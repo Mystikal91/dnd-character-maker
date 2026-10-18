@@ -184,6 +184,8 @@
   "credits.rulesIntro": "The rules text and data come from the System Reference Document, used under the Creative Commons Attribution 4.0 license.",
   "credits.data": "Structured data",
   "credits.dataText": "The structured SRD data is derived from the 5e-database project (MIT License).",
+  "credits.translations": "Translations of the rules",
+  "credits.translationsText": "Translated rules texts come from the official translations of the SRD 5.1 published by Wizards of the Coast under the same Creative Commons Attribution 4.0 license. They have been matched to the structured data by this project.",
   "credits.design": "Character sheet design",
   "credits.designText": "The layout of the character sheet and its set of pages (main sheet, story, feature cards, spell cards) are inspired by the class character sheets by Emmet Byrne. All artwork in this app is drawn from scratch; no artwork from those sheets is used.",
   "credits.fonts": "Fonts",

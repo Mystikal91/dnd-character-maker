@@ -4,6 +4,14 @@ import { ui } from "../i18n/ui";
 
 const REPO_URL = "https://github.com/Mystikal91/dnd-character-maker";
 
+/** The official translations of the SRD that the rules texts come from, by file code. */
+const TRANSLATED_SRDS = [
+  ["IT", "Italiano"],
+  ["FR", "Français"],
+  ["DE", "Deutsch"],
+  ["ES", "Español"],
+] as const;
+
 function ExternalLink({ href, children }: { href: string; children: string }) {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer">
@@ -51,6 +59,20 @@ export function Credits() {
           5e-bits/5e-database
         </ExternalLink>
       </p>
+
+      <h3>{ui("credits.translations")}</h3>
+      <p>{ui("credits.translationsText")}</p>
+      <ul>
+        {TRANSLATED_SRDS.map(([code, name]) => (
+          <li key={code}>
+            <ExternalLink
+              href={`https://media.dndbeyond.com/compendium-images/srd/5.1/SRD_CC_v5.1_${code}.pdf`}
+            >
+              {`SRD 5.1 — ${name}`}
+            </ExternalLink>
+          </li>
+        ))}
+      </ul>
 
       <h3>{ui("credits.design")}</h3>
       <p>{ui("credits.designText")}</p>

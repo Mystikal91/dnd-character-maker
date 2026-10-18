@@ -184,6 +184,8 @@
   "credits.rulesIntro": "Il testo e i dati delle regole provengono dal System Reference Document, usato con licenza Creative Commons Attribution 4.0.",
   "credits.data": "Dati strutturati",
   "credits.dataText": "I dati strutturati dell'SRD derivano dal progetto 5e-database (licenza MIT).",
+  "credits.translations": "Traduzioni delle regole",
+  "credits.translationsText": "I testi tradotti delle regole provengono dalle traduzioni ufficiali dell'SRD 5.1 pubblicate da Wizards of the Coast con la stessa licenza Creative Commons Attribution 4.0. Questo progetto li ha abbinati ai dati strutturati.",
   "credits.design": "Design della scheda",
   "credits.designText": "L'impaginazione della scheda e il suo insieme di pagine (scheda principale, storia, carte dei privilegi, carte degli incantesimi) si ispirano alle schede di classe di Emmet Byrne. Tutte le illustrazioni di questa app sono disegnate da zero: non è usata alcuna illustrazione di quelle schede.",
   "credits.fonts": "Caratteri",

@@ -42,6 +42,25 @@ Notes:
   `LANGUAGES` in `src/app/language.logic.ts`, and import its interface file in
   `src/i18n/ui.ts`.
 
+## Importing the official SRD translations
+
+Wizards publishes the SRD 5.1 in Italian, French, German and Spanish under the same CC-BY-4.0
+license ([download page](https://www.dndbeyond.com/srd)). `scripts/srd-translations/` imports
+their texts into `locales/<language>/srd51/`:
+
+```bash
+pip install pymupdf
+python scripts/srd-translations/import_spells.py it path/to/SRD_CC_v5.1_IT.pdf
+```
+
+The PDFs sort entries in the translated alphabetical order, so each spell is matched to its
+English entry by level, school, components, ritual/concentration flags and the numbers and
+dice in its text, using a global best assignment. The script prints the few matches it is less
+sure about (a school mislabelled in the PDF, for example); names there are still right.
+
+Imported so far: spells (all four languages), plus school names (not German). The rest of the
+rules texts (classes, species, features, items, conditions...) still fall back to English.
+
 ## Checking a translation locally
 
 ```bash
