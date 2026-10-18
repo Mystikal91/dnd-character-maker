@@ -1,0 +1,547 @@
+/* Print layout. The preview on screen uses the same rules, drawn as a sheet of paper. */
+
+.print-root {
+  --p-ink: #111;
+  --p-muted: #555;
+  --p-line: #8a8a8a;
+  --p-accent: #7a1f1f;
+  --p-tint: #f6efe0;
+  font-size: 9pt;
+  line-height: 1.3;
+}
+
+/* Black and white, no fills: for printing without colored ink. */
+.print-root.low-ink {
+  --p-ink: #000;
+  --p-muted: #000;
+  --p-line: #000;
+  --p-accent: #000;
+  --p-tint: transparent;
+}
+
+.print-toolbar {
+  margin-bottom: 1rem;
+}
+
+.print-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.print-actions button {
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.4rem;
+  background: var(--bg);
+  cursor: pointer;
+}
+
+.print-actions button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+.print-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.print-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.5rem 1rem;
+  align-items: end;
+}
+
+.print-options .checks {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.print-options .checks label {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  min-height: 2rem;
+}
+
+/* The paper: always white with dark ink, whatever the app theme is. */
+.paper-scroll {
+  overflow-x: auto;
+  padding: 0.5rem 0 1rem;
+}
+
+.paper {
+  box-sizing: border-box;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 12mm;
+  background: #fff;
+  color: var(--p-ink);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.3);
+}
+
+.paper-letter .paper {
+  width: 215.9mm;
+  min-height: 279.4mm;
+}
+
+.paper * {
+  box-sizing: border-box;
+}
+
+.paper h1,
+.paper h2,
+.paper h3 {
+  margin: 0;
+  color: var(--p-ink);
+}
+
+.p-page {
+  break-after: page;
+}
+
+.p-page:last-child {
+  break-after: auto;
+}
+
+.p-muted {
+  color: var(--p-muted);
+}
+
+.p-center {
+  text-align: center;
+}
+
+.p-title {
+  margin-bottom: 3mm !important;
+  padding-bottom: 1mm;
+  border-bottom: 0.4mm solid var(--p-accent);
+  color: var(--p-accent) !important;
+  font-size: 13pt;
+}
+
+/* ---- Front page ---- */
+
+.p-header {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4mm;
+  align-items: end;
+  margin-bottom: 4mm;
+}
+
+.p-header h1 {
+  padding: 2mm 3mm;
+  border: 0.4mm solid var(--p-line);
+  border-radius: 2mm;
+  background: var(--p-tint);
+  font-size: 17pt;
+}
+
+.p-fields {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2mm 3mm;
+  margin: 0;
+}
+
+.p-fields > div {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.p-fields dd {
+  margin: 0;
+  padding: 0.5mm 0;
+  min-height: 5mm;
+  border-bottom: 0.3mm solid var(--p-line);
+  font-weight: 600;
+}
+
+.p-fields dt {
+  font-size: 7pt;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--p-muted);
+}
+
+.p-columns {
+  display: grid;
+  grid-template-columns: 0.9fr 1.2fr 1fr;
+  gap: 4mm;
+  align-items: start;
+}
+
+.p-col > h2 {
+  margin: 3mm 0 1mm;
+  padding: 0.6mm 2mm;
+  background: var(--p-tint);
+  border-bottom: 0.3mm solid var(--p-accent);
+  color: var(--p-accent);
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.p-box {
+  margin-bottom: 2mm;
+  padding: 1.5mm;
+  border: 0.4mm solid var(--p-line);
+  border-radius: 2mm;
+  text-align: center;
+}
+
+.p-box-value {
+  min-height: 6mm;
+  font-size: 15pt;
+  font-weight: 700;
+}
+
+.p-box-label {
+  font-size: 6.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--p-muted);
+  text-align: center;
+}
+
+.p-abilities {
+  display: grid;
+  gap: 1.5mm;
+  margin-bottom: 2mm;
+}
+
+.p-ability {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  padding: 0.5mm 2mm;
+  border: 0.4mm solid var(--p-line);
+  border-radius: 2mm;
+  background: var(--p-tint);
+}
+
+.p-ability-name {
+  grid-column: 1 / -1;
+  font-size: 7pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.p-ability-mod {
+  font-size: 13pt;
+  font-weight: 700;
+}
+
+.p-ability-score {
+  min-width: 9mm;
+  padding: 0.5mm 1.5mm;
+  border: 0.3mm solid var(--p-line);
+  border-radius: 5mm;
+  background: #fff;
+  text-align: center;
+  font-weight: 700;
+}
+
+.p-checks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.p-checks li {
+  display: flex;
+  gap: 1.5mm;
+  align-items: baseline;
+  padding: 0;
+  border-bottom: 0.2mm solid #ddd;
+}
+
+.low-ink .p-checks li {
+  border-bottom-color: #888;
+}
+
+.p-dot {
+  width: 3mm;
+  text-align: center;
+}
+
+.p-num {
+  min-width: 7mm;
+  text-align: right;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.p-row3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2mm;
+}
+
+.p-row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2mm;
+  margin-bottom: 2mm;
+}
+
+.p-hp,
+.p-hp-temp,
+.p-hitdice,
+.p-death {
+  padding: 1.5mm;
+  border: 0.4mm solid var(--p-line);
+  border-radius: 2mm;
+}
+
+.p-hp {
+  margin-bottom: 2mm;
+}
+
+.p-hp-current {
+  min-height: 12mm;
+  margin: 1mm 0;
+  border-bottom: 0.3mm dashed var(--p-line);
+}
+
+.p-hp-current.small {
+  min-height: 8mm;
+}
+
+.p-hitdice .p-box-value {
+  font-size: 11pt;
+}
+
+.p-death {
+  display: grid;
+  gap: 1mm;
+  margin-bottom: 2mm;
+}
+
+.p-circles {
+  margin-left: 1.5mm;
+  letter-spacing: 0.3em;
+}
+
+.p-attacks,
+.p-slots,
+.p-spell-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.p-attacks th,
+.p-slots th,
+.p-spell-table th {
+  padding: 0.6mm 1.5mm;
+  border-bottom: 0.3mm solid var(--p-line);
+  font-size: 7pt;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--p-muted);
+}
+
+.p-attacks td,
+.p-slots td,
+.p-spell-table td {
+  padding: 1.2mm 1.5mm;
+  border-bottom: 0.2mm solid var(--p-line);
+}
+
+.p-coins {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5mm;
+  margin-bottom: 1.5mm;
+  text-align: center;
+  font-size: 7pt;
+}
+
+.p-coin-box {
+  height: 7mm;
+  margin-bottom: 0.5mm;
+  border: 0.3mm solid var(--p-line);
+  border-radius: 1.5mm;
+}
+
+.p-lines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.p-lines li {
+  min-height: 5mm;
+  padding: 0.5mm 0;
+  border-bottom: 0.2mm solid var(--p-line);
+}
+
+.p-prof {
+  margin: 0;
+}
+
+.p-prof dt {
+  margin-top: 1.5mm;
+  font-size: 7pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--p-muted);
+}
+
+.p-prof dd {
+  margin: 0;
+}
+
+.p-names {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.p-names li {
+  padding: 0.3mm 0;
+  border-bottom: 0.2mm solid #ddd;
+}
+
+.low-ink .p-names li {
+  border-bottom-color: #888;
+}
+
+/* ---- Features and spell pages ---- */
+
+.p-flow {
+  columns: 2;
+  column-gap: 6mm;
+}
+
+.p-flow article {
+  break-inside: avoid;
+  margin-bottom: 3mm;
+}
+
+.p-flow h3,
+.p-spell h3 {
+  font-size: 9.5pt;
+}
+
+.p-flow p,
+.p-spell p {
+  margin: 0.6mm 0;
+}
+
+.p-casting {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5mm;
+  align-items: start;
+  margin-bottom: 4mm;
+}
+
+.p-casting .p-fields {
+  grid-template-columns: 1fr;
+}
+
+.p-level-group {
+  margin-bottom: 3mm;
+}
+
+.p-level-title,
+.p-level-group > h3 {
+  margin: 2mm 0 1.5mm !important;
+  padding: 0.6mm 2mm;
+  background: var(--p-tint);
+  border-bottom: 0.3mm solid var(--p-accent);
+  color: var(--p-accent) !important;
+  font-size: 9pt;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.p-spell-columns {
+  columns: 2;
+  column-gap: 6mm;
+}
+
+.p-spell {
+  break-inside: avoid;
+  margin-bottom: 3mm;
+  padding-bottom: 2mm;
+  border-bottom: 0.2mm solid var(--p-line);
+  font-size: 8.5pt;
+}
+
+.p-spell-meta {
+  color: var(--p-muted);
+}
+
+.p-spell-table {
+  font-size: 8pt;
+}
+
+.p-spell-names {
+  columns: 3;
+  column-gap: 5mm;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.p-spell-names li {
+  break-inside: avoid;
+  padding: 0.4mm 0;
+}
+
+.p-prepared {
+  font-weight: 700;
+}
+
+/* ---- Printing for real ---- */
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .shell {
+    max-width: none;
+    padding: 0;
+  }
+
+  .shell > h1,
+  .no-print {
+    display: none !important;
+  }
+
+  .paper-scroll {
+    overflow: visible;
+    padding: 0;
+  }
+
+  .paper {
+    width: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .paper-letter .paper {
+    width: auto;
+    min-height: 0;
+  }
+
+  .print-root {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

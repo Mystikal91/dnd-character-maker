@@ -1,10 +1,12 @@
 import { useEffect } from "preact/hooks";
+import { view } from "../app/printSettings";
 import { content, initStorage, loadError, storageReady } from "../app/store";
 import { loadContent } from "../content/browser";
 import { ui } from "../i18n/ui";
 import { CharacterBar } from "./CharacterBar";
 import { CharacterForm } from "./CharacterForm";
 import { Sheet } from "./Sheet";
+import { PrintView } from "./print/PrintView";
 
 export function App() {
   useEffect(() => {
@@ -27,6 +29,8 @@ export function App() {
         <p role="alert">{ui("app.loadError")}</p>
       ) : !content.value || !storageReady.value ? (
         <p>{ui("app.loading")}</p>
+      ) : view.value === "print" ? (
+        <PrintView />
       ) : (
         <>
           <CharacterBar />

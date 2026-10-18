@@ -1,4 +1,5 @@
 import { useRef } from "preact/hooks";
+import { showView } from "../app/printSettings";
 import {
   character,
   characters,
@@ -54,6 +55,9 @@ export function CharacterBar() {
         </button>
         <button type="button" onClick={() => void duplicateCharacter()}>
           {ui("bar.duplicate")}
+        </button>
+        <button type="button" onClick={() => showView("print")}>
+          {ui("bar.print")}
         </button>
         <button type="button" onClick={exportCharacter}>
           {ui("bar.export")}
