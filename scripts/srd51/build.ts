@@ -21,6 +21,8 @@ const FILE_NAMES = {
   class: "classes",
   subclass: "subclasses",
   feature: "features",
+  item: "items",
+  property: "properties",
 } as const;
 
 const readJson = async (name: string) =>
@@ -42,6 +44,8 @@ const raw: RawSource = {
   subclasses: await readJson("5e-SRD-Subclasses"),
   levels: await readJson("5e-SRD-Levels"),
   features: await readJson("5e-SRD-Features"),
+  equipment: await readJson("5e-SRD-Equipment"),
+  weaponProperties: await readJson("5e-SRD-Weapon-Properties"),
 };
 
 const converted = convertAll(raw);

@@ -70,13 +70,20 @@
               "minimum": 13
             }
           ],
-          "proficiencies": ["armor:shields", "weapon:simple-weapons", "weapon:martial-weapons"],
+          "proficiencies": [
+            "armor:shields",
+            "weapon:simple-weapons",
+            "weapon:martial-weapons"
+          ],
           "proficiencyChoices": []
         },
         "levels": [
           {
             "level": 1,
-            "features": ["srd51:feature/rage", "srd51:feature/barbarian-unarmored-defense"],
+            "features": [
+              "srd51:feature/rage",
+              "srd51:feature/barbarian-unarmored-defense"
+            ],
             "abilityScoreImprovements": 0,
             "classSpecific": {
               "rageCount": 2,
@@ -86,7 +93,10 @@
           },
           {
             "level": 2,
-            "features": ["srd51:feature/reckless-attack", "srd51:feature/danger-sense"],
+            "features": [
+              "srd51:feature/reckless-attack",
+              "srd51:feature/danger-sense"
+            ],
             "abilityScoreImprovements": 0,
             "classSpecific": {
               "rageCount": 2,
@@ -96,7 +106,9 @@
           },
           {
             "level": 3,
-            "features": ["srd51:feature/primal-path"],
+            "features": [
+              "srd51:feature/primal-path"
+            ],
             "abilityScoreImprovements": 0,
             "classSpecific": {
               "rageCount": 3,
@@ -106,7 +118,9 @@
           },
           {
             "level": 4,
-            "features": ["srd51:feature/barbarian-ability-score-improvement-1"],
+            "features": [
+              "srd51:feature/barbarian-ability-score-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "classSpecific": {
               "rageCount": 3,
@@ -116,7 +130,10 @@
           },
           {
             "level": 5,
-            "features": ["srd51:feature/barbarian-extra-attack", "srd51:feature/fast-movement"],
+            "features": [
+              "srd51:feature/barbarian-extra-attack",
+              "srd51:feature/fast-movement"
+            ],
             "abilityScoreImprovements": 1,
             "classSpecific": {
               "rageCount": 3,
@@ -126,7 +143,9 @@
           },
           {
             "level": 6,
-            "features": ["srd51:feature/primal-path-improvement-1"],
+            "features": [
+              "srd51:feature/primal-path-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "classSpecific": {
               "rageCount": 4,
@@ -136,7 +155,9 @@
           },
           {
             "level": 7,
-            "features": ["srd51:feature/feral-instinct"],
+            "features": [
+              "srd51:feature/feral-instinct"
+            ],
             "abilityScoreImprovements": 1,
             "classSpecific": {
               "rageCount": 4,
@@ -146,7 +167,9 @@
           },
           {
             "level": 8,
-            "features": ["srd51:feature/barbarian-ability-score-improvement-2"],
+            "features": [
+              "srd51:feature/barbarian-ability-score-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "rageCount": 4,
@@ -156,7 +179,9 @@
           },
           {
             "level": 9,
-            "features": ["srd51:feature/brutal-critical-1-die"],
+            "features": [
+              "srd51:feature/brutal-critical-1-die"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "rageCount": 4,
@@ -166,7 +191,9 @@
           },
           {
             "level": 10,
-            "features": ["srd51:feature/primal-path-improvement-2"],
+            "features": [
+              "srd51:feature/primal-path-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "rageCount": 4,
@@ -176,7 +203,9 @@
           },
           {
             "level": 11,
-            "features": ["srd51:feature/relentless-rage"],
+            "features": [
+              "srd51:feature/relentless-rage"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "rageCount": 4,
@@ -186,7 +215,9 @@
           },
           {
             "level": 12,
-            "features": ["srd51:feature/barbarian-ability-score-improvement-3"],
+            "features": [
+              "srd51:feature/barbarian-ability-score-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "rageCount": 5,
@@ -196,7 +227,9 @@
           },
           {
             "level": 13,
-            "features": ["srd51:feature/brutal-critical-2-dice"],
+            "features": [
+              "srd51:feature/brutal-critical-2-dice"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "rageCount": 5,
@@ -206,7 +239,9 @@
           },
           {
             "level": 14,
-            "features": ["srd51:feature/primal-path-improvement-3"],
+            "features": [
+              "srd51:feature/primal-path-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "rageCount": 5,
@@ -216,7 +251,9 @@
           },
           {
             "level": 15,
-            "features": ["srd51:feature/persistent-rage"],
+            "features": [
+              "srd51:feature/persistent-rage"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "rageCount": 5,
@@ -226,7 +263,9 @@
           },
           {
             "level": 16,
-            "features": ["srd51:feature/barbarian-ability-score-improvement-4"],
+            "features": [
+              "srd51:feature/barbarian-ability-score-improvement-4"
+            ],
             "abilityScoreImprovements": 4,
             "classSpecific": {
               "rageCount": 5,
@@ -236,7 +275,9 @@
           },
           {
             "level": 17,
-            "features": ["srd51:feature/brutal-critical-3-dice"],
+            "features": [
+              "srd51:feature/brutal-critical-3-dice"
+            ],
             "abilityScoreImprovements": 4,
             "classSpecific": {
               "rageCount": 6,
@@ -246,7 +287,9 @@
           },
           {
             "level": 18,
-            "features": ["srd51:feature/indomitable-might"],
+            "features": [
+              "srd51:feature/indomitable-might"
+            ],
             "abilityScoreImprovements": 4,
             "classSpecific": {
               "rageCount": 6,
@@ -256,7 +299,9 @@
           },
           {
             "level": 19,
-            "features": ["srd51:feature/barbarian-ability-score-improvement-5"],
+            "features": [
+              "srd51:feature/barbarian-ability-score-improvement-5"
+            ],
             "abilityScoreImprovements": 5,
             "classSpecific": {
               "rageCount": 6,
@@ -266,7 +311,9 @@
           },
           {
             "level": 20,
-            "features": ["srd51:feature/primal-champion"],
+            "features": [
+              "srd51:feature/primal-champion"
+            ],
             "abilityScoreImprovements": 5,
             "classSpecific": {
               "rageCount": 9999,
@@ -451,7 +498,9 @@
               "minimum": 13
             }
           ],
-          "proficiencies": ["armor:light-armor"],
+          "proficiencies": [
+            "armor:light-armor"
+          ],
           "proficiencyChoices": [
             {
               "choose": 1,
@@ -496,11 +545,24 @@
         "levels": [
           {
             "level": 1,
-            "features": ["srd51:feature/spellcasting-bard", "srd51:feature/bardic-inspiration-d6"],
+            "features": [
+              "srd51:feature/spellcasting-bard",
+              "srd51:feature/bardic-inspiration-d6"
+            ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 2,
             "spellsKnown": 4,
-            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 6,
               "songOfRestDie": 0,
@@ -511,11 +573,24 @@
           },
           {
             "level": 2,
-            "features": ["srd51:feature/jack-of-all-trades", "srd51:feature/song-of-rest-d6"],
+            "features": [
+              "srd51:feature/jack-of-all-trades",
+              "srd51:feature/song-of-rest-d6"
+            ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 2,
             "spellsKnown": 5,
-            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 6,
               "songOfRestDie": 6,
@@ -526,11 +601,24 @@
           },
           {
             "level": 3,
-            "features": ["srd51:feature/bard-expertise-1", "srd51:feature/bard-college"],
+            "features": [
+              "srd51:feature/bard-expertise-1",
+              "srd51:feature/bard-college"
+            ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 2,
             "spellsKnown": 6,
-            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 6,
               "songOfRestDie": 6,
@@ -541,11 +629,23 @@
           },
           {
             "level": 4,
-            "features": ["srd51:feature/bard-ability-score-improvement-1"],
+            "features": [
+              "srd51:feature/bard-ability-score-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 3,
             "spellsKnown": 7,
-            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 6,
               "songOfRestDie": 6,
@@ -563,7 +663,17 @@
             "abilityScoreImprovements": 1,
             "cantripsKnown": 3,
             "spellsKnown": 8,
-            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 8,
               "songOfRestDie": 6,
@@ -574,11 +684,24 @@
           },
           {
             "level": 6,
-            "features": ["srd51:feature/countercharm", "srd51:feature/bard-college-improvement-1"],
+            "features": [
+              "srd51:feature/countercharm",
+              "srd51:feature/bard-college-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 3,
             "spellsKnown": 9,
-            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 8,
               "songOfRestDie": 6,
@@ -593,7 +716,17 @@
             "abilityScoreImprovements": 1,
             "cantripsKnown": 3,
             "spellsKnown": 10,
-            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 8,
               "songOfRestDie": 6,
@@ -604,11 +737,23 @@
           },
           {
             "level": 8,
-            "features": ["srd51:feature/bard-ability-score-improvement-2"],
+            "features": [
+              "srd51:feature/bard-ability-score-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 3,
             "spellsKnown": 11,
-            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 8,
               "songOfRestDie": 6,
@@ -619,11 +764,23 @@
           },
           {
             "level": 9,
-            "features": ["srd51:feature/song-of-rest-d8"],
+            "features": [
+              "srd51:feature/song-of-rest-d8"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 3,
             "spellsKnown": 12,
-            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 8,
               "songOfRestDie": 8,
@@ -642,7 +799,17 @@
             "abilityScoreImprovements": 2,
             "cantripsKnown": 4,
             "spellsKnown": 14,
-            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 10,
               "songOfRestDie": 8,
@@ -657,7 +824,17 @@
             "abilityScoreImprovements": 2,
             "cantripsKnown": 4,
             "spellsKnown": 15,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 10,
               "songOfRestDie": 8,
@@ -668,11 +845,23 @@
           },
           {
             "level": 12,
-            "features": ["srd51:feature/bard-ability-score-improvement-3"],
+            "features": [
+              "srd51:feature/bard-ability-score-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 4,
             "spellsKnown": 15,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 10,
               "songOfRestDie": 8,
@@ -683,11 +872,23 @@
           },
           {
             "level": 13,
-            "features": ["srd51:feature/song-of-rest-d10"],
+            "features": [
+              "srd51:feature/song-of-rest-d10"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 4,
             "spellsKnown": 16,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 10,
               "songOfRestDie": 10,
@@ -705,7 +906,17 @@
             "abilityScoreImprovements": 3,
             "cantripsKnown": 4,
             "spellsKnown": 18,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              0,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 10,
               "songOfRestDie": 10,
@@ -716,11 +927,23 @@
           },
           {
             "level": 15,
-            "features": ["srd51:feature/bardic-inspiration-d12"],
+            "features": [
+              "srd51:feature/bardic-inspiration-d12"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 4,
             "spellsKnown": 19,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 12,
               "songOfRestDie": 10,
@@ -731,11 +954,23 @@
           },
           {
             "level": 16,
-            "features": ["srd51:feature/bard-ability-score-improvement-4"],
+            "features": [
+              "srd51:feature/bard-ability-score-improvement-4"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 4,
             "spellsKnown": 19,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              0
+            ],
             "classSpecific": {
               "bardicInspirationDie": 12,
               "songOfRestDie": 10,
@@ -746,11 +981,23 @@
           },
           {
             "level": 17,
-            "features": ["srd51:feature/song-of-rest-d12"],
+            "features": [
+              "srd51:feature/song-of-rest-d12"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 4,
             "spellsKnown": 20,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "bardicInspirationDie": 12,
               "songOfRestDie": 12,
@@ -761,11 +1008,23 @@
           },
           {
             "level": 18,
-            "features": ["srd51:feature/magical-secrets-3"],
+            "features": [
+              "srd51:feature/magical-secrets-3"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 4,
             "spellsKnown": 22,
-            "spellSlots": [4, 3, 3, 3, 3, 1, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              1,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "bardicInspirationDie": 12,
               "songOfRestDie": 12,
@@ -776,11 +1035,23 @@
           },
           {
             "level": 19,
-            "features": ["srd51:feature/bard-ability-score-improvement-5"],
+            "features": [
+              "srd51:feature/bard-ability-score-improvement-5"
+            ],
             "abilityScoreImprovements": 5,
             "cantripsKnown": 4,
             "spellsKnown": 22,
-            "spellSlots": [4, 3, 3, 3, 3, 2, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "bardicInspirationDie": 12,
               "songOfRestDie": 12,
@@ -791,11 +1062,23 @@
           },
           {
             "level": 20,
-            "features": ["srd51:feature/superior-inspiration"],
+            "features": [
+              "srd51:feature/superior-inspiration"
+            ],
             "abilityScoreImprovements": 5,
             "cantripsKnown": 4,
             "spellsKnown": 22,
-            "spellSlots": [4, 3, 3, 3, 3, 2, 2, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              2,
+              2,
+              1,
+              1
+            ],
             "classSpecific": {
               "bardicInspirationDie": 12,
               "songOfRestDie": 12,
@@ -970,7 +1253,11 @@
               "minimum": 13
             }
           ],
-          "proficiencies": ["armor:light-armor", "armor:medium-armor", "armor:shields"],
+          "proficiencies": [
+            "armor:light-armor",
+            "armor:medium-armor",
+            "armor:shields"
+          ],
           "proficiencyChoices": []
         },
         "levels": [
@@ -983,7 +1270,17 @@
             ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 3,
-            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 0,
               "destroyUndeadCr": 0
@@ -998,7 +1295,17 @@
             ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 3,
-            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 1,
               "destroyUndeadCr": 0
@@ -1006,10 +1313,22 @@
           },
           {
             "level": 3,
-            "features": ["srd51:feature/domain-spells-2"],
+            "features": [
+              "srd51:feature/domain-spells-2"
+            ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 3,
-            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 1,
               "destroyUndeadCr": 0
@@ -1017,10 +1336,22 @@
           },
           {
             "level": 4,
-            "features": ["srd51:feature/cleric-ability-score-improvement-1"],
+            "features": [
+              "srd51:feature/cleric-ability-score-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 1,
               "destroyUndeadCr": 0
@@ -1034,7 +1365,17 @@
             ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 1,
               "destroyUndeadCr": 0.5
@@ -1048,7 +1389,17 @@
             ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 2,
               "destroyUndeadCr": 0.5
@@ -1056,10 +1407,22 @@
           },
           {
             "level": 7,
-            "features": ["srd51:feature/domain-spells-4"],
+            "features": [
+              "srd51:feature/domain-spells-4"
+            ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 2,
               "destroyUndeadCr": 0.5
@@ -1074,7 +1437,17 @@
             ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 2,
               "destroyUndeadCr": 1
@@ -1082,10 +1455,22 @@
           },
           {
             "level": 9,
-            "features": ["srd51:feature/domain-spells-5"],
+            "features": [
+              "srd51:feature/domain-spells-5"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 2,
               "destroyUndeadCr": 1
@@ -1093,10 +1478,22 @@
           },
           {
             "level": 10,
-            "features": ["srd51:feature/divine-intervention"],
+            "features": [
+              "srd51:feature/divine-intervention"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 2,
               "destroyUndeadCr": 1
@@ -1104,10 +1501,22 @@
           },
           {
             "level": 11,
-            "features": ["srd51:feature/destroy-undead-cr-2-or-below"],
+            "features": [
+              "srd51:feature/destroy-undead-cr-2-or-below"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 2,
               "destroyUndeadCr": 2
@@ -1115,10 +1524,22 @@
           },
           {
             "level": 12,
-            "features": ["srd51:feature/cleric-ability-score-improvement-3"],
+            "features": [
+              "srd51:feature/cleric-ability-score-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 2,
               "destroyUndeadCr": 2
@@ -1129,7 +1550,17 @@
             "features": [],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 2,
               "destroyUndeadCr": 2
@@ -1137,10 +1568,22 @@
           },
           {
             "level": 14,
-            "features": ["srd51:feature/destroy-undead-cr-3-or-below"],
+            "features": [
+              "srd51:feature/destroy-undead-cr-3-or-below"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              0,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 2,
               "destroyUndeadCr": 3
@@ -1151,7 +1594,17 @@
             "features": [],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 2,
               "destroyUndeadCr": 3
@@ -1159,10 +1612,22 @@
           },
           {
             "level": 16,
-            "features": ["srd51:feature/cleric-ability-score-improvement-4"],
+            "features": [
+              "srd51:feature/cleric-ability-score-improvement-4"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              0
+            ],
             "classSpecific": {
               "channelDivinityCharges": 2,
               "destroyUndeadCr": 3
@@ -1176,7 +1641,17 @@
             ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "channelDivinityCharges": 2,
               "destroyUndeadCr": 4
@@ -1184,10 +1659,22 @@
           },
           {
             "level": 18,
-            "features": ["srd51:feature/channel-divinity-3-rest"],
+            "features": [
+              "srd51:feature/channel-divinity-3-rest"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 3, 1, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              1,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "channelDivinityCharges": 3,
               "destroyUndeadCr": 4
@@ -1195,10 +1682,22 @@
           },
           {
             "level": 19,
-            "features": ["srd51:feature/cleric-ability-score-improvement-5"],
+            "features": [
+              "srd51:feature/cleric-ability-score-improvement-5"
+            ],
             "abilityScoreImprovements": 5,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 3, 2, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "channelDivinityCharges": 3,
               "destroyUndeadCr": 4
@@ -1206,10 +1705,22 @@
           },
           {
             "level": 20,
-            "features": ["srd51:feature/divine-intervention-improvement"],
+            "features": [
+              "srd51:feature/divine-intervention-improvement"
+            ],
             "abilityScoreImprovements": 5,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 3, 2, 2, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              2,
+              2,
+              1,
+              1
+            ],
             "classSpecific": {
               "channelDivinityCharges": 3,
               "destroyUndeadCr": 4
@@ -1484,16 +1995,33 @@
               "minimum": 13
             }
           ],
-          "proficiencies": ["armor:light-armor", "armor:medium-armor", "armor:shields"],
+          "proficiencies": [
+            "armor:light-armor",
+            "armor:medium-armor",
+            "armor:shields"
+          ],
           "proficiencyChoices": []
         },
         "levels": [
           {
             "level": 1,
-            "features": ["srd51:feature/spellcasting-druid", "srd51:feature/druidic"],
+            "features": [
+              "srd51:feature/spellcasting-druid",
+              "srd51:feature/druidic"
+            ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 2,
-            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 0,
               "wildShapeSwim": false,
@@ -1508,7 +2036,17 @@
             ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 2,
-            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 0.25,
               "wildShapeSwim": false,
@@ -1520,7 +2058,17 @@
             "features": [],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 2,
-            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 0.25,
               "wildShapeSwim": false,
@@ -1535,7 +2083,17 @@
             ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 3,
-            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 0.5,
               "wildShapeSwim": true,
@@ -1547,7 +2105,17 @@
             "features": [],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 3,
-            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 0.5,
               "wildShapeSwim": true,
@@ -1556,10 +2124,22 @@
           },
           {
             "level": 6,
-            "features": ["srd51:feature/druid-circle-improvement-1"],
+            "features": [
+              "srd51:feature/druid-circle-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 3,
-            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 0.5,
               "wildShapeSwim": true,
@@ -1571,7 +2151,17 @@
             "features": [],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 3,
-            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1586,7 +2176,17 @@
             ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 3,
-            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1598,7 +2198,17 @@
             "features": [],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 3,
-            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1607,10 +2217,22 @@
           },
           {
             "level": 10,
-            "features": ["srd51:feature/druid-circle-improvement-2"],
+            "features": [
+              "srd51:feature/druid-circle-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1622,7 +2244,17 @@
             "features": [],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1631,10 +2263,22 @@
           },
           {
             "level": 12,
-            "features": ["srd51:feature/druid-ability-score-improvement-3"],
+            "features": [
+              "srd51:feature/druid-ability-score-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1646,7 +2290,17 @@
             "features": [],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1655,10 +2309,22 @@
           },
           {
             "level": 14,
-            "features": ["srd51:feature/druid-circle-improvement-3"],
+            "features": [
+              "srd51:feature/druid-circle-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              0,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1670,7 +2336,17 @@
             "features": [],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1679,10 +2355,22 @@
           },
           {
             "level": 16,
-            "features": ["srd51:feature/druid-ability-score-improvement-4"],
+            "features": [
+              "srd51:feature/druid-ability-score-improvement-4"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              0
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1694,7 +2382,17 @@
             "features": [],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1703,10 +2401,23 @@
           },
           {
             "level": 18,
-            "features": ["srd51:feature/druid-timeless-body", "srd51:feature/beast-spells"],
+            "features": [
+              "srd51:feature/druid-timeless-body",
+              "srd51:feature/beast-spells"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 3, 1, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              1,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1715,10 +2426,22 @@
           },
           {
             "level": 19,
-            "features": ["srd51:feature/druid-ability-score-improvement-5"],
+            "features": [
+              "srd51:feature/druid-ability-score-improvement-5"
+            ],
             "abilityScoreImprovements": 5,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 3, 2, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1727,10 +2450,22 @@
           },
           {
             "level": 20,
-            "features": ["srd51:feature/archdruid"],
+            "features": [
+              "srd51:feature/archdruid"
+            ],
             "abilityScoreImprovements": 5,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 3, 2, 2, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              2,
+              2,
+              1,
+              1
+            ],
             "classSpecific": {
               "wildShapeMaxCr": 1,
               "wildShapeSwim": true,
@@ -1902,7 +2637,10 @@
         "levels": [
           {
             "level": 1,
-            "features": ["srd51:feature/fighter-fighting-style", "srd51:feature/second-wind"],
+            "features": [
+              "srd51:feature/fighter-fighting-style",
+              "srd51:feature/second-wind"
+            ],
             "abilityScoreImprovements": 0,
             "classSpecific": {
               "actionSurges": 0,
@@ -1912,7 +2650,9 @@
           },
           {
             "level": 2,
-            "features": ["srd51:feature/action-surge-1-use"],
+            "features": [
+              "srd51:feature/action-surge-1-use"
+            ],
             "abilityScoreImprovements": 0,
             "classSpecific": {
               "actionSurges": 1,
@@ -1922,7 +2662,9 @@
           },
           {
             "level": 3,
-            "features": ["srd51:feature/martial-archetype"],
+            "features": [
+              "srd51:feature/martial-archetype"
+            ],
             "abilityScoreImprovements": 0,
             "classSpecific": {
               "actionSurges": 1,
@@ -1932,7 +2674,9 @@
           },
           {
             "level": 4,
-            "features": ["srd51:feature/fighter-ability-score-improvement-1"],
+            "features": [
+              "srd51:feature/fighter-ability-score-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "classSpecific": {
               "actionSurges": 1,
@@ -1942,7 +2686,9 @@
           },
           {
             "level": 5,
-            "features": ["srd51:feature/extra-attack-1"],
+            "features": [
+              "srd51:feature/extra-attack-1"
+            ],
             "abilityScoreImprovements": 1,
             "classSpecific": {
               "actionSurges": 1,
@@ -1952,7 +2698,9 @@
           },
           {
             "level": 6,
-            "features": ["srd51:feature/fighter-ability-score-improvement-2"],
+            "features": [
+              "srd51:feature/fighter-ability-score-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "actionSurges": 1,
@@ -1962,7 +2710,9 @@
           },
           {
             "level": 7,
-            "features": ["srd51:feature/martial-archetype-improvement-1"],
+            "features": [
+              "srd51:feature/martial-archetype-improvement-1"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "actionSurges": 1,
@@ -1972,7 +2722,9 @@
           },
           {
             "level": 8,
-            "features": ["srd51:feature/fighter-ability-score-improvement-3"],
+            "features": [
+              "srd51:feature/fighter-ability-score-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "actionSurges": 1,
@@ -1982,7 +2734,9 @@
           },
           {
             "level": 9,
-            "features": ["srd51:feature/indomitable-1-use"],
+            "features": [
+              "srd51:feature/indomitable-1-use"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "actionSurges": 1,
@@ -1992,7 +2746,9 @@
           },
           {
             "level": 10,
-            "features": ["srd51:feature/martial-archetype-improvement-2"],
+            "features": [
+              "srd51:feature/martial-archetype-improvement-2"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "actionSurges": 1,
@@ -2002,7 +2758,9 @@
           },
           {
             "level": 11,
-            "features": ["srd51:feature/extra-attack-2"],
+            "features": [
+              "srd51:feature/extra-attack-2"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "actionSurges": 1,
@@ -2012,7 +2770,9 @@
           },
           {
             "level": 12,
-            "features": ["srd51:feature/fighter-ability-score-improvement-4"],
+            "features": [
+              "srd51:feature/fighter-ability-score-improvement-4"
+            ],
             "abilityScoreImprovements": 4,
             "classSpecific": {
               "actionSurges": 1,
@@ -2022,7 +2782,9 @@
           },
           {
             "level": 13,
-            "features": ["srd51:feature/indomitable-2-uses"],
+            "features": [
+              "srd51:feature/indomitable-2-uses"
+            ],
             "abilityScoreImprovements": 4,
             "classSpecific": {
               "actionSurges": 1,
@@ -2032,7 +2794,9 @@
           },
           {
             "level": 14,
-            "features": ["srd51:feature/fighter-ability-score-improvement-5"],
+            "features": [
+              "srd51:feature/fighter-ability-score-improvement-5"
+            ],
             "abilityScoreImprovements": 5,
             "classSpecific": {
               "actionSurges": 1,
@@ -2042,7 +2806,9 @@
           },
           {
             "level": 15,
-            "features": ["srd51:feature/martial-archetype-improvement-3"],
+            "features": [
+              "srd51:feature/martial-archetype-improvement-3"
+            ],
             "abilityScoreImprovements": 5,
             "classSpecific": {
               "actionSurges": 1,
@@ -2052,7 +2818,9 @@
           },
           {
             "level": 16,
-            "features": ["srd51:feature/fighter-ability-score-improvement-6"],
+            "features": [
+              "srd51:feature/fighter-ability-score-improvement-6"
+            ],
             "abilityScoreImprovements": 6,
             "classSpecific": {
               "actionSurges": 1,
@@ -2062,7 +2830,10 @@
           },
           {
             "level": 17,
-            "features": ["srd51:feature/action-surge-2-uses", "srd51:feature/indomitable-3-uses"],
+            "features": [
+              "srd51:feature/action-surge-2-uses",
+              "srd51:feature/indomitable-3-uses"
+            ],
             "abilityScoreImprovements": 6,
             "classSpecific": {
               "actionSurges": 2,
@@ -2072,7 +2843,9 @@
           },
           {
             "level": 18,
-            "features": ["srd51:feature/martial-archetype-improvement-4"],
+            "features": [
+              "srd51:feature/martial-archetype-improvement-4"
+            ],
             "abilityScoreImprovements": 6,
             "classSpecific": {
               "actionSurges": 2,
@@ -2082,7 +2855,9 @@
           },
           {
             "level": 19,
-            "features": ["srd51:feature/fighter-ability-score-improvement-7"],
+            "features": [
+              "srd51:feature/fighter-ability-score-improvement-7"
+            ],
             "abilityScoreImprovements": 7,
             "classSpecific": {
               "actionSurges": 2,
@@ -2092,7 +2867,9 @@
           },
           {
             "level": 20,
-            "features": ["srd51:feature/extra-attack-3"],
+            "features": [
+              "srd51:feature/extra-attack-3"
+            ],
             "abilityScoreImprovements": 7,
             "classSpecific": {
               "actionSurges": 2,
@@ -2344,13 +3121,19 @@
               "minimum": 13
             }
           ],
-          "proficiencies": ["weapon:simple-weapons", "weapon:shortswords"],
+          "proficiencies": [
+            "weapon:simple-weapons",
+            "weapon:shortswords"
+          ],
           "proficiencyChoices": []
         },
         "levels": [
           {
             "level": 1,
-            "features": ["srd51:feature/monk-unarmored-defense", "srd51:feature/martial-arts"],
+            "features": [
+              "srd51:feature/monk-unarmored-defense",
+              "srd51:feature/martial-arts"
+            ],
             "abilityScoreImprovements": 0,
             "classSpecific": {
               "martialArts": {
@@ -2382,7 +3165,10 @@
           },
           {
             "level": 3,
-            "features": ["srd51:feature/monastic-tradition", "srd51:feature/deflect-missiles"],
+            "features": [
+              "srd51:feature/monastic-tradition",
+              "srd51:feature/deflect-missiles"
+            ],
             "abilityScoreImprovements": 0,
             "classSpecific": {
               "martialArts": {
@@ -2411,7 +3197,10 @@
           },
           {
             "level": 5,
-            "features": ["srd51:feature/monk-extra-attack", "srd51:feature/stunning-strike"],
+            "features": [
+              "srd51:feature/monk-extra-attack",
+              "srd51:feature/stunning-strike"
+            ],
             "abilityScoreImprovements": 1,
             "classSpecific": {
               "martialArts": {
@@ -2440,7 +3229,10 @@
           },
           {
             "level": 7,
-            "features": ["srd51:feature/monk-evasion", "srd51:feature/stillness-of-mind"],
+            "features": [
+              "srd51:feature/monk-evasion",
+              "srd51:feature/stillness-of-mind"
+            ],
             "abilityScoreImprovements": 1,
             "classSpecific": {
               "martialArts": {
@@ -2453,7 +3245,9 @@
           },
           {
             "level": 8,
-            "features": ["srd51:feature/monk-ability-score-improvement-2"],
+            "features": [
+              "srd51:feature/monk-ability-score-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "martialArts": {
@@ -2466,7 +3260,9 @@
           },
           {
             "level": 9,
-            "features": ["srd51:feature/unarmored-movement-2"],
+            "features": [
+              "srd51:feature/unarmored-movement-2"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "martialArts": {
@@ -2479,7 +3275,9 @@
           },
           {
             "level": 10,
-            "features": ["srd51:feature/purity-of-body"],
+            "features": [
+              "srd51:feature/purity-of-body"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "martialArts": {
@@ -2492,7 +3290,9 @@
           },
           {
             "level": 11,
-            "features": ["srd51:feature/monastic-tradition-improvement-2"],
+            "features": [
+              "srd51:feature/monastic-tradition-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "martialArts": {
@@ -2505,7 +3305,9 @@
           },
           {
             "level": 12,
-            "features": ["srd51:feature/monk-ability-score-improvement-3"],
+            "features": [
+              "srd51:feature/monk-ability-score-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "martialArts": {
@@ -2518,7 +3320,9 @@
           },
           {
             "level": 13,
-            "features": ["srd51:feature/tongue-of-the-sun-and-moon"],
+            "features": [
+              "srd51:feature/tongue-of-the-sun-and-moon"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "martialArts": {
@@ -2531,7 +3335,9 @@
           },
           {
             "level": 14,
-            "features": ["srd51:feature/diamond-soul"],
+            "features": [
+              "srd51:feature/diamond-soul"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "martialArts": {
@@ -2544,7 +3350,9 @@
           },
           {
             "level": 15,
-            "features": ["srd51:feature/monk-timeless-body"],
+            "features": [
+              "srd51:feature/monk-timeless-body"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "martialArts": {
@@ -2557,7 +3365,9 @@
           },
           {
             "level": 16,
-            "features": ["srd51:feature/monk-ability-score-improvement-4"],
+            "features": [
+              "srd51:feature/monk-ability-score-improvement-4"
+            ],
             "abilityScoreImprovements": 4,
             "classSpecific": {
               "martialArts": {
@@ -2570,7 +3380,9 @@
           },
           {
             "level": 17,
-            "features": ["srd51:feature/monastic-tradition-improvement-3"],
+            "features": [
+              "srd51:feature/monastic-tradition-improvement-3"
+            ],
             "abilityScoreImprovements": 4,
             "classSpecific": {
               "martialArts": {
@@ -2583,7 +3395,9 @@
           },
           {
             "level": 18,
-            "features": ["srd51:feature/empty-body"],
+            "features": [
+              "srd51:feature/empty-body"
+            ],
             "abilityScoreImprovements": 4,
             "classSpecific": {
               "martialArts": {
@@ -2596,7 +3410,9 @@
           },
           {
             "level": 19,
-            "features": ["srd51:feature/monk-ability-score-improvement-5"],
+            "features": [
+              "srd51:feature/monk-ability-score-improvement-5"
+            ],
             "abilityScoreImprovements": 5,
             "classSpecific": {
               "martialArts": {
@@ -2609,7 +3425,9 @@
           },
           {
             "level": 20,
-            "features": ["srd51:feature/perfect-self"],
+            "features": [
+              "srd51:feature/perfect-self"
+            ],
             "abilityScoreImprovements": 5,
             "classSpecific": {
               "martialArts": {
@@ -2762,9 +3580,22 @@
         "levels": [
           {
             "level": 1,
-            "features": ["srd51:feature/divine-sense", "srd51:feature/lay-on-hands"],
+            "features": [
+              "srd51:feature/divine-sense",
+              "srd51:feature/lay-on-hands"
+            ],
             "abilityScoreImprovements": 0,
-            "spellSlots": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 0
             }
@@ -2777,7 +3608,17 @@
               "srd51:feature/divine-smite"
             ],
             "abilityScoreImprovements": 0,
-            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 0
             }
@@ -2791,52 +3632,122 @@
               "srd51:feature/channel-divinity"
             ],
             "abilityScoreImprovements": 0,
-            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 0
             }
           },
           {
             "level": 4,
-            "features": ["srd51:feature/paladin-ability-score-improvement-1"],
+            "features": [
+              "srd51:feature/paladin-ability-score-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
-            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 0
             }
           },
           {
             "level": 5,
-            "features": ["srd51:feature/paladin-extra-attack"],
+            "features": [
+              "srd51:feature/paladin-extra-attack"
+            ],
             "abilityScoreImprovements": 1,
-            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 0
             }
           },
           {
             "level": 6,
-            "features": ["srd51:feature/aura-of-protection"],
+            "features": [
+              "srd51:feature/aura-of-protection"
+            ],
             "abilityScoreImprovements": 1,
-            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 10
             }
           },
           {
             "level": 7,
-            "features": ["srd51:feature/sacred-oath-improvement-1"],
+            "features": [
+              "srd51:feature/sacred-oath-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
-            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 10
             }
           },
           {
             "level": 8,
-            "features": ["srd51:feature/paladin-ability-score-improvement-2"],
+            "features": [
+              "srd51:feature/paladin-ability-score-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
-            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 10
             }
@@ -2845,34 +3756,80 @@
             "level": 9,
             "features": [],
             "abilityScoreImprovements": 2,
-            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 10
             }
           },
           {
             "level": 10,
-            "features": ["srd51:feature/aura-of-courage"],
+            "features": [
+              "srd51:feature/aura-of-courage"
+            ],
             "abilityScoreImprovements": 2,
-            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 10
             }
           },
           {
             "level": 11,
-            "features": ["srd51:feature/improved-divine-smite"],
+            "features": [
+              "srd51:feature/improved-divine-smite"
+            ],
             "abilityScoreImprovements": 2,
-            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 10
             }
           },
           {
             "level": 12,
-            "features": ["srd51:feature/paladin-ability-score-improvement-3"],
+            "features": [
+              "srd51:feature/paladin-ability-score-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
-            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 10
             }
@@ -2881,34 +3838,80 @@
             "level": 13,
             "features": [],
             "abilityScoreImprovements": 3,
-            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 10
             }
           },
           {
             "level": 14,
-            "features": ["srd51:feature/cleansing-touch"],
+            "features": [
+              "srd51:feature/cleansing-touch"
+            ],
             "abilityScoreImprovements": 3,
-            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 10
             }
           },
           {
             "level": 15,
-            "features": ["srd51:feature/sacred-oath-improvement-2"],
+            "features": [
+              "srd51:feature/sacred-oath-improvement-2"
+            ],
             "abilityScoreImprovements": 3,
-            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 10
             }
           },
           {
             "level": 16,
-            "features": ["srd51:feature/paladin-ability-score-improvement-4"],
+            "features": [
+              "srd51:feature/paladin-ability-score-improvement-4"
+            ],
             "abilityScoreImprovements": 4,
-            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 10
             }
@@ -2917,34 +3920,80 @@
             "level": 17,
             "features": [],
             "abilityScoreImprovements": 4,
-            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 10
             }
           },
           {
             "level": 18,
-            "features": ["srd51:feature/aura-improvements"],
+            "features": [
+              "srd51:feature/aura-improvements"
+            ],
             "abilityScoreImprovements": 4,
-            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 30
             }
           },
           {
             "level": 19,
-            "features": ["srd51:feature/paladin-ability-score-improvement-5"],
+            "features": [
+              "srd51:feature/paladin-ability-score-improvement-5"
+            ],
             "abilityScoreImprovements": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 30
             }
           },
           {
             "level": 20,
-            "features": ["srd51:feature/sacred-oath-improvement-3"],
+            "features": [
+              "srd51:feature/sacred-oath-improvement-3"
+            ],
             "abilityScoreImprovements": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "auraRange": 30
             }
@@ -3177,7 +4226,17 @@
             ],
             "abilityScoreImprovements": 0,
             "spellsKnown": 0,
-            "spellSlots": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 1,
               "favoredTerrain": 1
@@ -3191,7 +4250,17 @@
             ],
             "abilityScoreImprovements": 0,
             "spellsKnown": 2,
-            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 1,
               "favoredTerrain": 1
@@ -3199,10 +4268,23 @@
           },
           {
             "level": 3,
-            "features": ["srd51:feature/ranger-archetype", "srd51:feature/primeval-awareness"],
+            "features": [
+              "srd51:feature/ranger-archetype",
+              "srd51:feature/primeval-awareness"
+            ],
             "abilityScoreImprovements": 0,
             "spellsKnown": 3,
-            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 1,
               "favoredTerrain": 1
@@ -3210,10 +4292,22 @@
           },
           {
             "level": 4,
-            "features": ["srd51:feature/ranger-ability-score-improvement-1"],
+            "features": [
+              "srd51:feature/ranger-ability-score-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "spellsKnown": 3,
-            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 1,
               "favoredTerrain": 1
@@ -3221,10 +4315,22 @@
           },
           {
             "level": 5,
-            "features": ["srd51:feature/ranger-extra-attack"],
+            "features": [
+              "srd51:feature/ranger-extra-attack"
+            ],
             "abilityScoreImprovements": 1,
             "spellsKnown": 4,
-            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 1,
               "favoredTerrain": 1
@@ -3238,7 +4344,17 @@
             ],
             "abilityScoreImprovements": 1,
             "spellsKnown": 4,
-            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 2,
               "favoredTerrain": 2
@@ -3246,10 +4362,22 @@
           },
           {
             "level": 7,
-            "features": ["srd51:feature/ranger-archetype-improvement-1"],
+            "features": [
+              "srd51:feature/ranger-archetype-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "spellsKnown": 5,
-            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 2,
               "favoredTerrain": 2
@@ -3263,7 +4391,17 @@
             ],
             "abilityScoreImprovements": 2,
             "spellsKnown": 5,
-            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 2,
               "favoredTerrain": 2
@@ -3274,7 +4412,17 @@
             "features": [],
             "abilityScoreImprovements": 2,
             "spellsKnown": 6,
-            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 2,
               "favoredTerrain": 2
@@ -3288,7 +4436,17 @@
             ],
             "abilityScoreImprovements": 2,
             "spellsKnown": 6,
-            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 2,
               "favoredTerrain": 3
@@ -3296,10 +4454,22 @@
           },
           {
             "level": 11,
-            "features": ["srd51:feature/ranger-archetype-improvement-2"],
+            "features": [
+              "srd51:feature/ranger-archetype-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "spellsKnown": 7,
-            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 2,
               "favoredTerrain": 3
@@ -3307,10 +4477,22 @@
           },
           {
             "level": 12,
-            "features": ["srd51:feature/ranger-ability-score-improvement-3"],
+            "features": [
+              "srd51:feature/ranger-ability-score-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "spellsKnown": 7,
-            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 2,
               "favoredTerrain": 3
@@ -3321,7 +4503,17 @@
             "features": [],
             "abilityScoreImprovements": 3,
             "spellsKnown": 8,
-            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 2,
               "favoredTerrain": 3
@@ -3329,10 +4521,23 @@
           },
           {
             "level": 14,
-            "features": ["srd51:feature/favored-enemy-3-enemies", "srd51:feature/vanish"],
+            "features": [
+              "srd51:feature/favored-enemy-3-enemies",
+              "srd51:feature/vanish"
+            ],
             "abilityScoreImprovements": 3,
             "spellsKnown": 8,
-            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 3,
               "favoredTerrain": 3
@@ -3340,10 +4545,22 @@
           },
           {
             "level": 15,
-            "features": ["srd51:feature/ranger-archetype-improvement-3"],
+            "features": [
+              "srd51:feature/ranger-archetype-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "spellsKnown": 9,
-            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 3,
               "favoredTerrain": 3
@@ -3351,10 +4568,22 @@
           },
           {
             "level": 16,
-            "features": ["srd51:feature/ranger-ability-score-improvement-4"],
+            "features": [
+              "srd51:feature/ranger-ability-score-improvement-4"
+            ],
             "abilityScoreImprovements": 4,
             "spellsKnown": 9,
-            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 3,
               "favoredTerrain": 3
@@ -3365,7 +4594,17 @@
             "features": [],
             "abilityScoreImprovements": 4,
             "spellsKnown": 10,
-            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 3,
               "favoredTerrain": 3
@@ -3373,10 +4612,22 @@
           },
           {
             "level": 18,
-            "features": ["srd51:feature/feral-senses"],
+            "features": [
+              "srd51:feature/feral-senses"
+            ],
             "abilityScoreImprovements": 4,
             "spellsKnown": 10,
-            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 3,
               "favoredTerrain": 3
@@ -3384,10 +4635,22 @@
           },
           {
             "level": 19,
-            "features": ["srd51:feature/ranger-ability-score-improvement-5"],
+            "features": [
+              "srd51:feature/ranger-ability-score-improvement-5"
+            ],
             "abilityScoreImprovements": 5,
             "spellsKnown": 11,
-            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 3,
               "favoredTerrain": 3
@@ -3395,10 +4658,22 @@
           },
           {
             "level": 20,
-            "features": ["srd51:feature/foe-slayer"],
+            "features": [
+              "srd51:feature/foe-slayer"
+            ],
             "abilityScoreImprovements": 5,
             "spellsKnown": 11,
-            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "favoredEnemies": 3,
               "favoredTerrain": 3
@@ -3573,7 +4848,10 @@
               "minimum": 13
             }
           ],
-          "proficiencies": ["armor:light-armor", "tool:thieves-tools"],
+          "proficiencies": [
+            "armor:light-armor",
+            "tool:thieves-tools"
+          ],
           "proficiencyChoices": [
             {
               "choose": 1,
@@ -3611,7 +4889,9 @@
           },
           {
             "level": 2,
-            "features": ["srd51:feature/cunning-action"],
+            "features": [
+              "srd51:feature/cunning-action"
+            ],
             "abilityScoreImprovements": 0,
             "classSpecific": {
               "sneakAttack": {
@@ -3622,7 +4902,9 @@
           },
           {
             "level": 3,
-            "features": ["srd51:feature/roguish-archetype"],
+            "features": [
+              "srd51:feature/roguish-archetype"
+            ],
             "abilityScoreImprovements": 0,
             "classSpecific": {
               "sneakAttack": {
@@ -3633,7 +4915,9 @@
           },
           {
             "level": 4,
-            "features": ["srd51:feature/rogue-ability-score-improvement-1"],
+            "features": [
+              "srd51:feature/rogue-ability-score-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "classSpecific": {
               "sneakAttack": {
@@ -3644,7 +4928,9 @@
           },
           {
             "level": 5,
-            "features": ["srd51:feature/uncanny-dodge"],
+            "features": [
+              "srd51:feature/uncanny-dodge"
+            ],
             "abilityScoreImprovements": 1,
             "classSpecific": {
               "sneakAttack": {
@@ -3655,7 +4941,9 @@
           },
           {
             "level": 6,
-            "features": ["srd51:feature/rogue-expertise-2"],
+            "features": [
+              "srd51:feature/rogue-expertise-2"
+            ],
             "abilityScoreImprovements": 1,
             "classSpecific": {
               "sneakAttack": {
@@ -3666,7 +4954,9 @@
           },
           {
             "level": 7,
-            "features": ["srd51:feature/rogue-evasion"],
+            "features": [
+              "srd51:feature/rogue-evasion"
+            ],
             "abilityScoreImprovements": 1,
             "classSpecific": {
               "sneakAttack": {
@@ -3677,7 +4967,9 @@
           },
           {
             "level": 8,
-            "features": ["srd51:feature/rogue-ability-score-improvement-2"],
+            "features": [
+              "srd51:feature/rogue-ability-score-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "sneakAttack": {
@@ -3688,7 +4980,9 @@
           },
           {
             "level": 9,
-            "features": ["srd51:feature/roguish-archetype-improvement-1"],
+            "features": [
+              "srd51:feature/roguish-archetype-improvement-1"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "sneakAttack": {
@@ -3699,7 +4993,9 @@
           },
           {
             "level": 10,
-            "features": ["srd51:feature/rogue-ability-score-improvement-3"],
+            "features": [
+              "srd51:feature/rogue-ability-score-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "sneakAttack": {
@@ -3710,7 +5006,9 @@
           },
           {
             "level": 11,
-            "features": ["srd51:feature/reliable-talent"],
+            "features": [
+              "srd51:feature/reliable-talent"
+            ],
             "abilityScoreImprovements": 2,
             "classSpecific": {
               "sneakAttack": {
@@ -3721,7 +5019,9 @@
           },
           {
             "level": 12,
-            "features": ["srd51:feature/rogue-ability-score-improvement-4"],
+            "features": [
+              "srd51:feature/rogue-ability-score-improvement-4"
+            ],
             "abilityScoreImprovements": 4,
             "classSpecific": {
               "sneakAttack": {
@@ -3732,7 +5032,9 @@
           },
           {
             "level": 13,
-            "features": ["srd51:feature/roguish-archetype-improvement-2"],
+            "features": [
+              "srd51:feature/roguish-archetype-improvement-2"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "sneakAttack": {
@@ -3743,7 +5045,9 @@
           },
           {
             "level": 14,
-            "features": ["srd51:feature/blindsense"],
+            "features": [
+              "srd51:feature/blindsense"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "sneakAttack": {
@@ -3754,7 +5058,9 @@
           },
           {
             "level": 15,
-            "features": ["srd51:feature/slippery-mind"],
+            "features": [
+              "srd51:feature/slippery-mind"
+            ],
             "abilityScoreImprovements": 3,
             "classSpecific": {
               "sneakAttack": {
@@ -3765,7 +5071,9 @@
           },
           {
             "level": 16,
-            "features": ["srd51:feature/rogue-ability-score-improvement-5"],
+            "features": [
+              "srd51:feature/rogue-ability-score-improvement-5"
+            ],
             "abilityScoreImprovements": 5,
             "classSpecific": {
               "sneakAttack": {
@@ -3776,7 +5084,9 @@
           },
           {
             "level": 17,
-            "features": ["srd51:feature/roguish-archetype-improvement-3"],
+            "features": [
+              "srd51:feature/roguish-archetype-improvement-3"
+            ],
             "abilityScoreImprovements": 4,
             "classSpecific": {
               "sneakAttack": {
@@ -3787,7 +5097,9 @@
           },
           {
             "level": 18,
-            "features": ["srd51:feature/elusive"],
+            "features": [
+              "srd51:feature/elusive"
+            ],
             "abilityScoreImprovements": 4,
             "classSpecific": {
               "sneakAttack": {
@@ -3798,7 +5110,9 @@
           },
           {
             "level": 19,
-            "features": ["srd51:feature/rogue-ability-score-improvement-6"],
+            "features": [
+              "srd51:feature/rogue-ability-score-improvement-6"
+            ],
             "abilityScoreImprovements": 6,
             "classSpecific": {
               "sneakAttack": {
@@ -3809,7 +5123,9 @@
           },
           {
             "level": 20,
-            "features": ["srd51:feature/stroke-of-luck"],
+            "features": [
+              "srd51:feature/stroke-of-luck"
+            ],
             "abilityScoreImprovements": 5,
             "classSpecific": {
               "sneakAttack": {
@@ -3998,11 +5314,24 @@
         "levels": [
           {
             "level": 1,
-            "features": ["srd51:feature/spellcasting-sorcerer", "srd51:feature/sorcerous-origin"],
+            "features": [
+              "srd51:feature/spellcasting-sorcerer",
+              "srd51:feature/sorcerous-origin"
+            ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 4,
             "spellsKnown": 2,
-            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 0,
               "metamagicKnown": 0,
@@ -4019,7 +5348,17 @@
             "abilityScoreImprovements": 0,
             "cantripsKnown": 4,
             "spellsKnown": 3,
-            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 2,
               "metamagicKnown": 0,
@@ -4049,11 +5388,23 @@
           },
           {
             "level": 3,
-            "features": ["srd51:feature/metamagic-1"],
+            "features": [
+              "srd51:feature/metamagic-1"
+            ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 4,
             "spellsKnown": 4,
-            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 3,
               "metamagicKnown": 2,
@@ -4083,11 +5434,23 @@
           },
           {
             "level": 4,
-            "features": ["srd51:feature/sorcerer-ability-score-improvement-1"],
+            "features": [
+              "srd51:feature/sorcerer-ability-score-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 5,
             "spellsKnown": 5,
-            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 4,
               "metamagicKnown": 2,
@@ -4121,7 +5484,17 @@
             "abilityScoreImprovements": 1,
             "cantripsKnown": 5,
             "spellsKnown": 6,
-            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 5,
               "metamagicKnown": 2,
@@ -4151,11 +5524,23 @@
           },
           {
             "level": 6,
-            "features": ["srd51:feature/sorcerous-origin-improvement-1"],
+            "features": [
+              "srd51:feature/sorcerous-origin-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 5,
             "spellsKnown": 7,
-            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 6,
               "metamagicKnown": 2,
@@ -4189,7 +5574,17 @@
             "abilityScoreImprovements": 1,
             "cantripsKnown": 5,
             "spellsKnown": 8,
-            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 7,
               "metamagicKnown": 2,
@@ -4219,11 +5614,23 @@
           },
           {
             "level": 8,
-            "features": ["srd51:feature/sorcerer-ability-score-improvement-2"],
+            "features": [
+              "srd51:feature/sorcerer-ability-score-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 5,
             "spellsKnown": 9,
-            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 8,
               "metamagicKnown": 2,
@@ -4257,7 +5664,17 @@
             "abilityScoreImprovements": 2,
             "cantripsKnown": 5,
             "spellsKnown": 10,
-            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 9,
               "metamagicKnown": 2,
@@ -4287,11 +5704,23 @@
           },
           {
             "level": 10,
-            "features": ["srd51:feature/metamagic-2"],
+            "features": [
+              "srd51:feature/metamagic-2"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 6,
             "spellsKnown": 11,
-            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 10,
               "metamagicKnown": 3,
@@ -4325,7 +5754,17 @@
             "abilityScoreImprovements": 2,
             "cantripsKnown": 6,
             "spellsKnown": 12,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 11,
               "metamagicKnown": 3,
@@ -4355,11 +5794,23 @@
           },
           {
             "level": 12,
-            "features": ["srd51:feature/sorcerer-ability-score-improvement-3"],
+            "features": [
+              "srd51:feature/sorcerer-ability-score-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 6,
             "spellsKnown": 12,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 12,
               "metamagicKnown": 3,
@@ -4393,7 +5844,17 @@
             "abilityScoreImprovements": 3,
             "cantripsKnown": 6,
             "spellsKnown": 13,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 13,
               "metamagicKnown": 3,
@@ -4423,11 +5884,23 @@
           },
           {
             "level": 14,
-            "features": ["srd51:feature/sorcerous-origin-improvement-2"],
+            "features": [
+              "srd51:feature/sorcerous-origin-improvement-2"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 6,
             "spellsKnown": 13,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              0,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 14,
               "metamagicKnown": 3,
@@ -4461,7 +5934,17 @@
             "abilityScoreImprovements": 3,
             "cantripsKnown": 6,
             "spellsKnown": 14,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 15,
               "metamagicKnown": 3,
@@ -4491,11 +5974,23 @@
           },
           {
             "level": 16,
-            "features": ["srd51:feature/sorcerer-ability-score-improvement-4"],
+            "features": [
+              "srd51:feature/sorcerer-ability-score-improvement-4"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 6,
             "spellsKnown": 14,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              0
+            ],
             "classSpecific": {
               "sorceryPoints": 16,
               "metamagicKnown": 4,
@@ -4525,11 +6020,23 @@
           },
           {
             "level": 17,
-            "features": ["srd51:feature/metamagic-3"],
+            "features": [
+              "srd51:feature/metamagic-3"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 6,
             "spellsKnown": 15,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "sorceryPoints": 17,
               "metamagicKnown": 4,
@@ -4559,11 +6066,23 @@
           },
           {
             "level": 18,
-            "features": ["srd51:feature/sorcerous-origin-improvement-3"],
+            "features": [
+              "srd51:feature/sorcerous-origin-improvement-3"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 6,
             "spellsKnown": 15,
-            "spellSlots": [4, 3, 3, 3, 3, 1, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              1,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "sorceryPoints": 18,
               "metamagicKnown": 4,
@@ -4593,11 +6112,23 @@
           },
           {
             "level": 19,
-            "features": ["srd51:feature/sorcerer-ability-score-improvement-5"],
+            "features": [
+              "srd51:feature/sorcerer-ability-score-improvement-5"
+            ],
             "abilityScoreImprovements": 5,
             "cantripsKnown": 6,
             "spellsKnown": 15,
-            "spellSlots": [4, 3, 3, 3, 3, 2, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "sorceryPoints": 19,
               "metamagicKnown": 4,
@@ -4627,11 +6158,23 @@
           },
           {
             "level": 20,
-            "features": ["srd51:feature/sorcerous-restoration"],
+            "features": [
+              "srd51:feature/sorcerous-restoration"
+            ],
             "abilityScoreImprovements": 5,
             "cantripsKnown": 6,
             "spellsKnown": 15,
-            "spellSlots": [4, 3, 3, 3, 3, 2, 2, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              2,
+              2,
+              1,
+              1
+            ],
             "classSpecific": {
               "sorceryPoints": 20,
               "metamagicKnown": 4,
@@ -4818,17 +6361,33 @@
               "minimum": 13
             }
           ],
-          "proficiencies": ["armor:light-armor", "weapon:simple-weapons"],
+          "proficiencies": [
+            "armor:light-armor",
+            "weapon:simple-weapons"
+          ],
           "proficiencyChoices": []
         },
         "levels": [
           {
             "level": 1,
-            "features": ["srd51:feature/otherworldly-patron", "srd51:feature/pact-magic"],
+            "features": [
+              "srd51:feature/otherworldly-patron",
+              "srd51:feature/pact-magic"
+            ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 2,
             "spellsKnown": 2,
-            "spellSlots": [1, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 0,
               "mysticArcanumLevel_6": 0,
@@ -4839,11 +6398,23 @@
           },
           {
             "level": 2,
-            "features": ["srd51:feature/eldritch-invocations"],
+            "features": [
+              "srd51:feature/eldritch-invocations"
+            ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 2,
             "spellsKnown": 3,
-            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 2,
               "mysticArcanumLevel_6": 0,
@@ -4854,11 +6425,23 @@
           },
           {
             "level": 3,
-            "features": ["srd51:feature/pact-boon"],
+            "features": [
+              "srd51:feature/pact-boon"
+            ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 2,
             "spellsKnown": 4,
-            "spellSlots": [0, 2, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 2,
               "mysticArcanumLevel_6": 0,
@@ -4869,11 +6452,23 @@
           },
           {
             "level": 4,
-            "features": ["srd51:feature/warlock-ability-score-improvement-1"],
+            "features": [
+              "srd51:feature/warlock-ability-score-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 3,
             "spellsKnown": 5,
-            "spellSlots": [0, 2, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 3,
               "mysticArcanumLevel_6": 0,
@@ -4888,7 +6483,17 @@
             "abilityScoreImprovements": 1,
             "cantripsKnown": 3,
             "spellsKnown": 6,
-            "spellSlots": [0, 0, 2, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 3,
               "mysticArcanumLevel_6": 0,
@@ -4899,11 +6504,23 @@
           },
           {
             "level": 6,
-            "features": ["srd51:feature/otherworldly-patron-improvement-1"],
+            "features": [
+              "srd51:feature/otherworldly-patron-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 3,
             "spellsKnown": 7,
-            "spellSlots": [0, 0, 2, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 4,
               "mysticArcanumLevel_6": 0,
@@ -4918,7 +6535,17 @@
             "abilityScoreImprovements": 1,
             "cantripsKnown": 3,
             "spellsKnown": 8,
-            "spellSlots": [0, 0, 0, 2, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 4,
               "mysticArcanumLevel_6": 0,
@@ -4929,11 +6556,23 @@
           },
           {
             "level": 8,
-            "features": ["srd51:feature/warlock-ability-score-improvement-2"],
+            "features": [
+              "srd51:feature/warlock-ability-score-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 3,
             "spellsKnown": 9,
-            "spellSlots": [0, 0, 0, 2, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 4,
               "mysticArcanumLevel_6": 0,
@@ -4948,7 +6587,17 @@
             "abilityScoreImprovements": 2,
             "cantripsKnown": 3,
             "spellsKnown": 10,
-            "spellSlots": [0, 0, 0, 0, 2, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 5,
               "mysticArcanumLevel_6": 0,
@@ -4959,11 +6608,23 @@
           },
           {
             "level": 10,
-            "features": ["srd51:feature/otherworldly-patron-improvement-2"],
+            "features": [
+              "srd51:feature/otherworldly-patron-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 4,
             "spellsKnown": 10,
-            "spellSlots": [0, 0, 0, 0, 2, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 5,
               "mysticArcanumLevel_6": 0,
@@ -4974,11 +6635,23 @@
           },
           {
             "level": 11,
-            "features": ["srd51:feature/mystic-arcanum-6th-level"],
+            "features": [
+              "srd51:feature/mystic-arcanum-6th-level"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 4,
             "spellsKnown": 11,
-            "spellSlots": [0, 0, 0, 0, 3, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              3,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 5,
               "mysticArcanumLevel_6": 1,
@@ -4989,11 +6662,23 @@
           },
           {
             "level": 12,
-            "features": ["srd51:feature/warlock-ability-score-improvement-3"],
+            "features": [
+              "srd51:feature/warlock-ability-score-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 4,
             "spellsKnown": 11,
-            "spellSlots": [0, 0, 0, 0, 3, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              3,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 6,
               "mysticArcanumLevel_6": 1,
@@ -5004,11 +6689,23 @@
           },
           {
             "level": 13,
-            "features": ["srd51:feature/mystic-arcanum-7th-level"],
+            "features": [
+              "srd51:feature/mystic-arcanum-7th-level"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 4,
             "spellsKnown": 12,
-            "spellSlots": [0, 0, 0, 0, 3, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              3,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 6,
               "mysticArcanumLevel_6": 1,
@@ -5019,11 +6716,23 @@
           },
           {
             "level": 14,
-            "features": ["srd51:feature/otherworldly-patron-improvement-3"],
+            "features": [
+              "srd51:feature/otherworldly-patron-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 4,
             "spellsKnown": 12,
-            "spellSlots": [0, 0, 0, 0, 3, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              3,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 6,
               "mysticArcanumLevel_6": 1,
@@ -5034,11 +6743,23 @@
           },
           {
             "level": 15,
-            "features": ["srd51:feature/mystic-arcanum-8th-level"],
+            "features": [
+              "srd51:feature/mystic-arcanum-8th-level"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 4,
             "spellsKnown": 13,
-            "spellSlots": [0, 0, 0, 0, 3, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              3,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 7,
               "mysticArcanumLevel_6": 1,
@@ -5049,11 +6770,23 @@
           },
           {
             "level": 16,
-            "features": ["srd51:feature/warlock-ability-score-improvement-4"],
+            "features": [
+              "srd51:feature/warlock-ability-score-improvement-4"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 4,
             "spellsKnown": 13,
-            "spellSlots": [0, 0, 0, 0, 3, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              3,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 7,
               "mysticArcanumLevel_6": 1,
@@ -5064,11 +6797,23 @@
           },
           {
             "level": 17,
-            "features": ["srd51:feature/mystic-arcanum-9th-level"],
+            "features": [
+              "srd51:feature/mystic-arcanum-9th-level"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 4,
             "spellsKnown": 14,
-            "spellSlots": [0, 0, 0, 0, 4, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 7,
               "mysticArcanumLevel_6": 1,
@@ -5083,7 +6828,17 @@
             "abilityScoreImprovements": 4,
             "cantripsKnown": 4,
             "spellsKnown": 14,
-            "spellSlots": [0, 0, 0, 0, 4, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 8,
               "mysticArcanumLevel_6": 1,
@@ -5094,11 +6849,23 @@
           },
           {
             "level": 19,
-            "features": ["srd51:feature/warlock-ability-score-improvement-5"],
+            "features": [
+              "srd51:feature/warlock-ability-score-improvement-5"
+            ],
             "abilityScoreImprovements": 5,
             "cantripsKnown": 4,
             "spellsKnown": 15,
-            "spellSlots": [0, 0, 0, 0, 4, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 8,
               "mysticArcanumLevel_6": 1,
@@ -5109,11 +6876,23 @@
           },
           {
             "level": 20,
-            "features": ["srd51:feature/eldritch-master"],
+            "features": [
+              "srd51:feature/eldritch-master"
+            ],
             "abilityScoreImprovements": 5,
             "cantripsKnown": 4,
             "spellsKnown": 15,
-            "spellSlots": [0, 0, 0, 0, 4, 0, 0, 0, 0],
+            "spellSlots": [
+              0,
+              0,
+              0,
+              0,
+              4,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "invocationsKnown": 8,
               "mysticArcanumLevel_6": 1,
@@ -5315,20 +7094,45 @@
         "levels": [
           {
             "level": 1,
-            "features": ["srd51:feature/spellcasting-wizard", "srd51:feature/arcane-recovery"],
+            "features": [
+              "srd51:feature/spellcasting-wizard",
+              "srd51:feature/arcane-recovery"
+            ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 3,
-            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 1
             }
           },
           {
             "level": 2,
-            "features": ["srd51:feature/arcane-tradition"],
+            "features": [
+              "srd51:feature/arcane-tradition"
+            ],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 3,
-            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 1
             }
@@ -5338,17 +7142,39 @@
             "features": [],
             "abilityScoreImprovements": 0,
             "cantripsKnown": 3,
-            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 2
             }
           },
           {
             "level": 4,
-            "features": ["srd51:feature/wizard-ability-score-improvement-1"],
+            "features": [
+              "srd51:feature/wizard-ability-score-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 2
             }
@@ -5358,17 +7184,39 @@
             "features": [],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 3
             }
           },
           {
             "level": 6,
-            "features": ["srd51:feature/arcane-tradition-improvement-1"],
+            "features": [
+              "srd51:feature/arcane-tradition-improvement-1"
+            ],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 3
             }
@@ -5378,17 +7226,39 @@
             "features": [],
             "abilityScoreImprovements": 1,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 4
             }
           },
           {
             "level": 8,
-            "features": ["srd51:feature/wizard-ability-score-improvement-2"],
+            "features": [
+              "srd51:feature/wizard-ability-score-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 4
             }
@@ -5398,17 +7268,39 @@
             "features": [],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 4,
-            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 5
             }
           },
           {
             "level": 10,
-            "features": ["srd51:feature/arcane-tradition-improvement-2"],
+            "features": [
+              "srd51:feature/arcane-tradition-improvement-2"
+            ],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 5
             }
@@ -5418,17 +7310,39 @@
             "features": [],
             "abilityScoreImprovements": 2,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 6
             }
           },
           {
             "level": 12,
-            "features": ["srd51:feature/wizard-ability-score-improvement-3"],
+            "features": [
+              "srd51:feature/wizard-ability-score-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              0,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 6
             }
@@ -5438,17 +7352,39 @@
             "features": [],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 7
             }
           },
           {
             "level": 14,
-            "features": ["srd51:feature/arcane-tradition-improvement-3"],
+            "features": [
+              "srd51:feature/arcane-tradition-improvement-3"
+            ],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              0,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 7
             }
@@ -5458,17 +7394,39 @@
             "features": [],
             "abilityScoreImprovements": 3,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 8
             }
           },
           {
             "level": 16,
-            "features": ["srd51:feature/wizard-ability-score-improvement-4"],
+            "features": [
+              "srd51:feature/wizard-ability-score-improvement-4"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              0
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 8
             }
@@ -5478,37 +7436,83 @@
             "features": [],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 9
             }
           },
           {
             "level": 18,
-            "features": ["srd51:feature/spell-mastery"],
+            "features": [
+              "srd51:feature/spell-mastery"
+            ],
             "abilityScoreImprovements": 4,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 3, 1, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              1,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 9
             }
           },
           {
             "level": 19,
-            "features": ["srd51:feature/wizard-ability-score-improvement-5"],
+            "features": [
+              "srd51:feature/wizard-ability-score-improvement-5"
+            ],
             "abilityScoreImprovements": 5,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 3, 2, 1, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              2,
+              1,
+              1,
+              1
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 10
             }
           },
           {
             "level": 20,
-            "features": ["srd51:feature/signature-spell"],
+            "features": [
+              "srd51:feature/signature-spell"
+            ],
             "abilityScoreImprovements": 5,
             "cantripsKnown": 5,
-            "spellSlots": [4, 3, 3, 3, 3, 2, 2, 1, 1],
+            "spellSlots": [
+              4,
+              3,
+              3,
+              3,
+              3,
+              2,
+              2,
+              1,
+              1
+            ],
             "classSpecific": {
               "arcaneRecoveryLevels": 10
             }

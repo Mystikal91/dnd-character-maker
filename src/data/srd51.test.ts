@@ -8,6 +8,7 @@ import {
   loadSrd51Strings,
   srd51Packs as packs,
 } from "../test/srd51";
+import { itemData } from "./items";
 import { classData, subclassData } from "./progression";
 import { findBrokenReferences } from "./schema";
 
@@ -121,6 +122,55 @@ describe("SRD 5.1 classes", () => {
         { ability: "str", minimum: 13 },
         { ability: "dex", minimum: 13 },
       ],
+    });
+  });
+});
+
+describe("SRD 5.1 equipment", () => {
+  const items = loadSrd51Pack("items").entries;
+
+  it("has structured weapons, armor and a property entry for every weapon property", () => {
+    const weapons = items.filter((i) => itemData(i).weapon);
+    const armors = items.filter((i) => itemData(i).armor);
+    expect(items).toHaveLength(237);
+    expect(weapons).toHaveLength(37);
+    expect(armors).toHaveLength(13);
+    for (const w of weapons)
+      for (const p of itemData(w).weapon?.properties ?? []) expect(index.has(p), p).toBe(true);
+  });
+
+  it("resolves every item referenced by classes, backgrounds and packs", () => {
+    const missing: string[] = [];
+    const need = (from: string, ref: string) => {
+      if (!index.has(ref)) missing.push(`${from} -> ${ref}`);
+    };
+    for (const entry of [
+      ...loadSrd51Pack("classes").entries,
+      ...loadSrd51Pack("backgrounds").entries,
+    ])
+      for (const e of entry.data.startingEquipment as { item: string }[]) need(entry.id, e.item);
+    for (const item of items) {
+      const contents = (item.data.gear as { contents?: { item: string }[] } | undefined)?.contents;
+      for (const c of contents ?? []) need(item.id, c.item);
+    }
+    expect(missing).toEqual([]);
+  });
+
+  it("models Chain Mail and the Longsword", () => {
+    expect(itemData(index.get("srd51:item/chain-mail") as never).armor).toMatchObject({
+      category: "heavy",
+      base: 16,
+      dexBonus: false,
+      strengthMinimum: 13,
+      stealthDisadvantage: true,
+      proficiency: ["armor:chain-mail", "armor:heavy-armor", "armor:all-armor"],
+    });
+    expect(itemData(index.get("srd51:item/longsword") as never).weapon).toMatchObject({
+      category: "martial",
+      kind: "melee",
+      damage: { dice: "1d8", type: "slashing" },
+      twoHandedDamage: { dice: "1d10", type: "slashing" },
+      proficiency: ["weapon:longswords", "weapon:martial-weapons"],
     });
   });
 });

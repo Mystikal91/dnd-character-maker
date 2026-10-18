@@ -1,0 +1,4894 @@
+{
+  "manifest": {
+    "id": "srd51",
+    "ruleset": "srd51",
+    "version": "5e-database@5.12.0",
+    "license": "CC-BY-4.0",
+    "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode."
+  },
+  "entries": [
+    {
+      "id": "srd51:item/club",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 1,
+          "unit": "sp"
+        },
+        "weight": 2,
+        "weapon": {
+          "category": "simple",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d4",
+            "type": "bludgeoning"
+          },
+          "properties": [
+            "srd51:property/light",
+            "srd51:property/monk"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:clubs",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/dagger",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "weapon": {
+          "category": "simple",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d4",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/finesse",
+            "srd51:property/light",
+            "srd51:property/thrown",
+            "srd51:property/monk"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "throwRange": {
+            "normal": 20,
+            "long": 60
+          },
+          "proficiency": [
+            "weapon:daggers",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/greatclub",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 2,
+          "unit": "sp"
+        },
+        "weight": 10,
+        "weapon": {
+          "category": "simple",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d8",
+            "type": "bludgeoning"
+          },
+          "properties": [
+            "srd51:property/two-handed"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:greatclubs",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/handaxe",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "weapon": {
+          "category": "simple",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d6",
+            "type": "slashing"
+          },
+          "properties": [
+            "srd51:property/light",
+            "srd51:property/thrown",
+            "srd51:property/monk"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "throwRange": {
+            "normal": 20,
+            "long": 60
+          },
+          "proficiency": [
+            "weapon:handaxes",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/javelin",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 5,
+          "unit": "sp"
+        },
+        "weight": 2,
+        "weapon": {
+          "category": "simple",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d6",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/thrown",
+            "srd51:property/monk"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "throwRange": {
+            "normal": 30,
+            "long": 120
+          },
+          "proficiency": [
+            "weapon:javelins",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/light-hammer",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "weapon": {
+          "category": "simple",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d4",
+            "type": "bludgeoning"
+          },
+          "properties": [
+            "srd51:property/light",
+            "srd51:property/thrown",
+            "srd51:property/monk"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "throwRange": {
+            "normal": 20,
+            "long": 60
+          },
+          "proficiency": [
+            "weapon:light-hammers",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/mace",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 4,
+        "weapon": {
+          "category": "simple",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d6",
+            "type": "bludgeoning"
+          },
+          "properties": [
+            "srd51:property/monk"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:maces",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/quarterstaff",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 2,
+          "unit": "sp"
+        },
+        "weight": 4,
+        "weapon": {
+          "category": "simple",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d6",
+            "type": "bludgeoning"
+          },
+          "twoHandedDamage": {
+            "dice": "1d8",
+            "type": "bludgeoning"
+          },
+          "properties": [
+            "srd51:property/versatile",
+            "srd51:property/monk"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:quarterstaffs",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/sickle",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "weapon": {
+          "category": "simple",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d4",
+            "type": "slashing"
+          },
+          "properties": [
+            "srd51:property/light",
+            "srd51:property/monk"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:sickles",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/spear",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "weapon": {
+          "category": "simple",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d6",
+            "type": "piercing"
+          },
+          "twoHandedDamage": {
+            "dice": "1d8",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/thrown",
+            "srd51:property/versatile",
+            "srd51:property/monk"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "throwRange": {
+            "normal": 20,
+            "long": 60
+          },
+          "proficiency": [
+            "weapon:spears",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/crossbow-light",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "weapon": {
+          "category": "simple",
+          "kind": "ranged",
+          "damage": {
+            "dice": "1d8",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/ammunition",
+            "srd51:property/loading",
+            "srd51:property/two-handed"
+          ],
+          "range": {
+            "normal": 80,
+            "long": 320
+          },
+          "proficiency": [
+            "weapon:crossbows-light",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/dart",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 5,
+          "unit": "cp"
+        },
+        "weight": 0.25,
+        "weapon": {
+          "category": "simple",
+          "kind": "ranged",
+          "damage": {
+            "dice": "1d4",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/finesse",
+            "srd51:property/thrown"
+          ],
+          "range": {
+            "normal": 20,
+            "long": 60
+          },
+          "throwRange": {
+            "normal": 20,
+            "long": 60
+          },
+          "proficiency": [
+            "weapon:darts",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/shortbow",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "weapon": {
+          "category": "simple",
+          "kind": "ranged",
+          "damage": {
+            "dice": "1d6",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/ammunition",
+            "srd51:property/two-handed"
+          ],
+          "range": {
+            "normal": 80,
+            "long": 320
+          },
+          "proficiency": [
+            "weapon:shortbows",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/sling",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 1,
+          "unit": "sp"
+        },
+        "weight": 0,
+        "weapon": {
+          "category": "simple",
+          "kind": "ranged",
+          "damage": {
+            "dice": "1d4",
+            "type": "bludgeoning"
+          },
+          "properties": [
+            "srd51:property/ammunition"
+          ],
+          "range": {
+            "normal": 30,
+            "long": 120
+          },
+          "proficiency": [
+            "weapon:slings",
+            "weapon:simple-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/battleaxe",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 4,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d8",
+            "type": "slashing"
+          },
+          "twoHandedDamage": {
+            "dice": "1d10",
+            "type": "slashing"
+          },
+          "properties": [
+            "srd51:property/versatile"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:battleaxes",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/flail",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d8",
+            "type": "bludgeoning"
+          },
+          "properties": [],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:flails",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/glaive",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 20,
+          "unit": "gp"
+        },
+        "weight": 6,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d10",
+            "type": "slashing"
+          },
+          "properties": [
+            "srd51:property/heavy",
+            "srd51:property/reach",
+            "srd51:property/two-handed"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:glaives",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/greataxe",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 30,
+          "unit": "gp"
+        },
+        "weight": 7,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d12",
+            "type": "slashing"
+          },
+          "properties": [
+            "srd51:property/heavy",
+            "srd51:property/two-handed"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:greataxes",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/greatsword",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "weight": 6,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "2d6",
+            "type": "slashing"
+          },
+          "properties": [
+            "srd51:property/heavy",
+            "srd51:property/two-handed"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:greatswords",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/halberd",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 20,
+          "unit": "gp"
+        },
+        "weight": 6,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d10",
+            "type": "slashing"
+          },
+          "properties": [
+            "srd51:property/heavy",
+            "srd51:property/reach",
+            "srd51:property/two-handed"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:halberds",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/lance",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 6,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d12",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/reach",
+            "srd51:property/special"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:lances",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/longsword",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 15,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d8",
+            "type": "slashing"
+          },
+          "twoHandedDamage": {
+            "dice": "1d10",
+            "type": "slashing"
+          },
+          "properties": [
+            "srd51:property/versatile"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:longswords",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/maul",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 10,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "2d6",
+            "type": "bludgeoning"
+          },
+          "properties": [
+            "srd51:property/heavy",
+            "srd51:property/two-handed"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:mauls",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/morningstar",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 15,
+          "unit": "gp"
+        },
+        "weight": 4,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d8",
+            "type": "piercing"
+          },
+          "properties": [],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:morningstars",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/pike",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 18,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d10",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/heavy",
+            "srd51:property/reach",
+            "srd51:property/two-handed"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:pikes",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/rapier",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d8",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/finesse"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:rapiers",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/scimitar",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d6",
+            "type": "slashing"
+          },
+          "properties": [
+            "srd51:property/finesse",
+            "srd51:property/light"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:scimitars",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/shortsword",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d6",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/finesse",
+            "srd51:property/light",
+            "srd51:property/monk"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:shortswords",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/trident",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 4,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d6",
+            "type": "piercing"
+          },
+          "twoHandedDamage": {
+            "dice": "1d8",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/thrown",
+            "srd51:property/versatile"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "throwRange": {
+            "normal": 20,
+            "long": 60
+          },
+          "proficiency": [
+            "weapon:tridents",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/war-pick",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d8",
+            "type": "piercing"
+          },
+          "properties": [],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:war-picks",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/warhammer",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 15,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d8",
+            "type": "bludgeoning"
+          },
+          "twoHandedDamage": {
+            "dice": "1d10",
+            "type": "bludgeoning"
+          },
+          "properties": [
+            "srd51:property/versatile"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:warhammers",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/whip",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "weapon": {
+          "category": "martial",
+          "kind": "melee",
+          "damage": {
+            "dice": "1d4",
+            "type": "slashing"
+          },
+          "properties": [
+            "srd51:property/finesse",
+            "srd51:property/reach"
+          ],
+          "range": {
+            "normal": 5
+          },
+          "proficiency": [
+            "weapon:whips",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/blowgun",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "weapon": {
+          "category": "martial",
+          "kind": "ranged",
+          "damage": {
+            "dice": "1",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/ammunition",
+            "srd51:property/loading"
+          ],
+          "range": {
+            "normal": 25,
+            "long": 100
+          },
+          "proficiency": [
+            "weapon:blowguns",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/crossbow-hand",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 75,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "weapon": {
+          "category": "martial",
+          "kind": "ranged",
+          "damage": {
+            "dice": "1d6",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/ammunition",
+            "srd51:property/light",
+            "srd51:property/loading"
+          ],
+          "range": {
+            "normal": 30,
+            "long": 120
+          },
+          "proficiency": [
+            "weapon:hand-crossbows",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/crossbow-heavy",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "weight": 18,
+        "weapon": {
+          "category": "martial",
+          "kind": "ranged",
+          "damage": {
+            "dice": "1d10",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/ammunition",
+            "srd51:property/heavy",
+            "srd51:property/loading",
+            "srd51:property/two-handed"
+          ],
+          "range": {
+            "normal": 100,
+            "long": 400
+          },
+          "proficiency": [
+            "weapon:crossbows-heavy",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/longbow",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "weapon": {
+          "category": "martial",
+          "kind": "ranged",
+          "damage": {
+            "dice": "1d8",
+            "type": "piercing"
+          },
+          "properties": [
+            "srd51:property/ammunition",
+            "srd51:property/heavy",
+            "srd51:property/two-handed"
+          ],
+          "range": {
+            "normal": 150,
+            "long": 600
+          },
+          "proficiency": [
+            "weapon:longbows",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/net",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "weapon",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "weapon": {
+          "category": "martial",
+          "kind": "ranged",
+          "properties": [
+            "srd51:property/thrown",
+            "srd51:property/special"
+          ],
+          "range": {
+            "normal": 5,
+            "long": 15
+          },
+          "throwRange": {
+            "normal": 5,
+            "long": 15
+          },
+          "proficiency": [
+            "weapon:nets",
+            "weapon:martial-weapons"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/padded-armor",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 8,
+        "armor": {
+          "category": "light",
+          "base": 11,
+          "dexBonus": true,
+          "strengthMinimum": 0,
+          "stealthDisadvantage": true,
+          "proficiency": [
+            "armor:padded-armor",
+            "armor:light-armor",
+            "armor:all-armor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/leather-armor",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 10,
+        "armor": {
+          "category": "light",
+          "base": 11,
+          "dexBonus": true,
+          "strengthMinimum": 0,
+          "stealthDisadvantage": false,
+          "proficiency": [
+            "armor:leather-armor",
+            "armor:light-armor",
+            "armor:all-armor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/studded-leather-armor",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 45,
+          "unit": "gp"
+        },
+        "weight": 13,
+        "armor": {
+          "category": "light",
+          "base": 12,
+          "dexBonus": true,
+          "strengthMinimum": 0,
+          "stealthDisadvantage": false,
+          "proficiency": [
+            "armor:studded-leather-armor",
+            "armor:light-armor",
+            "armor:all-armor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/hide-armor",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 12,
+        "armor": {
+          "category": "medium",
+          "base": 12,
+          "dexBonus": true,
+          "maxDexBonus": 2,
+          "strengthMinimum": 0,
+          "stealthDisadvantage": false,
+          "proficiency": [
+            "armor:hide-armor",
+            "armor:medium-armor",
+            "armor:all-armor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/chain-shirt",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "weight": 20,
+        "armor": {
+          "category": "medium",
+          "base": 13,
+          "dexBonus": true,
+          "maxDexBonus": 2,
+          "strengthMinimum": 0,
+          "stealthDisadvantage": false,
+          "proficiency": [
+            "armor:chain-shirt",
+            "armor:medium-armor",
+            "armor:all-armor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/scale-mail",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "weight": 45,
+        "armor": {
+          "category": "medium",
+          "base": 14,
+          "dexBonus": true,
+          "maxDexBonus": 2,
+          "strengthMinimum": 0,
+          "stealthDisadvantage": true,
+          "proficiency": [
+            "armor:scale-mail",
+            "armor:medium-armor",
+            "armor:all-armor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/breastplate",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 400,
+          "unit": "gp"
+        },
+        "weight": 20,
+        "armor": {
+          "category": "medium",
+          "base": 14,
+          "dexBonus": true,
+          "maxDexBonus": 2,
+          "strengthMinimum": 0,
+          "stealthDisadvantage": false,
+          "proficiency": [
+            "armor:breastplate",
+            "armor:medium-armor",
+            "armor:all-armor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/half-plate-armor",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 750,
+          "unit": "gp"
+        },
+        "weight": 40,
+        "armor": {
+          "category": "medium",
+          "base": 15,
+          "dexBonus": true,
+          "maxDexBonus": 2,
+          "strengthMinimum": 0,
+          "stealthDisadvantage": true,
+          "proficiency": [
+            "armor:half-plate-armor",
+            "armor:medium-armor",
+            "armor:all-armor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/ring-mail",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 30,
+          "unit": "gp"
+        },
+        "weight": 40,
+        "armor": {
+          "category": "heavy",
+          "base": 14,
+          "dexBonus": false,
+          "strengthMinimum": 0,
+          "stealthDisadvantage": true,
+          "proficiency": [
+            "armor:ring-mail",
+            "armor:heavy-armor",
+            "armor:all-armor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/chain-mail",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 75,
+          "unit": "gp"
+        },
+        "weight": 55,
+        "armor": {
+          "category": "heavy",
+          "base": 16,
+          "dexBonus": false,
+          "strengthMinimum": 13,
+          "stealthDisadvantage": true,
+          "proficiency": [
+            "armor:chain-mail",
+            "armor:heavy-armor",
+            "armor:all-armor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/splint-armor",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 200,
+          "unit": "gp"
+        },
+        "weight": 60,
+        "armor": {
+          "category": "heavy",
+          "base": 17,
+          "dexBonus": false,
+          "strengthMinimum": 15,
+          "stealthDisadvantage": true,
+          "proficiency": [
+            "armor:splint-armor",
+            "armor:heavy-armor",
+            "armor:all-armor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/plate-armor",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 1500,
+          "unit": "gp"
+        },
+        "weight": 65,
+        "armor": {
+          "category": "heavy",
+          "base": 18,
+          "dexBonus": false,
+          "strengthMinimum": 15,
+          "stealthDisadvantage": true,
+          "proficiency": [
+            "armor:plate-armor",
+            "armor:heavy-armor",
+            "armor:all-armor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/shield",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "armor",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 6,
+        "armor": {
+          "category": "shield",
+          "base": 2,
+          "dexBonus": false,
+          "strengthMinimum": 0,
+          "stealthDisadvantage": false,
+          "proficiency": [
+            "armor:shields"
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/abacus",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/acid-vial",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/alchemists-fire-flask",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/alms-box",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 0,
+          "unit": "cp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/arrow",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "ammunition",
+          "bundleSize": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:item/block-of-incense",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 0,
+          "unit": "cp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/blowgun-needle",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "ammunition",
+          "bundleSize": 50
+        }
+      }
+    },
+    {
+      "id": "srd51:item/censer",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 0,
+          "unit": "cp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/crossbow-bolt",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 1.5,
+        "gear": {
+          "category": "ammunition",
+          "bundleSize": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:item/sling-bullet",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 4,
+          "unit": "cp"
+        },
+        "weight": 1.5,
+        "gear": {
+          "category": "ammunition",
+          "bundleSize": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:item/amulet",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "holy-symbols"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/antitoxin-vial",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/crystal",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "arcane-foci"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/orb",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 20,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "gear": {
+          "category": "arcane-foci"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/rod",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "arcane-foci"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/staff",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 4,
+        "gear": {
+          "category": "arcane-foci"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/wand",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "arcane-foci"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/backpack",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/ball-bearings-bag-of-1000",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barrel",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 70,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/basket",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 4,
+          "unit": "sp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/bedroll",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 7,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/bell",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/blanket",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "sp"
+        },
+        "weight": 3,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/block-and-tackle",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/book",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/bottle-glass",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/bucket",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "cp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/caltrops",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "cp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/candle",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "cp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/case-crossbow-bolt",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/case-map-or-scroll",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/chain-10-feet",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 10,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/chalk-1-piece",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "cp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/chest",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 25,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/clothes-common",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "sp"
+        },
+        "weight": 3,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/clothes-costume",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 4,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/clothes-fine",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 15,
+          "unit": "gp"
+        },
+        "weight": 6,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/clothes-travelers",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 4,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/component-pouch",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/crowbar",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/sprig-of-mistletoe",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "druidic-foci"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/totem",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "druidic-foci"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/wooden-staff",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 4,
+        "gear": {
+          "category": "druidic-foci"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/yew-wand",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "druidic-foci"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/emblem",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "holy-symbols"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/fishing-tackle",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 4,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/flask-or-tankard",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "cp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/grappling-hook",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 4,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/hammer",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/hammer-sledge",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 10,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/holy-water-flask",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/hourglass",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/hunting-trap",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 25,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/ink-1-ounce-bottle",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/ink-pen",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "cp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/jug-or-pitcher",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "cp"
+        },
+        "weight": 4,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/climbers-kit",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 12,
+        "gear": {
+          "category": "kits"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/disguise-kit",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "gear": {
+          "category": "kits"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/forgery-kit",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 15,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "gear": {
+          "category": "kits"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/herbalism-kit",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "gear": {
+          "category": "kits"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/healers-kit",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "gear": {
+          "category": "kits"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/mess-kit",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "sp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "kits"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/poisoners-kit",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "kits"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/ladder-10-foot",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "sp"
+        },
+        "weight": 25,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/lamp",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "sp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/lantern-bullseye",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/lantern-hooded",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/little-bag-of-sand",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 0,
+          "unit": "cp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/lock",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/magnifying-glass",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 100,
+          "unit": "gp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/manacles",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 6,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/mirror-steel",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 0.5,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/oil-flask",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "sp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/paper-one-sheet",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "sp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/parchment-one-sheet",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "sp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/perfume-vial",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/pick-miners",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 10,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/piton",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "cp"
+        },
+        "weight": 0.25,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/poison-basic-vial",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 100,
+          "unit": "gp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/pole-10-foot",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "cp"
+        },
+        "weight": 7,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/pot-iron",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 10,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/pouch",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "sp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/quiver",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/ram-portable",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 4,
+          "unit": "gp"
+        },
+        "weight": 35,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/rations-1-day",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "sp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/reliquary",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "gear": {
+          "category": "holy-symbols"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/robes",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 4,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/rope-hempen-50-feet",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 10,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/rope-silk-50-feet",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/sack",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "cp"
+        },
+        "weight": 0.5,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/scale-merchants",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/sealing-wax",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "sp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/shovel",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/signal-whistle",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "cp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/signet-ring",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/small-knife",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 0,
+          "unit": "cp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/soap",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "cp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/spellbook",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/spike-iron",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "sp"
+        },
+        "weight": 5,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/spyglass",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1000,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/string-10-feet",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 0,
+          "unit": "cp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/tent-two-person",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 20,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/tinderbox",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 5,
+          "unit": "sp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/torch",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "cp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/vestments",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 0,
+          "unit": "cp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/vial",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 0,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/waterskin",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 2,
+          "unit": "sp"
+        },
+        "weight": 5,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/whetstone",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 1,
+          "unit": "cp"
+        },
+        "weight": 1,
+        "gear": {
+          "category": "standard-gear"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/burglars-pack",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 16,
+          "unit": "gp"
+        },
+        "gear": {
+          "category": "equipment-packs",
+          "contents": [
+            {
+              "item": "srd51:item/backpack",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/ball-bearings-bag-of-1000",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/string-10-feet",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/bell",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/candle",
+              "quantity": 5
+            },
+            {
+              "item": "srd51:item/crowbar",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/hammer",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/piton",
+              "quantity": 10
+            },
+            {
+              "item": "srd51:item/lantern-hooded",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/oil-flask",
+              "quantity": 2
+            },
+            {
+              "item": "srd51:item/rations-1-day",
+              "quantity": 5
+            },
+            {
+              "item": "srd51:item/tinderbox",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/waterskin",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/rope-hempen-50-feet",
+              "quantity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/diplomats-pack",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 39,
+          "unit": "gp"
+        },
+        "gear": {
+          "category": "equipment-packs",
+          "contents": [
+            {
+              "item": "srd51:item/chest",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/case-map-or-scroll",
+              "quantity": 2
+            },
+            {
+              "item": "srd51:item/clothes-fine",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/ink-1-ounce-bottle",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/ink-pen",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/lamp",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/oil-flask",
+              "quantity": 2
+            },
+            {
+              "item": "srd51:item/paper-one-sheet",
+              "quantity": 5
+            },
+            {
+              "item": "srd51:item/perfume-vial",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/sealing-wax",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/soap",
+              "quantity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/dungeoneers-pack",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 12,
+          "unit": "gp"
+        },
+        "gear": {
+          "category": "equipment-packs",
+          "contents": [
+            {
+              "item": "srd51:item/backpack",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/crowbar",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/hammer",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/piton",
+              "quantity": 10
+            },
+            {
+              "item": "srd51:item/torch",
+              "quantity": 10
+            },
+            {
+              "item": "srd51:item/tinderbox",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/rations-1-day",
+              "quantity": 10
+            },
+            {
+              "item": "srd51:item/waterskin",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/rope-hempen-50-feet",
+              "quantity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/entertainers-pack",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 40,
+          "unit": "gp"
+        },
+        "gear": {
+          "category": "equipment-packs",
+          "contents": [
+            {
+              "item": "srd51:item/backpack",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/bedroll",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/clothes-costume",
+              "quantity": 2
+            },
+            {
+              "item": "srd51:item/candle",
+              "quantity": 5
+            },
+            {
+              "item": "srd51:item/rations-1-day",
+              "quantity": 5
+            },
+            {
+              "item": "srd51:item/waterskin",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/disguise-kit",
+              "quantity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/explorers-pack",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "gear": {
+          "category": "equipment-packs",
+          "contents": [
+            {
+              "item": "srd51:item/backpack",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/bedroll",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/mess-kit",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/tinderbox",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/torch",
+              "quantity": 10
+            },
+            {
+              "item": "srd51:item/rations-1-day",
+              "quantity": 10
+            },
+            {
+              "item": "srd51:item/waterskin",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/rope-hempen-50-feet",
+              "quantity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/priests-pack",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 19,
+          "unit": "gp"
+        },
+        "gear": {
+          "category": "equipment-packs",
+          "contents": [
+            {
+              "item": "srd51:item/backpack",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/blanket",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/candle",
+              "quantity": 10
+            },
+            {
+              "item": "srd51:item/tinderbox",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/rations-1-day",
+              "quantity": 2
+            },
+            {
+              "item": "srd51:item/waterskin",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/alms-box",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/block-of-incense",
+              "quantity": 2
+            },
+            {
+              "item": "srd51:item/censer",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/vestments",
+              "quantity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/scholars-pack",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "adventuring-gear",
+        "cost": {
+          "amount": 40,
+          "unit": "gp"
+        },
+        "gear": {
+          "category": "equipment-packs",
+          "contents": [
+            {
+              "item": "srd51:item/backpack",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/book",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/ink-1-ounce-bottle",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/ink-pen",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/parchment-one-sheet",
+              "quantity": 10
+            },
+            {
+              "item": "srd51:item/little-bag-of-sand",
+              "quantity": 1
+            },
+            {
+              "item": "srd51:item/small-knife",
+              "quantity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:item/alchemists-supplies",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "weight": 8,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/brewers-supplies",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 20,
+          "unit": "gp"
+        },
+        "weight": 9,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/calligraphers-supplies",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/carpenters-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 8,
+          "unit": "gp"
+        },
+        "weight": 6,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/cartographers-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 15,
+          "unit": "gp"
+        },
+        "weight": 6,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/cobblers-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/cooks-utensils",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 8,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/glassblowers-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 30,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/jewelers-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/leatherworkers-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/masons-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 8,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/painters-supplies",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/potters-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/smiths-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 20,
+          "unit": "gp"
+        },
+        "weight": 8,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/tinkers-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "weight": 10,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/weavers-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/woodcarvers-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 1,
+          "unit": "gp"
+        },
+        "weight": 5,
+        "tool": {
+          "category": "artisans-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/dice-set",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 1,
+          "unit": "sp"
+        },
+        "weight": 0,
+        "tool": {
+          "category": "gaming-sets"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/playing-card-set",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 5,
+          "unit": "sp"
+        },
+        "weight": 0,
+        "tool": {
+          "category": "gaming-sets"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/bagpipes",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 30,
+          "unit": "gp"
+        },
+        "weight": 6,
+        "tool": {
+          "category": "musical-instrument"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/drum",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 6,
+          "unit": "gp"
+        },
+        "weight": 3,
+        "tool": {
+          "category": "musical-instrument"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/dulcimer",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 10,
+        "tool": {
+          "category": "musical-instrument"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/flute",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "tool": {
+          "category": "musical-instrument"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/lute",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 35,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "tool": {
+          "category": "musical-instrument"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/lyre",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 30,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "tool": {
+          "category": "musical-instrument"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/horn",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 3,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "tool": {
+          "category": "musical-instrument"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/pan-flute",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 12,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "tool": {
+          "category": "musical-instrument"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/shawm",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "tool": {
+          "category": "musical-instrument"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/viol",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 30,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "tool": {
+          "category": "musical-instrument"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/navigators-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 2,
+        "tool": {
+          "category": "other-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/thieves-tools",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "tools",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "tool": {
+          "category": "other-tools"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/camel",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "mounts-and-other-animals",
+          "speed": {
+            "amount": 50,
+            "unit": "ft/round"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/donkey",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 8,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "mounts-and-other-animals",
+          "speed": {
+            "amount": 40,
+            "unit": "ft/round"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/mule",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 8,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "mounts-and-other-animals",
+          "speed": {
+            "amount": 40,
+            "unit": "ft/round"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/elephant",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 200,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "mounts-and-other-animals",
+          "speed": {
+            "amount": 40,
+            "unit": "ft/round"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/horse-draft",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "mounts-and-other-animals",
+          "speed": {
+            "amount": 40,
+            "unit": "ft/round"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/horse-riding",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 75,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "mounts-and-other-animals",
+          "speed": {
+            "amount": 60,
+            "unit": "ft/round"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/mastiff",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 25,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "mounts-and-other-animals",
+          "speed": {
+            "amount": 40,
+            "unit": "ft/round"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/pony",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 30,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "mounts-and-other-animals",
+          "speed": {
+            "amount": 40,
+            "unit": "ft/round"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/warhorse",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 400,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "mounts-and-other-animals",
+          "speed": {
+            "amount": 60,
+            "unit": "ft/round"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barding-padded",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 20,
+          "unit": "gp"
+        },
+        "weight": 16,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barding-leather",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 40,
+          "unit": "gp"
+        },
+        "weight": 20,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barding-studded-leather",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 180,
+          "unit": "gp"
+        },
+        "weight": 26,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barding-hide",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 40,
+          "unit": "gp"
+        },
+        "weight": 24,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barding-chain-shirt",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 200,
+          "unit": "gp"
+        },
+        "weight": 40,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barding-scale-mail",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 200,
+          "unit": "gp"
+        },
+        "weight": 90,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barding-breastplate",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 1600,
+          "unit": "gp"
+        },
+        "weight": 40,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barding-half-plate",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 3000,
+          "unit": "gp"
+        },
+        "weight": 80,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barding-ring-mail",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 12,
+          "unit": "gp"
+        },
+        "weight": 80,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barding-chain-mail",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 300,
+          "unit": "gp"
+        },
+        "weight": 110,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barding-splint",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 800,
+          "unit": "gp"
+        },
+        "weight": 120,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/barding-plate",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 6000,
+          "unit": "gp"
+        },
+        "weight": 130,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/bit-and-bridle",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 2,
+          "unit": "gp"
+        },
+        "weight": 1,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/carriage",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 100,
+          "unit": "gp"
+        },
+        "weight": 600,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/cart",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 15,
+          "unit": "gp"
+        },
+        "weight": 200,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/chariot",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 250,
+          "unit": "gp"
+        },
+        "weight": 100,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/animal-feed-1-day",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 5,
+          "unit": "cp"
+        },
+        "weight": 10,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/saddle-exotic",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 60,
+          "unit": "gp"
+        },
+        "weight": 50,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/saddle-military",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 20,
+          "unit": "gp"
+        },
+        "weight": 30,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/saddle-pack",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 5,
+          "unit": "gp"
+        },
+        "weight": 15,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/saddle-riding",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 10,
+          "unit": "gp"
+        },
+        "weight": 25,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/saddlebags",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 4,
+          "unit": "gp"
+        },
+        "weight": 8,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/sled",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 20,
+          "unit": "gp"
+        },
+        "weight": 300,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/stabling-1-day",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 5,
+          "unit": "sp"
+        },
+        "weight": 0,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/wagon",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 35,
+          "unit": "gp"
+        },
+        "weight": 400,
+        "vehicle": {
+          "category": "tack-harness-and-drawn-vehicles"
+        }
+      }
+    },
+    {
+      "id": "srd51:item/galley",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 30000,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "waterborne-vehicles",
+          "speed": {
+            "amount": 4,
+            "unit": "mph"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/keelboat",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 3000,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "waterborne-vehicles",
+          "speed": {
+            "amount": 1,
+            "unit": "mph"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/longship",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 10000,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "waterborne-vehicles",
+          "speed": {
+            "amount": 3,
+            "unit": "mph"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/rowboat",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 50,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "waterborne-vehicles",
+          "speed": {
+            "amount": 1.5,
+            "unit": "mph"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/sailing-ship",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 10000,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "waterborne-vehicles",
+          "speed": {
+            "amount": 2,
+            "unit": "mph"
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:item/warship",
+      "kind": "item",
+      "effects": [],
+      "data": {
+        "category": "mounts-and-vehicles",
+        "cost": {
+          "amount": 25000,
+          "unit": "gp"
+        },
+        "vehicle": {
+          "category": "waterborne-vehicles",
+          "speed": {
+            "amount": 2.5,
+            "unit": "mph"
+          }
+        }
+      }
+    }
+  ]
+}

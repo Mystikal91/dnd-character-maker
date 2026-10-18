@@ -2544,7 +2544,15 @@
             "type": "string",
             "from": {
               "optionSetType": "options_array",
-              "options": ["arctic", "coast", "desert", "forest", "grassland", "mountain", "swamp"]
+              "options": [
+                "arctic",
+                "coast",
+                "desert",
+                "forest",
+                "grassland",
+                "mountain",
+                "swamp"
+              ]
             }
           }
         }
@@ -2800,7 +2808,15 @@
             "type": "string",
             "from": {
               "optionSetType": "options_array",
-              "options": ["arctic", "coast", "desert", "forest", "grassland", "mountain", "swamp"]
+              "options": [
+                "arctic",
+                "coast",
+                "desert",
+                "forest",
+                "grassland",
+                "mountain",
+                "swamp"
+              ]
             }
           }
         }
@@ -2919,7 +2935,15 @@
             "type": "string",
             "from": {
               "optionSetType": "options_array",
-              "options": ["arctic", "coast", "desert", "forest", "grassland", "mountain", "swamp"]
+              "options": [
+                "arctic",
+                "coast",
+                "desert",
+                "forest",
+                "grassland",
+                "mountain",
+                "swamp"
+              ]
             }
           }
         }

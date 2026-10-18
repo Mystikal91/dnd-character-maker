@@ -55,7 +55,11 @@
           "id": "tool-proficiency-proficiency",
           "choose": 1,
           "grants": "proficiency",
-          "from": ["tool:smiths-tools", "tool:brewers-supplies", "tool:masons-tools"]
+          "from": [
+            "tool:smiths-tools",
+            "tool:brewers-supplies",
+            "tool:masons-tools"
+          ]
         }
       ],
       "data": {}

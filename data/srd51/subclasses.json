@@ -16,19 +16,27 @@
         "levels": [
           {
             "level": 3,
-            "features": ["srd51:feature/frenzy"]
+            "features": [
+              "srd51:feature/frenzy"
+            ]
           },
           {
             "level": 6,
-            "features": ["srd51:feature/mindless-rage"]
+            "features": [
+              "srd51:feature/mindless-rage"
+            ]
           },
           {
             "level": 10,
-            "features": ["srd51:feature/intimidating-presence"]
+            "features": [
+              "srd51:feature/intimidating-presence"
+            ]
           },
           {
             "level": 14,
-            "features": ["srd51:feature/retaliation"]
+            "features": [
+              "srd51:feature/retaliation"
+            ]
           }
         ],
         "spells": []
@@ -43,21 +51,28 @@
         "levels": [
           {
             "level": 3,
-            "features": ["srd51:feature/bonus-proficiencies", "srd51:feature/cutting-words"],
+            "features": [
+              "srd51:feature/bonus-proficiencies",
+              "srd51:feature/cutting-words"
+            ],
             "subclassSpecific": {
               "additionalMagicalSecretsMaxLvl": 0
             }
           },
           {
             "level": 6,
-            "features": ["srd51:feature/additional-magical-secrets"],
+            "features": [
+              "srd51:feature/additional-magical-secrets"
+            ],
             "subclassSpecific": {
               "additionalMagicalSecretsMaxLvl": 3
             }
           },
           {
             "level": 14,
-            "features": ["srd51:feature/peerless-skill"],
+            "features": [
+              "srd51:feature/peerless-skill"
+            ],
             "subclassSpecific": {
               "additionalMagicalSecretsMaxLvl": 3
             }
@@ -75,23 +90,34 @@
         "levels": [
           {
             "level": 1,
-            "features": ["srd51:feature/bonus-proficiency", "srd51:feature/disciple-of-life"]
+            "features": [
+              "srd51:feature/bonus-proficiency",
+              "srd51:feature/disciple-of-life"
+            ]
           },
           {
             "level": 2,
-            "features": ["srd51:feature/channel-divinity-preserve-life"]
+            "features": [
+              "srd51:feature/channel-divinity-preserve-life"
+            ]
           },
           {
             "level": 6,
-            "features": ["srd51:feature/blessed-healer"]
+            "features": [
+              "srd51:feature/blessed-healer"
+            ]
           },
           {
             "level": 8,
-            "features": ["srd51:feature/divine-strike"]
+            "features": [
+              "srd51:feature/divine-strike"
+            ]
           },
           {
             "level": 17,
-            "features": ["srd51:feature/supreme-healing"]
+            "features": [
+              "srd51:feature/supreme-healing"
+            ]
           }
         ],
         "spells": [
@@ -143,19 +169,28 @@
         "levels": [
           {
             "level": 2,
-            "features": ["srd51:feature/bonus-cantrip", "srd51:feature/natural-recovery"]
+            "features": [
+              "srd51:feature/bonus-cantrip",
+              "srd51:feature/natural-recovery"
+            ]
           },
           {
             "level": 6,
-            "features": ["srd51:feature/druid-lands-stride"]
+            "features": [
+              "srd51:feature/druid-lands-stride"
+            ]
           },
           {
             "level": 10,
-            "features": ["srd51:feature/natures-ward"]
+            "features": [
+              "srd51:feature/natures-ward"
+            ]
           },
           {
             "level": 14,
-            "features": ["srd51:feature/natures-sanctuary"]
+            "features": [
+              "srd51:feature/natures-sanctuary"
+            ]
           }
         ],
         "spells": [
@@ -395,23 +430,33 @@
         "levels": [
           {
             "level": 3,
-            "features": ["srd51:feature/improved-critical"]
+            "features": [
+              "srd51:feature/improved-critical"
+            ]
           },
           {
             "level": 7,
-            "features": ["srd51:feature/remarkable-athlete"]
+            "features": [
+              "srd51:feature/remarkable-athlete"
+            ]
           },
           {
             "level": 10,
-            "features": ["srd51:feature/additional-fighting-style"]
+            "features": [
+              "srd51:feature/additional-fighting-style"
+            ]
           },
           {
             "level": 15,
-            "features": ["srd51:feature/superior-critical"]
+            "features": [
+              "srd51:feature/superior-critical"
+            ]
           },
           {
             "level": 18,
-            "features": ["srd51:feature/survivor"]
+            "features": [
+              "srd51:feature/survivor"
+            ]
           }
         ],
         "spells": []
@@ -426,19 +471,27 @@
         "levels": [
           {
             "level": 3,
-            "features": ["srd51:feature/open-hand-technique"]
+            "features": [
+              "srd51:feature/open-hand-technique"
+            ]
           },
           {
             "level": 6,
-            "features": ["srd51:feature/wholeness-of-body"]
+            "features": [
+              "srd51:feature/wholeness-of-body"
+            ]
           },
           {
             "level": 11,
-            "features": ["srd51:feature/tranquility"]
+            "features": [
+              "srd51:feature/tranquility"
+            ]
           },
           {
             "level": 17,
-            "features": ["srd51:feature/quivering-palm"]
+            "features": [
+              "srd51:feature/quivering-palm"
+            ]
           }
         ],
         "spells": []
@@ -460,14 +513,18 @@
           },
           {
             "level": 7,
-            "features": ["srd51:feature/aura-of-devotion"],
+            "features": [
+              "srd51:feature/aura-of-devotion"
+            ],
             "subclassSpecific": {
               "auraRange": 10
             }
           },
           {
             "level": 15,
-            "features": ["srd51:feature/purity-of-spirit"],
+            "features": [
+              "srd51:feature/purity-of-spirit"
+            ],
             "subclassSpecific": {
               "auraRange": 10
             }
@@ -481,7 +538,9 @@
           },
           {
             "level": 20,
-            "features": ["srd51:feature/holy-nimbus"],
+            "features": [
+              "srd51:feature/holy-nimbus"
+            ],
             "subclassSpecific": {
               "auraRange": 30
             }
@@ -540,19 +599,27 @@
         "levels": [
           {
             "level": 3,
-            "features": ["srd51:feature/hunters-prey"]
+            "features": [
+              "srd51:feature/hunters-prey"
+            ]
           },
           {
             "level": 7,
-            "features": ["srd51:feature/defensive-tactics"]
+            "features": [
+              "srd51:feature/defensive-tactics"
+            ]
           },
           {
             "level": 11,
-            "features": ["srd51:feature/multiattack"]
+            "features": [
+              "srd51:feature/multiattack"
+            ]
           },
           {
             "level": 15,
-            "features": ["srd51:feature/superior-hunters-defense"]
+            "features": [
+              "srd51:feature/superior-hunters-defense"
+            ]
           }
         ],
         "spells": []
@@ -567,19 +634,28 @@
         "levels": [
           {
             "level": 3,
-            "features": ["srd51:feature/fast-hands", "srd51:feature/second-story-work"]
+            "features": [
+              "srd51:feature/fast-hands",
+              "srd51:feature/second-story-work"
+            ]
           },
           {
             "level": 9,
-            "features": ["srd51:feature/supreme-sneak"]
+            "features": [
+              "srd51:feature/supreme-sneak"
+            ]
           },
           {
             "level": 13,
-            "features": ["srd51:feature/use-magic-device"]
+            "features": [
+              "srd51:feature/use-magic-device"
+            ]
           },
           {
             "level": 17,
-            "features": ["srd51:feature/thiefs-reflexes"]
+            "features": [
+              "srd51:feature/thiefs-reflexes"
+            ]
           }
         ],
         "spells": []
@@ -594,19 +670,28 @@
         "levels": [
           {
             "level": 1,
-            "features": ["srd51:feature/dragon-ancestor", "srd51:feature/draconic-resilience"]
+            "features": [
+              "srd51:feature/dragon-ancestor",
+              "srd51:feature/draconic-resilience"
+            ]
           },
           {
             "level": 6,
-            "features": ["srd51:feature/elemental-affinity"]
+            "features": [
+              "srd51:feature/elemental-affinity"
+            ]
           },
           {
             "level": 14,
-            "features": ["srd51:feature/dragon-wings"]
+            "features": [
+              "srd51:feature/dragon-wings"
+            ]
           },
           {
             "level": 18,
-            "features": ["srd51:feature/draconic-presence"]
+            "features": [
+              "srd51:feature/draconic-presence"
+            ]
           }
         ],
         "spells": []
@@ -621,19 +706,27 @@
         "levels": [
           {
             "level": 1,
-            "features": ["srd51:feature/dark-ones-blessing"]
+            "features": [
+              "srd51:feature/dark-ones-blessing"
+            ]
           },
           {
             "level": 6,
-            "features": ["srd51:feature/dark-ones-own-luck"]
+            "features": [
+              "srd51:feature/dark-ones-own-luck"
+            ]
           },
           {
             "level": 10,
-            "features": ["srd51:feature/fiendish-resilience"]
+            "features": [
+              "srd51:feature/fiendish-resilience"
+            ]
           },
           {
             "level": 14,
-            "features": ["srd51:feature/hurl-through-hell"]
+            "features": [
+              "srd51:feature/hurl-through-hell"
+            ]
           }
         ],
         "spells": [
@@ -689,19 +782,28 @@
         "levels": [
           {
             "level": 2,
-            "features": ["srd51:feature/evocation-savant", "srd51:feature/sculpt-spells"]
+            "features": [
+              "srd51:feature/evocation-savant",
+              "srd51:feature/sculpt-spells"
+            ]
           },
           {
             "level": 6,
-            "features": ["srd51:feature/potent-cantrip"]
+            "features": [
+              "srd51:feature/potent-cantrip"
+            ]
           },
           {
             "level": 10,
-            "features": ["srd51:feature/empowered-evocation"]
+            "features": [
+              "srd51:feature/empowered-evocation"
+            ]
           },
           {
             "level": 14,
-            "features": ["srd51:feature/overchannel"]
+            "features": [
+              "srd51:feature/overchannel"
+            ]
           }
         ],
         "spells": []

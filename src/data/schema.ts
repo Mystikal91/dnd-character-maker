@@ -82,6 +82,7 @@ export const ENTRY_KINDS = [
   "trait",
   "spell",
   "item",
+  "property",
 ] as const;
 
 export const EntrySchema = v.object({

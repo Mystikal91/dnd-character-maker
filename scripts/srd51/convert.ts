@@ -26,9 +26,20 @@ export interface RawSource {
   subclasses: Raw[];
   levels: Raw[];
   features: Raw[];
+  equipment: Raw[];
+  weaponProperties: Raw[];
 }
 export type ConvertedPack = Record<
-  "species" | "subspecies" | "trait" | "background" | "spell" | "class" | "subclass" | "feature",
+  | "species"
+  | "subspecies"
+  | "trait"
+  | "background"
+  | "spell"
+  | "class"
+  | "subclass"
+  | "feature"
+  | "item"
+  | "property",
   Converted
 >;
 
@@ -484,6 +495,107 @@ function convertFeatures(raw: RawSource): Converted {
   return { entries, strings };
 }
 
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+const damage = (d: Raw) => ({ dice: d.damage_dice, type: d.damage_type.index });
+
+/** Proficiency keys (`category:target`) that make a character proficient with a weapon or armor. */
+function ownProficiencies(raw: RawSource): Map<string, string> {
+  const own = new Map<string, string>();
+  for (const p of raw.proficiencies) {
+    if (p.type === "Weapons" || p.type === "Armor") own.set(p.reference.index, p.index);
+  }
+  return own;
+}
+
+function convertItems(raw: RawSource): Converted {
+  const own = ownProficiencies(raw);
+  const entries: Entry[] = [];
+  const strings: Strings = {};
+  for (const e of raw.equipment) {
+    const data: Record<string, unknown> = {
+      category: e.equipment_category.index,
+      cost: { amount: e.cost.quantity, unit: e.cost.unit },
+    };
+    if (e.weight !== undefined) data.weight = e.weight;
+
+    if (e.equipment_category.index === "weapon") {
+      const ownKey = own.get(e.index);
+      data.weapon = {
+        category: String(e.weapon_category).toLowerCase(),
+        kind: String(e.weapon_range).toLowerCase(),
+        ...(e.damage && { damage: damage(e.damage) }),
+        ...(e.two_handed_damage && { twoHandedDamage: damage(e.two_handed_damage) }),
+        properties: ((e.properties ?? []) as Raw[]).map((p) => id("property", p.index)),
+        range: cleanData(e.range),
+        ...(e.throw_range && { throwRange: cleanData(e.throw_range) }),
+        proficiency: [
+          ...(ownKey ? [`weapon:${ownKey}`] : []),
+          `weapon:${String(e.weapon_category).toLowerCase()}-weapons`,
+        ],
+      };
+    } else if (e.equipment_category.index === "armor") {
+      const category = String(e.armor_category).toLowerCase();
+      const ownKey = own.get(e.index);
+      data.armor = {
+        category,
+        base: e.armor_class.base,
+        dexBonus: e.armor_class.dex_bonus,
+        ...(e.armor_class.max_bonus !== undefined && { maxDexBonus: e.armor_class.max_bonus }),
+        strengthMinimum: e.str_minimum,
+        stealthDisadvantage: e.stealth_disadvantage,
+        proficiency: [
+          ...(ownKey ? [`armor:${ownKey}`] : []),
+          ...(category === "shield" ? [] : [`armor:${category}-armor`, "armor:all-armor"]),
+        ],
+      };
+    } else if (e.equipment_category.index === "adventuring-gear") {
+      data.gear = {
+        category: e.gear_category.index,
+        ...(e.quantity !== undefined && { bundleSize: e.quantity }),
+        ...(e.contents && {
+          contents: (e.contents as Raw[]).map((c) => ({
+            item: id("item", c.item.index),
+            quantity: c.quantity,
+          })),
+        }),
+      };
+    } else if (e.equipment_category.index === "tools") {
+      data.tool = { category: slugify(e.tool_category) };
+    } else if (e.equipment_category.index === "mounts-and-vehicles") {
+      data.vehicle = {
+        category: slugify(e.vehicle_category),
+        ...(e.speed && { speed: { amount: e.speed.quantity, unit: e.speed.unit } }),
+      };
+      if (e.capacity) strings[`${e.index}.capacity`] = e.capacity;
+    } else {
+      throw new Error(`Unknown equipment category: ${e.equipment_category.index}`);
+    }
+
+    entries.push({ id: id("item", e.index), kind: "item", effects: [], data });
+    strings[`${e.index}.name`] = e.name;
+    if (e.desc) strings[`${e.index}.desc`] = text(e.desc) ?? "";
+    if (e.special) strings[`${e.index}.special`] = text(e.special) ?? "";
+  }
+  return { entries, strings };
+}
+
+function convertProperties(raw: RawSource): Converted {
+  const entries: Entry[] = [];
+  const strings: Strings = {};
+  for (const p of raw.weaponProperties) {
+    entries.push({ id: id("property", p.index), kind: "property", effects: [], data: {} });
+    strings[`${p.index}.name`] = p.name;
+    strings[`${p.index}.desc`] = text(p.desc) ?? "";
+  }
+  return { entries, strings };
+}
+
 export function convertAll(raw: RawSource): ConvertedPack {
   const ctx = buildContext(raw);
   return {
@@ -495,5 +607,7 @@ export function convertAll(raw: RawSource): ConvertedPack {
     class: convertClasses(raw, ctx),
     subclass: convertSubclasses(raw),
     feature: convertFeatures(raw),
+    item: convertItems(raw),
+    property: convertProperties(raw),
   };
 }

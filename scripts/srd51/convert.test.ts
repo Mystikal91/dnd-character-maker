@@ -45,6 +45,8 @@ const raw: RawSource = {
   subclasses: [],
   levels: [],
   features: [],
+  equipment: [],
+  weaponProperties: [],
 };
 
 describe("cleanData", () => {

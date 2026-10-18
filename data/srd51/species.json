@@ -287,7 +287,13 @@
           "id": "half-elf-ability",
           "choose": 2,
           "grants": "abilityBonus",
-          "from": ["str", "dex", "con", "int", "wis"],
+          "from": [
+            "str",
+            "dex",
+            "con",
+            "int",
+            "wis"
+          ],
           "value": 1
         },
         {

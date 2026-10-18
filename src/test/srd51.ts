@@ -12,6 +12,8 @@ export const SRD51_FILES = [
   "classes",
   "subclasses",
   "features",
+  "items",
+  "properties",
 ] as const;
 
 export function loadSrd51Pack(file: string): Pack {

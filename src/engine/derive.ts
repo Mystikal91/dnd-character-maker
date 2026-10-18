@@ -10,6 +10,7 @@ import {
 } from "../data/schema";
 import { abilityModifier } from "./abilities";
 import type { Character } from "./character";
+import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
 
 export type PackIndex = Map<string, Entry>;
 
@@ -38,7 +39,7 @@ export interface SpellcastingResult {
   spellSlots: number[];
 }
 
-export interface DerivedSheet {
+export interface DerivedSheet extends EquipmentResult {
   /** Total character level (0 while no class is chosen). */
   level: number;
   proficiencyBonus: number;
@@ -199,7 +200,17 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     }
   }
 
+  const equipment = deriveEquipment({
+    character,
+    index,
+    abilities,
+    held: proficiencyKeys(proficiencies),
+    proficiencyBonus,
+    warnings,
+  });
+
   return {
+    ...equipment,
     level,
     proficiencyBonus,
     abilities,

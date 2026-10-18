@@ -11,6 +11,13 @@ export interface ClassLevel {
   hpRolls?: number[];
 }
 
+/** An item the character owns. `itemId` can be an SRD item or a homebrew one. */
+export interface InventoryItem {
+  itemId: string;
+  quantity: number;
+  equipped: boolean;
+}
+
 /** What gets saved. Everything on the sheet is derived from this by the engine. */
 export interface Character {
   schemaVersion: typeof CHARACTER_SCHEMA_VERSION;
@@ -22,6 +29,7 @@ export interface Character {
     background?: string;
   };
   classes: ClassLevel[];
+  inventory: InventoryItem[];
   abilityBase: Record<Ability, number>;
   /** Free edit: a forced value for a derived field, e.g. `ability.int`. Always wins. */
   overrides: Record<string, number | string | boolean>;
@@ -34,6 +42,7 @@ export function createCharacter(ruleset: Character["ruleset"]): Character {
     name: "",
     choices: {},
     classes: [],
+    inventory: [],
     abilityBase: Object.fromEntries(ABILITIES.map((a) => [a, 10])) as Record<Ability, number>,
     overrides: {},
   };
