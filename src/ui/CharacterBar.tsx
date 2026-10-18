@@ -1,5 +1,5 @@
 import { useRef } from "preact/hooks";
-import { showView } from "../app/printSettings";
+import { showView } from "../app/navigation";
 import {
   character,
   characters,

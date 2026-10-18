@@ -48,13 +48,6 @@ function load(): PrintSettings {
 
 export const printSettings = signal<PrintSettings>(load());
 
-/** Which screen is showing: the editor or the print preview. */
-export const view = signal<"edit" | "print">("edit");
-
-export function showView(next: "edit" | "print") {
-  view.value = next;
-}
-
 export function updatePrintSettings(change: Partial<PrintSettings>) {
   printSettings.value = { ...printSettings.value, ...change };
 }

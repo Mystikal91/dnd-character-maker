@@ -1,8 +1,8 @@
+import { showView } from "../../app/navigation";
 import {
   type Paper,
   type SpellMode,
   printSettings,
-  showView,
   updatePrintSettings,
 } from "../../app/printSettings";
 import { sheet } from "../../app/store";

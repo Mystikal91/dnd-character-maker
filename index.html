@@ -7,6 +7,17 @@
     <meta name="theme-color" content="#7a1f1f" />
     <link rel="icon" type="image/svg+xml" href="/dnd-character-maker/icon.svg" />
     <title>DND Character Maker</title>
+    <script>
+      // Apply the saved look before the first paint, so the page never flashes the wrong theme.
+      try {
+        var saved = JSON.parse(localStorage.getItem("theme") || "{}");
+        var root = document.documentElement;
+        root.dataset.style = saved.style === "modern" ? "modern" : "fantasy";
+        if (saved.scheme === "light" || saved.scheme === "dark") root.dataset.theme = saved.scheme;
+      } catch (e) {
+        document.documentElement.dataset.style = "fantasy";
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>

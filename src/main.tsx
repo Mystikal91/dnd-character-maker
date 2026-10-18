@@ -1,6 +1,20 @@
+import "@fontsource/cinzel/latin-600.css";
+import "@fontsource/cinzel/latin-700.css";
+import "@fontsource/cinzel/latin-ext-600.css";
+import "@fontsource/cinzel/latin-ext-700.css";
+import "@fontsource/eb-garamond/latin-400-italic.css";
+import "@fontsource/eb-garamond/latin-400.css";
+import "@fontsource/eb-garamond/latin-600.css";
+import "@fontsource/eb-garamond/latin-ext-400-italic.css";
+import "@fontsource/eb-garamond/latin-ext-400.css";
+import "@fontsource/eb-garamond/latin-ext-600.css";
 import { render } from "preact";
 import { App } from "./ui/App";
+import "./app/theme";
 import "./ui/print/print.css";
+import "./ui/theme/fonts.css";
+import "./ui/theme/tokens.css";
+import "./ui/theme/fantasy.css";
 import "./ui/styles.css";
 
 const root = document.getElementById("app");
