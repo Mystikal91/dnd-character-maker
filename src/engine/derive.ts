@@ -45,9 +45,33 @@ function selectedEntries(character: Character, index: PackIndex, warnings: strin
   return entries;
 }
 
+/**
+ * Effects of the given entries, following `trait` effects into the trait entries they
+ * name (so a species gets the proficiencies of its traits). Each trait is expanded once.
+ */
+function expandEffects(
+  entries: Entry[],
+  index: PackIndex,
+  warnings: string[],
+  seen = new Set<string>(),
+): Effect[] {
+  const result: Effect[] = [];
+  for (const entry of entries) {
+    for (const effect of entry.effects) {
+      result.push(effect);
+      if (effect.type !== "trait" || seen.has(effect.id)) continue;
+      seen.add(effect.id);
+      const trait = index.get(effect.id);
+      if (trait) result.push(...expandEffects([trait], index, warnings, seen));
+      else warnings.push(`Unknown entry: ${effect.id}`);
+    }
+  }
+  return result;
+}
+
 export function deriveSheet(character: Character, index: PackIndex): DerivedSheet {
   const warnings: string[] = [];
-  const effects: Effect[] = selectedEntries(character, index, warnings).flatMap((e) => e.effects);
+  const effects = expandEffects(selectedEntries(character, index, warnings), index, warnings);
 
   const abilities = {} as Record<Ability, AbilityResult>;
   for (const ability of ABILITIES) {

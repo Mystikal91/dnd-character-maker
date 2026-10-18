@@ -1,0 +1,91 @@
+{
+  "manifest": {
+    "id": "srd51",
+    "ruleset": "srd51",
+    "version": "5e-database@5.12.0",
+    "license": "CC-BY-4.0",
+    "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode."
+  },
+  "entries": [
+    {
+      "id": "srd51:subspecies/hill-dwarf",
+      "kind": "subspecies",
+      "parent": "srd51:species/dwarf",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "wis",
+          "value": 1
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/dwarven-toughness"
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:subspecies/high-elf",
+      "kind": "subspecies",
+      "parent": "srd51:species/elf",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "int",
+          "value": 1
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/elf-weapon-training"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/high-elf-cantrip"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/extra-language"
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:subspecies/lightfoot-halfling",
+      "kind": "subspecies",
+      "parent": "srd51:species/halfling",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "cha",
+          "value": 1
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/naturally-stealthy"
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:subspecies/rock-gnome",
+      "kind": "subspecies",
+      "parent": "srd51:species/gnome",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "con",
+          "value": 1
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/artificers-lore"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/tinker"
+        }
+      ],
+      "data": {}
+    }
+  ]
+}

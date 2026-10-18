@@ -1,0 +1,432 @@
+{
+  "manifest": {
+    "id": "srd51",
+    "ruleset": "srd51",
+    "version": "5e-database@5.12.0",
+    "license": "CC-BY-4.0",
+    "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode."
+  },
+  "entries": [
+    {
+      "id": "srd51:species/dwarf",
+      "kind": "species",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "con",
+          "value": 2
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "common"
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "dwarvish"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/darkvision"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/dwarven-resilience"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/stonecunning"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/dwarven-combat-training"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/tool-proficiency"
+        }
+      ],
+      "data": {
+        "speed": 25,
+        "size": "medium"
+      }
+    },
+    {
+      "id": "srd51:species/elf",
+      "kind": "species",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "dex",
+          "value": 2
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "common"
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "elvish"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/darkvision"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/fey-ancestry"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/trance"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/keen-senses"
+        }
+      ],
+      "data": {
+        "speed": 30,
+        "size": "medium"
+      }
+    },
+    {
+      "id": "srd51:species/halfling",
+      "kind": "species",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "dex",
+          "value": 2
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "common"
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "halfling"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/brave"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/halfling-nimbleness"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/lucky"
+        }
+      ],
+      "data": {
+        "speed": 25,
+        "size": "small"
+      }
+    },
+    {
+      "id": "srd51:species/human",
+      "kind": "species",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "str",
+          "value": 1
+        },
+        {
+          "type": "abilityBonus",
+          "ability": "dex",
+          "value": 1
+        },
+        {
+          "type": "abilityBonus",
+          "ability": "con",
+          "value": 1
+        },
+        {
+          "type": "abilityBonus",
+          "ability": "int",
+          "value": 1
+        },
+        {
+          "type": "abilityBonus",
+          "ability": "wis",
+          "value": 1
+        },
+        {
+          "type": "abilityBonus",
+          "ability": "cha",
+          "value": 1
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "common"
+        },
+        {
+          "type": "choice",
+          "id": "human-language",
+          "choose": 1,
+          "grants": "language",
+          "from": [
+            "dwarvish",
+            "elvish",
+            "giant",
+            "gnomish",
+            "goblin",
+            "halfling",
+            "orc",
+            "abyssal",
+            "celestial",
+            "draconic",
+            "deep-speech",
+            "infernal",
+            "primordial",
+            "sylvan",
+            "undercommon"
+          ]
+        }
+      ],
+      "data": {
+        "speed": 30,
+        "size": "medium"
+      }
+    },
+    {
+      "id": "srd51:species/dragonborn",
+      "kind": "species",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "str",
+          "value": 2
+        },
+        {
+          "type": "abilityBonus",
+          "ability": "cha",
+          "value": 1
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "common"
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "draconic"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/draconic-ancestry"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/breath-weapon"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/damage-resistance"
+        }
+      ],
+      "data": {
+        "speed": 30,
+        "size": "medium"
+      }
+    },
+    {
+      "id": "srd51:species/gnome",
+      "kind": "species",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "int",
+          "value": 2
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "common"
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "gnomish"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/darkvision"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/gnome-cunning"
+        }
+      ],
+      "data": {
+        "speed": 25,
+        "size": "small"
+      }
+    },
+    {
+      "id": "srd51:species/half-elf",
+      "kind": "species",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "cha",
+          "value": 2
+        },
+        {
+          "type": "choice",
+          "id": "half-elf-ability",
+          "choose": 2,
+          "grants": "abilityBonus",
+          "from": ["str", "dex", "con", "int", "wis"],
+          "value": 1
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "common"
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "elvish"
+        },
+        {
+          "type": "choice",
+          "id": "half-elf-language",
+          "choose": 1,
+          "grants": "language",
+          "from": [
+            "dwarvish",
+            "giant",
+            "gnomish",
+            "goblin",
+            "halfling",
+            "orc",
+            "abyssal",
+            "celestial",
+            "draconic",
+            "deep-speech",
+            "infernal",
+            "primordial",
+            "sylvan",
+            "undercommon"
+          ]
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/darkvision"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/fey-ancestry"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/skill-versatility"
+        }
+      ],
+      "data": {
+        "speed": 30,
+        "size": "medium"
+      }
+    },
+    {
+      "id": "srd51:species/half-orc",
+      "kind": "species",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "str",
+          "value": 2
+        },
+        {
+          "type": "abilityBonus",
+          "ability": "con",
+          "value": 1
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "common"
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "orc"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/darkvision"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/savage-attacks"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/relentless-endurance"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/menacing"
+        }
+      ],
+      "data": {
+        "speed": 30,
+        "size": "medium"
+      }
+    },
+    {
+      "id": "srd51:species/tiefling",
+      "kind": "species",
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "int",
+          "value": 1
+        },
+        {
+          "type": "abilityBonus",
+          "ability": "cha",
+          "value": 2
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "common"
+        },
+        {
+          "type": "proficiency",
+          "category": "language",
+          "target": "infernal"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/darkvision"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/hellish-resistance"
+        },
+        {
+          "type": "trait",
+          "id": "srd51:trait/infernal-legacy"
+        }
+      ],
+      "data": {
+        "speed": 30,
+        "size": "medium"
+      }
+    }
+  ]
+}

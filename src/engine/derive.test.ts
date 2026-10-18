@@ -14,22 +14,27 @@ const testPack = parsePack({
   },
   entries: [
     {
-      id: "test:elf",
+      id: "test:species/elf",
       kind: "species",
       effects: [
         { type: "abilityBonus", ability: "dex", value: 2 },
         { type: "proficiency", category: "skill", target: "perception" },
-        { type: "trait", id: "test:keen-senses" },
+        { type: "trait", id: "test:trait/keen-senses" },
       ],
     },
     {
-      id: "test:high-elf",
+      id: "test:subspecies/high-elf",
       kind: "subspecies",
-      parent: "test:elf",
+      parent: "test:species/elf",
       effects: [
         { type: "abilityBonus", ability: "int", value: 1 },
         { type: "proficiency", category: "skill", target: "perception" },
       ],
+    },
+    {
+      id: "test:trait/keen-senses",
+      kind: "trait",
+      effects: [{ type: "proficiency", category: "skill", target: "perception" }],
     },
   ],
 });
@@ -38,8 +43,8 @@ const index = indexPacks(testPack);
 
 function elf() {
   const c = createCharacter("srd51");
-  c.choices.species = "test:elf";
-  c.choices.subspecies = "test:high-elf";
+  c.choices.species = "test:species/elf";
+  c.choices.subspecies = "test:subspecies/high-elf";
   c.abilityBase.int = 14;
   c.abilityBase.dex = 12;
   return c;
@@ -56,7 +61,7 @@ describe("deriveSheet", () => {
   it("collects proficiencies without duplicates, and traits", () => {
     const sheet = deriveSheet(elf(), index);
     expect(sheet.proficiencies.skill).toEqual(["perception"]);
-    expect(sheet.traits).toEqual(["test:keen-senses"]);
+    expect(sheet.traits).toEqual(["test:trait/keen-senses"]);
   });
 
   it("lets a Free edit override win over the computed score", () => {
@@ -69,10 +74,13 @@ describe("deriveSheet", () => {
 
   it("warns, without failing, on unknown entries and scores above 20", () => {
     const c = elf();
-    c.choices.background = "test:missing";
+    c.choices.background = "test:background/missing";
     c.abilityBase.dex = 19;
     const sheet = deriveSheet(c, index);
-    expect(sheet.warnings).toEqual(["Unknown entry: test:missing", "dex is above 20 (21)"]);
+    expect(sheet.warnings).toEqual([
+      "Unknown entry: test:background/missing",
+      "dex is above 20 (21)",
+    ]);
     expect(sheet.abilities.dex.score).toBe(21);
   });
 });

@@ -1,0 +1,809 @@
+{
+  "manifest": {
+    "id": "srd51",
+    "ruleset": "srd51",
+    "version": "5e-database@5.12.0",
+    "license": "CC-BY-4.0",
+    "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode."
+  },
+  "entries": [
+    {
+      "id": "srd51:trait/darkvision",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/dwarven-resilience",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/dwarven-combat-training",
+      "kind": "trait",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "battleaxes"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "handaxes"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "light-hammers"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "warhammers"
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/tool-proficiency",
+      "kind": "trait",
+      "effects": [
+        {
+          "type": "choice",
+          "id": "tool-proficiency-proficiency",
+          "choose": 1,
+          "grants": "proficiency",
+          "from": ["tool:smiths-tools", "tool:brewers-supplies", "tool:masons-tools"]
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/stonecunning",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/dwarven-toughness",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/keen-senses",
+      "kind": "trait",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "skill",
+          "target": "perception"
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/fey-ancestry",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/trance",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/elf-weapon-training",
+      "kind": "trait",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "longswords"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "shortswords"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "shortbows"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "longbows"
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/high-elf-cantrip",
+      "kind": "trait",
+      "effects": [
+        {
+          "type": "choice",
+          "id": "high-elf-cantrip-spell",
+          "choose": 1,
+          "grants": "spell",
+          "from": [
+            "srd51:spell/light",
+            "srd51:spell/mage-hand",
+            "srd51:spell/mending",
+            "srd51:spell/message",
+            "srd51:spell/minor-illusion",
+            "srd51:spell/acid-splash",
+            "srd51:spell/prestidigitation",
+            "srd51:spell/ray-of-frost",
+            "srd51:spell/shocking-grasp",
+            "srd51:spell/true-strike",
+            "srd51:spell/chill-touch",
+            "srd51:spell/dancing-lights",
+            "srd51:spell/fire-bolt",
+            "srd51:spell/poison-spray"
+          ]
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/extra-language",
+      "kind": "trait",
+      "effects": [
+        {
+          "type": "choice",
+          "id": "extra-language-language",
+          "choose": 1,
+          "grants": "language",
+          "from": [
+            "dwarvish",
+            "giant",
+            "gnomish",
+            "goblin",
+            "halfling",
+            "orc",
+            "abyssal",
+            "celestial",
+            "draconic",
+            "deep-speech",
+            "infernal",
+            "primordial",
+            "sylvan",
+            "undercommon"
+          ]
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/lucky",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/brave",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/halfling-nimbleness",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/naturally-stealthy",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/draconic-ancestry",
+      "kind": "trait",
+      "effects": [
+        {
+          "type": "choice",
+          "id": "draconic-ancestry-subtrait",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:trait/draconic-ancestry-black",
+            "srd51:trait/draconic-ancestry-blue",
+            "srd51:trait/draconic-ancestry-brass",
+            "srd51:trait/draconic-ancestry-bronze",
+            "srd51:trait/draconic-ancestry-copper",
+            "srd51:trait/draconic-ancestry-gold",
+            "srd51:trait/draconic-ancestry-green",
+            "srd51:trait/draconic-ancestry-red",
+            "srd51:trait/draconic-ancestry-silver",
+            "srd51:trait/draconic-ancestry-white"
+          ]
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/draconic-ancestry-black",
+      "kind": "trait",
+      "parent": "srd51:trait/draconic-ancestry",
+      "effects": [],
+      "data": {
+        "traitSpecific": {
+          "damageType": {
+            "index": "acid",
+            "name": "Acid"
+          },
+          "breathWeapon": {
+            "name": "Breath Weapon",
+            "desc": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation. When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level. After you use your breath weapon, you can't use it again until you complete a short or long rest.",
+            "areaOfEffect": {
+              "size": 30,
+              "type": "line"
+            },
+            "usage": {
+              "type": "per rest",
+              "times": 1
+            },
+            "dc": {
+              "dcType": {
+                "index": "dex",
+                "name": "DEX"
+              },
+              "successType": "half"
+            },
+            "damage": [
+              {
+                "damageType": {
+                  "index": "acid",
+                  "name": "Acid"
+                },
+                "damageAtCharacterLevel": {
+                  "1": "2d6",
+                  "6": "3d6",
+                  "11": "4d6",
+                  "16": "5d6"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:trait/draconic-ancestry-blue",
+      "kind": "trait",
+      "parent": "srd51:trait/draconic-ancestry",
+      "effects": [],
+      "data": {
+        "traitSpecific": {
+          "damageType": {
+            "index": "lightning",
+            "name": "Lightning"
+          },
+          "breathWeapon": {
+            "name": "Breath Weapon",
+            "desc": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation. When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level. After you use your breath weapon, you can't use it again until you complete a short or long rest.",
+            "areaOfEffect": {
+              "size": 30,
+              "type": "line"
+            },
+            "usage": {
+              "type": "per rest",
+              "times": 1
+            },
+            "dc": {
+              "dcType": {
+                "index": "dex",
+                "name": "DEX"
+              },
+              "successType": "half"
+            },
+            "damage": [
+              {
+                "damageType": {
+                  "index": "lightning",
+                  "name": "Lightning"
+                },
+                "damageAtCharacterLevel": {
+                  "1": "2d6",
+                  "6": "3d6",
+                  "11": "4d6",
+                  "16": "5d6"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:trait/draconic-ancestry-brass",
+      "kind": "trait",
+      "parent": "srd51:trait/draconic-ancestry",
+      "effects": [],
+      "data": {
+        "traitSpecific": {
+          "damageType": {
+            "index": "fire",
+            "name": "Fire"
+          },
+          "breathWeapon": {
+            "name": "Breath Weapon",
+            "desc": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation. When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level. After you use your breath weapon, you can't use it again until you complete a short or long rest.",
+            "areaOfEffect": {
+              "size": 30,
+              "type": "line"
+            },
+            "usage": {
+              "type": "per rest",
+              "times": 1
+            },
+            "dc": {
+              "dcType": {
+                "index": "dex",
+                "name": "DEX"
+              },
+              "successType": "half"
+            },
+            "damage": [
+              {
+                "damageType": {
+                  "index": "fire",
+                  "name": "Fire"
+                },
+                "damageAtCharacterLevel": {
+                  "1": "2d6",
+                  "6": "3d6",
+                  "11": "4d6",
+                  "16": "5d6"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:trait/draconic-ancestry-bronze",
+      "kind": "trait",
+      "parent": "srd51:trait/draconic-ancestry",
+      "effects": [],
+      "data": {
+        "traitSpecific": {
+          "damageType": {
+            "index": "lightning",
+            "name": "Lightning"
+          },
+          "breathWeapon": {
+            "name": "Breath Weapon",
+            "desc": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation. When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level. After you use your breath weapon, you can't use it again until you complete a short or long rest.",
+            "areaOfEffect": {
+              "size": 30,
+              "type": "line"
+            },
+            "usage": {
+              "type": "per rest",
+              "times": 1
+            },
+            "dc": {
+              "dcType": {
+                "index": "dex",
+                "name": "DEX"
+              },
+              "successType": "half"
+            },
+            "damage": [
+              {
+                "damageType": {
+                  "index": "lightning",
+                  "name": "Lightning"
+                },
+                "damageAtCharacterLevel": {
+                  "1": "2d6",
+                  "6": "3d6",
+                  "11": "4d6",
+                  "16": "5d6"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:trait/draconic-ancestry-copper",
+      "kind": "trait",
+      "parent": "srd51:trait/draconic-ancestry",
+      "effects": [],
+      "data": {
+        "traitSpecific": {
+          "damageType": {
+            "index": "acid",
+            "name": "Acid"
+          },
+          "breathWeapon": {
+            "name": "Breath Weapon",
+            "desc": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation. When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level. After you use your breath weapon, you can't use it again until you complete a short or long rest.",
+            "areaOfEffect": {
+              "size": 30,
+              "type": "line"
+            },
+            "usage": {
+              "type": "per rest",
+              "times": 1
+            },
+            "dc": {
+              "dcType": {
+                "index": "dex",
+                "name": "DEX"
+              },
+              "successType": "half"
+            },
+            "damage": [
+              {
+                "damageType": {
+                  "index": "acid",
+                  "name": "Acid"
+                },
+                "damageAtCharacterLevel": {
+                  "1": "2d6",
+                  "6": "3d6",
+                  "11": "4d6",
+                  "16": "5d6"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:trait/draconic-ancestry-gold",
+      "kind": "trait",
+      "parent": "srd51:trait/draconic-ancestry",
+      "effects": [],
+      "data": {
+        "traitSpecific": {
+          "damageType": {
+            "index": "fire",
+            "name": "Fire"
+          },
+          "breathWeapon": {
+            "name": "Breath Weapon",
+            "desc": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation. When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level. After you use your breath weapon, you can't use it again until you complete a short or long rest.",
+            "areaOfEffect": {
+              "size": 15,
+              "type": "cone"
+            },
+            "usage": {
+              "type": "per rest",
+              "times": 1
+            },
+            "dc": {
+              "dcType": {
+                "index": "dex",
+                "name": "DEX"
+              },
+              "successType": "half"
+            },
+            "damage": [
+              {
+                "damageType": {
+                  "index": "fire",
+                  "name": "Fire"
+                },
+                "damageAtCharacterLevel": {
+                  "1": "2d6",
+                  "6": "3d6",
+                  "11": "4d6",
+                  "16": "5d6"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:trait/draconic-ancestry-green",
+      "kind": "trait",
+      "parent": "srd51:trait/draconic-ancestry",
+      "effects": [],
+      "data": {
+        "traitSpecific": {
+          "damageType": {
+            "index": "poison",
+            "name": "Poison"
+          },
+          "breathWeapon": {
+            "name": "Breath Weapon",
+            "desc": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation. When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level. After you use your breath weapon, you can't use it again until you complete a short or long rest.",
+            "areaOfEffect": {
+              "size": 15,
+              "type": "cone"
+            },
+            "usage": {
+              "type": "per rest",
+              "times": 1
+            },
+            "dc": {
+              "dcType": {
+                "index": "con",
+                "name": "CON"
+              },
+              "successType": "half"
+            },
+            "damage": [
+              {
+                "damageType": {
+                  "index": "poison",
+                  "name": "Poison"
+                },
+                "damageAtCharacterLevel": {
+                  "1": "2d6",
+                  "6": "3d6",
+                  "11": "4d6",
+                  "16": "5d6"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:trait/draconic-ancestry-red",
+      "kind": "trait",
+      "parent": "srd51:trait/draconic-ancestry",
+      "effects": [],
+      "data": {
+        "traitSpecific": {
+          "damageType": {
+            "index": "fire",
+            "name": "Fire"
+          },
+          "breathWeapon": {
+            "name": "Breath Weapon",
+            "desc": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation. When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level. After you use your breath weapon, you can't use it again until you complete a short or long rest.",
+            "areaOfEffect": {
+              "size": 15,
+              "type": "cone"
+            },
+            "usage": {
+              "type": "per rest",
+              "times": 1
+            },
+            "dc": {
+              "dcType": {
+                "index": "dex",
+                "name": "DEX"
+              },
+              "successType": "half"
+            },
+            "damage": [
+              {
+                "damageType": {
+                  "index": "fire",
+                  "name": "Fire"
+                },
+                "damageAtCharacterLevel": {
+                  "1": "2d6",
+                  "6": "3d6",
+                  "11": "4d6",
+                  "16": "5d6"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:trait/draconic-ancestry-silver",
+      "kind": "trait",
+      "parent": "srd51:trait/draconic-ancestry",
+      "effects": [],
+      "data": {
+        "traitSpecific": {
+          "damageType": {
+            "index": "cold",
+            "name": "Cold"
+          },
+          "breathWeapon": {
+            "name": "Breath Weapon",
+            "desc": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation. When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level. After you use your breath weapon, you can't use it again until you complete a short or long rest.",
+            "areaOfEffect": {
+              "size": 15,
+              "type": "cone"
+            },
+            "usage": {
+              "type": "per rest",
+              "times": 1
+            },
+            "dc": {
+              "dcType": {
+                "index": "con",
+                "name": "CON"
+              },
+              "successType": "half"
+            },
+            "damage": [
+              {
+                "damageType": {
+                  "index": "cold",
+                  "name": "Cold"
+                },
+                "damageAtCharacterLevel": {
+                  "1": "2d6",
+                  "6": "3d6",
+                  "11": "4d6",
+                  "16": "5d6"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:trait/draconic-ancestry-white",
+      "kind": "trait",
+      "parent": "srd51:trait/draconic-ancestry",
+      "effects": [],
+      "data": {
+        "traitSpecific": {
+          "damageType": {
+            "index": "cold",
+            "name": "Cold"
+          },
+          "breathWeapon": {
+            "name": "Breath Weapon",
+            "desc": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation. When you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level. After you use your breath weapon, you can't use it again until you complete a short or long rest.",
+            "areaOfEffect": {
+              "size": 15,
+              "type": "cone"
+            },
+            "usage": {
+              "type": "per rest",
+              "times": 1
+            },
+            "dc": {
+              "dcType": {
+                "index": "con",
+                "name": "CON"
+              },
+              "successType": "half"
+            },
+            "damage": [
+              {
+                "damageType": {
+                  "index": "cold",
+                  "name": "Cold"
+                },
+                "damageAtCharacterLevel": {
+                  "1": "2d6",
+                  "6": "3d6",
+                  "11": "4d6",
+                  "16": "5d6"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:trait/breath-weapon",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/damage-resistance",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/gnome-cunning",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/artificers-lore",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/tinker",
+      "kind": "trait",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "tool",
+          "target": "tinkers-tools"
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/skill-versatility",
+      "kind": "trait",
+      "effects": [
+        {
+          "type": "choice",
+          "id": "skill-versatility-proficiency",
+          "choose": 2,
+          "grants": "proficiency",
+          "from": [
+            "skill:acrobatics",
+            "skill:animal-handling",
+            "skill:arcana",
+            "skill:athletics",
+            "skill:deception",
+            "skill:history",
+            "skill:insight",
+            "skill:intimidation",
+            "skill:investigation",
+            "skill:medicine",
+            "skill:nature",
+            "skill:perception",
+            "skill:performance",
+            "skill:persuasion",
+            "skill:religion",
+            "skill:sleight-of-hand",
+            "skill:stealth",
+            "skill:survival"
+          ]
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/menacing",
+      "kind": "trait",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "skill",
+          "target": "intimidation"
+        }
+      ],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/relentless-endurance",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/savage-attacks",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/hellish-resistance",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    },
+    {
+      "id": "srd51:trait/infernal-legacy",
+      "kind": "trait",
+      "effects": [],
+      "data": {}
+    }
+  ]
+}

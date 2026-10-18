@@ -1,0 +1,86 @@
+{
+  "manifest": {
+    "id": "srd51",
+    "ruleset": "srd51",
+    "version": "5e-database@5.12.0",
+    "license": "CC-BY-4.0",
+    "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode."
+  },
+  "entries": [
+    {
+      "id": "srd51:background/acolyte",
+      "kind": "background",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "skill",
+          "target": "insight"
+        },
+        {
+          "type": "proficiency",
+          "category": "skill",
+          "target": "religion"
+        },
+        {
+          "type": "choice",
+          "id": "acolyte-language",
+          "choose": 2,
+          "grants": "language",
+          "from": [
+            "common",
+            "dwarvish",
+            "elvish",
+            "giant",
+            "gnomish",
+            "goblin",
+            "halfling",
+            "orc",
+            "abyssal",
+            "celestial",
+            "draconic",
+            "deep-speech",
+            "infernal",
+            "primordial",
+            "sylvan",
+            "undercommon"
+          ]
+        }
+      ],
+      "data": {
+        "choose": {
+          "personalityTraits": 2,
+          "ideals": 1,
+          "bonds": 1,
+          "flaws": 1
+        },
+        "startingGold": {
+          "quantity": 15,
+          "unit": "gp"
+        },
+        "startingEquipment": [
+          {
+            "item": "srd51:item/clothes-common",
+            "quantity": 1
+          },
+          {
+            "item": "srd51:item/pouch",
+            "quantity": 1
+          }
+        ],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "equipment_category",
+              "equipmentCategory": {
+                "index": "holy-symbols",
+                "name": "Holy Symbols"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

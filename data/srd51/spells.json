@@ -1,0 +1,6559 @@
+{
+  "manifest": {
+    "id": "srd51",
+    "ruleset": "srd51",
+    "version": "5e-database@5.12.0",
+    "license": "CC-BY-4.0",
+    "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode."
+  },
+  "entries": [
+    {
+      "id": "srd51:spell/acid-arrow",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"],
+        "attackType": "ranged",
+        "damage": [
+          {
+            "damageType": {
+              "index": "acid",
+              "name": "Acid"
+            },
+            "damageAtSlotLevel": {
+              "2": "4d4",
+              "3": "5d4",
+              "4": "6d4",
+              "5": "7d4",
+              "6": "8d4",
+              "7": "9d4",
+              "8": "10d4",
+              "9": "11d4"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/acid-splash",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "acid",
+              "name": "Acid"
+            },
+            "damageAtCharacterLevel": {
+              "1": "1d6",
+              "5": "2d6",
+              "11": "3d6",
+              "17": "4d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/aid",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/paladin"],
+        "healAtSlotLevel": {
+          "2": "5",
+          "3": "10",
+          "4": "15",
+          "5": "20",
+          "6": "25",
+          "7": "30",
+          "8": "35",
+          "9": "40"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/alarm",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/ranger", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/alter-self",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/animal-friendship",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "enchantment",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/druid", "srd51:class/ranger"],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/animal-messenger",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "enchantment",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/druid", "srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/animal-shapes",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/animate-dead",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "necromancy",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/animate-objects",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/antilife-shell",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "abjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/antimagic-field",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/antipathy-sympathy",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "enchantment",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/druid", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 200
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/arcane-eye",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 30
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/arcane-hand",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/arcane-lock",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/arcane-sword",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"],
+        "attackType": "melee",
+        "damage": [
+          {
+            "damageType": {
+              "index": "force",
+              "name": "Force"
+            },
+            "damageAtSlotLevel": {
+              "7": "3d10"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/arcanists-magic-aura",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/astral-projection",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "necromancy",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/augury",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/awaken",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/bane",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "enchantment",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/cleric"],
+        "dc": {
+          "dcType": {
+            "index": "cha",
+            "name": "CHA"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/banishment",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/cleric",
+          "srd51:class/paladin",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "cha",
+            "name": "CHA"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/barkskin",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/beacon-of-hope",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "abjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/bestow-curse",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "necromancy",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none",
+          "desc": "On fail, become cursed for the duration of the spell."
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/black-tentacles",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "bludgeoning",
+              "name": "Bludgeoning"
+            },
+            "damageAtSlotLevel": {
+              "4": "3d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "none",
+          "desc": "A creature restrained by the tentacles can use its action to make a Strength or Dexterity check (its choice) against your spell save DC. On a success, it frees itself."
+        },
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/blade-barrier",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "slashing",
+              "name": "Slashing"
+            },
+            "damageAtSlotLevel": {
+              "6": "6d10"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "line",
+          "size": 100
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/bless",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "enchantment",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/paladin"]
+      }
+    },
+    {
+      "id": "srd51:spell/blight",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "necromancy",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/druid",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "damage": [
+          {
+            "damageType": {
+              "index": "necrotic",
+              "name": "Necrotic"
+            },
+            "damageAtSlotLevel": {
+              "4": "8d8",
+              "5": "9d8",
+              "6": "10d8",
+              "7": "11d8",
+              "8": "12d8",
+              "9": "13d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/blindness-deafness",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "necromancy",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/blink",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/blur",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "illusion",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/branding-smite",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "evocation",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/paladin"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "radiant",
+              "name": "Radiant"
+            },
+            "damageAtSlotLevel": {
+              "2": "2d6",
+              "3": "3d6",
+              "4": "4d6",
+              "5": "5d6",
+              "6": "6d6",
+              "7": "7d6",
+              "8": "8d6",
+              "9": "9d6"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/burning-hands",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "1": "3d6",
+              "2": "4d6",
+              "3": "5d6",
+              "4": "6d6",
+              "5": "7d6",
+              "6": "8d6",
+              "7": "9d6",
+              "8": "10d6",
+              "9": "11d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "cone",
+          "size": 15
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/call-lightning",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "lightning",
+              "name": "Lightning"
+            },
+            "damageAtSlotLevel": {
+              "3": "3d10",
+              "4": "4d10",
+              "5": "5d10",
+              "6": "6d10",
+              "7": "7d10",
+              "8": "8d10",
+              "9": "9d10"
+            }
+          }
+        ],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 5
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/calm-emotions",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "enchantment",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/cleric"],
+        "dc": {
+          "dcType": {
+            "index": "cha",
+            "name": "CHA"
+          },
+          "dcSuccess": "none"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/chain-lightning",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "lightning",
+              "name": "Lightning"
+            },
+            "damageAtSlotLevel": {
+              "6": "10d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/charm-person",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "enchantment",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/druid",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/chill-touch",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "necromancy",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/warlock", "srd51:class/wizard"],
+        "attackType": "ranged",
+        "damage": [
+          {
+            "damageType": {
+              "index": "necrotic",
+              "name": "Necrotic"
+            },
+            "damageAtCharacterLevel": {
+              "1": "1d8",
+              "5": "2d8",
+              "11": "3d8",
+              "17": "4d8"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/circle-of-death",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "necromancy",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/warlock", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "necrotic",
+              "name": "Necrotic"
+            },
+            "damageAtSlotLevel": {
+              "6": "8d6",
+              "7": "10d6",
+              "8": "12d6",
+              "9": "14d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 60
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/clairvoyance",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/clone",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "necromancy",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/cloudkill",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "poison",
+              "name": "Poison"
+            },
+            "damageAtSlotLevel": {
+              "5": "5d8",
+              "6": "6d8",
+              "7": "7d8",
+              "8": "8d8",
+              "9": "9d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half",
+          "desc": "Creatures are affected even if they hold their breath or don't need to breathe."
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/color-spray",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cone",
+          "size": 15
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/command",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "enchantment",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/paladin"],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/commune",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/commune-with-nature",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "divination",
+        "components": ["V", "S"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/druid", "srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/comprehend-languages",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/compulsion",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "enchantment",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard"],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/cone-of-cold",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "cold",
+              "name": "Cold"
+            },
+            "damageAtSlotLevel": {
+              "5": "8d8",
+              "6": "9d8",
+              "7": "10d8",
+              "8": "11d8",
+              "9": "12d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half",
+          "desc": "A creature killed by this spell becomes a frozen statue until it thaws."
+        },
+        "areaOfEffect": {
+          "type": "cone",
+          "size": 60
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/confusion",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "enchantment",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/druid",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/conjure-animals",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/conjure-celestial",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/conjure-elemental",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/conjure-fey",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/warlock"]
+      }
+    },
+    {
+      "id": "srd51:spell/conjure-minor-elementals",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/conjure-woodland-beings",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/contact-other-plane",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "divination",
+        "components": ["V"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/warlock", "srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "int",
+            "name": "INT"
+          },
+          "dcSuccess": "other",
+          "desc": "On a failure, you take 6d6 psychic damage and are insane until you finish a long rest."
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/contagion",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "necromancy",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/druid"],
+        "attackType": "melee",
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "other",
+          "desc": "After succeeding on three of these saving throws, the creature recovers from the disease, and the spell ends."
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/contingency",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/continual-flame",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/control-water",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/druid", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "bludgeoning",
+              "name": "Bludgeoning"
+            },
+            "damageAtSlotLevel": {
+              "4": "2d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "str",
+            "name": "STR"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 100
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/control-weather",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/druid", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/counterspell",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "abjuration",
+        "components": ["S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/create-food-and-water",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/druid", "srd51:class/paladin"]
+      }
+    },
+    {
+      "id": "srd51:spell/create-undead",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "necromancy",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/create-or-destroy-water",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/druid"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 30
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/creation",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 5
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/cure-wounds",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/paladin",
+          "srd51:class/ranger"
+        ],
+        "healAtSlotLevel": {
+          "1": "1d8 + MOD",
+          "2": "2d8 + MOD",
+          "3": "3d8 + MOD",
+          "4": "4d8 + MOD",
+          "5": "5d8 + MOD",
+          "6": "6d8 + MOD",
+          "7": "7d8 + MOD",
+          "8": "8d8 + MOD",
+          "9": "9d8 + MOD"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/dancing-lights",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/darkness",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "evocation",
+        "components": ["V", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/warlock", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 15
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/darkvision",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/druid",
+          "srd51:class/ranger",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/daylight",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/paladin",
+          "srd51:class/ranger",
+          "srd51:class/sorcerer"
+        ],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 60
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/death-ward",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "abjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/paladin"]
+      }
+    },
+    {
+      "id": "srd51:spell/delayed-blast-fireball",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "7": "12d6",
+              "8": "13d6",
+              "9": "14d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/demiplane",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "conjuration",
+        "components": ["S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/detect-evil-and-good",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "divination",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/paladin"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 30
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/detect-magic",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "divination",
+        "components": ["V", "S"],
+        "ritual": true,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/paladin",
+          "srd51:class/ranger",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 30
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/detect-poison-and-disease",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": true,
+        "classes": [
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/paladin",
+          "srd51:class/ranger"
+        ],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 30
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/detect-thoughts",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/dimension-door",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "conjuration",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "damage": [
+          {
+            "damageType": {
+              "index": "force",
+              "name": "Force"
+            },
+            "damageAtSlotLevel": {
+              "4": "4d6"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/disguise-self",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "illusion",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/disintegrate",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "force",
+              "name": "Force"
+            },
+            "damageAtSlotLevel": {
+              "6": "10d6 + 40"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "none"
+        },
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/dispel-evil-and-good",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/paladin"],
+        "dc": {
+          "dcType": {
+            "index": "cha",
+            "name": "CHA"
+          },
+          "dcSuccess": "other",
+          "desc": "The creature must succeed on a charisma saving throw or be sent back to its home plane (if it isn't there already)"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/dispel-magic",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "abjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/paladin",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/divination",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/divine-favor",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/paladin"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "radiant",
+              "name": "Radiant"
+            },
+            "damageAtSlotLevel": {
+              "1": "1d4"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/divine-word",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "evocation",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "dc": {
+          "dcType": {
+            "index": "cha",
+            "name": "CHA"
+          },
+          "dcSuccess": "none",
+          "desc": "On a failed save, a creature suffers an effect based on its current hit points."
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/dominate-beast",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "enchantment",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/sorcerer"],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/dominate-monster",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "enchantment",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none",
+          "desc": "On failure, the creature is charmed by you for the duration."
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/dominate-person",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "enchantment",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "other",
+          "desc": "Each time the target takes damage, it makes a new wisdom saving throw against the spell. If the saving throw succeeds, the spell ends."
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/dream",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/warlock", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "psychic",
+              "name": "Psychic"
+            },
+            "damageAtSlotLevel": {
+              "5": "3d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none",
+          "desc": "On a failed save, echoes of the phantasmal monstrosity spawn a nightmare that lasts the duration of the target's sleep and prevents the target from gaining any benefit from that rest."
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/druidcraft",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/earthquake",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/druid", "srd51:class/sorcerer"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 100
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/eldritch-blast",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/warlock"],
+        "attackType": "ranged",
+        "damage": [
+          {
+            "damageType": {
+              "index": "force",
+              "name": "Force"
+            },
+            "damageAtCharacterLevel": {
+              "1": "1d10",
+              "5": "1d10",
+              "11": "1d10",
+              "17": "1d10"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/enhance-ability",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/sorcerer"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/enlarge-reduce",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/entangle",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid"],
+        "dc": {
+          "dcType": {
+            "index": "str",
+            "name": "STR"
+          },
+          "dcSuccess": "none"
+        },
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/enthrall",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "enchantment",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/warlock"],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/etherealness",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/expeditious-retreat",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/eyebite",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "necromancy",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none",
+          "desc": "On failure, the target can be affected by one of the following effects of your choice for the duration. [Asleep. The target falls unconscious. It wakes up if it takes any damage or if another creature uses its action to shake the sleeper awake.] [Panicked. The target is frightened of you. On each of its turns, the frightened creature must take the Dash action and move away from you by the safest and shortest available route, unless there is nowhere to move. If the target moves to a place at least 60 feet away from you where it can no longer see you, this effect ends.] [Sickened. The target has disadvantage on attack rolls and ability checks. At the end of each of its turns, it can make another wisdom saving throw. If it succeeds, the effect ends.]"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/fabricate",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/faerie-fire",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "evocation",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid"],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "none"
+        },
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/faithful-hound",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"],
+        "attackType": "melee",
+        "damage": [
+          {
+            "damageType": {
+              "index": "piercing",
+              "name": "Piercing"
+            },
+            "damageAtSlotLevel": {
+              "4": "4d8"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/false-life",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "necromancy",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "healAtSlotLevel": {
+          "1": "1d4 + 4",
+          "2": "1d4 + 9",
+          "3": "1d4 + 14",
+          "4": "1d4 + 19",
+          "5": "1d4 + 24",
+          "6": "1d4 + 29",
+          "7": "1d4 + 34",
+          "8": "1d4 + 39",
+          "9": "1d4 + 44"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/fear",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none",
+          "desc": "On fail, A creature drop whatever it is holding and become frightened for the duration."
+        },
+        "areaOfEffect": {
+          "type": "cone",
+          "size": 30
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/feather-fall",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "transmutation",
+        "components": ["V", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/feeblemind",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "enchantment",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/druid",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "damage": [
+          {
+            "damageType": {
+              "index": "psychic",
+              "name": "Psychic"
+            },
+            "damageAtSlotLevel": {
+              "8": "4d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "int",
+            "name": "INT"
+          },
+          "dcSuccess": "other",
+          "desc": "The target always takes the damage. On a failed save, the creature's Intelligence and Charisma scores become 1."
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/find-familiar",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/find-steed",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/paladin"]
+      }
+    },
+    {
+      "id": "srd51:spell/find-traps",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "divination",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/druid", "srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/find-the-path",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/finger-of-death",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "necromancy",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/warlock", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "necrotic",
+              "name": "Necrotic"
+            },
+            "damageAtSlotLevel": {
+              "7": "7d8 + 30"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/fire-bolt",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "attackType": "ranged",
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtCharacterLevel": {
+              "1": "1d10",
+              "5": "2d10",
+              "11": "3d10",
+              "17": "4d10"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/fire-shield",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "4": "2d8"
+            }
+          }
+        ],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 5
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/fire-storm",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/druid", "srd51:class/sorcerer"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "7": "7d10"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 100
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/fireball",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "3": "8d6",
+              "4": "9d6",
+              "5": "10d6",
+              "6": "11d6",
+              "7": "12d6",
+              "8": "13d6",
+              "9": "14d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/flame-blade",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "2": "3d6",
+              "4": "4d6",
+              "6": "5d6",
+              "8": "6d6"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/flame-strike",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "5": "4d6",
+              "6": "4d6 OR 5d6",
+              "7": "4d6 OR 6d6",
+              "8": "4d6 OR 7d6",
+              "9": "4d6 OR 8d6"
+            }
+          },
+          {
+            "damageType": {
+              "index": "radiant",
+              "name": "Radiant"
+            },
+            "damageAtSlotLevel": {
+              "5": "4d6",
+              "6": "4d6 OR 5d6",
+              "7": "4d6 OR 6d6",
+              "8": "4d6 OR 7d6",
+              "9": "4d6 OR 8d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "cylinder",
+          "size": 40
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/flaming-sphere",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "2": "2d6",
+              "3": "3d6",
+              "4": "4d6",
+              "5": "5d6",
+              "6": "6d6",
+              "7": "7d6",
+              "8": "8d6",
+              "9": "9d6"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/flesh-to-stone",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/warlock", "srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "none",
+          "desc": "On a failed save, the target is restrained as its flesh begins to harden."
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/floating-disk",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/fly",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/fog-cloud",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/druid",
+          "srd51:class/ranger",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/forbiddance",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 40000
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/forcecage",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/warlock", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/foresight",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/druid",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/freedom-of-movement",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/ranger"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/freezing-sphere",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "cold",
+              "name": "Cold"
+            },
+            "damageAtSlotLevel": {
+              "6": "10d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 60
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/gaseous-form",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/gate",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/geas",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "enchantment",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/paladin",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/gentle-repose",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "necromancy",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/giant-insect",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/glibness",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "transmutation",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/warlock"]
+      }
+    },
+    {
+      "id": "srd51:spell/globe-of-invulnerability",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/glyph-of-warding",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/goodberry",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/druid", "srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/grease",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "none"
+        },
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/greater-invisibility",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "illusion",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/greater-restoration",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/guardian-of-faith",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "conjuration",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "radiant",
+              "name": "Radiant"
+            },
+            "damageAtSlotLevel": {
+              "4": "20"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "cylinder",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/guards-and-wards",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 2500
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/guidance",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "divination",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/guiding-bolt",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "attackType": "ranged",
+        "damage": [
+          {
+            "damageType": {
+              "index": "radiant",
+              "name": "Radiant"
+            },
+            "damageAtSlotLevel": {
+              "1": "4d6",
+              "2": "5d6",
+              "3": "6d6",
+              "4": "7d6",
+              "5": "8d6",
+              "6": "9d6",
+              "7": "10d6",
+              "8": "11d6",
+              "9": "12d6"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/gust-of-wind",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "str",
+            "name": "STR"
+          },
+          "dcSuccess": "none"
+        },
+        "areaOfEffect": {
+          "type": "line",
+          "size": 60
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/hallow",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "dc": {
+          "dcType": {
+            "index": "cha",
+            "name": "CHA"
+          },
+          "dcSuccess": "none"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 60
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/hallucinatory-terrain",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/druid",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 150
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/harm",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "necromancy",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "necrotic",
+              "name": "Necrotic"
+            },
+            "damageAtSlotLevel": {
+              "6": "14d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/haste",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/heal",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/druid"],
+        "healAtSlotLevel": {
+          "6": "70",
+          "7": "80",
+          "8": "90",
+          "9": "100"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/healing-word",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "evocation",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/druid"],
+        "healAtSlotLevel": {
+          "1": "1d4 + MOD",
+          "2": "2d4 + MOD",
+          "3": "3d4 + MOD",
+          "4": "4d4 + MOD",
+          "5": "5d4 + MOD",
+          "6": "6d4 + MOD",
+          "7": "7d4 + MOD",
+          "8": "8d4 + MOD",
+          "9": "9d4 + MOD"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/heat-metal",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/druid"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "2": "2d8",
+              "3": "3d8",
+              "4": "4d8",
+              "5": "5d8",
+              "6": "6d8",
+              "7": "7d8",
+              "8": "8d8",
+              "9": "9d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "other",
+          "desc": "Can choose to not drop the object"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/hellish-rebuke",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/warlock"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "1": "2d10",
+              "2": "3d10",
+              "3": "4d10",
+              "4": "5d10",
+              "5": "6d10",
+              "6": "7d10",
+              "7": "8d10",
+              "8": "9d10",
+              "9": "10d10"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/heroes-feast",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/heroism",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "enchantment",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/paladin"]
+      }
+    },
+    {
+      "id": "srd51:spell/hideous-laughter",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "enchantment",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/hold-monster",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "enchantment",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/hold-person",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "enchantment",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/holy-aura",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 30
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/hunters-mark",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "divination",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/hypnotic-pattern",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "illusion",
+        "components": ["S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none",
+          "desc": "On a failed save, the creature becomes charmed for the duration."
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/ice-storm",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/druid", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "bludgeoning",
+              "name": "Bludgeoning"
+            },
+            "damageAtSlotLevel": {
+              "4": "2d8",
+              "5": "3d8",
+              "6": "4d8",
+              "7": "5d8",
+              "8": "6d8",
+              "9": "7d8"
+            }
+          },
+          {
+            "damageType": {
+              "index": "cold",
+              "name": "Cold"
+            },
+            "damageAtSlotLevel": {
+              "4": "4d6",
+              "5": "4d6",
+              "6": "4d6",
+              "7": "4d6",
+              "8": "4d6",
+              "9": "4d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "cylinder",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/identify",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/illusory-script",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "illusion",
+        "components": ["S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/imprisonment",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/warlock", "srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none",
+          "desc": "If the creature succeeds, it is immune to this spell if you cast it again"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/incendiary-cloud",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "8": "10d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/inflict-wounds",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "necromancy",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "attackType": "melee",
+        "damage": [
+          {
+            "damageType": {
+              "index": "necrotic",
+              "name": "Necrotic"
+            },
+            "damageAtSlotLevel": {
+              "1": "3d10",
+              "2": "4d10",
+              "3": "5d10",
+              "4": "6d10",
+              "5": "7d10",
+              "6": "8d10",
+              "7": "9d10",
+              "8": "10d10",
+              "9": "11d10"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/insect-plague",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/druid", "srd51:class/sorcerer"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "piercing",
+              "name": "Piercing"
+            },
+            "damageAtSlotLevel": {
+              "5": "4d10",
+              "6": "5d10",
+              "7": "6d10",
+              "8": "7d10",
+              "9": "8d10"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/instant-summons",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/invisibility",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/irresistible-dance",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "enchantment",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/jump",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/druid",
+          "srd51:class/ranger",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/knock",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "transmutation",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/legend-lore",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/lesser-restoration",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "abjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/paladin",
+          "srd51:class/ranger"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/levitate",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/light",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "evocation",
+        "components": ["V", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/lightning-bolt",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "lightning",
+              "name": "Lightning"
+            },
+            "damageAtSlotLevel": {
+              "3": "8d6",
+              "4": "9d6",
+              "5": "10d6",
+              "6": "11d6",
+              "7": "12d6",
+              "8": "13d6",
+              "9": "14d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "line",
+          "size": 100
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/locate-animals-or-plants",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/druid", "srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/locate-creature",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/paladin",
+          "srd51:class/ranger",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/locate-object",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/paladin",
+          "srd51:class/ranger",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/longstrider",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/druid",
+          "srd51:class/ranger",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/mage-armor",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/mage-hand",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/magic-circle",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/cleric",
+          "srd51:class/paladin",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "cha",
+            "name": "CHA"
+          },
+          "dcSuccess": "other",
+          "desc": "If the creature tries to use teleportation or interplanar travel to do so, it must first succeed on a Charisma saving throw."
+        },
+        "areaOfEffect": {
+          "type": "cylinder",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/magic-jar",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "necromancy",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "cha",
+            "name": "CHA"
+          },
+          "dcSuccess": "other",
+          "desc": "On a failure, your soul moves into the target's body, and the target's soul becomes trapped in the container. On a success, the target resists your efforts to possess it, and you can't attempt to possess it again for 24 hours."
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/magic-missile",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "force",
+              "name": "Force"
+            },
+            "damageAtSlotLevel": {
+              "1": "3d4 + 3",
+              "2": "4d4 + 4",
+              "3": "5d4 + 5",
+              "4": "6d4 + 6",
+              "5": "7d4 + 7",
+              "6": "8d4 + 8",
+              "7": "9d4 + 9",
+              "8": "10d4 + 10",
+              "9": "11d4 + 11"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/magic-mouth",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/magic-weapon",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/paladin", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/magnificent-mansion",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 5
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/major-image",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/mass-cure-wounds",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/druid"],
+        "healAtSlotLevel": {
+          "5": "3d8 + MOD",
+          "6": "4d8 + MOD",
+          "7": "5d8 + MOD",
+          "8": "6d8 + MOD",
+          "9": "7d8 + MOD"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 30
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/mass-heal",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "healAtSlotLevel": {
+          "9": "700"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/mass-healing-word",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "evocation",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "healAtSlotLevel": {
+          "3": "1d4 + MOD",
+          "4": "2d4 + MOD",
+          "5": "3d4 + MOD",
+          "6": "4d4 + MOD",
+          "7": "5d4 + MOD",
+          "8": "6d4 + MOD",
+          "9": "7d4 + MOD"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/mass-suggestion",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "enchantment",
+        "components": ["V", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/maze",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/meld-into-stone",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/mending",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/cleric",
+          "srd51:class/bard",
+          "srd51:class/druid",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/message",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/meteor-swarm",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "9": "20d6"
+            }
+          },
+          {
+            "damageType": {
+              "index": "bludgeoning",
+              "name": "Bludgeoning"
+            },
+            "damageAtSlotLevel": {
+              "9": "20d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 40
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/mind-blank",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "abjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/minor-illusion",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "illusion",
+        "components": ["S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/mirage-arcane",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "illusion",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/druid", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 5280
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/mirror-image",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "illusion",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/mislead",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "illusion",
+        "components": ["S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/misty-step",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "conjuration",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/modify-memory",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "enchantment",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/moonbeam",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "radiant",
+              "name": "Radiant"
+            },
+            "damageAtSlotLevel": {
+              "2": "2d10",
+              "3": "3d10",
+              "4": "4d10",
+              "5": "5d10",
+              "6": "6d10",
+              "7": "7d10",
+              "8": "8d10",
+              "9": "9d10"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "cylinder",
+          "size": 5
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/move-earth",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cone",
+          "size": 40
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/nondetection",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/ranger", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/pass-without-trace",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/passwall",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/phantasmal-killer",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "illusion",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "psychic",
+              "name": "Psychic"
+            },
+            "damageAtSlotLevel": {
+              "4": "4d10"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/phantom-steed",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "illusion",
+        "components": ["V", "S"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/planar-ally",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/planar-binding",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "cha",
+            "name": "CHA"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/plane-shift",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "attackType": "melee",
+        "dc": {
+          "dcType": {
+            "index": "cha",
+            "name": "CHA"
+          },
+          "dcSuccess": "none",
+          "desc": "If the creature fails this save, it is transported to a random location on the plane of existence you specify. A creature so transported must find its own way back to your current plane of existence."
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/plant-growth",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/druid", "srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/poison-spray",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard",
+          "srd51:class/druid"
+        ],
+        "damage": [
+          {
+            "damageType": {
+              "index": "poison",
+              "name": "Poison"
+            },
+            "damageAtCharacterLevel": {
+              "1": "1d12",
+              "5": "2d12",
+              "11": "3d12",
+              "17": "4d12"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/polymorph",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/druid",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/power-word-kill",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "enchantment",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/power-word-stun",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "enchantment",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/prayer-of-healing",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "evocation",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "healAtSlotLevel": {
+          "2": "2d8 + MOD",
+          "3": "3d8 + MOD",
+          "4": "4d8 + MOD",
+          "5": "5d8 + MOD",
+          "6": "6d8 + MOD",
+          "7": "7d8 + MOD",
+          "8": "8d8 + MOD",
+          "9": "9d8 + MOD"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/prestidigitation",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/prismatic-spray",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageAtSlotLevel": {
+              "7": "10d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "other",
+          "desc": "For each target, roll a d8 to determine which color ray affects it."
+        },
+        "areaOfEffect": {
+          "type": "cone",
+          "size": 60
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/prismatic-wall",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "abjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "line",
+          "size": 90
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/private-sanctum",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 100
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/produce-flame",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/druid"],
+        "attackType": "ranged",
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtCharacterLevel": {
+              "1": "1d8",
+              "5": "2d8",
+              "11": "3d8",
+              "17": "4d8"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/programmed-illusion",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 30
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/project-image",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/protection-from-energy",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "abjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/ranger",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/protection-from-evil-and-good",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/cleric",
+          "srd51:class/paladin",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/protection-from-poison",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "abjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/paladin",
+          "srd51:class/ranger"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/purify-food-and-drink",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/druid", "srd51:class/paladin"]
+      }
+    },
+    {
+      "id": "srd51:spell/raise-dead",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "necromancy",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/paladin"]
+      }
+    },
+    {
+      "id": "srd51:spell/ray-of-enfeeblement",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "necromancy",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/warlock", "srd51:class/wizard"],
+        "attackType": "ranged",
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/ray-of-frost",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "attackType": "ranged",
+        "damage": [
+          {
+            "damageType": {
+              "index": "cold",
+              "name": "Cold"
+            },
+            "damageAtCharacterLevel": {
+              "1": "1d8",
+              "5": "2d8",
+              "11": "3d8",
+              "17": "4d8"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/regenerate",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/druid"],
+        "healAtSlotLevel": {
+          "7": "4d8 + 15"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/reincarnate",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/remove-curse",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "abjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/cleric",
+          "srd51:class/paladin",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/resilient-sphere",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/resistance",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/resurrection",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "necromancy",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/reverse-gravity",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "other",
+          "desc": "A creature can make a dexterity saving throw to grab onto a fixed object it can reach, thus avoiding the fall."
+        },
+        "areaOfEffect": {
+          "type": "cylinder",
+          "size": 50
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/revivify",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/paladin"]
+      }
+    },
+    {
+      "id": "srd51:spell/rope-trick",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/sacred-flame",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "radiant",
+              "name": "Radiant"
+            },
+            "damageAtCharacterLevel": {
+              "1": "1d8",
+              "5": "2d8",
+              "11": "3d8",
+              "17": "4d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/sanctuary",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/scorching-ray",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "2": "2d6"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/scrying",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/secret-chest",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/see-invisibility",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/seeming",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "illusion",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/sending",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/sequester",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/shapechange",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/shatter",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "damage": [
+          {
+            "damageType": {
+              "index": "thunder",
+              "name": "Thunder"
+            },
+            "damageAtSlotLevel": {
+              "2": "3d8",
+              "3": "4d8",
+              "4": "5d8",
+              "5": "6d8",
+              "6": "7d8",
+              "7": "8d8",
+              "8": "9d8",
+              "9": "10d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/shield",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "abjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/shield-of-faith",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric", "srd51:class/paladin"]
+      }
+    },
+    {
+      "id": "srd51:spell/shillelagh",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/shocking-grasp",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "attackType": "melee",
+        "damage": [
+          {
+            "damageType": {
+              "index": "lightning",
+              "name": "Lightning"
+            },
+            "damageAtCharacterLevel": {
+              "1": "1d8",
+              "5": "2d8",
+              "11": "3d8",
+              "17": "4d8"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/silence",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "illusion",
+        "components": ["V", "S"],
+        "ritual": true,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/ranger"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/silent-image",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 15
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/simulacrum",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "illusion",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/sleep",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "enchantment",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageAtSlotLevel": {
+              "1": "5d8"
+            }
+          }
+        ],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/sleet-storm",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cylinder",
+          "size": 40
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/slow",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none",
+          "desc": "On failed save, the creature is slowed."
+        },
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 40
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/spare-the-dying",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "necromancy",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/speak-with-animals",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "divination",
+        "components": ["V", "S"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/druid", "srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/speak-with-dead",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "necromancy",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/speak-with-plants",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/druid", "srd51:class/ranger"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 30
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/spider-climb",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/spike-growth",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/ranger"],
+        "areaOfEffect": {
+          "type": "cylinder",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/spirit-guardians",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/spiritual-weapon",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "attackType": "melee",
+        "damage": [
+          {
+            "damageType": {
+              "index": "force",
+              "name": "Force"
+            },
+            "damageAtSlotLevel": {
+              "2": "1d8 + MOD",
+              "3": "1d8 + MOD",
+              "4": "2d8 + MOD",
+              "5": "2d8 + MOD",
+              "6": "3d8 + MOD",
+              "7": "3d8 + MOD",
+              "8": "4d8 + MOD",
+              "9": "4d8 + MOD"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/stinking-cloud",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "none",
+          "desc": "On a failed save, the creature spends its action that turn retching and reeling."
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/stone-shape",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/druid", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/stoneskin",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/druid",
+          "srd51:class/ranger",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/storm-of-vengeance",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "thunder",
+              "name": "Thunder"
+            },
+            "damageAtSlotLevel": {
+              "9": "2d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "none",
+          "desc": "On a failed save, a creature takes 2d6 thunder damage and becomes deafened for 5 minutes."
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 360
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/suggestion",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "enchantment",
+        "components": ["V", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/sunbeam",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "radiant",
+              "name": "Radiant"
+            },
+            "damageAtSlotLevel": {
+              "6": "6d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half",
+          "desc": "On a failed save, the creature is blinded until your next turn. On a successful save, it isn't blinded by this spell."
+        },
+        "areaOfEffect": {
+          "type": "line",
+          "size": 60
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/sunburst",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 8,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/druid", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "radiant",
+              "name": "Radiant"
+            },
+            "damageAtSlotLevel": {
+              "8": "12d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half",
+          "desc": "On failure, the creature is also blinded for 1 minute."
+        },
+        "areaOfEffect": {
+          "type": "cylinder",
+          "size": 60
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/symbol",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/telekinesis",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "transmutation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 30
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/telepathic-bond",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/teleport",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 7,
+        "school": "conjuration",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/teleportation-circle",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "conjuration",
+        "components": ["V", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/thaumaturgy",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "transmutation",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/thunderwave",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "evocation",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/druid",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ],
+        "damage": [
+          {
+            "damageType": {
+              "index": "thunder",
+              "name": "Thunder"
+            },
+            "damageAtSlotLevel": {
+              "1": "2d8",
+              "2": "3d8",
+              "3": "4d8",
+              "4": "5d8",
+              "5": "6d8",
+              "6": "7d8",
+              "7": "8d8",
+              "8": "9d8",
+              "9": "10d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "con",
+            "name": "CON"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 15
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/time-stop",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "transmutation",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/tiny-hut",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/tongues",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "divination",
+        "components": ["V", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/transport-via-plants",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/tree-stride",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "conjuration",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/ranger"]
+      }
+    },
+    {
+      "id": "srd51:spell/true-polymorph",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/bard", "srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/true-resurrection",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "necromancy",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric", "srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/true-seeing",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "divination",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/cleric",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/true-strike",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "divination",
+        "components": ["S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": [
+          "srd51:class/bard",
+          "srd51:class/sorcerer",
+          "srd51:class/warlock",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/unseen-servant",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 1,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/warlock", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/vampiric-touch",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "necromancy",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/warlock", "srd51:class/wizard"],
+        "attackType": "melee",
+        "damage": [
+          {
+            "damageType": {
+              "index": "necrotic",
+              "name": "Necrotic"
+            },
+            "damageAtSlotLevel": {
+              "3": "3d6",
+              "4": "4d6",
+              "5": "5d6",
+              "6": "6d6",
+              "7": "7d6",
+              "8": "8d6",
+              "9": "9d6"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/vicious-mockery",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 0,
+        "school": "enchantment",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "psychic",
+              "name": "Psychic"
+            },
+            "damageAtCharacterLevel": {
+              "1": "1d4",
+              "5": "2d4",
+              "11": "3d4",
+              "17": "4d4"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/wall-of-fire",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 4,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/sorcerer", "srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "fire",
+              "name": "Fire"
+            },
+            "damageAtSlotLevel": {
+              "4": "5d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "line",
+          "size": 60
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/wall-of-force",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/wall-of-ice",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/wizard"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "cold",
+              "name": "Cold"
+            },
+            "damageAtSlotLevel": {
+              "6": "10d6",
+              "7": "12d6",
+              "8": "14d6",
+              "9": "16d6"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 10
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/wall-of-stone",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 5,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/wall-of-thorns",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "piercing",
+              "name": "Piercing"
+            },
+            "damageAtSlotLevel": {
+              "6": "7d8",
+              "7": "8d8",
+              "8": "9d8",
+              "9": "10d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "dex",
+            "name": "DEX"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "line",
+          "size": 60
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/warding-bond",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "abjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"]
+      }
+    },
+    {
+      "id": "srd51:spell/water-breathing",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": [
+          "srd51:class/druid",
+          "srd51:class/ranger",
+          "srd51:class/sorcerer",
+          "srd51:class/wizard"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/water-walk",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": true,
+        "concentration": false,
+        "classes": [
+          "srd51:class/cleric",
+          "srd51:class/druid",
+          "srd51:class/ranger",
+          "srd51:class/sorcerer"
+        ]
+      }
+    },
+    {
+      "id": "srd51:spell/web",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "conjuration",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
+        "areaOfEffect": {
+          "type": "cube",
+          "size": 20
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/weird",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "illusion",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/wizard"],
+        "dc": {
+          "dcType": {
+            "index": "wis",
+            "name": "WIS"
+          },
+          "dcSuccess": "none"
+        },
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 30
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/wind-walk",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "transmutation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/druid"]
+      }
+    },
+    {
+      "id": "srd51:spell/wind-wall",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 3,
+        "school": "evocation",
+        "components": ["V", "S", "M"],
+        "ritual": false,
+        "concentration": true,
+        "classes": ["srd51:class/druid", "srd51:class/ranger"],
+        "damage": [
+          {
+            "damageType": {
+              "index": "bludgeoning",
+              "name": "Bludgeoning"
+            },
+            "damageAtSlotLevel": {
+              "3": "3d8"
+            }
+          }
+        ],
+        "dc": {
+          "dcType": {
+            "index": "str",
+            "name": "STR"
+          },
+          "dcSuccess": "half"
+        },
+        "areaOfEffect": {
+          "type": "line",
+          "size": 50
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/wish",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 9,
+        "school": "conjuration",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/sorcerer", "srd51:class/wizard"]
+      }
+    },
+    {
+      "id": "srd51:spell/word-of-recall",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 6,
+        "school": "conjuration",
+        "components": ["V"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/cleric"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 5
+        }
+      }
+    },
+    {
+      "id": "srd51:spell/zone-of-truth",
+      "kind": "spell",
+      "effects": [],
+      "data": {
+        "level": 2,
+        "school": "enchantment",
+        "components": ["V", "S"],
+        "ritual": false,
+        "concentration": false,
+        "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/paladin"],
+        "areaOfEffect": {
+          "type": "sphere",
+          "size": 15
+        }
+      }
+    }
+  ]
+}

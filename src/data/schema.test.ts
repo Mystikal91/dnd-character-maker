@@ -13,14 +13,14 @@ describe("parsePack", () => {
   it("accepts a valid pack and defaults effects to an empty list", () => {
     const pack = parsePack({
       manifest,
-      entries: [{ id: "test:elf", kind: "species" }],
+      entries: [{ id: "test:species/elf", kind: "species" }],
     });
     expect(pack.entries[0]?.effects).toEqual([]);
   });
 
   it("rejects ids that do not start with the pack id", () => {
     expect(() =>
-      parsePack({ manifest, entries: [{ id: "other:elf", kind: "species" }] }),
+      parsePack({ manifest, entries: [{ id: "other:species/elf", kind: "species" }] }),
     ).toThrow();
   });
 
@@ -29,8 +29,8 @@ describe("parsePack", () => {
       parsePack({
         manifest,
         entries: [
-          { id: "test:elf", kind: "species" },
-          { id: "test:elf", kind: "species" },
+          { id: "test:species/elf", kind: "species" },
+          { id: "test:species/elf", kind: "species" },
         ],
       }),
     ).toThrow();
@@ -41,7 +41,7 @@ describe("parsePack", () => {
     expect(() =>
       parsePack({
         manifest,
-        entries: [{ id: "test:elf", kind: "species", effects: [{ type: "explode" }] }],
+        entries: [{ id: "test:species/elf", kind: "species", effects: [{ type: "explode" }] }],
       }),
     ).toThrow();
   });
