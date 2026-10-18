@@ -26,6 +26,7 @@ const FILE_NAMES = {
   ability: "abilities",
   skill: "skills",
   language: "languages",
+  proficiency: "proficiencies",
 } as const;
 
 const readJson = async (name: string) =>

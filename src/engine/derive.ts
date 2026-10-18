@@ -12,6 +12,7 @@ import { abilityModifier } from "./abilities";
 import type { Character } from "./character";
 import { type ChecksResult, deriveChecks } from "./checks";
 import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
+import { type Warning, warn } from "./warnings";
 
 export type PackIndex = Map<string, Entry>;
 
@@ -55,16 +56,16 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   features: string[];
   spellcasting?: SpellcastingResult;
   /** Problems found while deriving. Never blocking: the sheet is still produced. */
-  warnings: string[];
+  warnings: Warning[];
 }
 
 const MAX_LEVEL = 20;
 
 export const proficiencyBonusForLevel = (level: number) => Math.ceil(Math.max(level, 1) / 4) + 1;
 
-function lookup(index: PackIndex, id: string, warnings: string[]): Entry | undefined {
+function lookup(index: PackIndex, id: string, warnings: Warning[]): Entry | undefined {
   const entry = index.get(id);
-  if (!entry) warnings.push(`Unknown entry: ${id}`);
+  if (!entry) warn(warnings, "unknownEntry", { id });
   return entry;
 }
 
@@ -75,7 +76,7 @@ function lookup(index: PackIndex, id: string, warnings: string[]): Entry | undef
 function expandEffects(
   entries: Entry[],
   index: PackIndex,
-  warnings: string[],
+  warnings: Warning[],
   seen = new Set<string>(),
 ): Effect[] {
   const result: Effect[] = [];
@@ -97,7 +98,7 @@ function overrideNumber(character: Character, key: string): number | undefined {
 }
 
 export function deriveSheet(character: Character, index: PackIndex): DerivedSheet {
-  const warnings: string[] = [];
+  const warnings: Warning[] = [];
 
   // Species, subspecies, background and the starting class contribute their effects;
   // other classes only contribute their multiclass proficiencies.
@@ -124,7 +125,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
 
   // Levels
   const level = character.classes.reduce((sum, cl) => sum + cl.level, 0);
-  if (level > MAX_LEVEL) warnings.push(`Total level is above ${MAX_LEVEL} (${level})`);
+  if (level > MAX_LEVEL) warn(warnings, "levelTooHigh", { level, max: MAX_LEVEL });
   const proficiencyBonus =
     overrideNumber(character, "proficiencyBonus") ?? proficiencyBonusForLevel(level);
 
@@ -139,7 +140,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     const override = overrideNumber(character, `ability.${ability}`);
     const overridden = override !== undefined;
     const score = override ?? base + bonus;
-    if (!overridden && score > 20) warnings.push(`${ability} is above 20 (${score})`);
+    if (!overridden && score > 20) warn(warnings, "abilityTooHigh", { ability, score });
     abilities[ability] = { base, bonus, score, modifier: abilityModifier(score), overridden };
   }
 
@@ -166,7 +167,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
       const sub = lookup(index, cl.subclassId, warnings);
       if (sub) {
         if (sub.parent !== cl.classId)
-          warnings.push(`${cl.subclassId} is not a subclass of ${cl.classId}`);
+          warn(warnings, "subclassMismatch", { subclass: cl.subclassId, class: cl.classId });
         for (const l of subclassData(sub).levels)
           if (l.level <= cl.level) features.push(...l.features);
       }
@@ -188,7 +189,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   });
   const hpOverride = overrideNumber(character, "hp.max");
   const spellcasting = casters.length === 1 ? casters[0] : undefined;
-  if (casters.length > 1) warnings.push("Multiclass spellcasting is not supported yet");
+  if (casters.length > 1) warn(warnings, "multiclassSpellcasting");
 
   // Proficiencies and traits
   const proficiencies = Object.fromEntries(

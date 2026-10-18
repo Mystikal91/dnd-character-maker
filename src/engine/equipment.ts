@@ -2,6 +2,7 @@ import { itemData } from "../data/items";
 import type { Ability, ProficiencyCategory } from "../data/schema";
 import type { Character } from "./character";
 import type { AbilityResult, PackIndex } from "./derive";
+import { type Warning, warn } from "./warnings";
 
 export interface DamageResult {
   dice: string;
@@ -48,7 +49,7 @@ interface Context {
   /** Held proficiencies as `category:target` keys. */
   held: Set<string>;
   proficiencyBonus: number;
-  warnings: string[];
+  warnings: Warning[];
 }
 
 const isProficient = (held: Set<string>, keys: string[]) => keys.some((k) => held.has(k));
@@ -71,8 +72,8 @@ function deriveArmorClass(ctx: Context): ArmorClassResult {
   });
   const bodies = armors.filter((a) => a.armor.category !== "shield");
   const shields = armors.filter((a) => a.armor.category === "shield");
-  if (bodies.length > 1) warnings.push("More than one suit of armor is equipped");
-  if (shields.length > 1) warnings.push("More than one shield is equipped");
+  if (bodies.length > 1) warn(warnings, "multipleArmor");
+  if (shields.length > 1) warn(warnings, "multipleShields");
 
   const dex = abilities.dex.modifier;
   const parts: ArmorClassResult["parts"] = [];
@@ -94,8 +95,8 @@ function deriveArmorClass(ctx: Context): ArmorClassResult {
 
   for (const { itemId, armor } of armors) {
     if (abilities.str.score < armor.strengthMinimum)
-      warnings.push(`${itemId} needs Strength ${armor.strengthMinimum}`);
-    if (!isProficient(held, armor.proficiency)) warnings.push(`Not proficient with ${itemId}`);
+      warn(warnings, "strengthMinimum", { item: itemId, minimum: armor.strengthMinimum });
+    if (!isProficient(held, armor.proficiency)) warn(warnings, "notProficient", { item: itemId });
   }
 
   const computed = parts.reduce((sum, p) => sum + p.value, 0);
@@ -151,7 +152,7 @@ function deriveLoad(ctx: Context): LoadResult {
   for (const item of ctx.character.inventory) {
     const entry = ctx.index.get(item.itemId);
     if (!entry) {
-      ctx.warnings.push(`Unknown entry: ${item.itemId}`);
+      warn(ctx.warnings, "unknownEntry", { id: item.itemId });
       continue;
     }
     carried += (itemData(entry).weight ?? 0) * item.quantity;

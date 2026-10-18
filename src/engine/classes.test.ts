@@ -89,8 +89,9 @@ describe("deriveSheet with SRD 5.1 classes", () => {
     c.classes = [
       { classId: "srd51:class/wizard", level: 3, subclassId: "srd51:subclass/champion" },
     ];
-    expect(deriveSheet(c, index).warnings).toContain(
-      "srd51:subclass/champion is not a subclass of srd51:class/wizard",
-    );
+    expect(deriveSheet(c, index).warnings).toContainEqual({
+      code: "subclassMismatch",
+      params: { subclass: "srd51:subclass/champion", class: "srd51:class/wizard" },
+    });
   });
 });

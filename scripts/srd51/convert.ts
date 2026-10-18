@@ -44,7 +44,8 @@ export type ConvertedPack = Record<
   | "property"
   | "ability"
   | "skill"
-  | "language",
+  | "language"
+  | "proficiency",
   Converted
 >;
 
@@ -647,6 +648,22 @@ function convertLanguages(raw: RawSource): Converted {
   return { entries, strings };
 }
 
+function convertProficiencies(raw: RawSource, ctx: Context): Converted {
+  const entries: Entry[] = [];
+  const strings: Strings = {};
+  for (const p of raw.proficiencies) {
+    const [category, target] = (ctx.proficiency.get(p.index) ?? "").split(":");
+    entries.push({
+      id: id("proficiency", p.index),
+      kind: "proficiency",
+      effects: [],
+      data: { category, target },
+    });
+    strings[`${p.index}.name`] = p.name;
+  }
+  return { entries, strings };
+}
+
 export function convertAll(raw: RawSource): ConvertedPack {
   const ctx = buildContext(raw);
   return {
@@ -663,5 +680,6 @@ export function convertAll(raw: RawSource): ConvertedPack {
     ability: convertAbilities(raw),
     skill: convertSkills(raw),
     language: convertLanguages(raw),
+    proficiency: convertProficiencies(raw, ctx),
   };
 }

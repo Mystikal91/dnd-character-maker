@@ -78,8 +78,8 @@ describe("deriveSheet", () => {
     c.abilityBase.dex = 19;
     const sheet = deriveSheet(c, index);
     expect(sheet.warnings).toEqual([
-      "Unknown entry: test:background/missing",
-      "dex is above 20 (21)",
+      { code: "unknownEntry", params: { id: "test:background/missing" } },
+      { code: "abilityTooHigh", params: { ability: "dex", score: 21 } },
     ]);
     expect(sheet.abilities.dex.score).toBe(21);
   });

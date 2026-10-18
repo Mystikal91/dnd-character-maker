@@ -56,9 +56,9 @@ describe("armor class", () => {
     const sheet = deriveSheet(c, index);
     expect(sheet.warnings).toEqual(
       expect.arrayContaining([
-        "More than one suit of armor is equipped",
-        "srd51:item/chain-mail needs Strength 13",
-        "Not proficient with srd51:item/chain-mail",
+        { code: "multipleArmor", params: {} },
+        { code: "strengthMinimum", params: { item: "srd51:item/chain-mail", minimum: 13 } },
+        { code: "notProficient", params: { item: "srd51:item/chain-mail" } },
       ]),
     );
     expect(sheet.armorClass.value).toBe(16);
@@ -128,6 +128,9 @@ describe("load", () => {
   it("warns about unknown items", () => {
     const c = withItems("fighter", {}, []);
     c.inventory.push({ itemId: "custom:item/mystery", quantity: 1, equipped: false });
-    expect(deriveSheet(c, index).warnings).toContain("Unknown entry: custom:item/mystery");
+    expect(deriveSheet(c, index).warnings).toContainEqual({
+      code: "unknownEntry",
+      params: { id: "custom:item/mystery" },
+    });
   });
 });

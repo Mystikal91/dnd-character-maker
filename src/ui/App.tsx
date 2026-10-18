@@ -1,8 +1,36 @@
+import { useEffect } from "preact/hooks";
+import { content, loadError } from "../app/store";
+import { loadContent } from "../content/browser";
+import { ui } from "../i18n/ui";
+import { CharacterForm } from "./CharacterForm";
+import { Sheet } from "./Sheet";
+
 export function App() {
+  useEffect(() => {
+    loadContent(["en"]).then(
+      (loaded) => {
+        content.value = loaded;
+      },
+      (error: unknown) => {
+        loadError.value = String(error);
+        console.error(error);
+      },
+    );
+  }, []);
+
   return (
     <main class="shell">
-      <h1>DND Character Maker</h1>
-      <p>Work in progress.</p>
+      <h1>{ui("app.title")}</h1>
+      {loadError.value ? (
+        <p role="alert">{ui("app.loadError")}</p>
+      ) : !content.value ? (
+        <p>{ui("app.loading")}</p>
+      ) : (
+        <div class="layout">
+          <CharacterForm />
+          <Sheet />
+        </div>
+      )}
     </main>
   );
 }

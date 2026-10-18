@@ -5,8 +5,18 @@ const ref = (index: string) => ({ index, name: index, url: `/api/2014/x/${index}
 
 const raw: RawSource = {
   proficiencies: [
-    { index: "skill-perception", type: "Skills", reference: { index: "perception" } },
-    { index: "battleaxes", type: "Weapons", reference: { index: "battleaxe" } },
+    {
+      index: "skill-perception",
+      name: "Skill: Perception",
+      type: "Skills",
+      reference: { index: "perception" },
+    },
+    {
+      index: "battleaxes",
+      name: "Battleaxes",
+      type: "Weapons",
+      reference: { index: "battleaxe" },
+    },
   ],
   languages: [
     {
