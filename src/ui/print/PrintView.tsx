@@ -29,6 +29,20 @@ interface Toggle {
   disabled?: boolean;
 }
 
+function Check({ toggle, settings }: { toggle: Toggle; settings: PrintSettings }) {
+  return (
+    <label>
+      <input
+        type="checkbox"
+        checked={settings[toggle.key] && !toggle.disabled}
+        disabled={toggle.disabled}
+        onChange={(e) => updatePrintSettings({ [toggle.key]: e.currentTarget.checked })}
+      />
+      {ui(toggle.label)}
+    </label>
+  );
+}
+
 /** Print preview with its options. The page content is what the browser prints. */
 export function PrintView() {
   const settings = printSettings.value;
@@ -38,14 +52,15 @@ export function PrintView() {
   const hasSpells = Boolean(c && s && collectSpellRows(c, s).length > 0);
   const nothing = printsNothing(settings, isCaster);
 
-  const toggles: Toggle[] = [
+  const pageToggles: Toggle[] = [
     { key: "includeSheet", label: "print.sheet" },
     { key: "includeStory", label: "print.story" },
     { key: "includeFeatureText", label: "print.featureText" },
+    { key: "featureCards", label: "print.featureCards" },
+  ];
+  const spellToggles: Toggle[] = [
     { key: "includeAvailable", label: "print.available", disabled: !isCaster },
     { key: "spellCards", label: "print.spellCards", disabled: !hasSpells },
-    { key: "featureCards", label: "print.featureCards" },
-    { key: "lowInk", label: "print.lowInk" },
   ];
 
   return (
@@ -54,18 +69,22 @@ export function PrintView() {
       <style>{`@page { size: ${PAGE_SIZE[settings.paper]}; margin: 12mm; }`}</style>
 
       <div class="card print-toolbar no-print">
-        <div class="print-actions">
-          <button type="button" class="secondary" onClick={() => showView("edit")}>
-            {ui("print.back")}
-          </button>
-          <button type="button" class="primary" onClick={() => window.print()} disabled={nothing}>
-            {ui("print.print")}
-          </button>
+        <div class="print-top">
+          <h2>{ui("print.title")}</h2>
+          <div class="print-actions">
+            <button type="button" onClick={() => showView("edit")}>
+              {ui("print.back")}
+            </button>
+            <button type="button" class="primary" onClick={() => window.print()} disabled={nothing}>
+              {ui("print.print")}
+            </button>
+          </div>
         </div>
-        <p class="muted">{ui("print.hint")}</p>
+        <p class="print-hint">{ui("print.hint")}</p>
 
-        <div class="print-options">
-          <div>
+        <div class="print-groups">
+          <fieldset class="print-group">
+            <legend>{ui("print.group.paper")}</legend>
             <label class="field">
               <span>{ui("print.paper")}</span>
               <select
@@ -76,6 +95,22 @@ export function PrintView() {
                 <option value="letter">{ui("print.paperLetter")}</option>
               </select>
             </label>
+            <div class="checks">
+              <Check toggle={{ key: "lowInk", label: "print.lowInk" }} settings={settings} />
+            </div>
+          </fieldset>
+
+          <fieldset class="print-group">
+            <legend>{ui("print.group.pages")}</legend>
+            <div class="checks">
+              {pageToggles.map((t) => (
+                <Check key={t.key} toggle={t} settings={settings} />
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset class="print-group">
+            <legend>{ui("print.group.spells")}</legend>
             <label class="field">
               <span>{ui("print.spells")}</span>
               <select
@@ -89,21 +124,12 @@ export function PrintView() {
                 <option value="none">{ui("print.spellsNone")}</option>
               </select>
             </label>
-          </div>
-
-          <div class="checks">
-            {toggles.map((t) => (
-              <label key={t.key}>
-                <input
-                  type="checkbox"
-                  checked={settings[t.key] && !t.disabled}
-                  disabled={t.disabled}
-                  onChange={(e) => updatePrintSettings({ [t.key]: e.currentTarget.checked })}
-                />
-                {ui(t.label)}
-              </label>
-            ))}
-          </div>
+            <div class="checks">
+              {spellToggles.map((t) => (
+                <Check key={t.key} toggle={t} settings={settings} />
+              ))}
+            </div>
+          </fieldset>
         </div>
       </div>
 

@@ -10,14 +10,13 @@
 
 .sheet-header {
   display: grid;
-  gap: 0.75rem;
+  /* Same column gap as .sheet-grid, so the banners line up with the columns below. */
+  gap: 0.75rem 1rem;
   align-items: center;
 }
 
-@container sheet (min-width: 44rem) {
-  .sheet-header {
-    grid-template-columns: 1.1fr 1.4fr 1fr;
-  }
+.sheet-header > * {
+  min-width: 0;
 }
 
 .banner {
@@ -87,23 +86,50 @@
   min-width: 0;
 }
 
+/* The header uses the same columns as the grid below, so banners line up with the columns. */
 @container sheet (min-width: 44rem) {
-  .sheet-grid {
+  .sheet-grid,
+  .sheet-header {
     grid-template-columns: 1fr 1.25fr;
   }
 
   .col-right {
     grid-column: 1 / -1;
   }
+
+  /* Two columns: name and class side by side, who-you-are underneath across both. */
+  .banner-name {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .banner-class {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .sheet-info {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
 }
 
 @container sheet (min-width: 66rem) {
-  .sheet-grid {
+  .sheet-grid,
+  .sheet-header {
     grid-template-columns: 0.95fr 1.2fr 1.05fr;
   }
 
   .col-right {
     grid-column: auto;
+  }
+
+  /* Three columns: name, who-you-are, class, each above its own column. */
+  .banner-name,
+  .banner-class,
+  .sheet-info {
+    grid-column: auto;
+    grid-row: auto;
   }
 }
 

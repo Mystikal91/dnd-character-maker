@@ -16,10 +16,6 @@
   --p-display: "Cinzel", "EB Garamond", Georgia, serif;
   --p-n: 3mm; /* corner cut of frames */
   --p-page-h: 273mm; /* printable height: A4 minus margins */
-  font-family: var(--p-font);
-  font-size: 9pt;
-  line-height: 1.25;
-  color: var(--p-ink);
 }
 
 .print-root.paper-letter {
@@ -33,7 +29,6 @@
   --p-tint: #eef0f6;
   --p-line: #9aa1ad;
   --p-n: 0mm;
-  font-size: 8pt;
 }
 
 /* Black and white, no fills: for printing without colored ink. */
@@ -48,23 +43,40 @@
 /* ---- Toolbar (screen only) ---- */
 
 .print-toolbar {
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.print-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+}
+
+.print-top h2 {
+  margin: 0;
 }
 
 .print-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
 }
 
 .print-actions button {
-  min-height: 2.5rem;
-  padding: 0 1rem;
+  min-height: 2.75rem;
+  padding: 0 1.1rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: var(--bg);
+  background: var(--surface-2);
+  color: var(--fg);
+  font-size: 1rem;
   cursor: pointer;
+}
+
+.print-actions button:hover {
+  border-color: var(--accent);
 }
 
 .print-actions button.primary {
@@ -79,23 +91,57 @@
   cursor: not-allowed;
 }
 
-.print-options {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  gap: 0.5rem 1rem;
-  align-items: start;
+.print-hint {
+  margin: 0.75rem 0 1rem;
+  color: var(--muted);
 }
 
-.print-options .checks {
+.print-groups {
   display: grid;
-  gap: 0.15rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.75rem 1rem;
 }
 
-.print-options .checks label {
+.print-group {
+  margin: 0;
+  padding: 0.75rem 1rem 0.5rem;
+}
+
+.print-group legend {
+  padding: 0 0.4rem;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.print-group .field {
+  margin-bottom: 0.5rem;
+}
+
+.print-group .checks {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.print-group .checks label {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.6rem;
   align-items: center;
-  min-height: 2rem;
+  min-height: 2.4rem;
+  cursor: pointer;
+}
+
+.print-group .checks label:has(input:disabled) {
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.print-group input[type="checkbox"] {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--accent);
 }
 
 /* ---- Paper ---- */
@@ -106,6 +152,9 @@
 }
 
 .paper {
+  font-family: var(--p-font);
+  font-size: 9pt;
+  line-height: 1.25;
   box-sizing: border-box;
   width: 210mm;
   min-height: 297mm;
@@ -119,6 +168,10 @@
 .paper-letter .paper {
   width: 215.9mm;
   min-height: 279.4mm;
+}
+
+:root[data-style="modern"] .paper {
+  font-size: 8pt;
 }
 
 .paper * {
