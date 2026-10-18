@@ -166,6 +166,25 @@ def run(lang: str, pdf: Path) -> None:
             values[f"{slug}.desc"] = "\n\n".join(section.body)
     print(lang, "conditions", write(lang, "conditions", values), "unknown:", unknown)
 
+    # The single background of the SRD: a level-3 section whose first level-4 child is the
+    # background feature, titled "Feature: Name" in every language.
+    from import_classes import CLASSES  # local import: import_classes imports this module
+
+    values = {}
+    after_classes = max(
+        (i for i, s in enumerate(secs) if s.level == 1 and key(s.title) in CLASSES[lang]), default=0
+    )
+    for i, section in enumerate(secs):
+        if i < after_classes:
+            continue
+        nxt = secs[i + 1] if i + 1 < len(secs) else None
+        if section.level == 3 and nxt and nxt.level == 4 and ":" in nxt.title and nxt.body:
+            values["acolyte.name"] = section.title
+            values["acolyte.featureName"] = nxt.title.split(":", 1)[1].strip()
+            values["acolyte.featureDesc"] = "\n\n".join(nxt.body)
+            break
+    print(lang, "backgrounds", write(lang, "backgrounds", values))
+
     # Alignments: the PDF gives the abbreviation and the paragraph; names are not set as headings.
     english = load_en("alignments")
     slugs = [k.split(".")[0] for k in english if k.endswith(".abbreviation")]

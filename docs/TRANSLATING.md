@@ -67,11 +67,22 @@ of translated headings (`import_reference.py`).
 python scripts/srd-translations/import_reference.py it path/to/SRD_CC_v5.1_IT.pdf
 ```
 
-Imported so far, in Italian, French, German and Spanish: spells, abilities, skills, conditions
-and alignment descriptions; school names (not German). Known gaps in the source PDFs: the Italian
-SRD has no text for the conditions frightened, prone, restrained and stunned, and exhaustion keeps
-its English text everywhere because its table is not part of the running text. Classes, species,
-features, items and the rest still fall back to English.
+```bash
+python scripts/srd-translations/import_species.py it path/to/SRD_CC_v5.1_IT.pdf
+python scripts/srd-translations/import_classes.py it path/to/SRD_CC_v5.1_IT.pdf
+```
+
+Imported so far, in Italian, French, German and Spanish: spells, abilities, skills, conditions,
+alignment descriptions, species, subspecies, the traits that belong to one species, the
+background, the twelve classes with their starting equipment and spellcasting text, the
+subclasses, and about 55% of the class features (225 of 407). A feature stays in English when
+its name is a variant ("Brutal Critical (1 die)"), repeats, or has no heading of its own in the
+PDF. School names are missing in German.
+
+Known gaps in the source PDFs: the Italian SRD has no text for the conditions frightened, prone,
+restrained and stunned, and exhaustion keeps its English text everywhere because its table is
+not part of the running text. Items, languages, proficiencies and the tables of characteristic
+suggestions (personality traits, ideals, bonds, flaws) are not imported yet: they live in tables.
 
 ## Checking a translation locally
 
