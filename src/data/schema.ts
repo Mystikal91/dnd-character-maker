@@ -1,0 +1,108 @@
+import * as v from "valibot";
+
+export const ABILITIES = ["str", "dex", "con", "int", "wis", "cha"] as const;
+export const AbilitySchema = v.picklist(ABILITIES);
+export type Ability = v.InferOutput<typeof AbilitySchema>;
+
+/** Namespaced id, e.g. `srd51:high-elf`. Texts live in locale files, keyed by this id. */
+export const EntryIdSchema = v.pipe(
+  v.string(),
+  v.regex(/^[a-z0-9]+:[a-z0-9]+(-[a-z0-9]+)*$/, "Expected an id like `pack:entry-name`"),
+);
+
+export const PROFICIENCY_CATEGORIES = [
+  "skill",
+  "save",
+  "weapon",
+  "armor",
+  "tool",
+  "language",
+] as const;
+export const ProficiencyCategorySchema = v.picklist(PROFICIENCY_CATEGORIES);
+export type ProficiencyCategory = v.InferOutput<typeof ProficiencyCategorySchema>;
+
+/**
+ * Closed set of declarative effects. Extend deliberately, one type at a time.
+ * Features that need custom logic are expressed as `trait` (+ optional `resource`)
+ * and are not automated.
+ */
+export const EffectSchema = v.variant("type", [
+  v.object({
+    type: v.literal("abilityBonus"),
+    ability: AbilitySchema,
+    value: v.number(),
+  }),
+  v.object({
+    type: v.literal("proficiency"),
+    category: ProficiencyCategorySchema,
+    target: v.string(),
+  }),
+  v.object({
+    type: v.literal("trait"),
+    id: EntryIdSchema,
+  }),
+  v.object({
+    type: v.literal("choice"),
+    id: v.string(),
+    choose: v.pipe(v.number(), v.integer(), v.minValue(1)),
+    from: v.string(),
+  }),
+  v.object({
+    type: v.literal("grantSpell"),
+    spell: EntryIdSchema,
+  }),
+  v.object({
+    type: v.literal("resource"),
+    id: v.string(),
+    max: v.pipe(v.number(), v.integer(), v.minValue(0)),
+    recharge: v.picklist(["short", "long", "dawn"]),
+  }),
+]);
+export type Effect = v.InferOutput<typeof EffectSchema>;
+
+export const ENTRY_KINDS = [
+  "species",
+  "subspecies",
+  "class",
+  "background",
+  "trait",
+  "spell",
+  "item",
+] as const;
+
+export const EntrySchema = v.object({
+  id: EntryIdSchema,
+  kind: v.picklist(ENTRY_KINDS),
+  parent: v.optional(EntryIdSchema),
+  effects: v.optional(v.array(EffectSchema), []),
+});
+export type Entry = v.InferOutput<typeof EntrySchema>;
+
+export const PackManifestSchema = v.object({
+  id: v.pipe(v.string(), v.regex(/^[a-z0-9]+$/)),
+  ruleset: v.picklist(["srd51", "srd52", "custom"]),
+  version: v.string(),
+  license: v.string(),
+  attribution: v.string(),
+});
+
+export const PackSchema = v.pipe(
+  v.object({
+    manifest: PackManifestSchema,
+    entries: v.array(EntrySchema),
+  }),
+  v.check(
+    (pack) => pack.entries.every((e) => e.id.startsWith(`${pack.manifest.id}:`)),
+    "Every entry id must start with the pack id",
+  ),
+  v.check(
+    (pack) => new Set(pack.entries.map((e) => e.id)).size === pack.entries.length,
+    "Entry ids must be unique within a pack",
+  ),
+);
+export type Pack = v.InferOutput<typeof PackSchema>;
+
+/** Parses untrusted pack JSON; throws a ValiError describing the first problems. */
+export function parsePack(input: unknown): Pack {
+  return v.parse(PackSchema, input);
+}
