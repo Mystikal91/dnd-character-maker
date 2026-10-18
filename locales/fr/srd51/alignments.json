@@ -1,0 +1,20 @@
+{
+  "lawful-good.abbreviation": "LB",
+  "lawful-good.desc": "Loyal bon (LB). On peut compter sur ces créatures pour se conduire selon les attentes d’une société vertueuse. Les dragons d’or, les paladins et la plupart des nains sont loyaux bons.",
+  "neutral-good.abbreviation": "NB",
+  "neutral-good.desc": "Neutre bon (NB). Ces personnes font de leur mieux pour aider autrui selon ses besoins. De nombreux célestes, certains géants des nuages et la plupart des gnomes sont neutres bons.",
+  "chaotic-good.abbreviation": "CB",
+  "chaotic-good.desc": "Chaotique bon (CB). Ces créatures agissent selon ce que leur conscience leur dicte, sans se soucier des attentes de la société. Les dragons de cuivre, de nombreux elfes et les licornes sont chaotiques bons.",
+  "lawful-neutral.abbreviation": "LN",
+  "lawful-neutral.desc": "Loyal neutre (LN). Ces individus se conduisent en accord avec la loi, les traditions ou leur code personnel. De nombreux moines et quelques magiciens sont loyaux neutres.",
+  "neutral.abbreviation": "N",
+  "neutral.desc": "Neutre (N). Cet alignement est celui des gens qui préfèrent éviter les questions morales et ne pas prendre parti, pour simplement agir au cas par cas, du mieux possible. Les hommes-lézards, la plupart des druides et de nombreux humains sont neutres.",
+  "chaotic-neutral.abbreviation": "CN",
+  "chaotic-neutral.desc": "Chaotique neutre (CN). Ces créatures agissent comme bon leur semble, leur propre liberté important plus que tout le reste. De nombreux barbares et roublards, ainsi que certains bardes, sont chaotiques neutres.",
+  "lawful-evil.abbreviation": "LM",
+  "lawful-evil.desc": "Loyal mauvais (LM). Ces créatures s’approprient méthodiquement ce qu’elles désirent tout en restant dans le cadre de la loyauté, de la tradition ou de l’ordre. Les diables, les dragons bleus et les hobgobelins sont loyaux mauvais.",
+  "neutral-evil.abbreviation": "NM",
+  "neutral-evil.desc": "Neutre mauvais (NM). Cet alignement est celui des êtres qui agissent à leur guise, sans scrupules ni la moindre compassion. De nombreux drows, certains géants des nuages et les gobelins sont neutres mauvais.",
+  "chaotic-evil.abbreviation": "CM",
+  "chaotic-evil.desc": "Chaotique mauvais (CM). La violence gratuite de ces créatures est motivée par la cupidité, la haine ou la soif de sang. Les démons, les dragons rouges et les orcs sont chaotiques mauvais."
+}

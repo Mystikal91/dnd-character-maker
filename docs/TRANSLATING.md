@@ -58,8 +58,20 @@ English entry by level, school, components, ritual/concentration flags and the n
 dice in its text, using a global best assignment. The script prints the few matches it is less
 sure about (a school mislabelled in the PDF, for example); names there are still right.
 
-Imported so far: spells (all four languages), plus school names (not German). The rest of the
-rules texts (classes, species, features, items, conditions...) still fall back to English.
+Other importers read the PDFs by structure instead: body text is Cambria and headings are
+Calibri, whose size gives the heading level in all four documents (`pdf_sections.py`). Small
+lists are found by their shape (`reference.py`) and paired with English ids through a glossary
+of translated headings (`import_reference.py`).
+
+```bash
+python scripts/srd-translations/import_reference.py it path/to/SRD_CC_v5.1_IT.pdf
+```
+
+Imported so far, in Italian, French, German and Spanish: spells, abilities, skills, conditions
+and alignment descriptions; school names (not German). Known gaps in the source PDFs: the Italian
+SRD has no text for the conditions frightened, prone, restrained and stunned, and exhaustion keeps
+its English text everywhere because its table is not part of the running text. Classes, species,
+features, items and the rest still fall back to English.
 
 ## Checking a translation locally
 

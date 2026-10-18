@@ -1,0 +1,20 @@
+{
+  "str.name": "Forza",
+  "str.abbreviation": "FOR",
+  "str.desc": "La Forza misura la potenza del corpo, l'addestramento fisico e l'efficacia con cui un personaggio è in grado di esercitare la propria potenza fisica.\n\nUna prova di Forza può rappresentare ogni tentativo di sollevare, spingere, tirare o spezzare qualcosa, di farsi strada attraverso uno spazio, o di applicare in altri modi la forza bruta a una situazione. L'abilità Atletica rappresenta una maggiore prestanza in certi tipi di prove di Forza.",
+  "dex.name": "Destrezza",
+  "dex.abbreviation": "DES",
+  "dex.desc": "La Destrezza misura l'agilità, i riflessi e l'equilibrio.\n\nUna prova di Destrezza può rappresentare ogni tentativo di muoversi agilmente, silenziosamente o rapidamente o di evitare di cadere quando ci si muove su una superficie precaria. Le abilità Acrobazia, Furtività e Rapidità di Mano rappresentano una maggiore bravura in certi tipi di prove di Destrezza.",
+  "con.name": "Costituzione",
+  "con.abbreviation": "COS",
+  "con.desc": "La Costituzione misura la salute, la resistenza fisica e l'energia vitale del personaggio.\n\nLe prove di Costituzione sono rare: nessuna abilità viene applicata alle prove di Costituzione, in quanto la resistenza rappresentata da questa caratteristica è principalmente una dote passiva e non richiede uno sforzo specifico da parte di un personaggio o di un mostro. Una prova di Costituzione può tuttavia rappresentare il tentativo di un personaggio di spingersi oltre i propri limiti.",
+  "int.name": "Intelligenza",
+  "int.abbreviation": "INT",
+  "int.desc": "L'Intelligenza misura l'acume mentale, la precisione della memoria e le capacità logiche.\n\nUna prova di Intelligenza entra in gioco quando un personaggio ricorre alla logica, all'istruzione, alla memoria o al ragionamento deduttivo. Le abilità Arcano, Storia, Indagare, Natura e Religione rappresentano una preparazione superiore in certi tipi di prove di Intelligenza.",
+  "wis.name": "Saggezza",
+  "wis.abbreviation": "SAG",
+  "wis.desc": "La Saggezza rappresenta la percezione, l'intuizione e il grado di sintonia del personaggio con il mondo circostante.\n\nUna prova di Saggezza rappresenta un tentativo di interpretare il linguaggio corporeo o le emozioni di qualcuno, notare qualcosa nell'ambiente o prendersi cura di una persona ferita. Le abilità Addestrare Animali, Intuizione, Medicina, Percezione e Sopravvivenza rappresentano una maggiore sensibilità in certi tipi di prove di Saggezza.",
+  "cha.name": "Carisma",
+  "cha.abbreviation": "CAR",
+  "cha.desc": "Il Carisma misura la capacità del personaggio di interagire con successo con gli altri. Include fattori come la sua sicurezza e la sua eloquenza e può rappresentare una personalità accattivante o imperiosa.\n\nUn personaggio può effettuare una prova di Carisma quando cerca di influenzare o di intrattenere gli altri, quando tenta di fare bella figura con qualcuno o di raccontare una bugia convincente, o quando deve destreggiarsi in una situazione sociale spinosa. Le abilità Inganno, Intimidire, Intrattenere e Persuasione rappresentano una maggiore disinvoltura in certi tipi di prove di Carisma."
+}

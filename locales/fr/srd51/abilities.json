@@ -1,0 +1,20 @@
+{
+  "str.name": "Force",
+  "str.abbreviation": "FOR",
+  "str.desc": "La Force mesure la puissance corporelle, l’entraînement athlétique et votre capacité à exercer un effort physique.\n\nUn test de Force sert généralement à soulever, pousser, tirer ou briser quelque chose, à imposer votre masse corporelle ou à régler une situation par la force brute. La compétence Athlétisme reflète le talent pour certains types de tests de Force.",
+  "dex.name": "Dextérité",
+  "dex.abbreviation": "DEX",
+  "dex.desc": "La Dextérité mesure l’agilité, les réflexes et l’équilibre.\n\nUn test de Dextérité illustre une tentative de se déplacer lestement, rapidement ou discrètement, ou d’éviter la chute en foulant un sol traître. Les compétences Acrobaties, Discrétion et Escamotage reflètent des aspects spécifiques des tests de Dextérité.",
+  "con.name": "Constitution",
+  "con.abbreviation": "CON",
+  "con.desc": "La Constitution mesure la santé, l’endurance et la force vitale.\n\nLes tests de Constitution sont peu courants et aucune compétence n’y est associée, car la vigueur représentée par cette caractéristique est essentiellement passive (elle ne demande pas d’implication spécifique de la part des personnages et monstres). Un test de Constitution peut toutefois illustrer une tentative de dépasser ses limites.",
+  "int.name": "Intelligence",
+  "int.abbreviation": "INT",
+  "int.desc": "L’Intelligence mesure votre acuité mentale, votre mémoire et votre capacité de raisonnement.\n\nUn test d’Intelligence intervient lorsqu’il vous faut faire preuve de logique, de culture, de mémoire ou de déduction. Les compétences Arcanes, Histoire, Investigation, Nature et Religion reflètent vos facilités pour certains types de tests d’Intelligence.",
+  "wis.name": "Sagesse",
+  "wis.abbreviation": "SAG",
+  "wis.desc": "La Sagesse reflète votre lien avec le monde qui vous entoure et représente la sensibilité et l’intuition.\n\nUn test de Sagesse peut intervenir pour interpréter le langage corporel, comprendre les sentiments d’autrui, noter d’infimes changements dans l’environnement ou soigner un blessé. Les compétences Dressage, Intuition, Médecine, Perception et Survie reflètent vos facilités pour certains types de tests de Sagesse.",
+  "cha.name": "Charisme",
+  "cha.abbreviation": "CHA",
+  "cha.desc": "Le Charisme mesure votre capacité à interagir efficacement avec autrui. Il met en avant des qualités comme la confiance en soi et l’éloquence ; un Charisme élevé représente parfois un charme ou une autorité naturels.\n\nUn test de Charisme peut intervenir lorsque vous tentez d’influencer des personnes ou de les divertir, lorsque vous cherchez à impressionner ou à mentir de manière convaincante, et lorsque vous prenez part à un échange compliqué entre individus. Les compétences Intimidation, Persuasion, Représentation et Tromperie reflètent vos facilités dans certains types de tests de Charisme."
+}

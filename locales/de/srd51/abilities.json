@@ -1,0 +1,20 @@
+{
+  "str.name": "Stärke",
+  "str.abbreviation": "STR",
+  "str.desc": "Stärke misst körperliche Kraft, athletische Ausbildung und das Ausmaß, in dem du rohe Gewalt ausüben kannst.\n\nEin Stärkewurf kann der Versuch sein, etwas zu heben, zu drücken, zu ziehen oder zu brechen, deinen Körper durch einen Bereich zu zwängen oder auf andere Weise rohe Gewalt anzuwenden. Die Fertigkeit Athletik spiegelt dieses Geschick bei bestimmten Arten von Stärkewürfen wider.",
+  "dex.name": "Geschicklichkeit",
+  "dex.abbreviation": "GES",
+  "dex.desc": "Geschicklichkeit misst Beweglichkeit, Reflexe und Gleichgewichtssinn.\n\nEin Geschicklichkeitswurf kann der Versuch sein, sich gewandt, schnell oder leise zu bewegen oder auf tückischem Untergrund nicht zu fallen. Die Fertigkeiten Akrobatik, Fingerfertigkeit und Heimlichkeit spiegeln dieses Geschick bei bestimmten Arten von Geschicklichkeitswürfen wider.",
+  "con.name": "Konstitution",
+  "con.abbreviation": "KON",
+  "con.desc": "Die Konstitution misst Gesundheit, Ausdauer und Lebenskraft.\n\nKonstitutionswürfe sind selten und werden bei keinen Fertigkeiten verwendet, da die Ausdauer, die dieses Attribut darstellt, weitgehend passiv ist und keine besondere Anstrengung seitens eines Charakters oder Monsters erfordert. Ein Konstitutionswurf kann aber deinen Versuch darstellen, über die normalen Grenzen hinauszugehen.",
+  "int.name": "Intelligenz",
+  "int.abbreviation": "INT",
+  "int.desc": "Intelligenz misst deine geistige Schärfe, die Präzision deiner Erinnerungen und dein logisches Denkvermögen.\n\nDu führst einen Intelligenzwurf aus, wenn du auf Logik, Bildung, Gedächtnis oder deduktives Denken angewiesen bist. Die Fertigkeiten Arkane Kunde, Geschichte, Nachforschungen, Naturkunde und Religion spiegeln dieses Geschick bei bestimmten Arten von Intelligenzwürfen wider.",
+  "wis.name": "Weisheit",
+  "wis.abbreviation": "WEI",
+  "wis.desc": "Weisheit spiegelt wider, wie gut du auf die Welt um dich herum eingestimmt bist, und repräsentiert Wahrnehmung und Intuition.\n\nDu führst einen Weisheitswurf aus, um Körpersprache oder die Gefühle einer Person zu verstehen, um Dinge in der Umgebung zu bemerken oder dich um einen Verletzten zu kümmern. Die Fertigkeiten Heilkunde, Mit Tieren umgehen, Motiv erkennen, Überlebenskunst und Wahrnehmung spiegeln dieses Geschick bei bestimmten Arten von Weisheitswürfen wider.",
+  "cha.name": "Charisma",
+  "cha.abbreviation": "CHA",
+  "cha.desc": "Charisma misst deine Fähigkeit, effektiv mit anderen zu interagieren. Dazu gehören Faktoren wie Selbstvertrauen und Wortgewandtheit, sowie eine charmante oder gebieterische Persönlichkeit.\n\nDu führst einen Charismawurf aus, um andere zu beeinflussen oder zu unterhalten, um Eindruck zu schinden, mit einer Lüge zu überzeugen oder eine schwierige soziale Situation zu meistern. Die Fertigkeiten Auftreten, Einschüchtern, Täuschen und Überzeugen spiegeln dieses Geschick bei bestimmten Arten von Charismawürfen wider."
+}

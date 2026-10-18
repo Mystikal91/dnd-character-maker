@@ -1,0 +1,20 @@
+{
+  "lawful-good.abbreviation": "LB",
+  "lawful-good.desc": "Las criaturas legales buenas (LB) cumplirán con lo que la sociedad considera correcto. Los dragones de oro, los paladines y la mayoría de los enanos son legales buenos.",
+  "neutral-good.abbreviation": "NB",
+  "neutral-good.desc": "Las personas neutrales buenas (NB) harán lo que esté en su mano para ayudar a los demás de acuerdo con sus necesidades. Muchos celestiales, algunos gigantes de las nubes y la mayoría de gnomos son neutrales buenos.",
+  "chaotic-good.abbreviation": "CB",
+  "chaotic-good.desc": "Los seres caóticos buenos (CB) actúan siguiendo los dictados de sus conciencias, sin preocuparles lo que otros esperan de ellos. Los dragones de cobre, muchos elfos y los unicornios son caóticos buenos.",
+  "lawful-neutral.abbreviation": "LN",
+  "lawful-neutral.desc": "Los individuos legales neutrales (LN) se comportan de acuerdo con la ley, la tradición o sus códigos de conducta personales. Muchos monjes y algunos magos son legales neutrales.",
+  "neutral.abbreviation": "N",
+  "neutral.desc": "Neutral (N) es el alineamiento de aquellos que prefieren evitar las cuestiones éticas, no toman partido y, por tanto, hacen lo que les parece mejor en cada momento. Los hombres lagarto, la mayoría de druidas y muchos humanos son neutrales.",
+  "chaotic-neutral.abbreviation": "CN",
+  "chaotic-neutral.desc": "Las criaturas caóticas neutrales (CN) persiguen sus caprichos y valoran su libertad personal por encima de cualquier otra cosa. Muchos bárbaros y pícaros, así como algunos bardos, son caóticos neutrales.",
+  "lawful-evil.abbreviation": "LM",
+  "lawful-evil.desc": "Los seres legales malvados (LM) toman lo que les viene en gana, pero siempre de forma metódica y dentro de los límites que marcan la tradición, el orden o la lealtad. Los diablos, los dragones azules y los hobgoblins son legales malvados.",
+  "neutral-evil.abbreviation": "NM",
+  "neutral-evil.desc": "Neutral malvado (NM) es el alineamiento de los que se salen con la suya siempre que se presenta la oportunidad, sin compasión ni remordimiento alguno. Muchos drows, algunos gigantes de las nubes y los goblins son neutrales malvados.",
+  "chaotic-evil.abbreviation": "CM",
+  "chaotic-evil.desc": "Las criaturas caóticas malvadas (CM) recurren a la violencia arbitrariamente, movidas por la codicia, el odio o el ansia de sangre. Los demonios, los dragones rojos y los orcos son caóticos malvados."
+}

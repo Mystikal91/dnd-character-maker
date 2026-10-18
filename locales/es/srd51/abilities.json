@@ -1,0 +1,20 @@
+{
+  "str.name": "Fuerza",
+  "str.abbreviation": "FUE",
+  "str.desc": "La Fuerza indica la condición física, el entrenamiento atlético y la cantidad de fuerza bruta que se puede ejercer.\n\nLas pruebas de Fuerza abarcan cualquier intento de levantar, empujar, tirar o romper algo, de abrirse paso a la fuerza a través de algún sitio o de aplicar la fuerza bruta a una situación de cualquier otro modo. La habilidad Atletismo refleja la aptitud para ciertos tipos de pruebas de Fuerza.",
+  "dex.name": "Destreza",
+  "dex.abbreviation": "DES",
+  "dex.desc": "La Destreza indica la agilidad, los reflejos y el equilibrio.\n\nLas pruebas de Destreza abarcan cualquier intento de moverse de forma hábil, rápida o silenciosa, así como de evitar caerse al pisar suelo inestable. Las habilidades Acrobacias, Juego de Manos y Sigilo reflejan la aptitud para ciertas pruebas de Destreza.",
+  "con.name": "Constitución",
+  "con.abbreviation": "CON",
+  "con.desc": "La Constitución mide el estado de salud, el aguante y la fuerza vital.\n\nLas pruebas de Constitución son infrecuentes y no se les aplica ninguna habilidad, ya que esta característica representa una resistencia casi totalmente pasiva, más que implicar un esfuerzo específico por parte de personajes o monstruos. Con todo, una prueba de Constitución puede servir para determinar si logras superar tus límites habituales.",
+  "int.name": "Inteligencia",
+  "int.abbreviation": "INT",
+  "int.desc": "La Inteligencia indica la agudeza mental, la retentiva y la capacidad para razonar.\n\nLas pruebas de Inteligencia entran en juego cuando necesitas recurrir a la lógica, los conocimientos, la memoria o el razonamiento deductivo. Las habilidades Conocimiento Arcano, Historia, Investigación, Naturaleza y Religión reflejan la aptitud para ciertos tipos de pruebas de Inteligencia.",
+  "wis.name": "Sabiduría",
+  "wis.abbreviation": "SAB",
+  "wis.desc": "La Sabiduría indica hasta qué punto estás en sintonía con el mundo que te rodea y refleja tu perspicacia e intuición.\n\nUna prueba de Sabiduría podría representar el intento de leer el lenguaje corporal de alguien, de entender sus sentimientos, de percibir detalles del entorno o de cuidar de una persona herida. Las habilidades Medicina, Percepción, Perspicacia, Supervivencia y Trato con Animales reflejan las aptitudes para ciertas pruebas de Sabiduría.",
+  "cha.name": "Carisma",
+  "cha.abbreviation": "CAR",
+  "cha.desc": "El Carisma indica tu capacidad para interaccionar con los demás de forma efectiva. Incluye aspectos como la confianza y la elocuencia y también puede representar una personalidad encantadora o dominante.\n\nPuede realizarse una prueba de Carisma si tratas de influir en otras personas o entretenerlas, si intentas causar una buena impresión o contar una mentira creíble, o si quieres salir airoso de una situación social comprometida. Las habilidades Engaño, Interpretación, Intimidación y Persuasión reflejan las aptitudes para ciertas pruebas de Carisma."
+}

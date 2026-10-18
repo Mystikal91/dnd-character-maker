@@ -1,0 +1,23 @@
+{
+  "blinded.name": "Accecato",
+  "blinded.desc": "- Una creatura accecata non è in grado di vedere e fallisce automaticamente qualsiasi prova di caratteristica che richieda l'uso della vista.\n\n- I tiri per colpire contro la creatura dispongono di vantaggio, mentre i tiri per colpire della creatura subiscono svantaggio.",
+  "charmed.name": "Affascinato",
+  "charmed.desc": "- Una creatura affascinata non può attaccare chi l'ha affascinata né bersagliarlo con capacità o effetti magici dannosi.\n\n- Chi ha affascinato la creatura dispone di vantaggio a qualsiasi prova di caratteristica effettuata per interagire socialmente con essa.",
+  "deafened.name": "Assordato",
+  "deafened.desc": "- Una creatura assordata non è in grado di sentire e fallisce automaticamente qualsiasi prova di caratteristica che richieda l'uso dell'udito.",
+  "grappled.name": "Afferrato",
+  "grappled.desc": "- La velocità di una creatura afferrata diventa 0 e la creatura non può beneficiare di alcun bonus alla velocità.\n\n- La condizione termina se chi ha afferrato la creatura è incapacitato (vedi la relativa condizione).\n\n- La condizione termina anche se un effetto rimuove la creatura afferrata dalla portata di chi l'ha afferrata o dell'effetto afferrante, come per esempio se viene scagliata lontano dall'incantesimo onda tonante.",
+  "incapacitated.name": "Incapacitato",
+  "incapacitated.desc": "- Una creatura incapacitata non può effettuare azioni o reazioni.",
+  "invisible.name": "Invisibile",
+  "invisible.desc": "- Una creatura invisibile è impossibile da vedere senza l'aiuto della magia o di sensi speciali. Agli effetti del nascondersi, è considerata pesantemente oscurata. La sua ubicazione può essere intuita dai rumori che emette o dalle tracce che lascia.\n\n- I tiri per colpire contro la creatura subiscono svantaggio, mentre i tiri per colpire della creatura ottengono vantaggio.",
+  "paralyzed.name": "Paralizzato",
+  "paralyzed.desc": "- Una creatura paralizzata è incapacitata (vedi la relativa condizione) e non può muoversi o parlare.\n\n- La creatura fallisce automaticamente i tiri salvezza su Forza e Destrezza.\n\n- I tiri per colpire contro la creatura ottengono vantaggio.\n\n- Ogni attacco che colpisce la creatura è un colpo critico se l'attaccante è situato entro 1,5 metri dalla creatura.",
+  "petrified.name": "Pietrificato",
+  "petrified.desc": "- Una creatura pietrificata viene trasformata, assieme a ogni oggetto non magico che trasporta o indossa, in una sostanza solida inanimata (solitamente pietra). La creatura cessa di invecchiare e il suo peso viene decuplicato.\n\n- La creatura è incapacitata (vedi condizione), non può muoversi o parlare, né è consapevole di ciò che le accade attorno.\n\n- I tiri per colpire contro la creatura ottengono vantaggio.\n\n- La creatura fallisce automaticamente i tiri salvezza su Forza e Destrezza.\n\n- La creatura è dotata di resistenza a tutti i danni.\n\n- La creatura è immune a veleni e malattie, ma eventuali veleni o malattie già presenti nel suo sistema vengono solo sospesi, non neutralizzati.",
+  "poisoned.name": "Avvelenato",
+  "poisoned.desc": "- Una creatura avvelenata subisce svantaggio ai tiri per colpire e alle prove di caratteristica.",
+  "unconscious.name": "Privo di sensi",
+  "unconscious.desc": "- Una creatura priva di sensi è incapacitata (vedi la relativa condizione), non è in grado di muoversi o parlare ed è inconsapevole di ciò che le accade attorno.\n\n- La creatura lascia cadere tutto ciò che impugna e cade a terra prona.\n\n- La creatura fallisce automaticamente i tiri salvezza su Forza e Destrezza.\n\n- I tiri per colpire contro la creatura ottengono vantaggio.\n\n- Ogni attacco che colpisce la creatura è un colpo critico se l'attaccante è situato entro 1,5 metri dalla creatura.",
+  "exhaustion.name": "Indebolimento"
+}
