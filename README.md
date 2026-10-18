@@ -26,6 +26,11 @@ Node 20+ is required (the PWA build step fails on older versions); Node 22 is us
 | `public/` | Static assets |
 | `.github/workflows/` | CI and GitHub Pages deployment |
 
+## Translating
+
+The interface is available in English and Italian, and translations are managed with Weblate.
+See [docs/TRANSLATING.md](docs/TRANSLATING.md).
+
 ## Licenses
 
 - Code: [MIT](LICENSE).

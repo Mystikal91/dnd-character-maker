@@ -1,4 +1,5 @@
 import { useEffect } from "preact/hooks";
+import { language, localeChain } from "../app/language";
 import { showView, view } from "../app/navigation";
 import { content, initStorage, loadError, storageReady } from "../app/store";
 import { loadContent } from "../content/browser";
@@ -31,16 +32,25 @@ function Screen() {
 export function App() {
   useEffect(() => {
     void initStorage();
-    loadContent(["en"]).then(
+  }, []);
+
+  // Rules texts follow the language; the old texts stay on screen until the new ones are loaded.
+  const lang = language.value;
+  useEffect(() => {
+    let current = true;
+    loadContent(localeChain(lang)).then(
       (loaded) => {
-        content.value = loaded;
+        if (current) content.value = loaded;
       },
       (error: unknown) => {
         loadError.value = String(error);
         console.error(error);
       },
     );
-  }, []);
+    return () => {
+      current = false;
+    };
+  }, [lang]);
 
   return (
     <main class="shell">

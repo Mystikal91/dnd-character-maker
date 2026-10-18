@@ -1,3 +1,4 @@
+import { LANGUAGES, type LanguageCode, language } from "../app/language";
 import { theme, updateTheme } from "../app/theme";
 import type { Scheme, StyleName } from "../app/theme.logic";
 import { type UiKey, ui } from "../i18n/ui";
@@ -10,6 +11,21 @@ export function ThemeControls() {
   const current = theme.value;
   return (
     <div class="theme-controls">
+      <label class="field">
+        <span>{ui("language.label")}</span>
+        <select
+          value={language.value}
+          onChange={(e) => {
+            language.value = e.currentTarget.value as LanguageCode;
+          }}
+        >
+          {LANGUAGES.map((l) => (
+            <option key={l.code} value={l.code} lang={l.code}>
+              {l.name}
+            </option>
+          ))}
+        </select>
+      </label>
       <label class="field">
         <span>{ui("theme.style")}</span>
         <select
