@@ -1,0 +1,191 @@
+import { signal } from "@preact/signals";
+import type { ComponentChildren } from "preact";
+import { showView } from "../../app/navigation";
+import { character, content, sheet } from "../../app/store";
+import { type UiKey, signed, ui } from "../../i18n/ui";
+import { AbilityScores } from "../AbilityScores";
+import { Choices } from "../Choices";
+import { SpellPicker } from "../SpellPicker";
+import { ClassStep, EquipmentStep, OriginStep } from "./steps";
+
+type StepId = "origin" | "class" | "abilities" | "choices" | "spells" | "equipment";
+
+/** The step that is open. Only one is open at a time, so the page stays short. */
+const openStep = signal<StepId>("origin");
+
+interface StepInfo {
+  id: StepId;
+  title: UiKey;
+  /** Short state shown next to the title, e.g. "Wizard 5" or "2 left". */
+  status: string;
+  /** True when there is nothing left to do in this step. */
+  done: boolean;
+  body: ComponentChildren;
+}
+
+function buildSteps(): StepInfo[] {
+  const ch = character.value;
+  const s = sheet.value;
+  const c = content.value;
+  const name = (id: string | undefined) => (id && c ? c.name(id) : "");
+
+  const first = ch.classes[0];
+  const pendingChoices = s?.choices.reduce((sum, choice) => sum + choice.remaining, 0) ?? 0;
+  const asiLeft = s ? s.asi.available - s.asi.used : 0;
+  const lists = s?.spellcasting?.lists;
+  const spellsLeft = lists
+    ? [lists.cantrips, lists.known, lists.prepared].reduce(
+        (sum, pick) => sum + (pick ? Math.max(0, pick.allowed - pick.chosen.length) : 0),
+        0,
+      )
+    : 0;
+
+  const steps: StepInfo[] = [
+    {
+      id: "origin",
+      title: "build.origin",
+      status: [name(ch.choices.species), name(ch.choices.background)].filter(Boolean).join(" · "),
+      done: Boolean(ch.choices.species && ch.choices.background),
+      body: <OriginStep />,
+    },
+    {
+      id: "class",
+      title: "build.class",
+      status: first ? `${name(first.classId)} ${first.level}` : "",
+      done: Boolean(first),
+      body: <ClassStep />,
+    },
+    {
+      id: "abilities",
+      title: "build.abilities",
+      status:
+        asiLeft > 0
+          ? ui("build.left", { n: asiLeft })
+          : ui(`abilities.method.${ch.abilityMethod}` as UiKey),
+      done: asiLeft === 0,
+      body: <AbilityScores />,
+    },
+    {
+      id: "choices",
+      title: "build.choices",
+      status: pendingChoices > 0 ? ui("build.left", { n: pendingChoices }) : "",
+      done: pendingChoices === 0,
+      body: <Choices />,
+    },
+  ];
+  if (s?.spellcasting) {
+    steps.push({
+      id: "spells",
+      title: "build.spells",
+      status: spellsLeft > 0 ? ui("build.left", { n: spellsLeft }) : "",
+      done: spellsLeft === 0,
+      body: <SpellPicker />,
+    });
+  }
+  steps.push({
+    id: "equipment",
+    title: "build.equipment",
+    status: ch.inventory.length > 0 ? String(ch.inventory.length) : "",
+    done: true,
+    body: <EquipmentStep />,
+  });
+  return steps;
+}
+
+/** The summary beside the steps: the numbers that change as choices are made. */
+function Summary() {
+  const s = sheet.value;
+  const ch = character.value;
+  const c = content.value;
+  if (!s || !c) return null;
+  const classes = ch.classes.map((cl) => `${c.name(cl.classId)} ${cl.level}`).join(" / ");
+
+  return (
+    <aside class="card summary">
+      <h3>{ui("build.summary")}</h3>
+      <p class="summary-name">{ch.name || ui("sheet.unnamed")}</p>
+      <p class="muted">
+        {[c.name(ch.choices.species ?? ""), classes].filter(Boolean).join(" · ") || "—"}
+      </p>
+      <div class="summary-stats">
+        <div>
+          <b>{s.armorClass.value}</b>
+          <span>{ui("sheet.armorClass")}</span>
+        </div>
+        <div>
+          <b>{s.hitPoints.max}</b>
+          <span>{ui("sheet.hitPoints")}</span>
+        </div>
+        <div>
+          <b>{signed(s.initiative)}</b>
+          <span>{ui("sheet.initiative")}</span>
+        </div>
+      </div>
+      <ul class="summary-abilities">
+        {(["str", "dex", "con", "int", "wis", "cha"] as const).map((a) => (
+          <li key={a}>
+            <span>{c.text(`${ch.ruleset}:ability/${a}`, "abbreviation")}</span>
+            <b>{s.abilities[a].score}</b>
+            <small>{signed(s.abilities[a].modifier)}</small>
+          </li>
+        ))}
+      </ul>
+      <button type="button" class="secondary" onClick={() => showView("sheet")}>
+        {ui("build.viewSheet")}
+      </button>
+    </aside>
+  );
+}
+
+/** Guided building: a list of steps that open one at a time, with a live summary. */
+export function BuildTab() {
+  const steps = buildSteps();
+  const open = openStep.value;
+  const index = steps.findIndex((step) => step.id === open);
+  const current = index === -1 ? 0 : index;
+
+  const next = (from: number) => {
+    const following = steps[from + 1];
+    if (following) openStep.value = following.id;
+    else showView("sheet");
+  };
+
+  return (
+    <div class="build">
+      <div class="steps">
+        {steps.map((step, i) => {
+          const isOpen = i === current;
+          return (
+            <section class={`card step${isOpen ? " open" : ""}`} key={step.id}>
+              <h3 class="step-title">
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={`step-${step.id}`}
+                  onClick={() => {
+                    openStep.value = step.id;
+                  }}
+                >
+                  <span class={`step-mark${step.done ? " done" : ""}`} aria-hidden="true">
+                    {step.done ? "✓" : i + 1}
+                  </span>
+                  <span class="step-name">{ui(step.title)}</span>
+                  {step.status && <span class="step-status">{step.status}</span>}
+                </button>
+              </h3>
+              {isOpen && (
+                <div class="step-body" id={`step-${step.id}`}>
+                  {step.body}
+                  <button type="button" class="secondary step-next" onClick={() => next(i)}>
+                    {i === steps.length - 1 ? ui("build.viewSheet") : ui("build.continue")}
+                  </button>
+                </div>
+              )}
+            </section>
+          );
+        })}
+      </div>
+      <Summary />
+    </div>
+  );
+}

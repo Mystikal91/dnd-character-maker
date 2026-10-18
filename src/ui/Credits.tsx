@@ -1,4 +1,4 @@
-import { showView } from "../app/navigation";
+import { leaveCredits } from "../app/navigation";
 import { content } from "../app/store";
 import { ui } from "../i18n/ui";
 
@@ -18,7 +18,7 @@ export function Credits() {
 
   return (
     <article class="card credits">
-      <button type="button" class="secondary" onClick={() => showView("edit")}>
+      <button type="button" class="secondary" onClick={leaveCredits}>
         {ui("credits.back")}
       </button>
       <h2>{ui("credits.title")}</h2>

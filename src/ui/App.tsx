@@ -4,24 +4,24 @@ import { content, initStorage, loadError, storageReady } from "../app/store";
 import { loadContent } from "../content/browser";
 import { ui } from "../i18n/ui";
 import { CharacterBar } from "./CharacterBar";
-import { CharacterForm } from "./CharacterForm";
 import { Credits } from "./Credits";
 import { Sheet } from "./Sheet";
+import { Tabs } from "./Tabs";
 import { ThemeControls } from "./ThemeControls";
+import { BuildTab } from "./build/BuildTab";
 import { PrintView } from "./print/PrintView";
 
 function Screen() {
-  if (view.value === "credits") return <Credits />;
-  if (view.value === "print") return <PrintView />;
-  return (
-    <>
-      <CharacterBar />
-      <div class="layout">
-        <CharacterForm />
-        <Sheet />
-      </div>
-    </>
-  );
+  switch (view.value) {
+    case "credits":
+      return <Credits />;
+    case "print":
+      return <PrintView />;
+    case "sheet":
+      return <Sheet />;
+    default:
+      return <BuildTab />;
+  }
 }
 
 export function App() {
@@ -51,7 +51,11 @@ export function App() {
       ) : !content.value || !storageReady.value ? (
         <p>{ui("app.loading")}</p>
       ) : (
-        <Screen />
+        <>
+          <CharacterBar />
+          <Tabs />
+          <Screen />
+        </>
       )}
       <footer class="site-footer no-print">
         <p>{ui("footer.unofficial")}</p>

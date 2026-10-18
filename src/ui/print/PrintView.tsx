@@ -1,4 +1,3 @@
-import { showView } from "../../app/navigation";
 import {
   type Paper,
   type PrintSettings,
@@ -72,9 +71,6 @@ export function PrintView() {
         <div class="print-top">
           <h2>{ui("print.title")}</h2>
           <div class="print-actions">
-            <button type="button" onClick={() => showView("edit")}>
-              {ui("print.back")}
-            </button>
             <button type="button" class="primary" onClick={() => window.print()} disabled={nothing}>
               {ui("print.print")}
             </button>

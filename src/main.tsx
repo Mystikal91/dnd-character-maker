@@ -11,6 +11,7 @@ import "@fontsource/eb-garamond/latin-ext-600.css";
 import { render } from "preact";
 import { App } from "./ui/App";
 import "./app/theme";
+import "./ui/build/build.css";
 import "./ui/print/print.css";
 import "./ui/theme/fonts.css";
 import "./ui/theme/tokens.css";
