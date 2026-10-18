@@ -15,6 +15,7 @@ import {
   saveCharacter,
   setCurrentId,
 } from "../storage/characters";
+import { decodeShare, isShareHash } from "../storage/share";
 import { exportFileName, parseImport, serializeCharacter } from "../storage/transfer";
 
 export type SaveStatus = "idle" | "saving" | "saved" | "failed";
@@ -32,6 +33,8 @@ export const character = signal<Character>(createNewCharacter());
 export const characters = signal<CharacterSummary[]>([]);
 export const saveStatus = signal<SaveStatus>("idle");
 export const importFailed = signal(false);
+/** What happened to a character that arrived in the page link, if one did. */
+export const shareNotice = signal<"imported" | "failed" | undefined>(undefined);
 /** True once saved characters have been read (or storage turned out to be unavailable). */
 export const storageReady = signal(false);
 
@@ -121,11 +124,31 @@ export async function initStorage(): Promise<void> {
     addEventListener("pagehide", () => {
       if (saveTimer !== undefined) void saveNow();
     });
+    addEventListener("hashchange", () => void importFromLink());
+    await importFromLink();
   } catch (error) {
     console.error("Storage is not available", error);
     saveStatus.value = "failed";
   } finally {
     storageReady.value = true;
+  }
+}
+
+/**
+ * Opens the character carried by the page link (`#c=...`) as a new character, then removes
+ * the fragment so reloading does not import it again.
+ */
+export async function importFromLink(): Promise<void> {
+  if (!isShareHash(location.hash)) return;
+  const hash = location.hash;
+  history.replaceState(null, "", `${location.pathname}${location.search}`);
+  try {
+    await switchTo(await decodeShare(hash));
+    shareNotice.value = "imported";
+  } catch (error) {
+    if (!(error instanceof CharacterParseError))
+      console.error("Opening a shared link failed", error);
+    shareNotice.value = "failed";
   }
 }
 

@@ -93,6 +93,12 @@ export function Credits() {
         {ui("credits.softwareText")}{" "}
         <ExternalLink href={REPO_URL}>{ui("credits.source")}</ExternalLink>
       </p>
+      <p>
+        {ui("credits.qr")}{" "}
+        <ExternalLink href="https://github.com/kazuhikoarase/qrcode-generator">
+          qrcode-generator
+        </ExternalLink>
+      </p>
     </article>
   );
 }

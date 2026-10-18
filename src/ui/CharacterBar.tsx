@@ -10,8 +10,10 @@ import {
   newCharacter,
   openCharacter,
   saveStatus,
+  shareNotice,
 } from "../app/store";
 import { ui } from "../i18n/ui";
+import { shareOpen } from "./ShareDialog";
 
 const STATUS_KEYS = {
   idle: "bar.idle",
@@ -58,6 +60,14 @@ export function CharacterBar() {
         <button type="button" onClick={exportCharacter}>
           {ui("bar.export")}
         </button>
+        <button
+          type="button"
+          onClick={() => {
+            shareOpen.value = true;
+          }}
+        >
+          {ui("bar.share")}
+        </button>
         <button type="button" onClick={() => fileInput.current?.click()}>
           {ui("bar.import")}
         </button>
@@ -79,6 +89,11 @@ export function CharacterBar() {
       <output class={`bar-status status-${saveStatus.value}`}>
         {ui(STATUS_KEYS[saveStatus.value])}
       </output>
+      {shareNotice.value && (
+        <p class="note" role={shareNotice.value === "failed" ? "alert" : "status"}>
+          {ui(shareNotice.value === "failed" ? "share.openFailed" : "share.opened")}
+        </p>
+      )}
       {importFailed.value && (
         <p class="note" role="alert">
           {ui("bar.importError")}

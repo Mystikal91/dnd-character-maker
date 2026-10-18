@@ -6,6 +6,7 @@ import { loadContent } from "../content/browser";
 import { ui } from "../i18n/ui";
 import { CharacterBar } from "./CharacterBar";
 import { Credits } from "./Credits";
+import { ShareDialog } from "./ShareDialog";
 import { Sheet } from "./Sheet";
 import { Tabs } from "./Tabs";
 import { ThemeControls } from "./ThemeControls";
@@ -72,6 +73,7 @@ export function App() {
         </>
       )}
       <SpellDialog />
+      <ShareDialog />
       <footer class="site-footer no-print">
         <p>{ui("footer.unofficial")}</p>
         <p>
