@@ -65,6 +65,16 @@ export function FitText({ text }: { text: string }) {
     run();
     // Fonts load after the first paint and change the metrics: measure again once ready.
     void document.fonts?.ready.then(run);
+    // The frame can change size without this component re-rendering (zoom, layout changes).
+    let lastHeight = el.clientHeight;
+    const observer = new ResizeObserver(() => {
+      if (el.clientHeight === lastHeight) return;
+      lastHeight = el.clientHeight;
+      run();
+      lastHeight = el.clientHeight;
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
   }, [text, paper]);
 
   return <div class="p-card-text t1" ref={box} />;

@@ -1,6 +1,11 @@
 import * as v from "valibot";
 import { AbilitySchema } from "../data/schema";
-import { CHARACTER_SCHEMA_VERSION, type Character, createPlayState } from "./character";
+import {
+  CHARACTER_SCHEMA_VERSION,
+  type Character,
+  createPlayState,
+  createStory,
+} from "./character";
 
 const ClassLevelSchema = v.object({
   classId: v.string(),
@@ -46,6 +51,24 @@ const CharacterSchema = v.object({
       prepared: v.array(v.string()),
     }),
   ),
+  story: v.object({
+    alignment: v.optional(v.string()),
+    personalityTraits: v.string(),
+    ideals: v.string(),
+    bonds: v.string(),
+    flaws: v.string(),
+    appearance: v.string(),
+    backstory: v.string(),
+    allies: v.string(),
+    enemies: v.string(),
+    notes: v.string(),
+    age: v.string(),
+    height: v.string(),
+    weight: v.string(),
+    eyes: v.string(),
+    skin: v.string(),
+    hair: v.string(),
+  }),
   play: v.object({
     hp: v.optional(v.pipe(v.number(), v.integer(), v.minValue(0))),
     tempHp: v.pipe(v.number(), v.integer(), v.minValue(0)),
@@ -74,6 +97,8 @@ const migrations: Record<number, (doc: Record<string, unknown>) => Record<string
   2: (doc) => ({ ...doc, spells: {} }),
   // 3 -> 4: play state (hit points, spent resources, conditions).
   3: (doc) => ({ ...doc, play: createPlayState() }),
+  // 4 -> 5: the character's story (personality, appearance, notes).
+  4: (doc) => ({ ...doc, story: createStory() }),
 };
 
 export class CharacterParseError extends Error {}

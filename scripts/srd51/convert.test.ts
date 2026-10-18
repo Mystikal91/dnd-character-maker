@@ -76,6 +76,7 @@ const raw: RawSource = {
   skills: [],
   magicSchools: [],
   conditions: [],
+  alignments: [],
 };
 
 describe("cleanData", () => {

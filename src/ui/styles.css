@@ -499,3 +499,44 @@ a {
   padding: 0 1rem;
   min-height: 2.5rem;
 }
+
+/* ---- Free text fields ---- */
+
+textarea {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.5rem 0.6rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--fg);
+  font: inherit;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+:root[data-style="fantasy"] textarea {
+  border-color: var(--ink);
+}
+
+.field > label {
+  display: block;
+}
+
+.field > small {
+  margin-bottom: 0.15rem;
+}
+
+.field > textarea + select {
+  margin-top: 0.4rem;
+}
+
+.looks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.5rem 0.75rem;
+}
+
+.looks .field {
+  margin: 0;
+}

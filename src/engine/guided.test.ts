@@ -148,7 +148,8 @@ describe("character migration", () => {
     };
     const upgraded = parseCharacter(v1);
     expect(upgraded).toMatchObject({
-      schemaVersion: 4,
+      schemaVersion: 5,
+      story: { ideals: "", notes: "" },
       spells: {},
       play: { tempHp: 0, conditions: [], inspiration: false },
       abilityMethod: "manual",

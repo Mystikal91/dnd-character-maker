@@ -404,6 +404,34 @@
   margin-bottom: 0.6rem;
 }
 
+/* ---- Story ---- */
+
+.story-looks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 1rem;
+  margin: 0 0 0.75rem;
+}
+
+.story-list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.story-list dt {
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.story-list dd {
+  margin: 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
 /* ---- Modern style: soft cards instead of ribbons ---- */
 
 :root[data-style="modern"] .banner {

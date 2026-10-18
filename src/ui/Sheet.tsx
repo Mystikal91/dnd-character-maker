@@ -6,6 +6,7 @@ import { Attacks, CoreStats } from "./sheet/CoreStats";
 import { Inventory, Notes, Proficiencies, SpeciesTraits } from "./sheet/Details";
 import { SheetHeader } from "./sheet/SheetHeader";
 import { SpellcastingPanel } from "./sheet/SpellcastingPanel";
+import { StoryPanel } from "./sheet/Story";
 
 /**
  * The character sheet on screen: three columns when there is room (abilities and skills,
@@ -31,6 +32,7 @@ export function Sheet() {
           <Notes />
         </div>
         <div class="sheet-col col-right">
+          <StoryPanel />
           <SpeciesTraits />
           <ClassFeatures />
         </div>

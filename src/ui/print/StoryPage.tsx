@@ -3,6 +3,7 @@ import type { Content } from "../../content/browser";
 import { itemData } from "../../data/items";
 import type { Character } from "../../engine/character";
 import { type UiKey, ui } from "../../i18n/ui";
+import { FitBox } from "./FitBox";
 
 const FIELDS = ["age", "height", "weight", "eyes", "skin", "hair"] as const;
 const SLOTS = [
@@ -34,10 +35,20 @@ function slotValue(c: Content, ch: Character, slot: (typeof SLOTS)[number]): str
   return "";
 }
 
-function Block({ title, className = "" }: { title: string; className?: string }) {
+/** A frame to write in: the text the player already wrote, or ruled lines to handwrite on. */
+function Block({
+  title,
+  text = "",
+  className = "",
+}: {
+  title: string;
+  text?: string;
+  className?: string;
+}) {
   return (
     <section class={`p-frame p-block ${className}`.trim()}>
       <h3 class="p-h">{title}</h3>
+      {text.trim() ? <FitBox text={text} /> : <div class="p-ruled-area" />}
     </section>
   );
 }
@@ -51,6 +62,14 @@ export function StoryPage() {
   const featureName = background ? c.text(background, "featureName") : undefined;
   const featureDesc = background ? c.text(background, "featureDesc") : undefined;
   const carried = ch.inventory.filter((i) => !i.equipped);
+  const story = ch.story;
+  // The background's feature first, then the player's backstory, sized together to fit the frame.
+  const backgroundText = [
+    featureName ? `${featureName}. ${featureDesc?.split("\n\n")[0] ?? ""}` : "",
+    story.backstory,
+  ]
+    .filter((part) => part.trim())
+    .join("\n\n");
 
   return (
     <section class="p-page p-story">
@@ -61,45 +80,55 @@ export function StoryPage() {
         </div>
         <div class="p-frame p-block">
           <dl class="p-fields">
+            <div>
+              <dd>{story.alignment ? c.name(story.alignment) : " "}</dd>
+              <dt>{ui("story.alignment")}</dt>
+            </div>
             {FIELDS.map((f) => (
               <div key={f}>
-                <dd>{" "}</dd>
+                <dd>{story[f] || " "}</dd>
                 <dt>{ui(`print.field.${f}` as UiKey)}</dt>
               </div>
             ))}
+            <div>
+              <dd>{" "}</dd>
+              <dt>{ui("print.xp")}</dt>
+            </div>
           </dl>
         </div>
       </div>
 
       <div class="p-story-grid">
         <div class="col">
-          <Block title={ui("print.story.appearance")} className="big" />
+          <Block title={ui("print.story.appearance")} text={story.appearance} className="big" />
         </div>
         <div class="col">
-          <Block title={ui("print.story.personality")} className="fill" />
-          <Block title={ui("print.story.ideals")} className="fill" />
-          <Block title={ui("print.story.bonds")} className="fill" />
-          <Block title={ui("print.story.flaws")} className="fill" />
+          <Block
+            title={ui("print.story.personality")}
+            text={story.personalityTraits}
+            className="fill"
+          />
+          <Block title={ui("print.story.ideals")} text={story.ideals} className="fill" />
+          <Block title={ui("print.story.bonds")} text={story.bonds} className="fill" />
+          <Block title={ui("print.story.flaws")} text={story.flaws} className="fill" />
         </div>
         <div class="col">
-          <section class="p-frame p-block fill">
+          <section class="p-frame p-block fill wide">
             <h3 class="p-h">{ui("print.story.background")}</h3>
             {background && <strong>{c.name(background)}</strong>}
-            {featureName && (
-              <p>
-                <em>{featureName}.</em> {featureDesc?.split("\n\n")[0]}
-              </p>
+            {backgroundText.trim() ? (
+              <FitBox text={backgroundText} />
+            ) : (
+              <div class="p-ruled-area" />
             )}
           </section>
-          <Block title={ui("print.story.allies")} className="fill" />
-          <Block title={ui("print.story.enemies")} className="fill" />
+          <Block title={ui("print.story.allies")} text={story.allies} className="fill" />
+          <Block title={ui("print.story.enemies")} text={story.enemies} className="fill" />
         </div>
       </div>
 
       <div class="p-story-bottom">
-        <section class="p-frame p-block">
-          <h3 class="p-h">{ui("print.story.additional")}</h3>
-        </section>
+        <Block title={ui("print.story.additional")} text={story.notes} />
 
         <div class="col mid">
           <section class="p-frame p-block">

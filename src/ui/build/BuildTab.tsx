@@ -6,9 +6,10 @@ import { type UiKey, signed, ui } from "../../i18n/ui";
 import { AbilityScores } from "../AbilityScores";
 import { Choices } from "../Choices";
 import { SpellPicker } from "../SpellPicker";
+import { StoryStep } from "./StoryStep";
 import { ClassStep, EquipmentStep, OriginStep } from "./steps";
 
-type StepId = "origin" | "class" | "abilities" | "choices" | "spells" | "equipment";
+type StepId = "origin" | "class" | "abilities" | "choices" | "spells" | "equipment" | "story";
 
 /** The step that is open. Only one is open at a time, so the page stays short. */
 const openStep = signal<StepId>("origin");
@@ -88,6 +89,17 @@ function buildSteps(): StepInfo[] {
     status: ch.inventory.length > 0 ? String(ch.inventory.length) : "",
     done: true,
     body: <EquipmentStep />,
+  });
+  const story = ch.story;
+  const written = [story.personalityTraits, story.ideals, story.bonds, story.flaws].filter(
+    (text) => text.trim() !== "",
+  ).length;
+  steps.push({
+    id: "story",
+    title: "build.story",
+    status: written > 0 ? `${written}/4` : "",
+    done: written === 4,
+    body: <StoryStep />,
   });
   return steps;
 }

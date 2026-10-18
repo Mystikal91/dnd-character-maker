@@ -1,6 +1,6 @@
 import { ABILITIES, type Ability } from "../data/schema";
 
-export const CHARACTER_SCHEMA_VERSION = 4;
+export const CHARACTER_SCHEMA_VERSION = 5;
 
 /** How ability scores were generated. Only `manual` has no constraints on the numbers. */
 export type AbilityMethod = "manual" | "standard" | "pointbuy" | "roll";
@@ -23,6 +23,50 @@ export interface ClassSpells {
   cantrips: string[];
   known: string[];
   prepared: string[];
+}
+
+/** Who the character is, in the player's own words. All free text; empty means not written yet. */
+export interface Story {
+  /** Alignment entry id, e.g. `srd51:alignment/chaotic-good`. */
+  alignment?: string;
+  personalityTraits: string;
+  ideals: string;
+  bonds: string;
+  flaws: string;
+  appearance: string;
+  backstory: string;
+  allies: string;
+  enemies: string;
+  /** Anything else worth keeping with the sheet (extra features, reminders). */
+  notes: string;
+  age: string;
+  height: string;
+  weight: string;
+  eyes: string;
+  skin: string;
+  hair: string;
+}
+
+export const STORY_TEXT_FIELDS = [
+  "personalityTraits",
+  "ideals",
+  "bonds",
+  "flaws",
+  "appearance",
+  "backstory",
+  "allies",
+  "enemies",
+  "notes",
+  "age",
+  "height",
+  "weight",
+  "eyes",
+  "skin",
+  "hair",
+] as const;
+
+export function createStory(): Story {
+  return Object.fromEntries(STORY_TEXT_FIELDS.map((f) => [f, ""])) as unknown as Story;
 }
 
 /** What changes during play: hit points, spent resources, conditions. */
@@ -84,6 +128,7 @@ export interface Character {
   /** Spell picks, keyed by class id. */
   spells: Record<string, ClassSpells>;
   play: PlayState;
+  story: Story;
   /**
    * Ability Score Improvements taken, one entry per improvement: one ability is +2,
    * two different abilities are +1 each.
@@ -107,6 +152,7 @@ export function createCharacter(ruleset: Character["ruleset"]): Character {
     selections: {},
     spells: {},
     play: createPlayState(),
+    story: createStory(),
     asi: [],
     overrides: {},
   };

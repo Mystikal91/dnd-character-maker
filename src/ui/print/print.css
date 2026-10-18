@@ -442,7 +442,7 @@
 }
 
 .p-info .p-fields {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .p-cols {
@@ -718,6 +718,15 @@
   flex-direction: column;
 }
 
+/* Text the player wrote, kept as typed and sized to fit its frame by FitBox. */
+.p-fit {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 /* Lines to write on, filling whatever space is left. */
 .p-ruled-area {
   flex: 1 1 auto;
@@ -776,7 +785,7 @@
 }
 
 .p-story-top .p-fields {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .p-story-grid {
@@ -801,6 +810,11 @@
 
 .p-block.fill {
   flex: 1 1 0;
+}
+
+/* The background frame gets more room: it holds the feature text and the backstory. */
+.p-block.fill.wide {
+  flex-grow: 2.4;
 }
 
 .p-block.big {

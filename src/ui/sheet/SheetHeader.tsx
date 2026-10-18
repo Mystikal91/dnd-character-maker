@@ -40,6 +40,10 @@ export function SheetHeader() {
           <dd>{ui("sheet.levelLabel", { level: totalLevel })}</dd>
           <dt>{ui("form.level")}</dt>
         </div>
+        <div>
+          <dd>{ch.story.alignment ? name(ch.story.alignment) : "—"}</dd>
+          <dt>{ui("story.alignment")}</dt>
+        </div>
       </dl>
 
       <div class="banner banner-class">

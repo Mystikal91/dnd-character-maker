@@ -32,6 +32,7 @@ export interface RawSource {
   skills: Raw[];
   magicSchools: Raw[];
   conditions: Raw[];
+  alignments: Raw[];
 }
 export type ConvertedPack = Record<
   | "species"
@@ -49,7 +50,8 @@ export type ConvertedPack = Record<
   | "language"
   | "proficiency"
   | "school"
-  | "condition",
+  | "condition"
+  | "alignment",
   Converted
 >;
 
@@ -695,6 +697,18 @@ function convertProficiencies(raw: RawSource, ctx: Context): Converted {
   return { entries, strings };
 }
 
+function convertAlignments(raw: RawSource): Converted {
+  const entries: Entry[] = [];
+  const strings: Strings = {};
+  for (const a of raw.alignments) {
+    entries.push({ id: id("alignment", a.index), kind: "alignment", effects: [], data: {} });
+    strings[`${a.index}.name`] = a.name;
+    strings[`${a.index}.abbreviation`] = a.abbreviation;
+    strings[`${a.index}.desc`] = text(a.desc) ?? "";
+  }
+  return { entries, strings };
+}
+
 function convertConditions(raw: RawSource): Converted {
   const entries: Entry[] = [];
   const strings: Strings = {};
@@ -736,5 +750,6 @@ export function convertAll(raw: RawSource): ConvertedPack {
     proficiency: convertProficiencies(raw, ctx),
     school: convertSchools(raw),
     condition: convertConditions(raw),
+    alignment: convertAlignments(raw),
   };
 }
