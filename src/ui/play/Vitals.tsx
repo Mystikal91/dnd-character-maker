@@ -1,0 +1,220 @@
+import { useState } from "preact/hooks";
+import { addLog, changePlay, vitals } from "../../app/play";
+import { character, sheet } from "../../app/store";
+import { cryptoRandomInt } from "../../engine/dice";
+import {
+  applyDamage,
+  applyHealing,
+  currentHp,
+  deathStatus,
+  gainTempHp,
+  hitDiceLeft,
+  longRest,
+  setDeathSave,
+  shortRest,
+  spendHitDie,
+} from "../../engine/play";
+import { type UiKey, ui } from "../../i18n/ui";
+import { Panel } from "../sheet/parts";
+
+function HitPoints() {
+  const [amount, setAmount] = useState("");
+  const v = vitals();
+  const play = character.value.play;
+  if (!v) return null;
+  const hp = currentHp(play, v.max);
+  const n = Math.max(0, Number.parseInt(amount, 10) || 0);
+  const apply = (change: (amount: number) => void) => {
+    if (n === 0) return;
+    change(n);
+    setAmount("");
+  };
+  const percent = v.max > 0 ? Math.round((hp / v.max) * 100) : 0;
+
+  return (
+    <Panel title={ui("play.hitPoints")}>
+      <div class="hp-readout">
+        <b class={hp === 0 ? "zero" : ""}>{hp}</b>
+        <span>{ui("play.of", { max: v.max })}</span>
+        {play.tempHp > 0 && <em>{ui("play.temp", { n: play.tempHp })}</em>}
+      </div>
+      <div class="hp-bar" role="img" aria-label={`${hp} ${ui("play.of", { max: v.max })}`}>
+        <span style={{ width: `${percent}%` }} />
+      </div>
+      <div class="hp-controls">
+        <label class="field">
+          <span>{ui("play.amount")}</span>
+          <input
+            type="number"
+            min={0}
+            inputMode="numeric"
+            value={amount}
+            onInput={(e) => setAmount(e.currentTarget.value)}
+          />
+        </label>
+        <div class="btn-row">
+          <button
+            type="button"
+            class="danger-btn"
+            disabled={n === 0}
+            onClick={() => apply((a) => changePlay((p) => applyDamage(p, v.max, a)))}
+          >
+            {ui("play.damage")}
+          </button>
+          <button
+            type="button"
+            disabled={n === 0}
+            onClick={() => apply((a) => changePlay((p) => applyHealing(p, v.max, a)))}
+          >
+            {ui("play.heal")}
+          </button>
+          <button
+            type="button"
+            disabled={n === 0}
+            onClick={() => apply((a) => changePlay((p) => gainTempHp(p, a)))}
+          >
+            {ui("play.tempHp")}
+          </button>
+        </div>
+      </div>
+    </Panel>
+  );
+}
+
+function DeathSaves() {
+  const v = vitals();
+  const play = character.value.play;
+  if (!v) return null;
+  const status = deathStatus(play, v.max);
+  if (status === "alive" && play.deathSaves.successes === 0 && play.deathSaves.failures === 0)
+    return null;
+
+  const row = (kind: "successes" | "failures", label: UiKey) => (
+    <div class="death-row">
+      <span>{ui(label)}</span>
+      <span class="pips-btns">
+        {[1, 2, 3].map((n) => {
+          const on = play.deathSaves[kind] >= n;
+          return (
+            <button
+              type="button"
+              key={n}
+              class={`pip-btn${on ? " on" : ""}`}
+              aria-pressed={on}
+              aria-label={`${ui(label)} ${n}`}
+              onClick={() =>
+                changePlay((p) => setDeathSave(p, kind, p.deathSaves[kind] === n ? n - 1 : n))
+              }
+            />
+          );
+        })}
+      </span>
+    </div>
+  );
+
+  return (
+    <Panel title={ui("play.deathSaves")}>
+      {status !== "alive" && (
+        <p class={`status status-${status}`}>{ui(`play.status.${status}` as UiKey)}</p>
+      )}
+      {row("successes", "play.successes")}
+      {row("failures", "play.failures")}
+    </Panel>
+  );
+}
+
+function HitDice() {
+  const v = vitals();
+  const play = character.value.play;
+  if (!v) return null;
+  const dice = Object.entries(v.hitDice);
+  if (dice.length === 0) return null;
+
+  return (
+    <Panel title={ui("play.hitDice")}>
+      <ul class="plain">
+        {dice.map(([die, total]) => {
+          const left = hitDiceLeft(play, die, total);
+          return (
+            <li class="row-between" key={die}>
+              <span>
+                <b>{die}</b> <span class="muted">{ui("play.hitDiceLeft", { left, total })}</span>
+              </span>
+              <button
+                type="button"
+                disabled={left === 0}
+                onClick={() => {
+                  const rolled = 1 + cryptoRandomInt(Number(die.slice(1)));
+                  const heal = Math.max(0, rolled + v.conMod);
+                  changePlay((p) => spendHitDie(p, v.max, die, rolled, v.conMod));
+                  addLog({
+                    label: `${ui("play.hitDice")} ${die}`,
+                    detail: `${die} ${rolled}${v.conMod === 0 ? "" : v.conMod > 0 ? ` +${v.conMod}` : ` ${v.conMod}`} → ${ui("play.healedBy", { n: heal })}`,
+                    total: heal,
+                  });
+                }}
+              >
+                {ui("play.spendDie")}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </Panel>
+  );
+}
+
+function Rests() {
+  const v = vitals();
+  const s = sheet.value;
+  const ch = character.value;
+  if (!v || !s) return null;
+  const isWarlock = ch.classes[0]?.classId.endsWith("/warlock") ?? false;
+
+  return (
+    <Panel title={ui("play.rests")}>
+      <p class="muted">{ui("play.shortRestHint")}</p>
+      <div class="btn-row">
+        <button
+          type="button"
+          onClick={() => {
+            changePlay((p) => shortRest(p, isWarlock));
+            addLog({ label: ui("play.shortRestLog"), detail: "" });
+          }}
+        >
+          {ui("play.shortRest")}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            if (!confirm(ui("play.longRestConfirm"))) return;
+            changePlay((p) => longRest(p, v.hitDice));
+            addLog({ label: ui("play.longRestLog"), detail: "" });
+          }}
+        >
+          {ui("play.longRest")}
+        </button>
+      </div>
+      <label class="check-row">
+        <input
+          type="checkbox"
+          checked={ch.play.inspiration}
+          onChange={(e) => changePlay((p) => ({ ...p, inspiration: e.currentTarget.checked }))}
+        />
+        {ui("play.inspiration")}
+      </label>
+    </Panel>
+  );
+}
+
+/** Hit points, death saves, hit dice and rests: what changes most during a session. */
+export function Vitals() {
+  return (
+    <>
+      <HitPoints />
+      <DeathSaves />
+      <HitDice />
+      <Rests />
+    </>
+  );
+}

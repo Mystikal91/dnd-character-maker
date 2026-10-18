@@ -1,0 +1,396 @@
+/* The play screen: big targets, quick taps, results that stay in view. */
+
+.play {
+  container: play / inline-size;
+  padding-bottom: 5rem; /* room for the pinned latest roll */
+}
+
+.play-grid {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+}
+
+.play-col {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  min-width: 0;
+}
+
+@container play (min-width: 42rem) {
+  .play-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .play-col:last-child {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@container play (min-width: 66rem) {
+  .play-grid {
+    grid-template-columns: 0.95fr 1.15fr 1fr;
+  }
+
+  .play-col:last-child {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+  }
+}
+
+.plain {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.3rem 0;
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Buttons on the play screen are comfortable to hit with a thumb. */
+.play button:not(.pip-btn):not(.info-btn):not(.link) {
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+}
+
+.play button:not(.pip-btn):not(.info-btn):not(.link):hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.play button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+:root[data-style="fantasy"] .play button:not(.pip-btn):not(.info-btn):not(.link) {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+.play .danger-btn {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ---- Hit points ---- */
+
+.hp-readout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.75rem;
+}
+
+.hp-readout b {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.hp-readout b.zero {
+  color: var(--accent);
+}
+
+.hp-readout span {
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.hp-readout em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.hp-bar {
+  height: 0.6rem;
+  margin: 0.5rem 0 1rem;
+  border: 1px solid var(--ink);
+  background: var(--surface-2);
+}
+
+.hp-bar span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.2s;
+}
+
+.hp-controls .field {
+  margin-bottom: 0.5rem;
+}
+
+.hp-controls input {
+  font-size: 1.2rem;
+}
+
+.status {
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+}
+
+.status-dying,
+.status-dead {
+  color: var(--accent);
+}
+
+/* ---- Pips to tap: death saves and spell slots ---- */
+
+.death-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0;
+}
+
+.pips-btns {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pip-btn {
+  position: relative;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+:root[data-style="fantasy"] .pip-btn {
+  border-radius: 0;
+  transform: rotate(45deg) scale(0.8);
+}
+
+.pip-btn.on {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.pip-btn:hover {
+  border-color: var(--accent);
+}
+
+.slot-level {
+  min-width: 5rem;
+  color: var(--muted);
+}
+
+.slots-play .row-between {
+  flex-wrap: wrap;
+}
+
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+/* ---- Conditions ---- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+
+.play .chips .chip {
+  min-height: 2.25rem;
+  padding: 0 0.8rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+.play .chips .chip.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* ---- Rolls ---- */
+
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 0.5rem;
+}
+
+.play .segmented button {
+  min-width: 0;
+  min-height: 2.5rem;
+  overflow-wrap: anywhere;
+  padding: 0 0.4rem;
+  border-radius: 0;
+  font-size: 0.85rem;
+}
+
+.play .segmented button.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.roll-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  gap: 0.4rem;
+}
+
+.play .roll-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.roll-btn b {
+  font-variant-numeric: tabular-nums;
+}
+
+.dice-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(3.5rem, 1fr));
+  gap: 0.4rem;
+}
+
+.dice-form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: end;
+  margin-top: 0.75rem;
+}
+
+.dice-form .field {
+  flex: 1;
+  margin: 0;
+}
+
+.dice-form button {
+  min-height: 2.75rem;
+  padding: 0 1.2rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font: inherit;
+  cursor: pointer;
+}
+
+.roll-log {
+  margin: 0 0 0.5rem;
+  padding: 0;
+  max-height: 18rem;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.roll-log li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.6rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.log-total {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+}
+
+.roll-log li.critical .log-total,
+.roll-log li.critical em {
+  color: var(--accent);
+}
+
+.roll-log li em {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* The last roll stays at the bottom of the screen while buttons are tapped above it. */
+.latest-roll {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.2rem 0.9rem;
+  padding: 0.7rem 1rem;
+  border-top: 2px solid var(--ink);
+  background: var(--surface);
+  box-shadow: 0 -4px 18px rgb(0 0 0 / 0.25);
+}
+
+.latest-label {
+  font-weight: 700;
+}
+
+.latest-detail {
+  color: var(--muted);
+}
+
+.latest-total {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--accent);
+}
+
+.latest-roll em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.latest-roll.fumble .latest-total {
+  color: var(--muted);
+}
+
+.spell-names li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.15rem 0;
+}
+
+fieldset.segmented {
+  min-width: 0; /* a fieldset would otherwise refuse to shrink below its content */
+  margin: 0 0 0.5rem;
+  padding: 0;
+  border: 0;
+}

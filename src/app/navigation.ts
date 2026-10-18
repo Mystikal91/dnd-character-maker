@@ -1,15 +1,16 @@
 import { effect, signal } from "@preact/signals";
 
 /** Which screen is showing. `build`, `sheet` and `print` are the tabs; `credits` is a page. */
-export type View = "build" | "sheet" | "print" | "credits";
-export type Tab = "build" | "sheet" | "print";
+export type View = "build" | "sheet" | "play" | "print" | "credits";
+export type Tab = "build" | "sheet" | "play" | "print";
 
 const STORAGE_KEY = "tab";
 
 /** The tab to reopen on the next visit. Print is never reopened: it is a one-off action. */
-function savedTab(): "build" | "sheet" {
+function savedTab(): "build" | "sheet" | "play" {
   try {
-    return localStorage.getItem(STORAGE_KEY) === "sheet" ? "sheet" : "build";
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved === "sheet" || saved === "play" ? saved : "build";
   } catch {
     return "build";
   }
@@ -30,7 +31,7 @@ export function leaveCredits() {
 }
 
 effect(() => {
-  if (view.value !== "build" && view.value !== "sheet") return;
+  if (view.value !== "build" && view.value !== "sheet" && view.value !== "play") return;
   try {
     localStorage.setItem(STORAGE_KEY, view.value);
   } catch {

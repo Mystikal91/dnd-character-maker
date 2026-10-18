@@ -1,6 +1,6 @@
 import { ABILITIES, type Ability } from "../data/schema";
 
-export const CHARACTER_SCHEMA_VERSION = 3;
+export const CHARACTER_SCHEMA_VERSION = 4;
 
 /** How ability scores were generated. Only `manual` has no constraints on the numbers. */
 export type AbilityMethod = "manual" | "standard" | "pointbuy" | "roll";
@@ -23,6 +23,32 @@ export interface ClassSpells {
   cantrips: string[];
   known: string[];
   prepared: string[];
+}
+
+/** What changes during play: hit points, spent resources, conditions. */
+export interface PlayState {
+  /** Current hit points. Undefined means "at full health", so levelling up needs no fix-up. */
+  hp?: number;
+  tempHp: number;
+  /** Hit dice spent since the last long rest, by die (`d8`). */
+  hitDiceUsed: Record<string, number>;
+  /** Spell slots spent per spell level 1..9. */
+  slotsUsed: number[];
+  deathSaves: { successes: number; failures: number };
+  /** Ids of the conditions currently affecting the character. */
+  conditions: string[];
+  inspiration: boolean;
+}
+
+export function createPlayState(): PlayState {
+  return {
+    tempHp: 0,
+    hitDiceUsed: {},
+    slotsUsed: Array.from({ length: 9 }, () => 0),
+    deathSaves: { successes: 0, failures: 0 },
+    conditions: [],
+    inspiration: false,
+  };
 }
 
 /** An item the character owns. `itemId` can be an SRD item or a homebrew one. */
@@ -57,6 +83,7 @@ export interface Character {
   selections: Record<string, string[]>;
   /** Spell picks, keyed by class id. */
   spells: Record<string, ClassSpells>;
+  play: PlayState;
   /**
    * Ability Score Improvements taken, one entry per improvement: one ability is +2,
    * two different abilities are +1 each.
@@ -79,6 +106,7 @@ export function createCharacter(ruleset: Character["ruleset"]): Character {
     abilityMethod: "manual",
     selections: {},
     spells: {},
+    play: createPlayState(),
     asi: [],
     overrides: {},
   };

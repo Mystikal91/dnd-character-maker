@@ -75,6 +75,7 @@ const raw: RawSource = {
   abilityScores: [],
   skills: [],
   magicSchools: [],
+  conditions: [],
 };
 
 describe("cleanData", () => {

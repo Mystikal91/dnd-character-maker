@@ -4,6 +4,7 @@ import { type UiKey, ui } from "../i18n/ui";
 const TABS: { id: Tab; label: UiKey }[] = [
   { id: "build", label: "tab.build" },
   { id: "sheet", label: "tab.sheet" },
+  { id: "play", label: "tab.play" },
   { id: "print", label: "tab.print" },
 ];
 

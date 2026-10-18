@@ -28,6 +28,7 @@ const FILE_NAMES = {
   language: "languages",
   proficiency: "proficiencies",
   school: "schools",
+  condition: "conditions",
 } as const;
 
 const readJson = async (name: string) =>
@@ -54,6 +55,7 @@ const raw: RawSource = {
   abilityScores: await readJson("5e-SRD-Ability-Scores"),
   skills: await readJson("5e-SRD-Skills"),
   magicSchools: await readJson("5e-SRD-Magic-Schools"),
+  conditions: await readJson("5e-SRD-Conditions"),
 };
 
 const converted = convertAll(raw);

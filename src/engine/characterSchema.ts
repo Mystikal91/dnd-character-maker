@@ -1,6 +1,6 @@
 import * as v from "valibot";
 import { AbilitySchema } from "../data/schema";
-import { CHARACTER_SCHEMA_VERSION, type Character } from "./character";
+import { CHARACTER_SCHEMA_VERSION, type Character, createPlayState } from "./character";
 
 const ClassLevelSchema = v.object({
   classId: v.string(),
@@ -46,6 +46,18 @@ const CharacterSchema = v.object({
       prepared: v.array(v.string()),
     }),
   ),
+  play: v.object({
+    hp: v.optional(v.pipe(v.number(), v.integer(), v.minValue(0))),
+    tempHp: v.pipe(v.number(), v.integer(), v.minValue(0)),
+    hitDiceUsed: v.record(v.string(), v.pipe(v.number(), v.integer(), v.minValue(0))),
+    slotsUsed: v.pipe(v.array(v.pipe(v.number(), v.integer(), v.minValue(0))), v.length(9)),
+    deathSaves: v.object({
+      successes: v.pipe(v.number(), v.integer(), v.minValue(0), v.maxValue(3)),
+      failures: v.pipe(v.number(), v.integer(), v.minValue(0), v.maxValue(3)),
+    }),
+    conditions: v.array(v.string()),
+    inspiration: v.boolean(),
+  }),
   asi: v.array(v.pipe(v.array(AbilitySchema), v.minLength(1), v.maxLength(2))),
   overrides: v.record(v.string(), v.union([v.number(), v.string(), v.boolean()])),
 });
@@ -60,6 +72,8 @@ const migrations: Record<number, (doc: Record<string, unknown>) => Record<string
   1: (doc) => ({ ...doc, abilityMethod: "manual", selections: {}, asi: [] }),
   // 2 -> 3: spell picks per class.
   2: (doc) => ({ ...doc, spells: {} }),
+  // 3 -> 4: play state (hit points, spent resources, conditions).
+  3: (doc) => ({ ...doc, play: createPlayState() }),
 };
 
 export class CharacterParseError extends Error {}

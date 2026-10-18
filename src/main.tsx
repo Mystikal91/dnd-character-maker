@@ -12,6 +12,7 @@ import { render } from "preact";
 import { App } from "./ui/App";
 import "./app/theme";
 import "./ui/build/build.css";
+import "./ui/play/play.css";
 import "./ui/print/print.css";
 import "./ui/theme/controls.css";
 import "./ui/theme/fonts.css";

@@ -9,6 +9,7 @@ import { Sheet } from "./Sheet";
 import { Tabs } from "./Tabs";
 import { ThemeControls } from "./ThemeControls";
 import { BuildTab } from "./build/BuildTab";
+import { PlayTab } from "./play/PlayTab";
 import { PrintView } from "./print/PrintView";
 import { SpellDialog } from "./spells/SpellInfo";
 
@@ -20,6 +21,8 @@ function Screen() {
       return <PrintView />;
     case "sheet":
       return <Sheet />;
+    case "play":
+      return <PlayTab />;
     default:
       return <BuildTab />;
   }
