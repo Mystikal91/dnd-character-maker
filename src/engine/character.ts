@@ -20,6 +20,8 @@ export interface InventoryItem {
 
 /** What gets saved. Everything on the sheet is derived from this by the engine. */
 export interface Character {
+  /** Stable identity of this character across saves, exports and imports. */
+  id: string;
   schemaVersion: typeof CHARACTER_SCHEMA_VERSION;
   ruleset: "srd51" | "srd52";
   name: string;
@@ -37,6 +39,7 @@ export interface Character {
 
 export function createCharacter(ruleset: Character["ruleset"]): Character {
   return {
+    id: crypto.randomUUID(),
     schemaVersion: CHARACTER_SCHEMA_VERSION,
     ruleset,
     name: "",

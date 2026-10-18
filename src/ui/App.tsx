@@ -1,12 +1,14 @@
 import { useEffect } from "preact/hooks";
-import { content, loadError } from "../app/store";
+import { content, initStorage, loadError, storageReady } from "../app/store";
 import { loadContent } from "../content/browser";
 import { ui } from "../i18n/ui";
+import { CharacterBar } from "./CharacterBar";
 import { CharacterForm } from "./CharacterForm";
 import { Sheet } from "./Sheet";
 
 export function App() {
   useEffect(() => {
+    void initStorage();
     loadContent(["en"]).then(
       (loaded) => {
         content.value = loaded;
@@ -23,13 +25,16 @@ export function App() {
       <h1>{ui("app.title")}</h1>
       {loadError.value ? (
         <p role="alert">{ui("app.loadError")}</p>
-      ) : !content.value ? (
+      ) : !content.value || !storageReady.value ? (
         <p>{ui("app.loading")}</p>
       ) : (
-        <div class="layout">
-          <CharacterForm />
-          <Sheet />
-        </div>
+        <>
+          <CharacterBar />
+          <div class="layout">
+            <CharacterForm />
+            <Sheet />
+          </div>
+        </>
       )}
     </main>
   );

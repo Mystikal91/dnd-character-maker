@@ -1,0 +1,57 @@
+import type { Character } from "../engine/character";
+import { CharacterParseError, parseCharacter } from "../engine/characterSchema";
+import { dbDelete, dbGet, dbGetAll, dbPut } from "./db";
+
+/** What is stored per character: the document plus when it last changed. */
+interface CharacterRecord {
+  id: string;
+  updatedAt: number;
+  character: Character;
+}
+
+export interface CharacterSummary {
+  id: string;
+  name: string;
+  updatedAt: number;
+}
+
+const CURRENT_KEY = "currentCharacterId";
+
+export async function saveCharacter(character: Character, now = Date.now()): Promise<void> {
+  const record: CharacterRecord = { id: character.id, updatedAt: now, character };
+  await dbPut("characters", record);
+}
+
+/** Loads and validates one character; returns undefined if it is missing or unreadable. */
+export async function loadCharacter(id: string): Promise<Character | undefined> {
+  const record = await dbGet<CharacterRecord>("characters", id);
+  if (!record) return undefined;
+  try {
+    return parseCharacter(record.character);
+  } catch (error) {
+    if (error instanceof CharacterParseError) return undefined;
+    throw error;
+  }
+}
+
+/** All saved characters, most recently changed first. Unreadable records are skipped. */
+export async function listCharacters(): Promise<CharacterSummary[]> {
+  const records = await dbGetAll<CharacterRecord>("characters");
+  return records
+    .map((r) => ({ id: r.id, name: r.character?.name ?? "", updatedAt: r.updatedAt }))
+    .sort((a, b) => b.updatedAt - a.updatedAt);
+}
+
+export const deleteCharacter = (id: string) => dbDelete("characters", id);
+
+export const getCurrentId = () => dbGet<string>("meta", CURRENT_KEY);
+export const setCurrentId = (id: string) => dbPut("meta", id, CURRENT_KEY);
+
+/** Asks the browser not to evict our data under storage pressure. Best effort. */
+export async function requestPersistence(): Promise<void> {
+  try {
+    await navigator.storage?.persist?.();
+  } catch {
+    // Not supported or denied: nothing to do.
+  }
+}
