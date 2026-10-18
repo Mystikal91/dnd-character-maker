@@ -25,6 +25,19 @@ export function Credits() {
 
       <h3>{ui("credits.rules")}</h3>
       <p>{ui("credits.rulesIntro")}</p>
+      <ul>
+        <li>
+          <ExternalLink href="https://dnd.wizards.com/resources/systems-reference-document">
+            System Reference Document 5.1
+          </ExternalLink>
+          {" — Wizards of the Coast"}
+        </li>
+        <li>
+          <ExternalLink href="https://creativecommons.org/licenses/by/4.0/legalcode">
+            Creative Commons Attribution 4.0 International
+          </ExternalLink>
+        </li>
+      </ul>
       {attributions.map((text) => (
         <blockquote key={text} lang="en">
           {text}
