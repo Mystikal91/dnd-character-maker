@@ -1,0 +1,6 @@
+SPEC.md
+node_modules
+dist
+dev-dist
+*.local
+.DS_Store
