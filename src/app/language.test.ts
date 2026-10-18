@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
+import de from "../../locales/de/ui.json";
 import en from "../../locales/en/ui.json";
+import es from "../../locales/es/ui.json";
+import fr from "../../locales/fr/ui.json";
 import it_ from "../../locales/it/ui.json";
-import { localeChain, pickLanguage } from "./language.logic";
+import { LANGUAGES, localeChain, pickLanguage } from "./language.logic";
 
 describe("pickLanguage", () => {
   it("prefers the saved choice", () => {
@@ -9,11 +12,11 @@ describe("pickLanguage", () => {
   });
 
   it("uses the first supported browser language, ignoring the region", () => {
-    expect(pickLanguage(null, ["fr-FR", "it-IT", "en"])).toBe("it");
+    expect(pickLanguage(null, ["pt-BR", "de-AT", "en"])).toBe("de");
   });
 
   it("falls back to English", () => {
-    expect(pickLanguage("xx", ["fr", "de"])).toBe("en");
+    expect(pickLanguage("xx", ["pt", "ja"])).toBe("en");
     expect(pickLanguage(undefined, [])).toBe("en");
   });
 });
@@ -25,20 +28,28 @@ describe("localeChain", () => {
   });
 });
 
-describe("Italian interface texts", () => {
-  const placeholders = (text: string) => [...text.matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort();
+describe("interface texts", () => {
+  const texts: Record<string, Record<string, string>> = { it: it_, fr, de, es };
+  const english: Record<string, string> = en;
+  const placeholders = (text: string) =>
+    JSON.stringify([...text.matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort());
 
-  it("has no keys that English lacks", () => {
-    const extra = Object.keys(it_).filter((key) => !(key in en));
-    expect(extra).toEqual([]);
+  it("covers every language the selector offers", () => {
+    const offered = LANGUAGES.map((l) => l.code).filter((code) => code !== "en");
+    expect(Object.keys(texts).sort()).toEqual([...offered].sort());
   });
 
-  it("keeps the same placeholders as English", () => {
-    const mismatched = Object.entries(it_).filter(
-      ([key, text]) =>
-        JSON.stringify(placeholders(text)) !==
-        JSON.stringify(placeholders((en as Record<string, string>)[key] ?? "")),
-    );
-    expect(mismatched).toEqual([]);
-  });
+  for (const [code, strings] of Object.entries(texts)) {
+    it(`${code} has the same keys as English`, () => {
+      expect(Object.keys(strings).filter((key) => !(key in english))).toEqual([]);
+      expect(Object.keys(english).filter((key) => !(key in strings))).toEqual([]);
+    });
+
+    it(`${code} keeps the same placeholders as English`, () => {
+      const mismatched = Object.entries(strings).filter(
+        ([key, text]) => placeholders(text) !== placeholders(english[key] ?? ""),
+      );
+      expect(mismatched).toEqual([]);
+    });
+  }
 });

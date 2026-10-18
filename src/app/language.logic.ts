@@ -2,6 +2,9 @@
 export const LANGUAGES = [
   { code: "en", name: "English" },
   { code: "it", name: "Italiano" },
+  { code: "fr", name: "Français" },
+  { code: "de", name: "Deutsch" },
+  { code: "es", name: "Español" },
 ] as const;
 
 export type LanguageCode = (typeof LANGUAGES)[number]["code"];
