@@ -1,0 +1,78 @@
+/*
+ * Form controls drawn by the theme instead of the browser. Checkboxes are a diamond with a
+ * gem inside in the fantasy style, and a rounded square with a tick in the modern one.
+ */
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  display: inline-grid;
+  place-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0;
+  border: 2px solid var(--ink);
+  background: var(--surface-2);
+  color: var(--accent);
+  cursor: pointer;
+  transition: background-color 0.12s, border-color 0.12s;
+}
+
+input[type="checkbox"]::after {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--accent);
+  transform: scale(0);
+  transition: transform 0.12s;
+}
+
+input[type="checkbox"]:checked::after {
+  transform: scale(1);
+}
+
+input[type="checkbox"]:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+input[type="checkbox"]:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Fantasy: a diamond, with a smaller diamond gem when checked. */
+:root[data-style="fantasy"] input[type="checkbox"] {
+  width: 1.05rem;
+  height: 1.05rem;
+  margin: 0.1rem;
+  border-radius: 0;
+  transform: rotate(45deg);
+}
+
+:root[data-style="fantasy"] input[type="checkbox"]::after {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+:root[data-style="fantasy"] input[type="checkbox"]:checked {
+  border-color: var(--accent);
+}
+
+/* Modern: a rounded square that fills with the accent color and shows a tick. */
+:root[data-style="modern"] input[type="checkbox"] {
+  border-color: var(--border);
+  border-radius: 0.35rem;
+}
+
+:root[data-style="modern"] input[type="checkbox"]::after {
+  width: 0.8rem;
+  height: 0.8rem;
+  background: var(--accent-contrast);
+  clip-path: polygon(14% 52%, 0 66%, 38% 100%, 100% 22%, 86% 8%, 38% 72%);
+}
+
+:root[data-style="modern"] input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}

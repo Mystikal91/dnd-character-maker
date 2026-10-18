@@ -4,6 +4,7 @@ import type { Content } from "../content/browser";
 import type { ClassSpells } from "../engine/character";
 import type { SpellPick } from "../engine/spells";
 import { ui } from "../i18n/ui";
+import { SpellInfoButton } from "./spells/SpellInfo";
 
 type ListName = keyof ClassSpells;
 
@@ -60,6 +61,7 @@ function SpellList({ classId, list, title, pick, filter, c }: ListProps) {
                       />
                       {c.name(id)}
                     </label>
+                    <SpellInfoButton id={id} />
                   </li>
                 );
               })}

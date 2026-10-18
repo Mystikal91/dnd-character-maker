@@ -50,6 +50,8 @@
   "warning.tooManyChoices": "Too many picks for {source}; the extra ones are ignored.",
   "warning.asiInvalid": "Improvement {slot} is not valid.",
   "warning.asiTooMany": "Only {available} improvements are available; the extra ones are ignored.",
+  "spells.info": "Spell details",
+  "spells.closeInfo": "Close",
   "spells.title": "Spells",
   "spells.cantrips": "Cantrips",
   "spells.known": "Spells known",

@@ -2,6 +2,7 @@ import { character, content, sheet, updateCharacter } from "../app/store";
 import type { Content } from "../content/browser";
 import type { PendingChoice } from "../engine/choices";
 import { type UiKey, ui } from "../i18n/ui";
+import { SpellInfoButton } from "./spells/SpellInfo";
 
 /** The display name of one option of a choice, whatever it grants. */
 function optionLabel(c: Content, ruleset: string, choice: PendingChoice, option: string): string {
@@ -85,6 +86,7 @@ export function Choices() {
                     {optionLabel(c, ch.ruleset, choice, option)}
                     {held && <span class="muted"> ({ui("choice.alreadyHave")})</span>}
                   </label>
+                  {choice.grants === "spell" && <SpellInfoButton id={option} />}
                 </li>
               );
             })}

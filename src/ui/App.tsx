@@ -10,6 +10,7 @@ import { Tabs } from "./Tabs";
 import { ThemeControls } from "./ThemeControls";
 import { BuildTab } from "./build/BuildTab";
 import { PrintView } from "./print/PrintView";
+import { SpellDialog } from "./spells/SpellInfo";
 
 function Screen() {
   switch (view.value) {
@@ -57,6 +58,7 @@ export function App() {
           <Screen />
         </>
       )}
+      <SpellDialog />
       <footer class="site-footer no-print">
         <p>{ui("footer.unofficial")}</p>
         <p>
