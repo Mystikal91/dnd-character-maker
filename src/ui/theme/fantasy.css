@@ -148,7 +148,7 @@
 :root[data-style="fantasy"]
   :is(input[type="text"], input[type="number"], input[type="search"], select) {
   border-color: var(--ink);
-  background: var(--surface-2);
+  background-color: var(--surface-2);
 }
 
 :root[data-style="fantasy"] fieldset {
