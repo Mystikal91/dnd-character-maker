@@ -15,6 +15,7 @@ import "./ui/print/print.css";
 import "./ui/theme/fonts.css";
 import "./ui/theme/tokens.css";
 import "./ui/theme/fantasy.css";
+import "./ui/sheet/sheet.css";
 import "./ui/styles.css";
 
 const root = document.getElementById("app");

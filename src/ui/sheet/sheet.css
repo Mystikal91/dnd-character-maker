@@ -1,0 +1,404 @@
+/* The character sheet on screen. Structure and spacing here; ornaments live in theme/fantasy.css. */
+
+.sheet {
+  container: sheet / inline-size;
+  display: grid;
+  gap: 1rem;
+}
+
+/* ---- Header: name banner, who you are, class banner ---- */
+
+.sheet-header {
+  display: grid;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+@container sheet (min-width: 44rem) {
+  .sheet-header {
+    grid-template-columns: 1.1fr 1.4fr 1fr;
+  }
+}
+
+.banner {
+  position: relative;
+  padding: 0.6rem 1.8rem 0.9rem;
+  background: var(--surface-2);
+  border-block: 2px solid var(--ink);
+  text-align: center;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 50%, 100% 100%, 0 100%, 14px 50%);
+}
+
+.banner h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.banner-label {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sheet-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: 0.5rem 1rem;
+  margin: 0;
+  padding: 0.6rem 1rem;
+}
+
+.sheet-info > div {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.sheet-info dd {
+  margin: 0;
+  padding-bottom: 0.15rem;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+
+.sheet-info dt {
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---- Columns: 3 wide, 2 medium, 1 narrow ---- */
+
+.sheet-grid {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+}
+
+.sheet-col {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  min-width: 0;
+}
+
+@container sheet (min-width: 44rem) {
+  .sheet-grid {
+    grid-template-columns: 1fr 1.25fr;
+  }
+
+  .col-right {
+    grid-column: 1 / -1;
+  }
+}
+
+@container sheet (min-width: 66rem) {
+  .sheet-grid {
+    grid-template-columns: 0.95fr 1.2fr 1.05fr;
+  }
+
+  .col-right {
+    grid-column: auto;
+  }
+}
+
+/* ---- Round badges: proficiency bonus, passive senses ---- */
+
+.badges {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  padding: 0.25rem;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--surface);
+  text-align: center;
+  line-height: 1.1;
+}
+
+.badge b {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+}
+
+.badge span {
+  max-width: 5.5rem;
+  color: var(--muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---- Ability blocks ---- */
+
+.ability-blocks {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.ability-block {
+  display: grid;
+  grid-template-columns: 6.2rem 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.75rem;
+}
+
+.ability-core {
+  display: grid;
+  justify-items: center;
+  gap: 0.15rem;
+  text-align: center;
+}
+
+.ability-name {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ability-oval {
+  display: grid;
+  place-items: center;
+  width: 4.2rem;
+  height: 3rem;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--surface-2);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.ability-mod {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.checks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.checks li {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  padding: 0.1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.checks li.proficient {
+  font-weight: 600;
+}
+
+.checks .bonus {
+  min-width: 1.9rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Proficiency markers and slot pips. */
+.pip {
+  flex: none;
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  background: transparent;
+}
+
+.pip.on {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.pips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.pips .pip {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+/* ---- Combat numbers ---- */
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+.stat-row-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.stat-row-4 {
+  grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr));
+}
+
+.stat {
+  padding: 0.55rem 0.4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.slot-list {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slot-list li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.slot-level {
+  min-width: 4.5rem;
+  color: var(--muted);
+}
+
+/* ---- Class features: one frame per level ---- */
+
+.class-features {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.class-block {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.class-features-title {
+  margin: 0;
+}
+
+.level-frame {
+  padding: 0.9rem 1rem 0.9rem 1rem;
+}
+
+.level-frame details {
+  border-top: 1px solid var(--border);
+}
+
+.level-frame details:first-of-type {
+  border-top: 0;
+}
+
+.level-frame summary {
+  padding-right: 3rem;
+}
+
+.level-badge {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.45rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--surface);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.level-badge small {
+  color: var(--muted);
+  font-size: 0.45rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.level-frame.locked {
+  opacity: 0.6;
+}
+
+.higher-levels {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0;
+  border: 0;
+}
+
+.higher-levels > summary {
+  margin-bottom: 0.6rem;
+  color: var(--muted);
+}
+
+.higher-levels[open] > .level-frame {
+  margin-bottom: 0.6rem;
+}
+
+/* ---- Modern style: soft cards instead of ribbons ---- */
+
+:root[data-style="modern"] .banner {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  clip-path: none;
+  padding-bottom: 0.6rem;
+}
+
+:root[data-style="modern"] .ability-oval,
+:root[data-style="modern"] .badge {
+  border-color: var(--border);
+}
+
+:root[data-style="modern"] .ability-oval {
+  border-radius: var(--radius-sm);
+}
+
+:root[data-style="modern"] .level-badge {
+  border-color: var(--accent);
+  color: var(--accent);
+}
