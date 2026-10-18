@@ -8,7 +8,22 @@ const raw: RawSource = {
     { index: "skill-perception", type: "Skills", reference: { index: "perception" } },
     { index: "battleaxes", type: "Weapons", reference: { index: "battleaxe" } },
   ],
-  languages: [{ index: "common" }, { index: "elvish" }],
+  languages: [
+    {
+      index: "common",
+      name: "Common",
+      type: "Standard",
+      typical_speakers: ["Humans"],
+      script: "Common",
+    },
+    {
+      index: "elvish",
+      name: "Elvish",
+      type: "Standard",
+      typical_speakers: ["Elves"],
+      script: "Elvish",
+    },
+  ],
   races: [
     {
       index: "elf",
@@ -47,6 +62,8 @@ const raw: RawSource = {
   features: [],
   equipment: [],
   weaponProperties: [],
+  abilityScores: [],
+  skills: [],
 };
 
 describe("cleanData", () => {

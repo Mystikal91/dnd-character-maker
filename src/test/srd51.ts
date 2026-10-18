@@ -14,6 +14,9 @@ export const SRD51_FILES = [
   "features",
   "items",
   "properties",
+  "abilities",
+  "skills",
+  "languages",
 ] as const;
 
 export function loadSrd51Pack(file: string): Pack {

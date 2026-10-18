@@ -28,6 +28,8 @@ export interface RawSource {
   features: Raw[];
   equipment: Raw[];
   weaponProperties: Raw[];
+  abilityScores: Raw[];
+  skills: Raw[];
 }
 export type ConvertedPack = Record<
   | "species"
@@ -39,7 +41,10 @@ export type ConvertedPack = Record<
   | "subclass"
   | "feature"
   | "item"
-  | "property",
+  | "property"
+  | "ability"
+  | "skill"
+  | "language",
   Converted
 >;
 
@@ -596,6 +601,52 @@ function convertProperties(raw: RawSource): Converted {
   return { entries, strings };
 }
 
+function convertAbilities(raw: RawSource): Converted {
+  const entries: Entry[] = [];
+  const strings: Strings = {};
+  for (const a of raw.abilityScores) {
+    entries.push({ id: id("ability", a.index), kind: "ability", effects: [], data: {} });
+    strings[`${a.index}.name`] = a.full_name;
+    strings[`${a.index}.abbreviation`] = a.name;
+    strings[`${a.index}.desc`] = text(a.desc) ?? "";
+  }
+  return { entries, strings };
+}
+
+function convertSkills(raw: RawSource): Converted {
+  const entries: Entry[] = [];
+  const strings: Strings = {};
+  for (const s of raw.skills) {
+    entries.push({
+      id: id("skill", s.index),
+      kind: "skill",
+      effects: [],
+      data: { ability: s.ability_score.index },
+    });
+    strings[`${s.index}.name`] = s.name;
+    strings[`${s.index}.desc`] = text(s.desc) ?? "";
+  }
+  return { entries, strings };
+}
+
+function convertLanguages(raw: RawSource): Converted {
+  const entries: Entry[] = [];
+  const strings: Strings = {};
+  for (const l of raw.languages) {
+    entries.push({
+      id: id("language", l.index),
+      kind: "language",
+      effects: [],
+      data: { type: String(l.type).toLowerCase() },
+    });
+    strings[`${l.index}.name`] = l.name;
+    strings[`${l.index}.speakers`] = (l.typical_speakers as string[]).join(", ");
+    if (l.script) strings[`${l.index}.script`] = l.script;
+    if (l.desc) strings[`${l.index}.desc`] = text(l.desc) ?? "";
+  }
+  return { entries, strings };
+}
+
 export function convertAll(raw: RawSource): ConvertedPack {
   const ctx = buildContext(raw);
   return {
@@ -609,5 +660,8 @@ export function convertAll(raw: RawSource): ConvertedPack {
     feature: convertFeatures(raw),
     item: convertItems(raw),
     property: convertProperties(raw),
+    ability: convertAbilities(raw),
+    skill: convertSkills(raw),
+    language: convertLanguages(raw),
   };
 }

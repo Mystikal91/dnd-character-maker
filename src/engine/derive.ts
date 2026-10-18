@@ -10,6 +10,7 @@ import {
 } from "../data/schema";
 import { abilityModifier } from "./abilities";
 import type { Character } from "./character";
+import { type ChecksResult, deriveChecks } from "./checks";
 import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
 
 export type PackIndex = Map<string, Entry>;
@@ -39,10 +40,13 @@ export interface SpellcastingResult {
   spellSlots: number[];
 }
 
-export interface DerivedSheet extends EquipmentResult {
+export interface DerivedSheet extends EquipmentResult, ChecksResult {
   /** Total character level (0 while no class is chosen). */
   level: number;
   proficiencyBonus: number;
+  initiative: number;
+  /** Walking speed in feet; undefined while no species is chosen. */
+  speed?: number;
   abilities: Record<Ability, AbilityResult>;
   hitPoints: { max: number; overridden: boolean; hitDice: Record<string, number> };
   proficiencies: Record<ProficiencyCategory, string[]>;
@@ -200,17 +204,31 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     }
   }
 
+  const held = proficiencyKeys(proficiencies);
   const equipment = deriveEquipment({
     character,
     index,
     abilities,
-    held: proficiencyKeys(proficiencies),
+    held,
     proficiencyBonus,
     warnings,
   });
+  const checks = deriveChecks({
+    index,
+    ruleset: character.ruleset,
+    abilities,
+    held,
+    proficiencyBonus,
+  });
+  const baseSpeed = chosen.find((e) => e.kind === "species")?.data.speed;
+  const speed =
+    overrideNumber(character, "speed") ?? (typeof baseSpeed === "number" ? baseSpeed : undefined);
 
   return {
     ...equipment,
+    ...checks,
+    initiative: overrideNumber(character, "initiative") ?? abilities.dex.modifier,
+    ...(speed !== undefined && { speed }),
     level,
     proficiencyBonus,
     abilities,
