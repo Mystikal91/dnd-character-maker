@@ -4,6 +4,7 @@ import { itemData } from "../data/items";
 import { ui } from "../i18n/ui";
 import { AbilityScores } from "./AbilityScores";
 import { Choices } from "./Choices";
+import { SpellPicker } from "./SpellPicker";
 
 const RULESET = "srd51";
 
@@ -159,6 +160,8 @@ export function CharacterForm() {
       <AbilityScores />
 
       <Choices />
+
+      <SpellPicker />
 
       <fieldset>
         <legend>{ui("form.equipment")}</legend>

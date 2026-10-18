@@ -1,6 +1,6 @@
 import { ABILITIES, type Ability } from "../data/schema";
 
-export const CHARACTER_SCHEMA_VERSION = 2;
+export const CHARACTER_SCHEMA_VERSION = 3;
 
 /** How ability scores were generated. Only `manual` has no constraints on the numbers. */
 export type AbilityMethod = "manual" | "standard" | "pointbuy" | "roll";
@@ -12,6 +12,17 @@ export interface ClassLevel {
   subclassId?: string;
   /** Hit die rolls for this class's levels, indexed by level - 1. Missing = average. */
   hpRolls?: number[];
+}
+
+/**
+ * Spells a character picked for one class. Which lists apply depends on the class: known
+ * casters fill `cantrips` and `known`; prepared casters fill `cantrips` and `prepared`;
+ * wizards fill `cantrips`, `known` (the spellbook) and `prepared`.
+ */
+export interface ClassSpells {
+  cantrips: string[];
+  known: string[];
+  prepared: string[];
 }
 
 /** An item the character owns. `itemId` can be an SRD item or a homebrew one. */
@@ -44,6 +55,8 @@ export interface Character {
    * `<entry id>/<choice id>`. Each value is the list of selected options.
    */
   selections: Record<string, string[]>;
+  /** Spell picks, keyed by class id. */
+  spells: Record<string, ClassSpells>;
   /**
    * Ability Score Improvements taken, one entry per improvement: one ability is +2,
    * two different abilities are +1 each.
@@ -65,6 +78,7 @@ export function createCharacter(ruleset: Character["ruleset"]): Character {
     abilityBase: Object.fromEntries(ABILITIES.map((a) => [a, 10])) as Record<Ability, number>,
     abilityMethod: "manual",
     selections: {},
+    spells: {},
     asi: [],
     overrides: {},
   };

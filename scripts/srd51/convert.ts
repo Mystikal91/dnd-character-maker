@@ -30,6 +30,7 @@ export interface RawSource {
   weaponProperties: Raw[];
   abilityScores: Raw[];
   skills: Raw[];
+  magicSchools: Raw[];
 }
 export type ConvertedPack = Record<
   | "species"
@@ -45,7 +46,8 @@ export type ConvertedPack = Record<
   | "ability"
   | "skill"
   | "language"
-  | "proficiency",
+  | "proficiency"
+  | "school",
   Converted
 >;
 
@@ -345,6 +347,32 @@ const scoreRequirement = (option: Raw) => ({
   minimum: option.minimum_score,
 });
 
+/**
+ * How each SRD 5.1 caster picks spells, from the "Spells Known and Prepared" text of each
+ * class. Not in the source database as data, so it is recorded here.
+ */
+type Preparation =
+  | { type: "known" }
+  | { type: "prepared"; levelDivisor: number }
+  | { type: "spellbook"; initial: number; perLevel: number };
+
+const PREPARATION: Record<string, Preparation> = {
+  bard: { type: "known" },
+  sorcerer: { type: "known" },
+  warlock: { type: "known" },
+  ranger: { type: "known" },
+  cleric: { type: "prepared", levelDivisor: 1 },
+  druid: { type: "prepared", levelDivisor: 1 },
+  paladin: { type: "prepared", levelDivisor: 2 },
+  wizard: { type: "spellbook", initial: 6, perLevel: 2 },
+};
+
+function preparationFor(classIndex: string): Preparation {
+  const preparation = PREPARATION[classIndex];
+  if (!preparation) throw new Error(`No spell preparation rule for class ${classIndex}`);
+  return preparation;
+}
+
 function convertClasses(raw: RawSource, ctx: Context): Converted {
   const entries: Entry[] = [];
   const strings: Strings = {};
@@ -407,6 +435,7 @@ function convertClasses(raw: RawSource, ctx: Context): Converted {
           spellcasting: {
             ability: casting.spellcasting_ability.index,
             startsAtLevel: casting.level,
+            preparation: preparationFor(c.index),
           },
         }),
         multiclassing: {
@@ -664,6 +693,17 @@ function convertProficiencies(raw: RawSource, ctx: Context): Converted {
   return { entries, strings };
 }
 
+function convertSchools(raw: RawSource): Converted {
+  const entries: Entry[] = [];
+  const strings: Strings = {};
+  for (const m of raw.magicSchools) {
+    entries.push({ id: id("school", m.index), kind: "school", effects: [], data: {} });
+    strings[`${m.index}.name`] = m.name;
+    strings[`${m.index}.desc`] = text(m.desc) ?? "";
+  }
+  return { entries, strings };
+}
+
 export function convertAll(raw: RawSource): ConvertedPack {
   const ctx = buildContext(raw);
   return {
@@ -681,5 +721,6 @@ export function convertAll(raw: RawSource): ConvertedPack {
     skill: convertSkills(raw),
     language: convertLanguages(raw),
     proficiency: convertProficiencies(raw, ctx),
+    school: convertSchools(raw),
   };
 }

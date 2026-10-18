@@ -12,6 +12,7 @@ import type { Character } from "./character";
 import { type ChecksResult, deriveChecks } from "./checks";
 import { type PendingChoice, collectEffects } from "./choices";
 import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
+import { type SpellLists, deriveSpellLists } from "./spells";
 import { type Warning, warn } from "./warnings";
 
 export type PackIndex = Map<string, Entry>;
@@ -39,6 +40,8 @@ export interface SpellcastingResult {
   spellsKnown?: number;
   /** Slots for spell levels 1..9. */
   spellSlots: number[];
+  /** What the class may pick and what is picked. */
+  lists: SpellLists;
 }
 
 export interface DerivedSheet extends EquipmentResult, ChecksResult {
@@ -164,8 +167,10 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     const row = data.levels.find((l) => l.level === cl.level);
     for (const l of data.levels) if (l.level <= cl.level) features.push(...l.features);
 
+    let subEntry: Entry | undefined;
     if (cl.subclassId) {
       const sub = lookup(index, cl.subclassId, warnings);
+      subEntry = sub;
       if (sub) {
         if (sub.parent !== cl.classId)
           warn(warnings, "subclassMismatch", { subclass: cl.subclassId, class: cl.classId });
@@ -185,6 +190,16 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
         ...(row.cantripsKnown !== undefined && { cantripsKnown: row.cantripsKnown }),
         ...(row.spellsKnown !== undefined && { spellsKnown: row.spellsKnown }),
         spellSlots: row.spellSlots,
+        lists: deriveSpellLists({
+          classId: cl.classId,
+          data,
+          level: cl.level,
+          abilityModifier: modifier,
+          picks: character.spells[cl.classId],
+          index,
+          subclass: subEntry,
+          warnings,
+        }),
       });
     }
   });

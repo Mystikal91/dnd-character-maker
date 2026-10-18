@@ -104,7 +104,11 @@ describe("SRD 5.1 classes", () => {
     if (!wizard) throw new Error("wizard missing");
     const data = classData(wizard);
     expect(data.hitDie).toBe(6);
-    expect(data.spellcasting).toEqual({ ability: "int", startsAtLevel: 1 });
+    expect(data.spellcasting).toEqual({
+      ability: "int",
+      startsAtLevel: 1,
+      preparation: { type: "spellbook", initial: 6, perLevel: 2 },
+    });
     expect(data.levels[4]).toMatchObject({
       level: 5,
       cantripsKnown: 4,

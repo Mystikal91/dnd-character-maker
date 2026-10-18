@@ -15,7 +15,9 @@ export type WarningCode =
   | "invalidChoice"
   | "tooManyChoices"
   | "asiInvalid"
-  | "asiTooMany";
+  | "asiTooMany"
+  | "invalidSpell"
+  | "tooManySpells";
 
 export interface Warning {
   code: WarningCode;

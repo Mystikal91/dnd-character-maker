@@ -462,3 +462,24 @@ button.secondary {
 .options label.disabled {
   color: var(--muted);
 }
+
+.spell-list {
+  margin-top: 0.75rem;
+}
+
+.spell-meta {
+  margin: 0.25rem 0 0.5rem;
+}
+
+.pair {
+  display: contents;
+}
+
+input[type="search"] {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.4rem;
+}

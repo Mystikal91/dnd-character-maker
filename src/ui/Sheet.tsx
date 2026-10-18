@@ -4,6 +4,7 @@ import { ABILITIES } from "../data/schema";
 import type { DamageResult } from "../engine/equipment";
 import type { Warning } from "../engine/warnings";
 import { type UiKey, signed, ui } from "../i18n/ui";
+import { SpellSheet } from "./SpellSheet";
 
 const PROFICIENCY_CATEGORIES = ["armor", "weapon", "tool", "language"] as const;
 const PROFICIENCY_LABELS = {
@@ -197,15 +198,7 @@ export function Sheet() {
         </Section>
       )}
 
-      {s.grantedSpells.length > 0 && (
-        <Section title={ui("sheet.grantedSpells")}>
-          <ul>
-            {s.grantedSpells.map((id) => (
-              <li key={id}>{name(id)}</li>
-            ))}
-          </ul>
-        </Section>
-      )}
+      <SpellSheet />
 
       <Section title={ui("sheet.proficiencies")}>
         <dl class="pairs">

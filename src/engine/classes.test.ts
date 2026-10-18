@@ -22,7 +22,7 @@ describe("deriveSheet with SRD 5.1 classes", () => {
     expect(sheet.hitPoints).toEqual({ max: 32, overridden: false, hitDice: { d6: 5 } });
     expect(sheet.proficiencies.save).toEqual(["int", "wis"]);
     expect(sheet.features).toContain("srd51:feature/arcane-recovery");
-    expect(sheet.spellcasting).toEqual({
+    expect(sheet.spellcasting).toMatchObject({
       classId: "srd51:class/wizard",
       ability: "int",
       saveDc: 14,

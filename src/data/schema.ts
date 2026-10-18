@@ -87,6 +87,7 @@ export const ENTRY_KINDS = [
   "skill",
   "language",
   "proficiency",
+  "school",
 ] as const;
 
 export const EntrySchema = v.object({

@@ -489,7 +489,10 @@
         "hitDie": 8,
         "spellcasting": {
           "ability": "cha",
-          "startsAtLevel": 1
+          "startsAtLevel": 1,
+          "preparation": {
+            "type": "known"
+          }
         },
         "multiclassing": {
           "prerequisites": [
@@ -1244,7 +1247,11 @@
         "hitDie": 8,
         "spellcasting": {
           "ability": "wis",
-          "startsAtLevel": 1
+          "startsAtLevel": 1,
+          "preparation": {
+            "type": "prepared",
+            "levelDivisor": 1
+          }
         },
         "multiclassing": {
           "prerequisites": [
@@ -1986,7 +1993,11 @@
         "hitDie": 8,
         "spellcasting": {
           "ability": "wis",
-          "startsAtLevel": 1
+          "startsAtLevel": 1,
+          "preparation": {
+            "type": "prepared",
+            "levelDivisor": 1
+          }
         },
         "multiclassing": {
           "prerequisites": [
@@ -3555,7 +3566,11 @@
         "hitDie": 10,
         "spellcasting": {
           "ability": "cha",
-          "startsAtLevel": 2
+          "startsAtLevel": 2,
+          "preparation": {
+            "type": "prepared",
+            "levelDivisor": 2
+          }
         },
         "multiclassing": {
           "prerequisites": [
@@ -4181,7 +4196,10 @@
         "hitDie": 10,
         "spellcasting": {
           "ability": "wis",
-          "startsAtLevel": 2
+          "startsAtLevel": 2,
+          "preparation": {
+            "type": "known"
+          }
         },
         "multiclassing": {
           "prerequisites": [
@@ -5299,7 +5317,10 @@
         "hitDie": 6,
         "spellcasting": {
           "ability": "cha",
-          "startsAtLevel": 1
+          "startsAtLevel": 1,
+          "preparation": {
+            "type": "known"
+          }
         },
         "multiclassing": {
           "prerequisites": [
@@ -6352,7 +6373,10 @@
         "hitDie": 8,
         "spellcasting": {
           "ability": "cha",
-          "startsAtLevel": 1
+          "startsAtLevel": 1,
+          "preparation": {
+            "type": "known"
+          }
         },
         "multiclassing": {
           "prerequisites": [
@@ -7079,7 +7103,12 @@
         "hitDie": 6,
         "spellcasting": {
           "ability": "int",
-          "startsAtLevel": 1
+          "startsAtLevel": 1,
+          "preparation": {
+            "type": "spellbook",
+            "initial": 6,
+            "perLevel": 2
+          }
         },
         "multiclassing": {
           "prerequisites": [

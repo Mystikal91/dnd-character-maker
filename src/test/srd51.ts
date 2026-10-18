@@ -18,6 +18,7 @@ export const SRD51_FILES = [
   "skills",
   "languages",
   "proficiencies",
+  "schools",
 ] as const;
 
 export function loadSrd51Pack(file: string): Pack {

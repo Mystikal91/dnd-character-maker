@@ -134,7 +134,7 @@ describe("ability score improvements", () => {
 });
 
 describe("character migration", () => {
-  it("upgrades a version 1 character to version 2 with empty guided state", () => {
+  it("upgrades a version 1 character to the current version with empty guided state", () => {
     const v1 = {
       id: "old",
       schemaVersion: 1,
@@ -148,7 +148,8 @@ describe("character migration", () => {
     };
     const upgraded = parseCharacter(v1);
     expect(upgraded).toMatchObject({
-      schemaVersion: 2,
+      schemaVersion: 3,
+      spells: {},
       abilityMethod: "manual",
       selections: {},
       asi: [],

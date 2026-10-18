@@ -27,6 +27,11 @@ export const ClassDataSchema = v.object({
     v.object({
       ability: AbilitySchema,
       startsAtLevel: v.number(),
+      preparation: v.variant("type", [
+        v.object({ type: v.literal("known") }),
+        v.object({ type: v.literal("prepared"), levelDivisor: v.number() }),
+        v.object({ type: v.literal("spellbook"), initial: v.number(), perLevel: v.number() }),
+      ]),
     }),
   ),
   multiclassing: v.object({

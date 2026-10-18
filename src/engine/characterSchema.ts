@@ -38,6 +38,14 @@ const CharacterSchema = v.object({
   abilityMethod: v.picklist(["manual", "standard", "pointbuy", "roll"]),
   abilityRolls: v.optional(v.array(v.number())),
   selections: v.record(v.string(), v.array(v.string())),
+  spells: v.record(
+    v.string(),
+    v.object({
+      cantrips: v.array(v.string()),
+      known: v.array(v.string()),
+      prepared: v.array(v.string()),
+    }),
+  ),
   asi: v.array(v.pipe(v.array(AbilitySchema), v.minLength(1), v.maxLength(2))),
   overrides: v.record(v.string(), v.union([v.number(), v.string(), v.boolean()])),
 });
@@ -50,6 +58,8 @@ const CharacterSchema = v.object({
 const migrations: Record<number, (doc: Record<string, unknown>) => Record<string, unknown>> = {
   // 1 -> 2: guided choices. Ability scores stay as entered (manual); no picks or ASIs yet.
   1: (doc) => ({ ...doc, abilityMethod: "manual", selections: {}, asi: [] }),
+  // 2 -> 3: spell picks per class.
+  2: (doc) => ({ ...doc, spells: {} }),
 };
 
 export class CharacterParseError extends Error {}
