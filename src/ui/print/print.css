@@ -16,6 +16,8 @@
   --p-display: "Cinzel", "EB Garamond", Georgia, serif;
   --p-n: 3mm; /* corner cut of frames */
   --p-page-h: 273mm; /* printable height: A4 minus margins */
+  --p-front-cols: 0.95fr 1.1fr 0.95fr; /* header and columns share these */
+  --p-story-cols: 0.9fr 1fr 1fr;
 }
 
 .print-root.paper-letter {
@@ -423,13 +425,14 @@
 
 .p-front {
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   gap: 3mm;
-  align-content: start;
+  min-height: var(--p-page-h);
 }
 
 .p-head {
   display: grid;
-  grid-template-columns: 1.45fr 1.5fr 0.95fr;
+  grid-template-columns: var(--p-front-cols);
   gap: 3mm;
   align-items: center;
 }
@@ -444,15 +447,15 @@
 
 .p-cols {
   display: grid;
-  grid-template-columns: 0.95fr 1.1fr 0.95fr;
+  grid-template-columns: var(--p-front-cols);
   gap: 3mm;
-  align-items: start;
+  align-items: stretch;
 }
 
 .p-col {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 2.5mm;
-  align-content: start;
   min-width: 0;
 }
 
@@ -489,7 +492,8 @@
   display: grid;
   grid-template-columns: 15mm 1fr;
   gap: 2mm;
-  align-items: start;
+  flex: 1 1 auto;
+  align-items: center;
   padding: 1.6mm 2.2mm;
 }
 
@@ -578,13 +582,13 @@
 }
 
 .p-write {
-  min-height: 11mm;
+  min-height: 8mm;
   margin: 1mm 0 0.5mm;
   border-bottom: 0.25mm dashed var(--p-line);
 }
 
 .p-write.small {
-  min-height: 7mm;
+  min-height: 5mm;
 }
 
 .p-caption {
@@ -698,17 +702,75 @@
   border-bottom: 0.2mm solid var(--p-line);
 }
 
+.p-head > *,
+.p-story-top > * {
+  min-width: 0;
+}
+
+/* A frame that takes the remaining height of its column, so columns end together. */
+.grow {
+  flex: 1 1 auto;
+}
+
+.p-panel.grow,
+.p-block.grow {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Lines to write on, filling whatever space is left. */
+.p-ruled-area {
+  flex: 1 1 auto;
+  min-height: 6mm;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 5.2mm,
+    var(--p-line) 5.2mm,
+    var(--p-line) 5.45mm
+  );
+}
+
+.p-quick-row {
+  display: flex;
+  gap: 2mm;
+  padding: 1mm 0;
+  border-bottom: 0.2mm solid var(--p-line);
+}
+
+.p-quick-row .lvl {
+  flex: none;
+  min-width: 13mm;
+  color: var(--p-muted);
+  font-size: 6.5pt;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.p-quick-row .items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5mm 3mm;
+}
+
+.p-quick-row .item {
+  display: inline-flex;
+  gap: 1mm;
+  align-items: center;
+}
+
 /* ---- Story and equipment page ---- */
 
 .p-story {
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr) minmax(0, 1.2fr);
   gap: 3mm;
-  align-content: start;
+  min-height: var(--p-page-h);
 }
 
 .p-story-top {
   display: grid;
-  grid-template-columns: 1fr 1.6fr;
+  grid-template-columns: var(--p-story-cols);
   gap: 3mm;
   align-items: center;
 }
@@ -719,33 +781,53 @@
 
 .p-story-grid {
   display: grid;
-  grid-template-columns: 0.9fr 1fr 1fr;
+  grid-template-columns: var(--p-story-cols);
   gap: 3mm;
+  align-items: stretch;
 }
 
 .p-story-grid .col {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 3mm;
-  align-content: start;
+  min-width: 0;
 }
 
 .p-block {
+  display: flex;
+  flex-direction: column;
   padding: 2.2mm 2.8mm;
 }
 
 .p-block.fill {
-  min-height: 20mm;
+  flex: 1 1 0;
 }
 
 .p-block.big {
-  min-height: 66mm;
+  flex: 1 1 0;
 }
 
 .p-story-bottom {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: var(--p-story-cols);
   gap: 3mm;
-  align-items: start;
+  align-items: stretch;
+}
+
+.p-story-top .p-block {
+  grid-column: 2 / -1;
+}
+
+.p-story-grid .col.mid,
+.p-story-bottom .col.mid {
+  display: flex;
+  flex-direction: column;
+  gap: 3mm;
+}
+
+.p-slot.single {
+  grid-template-columns: 1fr 4mm;
+  flex: 1 1 6mm;
 }
 
 .p-slot {
@@ -753,7 +835,7 @@
   grid-template-columns: 17mm 1fr 4mm;
   gap: 1.5mm;
   align-items: end;
-  min-height: 6mm;
+  min-height: 5.2mm;
 }
 
 .p-slot .name {

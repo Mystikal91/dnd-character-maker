@@ -168,51 +168,53 @@ export function SpellPages() {
   const caster = s.spellcasting;
   const showChosen = settings.spellMode !== "none" && rows.length > 0;
   const showAvailable = settings.includeAvailable && caster;
-  if (!caster && !showChosen) return null;
+  if (!showChosen && !showAvailable) return null;
   const levels = [...new Set(rows.map((r) => r.level))];
 
   return (
     <>
-      <section class="p-page p-spells">
-        <h2 class="p-title">{ui("print.page.spells")}</h2>
-        {caster && (
-          <div class="p-casting">
-            <dl class="p-fields">
-              <div>
-                <dd>{c.name(`${ch.ruleset}:ability/${caster.ability}`)}</dd>
-                <dt>{ui("sheet.spellAbility")}</dt>
-              </div>
-              <div>
-                <dd>{caster.saveDc}</dd>
-                <dt>{ui("sheet.spellSaveDc")}</dt>
-              </div>
-              <div>
-                <dd>{signed(caster.attackBonus)}</dd>
-                <dt>{ui("sheet.spellAttack")}</dt>
-              </div>
-            </dl>
-            <SlotBoxes slots={caster.spellSlots} />
-          </div>
-        )}
-
-        {showChosen && settings.spellMode === "compact" && (
-          <CompactTable c={c} ruleset={ch.ruleset} rows={rows} />
-        )}
-        {showChosen &&
-          settings.spellMode === "details" &&
-          levels.map((level) => (
-            <div key={level} class="p-level-group">
-              <h3 class="p-level-title">{levelTitle(level)}</h3>
-              <div class="p-spell-columns">
-                {rows
-                  .filter((r) => r.level === level)
-                  .map((row) => (
-                    <SpellBlock key={row.id} c={c} ruleset={ch.ruleset} row={row} />
-                  ))}
-              </div>
+      {showChosen && (
+        <section class="p-page p-spells">
+          <h2 class="p-title">{ui("print.page.spells")}</h2>
+          {caster && (
+            <div class="p-casting">
+              <dl class="p-fields">
+                <div>
+                  <dd>{c.name(`${ch.ruleset}:ability/${caster.ability}`)}</dd>
+                  <dt>{ui("sheet.spellAbility")}</dt>
+                </div>
+                <div>
+                  <dd>{caster.saveDc}</dd>
+                  <dt>{ui("sheet.spellSaveDc")}</dt>
+                </div>
+                <div>
+                  <dd>{signed(caster.attackBonus)}</dd>
+                  <dt>{ui("sheet.spellAttack")}</dt>
+                </div>
+              </dl>
+              <SlotBoxes slots={caster.spellSlots} />
             </div>
-          ))}
-      </section>
+          )}
+
+          {showChosen && settings.spellMode === "compact" && (
+            <CompactTable c={c} ruleset={ch.ruleset} rows={rows} />
+          )}
+          {showChosen &&
+            settings.spellMode === "details" &&
+            levels.map((level) => (
+              <div key={level} class="p-level-group">
+                <h3 class="p-level-title">{levelTitle(level)}</h3>
+                <div class="p-spell-columns">
+                  {rows
+                    .filter((r) => r.level === level)
+                    .map((row) => (
+                      <SpellBlock key={row.id} c={c} ruleset={ch.ruleset} row={row} />
+                    ))}
+                </div>
+              </div>
+            ))}
+        </section>
+      )}
       {showAvailable && (
         <section class="p-page">
           <AvailableList c={c} s={s} />

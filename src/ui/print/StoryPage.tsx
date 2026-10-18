@@ -17,7 +17,6 @@ const SLOTS = [
   "boots",
 ] as const;
 const MAGIC_ITEM_LINES = 5;
-const BACKPACK_LINES = 18;
 
 /** The equipped items that belong in a given slot, by name. Only armor and hands are known. */
 function slotValue(c: Content, ch: Character, slot: (typeof SLOTS)[number]): string {
@@ -61,7 +60,7 @@ export function StoryPage() {
           <small>{ui("sheet.name")}</small>
         </div>
         <div class="p-frame p-block">
-          <dl class="p-fields" style="grid-template-columns: repeat(3, 1fr)">
+          <dl class="p-fields">
             {FIELDS.map((f) => (
               <div key={f}>
                 <dd>{" "}</dd>
@@ -83,7 +82,7 @@ export function StoryPage() {
           <Block title={ui("print.story.flaws")} className="fill" />
         </div>
         <div class="col">
-          <section class="p-frame p-block fill" style="min-height: 42mm">
+          <section class="p-frame p-block fill">
             <h3 class="p-h">{ui("print.story.background")}</h3>
             {background && <strong>{c.name(background)}</strong>}
             {featureName && (
@@ -98,11 +97,11 @@ export function StoryPage() {
       </div>
 
       <div class="p-story-bottom">
-        <section class="p-frame p-block" style="min-height: 88mm">
+        <section class="p-frame p-block">
           <h3 class="p-h">{ui("print.story.additional")}</h3>
         </section>
 
-        <div class="col" style="display: grid; gap: 3mm; align-content: start">
+        <div class="col mid">
           <section class="p-frame p-block">
             <h3 class="p-h">{ui("print.story.equipment")}</h3>
             {SLOTS.map((slot, i) => (
@@ -121,10 +120,10 @@ export function StoryPage() {
               ))}
             </div>
           </section>
-          <section class="p-frame p-block">
+          <section class="p-frame p-block grow">
             <h3 class="p-h">{ui("print.story.magicItems")}</h3>
             {Array.from({ length: MAGIC_ITEM_LINES }, (_, i) => (
-              <div class="p-slot" style="grid-template-columns: 1fr 4mm" key={`magic-${i + 1}`}>
+              <div class="p-slot single" key={`magic-${i + 1}`}>
                 <span class="value">{" "}</span>
                 <span class="p-pip" title={ui("print.attuned")} />
               </div>
@@ -132,7 +131,7 @@ export function StoryPage() {
           </section>
         </div>
 
-        <section class="p-frame p-block" style="min-height: 88mm">
+        <section class="p-frame p-block">
           <h3 class="p-h">{ui("print.story.backpack")}</h3>
           <ul class="p-lines">
             {carried.map((i) => (
@@ -141,10 +140,8 @@ export function StoryPage() {
                 {i.quantity > 1 && ` ×${i.quantity}`}
               </li>
             ))}
-            {Array.from({ length: Math.max(0, BACKPACK_LINES - carried.length) }, (_, i) => (
-              <li key={`line-${i + 1}`}>{" "}</li>
-            ))}
           </ul>
+          <div class="p-ruled-area" />
         </section>
       </div>
     </section>

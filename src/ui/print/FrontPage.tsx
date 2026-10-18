@@ -5,6 +5,7 @@ import { ABILITIES } from "../../data/schema";
 import type { ClassLevel } from "../../engine/character";
 import type { DamageResult } from "../../engine/equipment";
 import { signed, ui } from "../../i18n/ui";
+import { collectSpellRows } from "../spellRows";
 
 const BLANK_ATTACK_ROWS = 4;
 const PROFICIENCY_CATEGORIES = ["armor", "weapon", "tool", "language"] as const;
@@ -48,6 +49,8 @@ export function FrontPage() {
     .filter((id): id is string => Boolean(id))
     .map(name)
     .join(", ");
+  const spellRows = collectSpellRows(c, s);
+  const spellLevels = [...new Set(spellRows.map((r) => r.level))];
   const insight = s.skills.find((sk) => sk.id === `${ruleset}:skill/insight`);
   const attackRows = Math.max(BLANK_ATTACK_ROWS, s.attacks.length);
   const caster = s.spellcasting;
@@ -250,6 +253,34 @@ export function FrontPage() {
               ))}
             </section>
           )}
+
+          {spellRows.length > 0 && (
+            <section class="p-frame p-panel">
+              <h3 class="p-h">{ui("sheet.spellList")}</h3>
+              {spellLevels.map((level) => (
+                <div class="p-quick-row" key={level}>
+                  <span class="lvl">
+                    {level === 0 ? ui("spells.cantrips") : ui("spells.level", { level })}
+                  </span>
+                  <span class="items">
+                    {spellRows
+                      .filter((r) => r.level === level)
+                      .map((r) => (
+                        <span class="item" key={r.id}>
+                          <span class={`p-pip${r.alwaysPrepared ? " on" : ""}`} />
+                          {name(r.id)}
+                        </span>
+                      ))}
+                  </span>
+                </div>
+              ))}
+            </section>
+          )}
+
+          <section class="p-frame p-panel grow">
+            <h3 class="p-h">{ui("print.notes")}</h3>
+            <div class="p-ruled-area" />
+          </section>
         </div>
 
         <div class="p-col">
@@ -287,6 +318,11 @@ export function FrontPage() {
               ))}
             </section>
           ))}
+
+          <section class="p-frame p-panel grow">
+            <h3 class="p-h">{ui("print.notes")}</h3>
+            <div class="p-ruled-area" />
+          </section>
         </div>
       </div>
     </section>
