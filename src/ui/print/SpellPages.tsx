@@ -1,7 +1,7 @@
 import { printSettings } from "../../app/printSettings";
 import { character, content, sheet } from "../../app/store";
 import type { Content } from "../../content/browser";
-import type { DerivedSheet } from "../../engine/derive";
+import type { DerivedSheet, SpellcastingResult } from "../../engine/derive";
 import { signed, ui } from "../../i18n/ui";
 import { type SpellRow, collectSpellRows } from "../spellRows";
 
@@ -122,8 +122,30 @@ function SlotBoxes({ slots }: { slots: number[] }) {
 
 /** Every spell the class could pick from, with the character's choices marked. */
 function AvailableList({ c, s }: { c: Content; s: DerivedSheet }) {
-  const lists = s.spellcasting?.lists;
-  if (!lists) return null;
+  return (
+    <>
+      {s.spellcasters.map((caster) => (
+        <CasterAvailable
+          key={caster.classId}
+          c={c}
+          caster={caster}
+          heading={s.spellcasters.length > 1 ? c.name(caster.classId) : undefined}
+        />
+      ))}
+    </>
+  );
+}
+
+function CasterAvailable({
+  c,
+  caster,
+  heading,
+}: {
+  c: Content;
+  caster: SpellcastingResult;
+  heading?: string;
+}) {
+  const lists = caster.lists;
   const pools = [
     ...(lists.cantrips?.pool ?? []),
     ...(lists.known?.pool ?? lists.prepared?.pool ?? []),
@@ -139,7 +161,7 @@ function AvailableList({ c, s }: { c: Content; s: DerivedSheet }) {
 
   return (
     <section class="p-available">
-      <h2 class="p-title">{ui("print.availableTitle")}</h2>
+      <h2 class="p-title">{heading ?? ui("print.availableTitle")}</h2>
       {levels.map((level) => (
         <div key={level} class="p-level-group">
           <h3>{levelTitle(level)}</h3>
@@ -178,21 +200,34 @@ export function SpellPages() {
           <h2 class="p-title">{ui("print.page.spells")}</h2>
           {caster && (
             <div class="p-casting">
-              <dl class="p-fields">
-                <div>
-                  <dd>{c.name(`${ch.ruleset}:ability/${caster.ability}`)}</dd>
-                  <dt>{ui("sheet.spellAbility")}</dt>
-                </div>
-                <div>
-                  <dd>{caster.saveDc}</dd>
-                  <dt>{ui("sheet.spellSaveDc")}</dt>
-                </div>
-                <div>
-                  <dd>{signed(caster.attackBonus)}</dd>
-                  <dt>{ui("sheet.spellAttack")}</dt>
-                </div>
-              </dl>
-              <SlotBoxes slots={caster.spellSlots} />
+              {s.spellcasters.map((each) => (
+                <dl class="p-fields" key={each.classId}>
+                  {s.spellcasters.length > 1 && (
+                    <div>
+                      <dd>{c.name(each.classId)}</dd>
+                      <dt>{ui("form.class")}</dt>
+                    </div>
+                  )}
+                  <div>
+                    <dd>{c.name(`${ch.ruleset}:ability/${each.ability}`)}</dd>
+                    <dt>{ui("sheet.spellAbility")}</dt>
+                  </div>
+                  <div>
+                    <dd>{each.saveDc}</dd>
+                    <dt>{ui("sheet.spellSaveDc")}</dt>
+                  </div>
+                  <div>
+                    <dd>{signed(each.attackBonus)}</dd>
+                    <dt>{ui("sheet.spellAttack")}</dt>
+                  </div>
+                </dl>
+              ))}
+              <SlotBoxes slots={s.spellSlots} />
+              {s.pactSlots && (
+                <p class="p-muted">
+                  {ui("sheet.pact", { count: s.pactSlots.count, level: s.pactSlots.level })}
+                </p>
+              )}
             </div>
           )}
 

@@ -13,7 +13,6 @@ export interface SpellRow {
  * and spells granted by species or traits. Ordered by level, then name.
  */
 export function collectSpellRows(c: Content, s: DerivedSheet): SpellRow[] {
-  const lists = s.spellcasting?.lists;
   const rows = new Map<string, SpellRow>();
   const add = (id: string, alwaysPrepared = false) => {
     const level = (c.index.get(id)?.data.level as number | undefined) ?? 0;
@@ -24,11 +23,13 @@ export function collectSpellRows(c: Content, s: DerivedSheet): SpellRow[] {
     });
   };
 
-  for (const id of lists?.cantrips?.chosen ?? []) add(id);
-  // Known casters use their known list; prepared casters and wizards use what they prepared.
-  const main = lists?.preparation === "known" ? lists.known : lists?.prepared;
-  for (const id of main?.chosen ?? []) add(id);
-  for (const id of lists?.alwaysPrepared ?? []) add(id, true);
+  for (const { lists } of s.spellcasters) {
+    for (const id of lists.cantrips?.chosen ?? []) add(id);
+    // Known casters use their known list; prepared casters and wizards use what they prepared.
+    const main = lists.preparation === "known" ? lists.known : lists.prepared;
+    for (const id of main?.chosen ?? []) add(id);
+    for (const id of lists.alwaysPrepared) add(id, true);
+  }
   for (const id of s.grantedSpells) add(id);
 
   return [...rows.values()].sort(

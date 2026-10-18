@@ -106,12 +106,27 @@ export function spendHitDie(
   return applyHealing(spent, max, Math.max(0, rolled + conModifier));
 }
 
+/** Pact Magic slots still available. */
+export function pactLeft(play: PlayState, total: number): number {
+  return Math.max(0, total - (play.pactUsed ?? 0));
+}
+
+/** Sets how many Pact Magic slots are spent, never below 0 or above the total. */
+export function setPactUsed(play: PlayState, used: number, total: number): PlayState {
+  return { ...play, pactUsed: clamp(used, 0, total) };
+}
+
+/** What a short rest gives back: a lone warlock's slots, a multiclass warlock's pact slots, or nothing. */
+export type ShortRestRecovery = "all" | "pact" | "none";
+
 /**
  * A short rest. Warlocks get their pact slots back; everyone else's slots wait for a long rest.
  * Hit dice are spent separately, one at a time, so the player can stop when healthy enough.
  */
-export function shortRest(play: PlayState, recoversSlots: boolean): PlayState {
-  return recoversSlots ? { ...play, slotsUsed: play.slotsUsed.map(() => 0) } : play;
+export function shortRest(play: PlayState, recovers: ShortRestRecovery): PlayState {
+  if (recovers === "all") return { ...play, slotsUsed: play.slotsUsed.map(() => 0), pactUsed: 0 };
+  if (recovers === "pact") return { ...play, pactUsed: 0 };
+  return play;
 }
 
 /**

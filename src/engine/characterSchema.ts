@@ -74,6 +74,7 @@ const CharacterSchema = v.object({
     tempHp: v.pipe(v.number(), v.integer(), v.minValue(0)),
     hitDiceUsed: v.record(v.string(), v.pipe(v.number(), v.integer(), v.minValue(0))),
     slotsUsed: v.pipe(v.array(v.pipe(v.number(), v.integer(), v.minValue(0))), v.length(9)),
+    pactUsed: v.optional(v.pipe(v.number(), v.integer(), v.minValue(0))),
     deathSaves: v.object({
       successes: v.pipe(v.number(), v.integer(), v.minValue(0), v.maxValue(3)),
       failures: v.pipe(v.number(), v.integer(), v.minValue(0), v.maxValue(3)),

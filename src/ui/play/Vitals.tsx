@@ -169,7 +169,10 @@ function Rests() {
   const s = sheet.value;
   const ch = character.value;
   if (!v || !s) return null;
-  const isWarlock = ch.classes[0]?.classId.endsWith("/warlock") ?? false;
+  // A lone warlock gets every slot back; a multiclass warlock only the separate pact slots.
+  const onlyWarlock =
+    s.spellcasters.length === 1 && s.spellcasters[0]?.classId.endsWith("/warlock");
+  const recovers = s.pactSlots ? "pact" : onlyWarlock ? "all" : "none";
 
   return (
     <Panel title={ui("play.rests")}>
@@ -178,7 +181,7 @@ function Rests() {
         <button
           type="button"
           onClick={() => {
-            changePlay((p) => shortRest(p, isWarlock));
+            changePlay((p) => shortRest(p, recovers));
             addLog({ label: ui("play.shortRestLog"), detail: "" });
           }}
         >

@@ -7,7 +7,7 @@ export type WarningCode =
   | "levelTooHigh"
   | "abilityTooHigh"
   | "subclassMismatch"
-  | "multiclassSpellcasting"
+  | "multiclassPrerequisite"
   | "multipleArmor"
   | "multipleShields"
   | "strengthMinimum"

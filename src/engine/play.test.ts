@@ -95,8 +95,9 @@ describe("slots and hit dice", () => {
 
   it("gives warlocks their slots back on a short rest, and nobody else", () => {
     const spent = setSlotsUsed(createPlayState(), 1, 2, 2);
-    expect(shortRest(spent, true).slotsUsed[0]).toBe(0);
-    expect(shortRest(spent, false).slotsUsed[0]).toBe(2);
+    expect(shortRest(spent, "all").slotsUsed[0]).toBe(0);
+    expect(shortRest(spent, "none").slotsUsed[0]).toBe(2);
+    expect(shortRest(spent, "pact").slotsUsed[0]).toBe(2);
   });
 });
 

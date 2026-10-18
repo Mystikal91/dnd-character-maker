@@ -2,6 +2,7 @@ import { useState } from "preact/hooks";
 import { content, sheet, updateCharacter } from "../app/store";
 import type { Content } from "../content/browser";
 import type { ClassSpells } from "../engine/character";
+import type { SpellcastingResult } from "../engine/derive";
 import type { SpellPick } from "../engine/spells";
 import { ui } from "../i18n/ui";
 import { SpellInfoButton } from "./spells/SpellInfo";
@@ -72,20 +73,22 @@ function SpellList({ classId, list, title, pick, filter, c }: ListProps) {
   );
 }
 
-export function SpellPicker() {
-  const [filter, setFilter] = useState("");
-  const c = content.value;
-  const caster = sheet.value?.spellcasting;
-  if (!c || !caster) return null;
+/** The lists of one spellcasting class: cantrips, known or prepared spells, always prepared ones. */
+function CasterSpells({
+  caster,
+  filter,
+  c,
+  heading,
+}: {
+  caster: SpellcastingResult;
+  filter: string;
+  c: Content;
+  heading?: string;
+}) {
   const { classId, lists } = caster;
-
   return (
-    <fieldset class="spell-picker">
-      <legend>{ui("spells.title")}</legend>
-      <label class="field">
-        <span>{ui("spells.filter")}</span>
-        <input type="search" value={filter} onInput={(e) => setFilter(e.currentTarget.value)} />
-      </label>
+    <div class="spell-class">
+      {heading && <h4>{heading}</h4>}
       {lists.cantrips && (
         <SpellList
           classId={classId}
@@ -121,6 +124,33 @@ export function SpellPicker() {
           {ui("spells.alwaysPrepared")}: {lists.alwaysPrepared.map((id) => c.name(id)).join(", ")}
         </p>
       )}
+    </div>
+  );
+}
+
+/** Spell picks for every spellcasting class, one block each. */
+export function SpellPicker() {
+  const [filter, setFilter] = useState("");
+  const c = content.value;
+  const casters = sheet.value?.spellcasters ?? [];
+  if (!c || casters.length === 0) return null;
+
+  return (
+    <fieldset class="spell-picker">
+      <legend>{ui("spells.title")}</legend>
+      <label class="field">
+        <span>{ui("spells.filter")}</span>
+        <input type="search" value={filter} onInput={(e) => setFilter(e.currentTarget.value)} />
+      </label>
+      {casters.map((caster) => (
+        <CasterSpells
+          key={caster.classId}
+          caster={caster}
+          filter={filter}
+          c={c}
+          heading={casters.length > 1 ? c.name(caster.classId) : undefined}
+        />
+      ))}
     </fieldset>
   );
 }

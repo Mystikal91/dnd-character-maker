@@ -31,7 +31,10 @@ export function SpellCards() {
   if (!c || !s) return null;
   const rows = collectSpellRows(c, s);
   if (rows.length === 0) return null;
-  const preparedList = s.spellcasting?.lists.prepared?.chosen;
+  // Only casters who prepare spells get the "prepared" marker on their cards.
+  const preparedList = s.spellcasters.some((caster) => caster.lists.prepared)
+    ? s.spellcasters.flatMap((caster) => caster.lists.prepared?.chosen ?? [])
+    : undefined;
 
   return (
     <>

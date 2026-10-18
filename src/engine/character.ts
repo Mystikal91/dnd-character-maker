@@ -78,6 +78,8 @@ export interface PlayState {
   hitDiceUsed: Record<string, number>;
   /** Spell slots spent per spell level 1..9. */
   slotsUsed: number[];
+  /** Pact Magic slots spent, when they are kept apart from the shared slots (multiclass warlock). */
+  pactUsed?: number;
   deathSaves: { successes: number; failures: number };
   /** Ids of the conditions currently affecting the character. */
   conditions: string[];

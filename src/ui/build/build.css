@@ -271,3 +271,37 @@
 .forced-skills > summary {
   margin-bottom: 0.75rem;
 }
+
+/* ---- Level up and classes ---- */
+
+.class-row {
+  margin-bottom: 0.75rem;
+}
+
+.levelup-options {
+  margin-bottom: 0.75rem;
+}
+
+.radio-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+}
+
+.radio-row small {
+  flex-basis: 100%;
+  margin-left: 1.9rem;
+}
+
+.levelup .btn-row,
+.levelup-tasks li {
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.level-up-button {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}

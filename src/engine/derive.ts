@@ -12,6 +12,7 @@ import type { Character } from "./character";
 import { type ChecksResult, deriveChecks } from "./checks";
 import { type PendingChoice, collectEffects } from "./choices";
 import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
+import { type CasterInput, casterKind, slotPools, unmetPrerequisites } from "./multiclass";
 import { OVERRIDE, numberOverride } from "./overrides";
 import { type SpellLists, deriveSpellLists } from "./spells";
 import { type Warning, warn } from "./warnings";
@@ -58,7 +59,14 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   traits: string[];
   /** Class and subclass features unlocked at the current levels. */
   features: string[];
+  /** The first spellcasting class: the one whose numbers the sheet headlines. */
   spellcasting?: SpellcastingResult;
+  /** Every spellcasting class, in the order the character took them. */
+  spellcasters: SpellcastingResult[];
+  /** Spell slots of levels 1..9 shared by all spellcasting classes. */
+  spellSlots: number[];
+  /** Pact Magic slots kept apart when a warlock multiclasses; they return on a short rest. */
+  pactSlots?: { level: number; count: number };
   /** Choices offered by the current picks (species, class, background, traits), with their state. */
   choices: PendingChoice[];
   /** Spells granted outright or by a choice (e.g. a High Elf cantrip). */
@@ -155,6 +163,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   const hitDice: Record<string, number> = {};
   const features: string[] = [];
   const casters: SpellcastingResult[] = [];
+  const casterInputs: CasterInput[] = [];
   classEntries.forEach(({ cl, entry }, position) => {
     if (!entry) return;
     const data = classData(entry);
@@ -181,6 +190,8 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     }
 
     if (data.spellcasting && cl.level >= data.spellcasting.startsAtLevel && row?.spellSlots) {
+      const kind = casterKind(cl.classId, data);
+      if (kind) casterInputs.push({ kind, level: cl.level, ownSlots: row.spellSlots });
       const ability = data.spellcasting.ability;
       const modifier = abilities[ability].modifier;
       casters.push({
@@ -208,8 +219,23 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     }
   });
   const hpOverride = overrideNumber(character, "hp.max");
-  const spellcasting = casters.length === 1 ? casters[0] : undefined;
-  if (casters.length > 1) warn(warnings, "multiclassSpellcasting");
+  // Several casting classes share their slots; each class keeps its own spell lists.
+  const pools = slotPools(casterInputs);
+  for (const caster of casters) caster.spellSlots = pools.slots;
+  const spellcasting = casters[0];
+
+  // Multiclassing asks for a minimum in the key abilities of every class involved.
+  if (classEntries.length > 1) {
+    for (const { cl, entry } of classEntries) {
+      if (!entry) continue;
+      for (const need of unmetPrerequisites(classData(entry), (a) => abilities[a].score))
+        warn(warnings, "multiclassPrerequisite", {
+          class: cl.classId,
+          ability: need.ability,
+          minimum: need.minimum,
+        });
+    }
+  }
 
   // Proficiencies and traits
   const proficiencies = Object.fromEntries(
@@ -259,6 +285,9 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     traits,
     features: [...new Set(features)],
     ...(spellcasting && { spellcasting }),
+    spellcasters: casters,
+    spellSlots: pools.slots,
+    ...(pools.pact && { pactSlots: pools.pact }),
     choices,
     grantedSpells: [...new Set(effects.flatMap((e) => (e.type === "grantSpell" ? [e.spell] : [])))],
     asi: { available: asiAvailable, used: asiUsed },

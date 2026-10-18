@@ -1,7 +1,7 @@
 import { character, content, updateCharacter } from "../../app/store";
 import { itemData } from "../../data/items";
 import { ui } from "../../i18n/ui";
-import { Select, entriesOfKind, parseWhole } from "./fields";
+import { Select, entriesOfKind } from "./fields";
 
 /** Name, species, subspecies and background. */
 export function OriginStep() {
@@ -55,58 +55,6 @@ export function OriginStep() {
           })
         }
       />
-    </>
-  );
-}
-
-/** Class, level and subclass. */
-export function ClassStep() {
-  const mainClass = character.value.classes[0];
-  return (
-    <>
-      <Select
-        label={ui("form.class")}
-        value={mainClass?.classId}
-        options={entriesOfKind("class")}
-        onChange={(id) =>
-          updateCharacter((d) => {
-            d.classes = id ? [{ classId: id, level: d.classes[0]?.level ?? 1 }] : [];
-          })
-        }
-      />
-      {mainClass && (
-        <>
-          <label class="field">
-            <span>{ui("form.level")}</span>
-            <input
-              type="number"
-              min={1}
-              max={20}
-              value={mainClass.level}
-              onInput={(e) => {
-                const level = Math.min(20, Math.max(1, parseWhole(e.currentTarget.value, 1)));
-                updateCharacter((d) => {
-                  const first = d.classes[0];
-                  if (first) first.level = level;
-                });
-              }}
-            />
-          </label>
-          {entriesOfKind("subclass", mainClass.classId).length > 0 && (
-            <Select
-              label={ui("form.subclass")}
-              value={mainClass.subclassId}
-              options={entriesOfKind("subclass", mainClass.classId)}
-              onChange={(id) =>
-                updateCharacter((d) => {
-                  const first = d.classes[0];
-                  if (first) first.subclassId = id;
-                })
-              }
-            />
-          )}
-        </>
-      )}
     </>
   );
 }

@@ -1,5 +1,5 @@
-import { signal } from "@preact/signals";
 import type { ComponentChildren } from "preact";
+import { type StepId, levelUpPhase, openStep } from "../../app/buildState";
 import { showView } from "../../app/navigation";
 import { character, content, sheet } from "../../app/store";
 import { countOverrides } from "../../engine/overrides";
@@ -7,22 +7,11 @@ import { type UiKey, signed, ui } from "../../i18n/ui";
 import { AbilityScores } from "../AbilityScores";
 import { Choices } from "../Choices";
 import { SpellPicker } from "../SpellPicker";
+import { ClassStep } from "./ClassStep";
 import { FreeEditStep } from "./FreeEditStep";
+import { LevelUp } from "./LevelUp";
 import { StoryStep } from "./StoryStep";
-import { ClassStep, EquipmentStep, OriginStep } from "./steps";
-
-type StepId =
-  | "origin"
-  | "class"
-  | "abilities"
-  | "choices"
-  | "spells"
-  | "equipment"
-  | "story"
-  | "freeEdit";
-
-/** The step that is open. Only one is open at a time, so the page stays short. */
-const openStep = signal<StepId>("origin");
+import { EquipmentStep, OriginStep } from "./steps";
 
 interface StepInfo {
   id: StepId;
@@ -43,13 +32,15 @@ function buildSteps(): StepInfo[] {
   const first = ch.classes[0];
   const pendingChoices = s?.choices.reduce((sum, choice) => sum + choice.remaining, 0) ?? 0;
   const asiLeft = s ? s.asi.available - s.asi.used : 0;
-  const lists = s?.spellcasting?.lists;
-  const spellsLeft = lists
-    ? [lists.cantrips, lists.known, lists.prepared].reduce(
+  const spellsLeft = (s?.spellcasters ?? []).reduce(
+    (total, caster) =>
+      total +
+      [caster.lists.cantrips, caster.lists.known, caster.lists.prepared].reduce(
         (sum, pick) => sum + (pick ? Math.max(0, pick.allowed - pick.chosen.length) : 0),
         0,
-      )
-    : 0;
+      ),
+    0,
+  );
 
   const steps: StepInfo[] = [
     {
@@ -62,7 +53,7 @@ function buildSteps(): StepInfo[] {
     {
       id: "class",
       title: "build.class",
-      status: first ? `${name(first.classId)} ${first.level}` : "",
+      status: ch.classes.map((cl) => `${name(cl.classId)} ${cl.level}`).join(" / "),
       done: Boolean(first),
       body: <ClassStep />,
     },
@@ -84,7 +75,7 @@ function buildSteps(): StepInfo[] {
       body: <Choices />,
     },
   ];
-  if (s?.spellcasting) {
+  if (s && s.spellcasters.length > 0) {
     steps.push({
       id: "spells",
       title: "build.spells",
@@ -160,6 +151,17 @@ function Summary() {
           </li>
         ))}
       </ul>
+      {ch.classes.length > 0 && (
+        <button
+          type="button"
+          class="level-up-button"
+          onClick={() => {
+            levelUpPhase.value = "choose";
+          }}
+        >
+          {ui("levelUp.button")}
+        </button>
+      )}
       <button type="button" class="secondary" onClick={() => showView("sheet")}>
         {ui("build.viewSheet")}
       </button>
@@ -183,6 +185,7 @@ export function BuildTab() {
   return (
     <div class="build">
       <div class="steps">
+        <LevelUp />
         {steps.map((step, i) => {
           const isOpen = i === current;
           return (
