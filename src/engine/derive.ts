@@ -12,6 +12,7 @@ import type { Character } from "./character";
 import { type ChecksResult, deriveChecks } from "./checks";
 import { type PendingChoice, collectEffects } from "./choices";
 import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
+import { OVERRIDE, numberOverride } from "./overrides";
 import { type SpellLists, deriveSpellLists } from "./spells";
 import { type Warning, warn } from "./warnings";
 
@@ -185,8 +186,11 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
       casters.push({
         classId: cl.classId,
         ability,
-        saveDc: 8 + proficiencyBonus + modifier,
-        attackBonus: proficiencyBonus + modifier,
+        saveDc:
+          numberOverride(character.overrides, OVERRIDE.spellSaveDc) ??
+          8 + proficiencyBonus + modifier,
+        attackBonus:
+          numberOverride(character.overrides, OVERRIDE.spellAttack) ?? proficiencyBonus + modifier,
         ...(row.cantripsKnown !== undefined && { cantripsKnown: row.cantripsKnown }),
         ...(row.spellsKnown !== undefined && { spellsKnown: row.spellsKnown }),
         spellSlots: row.spellSlots,
@@ -236,6 +240,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     abilities,
     held,
     proficiencyBonus,
+    overrides: character.overrides,
   });
   const baseSpeed = chosen.find((e) => e.kind === "species")?.data.speed;
   const speed =

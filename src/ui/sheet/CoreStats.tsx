@@ -1,12 +1,24 @@
 import type { ComponentChildren } from "preact";
-import { content, sheet } from "../../app/store";
+import { content, isForced, sheet } from "../../app/store";
 import type { DamageResult } from "../../engine/equipment";
+import { OVERRIDE } from "../../engine/overrides";
 import { signed, ui } from "../../i18n/ui";
 import { Panel } from "./parts";
 
-function Stat({ label, children }: { label: string; children: ComponentChildren }) {
+export function Stat({
+  label,
+  forced = false,
+  children,
+}: {
+  label: string;
+  forced?: boolean;
+  children: ComponentChildren;
+}) {
   return (
-    <div class="stat">
+    <div
+      class={`stat${forced ? " forced" : ""}`}
+      title={forced ? ui("freeEdit.forced") : undefined}
+    >
       <div class="stat-value">{children}</div>
       <div class="stat-label">{label}</div>
     </div>
@@ -27,15 +39,21 @@ export function CoreStats() {
   return (
     <>
       <div class="stat-row">
-        <Stat label={ui("sheet.armorClass")}>{s.armorClass.value}</Stat>
-        <Stat label={ui("sheet.initiative")}>{signed(s.initiative)}</Stat>
-        <Stat label={ui("sheet.speed")}>
+        <Stat label={ui("sheet.armorClass")} forced={isForced(OVERRIDE.armorClass)}>
+          {s.armorClass.value}
+        </Stat>
+        <Stat label={ui("sheet.initiative")} forced={isForced(OVERRIDE.initiative)}>
+          {signed(s.initiative)}
+        </Stat>
+        <Stat label={ui("sheet.speed")} forced={isForced(OVERRIDE.speed)}>
           {s.speed === undefined ? "—" : ui("sheet.speedValue", { feet: s.speed })}
         </Stat>
       </div>
       {s.armorClass.stealthDisadvantage && <p class="note">{ui("sheet.stealthDisadvantage")}</p>}
       <div class="stat-row stat-row-2">
-        <Stat label={ui("sheet.hitPoints")}>{s.hitPoints.max}</Stat>
+        <Stat label={ui("sheet.hitPoints")} forced={isForced(OVERRIDE.hitPoints)}>
+          {s.hitPoints.max}
+        </Stat>
         <Stat label={ui("sheet.hitDice")}>{hitDice || "—"}</Stat>
       </div>
     </>

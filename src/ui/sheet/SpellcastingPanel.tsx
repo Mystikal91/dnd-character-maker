@@ -1,5 +1,7 @@
-import { character, content, sheet } from "../../app/store";
+import { character, content, isForced, sheet } from "../../app/store";
+import { OVERRIDE } from "../../engine/overrides";
 import { signed, ui } from "../../i18n/ui";
+import { Stat } from "./CoreStats";
 import { Panel, Pips } from "./parts";
 
 /** Spell attack, save DC, how many spells are known, and the slots to tick off. */
@@ -14,14 +16,12 @@ export function SpellcastingPanel() {
   return (
     <Panel title={ui("sheet.spellcasting")}>
       <div class="stat-row stat-row-4">
-        <div class="stat">
-          <div class="stat-value">{signed(caster.attackBonus)}</div>
-          <div class="stat-label">{ui("sheet.spellAttack")}</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">{caster.saveDc}</div>
-          <div class="stat-label">{ui("sheet.spellSaveDc")}</div>
-        </div>
+        <Stat label={ui("sheet.spellAttack")} forced={isForced(OVERRIDE.spellAttack)}>
+          {signed(caster.attackBonus)}
+        </Stat>
+        <Stat label={ui("sheet.spellSaveDc")} forced={isForced(OVERRIDE.spellSaveDc)}>
+          {caster.saveDc}
+        </Stat>
         <div class="stat">
           <div class="stat-value">{caster.cantripsKnown ?? "—"}</div>
           <div class="stat-label">{ui("sheet.cantrips")}</div>

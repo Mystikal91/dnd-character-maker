@@ -456,3 +456,12 @@
   border-color: var(--accent);
   color: var(--accent);
 }
+
+/* A value the player forced in Free edit. */
+.stat.forced {
+  border-color: var(--accent);
+}
+
+.stat.forced .stat-label::after {
+  content: " *";
+}

@@ -2,14 +2,24 @@ import { signal } from "@preact/signals";
 import type { ComponentChildren } from "preact";
 import { showView } from "../../app/navigation";
 import { character, content, sheet } from "../../app/store";
+import { countOverrides } from "../../engine/overrides";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { AbilityScores } from "../AbilityScores";
 import { Choices } from "../Choices";
 import { SpellPicker } from "../SpellPicker";
+import { FreeEditStep } from "./FreeEditStep";
 import { StoryStep } from "./StoryStep";
 import { ClassStep, EquipmentStep, OriginStep } from "./steps";
 
-type StepId = "origin" | "class" | "abilities" | "choices" | "spells" | "equipment" | "story";
+type StepId =
+  | "origin"
+  | "class"
+  | "abilities"
+  | "choices"
+  | "spells"
+  | "equipment"
+  | "story"
+  | "freeEdit";
 
 /** The step that is open. Only one is open at a time, so the page stays short. */
 const openStep = signal<StepId>("origin");
@@ -100,6 +110,14 @@ function buildSteps(): StepInfo[] {
     status: written > 0 ? `${written}/4` : "",
     done: written === 4,
     body: <StoryStep />,
+  });
+  const forcedCount = countOverrides(ch.overrides);
+  steps.push({
+    id: "freeEdit",
+    title: "build.freeEdit",
+    status: forcedCount > 0 ? ui("freeEdit.count", { n: forcedCount }) : "",
+    done: true,
+    body: <FreeEditStep />,
   });
   return steps;
 }

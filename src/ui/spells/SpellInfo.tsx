@@ -1,5 +1,5 @@
 import { signal } from "@preact/signals";
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
 import { character, content } from "../../app/store";
 import { ui } from "../../i18n/ui";
 
@@ -69,16 +69,27 @@ function SpellInfoBody({ id, short = false }: { id: string; short?: boolean }) {
  * Enter opens the full text in a dialog, which is how it works on touch screens.
  */
 export function SpellInfoButton({ id }: { id: string }) {
-  const [tip, setTip] = useState<{ left: number; top: number } | undefined>();
+  const [tip, setTip] = useState<{ left: number; bottom: number; top: number } | undefined>();
+  const tipEl = useRef<HTMLDivElement>(null);
   const name = content.value?.name(id) ?? id;
+
+  // The tip lives in the top layer (popover), so no card or clipped container can cut it off.
+  // Once it is shown we know its real height and can choose below or above the button.
+  useLayoutEffect(() => {
+    const el = tipEl.current;
+    if (!tip || !el) return;
+    if (!el.matches(":popover-open")) el.showPopover();
+    const height = el.offsetHeight;
+    const below = tip.bottom + 8;
+    const top = below + height > innerHeight ? Math.max(8, tip.top - 8 - height) : below;
+    el.style.top = `${top}px`;
+  }, [tip]);
 
   const showTip = (button: HTMLElement) => {
     const rect = button.getBoundingClientRect();
     const width = Math.min(TIP_WIDTH_REM * 16, innerWidth - 16);
     const left = Math.max(8, Math.min(rect.left, innerWidth - width - 8));
-    // Prefer below the button; flip above when there is not enough room.
-    const top = rect.bottom + 8 + 220 > innerHeight ? Math.max(8, rect.top - 228) : rect.bottom + 8;
-    setTip({ left, top });
+    setTip({ left, bottom: rect.bottom, top: rect.top });
   };
 
   return (
@@ -100,11 +111,13 @@ export function SpellInfoButton({ id }: { id: string }) {
       </button>
       {tip && (
         <div
+          ref={tipEl}
+          popover="manual"
           class="info-tip"
           role="tooltip"
           style={{
             left: `${tip.left}px`,
-            top: `${tip.top}px`,
+            top: `${tip.bottom + 8}px`,
             width: `min(${TIP_WIDTH_REM}rem, calc(100vw - 16px))`,
           }}
         >

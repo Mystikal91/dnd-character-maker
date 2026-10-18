@@ -1,5 +1,6 @@
 import { ABILITIES, type Ability } from "../data/schema";
 import type { AbilityResult, PackIndex } from "./derive";
+import { OVERRIDE, type Overrides, numberOverride } from "./overrides";
 
 export interface CheckResult {
   bonus: number;
@@ -25,6 +26,8 @@ interface ChecksInput {
   /** Held proficiencies as `category:target` keys. */
   held: Set<string>;
   proficiencyBonus: number;
+  /** Free edit values: a forced bonus replaces the calculated one. */
+  overrides: Overrides;
 }
 
 export function deriveChecks({
@@ -33,12 +36,15 @@ export function deriveChecks({
   abilities,
   held,
   proficiencyBonus,
+  overrides,
 }: ChecksInput): ChecksResult {
   const saves = {} as Record<Ability, CheckResult>;
   for (const ability of ABILITIES) {
     const proficient = held.has(`save:${ability}`);
     saves[ability] = {
-      bonus: abilities[ability].modifier + (proficient ? proficiencyBonus : 0),
+      bonus:
+        numberOverride(overrides, OVERRIDE.save(ability)) ??
+        abilities[ability].modifier + (proficient ? proficiencyBonus : 0),
       proficient,
     };
   }
@@ -52,7 +58,9 @@ export function deriveChecks({
     skills.push({
       id: entry.id,
       ability,
-      bonus: abilities[ability].modifier + (proficient ? proficiencyBonus : 0),
+      bonus:
+        numberOverride(overrides, OVERRIDE.skill(slug)) ??
+        abilities[ability].modifier + (proficient ? proficiencyBonus : 0),
       proficient,
     });
   }

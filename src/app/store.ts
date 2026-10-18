@@ -40,6 +40,21 @@ export const sheet = computed<DerivedSheet | undefined>(() =>
   content.value ? deriveSheet(character.value, content.value.index) : undefined,
 );
 
+/**
+ * The same character as if nothing were forced by hand. The Free edit panel shows it next to
+ * each field, so the player knows what the automatic value would be.
+ */
+export const calculated = computed<DerivedSheet | undefined>(() =>
+  content.value
+    ? deriveSheet({ ...character.value, overrides: {} }, content.value.index)
+    : undefined,
+);
+
+/** True when the player forced this value in Free edit. */
+export function isForced(key: string): boolean {
+  return typeof character.value.overrides[key] === "number";
+}
+
 const SAVE_DELAY_MS = 400;
 let saveTimer: ReturnType<typeof setTimeout> | undefined;
 
