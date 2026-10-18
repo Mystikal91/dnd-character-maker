@@ -50,7 +50,8 @@
     grid-template-columns: minmax(0, 1fr) 20rem;
   }
 
-  .summary {
+  /* More specific than the fantasy frame, which would otherwise reset the position. */
+  :root[data-style] .card.summary {
     position: sticky;
     top: 1rem;
   }
