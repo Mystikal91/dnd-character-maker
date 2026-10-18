@@ -1,23 +1,51 @@
-/* Print layout. The preview on screen uses the same rules, drawn as a sheet of paper. */
+/*
+ * Print layout. The preview on screen uses the same rules, drawn as a sheet of paper.
+ * It follows the app's style (fantasy or modern) but is always ink on white, whatever the
+ * on-screen mode is, and has a low-ink variant with no tints.
+ */
+
+/* ---- Tokens ---- */
 
 .print-root {
-  --p-ink: #111;
-  --p-muted: #555;
-  --p-line: #8a8a8a;
+  --p-ink: #1a1612;
+  --p-muted: #5a5148;
+  --p-line: #8a7f70;
   --p-accent: #7a1f1f;
-  --p-tint: #f6efe0;
+  --p-tint: #f3ead4;
+  --p-font: "EB Garamond", Georgia, serif;
+  --p-display: "Cinzel", "EB Garamond", Georgia, serif;
+  --p-n: 3mm; /* corner cut of frames */
+  --p-page-h: 273mm; /* printable height: A4 minus margins */
+  font-family: var(--p-font);
   font-size: 9pt;
-  line-height: 1.3;
+  line-height: 1.25;
+  color: var(--p-ink);
+}
+
+.print-root.paper-letter {
+  --p-page-h: 255.4mm;
+}
+
+:root[data-style="modern"] .print-root {
+  --p-font: "Inter Variable", system-ui, sans-serif;
+  --p-display: "Inter Variable", system-ui, sans-serif;
+  --p-accent: #3730a3;
+  --p-tint: #eef0f6;
+  --p-line: #9aa1ad;
+  --p-n: 0mm;
+  font-size: 8pt;
 }
 
 /* Black and white, no fills: for printing without colored ink. */
 .print-root.low-ink {
   --p-ink: #000;
-  --p-muted: #000;
-  --p-line: #000;
+  --p-muted: #222;
+  --p-line: #444;
   --p-accent: #000;
   --p-tint: transparent;
 }
+
+/* ---- Toolbar (screen only) ---- */
 
 .print-toolbar {
   margin-bottom: 1rem;
@@ -34,7 +62,7 @@
   min-height: 2.5rem;
   padding: 0 1rem;
   border: 1px solid var(--border);
-  border-radius: 0.4rem;
+  border-radius: var(--radius-sm);
   background: var(--bg);
   cursor: pointer;
 }
@@ -42,7 +70,7 @@
 .print-actions button.primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: var(--bg);
+  color: var(--accent-contrast);
   font-weight: 700;
 }
 
@@ -55,12 +83,12 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   gap: 0.5rem 1rem;
-  align-items: end;
+  align-items: start;
 }
 
 .print-options .checks {
   display: grid;
-  gap: 0.25rem;
+  gap: 0.15rem;
 }
 
 .print-options .checks label {
@@ -70,7 +98,8 @@
   min-height: 2rem;
 }
 
-/* The paper: always white with dark ink, whatever the app theme is. */
+/* ---- Paper ---- */
+
 .paper-scroll {
   overflow-x: auto;
   padding: 0.5rem 0 1rem;
@@ -98,8 +127,10 @@
 
 .paper h1,
 .paper h2,
-.paper h3 {
+.paper h3,
+.paper h4 {
   margin: 0;
+  font-family: var(--p-display);
   color: var(--p-ink);
 }
 
@@ -119,36 +150,167 @@
   text-align: center;
 }
 
-.p-title {
-  margin-bottom: 3mm !important;
-  padding-bottom: 1mm;
-  border-bottom: 0.4mm solid var(--p-accent);
-  color: var(--p-accent) !important;
-  font-size: 13pt;
+/* ---- Primitives: frames, banners, headings, badges ---- */
+
+/* Frame with cut corners and a double line; plain rounded box in the modern style. */
+.p-frame {
+  --stroke: calc(var(--p-n) * 0.7071);
+  --corner: calc(var(--p-n) * 1.8);
+  position: relative;
+  border: 0.4mm solid var(--p-ink);
+  background-color: #fff;
+  background-image: linear-gradient(
+      135deg,
+      transparent var(--stroke),
+      var(--p-ink) var(--stroke),
+      var(--p-ink) calc(var(--stroke) + 0.5mm),
+      transparent calc(var(--stroke) + 0.5mm)
+    ),
+    linear-gradient(
+      225deg,
+      transparent var(--stroke),
+      var(--p-ink) var(--stroke),
+      var(--p-ink) calc(var(--stroke) + 0.5mm),
+      transparent calc(var(--stroke) + 0.5mm)
+    ),
+    linear-gradient(
+      315deg,
+      transparent var(--stroke),
+      var(--p-ink) var(--stroke),
+      var(--p-ink) calc(var(--stroke) + 0.5mm),
+      transparent calc(var(--stroke) + 0.5mm)
+    ),
+    linear-gradient(
+      45deg,
+      transparent var(--stroke),
+      var(--p-ink) var(--stroke),
+      var(--p-ink) calc(var(--stroke) + 0.5mm),
+      transparent calc(var(--stroke) + 0.5mm)
+    );
+  background-size: var(--corner) var(--corner);
+  background-position: top left, top right, bottom right, bottom left;
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  clip-path: polygon(
+    var(--p-n) 0,
+    calc(100% - var(--p-n)) 0,
+    100% var(--p-n),
+    100% calc(100% - var(--p-n)),
+    calc(100% - var(--p-n)) 100%,
+    var(--p-n) 100%,
+    0 calc(100% - var(--p-n)),
+    0 var(--p-n)
+  );
+  box-shadow: inset 0 0 0 0.7mm #fff, inset 0 0 0 0.9mm var(--p-line);
 }
 
-/* ---- Front page ---- */
-
-.p-header {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 4mm;
-  align-items: end;
-  margin-bottom: 4mm;
-}
-
-.p-header h1 {
-  padding: 2mm 3mm;
-  border: 0.4mm solid var(--p-line);
+:root[data-style="modern"] .p-frame {
+  border: 0.3mm solid var(--p-line);
   border-radius: 2mm;
+  background-image: none;
+  clip-path: none;
+  box-shadow: none;
+}
+
+.low-ink .p-frame {
+  box-shadow: inset 0 0 0 0.7mm #fff, inset 0 0 0 0.9mm #000;
+}
+
+/* Heading of a frame: centered, with a rule on each side. */
+.p-h {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  margin: 0 0 1.5mm;
+  color: var(--p-accent);
+  font-family: var(--p-display);
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.p-h::before,
+.p-h::after {
+  content: "";
+  flex: 1;
+  height: 0.25mm;
+  background: var(--p-line);
+}
+
+:root[data-style="modern"] .p-h::before {
+  display: none;
+}
+
+/* Banner with a swallowtail at each end. */
+.p-banner {
+  padding: 2mm 5.5mm 2.5mm;
   background: var(--p-tint);
-  font-size: 17pt;
+  border-block: 0.4mm solid var(--p-ink);
+  text-align: center;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 4mm) 50%, 100% 100%, 0 100%, 4mm 50%);
+}
+
+:root[data-style="modern"] .p-banner {
+  border: 0.3mm solid var(--p-line);
+  border-radius: 2mm;
+  clip-path: none;
+}
+
+.p-banner h1,
+.p-banner h2 {
+  font-size: 13pt;
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.p-banner small {
+  display: block;
+  margin-top: 0.5mm;
+  color: var(--p-muted);
+  font-size: 6pt;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.p-level {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 7mm;
+  height: 7mm;
+  border: 0.4mm solid var(--p-ink);
+  border-radius: 50%;
+  background: #fff;
+  font-family: var(--p-display);
+  font-size: 9pt;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.p-pip {
+  display: inline-block;
+  flex: none;
+  width: 2.2mm;
+  height: 2.2mm;
+  border: 0.3mm solid var(--p-ink);
+  border-radius: 50%;
+}
+
+:root[data-style="fantasy"] .p-pip {
+  border-radius: 0;
+  transform: rotate(45deg) scale(0.85);
+}
+
+.p-pip.on {
+  background: var(--p-ink);
 }
 
 .p-fields {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2mm 3mm;
+  gap: 1.5mm 3mm;
   margin: 0;
 }
 
@@ -159,96 +321,161 @@
 
 .p-fields dd {
   margin: 0;
-  padding: 0.5mm 0;
-  min-height: 5mm;
-  border-bottom: 0.3mm solid var(--p-line);
+  min-height: 4.5mm;
+  padding: 0.3mm 0;
+  border-bottom: 0.25mm solid var(--p-line);
   font-weight: 600;
 }
 
 .p-fields dt {
-  font-size: 7pt;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
   color: var(--p-muted);
-}
-
-.p-columns {
-  display: grid;
-  grid-template-columns: 0.9fr 1.2fr 1fr;
-  gap: 4mm;
-  align-items: start;
-}
-
-.p-col > h2 {
-  margin: 3mm 0 1mm;
-  padding: 0.6mm 2mm;
-  background: var(--p-tint);
-  border-bottom: 0.3mm solid var(--p-accent);
-  color: var(--p-accent);
-  font-size: 8pt;
+  font-size: 6pt;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .p-box {
-  margin-bottom: 2mm;
   padding: 1.5mm;
-  border: 0.4mm solid var(--p-line);
-  border-radius: 2mm;
   text-align: center;
 }
 
-.p-box-value {
+.p-box b {
+  display: block;
   min-height: 6mm;
+  font-family: var(--p-display);
   font-size: 15pt;
-  font-weight: 700;
+  line-height: 1.2;
 }
 
-.p-box-label {
-  font-size: 6.5pt;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+.p-box span {
   color: var(--p-muted);
-  text-align: center;
+  font-size: 6pt;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-.p-abilities {
+.p-lines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.p-lines li {
+  min-height: 5mm;
+  padding: 0.6mm 0;
+  border-bottom: 0.25mm solid var(--p-line);
+}
+
+/* ---- Front page ---- */
+
+.p-front {
   display: grid;
-  gap: 1.5mm;
-  margin-bottom: 2mm;
+  gap: 3mm;
+  align-content: start;
+}
+
+.p-head {
+  display: grid;
+  grid-template-columns: 1.45fr 1.5fr 0.95fr;
+  gap: 3mm;
+  align-items: center;
+}
+
+.p-info {
+  padding: 2mm 3.5mm;
+}
+
+.p-info .p-fields {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.p-cols {
+  display: grid;
+  grid-template-columns: 0.95fr 1.1fr 0.95fr;
+  gap: 3mm;
+  align-items: start;
+}
+
+.p-col {
+  display: grid;
+  gap: 2.5mm;
+  align-content: start;
+  min-width: 0;
+}
+
+.p-badges {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2mm;
+}
+
+.p-badge {
+  display: grid;
+  place-content: center;
+  aspect-ratio: 1;
+  border: 0.4mm solid var(--p-ink);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.p-badge b {
+  font-family: var(--p-display);
+  font-size: 12pt;
+}
+
+.p-badge span {
+  max-width: 13mm;
+  color: var(--p-muted);
+  font-size: 4.8pt;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .p-ability {
   display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto;
-  align-items: center;
-  padding: 0.5mm 2mm;
-  border: 0.4mm solid var(--p-line);
-  border-radius: 2mm;
-  background: var(--p-tint);
+  grid-template-columns: 15mm 1fr;
+  gap: 2mm;
+  align-items: start;
+  padding: 1.6mm 2.2mm;
+}
+
+.p-ability-core {
+  display: grid;
+  justify-items: center;
+  gap: 0.4mm;
+  text-align: center;
 }
 
 .p-ability-name {
-  grid-column: 1 / -1;
-  font-size: 7pt;
+  color: var(--p-accent);
+  font-family: var(--p-display);
+  font-size: 5.2pt;
   font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+}
+
+.p-oval {
+  display: grid;
+  place-items: center;
+  width: 11mm;
+  height: 8mm;
+  border: 0.4mm solid var(--p-ink);
+  border-radius: 50%;
+  background: var(--p-tint);
+  font-family: var(--p-display);
+  font-size: 11pt;
+  font-weight: 700;
+}
+
+:root[data-style="modern"] .p-oval {
+  border-radius: 2mm;
 }
 
 .p-ability-mod {
-  font-size: 13pt;
-  font-weight: 700;
-}
-
-.p-ability-score {
-  min-width: 9mm;
-  padding: 0.5mm 1.5mm;
-  border: 0.3mm solid var(--p-line);
-  border-radius: 5mm;
-  background: #fff;
-  text-align: center;
+  font-family: var(--p-display);
+  font-size: 10pt;
   font-weight: 700;
 }
 
@@ -261,129 +488,121 @@
 .p-checks li {
   display: flex;
   gap: 1.5mm;
-  align-items: baseline;
-  padding: 0;
-  border-bottom: 0.2mm solid #ddd;
+  align-items: center;
+  min-height: 4mm;
+  border-bottom: 0.2mm solid var(--p-line);
 }
 
-.low-ink .p-checks li {
-  border-bottom-color: #888;
+.p-checks li.on {
+  font-weight: 600;
 }
 
-.p-dot {
-  width: 3mm;
-  text-align: center;
-}
-
-.p-num {
-  min-width: 7mm;
+.p-checks b {
+  min-width: 6mm;
   text-align: right;
-  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
-.p-row3 {
+.p-stat-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2mm;
 }
 
-.p-row2 {
+.p-hp {
+  padding: 2mm;
+}
+
+.p-hp-max {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.p-hp-max b {
+  font-family: var(--p-display);
+  font-size: 15pt;
+}
+
+.p-write {
+  min-height: 11mm;
+  margin: 1mm 0 0.5mm;
+  border-bottom: 0.25mm dashed var(--p-line);
+}
+
+.p-write.small {
+  min-height: 7mm;
+}
+
+.p-caption {
+  color: var(--p-muted);
+  font-size: 6pt;
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.p-two {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2mm;
-  margin-bottom: 2mm;
-}
-
-.p-hp,
-.p-hp-temp,
-.p-hitdice,
-.p-death {
-  padding: 1.5mm;
-  border: 0.4mm solid var(--p-line);
-  border-radius: 2mm;
-}
-
-.p-hp {
-  margin-bottom: 2mm;
-}
-
-.p-hp-current {
-  min-height: 12mm;
-  margin: 1mm 0;
-  border-bottom: 0.3mm dashed var(--p-line);
-}
-
-.p-hp-current.small {
-  min-height: 8mm;
-}
-
-.p-hitdice .p-box-value {
-  font-size: 11pt;
 }
 
 .p-death {
   display: grid;
   gap: 1mm;
-  margin-bottom: 2mm;
+  padding: 2mm;
 }
 
-.p-circles {
-  margin-left: 1.5mm;
-  letter-spacing: 0.3em;
+.p-death .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.p-attacks,
-.p-slots,
-.p-spell-table {
+.p-death .p-pip {
+  margin-left: 1mm;
+}
+
+.p-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.p-attacks th,
-.p-slots th,
-.p-spell-table th {
-  padding: 0.6mm 1.5mm;
+.p-table th {
+  padding: 0.5mm 1.2mm;
   border-bottom: 0.3mm solid var(--p-line);
-  font-size: 7pt;
+  color: var(--p-muted);
+  font-size: 6pt;
+  letter-spacing: 0.05em;
   text-align: left;
   text-transform: uppercase;
-  color: var(--p-muted);
 }
 
-.p-attacks td,
-.p-slots td,
-.p-spell-table td {
-  padding: 1.2mm 1.5mm;
+.p-table td {
+  padding: 1.1mm 1.2mm;
   border-bottom: 0.2mm solid var(--p-line);
 }
 
-.p-coins {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1.5mm;
-  margin-bottom: 1.5mm;
-  text-align: center;
+.p-panel {
+  padding: 2.2mm 2.8mm 2.5mm;
+}
+
+.p-slotrow {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  margin-top: 1mm;
+}
+
+.p-slotrow .lvl {
+  min-width: 11mm;
+  color: var(--p-muted);
   font-size: 7pt;
 }
 
-.p-coin-box {
-  height: 7mm;
-  margin-bottom: 0.5mm;
-  border: 0.3mm solid var(--p-line);
-  border-radius: 1.5mm;
-}
-
-.p-lines {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.p-lines li {
-  min-height: 5mm;
-  padding: 0.5mm 0;
-  border-bottom: 0.2mm solid var(--p-line);
+.p-slotrow .p-pip {
+  margin-right: 0.8mm;
 }
 
 .p-prof {
@@ -391,15 +610,28 @@
 }
 
 .p-prof dt {
-  margin-top: 1.5mm;
-  font-size: 7pt;
-  font-weight: 700;
-  text-transform: uppercase;
+  margin-top: 1mm;
   color: var(--p-muted);
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .p-prof dd {
   margin: 0;
+}
+
+.p-level-row {
+  display: flex;
+  gap: 2mm;
+  align-items: center;
+  padding: 1mm 0;
+  border-bottom: 0.2mm solid var(--p-line);
+}
+
+.p-level-row .names {
+  line-height: 1.2;
 }
 
 .p-names {
@@ -409,15 +641,112 @@
 }
 
 .p-names li {
-  padding: 0.3mm 0;
-  border-bottom: 0.2mm solid #ddd;
+  padding: 0.5mm 0;
+  border-bottom: 0.2mm solid var(--p-line);
 }
 
-.low-ink .p-names li {
-  border-bottom-color: #888;
+/* ---- Story and equipment page ---- */
+
+.p-story {
+  display: grid;
+  gap: 3mm;
+  align-content: start;
 }
 
-/* ---- Features and spell pages ---- */
+.p-story-top {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 3mm;
+  align-items: center;
+}
+
+.p-story-top .p-fields {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.p-story-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1fr 1fr;
+  gap: 3mm;
+}
+
+.p-story-grid .col {
+  display: grid;
+  gap: 3mm;
+  align-content: start;
+}
+
+.p-block {
+  padding: 2.2mm 2.8mm;
+}
+
+.p-block.fill {
+  min-height: 20mm;
+}
+
+.p-block.big {
+  min-height: 66mm;
+}
+
+.p-story-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3mm;
+  align-items: start;
+}
+
+.p-slot {
+  display: grid;
+  grid-template-columns: 17mm 1fr 4mm;
+  gap: 1.5mm;
+  align-items: end;
+  min-height: 6mm;
+}
+
+.p-slot .name {
+  color: var(--p-muted);
+  font-size: 6.5pt;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.p-slot .value {
+  min-height: 4.5mm;
+  border-bottom: 0.25mm solid var(--p-line);
+  font-weight: 600;
+}
+
+.p-slot .p-pip {
+  align-self: center;
+}
+
+.p-coins {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5mm;
+  margin-top: 2mm;
+  text-align: center;
+  font-size: 6.5pt;
+}
+
+.p-coin {
+  height: 7mm;
+  margin-bottom: 0.5mm;
+  border: 0.3mm solid var(--p-line);
+  border-radius: 1.5mm;
+}
+
+/* ---- Features text and spell pages ---- */
+
+.p-title {
+  margin-bottom: 3mm;
+  padding-bottom: 1mm;
+  border-bottom: 0.4mm solid var(--p-accent);
+  color: var(--p-accent) !important;
+  font-size: 12pt;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 
 .p-flow {
   columns: 2;
@@ -431,7 +760,7 @@
 
 .p-flow h3,
 .p-spell h3 {
-  font-size: 9.5pt;
+  font-size: 9pt;
 }
 
 .p-flow p,
@@ -455,16 +784,15 @@
   margin-bottom: 3mm;
 }
 
-.p-level-title,
-.p-level-group > h3 {
-  margin: 2mm 0 1.5mm !important;
+.p-level-title {
+  margin: 2mm 0 1.5mm;
   padding: 0.6mm 2mm;
   background: var(--p-tint);
   border-bottom: 0.3mm solid var(--p-accent);
   color: var(--p-accent) !important;
-  font-size: 9pt;
+  font-size: 8.5pt;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .p-spell-columns {
@@ -485,7 +813,30 @@
 }
 
 .p-spell-table {
+  width: 100%;
+  border-collapse: collapse;
   font-size: 8pt;
+}
+
+.p-spell-table th,
+.p-slots th {
+  padding: 0.6mm 1.5mm;
+  border-bottom: 0.3mm solid var(--p-line);
+  color: var(--p-muted);
+  font-size: 7pt;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.p-spell-table td,
+.p-slots td {
+  padding: 1.2mm 1.5mm;
+  border-bottom: 0.2mm solid var(--p-line);
+}
+
+.p-slots {
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .p-spell-names {
@@ -505,6 +856,140 @@
   font-weight: 700;
 }
 
+/* ---- Cards: 3 across, spells 4 down and features 5 down ---- */
+
+.p-cards {
+  --gap: 3mm;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+.p-cards.spells {
+  grid-auto-rows: calc((var(--p-page-h) - 3 * var(--gap)) / 4);
+}
+
+.p-cards.features {
+  grid-auto-rows: calc((var(--p-page-h) - 4 * var(--gap)) / 5);
+}
+
+.p-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1mm;
+  min-height: 0;
+  padding: 2.2mm 2.6mm;
+  overflow: hidden;
+  break-inside: avoid;
+}
+
+.p-card-head {
+  display: flex;
+  gap: 1.5mm;
+  align-items: center;
+}
+
+.p-card-head h3 {
+  flex: 1;
+  font-size: 8pt;
+  line-height: 1.1;
+}
+
+.p-card-head small {
+  display: block;
+  color: var(--p-muted);
+  font-size: 5.8pt;
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+
+.p-card-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.8mm 1.5mm;
+  margin: 0;
+  font-size: 5.8pt;
+}
+
+.p-card-fields div {
+  display: flex;
+  flex-direction: column-reverse;
+  border-bottom: 0.2mm solid var(--p-line);
+}
+
+.p-card-fields dt {
+  color: var(--p-muted);
+  font-size: 4.8pt;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.p-card-fields dd {
+  margin: 0;
+  min-height: 3mm;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.p-card-marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8mm 2.5mm;
+  align-items: center;
+  font-size: 5.6pt;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.p-card-marks span {
+  display: inline-flex;
+  gap: 0.8mm;
+  align-items: center;
+}
+
+.p-card-marks .p-pip {
+  width: 1.9mm;
+  height: 1.9mm;
+}
+
+.p-card-text {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  padding-top: 1mm;
+  border-top: 0.25mm solid var(--p-line);
+}
+
+.p-card-text p {
+  margin: 0 0 0.8mm;
+}
+
+/* Longer texts get a smaller type so they fit on the card. */
+.p-card-text.t1 {
+  font-size: 7pt;
+}
+
+.p-card-text.t2 {
+  font-size: 6.2pt;
+  line-height: 1.2;
+}
+
+.p-card-text.t3 {
+  font-size: 5.5pt;
+  line-height: 1.15;
+}
+
+.p-card-text.t4 {
+  font-size: 4.9pt;
+  line-height: 1.1;
+}
+
+.p-card-more {
+  color: var(--p-muted);
+  font-size: 5pt;
+  font-style: italic;
+}
+
 /* ---- Printing for real ---- */
 
 @media print {
@@ -517,7 +1002,6 @@
     padding: 0;
   }
 
-  .shell > h1,
   .no-print {
     display: none !important;
   }
@@ -527,17 +1011,13 @@
     padding: 0;
   }
 
-  .paper {
+  .paper,
+  .paper-letter .paper {
     width: auto;
     min-height: 0;
     margin: 0;
     padding: 0;
     box-shadow: none;
-  }
-
-  .paper-letter .paper {
-    width: auto;
-    min-height: 0;
   }
 
   .print-root {
