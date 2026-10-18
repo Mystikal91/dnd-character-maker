@@ -197,6 +197,16 @@ export function Sheet() {
         </Section>
       )}
 
+      {s.grantedSpells.length > 0 && (
+        <Section title={ui("sheet.grantedSpells")}>
+          <ul>
+            {s.grantedSpells.map((id) => (
+              <li key={id}>{name(id)}</li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
       <Section title={ui("sheet.proficiencies")}>
         <dl class="pairs">
           {PROFICIENCY_CATEGORIES.map((cat) => (

@@ -2,7 +2,6 @@ import { classData, subclassData } from "../data/progression";
 import {
   ABILITIES,
   type Ability,
-  type Effect,
   type Entry,
   PROFICIENCY_CATEGORIES,
   type Pack,
@@ -11,6 +10,7 @@ import {
 import { abilityModifier } from "./abilities";
 import type { Character } from "./character";
 import { type ChecksResult, deriveChecks } from "./checks";
+import { type PendingChoice, collectEffects } from "./choices";
 import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
 import { type Warning, warn } from "./warnings";
 
@@ -55,6 +55,12 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   /** Class and subclass features unlocked at the current levels. */
   features: string[];
   spellcasting?: SpellcastingResult;
+  /** Choices offered by the current picks (species, class, background, traits), with their state. */
+  choices: PendingChoice[];
+  /** Spells granted outright or by a choice (e.g. a High Elf cantrip). */
+  grantedSpells: string[];
+  /** Ability Score Improvements available from class levels and how many are taken. */
+  asi: { available: number; used: number };
   /** Problems found while deriving. Never blocking: the sheet is still produced. */
   warnings: Warning[];
 }
@@ -67,29 +73,6 @@ function lookup(index: PackIndex, id: string, warnings: Warning[]): Entry | unde
   const entry = index.get(id);
   if (!entry) warn(warnings, "unknownEntry", { id });
   return entry;
-}
-
-/**
- * Effects of the given entries, following `trait` effects into the trait entries they
- * name (so a species gets the proficiencies of its traits). Each trait is expanded once.
- */
-function expandEffects(
-  entries: Entry[],
-  index: PackIndex,
-  warnings: Warning[],
-  seen = new Set<string>(),
-): Effect[] {
-  const result: Effect[] = [];
-  for (const entry of entries) {
-    for (const effect of entry.effects) {
-      result.push(effect);
-      if (effect.type !== "trait" || seen.has(effect.id)) continue;
-      seen.add(effect.id);
-      const trait = lookup(index, effect.id, warnings);
-      if (trait) result.push(...expandEffects([trait], index, warnings, seen));
-    }
-  }
-  return result;
 }
 
 function overrideNumber(character: Character, key: string): number | undefined {
@@ -110,10 +93,9 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     entry: lookup(index, cl.classId, warnings),
   }));
   const [starting, ...others] = classEntries;
-  const effects = expandEffects(
+  const { effects, choices } = collectEffects(
     [...chosen, ...(starting?.entry ? [starting.entry] : [])],
-    index,
-    warnings,
+    { index, selections: character.selections, warnings },
   );
   for (const { entry } of others) {
     if (!entry) continue;
@@ -128,6 +110,25 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   if (level > MAX_LEVEL) warn(warnings, "levelTooHigh", { level, max: MAX_LEVEL });
   const proficiencyBonus =
     overrideNumber(character, "proficiencyBonus") ?? proficiencyBonusForLevel(level);
+
+  // Ability Score Improvements: +2 to one ability or +1 to two different ones, per slot.
+  const asiAvailable = classEntries.reduce((sum, { cl, entry }) => {
+    const row = entry && classData(entry).levels.find((l) => l.level === cl.level);
+    return sum + (row?.abilityScoreImprovements ?? 0);
+  }, 0);
+  if (character.asi.length > asiAvailable)
+    warn(warnings, "asiTooMany", { available: asiAvailable });
+  let asiUsed = 0;
+  character.asi.slice(0, asiAvailable).forEach((slot, i) => {
+    if (new Set(slot).size !== slot.length) {
+      warn(warnings, "asiInvalid", { slot: i + 1 });
+      return;
+    }
+    asiUsed += 1;
+    for (const ability of slot) {
+      effects.push({ type: "abilityBonus", ability, value: slot.length === 1 ? 2 : 1 });
+    }
+  });
 
   // Abilities
   const abilities = {} as Record<Ability, AbilityResult>;
@@ -238,6 +239,9 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     traits,
     features: [...new Set(features)],
     ...(spellcasting && { spellcasting }),
+    choices,
+    grantedSpells: [...new Set(effects.flatMap((e) => (e.type === "grantSpell" ? [e.spell] : [])))],
+    asi: { available: asiAvailable, used: asiUsed },
     warnings,
   };
 }

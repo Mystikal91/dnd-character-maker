@@ -1,4 +1,5 @@
 import * as v from "valibot";
+import { AbilitySchema } from "../data/schema";
 import { CHARACTER_SCHEMA_VERSION, type Character } from "./character";
 
 const ClassLevelSchema = v.object({
@@ -34,6 +35,10 @@ const CharacterSchema = v.object({
     wis: v.number(),
     cha: v.number(),
   }),
+  abilityMethod: v.picklist(["manual", "standard", "pointbuy", "roll"]),
+  abilityRolls: v.optional(v.array(v.number())),
+  selections: v.record(v.string(), v.array(v.string())),
+  asi: v.array(v.pipe(v.array(AbilitySchema), v.minLength(1), v.maxLength(2))),
   overrides: v.record(v.string(), v.union([v.number(), v.string(), v.boolean()])),
 });
 
@@ -42,7 +47,10 @@ const CharacterSchema = v.object({
  * `migrations[n]` turns a version-n document into version n + 1. Never edit an existing
  * migration: saved characters from every released version must keep opening.
  */
-const migrations: Record<number, (doc: Record<string, unknown>) => Record<string, unknown>> = {};
+const migrations: Record<number, (doc: Record<string, unknown>) => Record<string, unknown>> = {
+  // 1 -> 2: guided choices. Ability scores stay as entered (manual); no picks or ASIs yet.
+  1: (doc) => ({ ...doc, abilityMethod: "manual", selections: {}, asi: [] }),
+};
 
 export class CharacterParseError extends Error {}
 

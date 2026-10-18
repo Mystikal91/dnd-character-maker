@@ -1,5 +1,6 @@
 import { computed, signal } from "@preact/signals";
 import type { Content } from "../content/browser";
+import { applyAbilityMethod } from "../engine/abilityScores";
 import { type Character, createCharacter } from "../engine/character";
 import { CharacterParseError } from "../engine/characterSchema";
 import { type DerivedSheet, deriveSheet } from "../engine/derive";
@@ -18,9 +19,16 @@ import { exportFileName, parseImport, serializeCharacter } from "../storage/tran
 
 export type SaveStatus = "idle" | "saving" | "saved" | "failed";
 
+/** A blank character that starts with the standard array, the easiest way to assign scores. */
+function createNewCharacter(): Character {
+  const fresh = createCharacter("srd51");
+  applyAbilityMethod(fresh, "standard");
+  return fresh;
+}
+
 export const content = signal<Content | undefined>(undefined);
 export const loadError = signal<string | undefined>(undefined);
-export const character = signal<Character>(createCharacter("srd51"));
+export const character = signal<Character>(createNewCharacter());
 export const characters = signal<CharacterSummary[]>([]);
 export const saveStatus = signal<SaveStatus>("idle");
 export const importFailed = signal(false);
@@ -106,7 +114,7 @@ export async function initStorage(): Promise<void> {
   }
 }
 
-export const newCharacter = () => switchTo(createCharacter("srd51"));
+export const newCharacter = () => switchTo(createNewCharacter());
 
 export async function openCharacter(id: string) {
   if (id === character.value.id) return;
@@ -145,7 +153,7 @@ export async function deleteCurrentCharacter() {
   }
   const next = characters.value[0];
   const loaded = next ? await loadCharacter(next.id) : undefined;
-  await switchTo(loaded ?? createCharacter("srd51"));
+  await switchTo(loaded ?? createNewCharacter());
 }
 
 /** Downloads the current character as a file the user can keep, send or import elsewhere. */

@@ -400,3 +400,65 @@ summary {
 .bar .note {
   flex-basis: 100%;
 }
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+}
+
+.stepper button,
+button.secondary {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.stepper button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+button.secondary {
+  margin-bottom: 0.75rem;
+  padding: 0 0.9rem;
+}
+
+.stepper output {
+  min-width: 2rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.bonus-hint {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.asi,
+.choices .choice {
+  margin-top: 0.75rem;
+}
+
+.options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 11rem;
+}
+
+.options label {
+  display: flex;
+  gap: 0.4rem;
+  align-items: flex-start;
+  min-height: 2rem;
+  break-inside: avoid;
+}
+
+.options label.disabled {
+  color: var(--muted);
+}

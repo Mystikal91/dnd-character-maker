@@ -1,8 +1,9 @@
 import type { JSX } from "preact";
 import { character, content, updateCharacter } from "../app/store";
 import { itemData } from "../data/items";
-import { ABILITIES } from "../data/schema";
 import { ui } from "../i18n/ui";
+import { AbilityScores } from "./AbilityScores";
+import { Choices } from "./Choices";
 
 const RULESET = "srd51";
 
@@ -102,6 +103,17 @@ export function CharacterForm() {
       )}
 
       <Select
+        label={ui("form.background")}
+        value={c.choices.background}
+        options={entriesOfKind("background")}
+        onChange={(id) =>
+          updateCharacter((d) => {
+            d.choices.background = id;
+          })
+        }
+      />
+
+      <Select
         label={ui("form.class")}
         value={mainClass?.classId}
         options={entriesOfKind("class")}
@@ -144,27 +156,9 @@ export function CharacterForm() {
         </>
       )}
 
-      <fieldset>
-        <legend>{ui("form.abilities")}</legend>
-        <div class="ability-inputs">
-          {ABILITIES.map((ability) => (
-            <label class="field" key={ability}>
-              <span>{content.value?.text(`${RULESET}:ability/${ability}`, "abbreviation")}</span>
-              <input
-                type="number"
-                min={1}
-                max={30}
-                value={c.abilityBase[ability]}
-                onInput={(e) =>
-                  updateCharacter((d) => {
-                    d.abilityBase[ability] = asNumber(e, 10);
-                  })
-                }
-              />
-            </label>
-          ))}
-        </div>
-      </fieldset>
+      <AbilityScores />
+
+      <Choices />
 
       <fieldset>
         <legend>{ui("form.equipment")}</legend>

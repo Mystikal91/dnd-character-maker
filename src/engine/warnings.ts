@@ -11,7 +11,11 @@ export type WarningCode =
   | "multipleArmor"
   | "multipleShields"
   | "strengthMinimum"
-  | "notProficient";
+  | "notProficient"
+  | "invalidChoice"
+  | "tooManyChoices"
+  | "asiInvalid"
+  | "asiTooMany";
 
 export interface Warning {
   code: WarningCode;

@@ -1,0 +1,212 @@
+import { character, content, sheet, updateCharacter } from "../app/store";
+import { ABILITIES, type Ability } from "../data/schema";
+import {
+  POINT_BUY_MAX,
+  applyAbilityMethod,
+  assignValue,
+  assignableValues,
+  canLower,
+  canRaise,
+  pointBuyRemaining,
+  reroll,
+} from "../engine/abilityScores";
+import type { AbilityMethod } from "../engine/character";
+import { type UiKey, signed, ui } from "../i18n/ui";
+
+const METHODS: AbilityMethod[] = ["manual", "standard", "pointbuy", "roll"];
+const asNumber = (value: string, fallback: number) => {
+  const n = Number.parseInt(value, 10);
+  return Number.isFinite(n) ? n : fallback;
+};
+
+export function AbilityScores() {
+  const c = character.value;
+  const ct = content.value;
+  const s = sheet.value;
+  const ruleset = c.ruleset;
+  const abbreviation = (a: Ability) => ct?.text(`${ruleset}:ability/${a}`, "abbreviation") ?? a;
+  const fullName = (a: Ability) => ct?.name(`${ruleset}:ability/${a}`) ?? a;
+  const values = [...new Set(assignableValues(c))].sort((a, b) => b - a);
+
+  return (
+    <fieldset>
+      <legend>{ui("form.abilities")}</legend>
+
+      <label class="field">
+        <span>{ui("abilities.method")}</span>
+        <select
+          value={c.abilityMethod}
+          onChange={(e) => {
+            const method = e.currentTarget.value as AbilityMethod;
+            updateCharacter((d) => applyAbilityMethod(d, method));
+          }}
+        >
+          {METHODS.map((m) => (
+            <option key={m} value={m}>
+              {ui(`abilities.method.${m}` as UiKey)}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      {c.abilityMethod === "pointbuy" && (
+        <p class="muted">
+          {ui("abilities.pointsLeft", { points: pointBuyRemaining(c.abilityBase) })}
+        </p>
+      )}
+      {c.abilityMethod === "roll" && (
+        <button type="button" class="secondary" onClick={() => updateCharacter((d) => reroll(d))}>
+          {ui("abilities.roll")}
+        </button>
+      )}
+
+      <div class="ability-inputs">
+        {ABILITIES.map((ability) => {
+          const bonus = s?.abilities[ability].bonus ?? 0;
+          return (
+            <div class="field" key={ability}>
+              <span>
+                {abbreviation(ability)}
+                {bonus !== 0 && (
+                  <span class="bonus-hint" title={ui("abilities.bonus", { bonus: signed(bonus) })}>
+                    {" "}
+                    {signed(bonus)}
+                  </span>
+                )}
+              </span>
+              {c.abilityMethod === "manual" && (
+                <input
+                  type="number"
+                  min={1}
+                  max={30}
+                  aria-label={fullName(ability)}
+                  value={c.abilityBase[ability]}
+                  onInput={(e) => {
+                    const n = asNumber(e.currentTarget.value, 10);
+                    updateCharacter((d) => {
+                      d.abilityBase[ability] = n;
+                    });
+                  }}
+                />
+              )}
+              {(c.abilityMethod === "standard" || c.abilityMethod === "roll") && (
+                <select
+                  aria-label={fullName(ability)}
+                  value={String(c.abilityBase[ability])}
+                  onChange={(e) => {
+                    const n = asNumber(e.currentTarget.value, c.abilityBase[ability]);
+                    updateCharacter((d) => {
+                      d.abilityBase = assignValue(d.abilityBase, ability, n);
+                    });
+                  }}
+                >
+                  {values.map((v) => (
+                    <option key={v} value={v}>
+                      {v}
+                    </option>
+                  ))}
+                </select>
+              )}
+              {c.abilityMethod === "pointbuy" && (
+                <div class="stepper">
+                  <button
+                    type="button"
+                    aria-label={ui("abilities.lower", { ability: fullName(ability) })}
+                    disabled={!canLower(c.abilityBase, ability)}
+                    onClick={() =>
+                      updateCharacter((d) => {
+                        d.abilityBase[ability] -= 1;
+                      })
+                    }
+                  >
+                    −
+                  </button>
+                  <output>{c.abilityBase[ability]}</output>
+                  <button
+                    type="button"
+                    aria-label={ui("abilities.raise", { ability: fullName(ability) })}
+                    disabled={
+                      !canRaise(c.abilityBase, ability) || c.abilityBase[ability] >= POINT_BUY_MAX
+                    }
+                    onClick={() =>
+                      updateCharacter((d) => {
+                        d.abilityBase[ability] += 1;
+                      })
+                    }
+                  >
+                    +
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {s && s.asi.available > 0 && <ImprovementSlots />}
+    </fieldset>
+  );
+}
+
+function ImprovementSlots() {
+  const c = character.value;
+  const s = sheet.value;
+  const ct = content.value;
+  if (!s || !ct) return null;
+  const name = (a: Ability) => ct.name(`${c.ruleset}:ability/${a}`);
+
+  const setSlot = (index: number, first: Ability | "", second: Ability | "") => {
+    updateCharacter((d) => {
+      const slot = [first, second].filter((a): a is Ability => a !== "" && a !== undefined);
+      const unique = [...new Set(slot)];
+      if (unique.length === 0) d.asi.splice(index, 1);
+      else d.asi[index] = unique;
+    });
+  };
+
+  return (
+    <div class="asi">
+      <h4>{ui("asi.title", { used: s.asi.used, available: s.asi.available })}</h4>
+      <p class="muted">{ui("asi.hint")}</p>
+      {Array.from({ length: s.asi.available }, (_, i) => {
+        const slot = c.asi[i] ?? [];
+        const first = slot[0] ?? "";
+        const second = slot[1] ?? "";
+        const options = (exclude: string) =>
+          ABILITIES.filter((a) => a !== exclude).map((a) => (
+            <option key={a} value={a}>
+              {name(a)}
+            </option>
+          ));
+        return (
+          <div class="asi-slot" key={`asi-${i + 1}`}>
+            <label class="field">
+              <span>
+                {ui("asi.slot", { n: i + 1 })} · {ui("asi.first")}
+              </span>
+              <select
+                value={first}
+                onChange={(e) => setSlot(i, e.currentTarget.value as Ability | "", second)}
+              >
+                <option value="">{ui("form.none")}</option>
+                {options("")}
+              </select>
+            </label>
+            {first && (
+              <label class="field">
+                <span>{ui("asi.second")}</span>
+                <select
+                  value={second}
+                  onChange={(e) => setSlot(i, first, e.currentTarget.value as Ability | "")}
+                >
+                  <option value="">{ui("form.none")}</option>
+                  {options(first)}
+                </select>
+              </label>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
