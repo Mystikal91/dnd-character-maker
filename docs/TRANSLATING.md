@@ -70,19 +70,23 @@ python scripts/srd-translations/import_reference.py it path/to/SRD_CC_v5.1_IT.pd
 ```bash
 python scripts/srd-translations/import_species.py it path/to/SRD_CC_v5.1_IT.pdf
 python scripts/srd-translations/import_classes.py it path/to/SRD_CC_v5.1_IT.pdf
+python scripts/srd-translations/import_tables.py it path/to/SRD_CC_v5.1_IT.pdf
 ```
 
 Imported so far, in Italian, French, German and Spanish: spells, abilities, skills, conditions,
-alignment descriptions, species, subspecies, the traits that belong to one species, the
-background, the twelve classes with their starting equipment and spellcasting text, the
-subclasses, and about 55% of the class features (225 of 407). A feature stays in English when
-its name is a variant ("Brutal Critical (1 die)"), repeats, or has no heading of its own in the
-PDF. School names are missing in German.
+alignments (names and descriptions), species, subspecies, the traits that belong to one species,
+the background with its personality tables, the twelve classes with their starting equipment and
+spellcasting text, the subclasses, about 55% of the class features (225 of 407), the languages,
+and 40-45% of the item names (all armor, nearly all weapons, and the gear whose cost and weight
+are unique). Tables are read by baseline from the Calibri 9 cells (`pdf_tables.py`); armor is
+paired by position and everything else by cost, weight and damage dice, keeping only unique
+matches. An item or feature stays in English when it cannot be paired with certainty. School
+names are missing in German.
 
 Known gaps in the source PDFs: the Italian SRD has no text for the conditions frightened, prone,
 restrained and stunned, and exhaustion keeps its English text everywhere because its table is
-not part of the running text. Items, languages, proficiencies and the tables of characteristic
-suggestions (personality traits, ideals, bonds, flaws) are not imported yet: they live in tables.
+not part of the running text. Item descriptions, proficiencies and the remaining gear are not
+imported yet.
 
 ## Checking a translation locally
 
