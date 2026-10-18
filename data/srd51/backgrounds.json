@@ -74,8 +74,7 @@
             "from": {
               "optionSetType": "equipment_category",
               "equipmentCategory": {
-                "index": "holy-symbols",
-                "name": "Holy Symbols"
+                "index": "holy-symbols"
               }
             }
           }

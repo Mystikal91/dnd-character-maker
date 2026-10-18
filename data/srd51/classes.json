@@ -1,0 +1,5604 @@
+{
+  "manifest": {
+    "id": "srd51",
+    "ruleset": "srd51",
+    "version": "5e-database@5.12.0",
+    "license": "CC-BY-4.0",
+    "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode."
+  },
+  "entries": [
+    {
+      "id": "srd51:class/barbarian",
+      "kind": "class",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "light-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "medium-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "shields"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "simple-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "martial-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "str"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "con"
+        },
+        {
+          "type": "choice",
+          "id": "barbarian-proficiency-1",
+          "choose": 2,
+          "grants": "proficiency",
+          "from": [
+            "skill:animal-handling",
+            "skill:athletics",
+            "skill:intimidation",
+            "skill:nature",
+            "skill:perception",
+            "skill:survival"
+          ]
+        }
+      ],
+      "data": {
+        "hitDie": 12,
+        "multiclassing": {
+          "prerequisites": [
+            {
+              "ability": "str",
+              "minimum": 13
+            }
+          ],
+          "proficiencies": ["armor:shields", "weapon:simple-weapons", "weapon:martial-weapons"],
+          "proficiencyChoices": []
+        },
+        "levels": [
+          {
+            "level": 1,
+            "features": ["srd51:feature/rage", "srd51:feature/barbarian-unarmored-defense"],
+            "abilityScoreImprovements": 0,
+            "classSpecific": {
+              "rageCount": 2,
+              "rageDamageBonus": 2,
+              "brutalCriticalDice": 0
+            }
+          },
+          {
+            "level": 2,
+            "features": ["srd51:feature/reckless-attack", "srd51:feature/danger-sense"],
+            "abilityScoreImprovements": 0,
+            "classSpecific": {
+              "rageCount": 2,
+              "rageDamageBonus": 2,
+              "brutalCriticalDice": 0
+            }
+          },
+          {
+            "level": 3,
+            "features": ["srd51:feature/primal-path"],
+            "abilityScoreImprovements": 0,
+            "classSpecific": {
+              "rageCount": 3,
+              "rageDamageBonus": 2,
+              "brutalCriticalDice": 0
+            }
+          },
+          {
+            "level": 4,
+            "features": ["srd51:feature/barbarian-ability-score-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "rageCount": 3,
+              "rageDamageBonus": 2,
+              "brutalCriticalDice": 0
+            }
+          },
+          {
+            "level": 5,
+            "features": ["srd51:feature/barbarian-extra-attack", "srd51:feature/fast-movement"],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "rageCount": 3,
+              "rageDamageBonus": 2,
+              "brutalCriticalDice": 0
+            }
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/primal-path-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "rageCount": 4,
+              "rageDamageBonus": 2,
+              "brutalCriticalDice": 0
+            }
+          },
+          {
+            "level": 7,
+            "features": ["srd51:feature/feral-instinct"],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "rageCount": 4,
+              "rageDamageBonus": 2,
+              "brutalCriticalDice": 0
+            }
+          },
+          {
+            "level": 8,
+            "features": ["srd51:feature/barbarian-ability-score-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "rageCount": 4,
+              "rageDamageBonus": 2,
+              "brutalCriticalDice": 0
+            }
+          },
+          {
+            "level": 9,
+            "features": ["srd51:feature/brutal-critical-1-die"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "rageCount": 4,
+              "rageDamageBonus": 3,
+              "brutalCriticalDice": 1
+            }
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/primal-path-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "rageCount": 4,
+              "rageDamageBonus": 3,
+              "brutalCriticalDice": 1
+            }
+          },
+          {
+            "level": 11,
+            "features": ["srd51:feature/relentless-rage"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "rageCount": 4,
+              "rageDamageBonus": 3,
+              "brutalCriticalDice": 1
+            }
+          },
+          {
+            "level": 12,
+            "features": ["srd51:feature/barbarian-ability-score-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "rageCount": 5,
+              "rageDamageBonus": 3,
+              "brutalCriticalDice": 1
+            }
+          },
+          {
+            "level": 13,
+            "features": ["srd51:feature/brutal-critical-2-dice"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "rageCount": 5,
+              "rageDamageBonus": 3,
+              "brutalCriticalDice": 2
+            }
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/primal-path-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "rageCount": 5,
+              "rageDamageBonus": 3,
+              "brutalCriticalDice": 2
+            }
+          },
+          {
+            "level": 15,
+            "features": ["srd51:feature/persistent-rage"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "rageCount": 5,
+              "rageDamageBonus": 3,
+              "brutalCriticalDice": 2
+            }
+          },
+          {
+            "level": 16,
+            "features": ["srd51:feature/barbarian-ability-score-improvement-4"],
+            "abilityScoreImprovements": 4,
+            "classSpecific": {
+              "rageCount": 5,
+              "rageDamageBonus": 4,
+              "brutalCriticalDice": 2
+            }
+          },
+          {
+            "level": 17,
+            "features": ["srd51:feature/brutal-critical-3-dice"],
+            "abilityScoreImprovements": 4,
+            "classSpecific": {
+              "rageCount": 6,
+              "rageDamageBonus": 4,
+              "brutalCriticalDice": 3
+            }
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/indomitable-might"],
+            "abilityScoreImprovements": 4,
+            "classSpecific": {
+              "rageCount": 6,
+              "rageDamageBonus": 4,
+              "brutalCriticalDice": 3
+            }
+          },
+          {
+            "level": 19,
+            "features": ["srd51:feature/barbarian-ability-score-improvement-5"],
+            "abilityScoreImprovements": 5,
+            "classSpecific": {
+              "rageCount": 6,
+              "rageDamageBonus": 4,
+              "brutalCriticalDice": 3
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/primal-champion"],
+            "abilityScoreImprovements": 5,
+            "classSpecific": {
+              "rageCount": 9999,
+              "rageDamageBonus": 4,
+              "brutalCriticalDice": 3
+            }
+          }
+        ],
+        "startingEquipment": [
+          {
+            "item": "srd51:item/explorers-pack",
+            "quantity": 1
+          },
+          {
+            "item": "srd51:item/javelin",
+            "quantity": 4
+          }
+        ],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "greataxe"
+                  }
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "any martial melee weapon",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "martial-melee-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 2,
+                  "of": {
+                    "index": "handaxe"
+                  }
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "any simple weapon",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "simple-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:class/bard",
+      "kind": "class",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "light-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "simple-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "longswords"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "rapiers"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "shortswords"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "hand-crossbows"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "dex"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "cha"
+        },
+        {
+          "type": "choice",
+          "id": "bard-proficiency-1",
+          "choose": 3,
+          "grants": "proficiency",
+          "from": [
+            "skill:acrobatics",
+            "skill:animal-handling",
+            "skill:arcana",
+            "skill:athletics",
+            "skill:deception",
+            "skill:history",
+            "skill:insight",
+            "skill:intimidation",
+            "skill:investigation",
+            "skill:medicine",
+            "skill:nature",
+            "skill:perception",
+            "skill:performance",
+            "skill:persuasion",
+            "skill:religion",
+            "skill:sleight-of-hand",
+            "skill:stealth",
+            "skill:survival"
+          ]
+        },
+        {
+          "type": "choice",
+          "id": "bard-proficiency-2",
+          "choose": 3,
+          "grants": "proficiency",
+          "from": [
+            "tool:bagpipes",
+            "tool:drum",
+            "tool:dulcimer",
+            "tool:flute",
+            "tool:lute",
+            "tool:lyre",
+            "tool:horn",
+            "tool:pan-flute",
+            "tool:shawm",
+            "tool:viol"
+          ]
+        }
+      ],
+      "data": {
+        "hitDie": 8,
+        "spellcasting": {
+          "ability": "cha",
+          "startsAtLevel": 1
+        },
+        "multiclassing": {
+          "prerequisites": [
+            {
+              "ability": "cha",
+              "minimum": 13
+            }
+          ],
+          "proficiencies": ["armor:light-armor"],
+          "proficiencyChoices": [
+            {
+              "choose": 1,
+              "from": [
+                "skill:acrobatics",
+                "skill:animal-handling",
+                "skill:arcana",
+                "skill:athletics",
+                "skill:deception",
+                "skill:history",
+                "skill:insight",
+                "skill:intimidation",
+                "skill:investigation",
+                "skill:medicine",
+                "skill:nature",
+                "skill:perception",
+                "skill:performance",
+                "skill:persuasion",
+                "skill:religion",
+                "skill:sleight-of-hand",
+                "skill:stealth",
+                "skill:survival"
+              ]
+            },
+            {
+              "choose": 1,
+              "from": [
+                "tool:bagpipes",
+                "tool:drum",
+                "tool:dulcimer",
+                "tool:flute",
+                "tool:lute",
+                "tool:lyre",
+                "tool:horn",
+                "tool:pan-flute",
+                "tool:shawm",
+                "tool:viol"
+              ]
+            }
+          ]
+        },
+        "levels": [
+          {
+            "level": 1,
+            "features": ["srd51:feature/spellcasting-bard", "srd51:feature/bardic-inspiration-d6"],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 2,
+            "spellsKnown": 4,
+            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 6,
+              "songOfRestDie": 0,
+              "magicalSecretsMax_5": 0,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 2,
+            "features": ["srd51:feature/jack-of-all-trades", "srd51:feature/song-of-rest-d6"],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 2,
+            "spellsKnown": 5,
+            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 6,
+              "songOfRestDie": 6,
+              "magicalSecretsMax_5": 0,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 3,
+            "features": ["srd51:feature/bard-expertise-1", "srd51:feature/bard-college"],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 2,
+            "spellsKnown": 6,
+            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 6,
+              "songOfRestDie": 6,
+              "magicalSecretsMax_5": 0,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 4,
+            "features": ["srd51:feature/bard-ability-score-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 3,
+            "spellsKnown": 7,
+            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 6,
+              "songOfRestDie": 6,
+              "magicalSecretsMax_5": 0,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 5,
+            "features": [
+              "srd51:feature/bardic-inspiration-d8",
+              "srd51:feature/font-of-inspiration"
+            ],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 3,
+            "spellsKnown": 8,
+            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 8,
+              "songOfRestDie": 6,
+              "magicalSecretsMax_5": 0,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/countercharm", "srd51:feature/bard-college-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 3,
+            "spellsKnown": 9,
+            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 8,
+              "songOfRestDie": 6,
+              "magicalSecretsMax_5": 0,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 7,
+            "features": [],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 3,
+            "spellsKnown": 10,
+            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 8,
+              "songOfRestDie": 6,
+              "magicalSecretsMax_5": 0,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 8,
+            "features": ["srd51:feature/bard-ability-score-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 3,
+            "spellsKnown": 11,
+            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 8,
+              "songOfRestDie": 6,
+              "magicalSecretsMax_5": 0,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 9,
+            "features": ["srd51:feature/song-of-rest-d8"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 3,
+            "spellsKnown": 12,
+            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 8,
+              "songOfRestDie": 8,
+              "magicalSecretsMax_5": 0,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 10,
+            "features": [
+              "srd51:feature/bard-expertise-2",
+              "srd51:feature/bardic-inspiration-d10",
+              "srd51:feature/magical-secrets-1"
+            ],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 4,
+            "spellsKnown": 14,
+            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 10,
+              "songOfRestDie": 8,
+              "magicalSecretsMax_5": 2,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 11,
+            "features": [],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 4,
+            "spellsKnown": 15,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 10,
+              "songOfRestDie": 8,
+              "magicalSecretsMax_5": 2,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 12,
+            "features": ["srd51:feature/bard-ability-score-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 4,
+            "spellsKnown": 15,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 10,
+              "songOfRestDie": 8,
+              "magicalSecretsMax_5": 2,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 13,
+            "features": ["srd51:feature/song-of-rest-d10"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 4,
+            "spellsKnown": 16,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 10,
+              "songOfRestDie": 10,
+              "magicalSecretsMax_5": 2,
+              "magicalSecretsMax_7": 0,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 14,
+            "features": [
+              "srd51:feature/magical-secrets-2",
+              "srd51:feature/bard-college-improvement-2"
+            ],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 4,
+            "spellsKnown": 18,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 10,
+              "songOfRestDie": 10,
+              "magicalSecretsMax_5": 2,
+              "magicalSecretsMax_7": 2,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 15,
+            "features": ["srd51:feature/bardic-inspiration-d12"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 4,
+            "spellsKnown": 19,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 12,
+              "songOfRestDie": 10,
+              "magicalSecretsMax_5": 2,
+              "magicalSecretsMax_7": 2,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 16,
+            "features": ["srd51:feature/bard-ability-score-improvement-4"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 4,
+            "spellsKnown": 19,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "classSpecific": {
+              "bardicInspirationDie": 12,
+              "songOfRestDie": 10,
+              "magicalSecretsMax_5": 2,
+              "magicalSecretsMax_7": 2,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 17,
+            "features": ["srd51:feature/song-of-rest-d12"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 4,
+            "spellsKnown": 20,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 1],
+            "classSpecific": {
+              "bardicInspirationDie": 12,
+              "songOfRestDie": 12,
+              "magicalSecretsMax_5": 2,
+              "magicalSecretsMax_7": 2,
+              "magicalSecretsMax_9": 0
+            }
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/magical-secrets-3"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 4,
+            "spellsKnown": 22,
+            "spellSlots": [4, 3, 3, 3, 3, 1, 1, 1, 1],
+            "classSpecific": {
+              "bardicInspirationDie": 12,
+              "songOfRestDie": 12,
+              "magicalSecretsMax_5": 2,
+              "magicalSecretsMax_7": 2,
+              "magicalSecretsMax_9": 2
+            }
+          },
+          {
+            "level": 19,
+            "features": ["srd51:feature/bard-ability-score-improvement-5"],
+            "abilityScoreImprovements": 5,
+            "cantripsKnown": 4,
+            "spellsKnown": 22,
+            "spellSlots": [4, 3, 3, 3, 3, 2, 1, 1, 1],
+            "classSpecific": {
+              "bardicInspirationDie": 12,
+              "songOfRestDie": 12,
+              "magicalSecretsMax_5": 2,
+              "magicalSecretsMax_7": 2,
+              "magicalSecretsMax_9": 2
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/superior-inspiration"],
+            "abilityScoreImprovements": 5,
+            "cantripsKnown": 4,
+            "spellsKnown": 22,
+            "spellSlots": [4, 3, 3, 3, 3, 2, 2, 1, 1],
+            "classSpecific": {
+              "bardicInspirationDie": 12,
+              "songOfRestDie": 12,
+              "magicalSecretsMax_5": 2,
+              "magicalSecretsMax_7": 2,
+              "magicalSecretsMax_9": 2
+            }
+          }
+        ],
+        "startingEquipment": [
+          {
+            "item": "srd51:item/leather-armor",
+            "quantity": 1
+          },
+          {
+            "item": "srd51:item/dagger",
+            "quantity": 1
+          }
+        ],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "rapier"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "longsword"
+                  }
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "any simple weapon",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "simple-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "diplomats-pack"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "entertainers-pack"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "lute"
+                  }
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "any other musical instrument",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "musical-instruments"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:class/cleric",
+      "kind": "class",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "light-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "medium-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "shields"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "simple-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "wis"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "cha"
+        },
+        {
+          "type": "choice",
+          "id": "cleric-proficiency-1",
+          "choose": 2,
+          "grants": "proficiency",
+          "from": [
+            "skill:history",
+            "skill:insight",
+            "skill:medicine",
+            "skill:persuasion",
+            "skill:religion"
+          ]
+        }
+      ],
+      "data": {
+        "hitDie": 8,
+        "spellcasting": {
+          "ability": "wis",
+          "startsAtLevel": 1
+        },
+        "multiclassing": {
+          "prerequisites": [
+            {
+              "ability": "wis",
+              "minimum": 13
+            }
+          ],
+          "proficiencies": ["armor:light-armor", "armor:medium-armor", "armor:shields"],
+          "proficiencyChoices": []
+        },
+        "levels": [
+          {
+            "level": 1,
+            "features": [
+              "srd51:feature/spellcasting-cleric",
+              "srd51:feature/divine-domain",
+              "srd51:feature/domain-spells-1"
+            ],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 3,
+            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 0,
+              "destroyUndeadCr": 0
+            }
+          },
+          {
+            "level": 2,
+            "features": [
+              "srd51:feature/channel-divinity-1-rest",
+              "srd51:feature/channel-divinity-turn-undead",
+              "srd51:feature/divine-domain-improvement-1"
+            ],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 3,
+            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 1,
+              "destroyUndeadCr": 0
+            }
+          },
+          {
+            "level": 3,
+            "features": ["srd51:feature/domain-spells-2"],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 3,
+            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 1,
+              "destroyUndeadCr": 0
+            }
+          },
+          {
+            "level": 4,
+            "features": ["srd51:feature/cleric-ability-score-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 1,
+              "destroyUndeadCr": 0
+            }
+          },
+          {
+            "level": 5,
+            "features": [
+              "srd51:feature/domain-spells-3",
+              "srd51:feature/destroy-undead-cr-1-2-or-below"
+            ],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 1,
+              "destroyUndeadCr": 0.5
+            }
+          },
+          {
+            "level": 6,
+            "features": [
+              "srd51:feature/channel-divinity-2-rest",
+              "srd51:feature/divine-domain-improvement-2"
+            ],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 2,
+              "destroyUndeadCr": 0.5
+            }
+          },
+          {
+            "level": 7,
+            "features": ["srd51:feature/domain-spells-4"],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 2,
+              "destroyUndeadCr": 0.5
+            }
+          },
+          {
+            "level": 8,
+            "features": [
+              "srd51:feature/cleric-ability-score-improvement-2",
+              "srd51:feature/destroy-undead-cr-1-or-below",
+              "srd51:feature/divine-domain-improvement-3"
+            ],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 2,
+              "destroyUndeadCr": 1
+            }
+          },
+          {
+            "level": 9,
+            "features": ["srd51:feature/domain-spells-5"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 2,
+              "destroyUndeadCr": 1
+            }
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/divine-intervention"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 2,
+              "destroyUndeadCr": 1
+            }
+          },
+          {
+            "level": 11,
+            "features": ["srd51:feature/destroy-undead-cr-2-or-below"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 2,
+              "destroyUndeadCr": 2
+            }
+          },
+          {
+            "level": 12,
+            "features": ["srd51:feature/cleric-ability-score-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 2,
+              "destroyUndeadCr": 2
+            }
+          },
+          {
+            "level": 13,
+            "features": [],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 2,
+              "destroyUndeadCr": 2
+            }
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/destroy-undead-cr-3-or-below"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 2,
+              "destroyUndeadCr": 3
+            }
+          },
+          {
+            "level": 15,
+            "features": [],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 2,
+              "destroyUndeadCr": 3
+            }
+          },
+          {
+            "level": 16,
+            "features": ["srd51:feature/cleric-ability-score-improvement-4"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "classSpecific": {
+              "channelDivinityCharges": 2,
+              "destroyUndeadCr": 3
+            }
+          },
+          {
+            "level": 17,
+            "features": [
+              "srd51:feature/destroy-undead-cr-4-or-below",
+              "srd51:feature/divine-domain-improvement-4"
+            ],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 1],
+            "classSpecific": {
+              "channelDivinityCharges": 2,
+              "destroyUndeadCr": 4
+            }
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/channel-divinity-3-rest"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 3, 1, 1, 1, 1],
+            "classSpecific": {
+              "channelDivinityCharges": 3,
+              "destroyUndeadCr": 4
+            }
+          },
+          {
+            "level": 19,
+            "features": ["srd51:feature/cleric-ability-score-improvement-5"],
+            "abilityScoreImprovements": 5,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 3, 2, 1, 1, 1],
+            "classSpecific": {
+              "channelDivinityCharges": 3,
+              "destroyUndeadCr": 4
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/divine-intervention-improvement"],
+            "abilityScoreImprovements": 5,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 3, 2, 2, 1, 1],
+            "classSpecific": {
+              "channelDivinityCharges": 3,
+              "destroyUndeadCr": 4
+            }
+          }
+        ],
+        "startingEquipment": [
+          {
+            "item": "srd51:item/shield",
+            "quantity": 1
+          }
+        ],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "mace"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "warhammer"
+                  },
+                  "prerequisites": [
+                    {
+                      "type": "proficiency",
+                      "proficiency": {
+                        "index": "warhammers"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "scale-mail"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "leather-armor"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "chain-mail"
+                  },
+                  "prerequisites": [
+                    {
+                      "type": "proficiency",
+                      "proficiency": {
+                        "index": "chain-mail"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "multiple",
+                  "items": [
+                    {
+                      "optionType": "counted_reference",
+                      "count": 1,
+                      "of": {
+                        "index": "crossbow-light"
+                      }
+                    },
+                    {
+                      "optionType": "counted_reference",
+                      "count": 20,
+                      "of": {
+                        "index": "crossbow-bolt"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "any simple weapon",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "simple-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "priests-pack"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "explorers-pack"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "equipment_category",
+              "equipmentCategory": {
+                "index": "holy-symbols"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:class/druid",
+      "kind": "class",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "light-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "medium-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "shields"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "clubs"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "daggers"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "javelins"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "maces"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "quarterstaffs"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "sickles"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "spears"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "darts"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "slings"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "scimitars"
+        },
+        {
+          "type": "proficiency",
+          "category": "tool",
+          "target": "herbalism-kit"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "int"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "wis"
+        },
+        {
+          "type": "choice",
+          "id": "druid-proficiency-1",
+          "choose": 2,
+          "grants": "proficiency",
+          "from": [
+            "skill:arcana",
+            "skill:animal-handling",
+            "skill:insight",
+            "skill:medicine",
+            "skill:nature",
+            "skill:perception",
+            "skill:religion",
+            "skill:survival"
+          ]
+        }
+      ],
+      "data": {
+        "hitDie": 8,
+        "spellcasting": {
+          "ability": "wis",
+          "startsAtLevel": 1
+        },
+        "multiclassing": {
+          "prerequisites": [
+            {
+              "ability": "wis",
+              "minimum": 13
+            }
+          ],
+          "proficiencies": ["armor:light-armor", "armor:medium-armor", "armor:shields"],
+          "proficiencyChoices": []
+        },
+        "levels": [
+          {
+            "level": 1,
+            "features": ["srd51:feature/spellcasting-druid", "srd51:feature/druidic"],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 2,
+            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 0,
+              "wildShapeSwim": false,
+              "wildShapeFly": false
+            }
+          },
+          {
+            "level": 2,
+            "features": [
+              "srd51:feature/wild-shape-cr-1-4-or-below-no-flying-or-swim-speed",
+              "srd51:feature/druid-circle"
+            ],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 2,
+            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 0.25,
+              "wildShapeSwim": false,
+              "wildShapeFly": false
+            }
+          },
+          {
+            "level": 3,
+            "features": [],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 2,
+            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 0.25,
+              "wildShapeSwim": false,
+              "wildShapeFly": false
+            }
+          },
+          {
+            "level": 4,
+            "features": [
+              "srd51:feature/wild-shape-cr-1-2-or-below-no-flying-speed",
+              "srd51:feature/druid-ability-score-improvement-1"
+            ],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 3,
+            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 0.5,
+              "wildShapeSwim": true,
+              "wildShapeFly": false
+            }
+          },
+          {
+            "level": 5,
+            "features": [],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 3,
+            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 0.5,
+              "wildShapeSwim": true,
+              "wildShapeFly": false
+            }
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/druid-circle-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 3,
+            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 0.5,
+              "wildShapeSwim": true,
+              "wildShapeFly": false
+            }
+          },
+          {
+            "level": 7,
+            "features": [],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 3,
+            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": false
+            }
+          },
+          {
+            "level": 8,
+            "features": [
+              "srd51:feature/wild-shape-cr-1-or-below",
+              "srd51:feature/druid-ability-score-improvement-2"
+            ],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 3,
+            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          },
+          {
+            "level": 9,
+            "features": [],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 3,
+            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/druid-circle-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          },
+          {
+            "level": 11,
+            "features": [],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          },
+          {
+            "level": 12,
+            "features": ["srd51:feature/druid-ability-score-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          },
+          {
+            "level": 13,
+            "features": [],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/druid-circle-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          },
+          {
+            "level": 15,
+            "features": [],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          },
+          {
+            "level": 16,
+            "features": ["srd51:feature/druid-ability-score-improvement-4"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          },
+          {
+            "level": 17,
+            "features": [],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 1],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/druid-timeless-body", "srd51:feature/beast-spells"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 3, 1, 1, 1, 1],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          },
+          {
+            "level": 19,
+            "features": ["srd51:feature/druid-ability-score-improvement-5"],
+            "abilityScoreImprovements": 5,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 3, 2, 1, 1, 1],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/archdruid"],
+            "abilityScoreImprovements": 5,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 3, 2, 2, 1, 1],
+            "classSpecific": {
+              "wildShapeMaxCr": 1,
+              "wildShapeSwim": true,
+              "wildShapeFly": true
+            }
+          }
+        ],
+        "startingEquipment": [
+          {
+            "item": "srd51:item/leather-armor",
+            "quantity": 1
+          },
+          {
+            "item": "srd51:item/explorers-pack",
+            "quantity": 1
+          }
+        ],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "shield"
+                  }
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "any simple weapon",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "simple-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "scimitar"
+                  }
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "any simple melee weapon",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "simple-melee-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "equipment_category",
+              "equipmentCategory": {
+                "index": "druidic-foci"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:class/fighter",
+      "kind": "class",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "all-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "shields"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "simple-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "martial-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "str"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "con"
+        },
+        {
+          "type": "choice",
+          "id": "fighter-proficiency-1",
+          "choose": 2,
+          "grants": "proficiency",
+          "from": [
+            "skill:acrobatics",
+            "skill:animal-handling",
+            "skill:athletics",
+            "skill:history",
+            "skill:insight",
+            "skill:intimidation",
+            "skill:perception",
+            "skill:survival"
+          ]
+        }
+      ],
+      "data": {
+        "hitDie": 10,
+        "multiclassing": {
+          "prerequisites": [],
+          "prerequisiteOptions": {
+            "choose": 1,
+            "from": [
+              {
+                "ability": "str",
+                "minimum": 13
+              },
+              {
+                "ability": "dex",
+                "minimum": 13
+              }
+            ]
+          },
+          "proficiencies": [
+            "armor:light-armor",
+            "armor:medium-armor",
+            "armor:shields",
+            "weapon:simple-weapons",
+            "weapon:martial-weapons"
+          ],
+          "proficiencyChoices": []
+        },
+        "levels": [
+          {
+            "level": 1,
+            "features": ["srd51:feature/fighter-fighting-style", "srd51:feature/second-wind"],
+            "abilityScoreImprovements": 0,
+            "classSpecific": {
+              "actionSurges": 0,
+              "indomitableUses": 0,
+              "extraAttacks": 0
+            }
+          },
+          {
+            "level": 2,
+            "features": ["srd51:feature/action-surge-1-use"],
+            "abilityScoreImprovements": 0,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 0,
+              "extraAttacks": 0
+            }
+          },
+          {
+            "level": 3,
+            "features": ["srd51:feature/martial-archetype"],
+            "abilityScoreImprovements": 0,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 0,
+              "extraAttacks": 0
+            }
+          },
+          {
+            "level": 4,
+            "features": ["srd51:feature/fighter-ability-score-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 0,
+              "extraAttacks": 0
+            }
+          },
+          {
+            "level": 5,
+            "features": ["srd51:feature/extra-attack-1"],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 0,
+              "extraAttacks": 1
+            }
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/fighter-ability-score-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 0,
+              "extraAttacks": 1
+            }
+          },
+          {
+            "level": 7,
+            "features": ["srd51:feature/martial-archetype-improvement-1"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 0,
+              "extraAttacks": 1
+            }
+          },
+          {
+            "level": 8,
+            "features": ["srd51:feature/fighter-ability-score-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 0,
+              "extraAttacks": 1
+            }
+          },
+          {
+            "level": 9,
+            "features": ["srd51:feature/indomitable-1-use"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 1,
+              "extraAttacks": 1
+            }
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/martial-archetype-improvement-2"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 1,
+              "extraAttacks": 1
+            }
+          },
+          {
+            "level": 11,
+            "features": ["srd51:feature/extra-attack-2"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 1,
+              "extraAttacks": 2
+            }
+          },
+          {
+            "level": 12,
+            "features": ["srd51:feature/fighter-ability-score-improvement-4"],
+            "abilityScoreImprovements": 4,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 1,
+              "extraAttacks": 2
+            }
+          },
+          {
+            "level": 13,
+            "features": ["srd51:feature/indomitable-2-uses"],
+            "abilityScoreImprovements": 4,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 2,
+              "extraAttacks": 2
+            }
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/fighter-ability-score-improvement-5"],
+            "abilityScoreImprovements": 5,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 2,
+              "extraAttacks": 2
+            }
+          },
+          {
+            "level": 15,
+            "features": ["srd51:feature/martial-archetype-improvement-3"],
+            "abilityScoreImprovements": 5,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 2,
+              "extraAttacks": 2
+            }
+          },
+          {
+            "level": 16,
+            "features": ["srd51:feature/fighter-ability-score-improvement-6"],
+            "abilityScoreImprovements": 6,
+            "classSpecific": {
+              "actionSurges": 1,
+              "indomitableUses": 2,
+              "extraAttacks": 2
+            }
+          },
+          {
+            "level": 17,
+            "features": ["srd51:feature/action-surge-2-uses", "srd51:feature/indomitable-3-uses"],
+            "abilityScoreImprovements": 6,
+            "classSpecific": {
+              "actionSurges": 2,
+              "indomitableUses": 3,
+              "extraAttacks": 2
+            }
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/martial-archetype-improvement-4"],
+            "abilityScoreImprovements": 6,
+            "classSpecific": {
+              "actionSurges": 2,
+              "indomitableUses": 3,
+              "extraAttacks": 2
+            }
+          },
+          {
+            "level": 19,
+            "features": ["srd51:feature/fighter-ability-score-improvement-7"],
+            "abilityScoreImprovements": 7,
+            "classSpecific": {
+              "actionSurges": 2,
+              "indomitableUses": 3,
+              "extraAttacks": 2
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/extra-attack-3"],
+            "abilityScoreImprovements": 7,
+            "classSpecific": {
+              "actionSurges": 2,
+              "indomitableUses": 3,
+              "extraAttacks": 3
+            }
+          }
+        ],
+        "startingEquipment": [],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "chain-mail"
+                  }
+                },
+                {
+                  "optionType": "multiple",
+                  "items": [
+                    {
+                      "optionType": "counted_reference",
+                      "count": 1,
+                      "of": {
+                        "index": "leather-armor"
+                      }
+                    },
+                    {
+                      "optionType": "counted_reference",
+                      "count": 1,
+                      "of": {
+                        "index": "longbow"
+                      }
+                    },
+                    {
+                      "optionType": "counted_reference",
+                      "count": 20,
+                      "of": {
+                        "index": "arrow"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "multiple",
+                  "items": [
+                    {
+                      "optionType": "choice",
+                      "choice": {
+                        "desc": "a martial weapon",
+                        "choose": 1,
+                        "type": "equipment",
+                        "from": {
+                          "optionSetType": "equipment_category",
+                          "equipmentCategory": {
+                            "index": "martial-weapons"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "optionType": "counted_reference",
+                      "count": 1,
+                      "of": {
+                        "index": "shield"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "two martial weapons",
+                    "choose": 2,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "martial-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "multiple",
+                  "items": [
+                    {
+                      "optionType": "counted_reference",
+                      "count": 1,
+                      "of": {
+                        "index": "crossbow-light"
+                      }
+                    },
+                    {
+                      "optionType": "counted_reference",
+                      "count": 20,
+                      "of": {
+                        "index": "crossbow-bolt"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 2,
+                  "of": {
+                    "index": "handaxe"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "dungeoneers-pack"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "explorers-pack"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:class/monk",
+      "kind": "class",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "simple-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "shortswords"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "dex"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "str"
+        },
+        {
+          "type": "choice",
+          "id": "monk-proficiency-1",
+          "choose": 2,
+          "grants": "proficiency",
+          "from": [
+            "skill:acrobatics",
+            "skill:athletics",
+            "skill:history",
+            "skill:insight",
+            "skill:religion",
+            "skill:stealth"
+          ]
+        },
+        {
+          "type": "choice",
+          "id": "monk-proficiency-2",
+          "choose": 1,
+          "grants": "proficiency",
+          "from": [
+            "tool:alchemists-supplies",
+            "tool:brewers-supplies",
+            "tool:calligraphers-supplies",
+            "tool:carpenters-tools",
+            "tool:cartographers-tools",
+            "tool:cobblers-tools",
+            "tool:cooks-utensils",
+            "tool:glassblowers-tools",
+            "tool:jewelers-tools",
+            "tool:leatherworkers-tools",
+            "tool:masons-tools",
+            "tool:painters-supplies",
+            "tool:potters-tools",
+            "tool:smiths-tools",
+            "tool:tinkers-tools",
+            "tool:weavers-tools",
+            "tool:woodcarvers-tools",
+            "tool:disguise-kit",
+            "tool:forgery-kit",
+            "tool:bagpipes",
+            "tool:drum",
+            "tool:dulcimer",
+            "tool:flute",
+            "tool:lute",
+            "tool:lyre",
+            "tool:horn",
+            "tool:pan-flute",
+            "tool:shawm",
+            "tool:viol"
+          ]
+        }
+      ],
+      "data": {
+        "hitDie": 8,
+        "multiclassing": {
+          "prerequisites": [
+            {
+              "ability": "dex",
+              "minimum": 13
+            },
+            {
+              "ability": "wis",
+              "minimum": 13
+            }
+          ],
+          "proficiencies": ["weapon:simple-weapons", "weapon:shortswords"],
+          "proficiencyChoices": []
+        },
+        "levels": [
+          {
+            "level": 1,
+            "features": ["srd51:feature/monk-unarmored-defense", "srd51:feature/martial-arts"],
+            "abilityScoreImprovements": 0,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 4
+              },
+              "kiPoints": 0,
+              "unarmoredMovement": 0
+            }
+          },
+          {
+            "level": 2,
+            "features": [
+              "srd51:feature/ki",
+              "srd51:feature/flurry-of-blows",
+              "srd51:feature/patient-defense",
+              "srd51:feature/step-of-the-wind",
+              "srd51:feature/unarmored-movement-1"
+            ],
+            "abilityScoreImprovements": 0,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 4
+              },
+              "kiPoints": 2,
+              "unarmoredMovement": 10
+            }
+          },
+          {
+            "level": 3,
+            "features": ["srd51:feature/monastic-tradition", "srd51:feature/deflect-missiles"],
+            "abilityScoreImprovements": 0,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 4
+              },
+              "kiPoints": 3,
+              "unarmoredMovement": 10
+            }
+          },
+          {
+            "level": 4,
+            "features": [
+              "srd51:feature/monk-ability-score-improvement-1",
+              "srd51:feature/slow-fall"
+            ],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 4
+              },
+              "kiPoints": 4,
+              "unarmoredMovement": 10
+            }
+          },
+          {
+            "level": 5,
+            "features": ["srd51:feature/monk-extra-attack", "srd51:feature/stunning-strike"],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 6
+              },
+              "kiPoints": 5,
+              "unarmoredMovement": 10
+            }
+          },
+          {
+            "level": 6,
+            "features": [
+              "srd51:feature/ki-empowered-strikes",
+              "srd51:feature/monastic-tradition-improvement-1"
+            ],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 6
+              },
+              "kiPoints": 6,
+              "unarmoredMovement": 15
+            }
+          },
+          {
+            "level": 7,
+            "features": ["srd51:feature/monk-evasion", "srd51:feature/stillness-of-mind"],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 6
+              },
+              "kiPoints": 7,
+              "unarmoredMovement": 15
+            }
+          },
+          {
+            "level": 8,
+            "features": ["srd51:feature/monk-ability-score-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 6
+              },
+              "kiPoints": 8,
+              "unarmoredMovement": 15
+            }
+          },
+          {
+            "level": 9,
+            "features": ["srd51:feature/unarmored-movement-2"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 6
+              },
+              "kiPoints": 9,
+              "unarmoredMovement": 15
+            }
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/purity-of-body"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 6
+              },
+              "kiPoints": 10,
+              "unarmoredMovement": 20
+            }
+          },
+          {
+            "level": 11,
+            "features": ["srd51:feature/monastic-tradition-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 8
+              },
+              "kiPoints": 11,
+              "unarmoredMovement": 20
+            }
+          },
+          {
+            "level": 12,
+            "features": ["srd51:feature/monk-ability-score-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 8
+              },
+              "kiPoints": 12,
+              "unarmoredMovement": 20
+            }
+          },
+          {
+            "level": 13,
+            "features": ["srd51:feature/tongue-of-the-sun-and-moon"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 8
+              },
+              "kiPoints": 13,
+              "unarmoredMovement": 20
+            }
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/diamond-soul"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 8
+              },
+              "kiPoints": 14,
+              "unarmoredMovement": 25
+            }
+          },
+          {
+            "level": 15,
+            "features": ["srd51:feature/monk-timeless-body"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 8
+              },
+              "kiPoints": 15,
+              "unarmoredMovement": 25
+            }
+          },
+          {
+            "level": 16,
+            "features": ["srd51:feature/monk-ability-score-improvement-4"],
+            "abilityScoreImprovements": 4,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 8
+              },
+              "kiPoints": 16,
+              "unarmoredMovement": 25
+            }
+          },
+          {
+            "level": 17,
+            "features": ["srd51:feature/monastic-tradition-improvement-3"],
+            "abilityScoreImprovements": 4,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 10
+              },
+              "kiPoints": 17,
+              "unarmoredMovement": 25
+            }
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/empty-body"],
+            "abilityScoreImprovements": 4,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 10
+              },
+              "kiPoints": 18,
+              "unarmoredMovement": 30
+            }
+          },
+          {
+            "level": 19,
+            "features": ["srd51:feature/monk-ability-score-improvement-5"],
+            "abilityScoreImprovements": 5,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 10
+              },
+              "kiPoints": 19,
+              "unarmoredMovement": 30
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/perfect-self"],
+            "abilityScoreImprovements": 5,
+            "classSpecific": {
+              "martialArts": {
+                "diceCount": 1,
+                "diceValue": 10
+              },
+              "kiPoints": 20,
+              "unarmoredMovement": 30
+            }
+          }
+        ],
+        "startingEquipment": [
+          {
+            "item": "srd51:item/dart",
+            "quantity": 10
+          }
+        ],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "shortsword"
+                  }
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "any simple weapon",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "simple-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "dungeoneers-pack"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "explorers-pack"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:class/paladin",
+      "kind": "class",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "all-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "shields"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "simple-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "martial-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "wis"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "cha"
+        },
+        {
+          "type": "choice",
+          "id": "paladin-proficiency-1",
+          "choose": 2,
+          "grants": "proficiency",
+          "from": [
+            "skill:athletics",
+            "skill:insight",
+            "skill:intimidation",
+            "skill:medicine",
+            "skill:persuasion",
+            "skill:religion"
+          ]
+        }
+      ],
+      "data": {
+        "hitDie": 10,
+        "spellcasting": {
+          "ability": "cha",
+          "startsAtLevel": 2
+        },
+        "multiclassing": {
+          "prerequisites": [
+            {
+              "ability": "str",
+              "minimum": 13
+            },
+            {
+              "ability": "cha",
+              "minimum": 13
+            }
+          ],
+          "proficiencies": [
+            "armor:light-armor",
+            "armor:medium-armor",
+            "armor:shields",
+            "weapon:simple-weapons",
+            "weapon:martial-weapons"
+          ],
+          "proficiencyChoices": []
+        },
+        "levels": [
+          {
+            "level": 1,
+            "features": ["srd51:feature/divine-sense", "srd51:feature/lay-on-hands"],
+            "abilityScoreImprovements": 0,
+            "spellSlots": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 0
+            }
+          },
+          {
+            "level": 2,
+            "features": [
+              "srd51:feature/paladin-fighting-style",
+              "srd51:feature/spellcasting-paladin",
+              "srd51:feature/divine-smite"
+            ],
+            "abilityScoreImprovements": 0,
+            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 0
+            }
+          },
+          {
+            "level": 3,
+            "features": [
+              "srd51:feature/divine-health",
+              "srd51:feature/sacred-oath",
+              "srd51:feature/oath-spells",
+              "srd51:feature/channel-divinity"
+            ],
+            "abilityScoreImprovements": 0,
+            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 0
+            }
+          },
+          {
+            "level": 4,
+            "features": ["srd51:feature/paladin-ability-score-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 0
+            }
+          },
+          {
+            "level": 5,
+            "features": ["srd51:feature/paladin-extra-attack"],
+            "abilityScoreImprovements": 1,
+            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 0
+            }
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/aura-of-protection"],
+            "abilityScoreImprovements": 1,
+            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 7,
+            "features": ["srd51:feature/sacred-oath-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 8,
+            "features": ["srd51:feature/paladin-ability-score-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 9,
+            "features": [],
+            "abilityScoreImprovements": 2,
+            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/aura-of-courage"],
+            "abilityScoreImprovements": 2,
+            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 11,
+            "features": ["srd51:feature/improved-divine-smite"],
+            "abilityScoreImprovements": 2,
+            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 12,
+            "features": ["srd51:feature/paladin-ability-score-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 13,
+            "features": [],
+            "abilityScoreImprovements": 3,
+            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/cleansing-touch"],
+            "abilityScoreImprovements": 3,
+            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 15,
+            "features": ["srd51:feature/sacred-oath-improvement-2"],
+            "abilityScoreImprovements": 3,
+            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 16,
+            "features": ["srd51:feature/paladin-ability-score-improvement-4"],
+            "abilityScoreImprovements": 4,
+            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 17,
+            "features": [],
+            "abilityScoreImprovements": 4,
+            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/aura-improvements"],
+            "abilityScoreImprovements": 4,
+            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 30
+            }
+          },
+          {
+            "level": 19,
+            "features": ["srd51:feature/paladin-ability-score-improvement-5"],
+            "abilityScoreImprovements": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 30
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/sacred-oath-improvement-3"],
+            "abilityScoreImprovements": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "classSpecific": {
+              "auraRange": 30
+            }
+          }
+        ],
+        "startingEquipment": [
+          {
+            "item": "srd51:item/chain-mail",
+            "quantity": 1
+          }
+        ],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "multiple",
+                  "items": [
+                    {
+                      "optionType": "choice",
+                      "choice": {
+                        "desc": "a martial weapon",
+                        "choose": 1,
+                        "type": "equipment",
+                        "from": {
+                          "optionSetType": "equipment_category",
+                          "equipmentCategory": {
+                            "index": "martial-weapons"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "optionType": "counted_reference",
+                      "count": 1,
+                      "of": {
+                        "index": "shield"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "two martial weapons",
+                    "choose": 2,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "martial-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 5,
+                  "of": {
+                    "index": "javelin"
+                  }
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "any simple weapon",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "simple-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "priests-pack"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "explorers-pack"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "equipment_category",
+              "equipmentCategory": {
+                "index": "holy-symbols"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:class/ranger",
+      "kind": "class",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "light-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "medium-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "shields"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "simple-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "martial-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "dex"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "str"
+        },
+        {
+          "type": "choice",
+          "id": "ranger-proficiency-1",
+          "choose": 3,
+          "grants": "proficiency",
+          "from": [
+            "skill:animal-handling",
+            "skill:athletics",
+            "skill:insight",
+            "skill:investigation",
+            "skill:nature",
+            "skill:perception",
+            "skill:stealth",
+            "skill:survival"
+          ]
+        }
+      ],
+      "data": {
+        "hitDie": 10,
+        "spellcasting": {
+          "ability": "wis",
+          "startsAtLevel": 2
+        },
+        "multiclassing": {
+          "prerequisites": [
+            {
+              "ability": "dex",
+              "minimum": 13
+            },
+            {
+              "ability": "wis",
+              "minimum": 13
+            }
+          ],
+          "proficiencies": [
+            "armor:light-armor",
+            "armor:medium-armor",
+            "armor:shields",
+            "weapon:simple-weapons",
+            "weapon:martial-weapons"
+          ],
+          "proficiencyChoices": [
+            {
+              "choose": 1,
+              "from": [
+                "skill:animal-handling",
+                "skill:athletics",
+                "skill:insight",
+                "skill:investigation",
+                "skill:nature",
+                "skill:perception",
+                "skill:stealth",
+                "skill:survival"
+              ]
+            }
+          ]
+        },
+        "levels": [
+          {
+            "level": 1,
+            "features": [
+              "srd51:feature/favored-enemy-1-type",
+              "srd51:feature/natural-explorer-1-terrain-type"
+            ],
+            "abilityScoreImprovements": 0,
+            "spellsKnown": 0,
+            "spellSlots": [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 1,
+              "favoredTerrain": 1
+            }
+          },
+          {
+            "level": 2,
+            "features": [
+              "srd51:feature/ranger-fighting-style",
+              "srd51:feature/spellcasting-ranger"
+            ],
+            "abilityScoreImprovements": 0,
+            "spellsKnown": 2,
+            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 1,
+              "favoredTerrain": 1
+            }
+          },
+          {
+            "level": 3,
+            "features": ["srd51:feature/ranger-archetype", "srd51:feature/primeval-awareness"],
+            "abilityScoreImprovements": 0,
+            "spellsKnown": 3,
+            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 1,
+              "favoredTerrain": 1
+            }
+          },
+          {
+            "level": 4,
+            "features": ["srd51:feature/ranger-ability-score-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "spellsKnown": 3,
+            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 1,
+              "favoredTerrain": 1
+            }
+          },
+          {
+            "level": 5,
+            "features": ["srd51:feature/ranger-extra-attack"],
+            "abilityScoreImprovements": 1,
+            "spellsKnown": 4,
+            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 1,
+              "favoredTerrain": 1
+            }
+          },
+          {
+            "level": 6,
+            "features": [
+              "srd51:feature/favored-enemy-2-types",
+              "srd51:feature/natural-explorer-2-terrain-types"
+            ],
+            "abilityScoreImprovements": 1,
+            "spellsKnown": 4,
+            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 2,
+              "favoredTerrain": 2
+            }
+          },
+          {
+            "level": 7,
+            "features": ["srd51:feature/ranger-archetype-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "spellsKnown": 5,
+            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 2,
+              "favoredTerrain": 2
+            }
+          },
+          {
+            "level": 8,
+            "features": [
+              "srd51:feature/ranger-ability-score-improvement-2",
+              "srd51:feature/ranger-lands-stride"
+            ],
+            "abilityScoreImprovements": 2,
+            "spellsKnown": 5,
+            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 2,
+              "favoredTerrain": 2
+            }
+          },
+          {
+            "level": 9,
+            "features": [],
+            "abilityScoreImprovements": 2,
+            "spellsKnown": 6,
+            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 2,
+              "favoredTerrain": 2
+            }
+          },
+          {
+            "level": 10,
+            "features": [
+              "srd51:feature/natural-explorer-3-terrain-types",
+              "srd51:feature/hide-in-plain-sight"
+            ],
+            "abilityScoreImprovements": 2,
+            "spellsKnown": 6,
+            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 2,
+              "favoredTerrain": 3
+            }
+          },
+          {
+            "level": 11,
+            "features": ["srd51:feature/ranger-archetype-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "spellsKnown": 7,
+            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 2,
+              "favoredTerrain": 3
+            }
+          },
+          {
+            "level": 12,
+            "features": ["srd51:feature/ranger-ability-score-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "spellsKnown": 7,
+            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 2,
+              "favoredTerrain": 3
+            }
+          },
+          {
+            "level": 13,
+            "features": [],
+            "abilityScoreImprovements": 3,
+            "spellsKnown": 8,
+            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 2,
+              "favoredTerrain": 3
+            }
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/favored-enemy-3-enemies", "srd51:feature/vanish"],
+            "abilityScoreImprovements": 3,
+            "spellsKnown": 8,
+            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 3,
+              "favoredTerrain": 3
+            }
+          },
+          {
+            "level": 15,
+            "features": ["srd51:feature/ranger-archetype-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "spellsKnown": 9,
+            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 3,
+              "favoredTerrain": 3
+            }
+          },
+          {
+            "level": 16,
+            "features": ["srd51:feature/ranger-ability-score-improvement-4"],
+            "abilityScoreImprovements": 4,
+            "spellsKnown": 9,
+            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 3,
+              "favoredTerrain": 3
+            }
+          },
+          {
+            "level": 17,
+            "features": [],
+            "abilityScoreImprovements": 4,
+            "spellsKnown": 10,
+            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 3,
+              "favoredTerrain": 3
+            }
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/feral-senses"],
+            "abilityScoreImprovements": 4,
+            "spellsKnown": 10,
+            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 3,
+              "favoredTerrain": 3
+            }
+          },
+          {
+            "level": 19,
+            "features": ["srd51:feature/ranger-ability-score-improvement-5"],
+            "abilityScoreImprovements": 5,
+            "spellsKnown": 11,
+            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 3,
+              "favoredTerrain": 3
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/foe-slayer"],
+            "abilityScoreImprovements": 5,
+            "spellsKnown": 11,
+            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "classSpecific": {
+              "favoredEnemies": 3,
+              "favoredTerrain": 3
+            }
+          }
+        ],
+        "startingEquipment": [
+          {
+            "item": "srd51:item/longbow",
+            "quantity": 1
+          },
+          {
+            "item": "srd51:item/arrow",
+            "quantity": 20
+          }
+        ],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "scale-mail"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "leather-armor"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 2,
+                  "of": {
+                    "index": "shortsword"
+                  }
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "two simple melee weapons",
+                    "choose": 2,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "simple-melee-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "dungeoneers-pack"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "explorers-pack"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:class/rogue",
+      "kind": "class",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "light-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "simple-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "longswords"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "rapiers"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "shortswords"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "hand-crossbows"
+        },
+        {
+          "type": "proficiency",
+          "category": "tool",
+          "target": "thieves-tools"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "dex"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "int"
+        },
+        {
+          "type": "choice",
+          "id": "rogue-proficiency-1",
+          "choose": 4,
+          "grants": "proficiency",
+          "from": [
+            "skill:acrobatics",
+            "skill:athletics",
+            "skill:deception",
+            "skill:insight",
+            "skill:intimidation",
+            "skill:investigation",
+            "skill:perception",
+            "skill:performance",
+            "skill:persuasion",
+            "skill:sleight-of-hand",
+            "skill:stealth"
+          ]
+        }
+      ],
+      "data": {
+        "hitDie": 8,
+        "multiclassing": {
+          "prerequisites": [
+            {
+              "ability": "dex",
+              "minimum": 13
+            }
+          ],
+          "proficiencies": ["armor:light-armor", "tool:thieves-tools"],
+          "proficiencyChoices": [
+            {
+              "choose": 1,
+              "from": [
+                "skill:acrobatics",
+                "skill:athletics",
+                "skill:deception",
+                "skill:insight",
+                "skill:intimidation",
+                "skill:investigation",
+                "skill:perception",
+                "skill:performance",
+                "skill:persuasion",
+                "skill:sleight-of-hand",
+                "skill:stealth"
+              ]
+            }
+          ]
+        },
+        "levels": [
+          {
+            "level": 1,
+            "features": [
+              "srd51:feature/rogue-expertise-1",
+              "srd51:feature/sneak-attack",
+              "srd51:feature/thieves-cant"
+            ],
+            "abilityScoreImprovements": 0,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 1,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 2,
+            "features": ["srd51:feature/cunning-action"],
+            "abilityScoreImprovements": 0,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 1,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 3,
+            "features": ["srd51:feature/roguish-archetype"],
+            "abilityScoreImprovements": 0,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 2,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 4,
+            "features": ["srd51:feature/rogue-ability-score-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 2,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 5,
+            "features": ["srd51:feature/uncanny-dodge"],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 3,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/rogue-expertise-2"],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 3,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 7,
+            "features": ["srd51:feature/rogue-evasion"],
+            "abilityScoreImprovements": 1,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 4,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 8,
+            "features": ["srd51:feature/rogue-ability-score-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 4,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 9,
+            "features": ["srd51:feature/roguish-archetype-improvement-1"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 5,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/rogue-ability-score-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 5,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 11,
+            "features": ["srd51:feature/reliable-talent"],
+            "abilityScoreImprovements": 2,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 6,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 12,
+            "features": ["srd51:feature/rogue-ability-score-improvement-4"],
+            "abilityScoreImprovements": 4,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 6,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 13,
+            "features": ["srd51:feature/roguish-archetype-improvement-2"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 7,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/blindsense"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 7,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 15,
+            "features": ["srd51:feature/slippery-mind"],
+            "abilityScoreImprovements": 3,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 8,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 16,
+            "features": ["srd51:feature/rogue-ability-score-improvement-5"],
+            "abilityScoreImprovements": 5,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 8,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 17,
+            "features": ["srd51:feature/roguish-archetype-improvement-3"],
+            "abilityScoreImprovements": 4,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 9,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/elusive"],
+            "abilityScoreImprovements": 4,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 9,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 19,
+            "features": ["srd51:feature/rogue-ability-score-improvement-6"],
+            "abilityScoreImprovements": 6,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 10,
+                "diceValue": 6
+              }
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/stroke-of-luck"],
+            "abilityScoreImprovements": 5,
+            "classSpecific": {
+              "sneakAttack": {
+                "diceCount": 10,
+                "diceValue": 6
+              }
+            }
+          }
+        ],
+        "startingEquipment": [
+          {
+            "item": "srd51:item/leather-armor",
+            "quantity": 1
+          },
+          {
+            "item": "srd51:item/dagger",
+            "quantity": 2
+          },
+          {
+            "item": "srd51:item/thieves-tools",
+            "quantity": 1
+          }
+        ],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "rapier"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "shortsword"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "multiple",
+                  "items": [
+                    {
+                      "optionType": "counted_reference",
+                      "count": 1,
+                      "of": {
+                        "index": "shortbow"
+                      }
+                    },
+                    {
+                      "optionType": "counted_reference",
+                      "count": 20,
+                      "of": {
+                        "index": "arrow"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "shortsword"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "burglars-pack"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "dungeoneers-pack"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "explorers-pack"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:class/sorcerer",
+      "kind": "class",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "daggers"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "darts"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "slings"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "quarterstaffs"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "crossbows-light"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "con"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "cha"
+        },
+        {
+          "type": "choice",
+          "id": "sorcerer-proficiency-1",
+          "choose": 2,
+          "grants": "proficiency",
+          "from": [
+            "skill:arcana",
+            "skill:deception",
+            "skill:insight",
+            "skill:intimidation",
+            "skill:persuasion",
+            "skill:religion"
+          ]
+        }
+      ],
+      "data": {
+        "hitDie": 6,
+        "spellcasting": {
+          "ability": "cha",
+          "startsAtLevel": 1
+        },
+        "multiclassing": {
+          "prerequisites": [
+            {
+              "ability": "cha",
+              "minimum": 13
+            }
+          ],
+          "proficiencies": [],
+          "proficiencyChoices": []
+        },
+        "levels": [
+          {
+            "level": 1,
+            "features": ["srd51:feature/spellcasting-sorcerer", "srd51:feature/sorcerous-origin"],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 4,
+            "spellsKnown": 2,
+            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 0,
+              "metamagicKnown": 0,
+              "creatingSpellSlots": []
+            }
+          },
+          {
+            "level": 2,
+            "features": [
+              "srd51:feature/font-of-magic",
+              "srd51:feature/flexible-casting-creating-spell-slots",
+              "srd51:feature/flexible-casting-converting-spell-slot"
+            ],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 4,
+            "spellsKnown": 3,
+            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 2,
+              "metamagicKnown": 0,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 3,
+            "features": ["srd51:feature/metamagic-1"],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 4,
+            "spellsKnown": 4,
+            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 3,
+              "metamagicKnown": 2,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 4,
+            "features": ["srd51:feature/sorcerer-ability-score-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 5,
+            "spellsKnown": 5,
+            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 4,
+              "metamagicKnown": 2,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 5,
+            "features": [],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 5,
+            "spellsKnown": 6,
+            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 5,
+              "metamagicKnown": 2,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/sorcerous-origin-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 5,
+            "spellsKnown": 7,
+            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 6,
+              "metamagicKnown": 2,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 7,
+            "features": [],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 5,
+            "spellsKnown": 8,
+            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 7,
+              "metamagicKnown": 2,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 8,
+            "features": ["srd51:feature/sorcerer-ability-score-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 5,
+            "spellsKnown": 9,
+            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 8,
+              "metamagicKnown": 2,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 9,
+            "features": [],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 5,
+            "spellsKnown": 10,
+            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 9,
+              "metamagicKnown": 2,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/metamagic-2"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 6,
+            "spellsKnown": 11,
+            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 10,
+              "metamagicKnown": 3,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 11,
+            "features": [],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 6,
+            "spellsKnown": 12,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 11,
+              "metamagicKnown": 3,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 12,
+            "features": ["srd51:feature/sorcerer-ability-score-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 6,
+            "spellsKnown": 12,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 12,
+              "metamagicKnown": 3,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 13,
+            "features": [],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 6,
+            "spellsKnown": 13,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 13,
+              "metamagicKnown": 3,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/sorcerous-origin-improvement-2"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 6,
+            "spellsKnown": 13,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "classSpecific": {
+              "sorceryPoints": 14,
+              "metamagicKnown": 3,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 15,
+            "features": [],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 6,
+            "spellsKnown": 14,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "classSpecific": {
+              "sorceryPoints": 15,
+              "metamagicKnown": 3,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 16,
+            "features": ["srd51:feature/sorcerer-ability-score-improvement-4"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 6,
+            "spellsKnown": 14,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "classSpecific": {
+              "sorceryPoints": 16,
+              "metamagicKnown": 4,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 17,
+            "features": ["srd51:feature/metamagic-3"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 6,
+            "spellsKnown": 15,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 1],
+            "classSpecific": {
+              "sorceryPoints": 17,
+              "metamagicKnown": 4,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/sorcerous-origin-improvement-3"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 6,
+            "spellsKnown": 15,
+            "spellSlots": [4, 3, 3, 3, 3, 1, 1, 1, 1],
+            "classSpecific": {
+              "sorceryPoints": 18,
+              "metamagicKnown": 4,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 19,
+            "features": ["srd51:feature/sorcerer-ability-score-improvement-5"],
+            "abilityScoreImprovements": 5,
+            "cantripsKnown": 6,
+            "spellsKnown": 15,
+            "spellSlots": [4, 3, 3, 3, 3, 2, 1, 1, 1],
+            "classSpecific": {
+              "sorceryPoints": 19,
+              "metamagicKnown": 4,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/sorcerous-restoration"],
+            "abilityScoreImprovements": 5,
+            "cantripsKnown": 6,
+            "spellsKnown": 15,
+            "spellSlots": [4, 3, 3, 3, 3, 2, 2, 1, 1],
+            "classSpecific": {
+              "sorceryPoints": 20,
+              "metamagicKnown": 4,
+              "creatingSpellSlots": [
+                {
+                  "spellSlotLevel": 1,
+                  "sorceryPointCost": 2
+                },
+                {
+                  "spellSlotLevel": 2,
+                  "sorceryPointCost": 3
+                },
+                {
+                  "spellSlotLevel": 3,
+                  "sorceryPointCost": 5
+                },
+                {
+                  "spellSlotLevel": 4,
+                  "sorceryPointCost": 6
+                },
+                {
+                  "spellSlotLevel": 5,
+                  "sorceryPointCost": 7
+                }
+              ]
+            }
+          }
+        ],
+        "startingEquipment": [
+          {
+            "item": "srd51:item/dagger",
+            "quantity": 2
+          }
+        ],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "multiple",
+                  "items": [
+                    {
+                      "optionType": "counted_reference",
+                      "count": 1,
+                      "of": {
+                        "index": "crossbow-light"
+                      }
+                    },
+                    {
+                      "optionType": "counted_reference",
+                      "count": 20,
+                      "of": {
+                        "index": "crossbow-bolt"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "any simple weapon",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "simple-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "component-pouch"
+                  }
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "arcane focus",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "arcane-foci"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "dungeoneers-pack"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "explorers-pack"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:class/warlock",
+      "kind": "class",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "light-armor"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "simple-weapons"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "wis"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "cha"
+        },
+        {
+          "type": "choice",
+          "id": "warlock-proficiency-1",
+          "choose": 2,
+          "grants": "proficiency",
+          "from": [
+            "skill:arcana",
+            "skill:deception",
+            "skill:history",
+            "skill:intimidation",
+            "skill:investigation",
+            "skill:nature",
+            "skill:religion"
+          ]
+        }
+      ],
+      "data": {
+        "hitDie": 8,
+        "spellcasting": {
+          "ability": "cha",
+          "startsAtLevel": 1
+        },
+        "multiclassing": {
+          "prerequisites": [
+            {
+              "ability": "cha",
+              "minimum": 13
+            }
+          ],
+          "proficiencies": ["armor:light-armor", "weapon:simple-weapons"],
+          "proficiencyChoices": []
+        },
+        "levels": [
+          {
+            "level": 1,
+            "features": ["srd51:feature/otherworldly-patron", "srd51:feature/pact-magic"],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 2,
+            "spellsKnown": 2,
+            "spellSlots": [1, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 0,
+              "mysticArcanumLevel_6": 0,
+              "mysticArcanumLevel_7": 0,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 2,
+            "features": ["srd51:feature/eldritch-invocations"],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 2,
+            "spellsKnown": 3,
+            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 2,
+              "mysticArcanumLevel_6": 0,
+              "mysticArcanumLevel_7": 0,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 3,
+            "features": ["srd51:feature/pact-boon"],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 2,
+            "spellsKnown": 4,
+            "spellSlots": [0, 2, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 2,
+              "mysticArcanumLevel_6": 0,
+              "mysticArcanumLevel_7": 0,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 4,
+            "features": ["srd51:feature/warlock-ability-score-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 3,
+            "spellsKnown": 5,
+            "spellSlots": [0, 2, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 3,
+              "mysticArcanumLevel_6": 0,
+              "mysticArcanumLevel_7": 0,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 5,
+            "features": [],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 3,
+            "spellsKnown": 6,
+            "spellSlots": [0, 0, 2, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 3,
+              "mysticArcanumLevel_6": 0,
+              "mysticArcanumLevel_7": 0,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/otherworldly-patron-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 3,
+            "spellsKnown": 7,
+            "spellSlots": [0, 0, 2, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 4,
+              "mysticArcanumLevel_6": 0,
+              "mysticArcanumLevel_7": 0,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 7,
+            "features": [],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 3,
+            "spellsKnown": 8,
+            "spellSlots": [0, 0, 0, 2, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 4,
+              "mysticArcanumLevel_6": 0,
+              "mysticArcanumLevel_7": 0,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 8,
+            "features": ["srd51:feature/warlock-ability-score-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 3,
+            "spellsKnown": 9,
+            "spellSlots": [0, 0, 0, 2, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 4,
+              "mysticArcanumLevel_6": 0,
+              "mysticArcanumLevel_7": 0,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 9,
+            "features": [],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 3,
+            "spellsKnown": 10,
+            "spellSlots": [0, 0, 0, 0, 2, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 5,
+              "mysticArcanumLevel_6": 0,
+              "mysticArcanumLevel_7": 0,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/otherworldly-patron-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 4,
+            "spellsKnown": 10,
+            "spellSlots": [0, 0, 0, 0, 2, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 5,
+              "mysticArcanumLevel_6": 0,
+              "mysticArcanumLevel_7": 0,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 11,
+            "features": ["srd51:feature/mystic-arcanum-6th-level"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 4,
+            "spellsKnown": 11,
+            "spellSlots": [0, 0, 0, 0, 3, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 5,
+              "mysticArcanumLevel_6": 1,
+              "mysticArcanumLevel_7": 0,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 12,
+            "features": ["srd51:feature/warlock-ability-score-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 4,
+            "spellsKnown": 11,
+            "spellSlots": [0, 0, 0, 0, 3, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 6,
+              "mysticArcanumLevel_6": 1,
+              "mysticArcanumLevel_7": 0,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 13,
+            "features": ["srd51:feature/mystic-arcanum-7th-level"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 4,
+            "spellsKnown": 12,
+            "spellSlots": [0, 0, 0, 0, 3, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 6,
+              "mysticArcanumLevel_6": 1,
+              "mysticArcanumLevel_7": 1,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/otherworldly-patron-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 4,
+            "spellsKnown": 12,
+            "spellSlots": [0, 0, 0, 0, 3, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 6,
+              "mysticArcanumLevel_6": 1,
+              "mysticArcanumLevel_7": 1,
+              "mysticArcanumLevel_8": 0,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 15,
+            "features": ["srd51:feature/mystic-arcanum-8th-level"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 4,
+            "spellsKnown": 13,
+            "spellSlots": [0, 0, 0, 0, 3, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 7,
+              "mysticArcanumLevel_6": 1,
+              "mysticArcanumLevel_7": 1,
+              "mysticArcanumLevel_8": 1,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 16,
+            "features": ["srd51:feature/warlock-ability-score-improvement-4"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 4,
+            "spellsKnown": 13,
+            "spellSlots": [0, 0, 0, 0, 3, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 7,
+              "mysticArcanumLevel_6": 1,
+              "mysticArcanumLevel_7": 1,
+              "mysticArcanumLevel_8": 1,
+              "mysticArcanumLevel_9": 0
+            }
+          },
+          {
+            "level": 17,
+            "features": ["srd51:feature/mystic-arcanum-9th-level"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 4,
+            "spellsKnown": 14,
+            "spellSlots": [0, 0, 0, 0, 4, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 7,
+              "mysticArcanumLevel_6": 1,
+              "mysticArcanumLevel_7": 1,
+              "mysticArcanumLevel_8": 1,
+              "mysticArcanumLevel_9": 1
+            }
+          },
+          {
+            "level": 18,
+            "features": [],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 4,
+            "spellsKnown": 14,
+            "spellSlots": [0, 0, 0, 0, 4, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 8,
+              "mysticArcanumLevel_6": 1,
+              "mysticArcanumLevel_7": 1,
+              "mysticArcanumLevel_8": 1,
+              "mysticArcanumLevel_9": 1
+            }
+          },
+          {
+            "level": 19,
+            "features": ["srd51:feature/warlock-ability-score-improvement-5"],
+            "abilityScoreImprovements": 5,
+            "cantripsKnown": 4,
+            "spellsKnown": 15,
+            "spellSlots": [0, 0, 0, 0, 4, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 8,
+              "mysticArcanumLevel_6": 1,
+              "mysticArcanumLevel_7": 1,
+              "mysticArcanumLevel_8": 1,
+              "mysticArcanumLevel_9": 1
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/eldritch-master"],
+            "abilityScoreImprovements": 5,
+            "cantripsKnown": 4,
+            "spellsKnown": 15,
+            "spellSlots": [0, 0, 0, 0, 4, 0, 0, 0, 0],
+            "classSpecific": {
+              "invocationsKnown": 8,
+              "mysticArcanumLevel_6": 1,
+              "mysticArcanumLevel_7": 1,
+              "mysticArcanumLevel_8": 1,
+              "mysticArcanumLevel_9": 1
+            }
+          }
+        ],
+        "startingEquipment": [
+          {
+            "item": "srd51:item/dagger",
+            "quantity": 2
+          },
+          {
+            "item": "srd51:item/leather-armor",
+            "quantity": 1
+          }
+        ],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "multiple",
+                  "items": [
+                    {
+                      "optionType": "counted_reference",
+                      "count": 1,
+                      "of": {
+                        "index": "crossbow-light"
+                      }
+                    },
+                    {
+                      "optionType": "counted_reference",
+                      "count": 20,
+                      "of": {
+                        "index": "crossbow-bolt"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "any simple weapon",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "simple-weapons"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "component-pouch"
+                  }
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "arcane focus",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "arcane-foci"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "scholars-pack"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "dungeoneers-pack"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "equipment_category",
+              "equipmentCategory": {
+                "index": "simple-weapons"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:class/wizard",
+      "kind": "class",
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "daggers"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "darts"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "slings"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "quarterstaffs"
+        },
+        {
+          "type": "proficiency",
+          "category": "weapon",
+          "target": "crossbows-light"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "int"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "wis"
+        },
+        {
+          "type": "choice",
+          "id": "wizard-proficiency-1",
+          "choose": 2,
+          "grants": "proficiency",
+          "from": [
+            "skill:arcana",
+            "skill:history",
+            "skill:insight",
+            "skill:investigation",
+            "skill:medicine",
+            "skill:religion"
+          ]
+        }
+      ],
+      "data": {
+        "hitDie": 6,
+        "spellcasting": {
+          "ability": "int",
+          "startsAtLevel": 1
+        },
+        "multiclassing": {
+          "prerequisites": [
+            {
+              "ability": "int",
+              "minimum": 13
+            }
+          ],
+          "proficiencies": [],
+          "proficiencyChoices": []
+        },
+        "levels": [
+          {
+            "level": 1,
+            "features": ["srd51:feature/spellcasting-wizard", "srd51:feature/arcane-recovery"],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 3,
+            "spellSlots": [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 1
+            }
+          },
+          {
+            "level": 2,
+            "features": ["srd51:feature/arcane-tradition"],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 3,
+            "spellSlots": [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 1
+            }
+          },
+          {
+            "level": 3,
+            "features": [],
+            "abilityScoreImprovements": 0,
+            "cantripsKnown": 3,
+            "spellSlots": [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 2
+            }
+          },
+          {
+            "level": 4,
+            "features": ["srd51:feature/wizard-ability-score-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 2
+            }
+          },
+          {
+            "level": 5,
+            "features": [],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 3
+            }
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/arcane-tradition-improvement-1"],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 3
+            }
+          },
+          {
+            "level": 7,
+            "features": [],
+            "abilityScoreImprovements": 1,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 4
+            }
+          },
+          {
+            "level": 8,
+            "features": ["srd51:feature/wizard-ability-score-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 4
+            }
+          },
+          {
+            "level": 9,
+            "features": [],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 4,
+            "spellSlots": [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 5
+            }
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/arcane-tradition-improvement-2"],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 5
+            }
+          },
+          {
+            "level": 11,
+            "features": [],
+            "abilityScoreImprovements": 2,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 6
+            }
+          },
+          {
+            "level": 12,
+            "features": ["srd51:feature/wizard-ability-score-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 6
+            }
+          },
+          {
+            "level": 13,
+            "features": [],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 7
+            }
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/arcane-tradition-improvement-3"],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 7
+            }
+          },
+          {
+            "level": 15,
+            "features": [],
+            "abilityScoreImprovements": 3,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 8
+            }
+          },
+          {
+            "level": 16,
+            "features": ["srd51:feature/wizard-ability-score-improvement-4"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 8
+            }
+          },
+          {
+            "level": 17,
+            "features": [],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 2, 1, 1, 1, 1],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 9
+            }
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/spell-mastery"],
+            "abilityScoreImprovements": 4,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 3, 1, 1, 1, 1],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 9
+            }
+          },
+          {
+            "level": 19,
+            "features": ["srd51:feature/wizard-ability-score-improvement-5"],
+            "abilityScoreImprovements": 5,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 3, 2, 1, 1, 1],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 10
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/signature-spell"],
+            "abilityScoreImprovements": 5,
+            "cantripsKnown": 5,
+            "spellSlots": [4, 3, 3, 3, 3, 2, 2, 1, 1],
+            "classSpecific": {
+              "arcaneRecoveryLevels": 10
+            }
+          }
+        ],
+        "startingEquipment": [
+          {
+            "item": "srd51:item/spellbook",
+            "quantity": 1
+          }
+        ],
+        "startingEquipmentOptions": [
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "quarterstaff"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "dagger"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "component-pouch"
+                  }
+                },
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "desc": "arcane focus",
+                    "choose": 1,
+                    "type": "equipment",
+                    "from": {
+                      "optionSetType": "equipment_category",
+                      "equipmentCategory": {
+                        "index": "arcane-foci"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "choose": 1,
+            "type": "equipment",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "scholars-pack"
+                  }
+                },
+                {
+                  "optionType": "counted_reference",
+                  "count": 1,
+                  "of": {
+                    "index": "explorers-pack"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -22,8 +22,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "acid",
-              "name": "Acid"
+              "index": "acid"
             },
             "damageAtSlotLevel": {
               "2": "4d4",
@@ -53,8 +52,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "acid",
-              "name": "Acid"
+              "index": "acid"
             },
             "damageAtCharacterLevel": {
               "1": "1d6",
@@ -66,8 +64,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "none"
         }
@@ -139,8 +136,7 @@
         "classes": ["srd51:class/bard", "srd51:class/druid", "srd51:class/ranger"],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -307,8 +303,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "force",
-              "name": "Force"
+              "index": "force"
             },
             "damageAtSlotLevel": {
               "7": "3d10"
@@ -382,8 +377,7 @@
         "classes": ["srd51:class/bard", "srd51:class/cleric"],
         "dc": {
           "dcType": {
-            "index": "cha",
-            "name": "CHA"
+            "index": "cha"
           },
           "dcSuccess": "none"
         }
@@ -408,8 +402,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "cha",
-            "name": "CHA"
+            "index": "cha"
           },
           "dcSuccess": "none"
         }
@@ -454,8 +447,7 @@
         "classes": ["srd51:class/bard", "srd51:class/cleric", "srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none",
           "desc": "On fail, become cursed for the duration of the spell."
@@ -476,8 +468,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "bludgeoning",
-              "name": "Bludgeoning"
+              "index": "bludgeoning"
             },
             "damageAtSlotLevel": {
               "4": "3d6"
@@ -486,8 +477,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "none",
           "desc": "A creature restrained by the tentacles can use its action to make a Strength or Dexterity check (its choice) against your spell save DC. On a success, it frees itself."
@@ -512,8 +502,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "slashing",
-              "name": "Slashing"
+              "index": "slashing"
             },
             "damageAtSlotLevel": {
               "6": "6d10"
@@ -522,8 +511,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -565,8 +553,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "necrotic",
-              "name": "Necrotic"
+              "index": "necrotic"
             },
             "damageAtSlotLevel": {
               "4": "8d8",
@@ -580,8 +567,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half"
         }
@@ -605,8 +591,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "none"
         }
@@ -652,8 +637,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "radiant",
-              "name": "Radiant"
+              "index": "radiant"
             },
             "damageAtSlotLevel": {
               "2": "2d6",
@@ -683,8 +667,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "1": "3d6",
@@ -701,8 +684,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -726,8 +708,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "lightning",
-              "name": "Lightning"
+              "index": "lightning"
             },
             "damageAtSlotLevel": {
               "3": "3d10",
@@ -759,8 +740,7 @@
         "classes": ["srd51:class/bard", "srd51:class/cleric"],
         "dc": {
           "dcType": {
-            "index": "cha",
-            "name": "CHA"
+            "index": "cha"
           },
           "dcSuccess": "none"
         },
@@ -784,8 +764,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "lightning",
-              "name": "Lightning"
+              "index": "lightning"
             },
             "damageAtSlotLevel": {
               "6": "10d8"
@@ -794,8 +773,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         }
@@ -820,8 +798,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -842,8 +819,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "necrotic",
-              "name": "Necrotic"
+              "index": "necrotic"
             },
             "damageAtCharacterLevel": {
               "1": "1d8",
@@ -869,8 +845,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "necrotic",
-              "name": "Necrotic"
+              "index": "necrotic"
             },
             "damageAtSlotLevel": {
               "6": "8d6",
@@ -882,8 +857,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half"
         },
@@ -938,8 +912,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "poison",
-              "name": "Poison"
+              "index": "poison"
             },
             "damageAtSlotLevel": {
               "5": "5d8",
@@ -952,8 +925,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half",
           "desc": "Creatures are affected even if they hold their breath or don't need to breathe."
@@ -994,8 +966,7 @@
         "classes": ["srd51:class/cleric", "srd51:class/paladin"],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -1058,8 +1029,7 @@
         "classes": ["srd51:class/bard"],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -1079,8 +1049,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "cold",
-              "name": "Cold"
+              "index": "cold"
             },
             "damageAtSlotLevel": {
               "5": "8d8",
@@ -1093,8 +1062,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half",
           "desc": "A creature killed by this spell becomes a frozen statue until it thaws."
@@ -1123,8 +1091,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         },
@@ -1229,8 +1196,7 @@
         "classes": ["srd51:class/warlock", "srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "int",
-            "name": "INT"
+            "index": "int"
           },
           "dcSuccess": "other",
           "desc": "On a failure, you take 6d6 psychic damage and are insane until you finish a long rest."
@@ -1251,8 +1217,7 @@
         "attackType": "melee",
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "other",
           "desc": "After succeeding on three of these saving throws, the creature recovers from the disease, and the spell ends."
@@ -1299,8 +1264,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "bludgeoning",
-              "name": "Bludgeoning"
+              "index": "bludgeoning"
             },
             "damageAtSlotLevel": {
               "4": "2d8"
@@ -1309,8 +1273,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "str",
-            "name": "STR"
+            "index": "str"
           },
           "dcSuccess": "half"
         },
@@ -1534,8 +1497,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "7": "12d6",
@@ -1546,8 +1508,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -1666,8 +1627,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "force",
-              "name": "Force"
+              "index": "force"
             },
             "damageAtSlotLevel": {
               "4": "4d6"
@@ -1703,8 +1663,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "force",
-              "name": "Force"
+              "index": "force"
             },
             "damageAtSlotLevel": {
               "6": "10d6 + 40"
@@ -1713,8 +1672,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "none"
         },
@@ -1737,8 +1695,7 @@
         "classes": ["srd51:class/cleric", "srd51:class/paladin"],
         "dc": {
           "dcType": {
-            "index": "cha",
-            "name": "CHA"
+            "index": "cha"
           },
           "dcSuccess": "other",
           "desc": "The creature must succeed on a charisma saving throw or be sent back to its home plane (if it isn't there already)"
@@ -1793,8 +1750,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "radiant",
-              "name": "Radiant"
+              "index": "radiant"
             },
             "damageAtSlotLevel": {
               "1": "1d4"
@@ -1816,8 +1772,7 @@
         "classes": ["srd51:class/cleric"],
         "dc": {
           "dcType": {
-            "index": "cha",
-            "name": "CHA"
+            "index": "cha"
           },
           "dcSuccess": "none",
           "desc": "On a failed save, a creature suffers an effect based on its current hit points."
@@ -1837,8 +1792,7 @@
         "classes": ["srd51:class/druid", "srd51:class/sorcerer"],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -1862,8 +1816,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none",
           "desc": "On failure, the creature is charmed by you for the duration."
@@ -1883,8 +1836,7 @@
         "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "other",
           "desc": "Each time the target takes damage, it makes a new wisdom saving throw against the spell. If the saving throw succeeds, the spell ends."
@@ -1905,8 +1857,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "psychic",
-              "name": "Psychic"
+              "index": "psychic"
             },
             "damageAtSlotLevel": {
               "5": "3d6"
@@ -1915,8 +1866,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none",
           "desc": "On a failed save, echoes of the phantasmal monstrosity spawn a nightmare that lasts the duration of the target's sleep and prevents the target from gaining any benefit from that rest."
@@ -1968,8 +1918,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "force",
-              "name": "Force"
+              "index": "force"
             },
             "damageAtCharacterLevel": {
               "1": "1d10",
@@ -2012,8 +1961,7 @@
         "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "none"
         }
@@ -2032,8 +1980,7 @@
         "classes": ["srd51:class/druid"],
         "dc": {
           "dcType": {
-            "index": "str",
-            "name": "STR"
+            "index": "str"
           },
           "dcSuccess": "none"
         },
@@ -2056,8 +2003,7 @@
         "classes": ["srd51:class/bard", "srd51:class/warlock"],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -2113,8 +2059,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none",
           "desc": "On failure, the target can be affected by one of the following effects of your choice for the duration. [Asleep. The target falls unconscious. It wakes up if it takes any damage or if another creature uses its action to shake the sleeper awake.] [Panicked. The target is frightened of you. On each of its turns, the frightened creature must take the Dash action and move away from you by the safest and shortest available route, unless there is nowhere to move. If the target moves to a place at least 60 feet away from you where it can no longer see you, this effect ends.] [Sickened. The target has disadvantage on attack rolls and ability checks. At the end of each of its turns, it can make another wisdom saving throw. If it succeeds, the effect ends.]"
@@ -2147,8 +2092,7 @@
         "classes": ["srd51:class/druid"],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "none"
         },
@@ -2173,8 +2117,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "piercing",
-              "name": "Piercing"
+              "index": "piercing"
             },
             "damageAtSlotLevel": {
               "4": "4d8"
@@ -2225,8 +2168,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none",
           "desc": "On fail, A creature drop whatever it is holding and become frightened for the duration."
@@ -2269,8 +2211,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "psychic",
-              "name": "Psychic"
+              "index": "psychic"
             },
             "damageAtSlotLevel": {
               "8": "4d6"
@@ -2279,8 +2220,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "int",
-            "name": "INT"
+            "index": "int"
           },
           "dcSuccess": "other",
           "desc": "The target always takes the damage. On a failed save, the creature's Intelligence and Charisma scores become 1."
@@ -2353,8 +2293,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "necrotic",
-              "name": "Necrotic"
+              "index": "necrotic"
             },
             "damageAtSlotLevel": {
               "7": "7d8 + 30"
@@ -2363,8 +2302,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half"
         }
@@ -2385,8 +2323,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtCharacterLevel": {
               "1": "1d10",
@@ -2412,8 +2349,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "4": "2d8"
@@ -2440,8 +2376,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "7": "7d10"
@@ -2450,8 +2385,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -2475,8 +2409,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "3": "8d6",
@@ -2491,8 +2424,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -2516,8 +2448,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "2": "3d6",
@@ -2543,8 +2474,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "5": "4d6",
@@ -2556,8 +2486,7 @@
           },
           {
             "damageType": {
-              "index": "radiant",
-              "name": "Radiant"
+              "index": "radiant"
             },
             "damageAtSlotLevel": {
               "5": "4d6",
@@ -2570,8 +2499,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -2595,8 +2523,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "2": "2d6",
@@ -2625,8 +2552,7 @@
         "classes": ["srd51:class/warlock", "srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "none",
           "desc": "On a failed save, the target is restrained as its flesh begins to harden."
@@ -2765,8 +2691,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "cold",
-              "name": "Cold"
+              "index": "cold"
             },
             "damageAtSlotLevel": {
               "6": "10d6"
@@ -2775,8 +2700,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half"
         },
@@ -2831,8 +2755,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -2933,8 +2856,7 @@
         "classes": ["srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "none"
         },
@@ -2984,8 +2906,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "radiant",
-              "name": "Radiant"
+              "index": "radiant"
             },
             "damageAtSlotLevel": {
               "4": "20"
@@ -2994,8 +2915,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -3050,8 +2970,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "radiant",
-              "name": "Radiant"
+              "index": "radiant"
             },
             "damageAtSlotLevel": {
               "1": "4d6",
@@ -3081,8 +3000,7 @@
         "classes": ["srd51:class/druid", "srd51:class/sorcerer", "srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "str",
-            "name": "STR"
+            "index": "str"
           },
           "dcSuccess": "none"
         },
@@ -3105,8 +3023,7 @@
         "classes": ["srd51:class/cleric"],
         "dc": {
           "dcType": {
-            "index": "cha",
-            "name": "CHA"
+            "index": "cha"
           },
           "dcSuccess": "none"
         },
@@ -3152,8 +3069,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "necrotic",
-              "name": "Necrotic"
+              "index": "necrotic"
             },
             "damageAtSlotLevel": {
               "6": "14d6"
@@ -3162,8 +3078,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half"
         }
@@ -3239,8 +3154,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "2": "2d8",
@@ -3256,8 +3170,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "other",
           "desc": "Can choose to not drop the object"
@@ -3278,8 +3191,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "1": "2d10",
@@ -3296,8 +3208,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         }
@@ -3342,8 +3253,7 @@
         "classes": ["srd51:class/bard", "srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -3367,8 +3277,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -3394,8 +3303,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -3449,8 +3357,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none",
           "desc": "On a failed save, the creature becomes charmed for the duration."
@@ -3471,8 +3378,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "bludgeoning",
-              "name": "Bludgeoning"
+              "index": "bludgeoning"
             },
             "damageAtSlotLevel": {
               "4": "2d8",
@@ -3485,8 +3391,7 @@
           },
           {
             "damageType": {
-              "index": "cold",
-              "name": "Cold"
+              "index": "cold"
             },
             "damageAtSlotLevel": {
               "4": "4d6",
@@ -3500,8 +3405,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -3550,8 +3454,7 @@
         "classes": ["srd51:class/warlock", "srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none",
           "desc": "If the creature succeeds, it is immune to this spell if you cast it again"
@@ -3572,8 +3475,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "8": "10d8"
@@ -3582,8 +3484,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -3608,8 +3509,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "necrotic",
-              "name": "Necrotic"
+              "index": "necrotic"
             },
             "damageAtSlotLevel": {
               "1": "3d10",
@@ -3640,8 +3540,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "piercing",
-              "name": "Piercing"
+              "index": "piercing"
             },
             "damageAtSlotLevel": {
               "5": "4d10",
@@ -3654,8 +3553,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half"
         },
@@ -3803,8 +3701,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "none"
         }
@@ -3824,8 +3721,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "lightning",
-              "name": "Lightning"
+              "index": "lightning"
             },
             "damageAtSlotLevel": {
               "3": "8d6",
@@ -3840,8 +3736,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -3971,8 +3866,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "cha",
-            "name": "CHA"
+            "index": "cha"
           },
           "dcSuccess": "other",
           "desc": "If the creature tries to use teleportation or interplanar travel to do so, it must first succeed on a Charisma saving throw."
@@ -3996,8 +3890,7 @@
         "classes": ["srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "cha",
-            "name": "CHA"
+            "index": "cha"
           },
           "dcSuccess": "other",
           "desc": "On a failure, your soul moves into the target's body, and the target's soul becomes trapped in the container. On a success, the target resists your efforts to possess it, and you can't attempt to possess it again for 24 hours."
@@ -4018,8 +3911,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "force",
-              "name": "Force"
+              "index": "force"
             },
             "damageAtSlotLevel": {
               "1": "3d4 + 3",
@@ -4177,8 +4069,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -4256,8 +4147,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "9": "20d6"
@@ -4265,8 +4155,7 @@
           },
           {
             "damageType": {
-              "index": "bludgeoning",
-              "name": "Bludgeoning"
+              "index": "bludgeoning"
             },
             "damageAtSlotLevel": {
               "9": "20d6"
@@ -4275,8 +4164,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -4386,8 +4274,7 @@
         "classes": ["srd51:class/bard", "srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -4407,8 +4294,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "radiant",
-              "name": "Radiant"
+              "index": "radiant"
             },
             "damageAtSlotLevel": {
               "2": "2d10",
@@ -4424,8 +4310,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half"
         },
@@ -4505,8 +4390,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "psychic",
-              "name": "Psychic"
+              "index": "psychic"
             },
             "damageAtSlotLevel": {
               "4": "4d10"
@@ -4515,8 +4399,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -4566,8 +4449,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "cha",
-            "name": "CHA"
+            "index": "cha"
           },
           "dcSuccess": "none"
         }
@@ -4593,8 +4475,7 @@
         "attackType": "melee",
         "dc": {
           "dcType": {
-            "index": "cha",
-            "name": "CHA"
+            "index": "cha"
           },
           "dcSuccess": "none",
           "desc": "If the creature fails this save, it is transported to a random location on the plane of existence you specify. A creature so transported must find its own way back to your current plane of existence."
@@ -4633,8 +4514,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "poison",
-              "name": "Poison"
+              "index": "poison"
             },
             "damageAtCharacterLevel": {
               "1": "1d12",
@@ -4646,8 +4526,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "none"
         }
@@ -4671,8 +4550,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -4775,8 +4653,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "other",
           "desc": "For each target, roll a d8 to determine which color ray affects it."
@@ -4836,8 +4713,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtCharacterLevel": {
               "1": "1d8",
@@ -4974,8 +4850,7 @@
         "attackType": "ranged",
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "none"
         }
@@ -4996,8 +4871,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "cold",
-              "name": "Cold"
+              "index": "cold"
             },
             "damageAtCharacterLevel": {
               "1": "1d8",
@@ -5069,8 +4943,7 @@
         "classes": ["srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "none"
         }
@@ -5115,8 +4988,7 @@
         "classes": ["srd51:class/druid", "srd51:class/sorcerer", "srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "other",
           "desc": "A creature can make a dexterity saving throw to grab onto a fixed object it can reach, thus avoiding the fall."
@@ -5167,8 +5039,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "radiant",
-              "name": "Radiant"
+              "index": "radiant"
             },
             "damageAtCharacterLevel": {
               "1": "1d8",
@@ -5180,8 +5051,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "none"
         }
@@ -5214,8 +5084,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "2": "2d6"
@@ -5243,8 +5112,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -5347,8 +5215,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "thunder",
-              "name": "Thunder"
+              "index": "thunder"
             },
             "damageAtSlotLevel": {
               "2": "3d8",
@@ -5364,8 +5231,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half"
         },
@@ -5429,8 +5295,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "lightning",
-              "name": "Lightning"
+              "index": "lightning"
             },
             "damageAtCharacterLevel": {
               "1": "1d8",
@@ -5543,8 +5408,7 @@
         "classes": ["srd51:class/sorcerer", "srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none",
           "desc": "On failed save, the creature is slowed."
@@ -5669,8 +5533,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "force",
-              "name": "Force"
+              "index": "force"
             },
             "damageAtSlotLevel": {
               "2": "1d8 + MOD",
@@ -5699,8 +5562,7 @@
         "classes": ["srd51:class/bard", "srd51:class/sorcerer", "srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "none",
           "desc": "On a failed save, the creature spends its action that turn retching and reeling."
@@ -5756,8 +5618,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "thunder",
-              "name": "Thunder"
+              "index": "thunder"
             },
             "damageAtSlotLevel": {
               "9": "2d6"
@@ -5766,8 +5627,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "none",
           "desc": "On a failed save, a creature takes 2d6 thunder damage and becomes deafened for 5 minutes."
@@ -5796,8 +5656,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -5817,8 +5676,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "radiant",
-              "name": "Radiant"
+              "index": "radiant"
             },
             "damageAtSlotLevel": {
               "6": "6d8"
@@ -5827,8 +5685,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half",
           "desc": "On a failed save, the creature is blinded until your next turn. On a successful save, it isn't blinded by this spell."
@@ -5853,8 +5710,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "radiant",
-              "name": "Radiant"
+              "index": "radiant"
             },
             "damageAtSlotLevel": {
               "8": "12d6"
@@ -5863,8 +5719,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half",
           "desc": "On failure, the creature is also blinded for 1 minute."
@@ -5988,8 +5843,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "thunder",
-              "name": "Thunder"
+              "index": "thunder"
             },
             "damageAtSlotLevel": {
               "1": "2d8",
@@ -6006,8 +5860,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "con",
-            "name": "CON"
+            "index": "con"
           },
           "dcSuccess": "half"
         },
@@ -6183,8 +6036,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "necrotic",
-              "name": "Necrotic"
+              "index": "necrotic"
             },
             "damageAtSlotLevel": {
               "3": "3d6",
@@ -6213,8 +6065,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "psychic",
-              "name": "Psychic"
+              "index": "psychic"
             },
             "damageAtCharacterLevel": {
               "1": "1d4",
@@ -6226,8 +6077,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         }
@@ -6247,8 +6097,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "fire",
-              "name": "Fire"
+              "index": "fire"
             },
             "damageAtSlotLevel": {
               "4": "5d8"
@@ -6257,8 +6106,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -6295,8 +6143,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "cold",
-              "name": "Cold"
+              "index": "cold"
             },
             "damageAtSlotLevel": {
               "6": "10d6",
@@ -6308,8 +6155,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -6346,8 +6192,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "piercing",
-              "name": "Piercing"
+              "index": "piercing"
             },
             "damageAtSlotLevel": {
               "6": "7d8",
@@ -6359,8 +6204,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "dex",
-            "name": "DEX"
+            "index": "dex"
           },
           "dcSuccess": "half"
         },
@@ -6449,8 +6293,7 @@
         "classes": ["srd51:class/wizard"],
         "dc": {
           "dcType": {
-            "index": "wis",
-            "name": "WIS"
+            "index": "wis"
           },
           "dcSuccess": "none"
         },
@@ -6487,8 +6330,7 @@
         "damage": [
           {
             "damageType": {
-              "index": "bludgeoning",
-              "name": "Bludgeoning"
+              "index": "bludgeoning"
             },
             "damageAtSlotLevel": {
               "3": "3d8"
@@ -6497,8 +6339,7 @@
         ],
         "dc": {
           "dcType": {
-            "index": "str",
-            "name": "STR"
+            "index": "str"
           },
           "dcSuccess": "half"
         },

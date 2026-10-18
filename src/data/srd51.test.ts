@@ -1,21 +1,15 @@
-import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { createCharacter } from "../engine/character";
-import { deriveSheet, indexPacks } from "../engine/derive";
-import { type Pack, findBrokenReferences, parsePack } from "./schema";
-
-// Checks the committed output of `npm run data:srd51`; no network needed.
-const FILES = ["species", "subspecies", "traits", "backgrounds", "spells"] as const;
-
-function load(file: string): Pack {
-  return parsePack(JSON.parse(readFileSync(`data/srd51/${file}.json`, "utf8")));
-}
-function strings(file: string): Record<string, string> {
-  return JSON.parse(readFileSync(`locales/en/srd51/${file}.json`, "utf8"));
-}
-
-const packs = FILES.map(load);
-const index = indexPacks(...packs);
+import { deriveSheet } from "../engine/derive";
+import {
+  SRD51_FILES,
+  srd51Index as index,
+  loadSrd51Pack,
+  loadSrd51Strings,
+  srd51Packs as packs,
+} from "../test/srd51";
+import { classData, subclassData } from "./progression";
+import { findBrokenReferences } from "./schema";
 
 describe("SRD 5.1 pack", () => {
   it("passes schema validation and has no broken references", () => {
@@ -23,9 +17,9 @@ describe("SRD 5.1 pack", () => {
   });
 
   it("has a display name for every entry", () => {
-    for (const file of FILES) {
-      const texts = strings(file);
-      for (const entry of load(file).entries) {
+    for (const file of SRD51_FILES) {
+      const texts = loadSrd51Strings(file);
+      for (const entry of loadSrd51Pack(file).entries) {
         const slug = entry.id.split("/")[1] ?? "";
         expect(texts[`${slug}.name`], entry.id).toBeTruthy();
       }
@@ -33,7 +27,7 @@ describe("SRD 5.1 pack", () => {
   });
 
   it("keeps display text out of the data files", () => {
-    const spells = load("spells").entries;
+    const spells = loadSrd51Pack("spells").entries;
     expect(spells).toHaveLength(319);
     expect(JSON.stringify(spells)).not.toContain("explosion of flame");
   });
@@ -72,5 +66,61 @@ describe("SRD 5.1 pack", () => {
     expect(cantrip?.effects).toContainEqual(
       expect.objectContaining({ type: "choice", grants: "spell", choose: 1 }),
     );
+  });
+});
+
+describe("SRD 5.1 classes", () => {
+  const classes = loadSrd51Pack("classes").entries;
+  const subclasses = loadSrd51Pack("subclasses").entries;
+
+  it("has all 12 classes with 20 level rows and 12 subclasses", () => {
+    expect(classes).toHaveLength(12);
+    expect(subclasses).toHaveLength(12);
+    for (const entry of classes) expect(classData(entry).levels, entry.id).toHaveLength(20);
+  });
+
+  it("resolves every referenced feature, spell and class", () => {
+    const missing: string[] = [];
+    const need = (from: string, ref: string) => {
+      if (!index.has(ref)) missing.push(`${from} -> ${ref}`);
+    };
+    for (const entry of classes)
+      for (const row of classData(entry).levels) for (const f of row.features) need(entry.id, f);
+    for (const entry of subclasses) {
+      const data = subclassData(entry);
+      for (const row of data.levels) for (const f of row.features) need(entry.id, f);
+      for (const sp of data.spells) need(entry.id, sp.spell);
+    }
+    for (const spell of loadSrd51Pack("spells").entries)
+      for (const c of spell.data.classes as string[]) need(spell.id, c);
+    for (const feature of loadSrd51Pack("features").entries)
+      need(feature.id, feature.data.class as string);
+    expect(missing).toEqual([]);
+  });
+
+  it("describes Wizard spellcasting and the Wizard's saving throws", () => {
+    const wizard = index.get("srd51:class/wizard");
+    if (!wizard) throw new Error("wizard missing");
+    const data = classData(wizard);
+    expect(data.hitDie).toBe(6);
+    expect(data.spellcasting).toEqual({ ability: "int", startsAtLevel: 1 });
+    expect(data.levels[4]).toMatchObject({
+      level: 5,
+      cantripsKnown: 4,
+      spellSlots: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+    });
+    expect(wizard.effects).toContainEqual({ type: "proficiency", category: "save", target: "int" });
+  });
+
+  it("models the Fighter's multiclass requirement as a choice of STR or DEX 13", () => {
+    const fighter = index.get("srd51:class/fighter");
+    if (!fighter) throw new Error("fighter missing");
+    expect(classData(fighter).multiclassing.prerequisiteOptions).toEqual({
+      choose: 1,
+      from: [
+        { ability: "str", minimum: 13 },
+        { ability: "dex", minimum: 13 },
+      ],
+    });
   });
 });

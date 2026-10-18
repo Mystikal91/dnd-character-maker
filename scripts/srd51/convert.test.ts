@@ -41,6 +41,10 @@ const raw: RawSource = {
   ],
   backgrounds: [],
   spells: [],
+  classes: [],
+  subclasses: [],
+  levels: [],
+  features: [],
 };
 
 describe("cleanData", () => {

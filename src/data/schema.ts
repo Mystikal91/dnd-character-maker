@@ -12,7 +12,7 @@ export type Ability = v.InferOutput<typeof AbilitySchema>;
 export const EntryIdSchema = v.pipe(
   v.string(),
   v.regex(
-    /^[a-z0-9]+:[a-z]+\/[a-z0-9]+(-[a-z0-9]+)*$/,
+    /^[a-z0-9]+:[a-z]+\/[a-z0-9]+(-+[a-z0-9]+)*$/,
     "Expected an id like `pack:kind/entry-name`",
   ),
 );
@@ -76,6 +76,8 @@ export const ENTRY_KINDS = [
   "species",
   "subspecies",
   "class",
+  "subclass",
+  "feature",
   "background",
   "trait",
   "spell",

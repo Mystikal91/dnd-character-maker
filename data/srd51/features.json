@@ -1,0 +1,5424 @@
+{
+  "manifest": {
+    "id": "srd51",
+    "ruleset": "srd51",
+    "version": "5e-database@5.12.0",
+    "license": "CC-BY-4.0",
+    "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode."
+  },
+  "entries": [
+    {
+      "id": "srd51:feature/rage",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/barbarian-unarmored-defense",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/reckless-attack",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/danger-sense",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/primal-path",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/frenzy",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 3,
+        "subclass": "srd51:subclass/berserker"
+      }
+    },
+    {
+      "id": "srd51:feature/barbarian-ability-score-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/barbarian-extra-attack",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 5
+      }
+    },
+    {
+      "id": "srd51:feature/fast-movement",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 5
+      }
+    },
+    {
+      "id": "srd51:feature/mindless-rage",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 6,
+        "subclass": "srd51:subclass/berserker"
+      }
+    },
+    {
+      "id": "srd51:feature/primal-path-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/feral-instinct",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 7
+      }
+    },
+    {
+      "id": "srd51:feature/barbarian-ability-score-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/brutal-critical-1-die",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 9
+      }
+    },
+    {
+      "id": "srd51:feature/intimidating-presence",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 10,
+        "subclass": "srd51:subclass/berserker"
+      }
+    },
+    {
+      "id": "srd51:feature/primal-path-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 10
+      }
+    },
+    {
+      "id": "srd51:feature/relentless-rage",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 11
+      }
+    },
+    {
+      "id": "srd51:feature/barbarian-ability-score-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 12
+      }
+    },
+    {
+      "id": "srd51:feature/brutal-critical-2-dice",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 13
+      }
+    },
+    {
+      "id": "srd51:feature/retaliation",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 14,
+        "subclass": "srd51:subclass/berserker"
+      }
+    },
+    {
+      "id": "srd51:feature/primal-path-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/persistent-rage",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 15
+      }
+    },
+    {
+      "id": "srd51:feature/barbarian-ability-score-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 16
+      }
+    },
+    {
+      "id": "srd51:feature/brutal-critical-3-dice",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 17
+      }
+    },
+    {
+      "id": "srd51:feature/indomitable-might",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 18
+      }
+    },
+    {
+      "id": "srd51:feature/barbarian-ability-score-improvement-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 19
+      }
+    },
+    {
+      "id": "srd51:feature/primal-champion",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/barbarian",
+        "level": 20
+      }
+    },
+    {
+      "id": "srd51:feature/spellcasting-bard",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/bardic-inspiration-d6",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/jack-of-all-trades",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/song-of-rest-d6",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/bard-college",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/bonus-proficiencies",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 3,
+        "subclass": "srd51:subclass/lore"
+      }
+    },
+    {
+      "id": "srd51:feature/cutting-words",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 3,
+        "subclass": "srd51:subclass/lore"
+      }
+    },
+    {
+      "id": "srd51:feature/bard-expertise-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 3,
+        "featureSpecific": {
+          "expertiseOptions": {
+            "choose": 2,
+            "type": "proficiency",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-acrobatics"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-animal-handling"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-arcana"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-athletics"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-deception"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-history"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-insight"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-intimidation"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-investigation"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-medicine"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-nature"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-perception"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-performance"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-persuasion"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-religion"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-sleight-of-hand"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-stealth"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-survival"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/bard-ability-score-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/bardic-inspiration-d8",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 5
+      }
+    },
+    {
+      "id": "srd51:feature/font-of-inspiration",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 5
+      }
+    },
+    {
+      "id": "srd51:feature/countercharm",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/bard-college-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/additional-magical-secrets",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 6,
+        "subclass": "srd51:subclass/lore"
+      }
+    },
+    {
+      "id": "srd51:feature/bard-ability-score-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/song-of-rest-d8",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 9
+      }
+    },
+    {
+      "id": "srd51:feature/bardic-inspiration-d10",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 10
+      }
+    },
+    {
+      "id": "srd51:feature/bard-expertise-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 10,
+        "featureSpecific": {
+          "expertiseOptions": {
+            "choose": 2,
+            "type": "proficiency",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-acrobatics"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-animal-handling"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-arcana"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-athletics"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-deception"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-history"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-insight"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-intimidation"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-investigation"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-medicine"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-nature"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-perception"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-performance"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-persuasion"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-religion"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-sleight-of-hand"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-stealth"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-survival"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/magical-secrets-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 10
+      }
+    },
+    {
+      "id": "srd51:feature/bard-ability-score-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 12
+      }
+    },
+    {
+      "id": "srd51:feature/song-of-rest-d10",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 13
+      }
+    },
+    {
+      "id": "srd51:feature/magical-secrets-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/bard-college-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/peerless-skill",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 14,
+        "subclass": "srd51:subclass/lore"
+      }
+    },
+    {
+      "id": "srd51:feature/bardic-inspiration-d12",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 15
+      }
+    },
+    {
+      "id": "srd51:feature/bard-ability-score-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 16
+      }
+    },
+    {
+      "id": "srd51:feature/song-of-rest-d12",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 17
+      }
+    },
+    {
+      "id": "srd51:feature/magical-secrets-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 18
+      }
+    },
+    {
+      "id": "srd51:feature/bard-ability-score-improvement-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 19
+      }
+    },
+    {
+      "id": "srd51:feature/superior-inspiration",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/bard",
+        "level": 20
+      }
+    },
+    {
+      "id": "srd51:feature/spellcasting-cleric",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/divine-domain",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/domain-spells-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/bonus-proficiency",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 1,
+        "subclass": "srd51:subclass/life"
+      }
+    },
+    {
+      "id": "srd51:feature/disciple-of-life",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 1,
+        "subclass": "srd51:subclass/life"
+      }
+    },
+    {
+      "id": "srd51:feature/channel-divinity-1-rest",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/channel-divinity-turn-undead",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/divine-domain-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/channel-divinity-preserve-life",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 2,
+        "subclass": "srd51:subclass/life"
+      }
+    },
+    {
+      "id": "srd51:feature/domain-spells-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/cleric-ability-score-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/domain-spells-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 5
+      }
+    },
+    {
+      "id": "srd51:feature/destroy-undead-cr-1-2-or-below",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 5
+      }
+    },
+    {
+      "id": "srd51:feature/channel-divinity-2-rest",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/divine-domain-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/blessed-healer",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 6,
+        "subclass": "srd51:subclass/life"
+      }
+    },
+    {
+      "id": "srd51:feature/domain-spells-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 7
+      }
+    },
+    {
+      "id": "srd51:feature/cleric-ability-score-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/destroy-undead-cr-1-or-below",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/divine-domain-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/divine-strike",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 8,
+        "subclass": "srd51:subclass/life"
+      }
+    },
+    {
+      "id": "srd51:feature/domain-spells-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 9
+      }
+    },
+    {
+      "id": "srd51:feature/divine-intervention",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 10
+      }
+    },
+    {
+      "id": "srd51:feature/destroy-undead-cr-2-or-below",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 11
+      }
+    },
+    {
+      "id": "srd51:feature/cleric-ability-score-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 12
+      }
+    },
+    {
+      "id": "srd51:feature/destroy-undead-cr-3-or-below",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/cleric-ability-score-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 16
+      }
+    },
+    {
+      "id": "srd51:feature/destroy-undead-cr-4-or-below",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 17
+      }
+    },
+    {
+      "id": "srd51:feature/divine-domain-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 17
+      }
+    },
+    {
+      "id": "srd51:feature/supreme-healing",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 17
+      }
+    },
+    {
+      "id": "srd51:feature/channel-divinity-3-rest",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 18
+      }
+    },
+    {
+      "id": "srd51:feature/cleric-ability-score-improvement-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 19
+      }
+    },
+    {
+      "id": "srd51:feature/divine-intervention-improvement",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/cleric",
+        "level": 20
+      }
+    },
+    {
+      "id": "srd51:feature/spellcasting-druid",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/druidic",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/wild-shape-cr-1-4-or-below-no-flying-or-swim-speed",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/druid-circle",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/circle-of-the-land",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 2,
+        "subclass": "srd51:subclass/land",
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "circle-of-the-land-arctic"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "circle-of-the-land-coast"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "circle-of-the-land-desert"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "circle-of-the-land-forest"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "circle-of-the-land-grassland"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "circle-of-the-land-mountain"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "circle-of-the-land-swamp"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/circle-of-the-land-arctic",
+      "kind": "feature",
+      "parent": "srd51:feature/circle-of-the-land",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 2,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/circle-of-the-land-coast",
+      "kind": "feature",
+      "parent": "srd51:feature/circle-of-the-land",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 2,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/circle-of-the-land-desert",
+      "kind": "feature",
+      "parent": "srd51:feature/circle-of-the-land",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 2,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/circle-of-the-land-forest",
+      "kind": "feature",
+      "parent": "srd51:feature/circle-of-the-land",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 2,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/circle-of-the-land-grassland",
+      "kind": "feature",
+      "parent": "srd51:feature/circle-of-the-land",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 2,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/circle-of-the-land-mountain",
+      "kind": "feature",
+      "parent": "srd51:feature/circle-of-the-land",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 2,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/circle-of-the-land-swamp",
+      "kind": "feature",
+      "parent": "srd51:feature/circle-of-the-land",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 2,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/bonus-cantrip",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 2,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/natural-recovery",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 2,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/circle-spells-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 3,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/wild-shape-cr-1-2-or-below-no-flying-speed",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/druid-ability-score-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/circle-spells-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 5,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/druid-circle-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/druid-lands-stride",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 6,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/circle-spells-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 7,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/wild-shape-cr-1-or-below",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/druid-ability-score-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/circle-spells-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 9,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/druid-circle-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 10
+      }
+    },
+    {
+      "id": "srd51:feature/natures-ward",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 10,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/druid-ability-score-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 12
+      }
+    },
+    {
+      "id": "srd51:feature/druid-circle-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/natures-sanctuary",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 14,
+        "subclass": "srd51:subclass/land"
+      }
+    },
+    {
+      "id": "srd51:feature/druid-ability-score-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 16
+      }
+    },
+    {
+      "id": "srd51:feature/druid-timeless-body",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 18
+      }
+    },
+    {
+      "id": "srd51:feature/beast-spells",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 18
+      }
+    },
+    {
+      "id": "srd51:feature/druid-ability-score-improvement-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 19
+      }
+    },
+    {
+      "id": "srd51:feature/archdruid",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/druid",
+        "level": 20
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-fighting-style",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 1,
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighter-fighting-style-archery"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighter-fighting-style-defense"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighter-fighting-style-dueling"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighter-fighting-style-great-weapon-fighting"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighter-fighting-style-protection"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighter-fighting-style-two-weapon-fighting"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-fighting-style-archery",
+      "kind": "feature",
+      "parent": "srd51:feature/fighter-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-fighting-style-defense",
+      "kind": "feature",
+      "parent": "srd51:feature/fighter-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-fighting-style-dueling",
+      "kind": "feature",
+      "parent": "srd51:feature/fighter-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-fighting-style-great-weapon-fighting",
+      "kind": "feature",
+      "parent": "srd51:feature/fighter-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-fighting-style-protection",
+      "kind": "feature",
+      "parent": "srd51:feature/fighter-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-fighting-style-two-weapon-fighting",
+      "kind": "feature",
+      "parent": "srd51:feature/fighter-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/second-wind",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/action-surge-1-use",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/martial-archetype",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/improved-critical",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 3,
+        "subclass": "srd51:subclass/champion"
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-ability-score-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/extra-attack-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 5
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-ability-score-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/remarkable-athlete",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 7,
+        "subclass": "srd51:subclass/champion"
+      }
+    },
+    {
+      "id": "srd51:feature/martial-archetype-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 7
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-ability-score-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/indomitable-1-use",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 9
+      }
+    },
+    {
+      "id": "srd51:feature/additional-fighting-style",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 10,
+        "subclass": "srd51:subclass/champion",
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighter-fighting-style-archery"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighter-fighting-style-defense"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighter-fighting-style-dueling"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighter-fighting-style-great-weapon-fighting"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighter-fighting-style-protection"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighter-fighting-style-two-weapon-fighting"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/martial-archetype-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 10
+      }
+    },
+    {
+      "id": "srd51:feature/extra-attack-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 11
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-ability-score-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 12
+      }
+    },
+    {
+      "id": "srd51:feature/indomitable-2-uses",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 13
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-ability-score-improvement-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/superior-critical",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 15,
+        "subclass": "srd51:subclass/champion"
+      }
+    },
+    {
+      "id": "srd51:feature/martial-archetype-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 15
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-ability-score-improvement-6",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 16
+      }
+    },
+    {
+      "id": "srd51:feature/action-surge-2-uses",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 17
+      }
+    },
+    {
+      "id": "srd51:feature/indomitable-3-uses",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 17
+      }
+    },
+    {
+      "id": "srd51:feature/martial-archetype-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 18
+      }
+    },
+    {
+      "id": "srd51:feature/survivor",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 18,
+        "subclass": "srd51:subclass/champion"
+      }
+    },
+    {
+      "id": "srd51:feature/fighter-ability-score-improvement-7",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 19
+      }
+    },
+    {
+      "id": "srd51:feature/extra-attack-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/fighter",
+        "level": 20
+      }
+    },
+    {
+      "id": "srd51:feature/monk-unarmored-defense",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/martial-arts",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/ki",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/flurry-of-blows",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/patient-defense",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/step-of-the-wind",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/unarmored-movement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/monastic-tradition",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/deflect-missiles",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/open-hand-technique",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 3,
+        "subclass": "srd51:subclass/open-hand"
+      }
+    },
+    {
+      "id": "srd51:feature/monk-ability-score-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/slow-fall",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/monk-extra-attack",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 5
+      }
+    },
+    {
+      "id": "srd51:feature/stunning-strike",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 5
+      }
+    },
+    {
+      "id": "srd51:feature/ki-empowered-strikes",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/monastic-tradition-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/wholeness-of-body",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 6,
+        "subclass": "srd51:subclass/open-hand"
+      }
+    },
+    {
+      "id": "srd51:feature/monk-evasion",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 7
+      }
+    },
+    {
+      "id": "srd51:feature/stillness-of-mind",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 7
+      }
+    },
+    {
+      "id": "srd51:feature/monk-ability-score-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/unarmored-movement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 9
+      }
+    },
+    {
+      "id": "srd51:feature/purity-of-body",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 10
+      }
+    },
+    {
+      "id": "srd51:feature/monastic-tradition-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 11
+      }
+    },
+    {
+      "id": "srd51:feature/tranquility",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 11,
+        "subclass": "srd51:subclass/open-hand"
+      }
+    },
+    {
+      "id": "srd51:feature/monk-ability-score-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 12
+      }
+    },
+    {
+      "id": "srd51:feature/tongue-of-the-sun-and-moon",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 13
+      }
+    },
+    {
+      "id": "srd51:feature/diamond-soul",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/monk-timeless-body",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 15
+      }
+    },
+    {
+      "id": "srd51:feature/monk-ability-score-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 16
+      }
+    },
+    {
+      "id": "srd51:feature/monastic-tradition-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 17
+      }
+    },
+    {
+      "id": "srd51:feature/quivering-palm",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 17,
+        "subclass": "srd51:subclass/open-hand"
+      }
+    },
+    {
+      "id": "srd51:feature/empty-body",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 18
+      }
+    },
+    {
+      "id": "srd51:feature/monk-ability-score-improvement-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 19
+      }
+    },
+    {
+      "id": "srd51:feature/perfect-self",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/monk",
+        "level": 20
+      }
+    },
+    {
+      "id": "srd51:feature/divine-sense",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/lay-on-hands",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/paladin-fighting-style",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 2,
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighting-style-defense"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighting-style-dueling"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighting-style-great-weapon-fighting"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "fighting-style-protection"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/fighting-style-defense",
+      "kind": "feature",
+      "parent": "srd51:feature/paladin-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/fighting-style-dueling",
+      "kind": "feature",
+      "parent": "srd51:feature/paladin-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/fighting-style-great-weapon-fighting",
+      "kind": "feature",
+      "parent": "srd51:feature/paladin-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/fighting-style-protection",
+      "kind": "feature",
+      "parent": "srd51:feature/paladin-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/spellcasting-paladin",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/divine-smite",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/divine-health",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/sacred-oath",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/oath-spells",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/channel-divinity",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/channel-divinity-sacred-weapon",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 3,
+        "subclass": "srd51:subclass/devotion"
+      }
+    },
+    {
+      "id": "srd51:feature/channel-divinity-turn-the-unholy",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 3,
+        "subclass": "srd51:subclass/devotion"
+      }
+    },
+    {
+      "id": "srd51:feature/paladin-ability-score-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/paladin-extra-attack",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 5
+      }
+    },
+    {
+      "id": "srd51:feature/aura-of-protection",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/sacred-oath-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 7
+      }
+    },
+    {
+      "id": "srd51:feature/aura-of-devotion",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 7,
+        "subclass": "srd51:subclass/devotion"
+      }
+    },
+    {
+      "id": "srd51:feature/paladin-ability-score-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/aura-of-courage",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 10
+      }
+    },
+    {
+      "id": "srd51:feature/improved-divine-smite",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 11
+      }
+    },
+    {
+      "id": "srd51:feature/paladin-ability-score-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 12
+      }
+    },
+    {
+      "id": "srd51:feature/cleansing-touch",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/sacred-oath-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 15
+      }
+    },
+    {
+      "id": "srd51:feature/purity-of-spirit",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 15,
+        "subclass": "srd51:subclass/devotion"
+      }
+    },
+    {
+      "id": "srd51:feature/paladin-ability-score-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 16
+      }
+    },
+    {
+      "id": "srd51:feature/aura-improvements",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 18
+      }
+    },
+    {
+      "id": "srd51:feature/paladin-ability-score-improvement-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 19
+      }
+    },
+    {
+      "id": "srd51:feature/sacred-oath-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 20
+      }
+    },
+    {
+      "id": "srd51:feature/holy-nimbus",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/paladin",
+        "level": 20,
+        "subclass": "srd51:subclass/devotion"
+      }
+    },
+    {
+      "id": "srd51:feature/favored-enemy-1-type",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 1,
+        "featureSpecific": {
+          "enemyTypeOptions": {
+            "desc": "one enemy type",
+            "choose": 1,
+            "type": "string",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                "aberrations",
+                "beasts",
+                "celestials",
+                "constructs",
+                "dragons",
+                "elementals",
+                "fey",
+                "fiends",
+                "giants",
+                "monstrosities",
+                "oozes",
+                "plants",
+                "undead",
+                "humanoids"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/natural-explorer-1-terrain-type",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 1,
+        "featureSpecific": {
+          "terrainTypeOptions": {
+            "desc": "one terrain type",
+            "choose": 1,
+            "type": "string",
+            "from": {
+              "optionSetType": "options_array",
+              "options": ["arctic", "coast", "desert", "forest", "grassland", "mountain", "swamp"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-fighting-style",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 2,
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "ranger-fighting-style-archery"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "ranger-fighting-style-defense"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "ranger-fighting-style-dueling"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "ranger-fighting-style-two-weapon-fighting"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-fighting-style-archery",
+      "kind": "feature",
+      "parent": "srd51:feature/ranger-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-fighting-style-defense",
+      "kind": "feature",
+      "parent": "srd51:feature/ranger-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-fighting-style-dueling",
+      "kind": "feature",
+      "parent": "srd51:feature/ranger-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-fighting-style-two-weapon-fighting",
+      "kind": "feature",
+      "parent": "srd51:feature/ranger-fighting-style",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/spellcasting-ranger",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-archetype",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/hunters-prey",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 3,
+        "subclass": "srd51:subclass/hunter",
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "hunters-prey-colossus-slayer"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "hunters-prey-giant-killer"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "hunters-prey-horde-breaker"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/hunters-prey-colossus-slayer",
+      "kind": "feature",
+      "parent": "srd51:feature/hunters-prey",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 3,
+        "subclass": "srd51:subclass/hunter"
+      }
+    },
+    {
+      "id": "srd51:feature/hunters-prey-giant-killer",
+      "kind": "feature",
+      "parent": "srd51:feature/hunters-prey",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 3,
+        "subclass": "srd51:subclass/hunter"
+      }
+    },
+    {
+      "id": "srd51:feature/hunters-prey-horde-breaker",
+      "kind": "feature",
+      "parent": "srd51:feature/hunters-prey",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 3,
+        "subclass": "srd51:subclass/hunter"
+      }
+    },
+    {
+      "id": "srd51:feature/primeval-awareness",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-ability-score-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-extra-attack",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 5
+      }
+    },
+    {
+      "id": "srd51:feature/favored-enemy-2-types",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 6,
+        "featureSpecific": {
+          "enemyTypeOptions": {
+            "desc": "one enemy type",
+            "choose": 1,
+            "type": "string",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                "aberrations",
+                "beasts",
+                "celestials",
+                "constructs",
+                "dragons",
+                "elementals",
+                "fey",
+                "fiends",
+                "giants",
+                "monstrosities",
+                "oozes",
+                "plants",
+                "undead",
+                "humanoids"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/natural-explorer-2-terrain-types",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 6,
+        "featureSpecific": {
+          "terrainTypeOptions": {
+            "desc": "one terrain type",
+            "choose": 1,
+            "type": "string",
+            "from": {
+              "optionSetType": "options_array",
+              "options": ["arctic", "coast", "desert", "forest", "grassland", "mountain", "swamp"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-archetype-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 7
+      }
+    },
+    {
+      "id": "srd51:feature/defensive-tactics",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 7,
+        "subclass": "srd51:subclass/hunter",
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "defensive-tactics-escape-the-horde"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "defensive-tactics-multiattack-defense"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "defensive-tactics-steel-will"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/defensive-tactics-escape-the-horde",
+      "kind": "feature",
+      "parent": "srd51:feature/defensive-tactics",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 7,
+        "subclass": "srd51:subclass/hunter"
+      }
+    },
+    {
+      "id": "srd51:feature/defensive-tactics-multiattack-defense",
+      "kind": "feature",
+      "parent": "srd51:feature/defensive-tactics",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 7,
+        "subclass": "srd51:subclass/hunter"
+      }
+    },
+    {
+      "id": "srd51:feature/defensive-tactics-steel-will",
+      "kind": "feature",
+      "parent": "srd51:feature/defensive-tactics",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 7,
+        "subclass": "srd51:subclass/hunter"
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-ability-score-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-lands-stride",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/natural-explorer-3-terrain-types",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 10,
+        "featureSpecific": {
+          "terrainTypeOptions": {
+            "desc": "one terrain type",
+            "choose": 1,
+            "type": "string",
+            "from": {
+              "optionSetType": "options_array",
+              "options": ["arctic", "coast", "desert", "forest", "grassland", "mountain", "swamp"]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/hide-in-plain-sight",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 10
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-archetype-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 11
+      }
+    },
+    {
+      "id": "srd51:feature/multiattack",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 11,
+        "subclass": "srd51:subclass/hunter",
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "multiattack-volley"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "multiattack-whirlwind-attack"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/multiattack-volley",
+      "kind": "feature",
+      "parent": "srd51:feature/multiattack",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 11,
+        "subclass": "srd51:subclass/hunter"
+      }
+    },
+    {
+      "id": "srd51:feature/multiattack-whirlwind-attack",
+      "kind": "feature",
+      "parent": "srd51:feature/multiattack",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 11,
+        "subclass": "srd51:subclass/hunter"
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-ability-score-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 12
+      }
+    },
+    {
+      "id": "srd51:feature/favored-enemy-3-enemies",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 14,
+        "featureSpecific": {
+          "enemyTypeOptions": {
+            "desc": "one enemy type",
+            "choose": 1,
+            "type": "string",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                "aberrations",
+                "beasts",
+                "celestials",
+                "constructs",
+                "dragons",
+                "elementals",
+                "fey",
+                "fiends",
+                "giants",
+                "monstrosities",
+                "oozes",
+                "plants",
+                "undead",
+                "humanoids"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/vanish",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-archetype-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 15
+      }
+    },
+    {
+      "id": "srd51:feature/superior-hunters-defense",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 15,
+        "subclass": "srd51:subclass/hunter",
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "superior-hunters-defense-evasion"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "superior-hunters-defense-stand-against-the-tide"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "superior-hunters-defense-uncanny-dodge"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/superior-hunters-defense-evasion",
+      "kind": "feature",
+      "parent": "srd51:feature/superior-hunters-defense",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 15,
+        "subclass": "srd51:subclass/hunter"
+      }
+    },
+    {
+      "id": "srd51:feature/superior-hunters-defense-stand-against-the-tide",
+      "kind": "feature",
+      "parent": "srd51:feature/superior-hunters-defense",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 15,
+        "subclass": "srd51:subclass/hunter"
+      }
+    },
+    {
+      "id": "srd51:feature/superior-hunters-defense-uncanny-dodge",
+      "kind": "feature",
+      "parent": "srd51:feature/superior-hunters-defense",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 15,
+        "subclass": "srd51:subclass/hunter"
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-ability-score-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 16
+      }
+    },
+    {
+      "id": "srd51:feature/feral-senses",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 18
+      }
+    },
+    {
+      "id": "srd51:feature/ranger-ability-score-improvement-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 19
+      }
+    },
+    {
+      "id": "srd51:feature/foe-slayer",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/ranger",
+        "level": 20
+      }
+    },
+    {
+      "id": "srd51:feature/rogue-expertise-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 1,
+        "featureSpecific": {
+          "expertiseOptions": {
+            "choose": 1,
+            "type": "proficiency",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "choice",
+                  "choice": {
+                    "choose": 2,
+                    "type": "proficiency",
+                    "from": {
+                      "optionSetType": "options_array",
+                      "options": [
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-acrobatics"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-animal-handling"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-arcana"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-athletics"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-deception"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-history"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-insight"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-intimidation"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-investigation"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-medicine"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-nature"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-perception"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-performance"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-persuasion"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-religion"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-sleight-of-hand"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-stealth"
+                          }
+                        },
+                        {
+                          "optionType": "reference",
+                          "item": {
+                            "index": "skill-survival"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "optionType": "multiple",
+                  "items": [
+                    {
+                      "optionType": "choice",
+                      "choice": {
+                        "choose": 1,
+                        "type": "proficiency",
+                        "from": {
+                          "optionSetType": "options_array",
+                          "options": [
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-acrobatics"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-animal-handling"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-arcana"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-athletics"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-deception"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-history"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-insight"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-intimidation"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-investigation"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-medicine"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-nature"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-perception"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-performance"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-persuasion"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-religion"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-sleight-of-hand"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-stealth"
+                              }
+                            },
+                            {
+                              "optionType": "reference",
+                              "item": {
+                                "index": "skill-survival"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "optionType": "reference",
+                      "item": {
+                        "index": "thieves-tools"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/sneak-attack",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/thieves-cant",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/cunning-action",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/roguish-archetype",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/fast-hands",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 3,
+        "subclass": "srd51:subclass/thief"
+      }
+    },
+    {
+      "id": "srd51:feature/second-story-work",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 3,
+        "subclass": "srd51:subclass/thief"
+      }
+    },
+    {
+      "id": "srd51:feature/rogue-ability-score-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/uncanny-dodge",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 5
+      }
+    },
+    {
+      "id": "srd51:feature/rogue-expertise-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 6,
+        "featureSpecific": {
+          "expertiseOptions": {
+            "choose": 2,
+            "type": "proficiency",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-acrobatics"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-animal-handling"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-arcana"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-athletics"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-deception"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-history"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-insight"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-intimidation"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-investigation"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-medicine"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-nature"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-perception"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-performance"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-persuasion"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-religion"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-sleight-of-hand"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-stealth"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "skill-survival"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "thieves-tools"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/rogue-evasion",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 7
+      }
+    },
+    {
+      "id": "srd51:feature/rogue-ability-score-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/roguish-archetype-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 9
+      }
+    },
+    {
+      "id": "srd51:feature/supreme-sneak",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 9,
+        "subclass": "srd51:subclass/thief"
+      }
+    },
+    {
+      "id": "srd51:feature/rogue-ability-score-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 10
+      }
+    },
+    {
+      "id": "srd51:feature/reliable-talent",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 11
+      }
+    },
+    {
+      "id": "srd51:feature/rogue-ability-score-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 12
+      }
+    },
+    {
+      "id": "srd51:feature/roguish-archetype-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 13
+      }
+    },
+    {
+      "id": "srd51:feature/use-magic-device",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 13,
+        "subclass": "srd51:subclass/thief"
+      }
+    },
+    {
+      "id": "srd51:feature/blindsense",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/slippery-mind",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 15
+      }
+    },
+    {
+      "id": "srd51:feature/rogue-ability-score-improvement-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 16
+      }
+    },
+    {
+      "id": "srd51:feature/roguish-archetype-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 17
+      }
+    },
+    {
+      "id": "srd51:feature/thiefs-reflexes",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 17,
+        "subclass": "srd51:subclass/thief"
+      }
+    },
+    {
+      "id": "srd51:feature/elusive",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 18
+      }
+    },
+    {
+      "id": "srd51:feature/rogue-ability-score-improvement-6",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 19
+      }
+    },
+    {
+      "id": "srd51:feature/stroke-of-luck",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/rogue",
+        "level": 20
+      }
+    },
+    {
+      "id": "srd51:feature/spellcasting-sorcerer",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/sorcerous-origin",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/dragon-ancestor",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1,
+        "subclass": "srd51:subclass/draconic",
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "dragon-ancestor-black---acid-damage"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "dragon-ancestor-blue---lightning-damage"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "dragon-ancestor-brass---fire-damage"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "dragon-ancestor-bronze---lightning-damage"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "dragon-ancestor-copper---acid-damage"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "dragon-ancestor-gold---fire-damage"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "dragon-ancestor-green---poison-damage"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "dragon-ancestor-red---fire-damage"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "dragon-ancestor-silver---cold-damage"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "dragon-ancestor-white---cold-damage"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/dragon-ancestor-black---acid-damage",
+      "kind": "feature",
+      "parent": "srd51:feature/dragon-ancestor",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/dragon-ancestor-blue---lightning-damage",
+      "kind": "feature",
+      "parent": "srd51:feature/dragon-ancestor",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/dragon-ancestor-brass---fire-damage",
+      "kind": "feature",
+      "parent": "srd51:feature/dragon-ancestor",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/dragon-ancestor-bronze---lightning-damage",
+      "kind": "feature",
+      "parent": "srd51:feature/dragon-ancestor",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/dragon-ancestor-copper---acid-damage",
+      "kind": "feature",
+      "parent": "srd51:feature/dragon-ancestor",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/dragon-ancestor-gold---fire-damage",
+      "kind": "feature",
+      "parent": "srd51:feature/dragon-ancestor",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/dragon-ancestor-green---poison-damage",
+      "kind": "feature",
+      "parent": "srd51:feature/dragon-ancestor",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/dragon-ancestor-red---fire-damage",
+      "kind": "feature",
+      "parent": "srd51:feature/dragon-ancestor",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/dragon-ancestor-silver---cold-damage",
+      "kind": "feature",
+      "parent": "srd51:feature/dragon-ancestor",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/dragon-ancestor-white---cold-damage",
+      "kind": "feature",
+      "parent": "srd51:feature/dragon-ancestor",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/draconic-resilience",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 1,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/font-of-magic",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/flexible-casting-creating-spell-slots",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/flexible-casting-converting-spell-slot",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/metamagic-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 3,
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 2,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-careful-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-distant-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-empowered-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-extended-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-heightened-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-quickened-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-subtle-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-twinned-spell"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/metamagic-careful-spell",
+      "kind": "feature",
+      "parent": "srd51:feature/metamagic-1",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/metamagic-distant-spell",
+      "kind": "feature",
+      "parent": "srd51:feature/metamagic-1",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/metamagic-empowered-spell",
+      "kind": "feature",
+      "parent": "srd51:feature/metamagic-1",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/metamagic-extended-spell",
+      "kind": "feature",
+      "parent": "srd51:feature/metamagic-1",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/metamagic-heightened-spell",
+      "kind": "feature",
+      "parent": "srd51:feature/metamagic-1",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/metamagic-quickened-spell",
+      "kind": "feature",
+      "parent": "srd51:feature/metamagic-1",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/metamagic-subtle-spell",
+      "kind": "feature",
+      "parent": "srd51:feature/metamagic-1",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/metamagic-twinned-spell",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/sorcerer-ability-score-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/sorcerous-origin-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/elemental-affinity",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 6,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/sorcerer-ability-score-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/metamagic-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 10,
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-careful-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-distant-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-empowered-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-extended-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-heightened-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-quickened-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-subtle-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-twinned-spell"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/sorcerer-ability-score-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 12
+      }
+    },
+    {
+      "id": "srd51:feature/sorcerous-origin-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/dragon-wings",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 14,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/sorcerer-ability-score-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 16
+      }
+    },
+    {
+      "id": "srd51:feature/metamagic-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 17,
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-careful-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-distant-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-empowered-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-extended-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-heightened-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-quickened-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-subtle-spell"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "metamagic-twinned-spell"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/sorcerous-origin-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 18
+      }
+    },
+    {
+      "id": "srd51:feature/draconic-presence",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 18,
+        "subclass": "srd51:subclass/draconic"
+      }
+    },
+    {
+      "id": "srd51:feature/sorcerer-ability-score-improvement-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 19
+      }
+    },
+    {
+      "id": "srd51:feature/sorcerous-restoration",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/sorcerer",
+        "level": 20
+      }
+    },
+    {
+      "id": "srd51:feature/otherworldly-patron",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/dark-ones-blessing",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 1,
+        "subclass": "srd51:subclass/fiend"
+      }
+    },
+    {
+      "id": "srd51:feature/pact-magic",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocations",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2,
+        "featureSpecific": {
+          "invocations": [
+            {
+              "index": "eldritch-invocation-agonizing-blast"
+            },
+            {
+              "index": "eldritch-invocation-armor-of-shadows"
+            },
+            {
+              "index": "eldritch-invocation-beast-speech"
+            },
+            {
+              "index": "eldritch-invocation-beguiling-influence"
+            },
+            {
+              "index": "eldritch-invocation-book-of-ancient-secrets"
+            },
+            {
+              "index": "eldritch-invocation-devils-sight"
+            },
+            {
+              "index": "eldritch-invocation-eldritch-sight"
+            },
+            {
+              "index": "eldritch-invocation-eldritch-spear"
+            },
+            {
+              "index": "eldritch-invocation-eyes-of-the-rune-keeper"
+            },
+            {
+              "index": "eldritch-invocation-fiendish-vigor"
+            },
+            {
+              "index": "eldritch-invocation-gaze-of-two-minds"
+            },
+            {
+              "index": "eldritch-invocation-mask-of-many-faces"
+            },
+            {
+              "index": "eldritch-invocation-misty-visions"
+            },
+            {
+              "index": "eldritch-invocation-repelling-blast"
+            },
+            {
+              "index": "eldritch-invocation-thief-of-five-fates"
+            },
+            {
+              "index": "eldritch-invocation-voice-of-the-chain-master"
+            },
+            {
+              "index": "eldritch-invocation-mire-the-mind"
+            },
+            {
+              "index": "eldritch-invocation-one-with-shadows"
+            },
+            {
+              "index": "eldritch-invocation-sign-of-ill-omen"
+            },
+            {
+              "index": "eldritch-invocation-thirsting-blade"
+            },
+            {
+              "index": "eldritch-invocation-bewitching-whispers"
+            },
+            {
+              "index": "eldritch-invocation-dreadful-word"
+            },
+            {
+              "index": "eldritch-invocation-sculptor-of-flesh"
+            },
+            {
+              "index": "eldritch-invocation-ascendant-step"
+            },
+            {
+              "index": "eldritch-invocation-minions-of-chaos"
+            },
+            {
+              "index": "eldritch-invocation-otherworldly-leap"
+            },
+            {
+              "index": "eldritch-invocation-whispers-of-the-grave"
+            },
+            {
+              "index": "eldritch-invocation-lifedrinker"
+            },
+            {
+              "index": "eldritch-invocation-chains-of-carceri"
+            },
+            {
+              "index": "eldritch-invocation-master-of-myriad-forms"
+            },
+            {
+              "index": "eldritch-invocation-visions-of-distant-realms"
+            },
+            {
+              "index": "eldritch-invocation-witch-sight"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-agonizing-blast",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2,
+        "prerequisites": [
+          {
+            "type": "spell",
+            "spell": "srd51:spell/eldritch-blast"
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-armor-of-shadows",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-beast-speech",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-beguiling-influence",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-book-of-ancient-secrets",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2,
+        "prerequisites": [
+          {
+            "type": "feature",
+            "feature": "srd51:feature/pact-of-the-tome"
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-devils-sight",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-eldritch-sight",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-eldritch-spear",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2,
+        "prerequisites": [
+          {
+            "type": "spell",
+            "spell": "srd51:spell/eldritch-blast"
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-eyes-of-the-rune-keeper",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-fiendish-vigor",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-gaze-of-two-minds",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-mask-of-many-faces",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-misty-visions",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-repelling-blast",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2,
+        "prerequisites": [
+          {
+            "type": "spell",
+            "spell": "srd51:spell/eldritch-blast"
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-thief-of-five-fates",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-voice-of-the-chain-master",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 2,
+        "prerequisites": [
+          {
+            "type": "feature",
+            "feature": "srd51:feature/pact-of-the-chain"
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-mire-the-mind",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 5,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 5
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-one-with-shadows",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 5,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 5
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-sign-of-ill-omen",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 5,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 5
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-thirsting-blade",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 5,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 5
+          },
+          {
+            "type": "feature",
+            "feature": "srd51:feature/pact-of-the-blade"
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/otherworldly-patron-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-bewitching-whispers",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 7,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 7
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-dreadful-word",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 7,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 7
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-sculptor-of-flesh",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 7,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 7
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-ascendant-step",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 9,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 9
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-minions-of-chaos",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 9,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 9
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-otherworldly-leap",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 9,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 9
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-whispers-of-the-grave",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 9,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 9
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/otherworldly-patron-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 10
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-lifedrinker",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 12,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 12
+          },
+          {
+            "type": "feature",
+            "feature": "srd51:feature/pact-of-the-blade"
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/otherworldly-patron-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-chains-of-carceri",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 15,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 15
+          },
+          {
+            "type": "feature",
+            "feature": "srd51:feature/pact-of-the-chain"
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-master-of-myriad-forms",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 15,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 15
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-visions-of-distant-realms",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 15,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 15
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-invocation-witch-sight",
+      "kind": "feature",
+      "parent": "srd51:feature/eldritch-invocations",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 15,
+        "prerequisites": [
+          {
+            "type": "level",
+            "level": 15
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:feature/pact-boon",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 3,
+        "featureSpecific": {
+          "subfeatureOptions": {
+            "choose": 1,
+            "type": "feature",
+            "from": {
+              "optionSetType": "options_array",
+              "options": [
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "pact-of-the-chain"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "pact-of-the-blade"
+                  }
+                },
+                {
+                  "optionType": "reference",
+                  "item": {
+                    "index": "pact-of-the-tome"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "srd51:feature/pact-of-the-chain",
+      "kind": "feature",
+      "parent": "srd51:feature/pact-boon",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/pact-of-the-blade",
+      "kind": "feature",
+      "parent": "srd51:feature/pact-boon",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/pact-of-the-tome",
+      "kind": "feature",
+      "parent": "srd51:feature/pact-boon",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 3
+      }
+    },
+    {
+      "id": "srd51:feature/warlock-ability-score-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/dark-ones-own-luck",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 6,
+        "subclass": "srd51:subclass/fiend"
+      }
+    },
+    {
+      "id": "srd51:feature/warlock-ability-score-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/fiendish-resilience",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 10,
+        "subclass": "srd51:subclass/fiend"
+      }
+    },
+    {
+      "id": "srd51:feature/mystic-arcanum-6th-level",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 11
+      }
+    },
+    {
+      "id": "srd51:feature/warlock-ability-score-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 12
+      }
+    },
+    {
+      "id": "srd51:feature/mystic-arcanum-7th-level",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 13
+      }
+    },
+    {
+      "id": "srd51:feature/hurl-through-hell",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 14,
+        "subclass": "srd51:subclass/fiend"
+      }
+    },
+    {
+      "id": "srd51:feature/mystic-arcanum-8th-level",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 15
+      }
+    },
+    {
+      "id": "srd51:feature/warlock-ability-score-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 16
+      }
+    },
+    {
+      "id": "srd51:feature/mystic-arcanum-9th-level",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 17
+      }
+    },
+    {
+      "id": "srd51:feature/warlock-ability-score-improvement-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 19
+      }
+    },
+    {
+      "id": "srd51:feature/eldritch-master",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/warlock",
+        "level": 20
+      }
+    },
+    {
+      "id": "srd51:feature/spellcasting-wizard",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/arcane-recovery",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 1
+      }
+    },
+    {
+      "id": "srd51:feature/arcane-tradition",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 2
+      }
+    },
+    {
+      "id": "srd51:feature/evocation-savant",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 2,
+        "subclass": "srd51:subclass/evocation"
+      }
+    },
+    {
+      "id": "srd51:feature/sculpt-spells",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 2,
+        "subclass": "srd51:subclass/evocation"
+      }
+    },
+    {
+      "id": "srd51:feature/wizard-ability-score-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 4
+      }
+    },
+    {
+      "id": "srd51:feature/arcane-tradition-improvement-1",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 6
+      }
+    },
+    {
+      "id": "srd51:feature/potent-cantrip",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 6,
+        "subclass": "srd51:subclass/evocation"
+      }
+    },
+    {
+      "id": "srd51:feature/wizard-ability-score-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 8
+      }
+    },
+    {
+      "id": "srd51:feature/arcane-tradition-improvement-2",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 10
+      }
+    },
+    {
+      "id": "srd51:feature/empowered-evocation",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 10,
+        "subclass": "srd51:subclass/evocation"
+      }
+    },
+    {
+      "id": "srd51:feature/wizard-ability-score-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 12
+      }
+    },
+    {
+      "id": "srd51:feature/arcane-tradition-improvement-3",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 14
+      }
+    },
+    {
+      "id": "srd51:feature/overchannel",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 14,
+        "subclass": "srd51:subclass/evocation"
+      }
+    },
+    {
+      "id": "srd51:feature/wizard-ability-score-improvement-4",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 16
+      }
+    },
+    {
+      "id": "srd51:feature/spell-mastery",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 18
+      }
+    },
+    {
+      "id": "srd51:feature/wizard-ability-score-improvement-5",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 19
+      }
+    },
+    {
+      "id": "srd51:feature/signature-spell",
+      "kind": "feature",
+      "effects": [],
+      "data": {
+        "class": "srd51:class/wizard",
+        "level": 20
+      }
+    }
+  ]
+}

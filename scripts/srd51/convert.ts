@@ -22,9 +22,13 @@ export interface RawSource {
   spells: Raw[];
   proficiencies: Raw[];
   languages: Raw[];
+  classes: Raw[];
+  subclasses: Raw[];
+  levels: Raw[];
+  features: Raw[];
 }
 export type ConvertedPack = Record<
-  "species" | "subspecies" | "trait" | "background" | "spell",
+  "species" | "subspecies" | "trait" | "background" | "spell" | "class" | "subclass" | "feature",
   Converted
 >;
 
@@ -32,13 +36,17 @@ const id = (kind: string, slug: string) => `${PACK}:${kind}/${slug}`;
 const text = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value.join("\n\n") : value;
 
-/** Drops API `url` fields and camel-cases keys (`damage_type` -> `damageType`). */
+/**
+ * Drops API `url` fields and display `name`s that sit next to an `index` (names belong in
+ * locale files), and camel-cases keys (`damage_type` -> `damageType`).
+ */
 export function cleanData(value: Raw): Raw {
   if (Array.isArray(value)) return value.map(cleanData);
   if (value && typeof value === "object") {
+    const hasIndex = "index" in value;
     return Object.fromEntries(
       Object.entries(value)
-        .filter(([key]) => key !== "url")
+        .filter(([key]) => key !== "url" && !(hasIndex && key === "name"))
         .map(([key, v]) => [
           key.replace(/_([a-z])/g, (_, c: string) => c.toUpperCase()),
           cleanData(v),
@@ -86,7 +94,13 @@ function resolveProficiency(ctx: Context, index: string): Effect {
 
 /** Flattens a 5e-database option set into plain option values. */
 function optionValues(ctx: Context, set: Raw, map: (option: Raw) => string): string[] {
-  if (set.option_set_type === "options_array") return set.options.map(map);
+  if (set.option_set_type === "options_array") {
+    // A nested `choice` option (e.g. the monk's "one tool or one instrument") is flattened
+    // into the outer list; the outer `choose` count still applies.
+    return (set.options as Raw[]).flatMap((o) =>
+      o.option_type === "choice" ? optionValues(ctx, o.choice.from, map) : [map(o)],
+    );
+  }
   if (set.option_set_type === "resource_list") {
     if (set.resource_list_url.endsWith("/languages")) return ctx.languages;
     throw new Error(`Unsupported resource list: ${set.resource_list_url}`);
@@ -301,6 +315,175 @@ function convertSpells(raw: RawSource): Converted {
 
 const cleanKey = (key: string) => key.replace(/_([a-z])/g, (_, c: string) => c.toUpperCase());
 
+const lastSegment = (url: string) => url.split("/").pop() ?? url;
+
+function resolveProficiencyKey(ctx: Context, index: string): string {
+  const resolved = ctx.proficiency.get(index);
+  if (!resolved) throw new Error(`Unknown proficiency: ${index}`);
+  return resolved;
+}
+
+const scoreRequirement = (option: Raw) => ({
+  ability: option.ability_score.index,
+  minimum: option.minimum_score,
+});
+
+function convertClasses(raw: RawSource, ctx: Context): Converted {
+  const entries: Entry[] = [];
+  const strings: Strings = {};
+  for (const c of raw.classes) {
+    const effects: Effect[] = (c.proficiencies as Raw[]).map((p) =>
+      resolveProficiency(ctx, p.index),
+    );
+    (c.proficiency_choices as Raw[]).forEach((choice, i) => {
+      effects.push({
+        type: "choice",
+        id: `${c.index}-proficiency-${i + 1}`,
+        choose: choice.choose,
+        grants: "proficiency",
+        from: optionValues(ctx, choice.from, (o) => resolveProficiencyKey(ctx, referenceIndex(o))),
+      });
+    });
+
+    const casting = c.spellcasting;
+    const levels = (raw.levels as Raw[])
+      .filter((l) => l.class.index === c.index && !l.subclass)
+      .sort((a, b) => a.level - b.level)
+      .map((l) => {
+        if (l.prof_bonus !== Math.ceil(l.level / 4) + 1)
+          throw new Error(`Unexpected proficiency bonus at ${l.index}`);
+        const sc = l.spellcasting;
+        return {
+          level: l.level,
+          features: (l.features as Raw[]).map((f) => id("feature", f.index)),
+          abilityScoreImprovements: l.ability_score_bonuses ?? 0,
+          ...(sc?.cantrips_known !== undefined && { cantripsKnown: sc.cantrips_known }),
+          ...(sc?.spells_known !== undefined && { spellsKnown: sc.spells_known }),
+          ...(sc && {
+            spellSlots: [1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => sc[`spell_slots_level_${n}`] ?? 0),
+          }),
+          classSpecific: cleanData(l.class_specific ?? {}),
+        };
+      });
+    if (levels.length !== 20) throw new Error(`${c.index} has ${levels.length} level rows`);
+
+    const multi = c.multi_classing;
+    const options = multi.prerequisite_options;
+    const equipmentOptions = (c.starting_equipment_options as Raw[]).map((option, i) => {
+      const { desc, ...rest } = option;
+      strings[`${c.index}.startingEquipment.${i + 1}`] = desc;
+      return cleanData(rest);
+    });
+    (casting?.info as Raw[] | undefined)?.forEach((info, i) => {
+      strings[`${c.index}.spellcasting.${i + 1}.name`] = info.name;
+      strings[`${c.index}.spellcasting.${i + 1}.desc`] = text(info.desc) ?? "";
+    });
+    strings[`${c.index}.name`] = c.name;
+
+    entries.push({
+      id: id("class", c.index),
+      kind: "class",
+      effects,
+      data: {
+        hitDie: c.hit_die,
+        ...(casting && {
+          spellcasting: {
+            ability: casting.spellcasting_ability.index,
+            startsAtLevel: casting.level,
+          },
+        }),
+        multiclassing: {
+          prerequisites: ((multi.prerequisites ?? []) as Raw[]).map(scoreRequirement),
+          ...(options && {
+            prerequisiteOptions: {
+              choose: options.choose,
+              from: options.from.options.map(scoreRequirement),
+            },
+          }),
+          proficiencies: ((multi.proficiencies ?? []) as Raw[]).map((p) =>
+            resolveProficiencyKey(ctx, p.index),
+          ),
+          proficiencyChoices: ((multi.proficiency_choices ?? []) as Raw[]).map((choice) => ({
+            choose: choice.choose,
+            from: optionValues(ctx, choice.from, (o) =>
+              resolveProficiencyKey(ctx, referenceIndex(o)),
+            ),
+          })),
+        },
+        levels,
+        startingEquipment: (c.starting_equipment as Raw[]).map((e) => ({
+          item: id("item", e.equipment.index),
+          quantity: e.quantity,
+        })),
+        startingEquipmentOptions: equipmentOptions,
+      },
+    });
+  }
+  return { entries, strings };
+}
+
+function convertSubclasses(raw: RawSource): Converted {
+  const entries: Entry[] = [];
+  const strings: Strings = {};
+  for (const s of raw.subclasses) {
+    const levels = (raw.levels as Raw[])
+      .filter((l) => l.subclass?.index === s.index)
+      .sort((a, b) => a.level - b.level)
+      .map((l) => ({
+        level: l.level,
+        features: (l.features as Raw[]).map((f) => id("feature", f.index)),
+        ...(l.subclass_specific && { subclassSpecific: cleanData(l.subclass_specific) }),
+      }));
+    const spells = ((s.spells ?? []) as Raw[]).map((sp) => {
+      const requirement = (sp.prerequisites as Raw[]).find((p) => p.type === "level");
+      if (!requirement) throw new Error(`Subclass spell without level in ${s.index}`);
+      return {
+        spell: id("spell", sp.spell.index),
+        classLevel: Number(String(requirement.index).split("-").pop()),
+      };
+    });
+    entries.push({
+      id: id("subclass", s.index),
+      kind: "subclass",
+      parent: id("class", s.class.index),
+      effects: [],
+      data: { levels, spells },
+    });
+    strings[`${s.index}.name`] = s.name;
+    strings[`${s.index}.flavor`] = s.subclass_flavor;
+    strings[`${s.index}.desc`] = text(s.desc) ?? "";
+  }
+  return { entries, strings };
+}
+
+function normalizePrerequisite(p: Raw): Raw {
+  if (p.type === "spell") return { type: "spell", spell: id("spell", lastSegment(p.spell)) };
+  if (p.type === "feature")
+    return { type: "feature", feature: id("feature", lastSegment(p.feature)) };
+  if (p.type === "level") return { type: "level", level: p.level };
+  throw new Error(`Unknown feature prerequisite: ${p.type}`);
+}
+
+function convertFeatures(raw: RawSource): Converted {
+  const entries: Entry[] = [];
+  const strings: Strings = {};
+  for (const f of raw.features) {
+    const data: Record<string, unknown> = {
+      class: id("class", f.class.index),
+      level: f.level,
+    };
+    if (f.subclass) data.subclass = id("subclass", f.subclass.index);
+    if (f.prerequisites.length) data.prerequisites = f.prerequisites.map(normalizePrerequisite);
+    if (f.feature_specific) data.featureSpecific = cleanData(f.feature_specific);
+    const entry: Entry = { id: id("feature", f.index), kind: "feature", effects: [], data };
+    if (f.parent) entry.parent = id("feature", f.parent.index);
+    entries.push(entry);
+    strings[`${f.index}.name`] = f.name;
+    strings[`${f.index}.desc`] = text(f.desc) ?? "";
+  }
+  return { entries, strings };
+}
+
 export function convertAll(raw: RawSource): ConvertedPack {
   const ctx = buildContext(raw);
   return {
@@ -309,5 +492,8 @@ export function convertAll(raw: RawSource): ConvertedPack {
     trait: convertTraits(raw, ctx),
     background: convertBackgrounds(raw, ctx),
     spell: convertSpells(raw),
+    class: convertClasses(raw, ctx),
+    subclass: convertSubclasses(raw),
+    feature: convertFeatures(raw),
   };
 }

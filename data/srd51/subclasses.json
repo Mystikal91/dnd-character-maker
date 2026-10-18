@@ -1,0 +1,711 @@
+{
+  "manifest": {
+    "id": "srd51",
+    "ruleset": "srd51",
+    "version": "5e-database@5.12.0",
+    "license": "CC-BY-4.0",
+    "attribution": "This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at https://dnd.wizards.com/resources/systems-reference-document. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0 International License available at https://creativecommons.org/licenses/by/4.0/legalcode."
+  },
+  "entries": [
+    {
+      "id": "srd51:subclass/berserker",
+      "kind": "subclass",
+      "parent": "srd51:class/barbarian",
+      "effects": [],
+      "data": {
+        "levels": [
+          {
+            "level": 3,
+            "features": ["srd51:feature/frenzy"]
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/mindless-rage"]
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/intimidating-presence"]
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/retaliation"]
+          }
+        ],
+        "spells": []
+      }
+    },
+    {
+      "id": "srd51:subclass/lore",
+      "kind": "subclass",
+      "parent": "srd51:class/bard",
+      "effects": [],
+      "data": {
+        "levels": [
+          {
+            "level": 3,
+            "features": ["srd51:feature/bonus-proficiencies", "srd51:feature/cutting-words"],
+            "subclassSpecific": {
+              "additionalMagicalSecretsMaxLvl": 0
+            }
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/additional-magical-secrets"],
+            "subclassSpecific": {
+              "additionalMagicalSecretsMaxLvl": 3
+            }
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/peerless-skill"],
+            "subclassSpecific": {
+              "additionalMagicalSecretsMaxLvl": 3
+            }
+          }
+        ],
+        "spells": []
+      }
+    },
+    {
+      "id": "srd51:subclass/life",
+      "kind": "subclass",
+      "parent": "srd51:class/cleric",
+      "effects": [],
+      "data": {
+        "levels": [
+          {
+            "level": 1,
+            "features": ["srd51:feature/bonus-proficiency", "srd51:feature/disciple-of-life"]
+          },
+          {
+            "level": 2,
+            "features": ["srd51:feature/channel-divinity-preserve-life"]
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/blessed-healer"]
+          },
+          {
+            "level": 8,
+            "features": ["srd51:feature/divine-strike"]
+          },
+          {
+            "level": 17,
+            "features": ["srd51:feature/supreme-healing"]
+          }
+        ],
+        "spells": [
+          {
+            "spell": "srd51:spell/bless",
+            "classLevel": 1
+          },
+          {
+            "spell": "srd51:spell/cure-wounds",
+            "classLevel": 1
+          },
+          {
+            "spell": "srd51:spell/lesser-restoration",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/spiritual-weapon",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/beacon-of-hope",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/revivify",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/death-ward",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/mass-cure-wounds",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/raise-dead",
+            "classLevel": 9
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:subclass/land",
+      "kind": "subclass",
+      "parent": "srd51:class/druid",
+      "effects": [],
+      "data": {
+        "levels": [
+          {
+            "level": 2,
+            "features": ["srd51:feature/bonus-cantrip", "srd51:feature/natural-recovery"]
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/druid-lands-stride"]
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/natures-ward"]
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/natures-sanctuary"]
+          }
+        ],
+        "spells": [
+          {
+            "spell": "srd51:spell/hold-person",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/spike-growth",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/sleet-storm",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/slow",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/freedom-of-movement",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/ice-storm",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/commune-with-nature",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/cone-of-cold",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/mirror-image",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/misty-step",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/water-breathing",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/water-walk",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/control-water",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/freedom-of-movement",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/conjure-elemental",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/scrying",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/blur",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/silence",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/create-food-and-water",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/protection-from-energy",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/blight",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/hallucinatory-terrain",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/insect-plague",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/wall-of-stone",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/barkskin",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/spider-climb",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/call-lightning",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/plant-growth",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/divination",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/freedom-of-movement",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/commune-with-nature",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/tree-stride",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/invisibility",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/pass-without-trace",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/daylight",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/haste",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/divination",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/freedom-of-movement",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/dream",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/insect-plague",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/spider-climb",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/spike-growth",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/lightning-bolt",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/meld-into-stone",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/stone-shape",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/stoneskin",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/passwall",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/wall-of-stone",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/acid-arrow",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/darkness",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/water-walk",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/stinking-cloud",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/freedom-of-movement",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/locate-creature",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/insect-plague",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/scrying",
+            "classLevel": 9
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:subclass/champion",
+      "kind": "subclass",
+      "parent": "srd51:class/fighter",
+      "effects": [],
+      "data": {
+        "levels": [
+          {
+            "level": 3,
+            "features": ["srd51:feature/improved-critical"]
+          },
+          {
+            "level": 7,
+            "features": ["srd51:feature/remarkable-athlete"]
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/additional-fighting-style"]
+          },
+          {
+            "level": 15,
+            "features": ["srd51:feature/superior-critical"]
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/survivor"]
+          }
+        ],
+        "spells": []
+      }
+    },
+    {
+      "id": "srd51:subclass/open-hand",
+      "kind": "subclass",
+      "parent": "srd51:class/monk",
+      "effects": [],
+      "data": {
+        "levels": [
+          {
+            "level": 3,
+            "features": ["srd51:feature/open-hand-technique"]
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/wholeness-of-body"]
+          },
+          {
+            "level": 11,
+            "features": ["srd51:feature/tranquility"]
+          },
+          {
+            "level": 17,
+            "features": ["srd51:feature/quivering-palm"]
+          }
+        ],
+        "spells": []
+      }
+    },
+    {
+      "id": "srd51:subclass/devotion",
+      "kind": "subclass",
+      "parent": "srd51:class/paladin",
+      "effects": [],
+      "data": {
+        "levels": [
+          {
+            "level": 3,
+            "features": [
+              "srd51:feature/channel-divinity-sacred-weapon",
+              "srd51:feature/channel-divinity-turn-the-unholy"
+            ]
+          },
+          {
+            "level": 7,
+            "features": ["srd51:feature/aura-of-devotion"],
+            "subclassSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 15,
+            "features": ["srd51:feature/purity-of-spirit"],
+            "subclassSpecific": {
+              "auraRange": 10
+            }
+          },
+          {
+            "level": 18,
+            "features": [],
+            "subclassSpecific": {
+              "auraRange": 30
+            }
+          },
+          {
+            "level": 20,
+            "features": ["srd51:feature/holy-nimbus"],
+            "subclassSpecific": {
+              "auraRange": 30
+            }
+          }
+        ],
+        "spells": [
+          {
+            "spell": "srd51:spell/protection-from-evil-and-good",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/sanctuary",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/lesser-restoration",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/zone-of-truth",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/beacon-of-hope",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/dispel-magic",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/freedom-of-movement",
+            "classLevel": 13
+          },
+          {
+            "spell": "srd51:spell/guardian-of-faith",
+            "classLevel": 13
+          },
+          {
+            "spell": "srd51:spell/commune",
+            "classLevel": 17
+          },
+          {
+            "spell": "srd51:spell/flame-strike",
+            "classLevel": 17
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:subclass/hunter",
+      "kind": "subclass",
+      "parent": "srd51:class/ranger",
+      "effects": [],
+      "data": {
+        "levels": [
+          {
+            "level": 3,
+            "features": ["srd51:feature/hunters-prey"]
+          },
+          {
+            "level": 7,
+            "features": ["srd51:feature/defensive-tactics"]
+          },
+          {
+            "level": 11,
+            "features": ["srd51:feature/multiattack"]
+          },
+          {
+            "level": 15,
+            "features": ["srd51:feature/superior-hunters-defense"]
+          }
+        ],
+        "spells": []
+      }
+    },
+    {
+      "id": "srd51:subclass/thief",
+      "kind": "subclass",
+      "parent": "srd51:class/rogue",
+      "effects": [],
+      "data": {
+        "levels": [
+          {
+            "level": 3,
+            "features": ["srd51:feature/fast-hands", "srd51:feature/second-story-work"]
+          },
+          {
+            "level": 9,
+            "features": ["srd51:feature/supreme-sneak"]
+          },
+          {
+            "level": 13,
+            "features": ["srd51:feature/use-magic-device"]
+          },
+          {
+            "level": 17,
+            "features": ["srd51:feature/thiefs-reflexes"]
+          }
+        ],
+        "spells": []
+      }
+    },
+    {
+      "id": "srd51:subclass/draconic",
+      "kind": "subclass",
+      "parent": "srd51:class/sorcerer",
+      "effects": [],
+      "data": {
+        "levels": [
+          {
+            "level": 1,
+            "features": ["srd51:feature/dragon-ancestor", "srd51:feature/draconic-resilience"]
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/elemental-affinity"]
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/dragon-wings"]
+          },
+          {
+            "level": 18,
+            "features": ["srd51:feature/draconic-presence"]
+          }
+        ],
+        "spells": []
+      }
+    },
+    {
+      "id": "srd51:subclass/fiend",
+      "kind": "subclass",
+      "parent": "srd51:class/warlock",
+      "effects": [],
+      "data": {
+        "levels": [
+          {
+            "level": 1,
+            "features": ["srd51:feature/dark-ones-blessing"]
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/dark-ones-own-luck"]
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/fiendish-resilience"]
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/hurl-through-hell"]
+          }
+        ],
+        "spells": [
+          {
+            "spell": "srd51:spell/burning-hands",
+            "classLevel": 1
+          },
+          {
+            "spell": "srd51:spell/command",
+            "classLevel": 1
+          },
+          {
+            "spell": "srd51:spell/blindness-deafness",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/scorching-ray",
+            "classLevel": 3
+          },
+          {
+            "spell": "srd51:spell/fireball",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/stinking-cloud",
+            "classLevel": 5
+          },
+          {
+            "spell": "srd51:spell/fire-shield",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/wall-of-fire",
+            "classLevel": 7
+          },
+          {
+            "spell": "srd51:spell/flame-strike",
+            "classLevel": 9
+          },
+          {
+            "spell": "srd51:spell/hallow",
+            "classLevel": 9
+          }
+        ]
+      }
+    },
+    {
+      "id": "srd51:subclass/evocation",
+      "kind": "subclass",
+      "parent": "srd51:class/wizard",
+      "effects": [],
+      "data": {
+        "levels": [
+          {
+            "level": 2,
+            "features": ["srd51:feature/evocation-savant", "srd51:feature/sculpt-spells"]
+          },
+          {
+            "level": 6,
+            "features": ["srd51:feature/potent-cantrip"]
+          },
+          {
+            "level": 10,
+            "features": ["srd51:feature/empowered-evocation"]
+          },
+          {
+            "level": 14,
+            "features": ["srd51:feature/overchannel"]
+          }
+        ],
+        "spells": []
+      }
+    }
+  ]
+}

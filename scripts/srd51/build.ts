@@ -18,6 +18,9 @@ const FILE_NAMES = {
   trait: "traits",
   background: "backgrounds",
   spell: "spells",
+  class: "classes",
+  subclass: "subclasses",
+  feature: "features",
 } as const;
 
 const readJson = async (name: string) =>
@@ -35,6 +38,10 @@ const raw: RawSource = {
   spells: await readJson("5e-SRD-Spells"),
   proficiencies: await readJson("5e-SRD-Proficiencies"),
   languages: await readJson("5e-SRD-Languages"),
+  classes: await readJson("5e-SRD-Classes"),
+  subclasses: await readJson("5e-SRD-Subclasses"),
+  levels: await readJson("5e-SRD-Levels"),
+  features: await readJson("5e-SRD-Features"),
 };
 
 const converted = convertAll(raw);
