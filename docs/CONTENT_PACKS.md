@@ -28,8 +28,12 @@ are left out and anything that refers to them is pointed at the app's own entry.
 What the app deliberately does **not** do:
 
 - ship any Aurora or publisher content;
-- download content from any server, or keep a list of places to fetch it from;
+- download anything on its own, or keep a list of places to fetch from: it fetches only from an
+  address the user types, or one listed in an index file the user chose, and only over https;
 - let a personal pack be exported or shared.
+
+Index files (`.index`) are followed to every content file they list, so one address can bring a
+whole book. What is added, and the right to use it, is the user's responsibility.
 
 The files are read in the browser, processed there and stored on the device. Only add content
 you have the right to use.

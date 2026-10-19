@@ -1,5 +1,6 @@
 import { signal } from "@preact/signals";
 import { AuroraParseError, parseAurora } from "../import/aurora";
+import { gatherAurora } from "../import/aurora/remote";
 import {
   PackParseError,
   type UserPackRecord,
@@ -76,23 +77,49 @@ export const importReport = signal<
       skipped: Record<string, number>;
       unsupported: number;
       name: string;
+      /** Addresses or files that could not be read. */
+      failed: number;
+      /** True when the search for files stopped at its limits. */
+      truncated: boolean;
     }
   | undefined
 >(undefined);
+
+/** Files fetched so far while following an address or an index file. */
+export const importProgress = signal<{ done: number; total: number } | undefined>(undefined);
 
 /**
  * Adds a personal pack from Aurora XML files the user chose. The files are read here and kept
  * only on this device; entries the app already has are left out.
  */
 export async function importAuroraFiles(files: File[]): Promise<void> {
+  const texts = await Promise.all(files.map((f) => f.text()));
+  await importAuroraSources(texts.map((text) => ({ text })));
+}
+
+/** Adds a personal pack from an address typed by the user: an index file or a content file. */
+export async function importAuroraUrl(url: string): Promise<void> {
+  await importAuroraSources([{ url }]);
+}
+
+/**
+ * Reads what the user gave, following index files to the content files they list. Fetching
+ * starts only from a file or an address the user chose.
+ */
+async function importAuroraSources(start: { text?: string; url?: string }[]): Promise<void> {
   const loaded = content.value;
   packError.value = undefined;
   importReport.value = undefined;
-  if (!loaded || files.length === 0) return;
+  if (!loaded || start.length === 0) return;
   try {
-    const texts = await Promise.all(files.map((f) => f.text()));
+    importProgress.value = { done: 0, total: start.length };
+    const gathered = await gatherAurora(start, {
+      onProgress: (done, total) => {
+        importProgress.value = { done, total };
+      },
+    });
     const id = `imp${Date.now().toString(36)}`;
-    const result = parseAurora(texts, {
+    const result = parseAurora(gathered.texts, {
       packId: id,
       index: loaded.index,
       nameOf: (entryId) => loaded.name(entryId),
@@ -104,6 +131,8 @@ export async function importAuroraFiles(files: File[]): Promise<void> {
       skipped: result.skipped,
       unsupported: result.unsupportedRules,
       name,
+      failed: gathered.failed.length,
+      truncated: gathered.truncated,
     };
     if (result.entries.length === 0) return;
     await addUserPack({
@@ -117,8 +146,8 @@ export async function importAuroraFiles(files: File[]): Promise<void> {
           id,
           ruleset: "custom",
           version: "1",
-          license: "Personal use: files provided by the user",
-          attribution: `Imported from files provided by the user. Sources: ${result.sources.join("; ") || "unknown"}.`,
+          license: "Personal use: content provided by the user",
+          attribution: `Imported from content the user provided. Sources: ${result.sources.join("; ") || "unknown"}.`,
         },
         entries: result.entries,
       },
@@ -127,5 +156,7 @@ export async function importAuroraFiles(files: File[]): Promise<void> {
   } catch (error) {
     if (!(error instanceof AuroraParseError)) console.error("Importing files failed", error);
     packError.value = "invalid";
+  } finally {
+    importProgress.value = undefined;
   }
 }

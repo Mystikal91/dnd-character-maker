@@ -1,10 +1,12 @@
-import { useRef } from "preact/hooks";
+import { useRef, useState } from "preact/hooks";
 import { leavePage } from "../app/navigation";
 import { content } from "../app/store";
 import {
   exportPack,
   importAuroraFiles,
+  importAuroraUrl,
   importPackFile,
+  importProgress,
   importReport,
   packError,
   removeUserPack,
@@ -25,6 +27,8 @@ function summary(record: UserPackRecord): string {
 export function PacksPage() {
   const fileInput = useRef<HTMLInputElement>(null);
   const auroraInput = useRef<HTMLInputElement>(null);
+  const [address, setAddress] = useState("");
+  const progress = importProgress.value;
   const report = importReport.value;
   const packs = userPacks.value;
   const error = packError.value;
@@ -97,7 +101,7 @@ export function PacksPage() {
         <input
           ref={auroraInput}
           type="file"
-          accept=".xml,text/xml,application/xml"
+          accept=".xml,.index,.txt,text/xml,application/xml,text/plain"
           multiple
           hidden
           onChange={(e) => {
@@ -118,7 +122,30 @@ export function PacksPage() {
           }}
         />
       </div>
+      <form
+        class="btn-row"
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (address.trim() && !progress) void importAuroraUrl(address);
+        }}
+      >
+        <input
+          type="url"
+          value={address}
+          placeholder="https://"
+          aria-label={ui("packs.addressLabel")}
+          onInput={(e) => setAddress(e.currentTarget.value)}
+        />
+        <button type="submit" disabled={!address.trim() || Boolean(progress)}>
+          {ui("packs.addressGo")}
+        </button>
+      </form>
       <p class="muted">{ui("packs.auroraHint")}</p>
+      {progress && (
+        <p class="note" aria-live="polite">
+          {ui("packs.progress", { done: progress.done, total: progress.total })}
+        </p>
+      )}
       {report && (
         <div class="note" aria-live="polite">
           {report.added > 0 ? (
@@ -126,6 +153,8 @@ export function PacksPage() {
           ) : (
             <p>{ui("packs.reportNothing")}</p>
           )}
+          {report.failed > 0 && <p>{ui("packs.reportFailed", { n: report.failed })}</p>}
+          {report.truncated && <p>{ui("packs.reportTruncated")}</p>}
           {report.duplicates > 0 && <p>{ui("packs.reportDuplicates", { n: report.duplicates })}</p>}
           {report.unsupported > 0 && <p>{ui("packs.reportRules", { n: report.unsupported })}</p>}
           {Object.keys(report.skipped).length > 0 && (
