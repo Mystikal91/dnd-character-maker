@@ -31,6 +31,11 @@ Node 20+ is required (the PWA build step fails on older versions); Node 22 is us
 The interface is available in English and Italian, and translations are managed with Weblate.
 See [docs/TRANSLATING.md](docs/TRANSLATING.md).
 
+## Content packs
+
+Besides the SRD 5.1, people can add their own packs and read Aurora XML files they already
+have. See [docs/CONTENT_PACKS.md](docs/CONTENT_PACKS.md).
+
 ## Licenses
 
 - Code: [MIT](LICENSE).

@@ -7,11 +7,14 @@ const RULESET = "srd51";
 export function entriesOfKind(kind: string, parent?: string) {
   const c = content.value;
   if (!c) return [];
-  return [...c.index.values()]
-    .filter((e) => e.kind === kind && e.id.startsWith(`${RULESET}:`))
-    .filter((e) => parent === undefined || e.parent === parent)
-    .map((e) => ({ id: e.id, label: c.name(e.id) }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+  return (
+    [...c.index.values()]
+      // The active ruleset's entries, plus packs the user added (any id that is not another SRD's).
+      .filter((e) => e.kind === kind && (e.id.startsWith(`${RULESET}:`) || !/^srd\d+:/.test(e.id)))
+      .filter((e) => parent === undefined || e.parent === parent)
+      .map((e) => ({ id: e.id, label: c.name(e.id) }))
+      .sort((a, b) => a.label.localeCompare(b.label))
+  );
 }
 
 interface SelectProps {

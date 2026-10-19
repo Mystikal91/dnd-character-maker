@@ -1,7 +1,15 @@
 import { useRef } from "preact/hooks";
 import { leavePage } from "../app/navigation";
 import { content } from "../app/store";
-import { exportPack, importPackFile, packError, removeUserPack, userPacks } from "../app/userPacks";
+import {
+  exportPack,
+  importAuroraFiles,
+  importPackFile,
+  importReport,
+  packError,
+  removeUserPack,
+  userPacks,
+} from "../app/userPacks";
 import { type UiKey, ui } from "../i18n/ui";
 import type { UserPackRecord } from "../storage/packs";
 
@@ -16,6 +24,8 @@ function summary(record: UserPackRecord): string {
 /** The content packs the user added: what they hold, where they came from, and how to remove them. */
 export function PacksPage() {
   const fileInput = useRef<HTMLInputElement>(null);
+  const auroraInput = useRef<HTMLInputElement>(null);
+  const report = importReport.value;
   const packs = userPacks.value;
   const error = packError.value;
   // The built-in content is spread over several files: count entries per pack id.
@@ -81,6 +91,21 @@ export function PacksPage() {
         <button type="button" onClick={() => fileInput.current?.click()}>
           {ui("packs.import")}
         </button>
+        <button type="button" onClick={() => auroraInput.current?.click()}>
+          {ui("packs.importAurora")}
+        </button>
+        <input
+          ref={auroraInput}
+          type="file"
+          accept=".xml,text/xml,application/xml"
+          multiple
+          hidden
+          onChange={(e) => {
+            const files = Array.from(e.currentTarget.files ?? []);
+            e.currentTarget.value = "";
+            if (files.length > 0) void importAuroraFiles(files);
+          }}
+        />
         <input
           ref={fileInput}
           type="file"
@@ -93,6 +118,26 @@ export function PacksPage() {
           }}
         />
       </div>
+      <p class="muted">{ui("packs.auroraHint")}</p>
+      {report && (
+        <div class="note" aria-live="polite">
+          {report.added > 0 ? (
+            <p>{ui("packs.report", { name: report.name, n: report.added })}</p>
+          ) : (
+            <p>{ui("packs.reportNothing")}</p>
+          )}
+          {report.duplicates > 0 && <p>{ui("packs.reportDuplicates", { n: report.duplicates })}</p>}
+          {Object.keys(report.skipped).length > 0 && (
+            <p>
+              {ui("packs.reportSkipped", {
+                list: Object.entries(report.skipped)
+                  .map(([type, n]) => `${type} ×${n}`)
+                  .join(", "),
+              })}
+            </p>
+          )}
+        </div>
+      )}
       {error && (
         <p class="note" role="alert">
           {ui(error === "exists" ? "packs.exists" : "packs.invalid")}
