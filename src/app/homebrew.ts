@@ -23,10 +23,10 @@ export function openHomebrewPack(id: string): void {
   showView("homebrew");
 }
 
-/** Every language slug the app knows, for a background's language choice. */
-function languageSlugs(): string[] {
+/** The slugs of every entry of one kind the app knows. */
+function slugsOf(kind: string): string[] {
   return [...(content.value?.index.values() ?? [])]
-    .filter((e) => e.kind === "language")
+    .filter((e) => e.kind === kind)
     .map((e) => e.id.split("/")[1] ?? "")
     .filter(Boolean);
 }
@@ -35,7 +35,12 @@ function languageSlugs(): string[] {
 export async function saveHomebrewEntry(draft: Draft, editing?: string): Promise<void> {
   const record = editingPack();
   if (!record) return;
-  const saved = saveDraft(record, draft, { languages: languageSlugs() }, editing);
+  const saved = saveDraft(
+    record,
+    draft,
+    { languages: slugsOf("language"), skills: slugsOf("skill") },
+    editing,
+  );
   await addUserPack(saved.record);
 }
 

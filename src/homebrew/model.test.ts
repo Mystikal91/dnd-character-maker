@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { classData } from "../data/progression";
 import { parsePack } from "../data/schema";
+import type { Entry } from "../data/schema";
 import { createCharacter } from "../engine/character";
 import { deriveSheet } from "../engine/derive";
 import { srd51Index } from "../test/srd51";
@@ -191,5 +193,109 @@ describe("homebrew entries", () => {
     expect(sheet.abilities.con.score).toBe(12);
     expect(sheet.abilities.str.score).toBe(11);
     expect(sheet.speed).toBe(25);
+  });
+});
+
+describe("homebrew classes", () => {
+  const classDraft = draft(
+    "class",
+    {
+      name: "Tinker Mage",
+      hitDie: "8",
+      saves: "int,wis",
+      armor: "light-armor",
+      weapons: "simple-weapons",
+      skillCount: "2",
+      skills: "arcana,history,investigation",
+      casting: "half",
+      castAbility: "int",
+      preparation: "prepared",
+      cantrips: "2",
+      multiAbility: "int",
+      multiMin: "13",
+      desc: "A maker of clever things.",
+    },
+    [
+      { name: "Gadgets", text: "You build gadgets.", level: "1" },
+      { name: "Tinker Path", text: "Choose a path.", level: "3" },
+    ],
+  );
+
+  it("makes a class that passes the schema, with its features and tables", () => {
+    const made = saveDraft(newHomebrewPack("Mine", 1000), classDraft, { ...context, skills: [] });
+    expect(() => parsePack(made.record.pack)).not.toThrow();
+    const entry = made.record.pack.entries.find((e) => e.kind === "class");
+    const data = entry && classData(entry);
+    expect(data?.hitDie).toBe(8);
+    expect(data?.levels).toHaveLength(20);
+    expect(data?.levels[0]?.features).toHaveLength(1);
+    expect(data?.levels[1]?.spellSlots).toEqual([2, 0, 0, 0, 0, 0, 0, 0, 0]);
+    expect(data?.levels[4]?.spellSlots).toEqual([4, 2, 0, 0, 0, 0, 0, 0, 0]);
+    expect(data?.levels[3]?.cantripsKnown).toBe(3);
+    expect(data?.levels[3]?.abilityScoreImprovements).toBe(1);
+    expect(data?.spellcasting).toMatchObject({
+      startsAtLevel: 2,
+      preparation: { levelDivisor: 2 },
+    });
+    expect(data?.multiclassing.prerequisites).toEqual([{ ability: "int", minimum: 13 }]);
+  });
+
+  it("makes Pact Magic slots of one growing level", () => {
+    const made = saveDraft(
+      newHomebrewPack("Mine", 1000),
+      draft("class", {
+        name: "Binder",
+        casting: "pact",
+        castAbility: "cha",
+        preparation: "known",
+        cantrips: "2",
+      }),
+      context,
+    );
+    const data = classData(made.record.pack.entries.find((e) => e.kind === "class") as Entry);
+    expect(data.spellcasting?.pact).toBe(true);
+    expect(data.levels[0]?.spellSlots).toEqual([1, 0, 0, 0, 0, 0, 0, 0, 0]);
+    expect(data.levels[2]?.spellSlots).toEqual([0, 2, 0, 0, 0, 0, 0, 0, 0]);
+    expect(data.levels[10]?.spellSlots).toEqual([0, 0, 0, 0, 3, 0, 0, 0, 0]);
+    expect(data.levels[0]?.spellsKnown).toBe(2);
+  });
+
+  it("works in a character, with a subclass, and opens again for editing", () => {
+    const made = saveDraft(newHomebrewPack("Mine", 1000), classDraft, context);
+    const sub = saveDraft(
+      made.record,
+      draft("subclass", { name: "Clockwork", parent: made.id, desc: "Gears." }, [
+        { name: "Springs", text: "Boing.", level: "3" },
+      ]),
+      context,
+    );
+    expect(() => parsePack(sub.record.pack)).not.toThrow();
+    const index = new Map([
+      ...srd51Index,
+      ...sub.record.pack.entries.map((e) => [e.id, e] as const),
+    ]);
+    const c = createCharacter("srd51");
+    c.classes = [{ classId: made.id, level: 5, subclassId: sub.id }];
+    c.abilityBase = { str: 10, dex: 10, con: 10, int: 16, wis: 10, cha: 10 };
+    const sheet = deriveSheet(c, index);
+    expect(sheet.spellSlots).toEqual([4, 2, 0, 0, 0, 0, 0, 0, 0]);
+    expect(sheet.spellcasters[0]?.cantripsKnown).toBe(3);
+
+    const entry = sub.record.pack.entries.find((e) => e.id === sub.id) as Entry;
+    const back = draftFromEntry(entry, sub.record.strings, sub.record.pack.entries);
+    expect(back?.values.parent).toBe(made.id);
+    expect(back?.traits).toEqual([{ name: "Springs", text: "Boing.", level: "3" }]);
+    const classEntry = made.record.pack.entries.find((e) => e.id === made.id) as Entry;
+    const classBack = draftFromEntry(classEntry, made.record.strings, made.record.pack.entries);
+    expect(classBack?.values).toMatchObject({
+      hitDie: "8",
+      casting: "half",
+      cantrips: "2",
+      asiLevels: "4,8,12,16,19",
+    });
+    expect(classBack?.traits.map((t) => t.name)).toEqual(["Gadgets", "Tinker Path"]);
+
+    const without = removeEntry(sub.record, made.id);
+    expect(without.pack.entries.map((e) => e.kind)).toEqual(["subclass", "feature"]);
   });
 });

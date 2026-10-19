@@ -1,4 +1,5 @@
 import type { Effect, Entry } from "../data/schema";
+import { MULTICLASS_SLOTS } from "../engine/multiclass";
 import { slugify } from "../import/aurora/xml";
 import type { UserPackRecord } from "../storage/packs";
 
@@ -12,6 +13,8 @@ export const HOMEBREW_KINDS = [
   "feat",
   "species",
   "background",
+  "class",
+  "subclass",
 ] as const;
 export type HomebrewKind = (typeof HOMEBREW_KINDS)[number];
 
@@ -38,6 +41,8 @@ export const ABILITY_IDS = ["str", "dex", "con", "int", "wis", "cha"] as const;
 export interface DraftTrait {
   name: string;
   text: string;
+  /** The level a class or subclass feature arrives at. */
+  level?: string;
 }
 
 /**
@@ -56,6 +61,57 @@ export const blankDraft = (kind: HomebrewKind): Draft => ({ kind, values: {}, tr
 export interface BuildContext {
   /** Every language slug, offered by a background's language choice. */
   languages: string[];
+  /** Every skill slug, offered by a class's skill choice when none are picked. */
+  skills?: string[];
+}
+
+const ZERO_SLOTS = Array.from({ length: 9 }, () => 0);
+export const CASTING_KINDS = ["none", "full", "half", "pact"] as const;
+export const PREPARATION_KINDS = ["prepared", "known", "spellbook"] as const;
+export const HIT_DICE = [6, 8, 10, 12] as const;
+export const DEFAULT_ASI_LEVELS = "4,8,12,16,19";
+
+/** Slots of a class on the standard tables: full casters, half casters, or Pact Magic. */
+function slotsFor(kind: "full" | "half" | "pact", level: number): number[] {
+  if (kind === "full") return MULTICLASS_SLOTS[level - 1] ?? ZERO_SLOTS;
+  if (kind === "half")
+    return level < 2 ? ZERO_SLOTS : (MULTICLASS_SLOTS[Math.ceil(level / 2) - 1] ?? ZERO_SLOTS);
+  const count = level === 1 ? 1 : level <= 10 ? 2 : level <= 16 ? 3 : 4;
+  const spellLevel = Math.min(5, Math.ceil(level / 2));
+  return ZERO_SLOTS.map((_, i) => (i === spellLevel - 1 ? count : 0));
+}
+
+/** The feature entries a class or subclass lists, with their ids grouped by level. */
+function featureEntries(
+  rows: DraftTrait[],
+  id: Id,
+  classId: string,
+  strings: Record<string, string>,
+  into: Entry[],
+): Map<number, string[]> {
+  const byLevel = new Map<number, string[]>();
+  const used = new Set<string>();
+  for (const row of rows) {
+    const name = text(row.name);
+    if (!name) continue;
+    const level = Math.min(20, Math.max(1, whole(row.level, 1)));
+    const base = `${slugOf(id)}-${slugify(name) || "feature"}`;
+    let slug = base;
+    for (let n = 2; used.has(slug); n++) slug = `${base}-${n}`;
+    used.add(slug);
+    const featureId = idOf(packOf(id), "feature", slug);
+    into.push({ id: featureId, kind: "feature", effects: [], data: { class: classId, level } });
+    strings[`${featureId}.name`] = name;
+    if (text(row.text)) strings[`${featureId}.desc`] = text(row.text);
+    byLevel.set(level, [...(byLevel.get(level) ?? []), featureId]);
+  }
+  return byLevel;
+}
+
+/** A form is ready to save when it has a name, and a subclass also has its class. */
+export function draftReady(draft: Draft): boolean {
+  if (!text(draft.values.name)) return false;
+  return draft.kind !== "subclass" || Boolean(text(draft.values.parent));
 }
 
 const num = (s: string | undefined, fallback: number) => {
@@ -285,6 +341,111 @@ export function buildDraft(draft: Draft, id: Id, context: BuildContext): Built {
       entry = { id, kind: "background", effects, data: { choose } };
       break;
     }
+    case "class": {
+      const effects: Effect[] = [];
+      for (const target of list(values.armor))
+        effects.push({ type: "proficiency", category: "armor", target });
+      for (const target of list(values.weapons))
+        effects.push({ type: "proficiency", category: "weapon", target });
+      for (const target of list(values.saves))
+        effects.push({ type: "proficiency", category: "save", target });
+      const picked = list(values.skills);
+      const from = (picked.length > 0 ? picked : (context.skills ?? [])).map((k) => `skill:${k}`);
+      const skillCount = Math.min(6, Math.max(0, whole(values.skillCount, 2)));
+      if (skillCount > 0 && from.length > 0)
+        effects.push({
+          type: "choice",
+          id: `${slugOf(id)}-proficiency-1`,
+          choose: skillCount,
+          grants: "proficiency",
+          from,
+        });
+
+      const hitDie = HIT_DICE.find((d) => d === whole(values.hitDie, 8)) ?? 8;
+      const casting = CASTING_KINDS.find((k) => k === values.casting) ?? "none";
+      const preparation = PREPARATION_KINDS.find((k) => k === values.preparation) ?? "prepared";
+      const cantrips = Math.min(9, Math.max(0, whole(values.cantrips, 0)));
+      const startsAt = casting === "half" ? 2 : 1;
+      const ability = ABILITY_IDS.find((a) => a === values.castAbility) ?? "int";
+      const asiLevels = (values.asiLevels ?? DEFAULT_ASI_LEVELS)
+        .split(/[\s,]+/)
+        .map((n) => Number(n))
+        .filter((n) => Number.isInteger(n) && n >= 1 && n <= 20);
+      const byLevel = featureEntries(draft.traits, id, id, strings, extra);
+      const levels = Array.from({ length: 20 }, (_, i) => {
+        const level = i + 1;
+        const casts = casting !== "none" && level >= startsAt;
+        return {
+          level,
+          features: byLevel.get(level) ?? [],
+          abilityScoreImprovements: asiLevels.filter((l) => l <= level).length,
+          ...(casts &&
+            cantrips > 0 && {
+              cantripsKnown: cantrips + (level >= 4 ? 1 : 0) + (level >= 10 ? 1 : 0),
+            }),
+          ...(casts &&
+            preparation === "known" && {
+              spellsKnown:
+                casting === "half"
+                  ? Math.floor(level / 2) + 1
+                  : Math.min(casting === "pact" ? 15 : 20, level + 1),
+            }),
+          ...(casts && { spellSlots: slotsFor(casting, level) }),
+          classSpecific: {},
+        };
+      });
+      const prereq = ABILITY_IDS.find((a) => a === values.multiAbility);
+      const multiclassProficiencies = [
+        ...list(values.armor)
+          .filter((t) => t !== "heavy-armor" && t !== "all-armor")
+          .map((t) => `armor:${t}`),
+        ...list(values.weapons).map((t) => `weapon:${t}`),
+      ];
+      entry = {
+        id,
+        kind: "class",
+        effects,
+        data: {
+          hitDie,
+          ...(casting !== "none" && {
+            spellcasting: {
+              ability,
+              startsAtLevel: startsAt,
+              ...(casting === "pact" && { pact: true }),
+              preparation:
+                preparation === "known"
+                  ? { type: "known" }
+                  : preparation === "spellbook"
+                    ? { type: "spellbook", initial: 6, perLevel: 2 }
+                    : { type: "prepared", levelDivisor: casting === "half" ? 2 : 1 },
+            },
+          }),
+          multiclassing: {
+            prerequisites: prereq ? [{ ability: prereq, minimum: whole(values.multiMin, 13) }] : [],
+            proficiencies: multiclassProficiencies,
+          },
+          levels,
+        },
+      };
+      break;
+    }
+    case "subclass": {
+      const parent = text(values.parent) as Id;
+      const byLevel = featureEntries(draft.traits, id, parent, strings, extra);
+      entry = {
+        id,
+        kind: "subclass",
+        ...(parent && { parent }),
+        effects: [],
+        data: {
+          levels: [...byLevel.entries()]
+            .sort(([a], [b]) => a - b)
+            .map(([level, features]) => ({ level, features })),
+          spells: [],
+        },
+      };
+      break;
+    }
   }
   return { entries: [entry, ...extra], strings };
 }
@@ -412,6 +573,77 @@ export function draftFromEntry(
       }
       return { kind: "background", values, traits: [] };
     }
+    case "class": {
+      const proficiencies = (category: string) =>
+        entry.effects
+          .flatMap((e) => (e.type === "proficiency" && e.category === category ? [e.target] : []))
+          .join(",");
+      const choice = entry.effects.find((e) => e.type === "choice" && e.grants === "proficiency");
+      const casting = d.spellcasting;
+      const rows: {
+        level: number;
+        features: string[];
+        abilityScoreImprovements: number;
+        cantripsKnown?: number;
+      }[] = d.levels ?? [];
+      const asi: number[] = [];
+      let before = 0;
+      for (const row of rows) {
+        for (let n = before; n < row.abilityScoreImprovements; n++) asi.push(row.level);
+        before = row.abilityScoreImprovements;
+      }
+      Object.assign(values, {
+        hitDie: String(d.hitDie ?? 8),
+        armor: proficiencies("armor"),
+        weapons: proficiencies("weapon"),
+        saves: proficiencies("save"),
+        skillCount: choice?.type === "choice" ? String(choice.choose) : "0",
+        skills:
+          choice?.type === "choice"
+            ? choice.from.map((f) => f.replace(/^skill:/, "")).join(",")
+            : "",
+        casting: !casting
+          ? "none"
+          : casting.pact
+            ? "pact"
+            : casting.startsAtLevel > 1
+              ? "half"
+              : "full",
+        castAbility: String(casting?.ability ?? "int"),
+        preparation: casting?.preparation.type ?? "prepared",
+        cantrips: String(rows.find((r) => r.cantripsKnown !== undefined)?.cantripsKnown ?? 0),
+        asiLevels: asi.join(","),
+        multiAbility: d.multiclassing?.prerequisites?.[0]?.ability ?? "",
+        multiMin: String(d.multiclassing?.prerequisites?.[0]?.minimum ?? 13),
+      });
+      const traits: DraftTrait[] = [];
+      for (const row of rows)
+        for (const featureId of row.features) {
+          const owned = entries.find((e) => e.id === featureId);
+          if (owned)
+            traits.push({
+              name: strings[`${owned.id}.name`] ?? "",
+              text: strings[`${owned.id}.desc`] ?? "",
+              level: String(row.level),
+            });
+        }
+      return { kind: "class", values, traits };
+    }
+    case "subclass": {
+      values.parent = entry.parent ?? "";
+      const traits: DraftTrait[] = [];
+      for (const row of (d.levels ?? []) as { level: number; features: string[] }[])
+        for (const featureId of row.features) {
+          const owned = entries.find((e) => e.id === featureId);
+          if (owned)
+            traits.push({
+              name: strings[`${owned.id}.name`] ?? "",
+              text: strings[`${owned.id}.desc`] ?? "",
+              level: String(row.level),
+            });
+        }
+      return { kind: "subclass", values, traits };
+    }
     default:
       return undefined;
   }
@@ -447,6 +679,12 @@ export function newHomebrewPack(name: string, now = Date.now()): UserPackRecord 
 
 /** Ids of the entries a species owns: the traits the editor made for it. */
 function ownedIds(entry: Entry): string[] {
+  if (entry.kind === "class" || entry.kind === "subclass") {
+    const rows = ((entry.data as { levels?: { features?: string[] }[] }).levels ?? []).flatMap(
+      (row) => row.features ?? [],
+    );
+    return rows.filter((id) => packOf(id) === packOf(entry.id));
+  }
   if (entry.kind !== "species") return [];
   return entry.effects.flatMap((e) =>
     e.type === "trait" && packOf(e.id) === packOf(entry.id) ? [e.id] : [],

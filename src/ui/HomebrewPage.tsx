@@ -10,15 +10,20 @@ import { content } from "../app/store";
 import { exportPack } from "../app/userPacks";
 import {
   ABILITY_IDS,
+  CASTING_KINDS,
   COIN_UNITS,
   DAMAGE_TYPES,
+  DEFAULT_ASI_LEVELS,
   type Draft,
   type DraftTrait,
+  HIT_DICE,
   HOMEBREW_KINDS,
   type HomebrewKind,
+  PREPARATION_KINDS,
   SIZES,
   blankDraft,
   draftFromEntry,
+  draftReady,
   editableEntries,
 } from "../homebrew/model";
 import { type UiKey, ui } from "../i18n/ui";
@@ -34,8 +39,18 @@ interface FormApi {
   setTraits: (traits: DraftTrait[]) => void;
 }
 
-function Text({ api, name, area }: { api: FormApi; name: string; area?: boolean }) {
-  const value = api.draft.values[name] ?? "";
+function Text({
+  api,
+  name,
+  area,
+  fallback,
+}: {
+  api: FormApi;
+  name: string;
+  area?: boolean;
+  fallback?: string;
+}) {
+  const value = api.draft.values[name] ?? fallback ?? "";
   if (area)
     return (
       <label class="field">
@@ -176,6 +191,8 @@ function abilityOptions() {
 
 function Fields({ api }: { api: FormApi }) {
   const abilities = abilityOptions();
+  const proficiencies = (list: string[]) =>
+    list.map((id) => ({ id, label: content.value?.name(`srd51:proficiency/${id}`) ?? id }));
   const slugs = (kind: string) =>
     entriesOfKind(kind).map((e) => ({ id: e.id.split("/")[1] ?? e.id, label: e.label }));
   switch (api.draft.kind) {
@@ -324,6 +341,66 @@ function Fields({ api }: { api: FormApi }) {
           <Traits api={api} />
         </>
       );
+    case "class":
+      return (
+        <>
+          <div class="hb-row">
+            <Pick
+              api={api}
+              name="hitDie"
+              fallback="8"
+              options={HIT_DICE.map((d) => ({ id: String(d), label: `d${d}` }))}
+            />
+            <Pick api={api} name="skillCount" fallback="2" options={range(0, 6)} />
+          </div>
+          <Many api={api} name="saves" options={abilities} />
+          <Many
+            api={api}
+            name="armor"
+            options={proficiencies(["light-armor", "medium-armor", "heavy-armor", "shields"])}
+          />
+          <Many
+            api={api}
+            name="weapons"
+            options={proficiencies(["simple-weapons", "martial-weapons"])}
+          />
+          <Many api={api} name="skills" options={slugs("skill")} />
+          <div class="hb-row">
+            <Pick
+              api={api}
+              name="casting"
+              fallback="none"
+              options={CASTING_KINDS.map((id) => ({ id, label: option(id) }))}
+            />
+            <Pick api={api} name="castAbility" fallback="int" options={abilities} />
+            <Pick
+              api={api}
+              name="preparation"
+              fallback="prepared"
+              options={PREPARATION_KINDS.map((id) => ({ id, label: option(id) }))}
+            />
+            <Num api={api} name="cantrips" min={0} />
+          </div>
+          {(api.draft.values.casting ?? "none") !== "none" && (
+            <p class="muted">{ui("hb.classSpellsHint")}</p>
+          )}
+          <Text api={api} name="asiLevels" fallback={DEFAULT_ASI_LEVELS} />
+          <div class="hb-row">
+            <Pick api={api} name="multiAbility" options={abilities} blank />
+            <Num api={api} name="multiMin" min={1} />
+          </div>
+          <Text api={api} name="desc" area />
+          <Features api={api} />
+        </>
+      );
+    case "subclass":
+      return (
+        <>
+          <Pick api={api} name="parent" options={entriesOfKind("class")} blank />
+          <Text api={api} name="desc" area />
+          <Features api={api} />
+        </>
+      );
     case "background":
       return (
         <>
@@ -340,6 +417,60 @@ function Fields({ api }: { api: FormApi }) {
         </>
       );
   }
+}
+
+function Features({ api }: { api: FormApi }) {
+  const rows = api.draft.traits;
+  const update = api.setTraits;
+  const patch = (i: number, change: Partial<DraftTrait>) =>
+    update(rows.map((x, j) => (j === i ? { ...x, ...change } : x)));
+  return (
+    <fieldset class="hb-many">
+      <legend>{label("features")}</legend>
+      {rows.map((t, i) => (
+        <div class="hb-trait" key={`feature-${i + 1}`}>
+          <div class="hb-row">
+            <label class="field">
+              <span>{label("featureLevel")}</span>
+              <input
+                type="number"
+                min={1}
+                max={20}
+                value={t.level ?? "1"}
+                onInput={(e) => patch(i, { level: e.currentTarget.value })}
+              />
+            </label>
+            <label class="field">
+              <span>{label("featureName")}</span>
+              <input
+                type="text"
+                value={t.name}
+                onInput={(e) => patch(i, { name: e.currentTarget.value })}
+              />
+            </label>
+          </div>
+          <label class="field">
+            <span>{label("featureDesc")}</span>
+            <textarea
+              rows={3}
+              value={t.text}
+              onInput={(e) => patch(i, { text: e.currentTarget.value })}
+            />
+          </label>
+          <button
+            type="button"
+            class="danger"
+            onClick={() => update(rows.filter((_, j) => j !== i))}
+          >
+            {ui("form.remove")}
+          </button>
+        </div>
+      ))}
+      <button type="button" onClick={() => update([...rows, { name: "", text: "", level: "1" }])}>
+        {label("addFeature")}
+      </button>
+    </fieldset>
+  );
 }
 
 function Traits({ api }: { api: FormApi }) {
@@ -403,7 +534,7 @@ function EntryForm({
       setDraft((d) => ({ ...d, values: { ...d.values, [key]: value } })),
     setTraits: (traits: DraftTrait[]) => setDraft((d) => ({ ...d, traits })),
   };
-  const named = (draft.values.name ?? "").trim() !== "";
+  const named = draftReady(draft);
   const save = async () => {
     if (!named || saving) return;
     setSaving(true);
@@ -415,7 +546,9 @@ function EntryForm({
       <h3>{kindName(draft.kind)}</h3>
       <Text api={api} name="name" />
       <Fields api={api} />
-      {!named && <p class="muted">{ui("hb.needName")}</p>}
+      {!named && (
+        <p class="muted">{ui(draft.kind === "subclass" ? "hb.needClass" : "hb.needName")}</p>
+      )}
       <div class="pack-actions">
         <button
           type="button"

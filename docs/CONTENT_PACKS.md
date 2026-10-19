@@ -17,10 +17,10 @@ link: a link carries only the character, so whoever opens it needs their own cop
 ## Homebrew editor
 
 *New homebrew pack* on the packs page opens an editor with a form for each kind of entry:
-spells, weapons, armor, gear, languages, feats, species (with their traits) and backgrounds
+spells, weapons, armor, gear, languages, feats, species (with their traits), backgrounds, classes and subclasses
 (with personality tables). Entries are saved as soon as the form is saved, appear in the build
 steps like the built-in ones, and can be edited or deleted later. A pack can be exported as a
-file and added on another device. Classes and subclasses are not in the editor yet.
+file and added on another device. Classes use the standard spell slot tables (full caster, half caster or Pact Magic); every class and subclass feature is a name and a text at a level.
 
 ## Aurora XML
 
