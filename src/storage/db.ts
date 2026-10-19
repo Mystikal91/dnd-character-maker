@@ -1,9 +1,9 @@
-/** Minimal promise wrapper over IndexedDB: two object stores, no dependencies. */
+/** Minimal promise wrapper over IndexedDB: a few object stores, no dependencies. */
 
 const DB_NAME = "dnd-character-maker";
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
-export type StoreName = "characters" | "meta";
+export type StoreName = "characters" | "meta" | "packs";
 
 let connection: Promise<IDBDatabase> | undefined;
 
@@ -19,6 +19,7 @@ function open(): Promise<IDBDatabase> {
       if (!db.objectStoreNames.contains("characters"))
         db.createObjectStore("characters", { keyPath: "id" });
       if (!db.objectStoreNames.contains("meta")) db.createObjectStore("meta");
+      if (!db.objectStoreNames.contains("packs")) db.createObjectStore("packs", { keyPath: "id" });
     };
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error ?? new Error("Could not open the database"));

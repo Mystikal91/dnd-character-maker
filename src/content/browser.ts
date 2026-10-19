@@ -1,5 +1,6 @@
 import { type Pack, parsePack } from "../data/schema";
 import { type PackIndex, indexPacks } from "../engine/derive";
+import type { UserPackRecord } from "../storage/packs";
 
 /** Loaded rules content plus helpers to read its translated texts. */
 export interface Content {
@@ -29,7 +30,10 @@ export const prettify = (slug: string) => {
  * Loads every content pack and the texts for `locales`, in priority order
  * (e.g. `["it", "en"]`: Italian where translated, English otherwise).
  */
-export async function loadContent(locales: string[]): Promise<Content> {
+export async function loadContent(
+  locales: string[],
+  userPacks: UserPackRecord[] = [],
+): Promise<Content> {
   const texts = new Map<string, string>();
   const packs: Pack[] = [];
 
@@ -51,6 +55,14 @@ export async function loadContent(locales: string[]): Promise<Content> {
       }
     }),
   );
+
+  // Packs the user added: their texts are keyed by full entry id and carry their own language.
+  for (const record of userPacks) {
+    const pack = parsePack(record.pack);
+    if (packs.some((p) => p.manifest.id === pack.manifest.id)) continue;
+    packs.push(pack);
+    for (const [key, value] of Object.entries(record.strings)) if (value) texts.set(key, value);
+  }
 
   const text = (id: string, field: string) => texts.get(`${id}.${field}`);
   return {

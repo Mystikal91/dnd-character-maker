@@ -1,4 +1,4 @@
-import { leaveCredits } from "../app/navigation";
+import { leavePage } from "../app/navigation";
 import { content } from "../app/store";
 import { ui } from "../i18n/ui";
 
@@ -22,11 +22,18 @@ function ExternalLink({ href, children }: { href: string; children: string }) {
 
 /** Attribution and licenses. The SRD attribution text is required by its license and stays in English. */
 export function Credits() {
-  const attributions = [...new Set(content.value?.packs.map((p) => p.manifest.attribution))];
+  // Packs the user added carry their own notes; only the content shipped with the app is credited.
+  const attributions = [
+    ...new Set(
+      content.value?.packs
+        .filter((p) => p.manifest.ruleset !== "custom")
+        .map((p) => p.manifest.attribution),
+    ),
+  ];
 
   return (
     <article class="card credits">
-      <button type="button" class="secondary" onClick={leaveCredits}>
+      <button type="button" class="secondary" onClick={leavePage}>
         {ui("credits.back")}
       </button>
       <h2>{ui("credits.title")}</h2>

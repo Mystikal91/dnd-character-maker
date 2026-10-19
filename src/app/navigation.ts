@@ -1,7 +1,7 @@
 import { effect, signal } from "@preact/signals";
 
-/** Which screen is showing. `build`, `sheet` and `print` are the tabs; `credits` is a page. */
-export type View = "build" | "sheet" | "play" | "print" | "credits";
+/** Which screen is showing: the tabs, or one of the pages (credits, content packs). */
+export type View = "build" | "sheet" | "play" | "print" | "credits" | "packs";
 export type Tab = "build" | "sheet" | "play" | "print";
 
 const STORAGE_KEY = "tab";
@@ -18,15 +18,18 @@ function savedTab(): "build" | "sheet" | "play" {
 
 export const view = signal<View>(savedTab());
 
-/** The tab to go back to when leaving the credits page. */
-let lastTab: Tab = view.value === "credits" ? "build" : (view.value as Tab);
+const isPage = (v: View) => v === "credits" || v === "packs";
+
+/** The tab to go back to when leaving a page. */
+let lastTab: Tab = isPage(view.value) ? "build" : (view.value as Tab);
 
 export function showView(next: View) {
-  if (next !== "credits") lastTab = next;
+  if (!isPage(next)) lastTab = next as Tab;
   view.value = next;
 }
 
-export function leaveCredits() {
+/** Leaves the credits or packs page, back to the tab that was open. */
+export function leavePage() {
   view.value = lastTab;
 }
 

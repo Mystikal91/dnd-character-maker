@@ -2,10 +2,12 @@ import { useEffect } from "preact/hooks";
 import { language, localeChain } from "../app/language";
 import { showView, view } from "../app/navigation";
 import { content, initStorage, loadError, storageReady } from "../app/store";
+import { loadUserPacks, userPacks, userPacksReady } from "../app/userPacks";
 import { loadContent } from "../content/browser";
 import { ui } from "../i18n/ui";
 import { CharacterBar } from "./CharacterBar";
 import { Credits } from "./Credits";
+import { PacksPage } from "./PacksPage";
 import { ShareDialog } from "./ShareDialog";
 import { Sheet } from "./Sheet";
 import { Tabs } from "./Tabs";
@@ -19,6 +21,8 @@ function Screen() {
   switch (view.value) {
     case "credits":
       return <Credits />;
+    case "packs":
+      return <PacksPage />;
     case "print":
       return <PrintView />;
     case "sheet":
@@ -33,13 +37,17 @@ function Screen() {
 export function App() {
   useEffect(() => {
     void initStorage();
+    void loadUserPacks();
   }, []);
 
   // Rules texts follow the language; the old texts stay on screen until the new ones are loaded.
   const lang = language.value;
+  const added = userPacks.value;
+  const packsReady = userPacksReady.value;
   useEffect(() => {
+    if (!packsReady) return;
     let current = true;
-    loadContent(localeChain(lang)).then(
+    loadContent(localeChain(lang), added).then(
       (loaded) => {
         if (current) content.value = loaded;
       },
@@ -51,7 +59,7 @@ export function App() {
     return () => {
       current = false;
     };
-  }, [lang]);
+  }, [lang, added, packsReady]);
 
   return (
     <main class="shell">
@@ -77,6 +85,10 @@ export function App() {
       <footer class="site-footer no-print">
         <p>{ui("footer.unofficial")}</p>
         <p>
+          <button type="button" class="link" onClick={() => showView("packs")}>
+            {ui("footer.packs")}
+          </button>
+          {" · "}
           <button type="button" class="link" onClick={() => showView("credits")}>
             {ui("footer.credits")}
           </button>
