@@ -9,7 +9,8 @@ export type View =
   | "credits"
   | "packs"
   | "homebrew"
-  | "translate";
+  | "translate"
+  | "about";
 export type Tab = "build" | "sheet" | "play" | "print";
 
 const STORAGE_KEY = "tab";
@@ -27,7 +28,7 @@ function savedTab(): "build" | "sheet" | "play" {
 export const view = signal<View>(savedTab());
 
 const isPage = (v: View) =>
-  v === "credits" || v === "packs" || v === "homebrew" || v === "translate";
+  v === "credits" || v === "packs" || v === "homebrew" || v === "translate" || v === "about";
 
 /** The tab to go back to when leaving a page. */
 let lastTab: Tab = isPage(view.value) ? "build" : (view.value as Tab);

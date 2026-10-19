@@ -36,6 +36,13 @@ See [docs/TRANSLATING.md](docs/TRANSLATING.md).
 Besides the SRD 5.1, people can add their own packs and read Aurora XML files they already
 have. See [docs/CONTENT_PACKS.md](docs/CONTENT_PACKS.md).
 
+## Versions and changelog
+
+The version and its stage (`beta`) are in `src/app/version.ts`. What changed in each version is
+listed in `src/content/news.ts` (`CHANGELOG`, newest first: write the lines in English and, if
+possible, in the other languages) next to the `ROADMAP` of what is still missing. Both show in
+the app, under the title.
+
 ## Licenses
 
 - Code: [MIT](LICENSE).

@@ -8,6 +8,8 @@ import { ui } from "../i18n/ui";
 import { CharacterBar } from "./CharacterBar";
 import { Credits } from "./Credits";
 import "../app/translate";
+import { STAGE } from "../app/version";
+import { AboutPage } from "./AboutPage";
 import { AutoTranslatePage } from "./AutoTranslatePage";
 import { HomebrewPage } from "./HomebrewPage";
 import { PacksPage } from "./PacksPage";
@@ -31,6 +33,8 @@ function Screen() {
       return <HomebrewPage />;
     case "translate":
       return <AutoTranslatePage />;
+    case "about":
+      return <AboutPage />;
     case "print":
       return <PrintView />;
     case "sheet":
@@ -73,7 +77,12 @@ export function App() {
     <main class="shell">
       <header class="app-header no-print">
         <div class="app-title">
-          <h1>{ui("app.title")}</h1>
+          <h1>
+            <button type="button" class="title-link" onClick={() => showView("about")}>
+              {ui("app.title")}
+            </button>{" "}
+            <span class="beta-badge">{STAGE}</span>
+          </h1>
         </div>
         <ThemeControls />
       </header>
@@ -94,6 +103,10 @@ export function App() {
       <footer class="site-footer no-print">
         <p>{ui("footer.unofficial")}</p>
         <p>
+          <button type="button" class="link" onClick={() => showView("about")}>
+            {ui("footer.about")}
+          </button>
+          {" · "}
           <button type="button" class="link" onClick={() => showView("packs")}>
             {ui("footer.packs")}
           </button>

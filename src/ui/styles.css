@@ -737,3 +737,44 @@ textarea {
   font-size: 0.8rem;
   color: var(--muted);
 }
+
+/* ---- Title, beta badge and the About page ---- */
+
+.beta-badge {
+  display: inline-block;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-family: var(--font-body, inherit);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+button.title-link {
+  padding: 0;
+  min-height: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.about section {
+  margin-top: 1.25rem;
+}
+
+.about-list {
+  padding-left: 1.2rem;
+}
+
+.about-list li {
+  margin-bottom: 0.5rem;
+}
