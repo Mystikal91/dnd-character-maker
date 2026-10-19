@@ -35,6 +35,13 @@ describe("following Aurora indexes", () => {
     expect(log).not.toContain("https://x.test/old.xml");
   });
 
+  it("reports the name the first index gives its content", async () => {
+    const result = await gatherAurora([{ text: index("https://x.test/b.xml") }], {
+      fetcher: served({ "https://x.test/b.xml": elements("B") }),
+    });
+    expect(result.title).toBe("Idx");
+  });
+
   it("starts from an address and visits each address once", async () => {
     const files = {
       "https://x.test/a.index": index("https://x.test/b.index", "https://x.test/b.index"),

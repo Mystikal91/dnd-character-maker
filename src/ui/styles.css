@@ -578,6 +578,10 @@ textarea {
 
 /* ---- Content packs ---- */
 
+.packs h3 {
+  margin-top: 1.75rem;
+}
+
 .pack-list .pack {
   display: flex;
   flex-wrap: wrap;

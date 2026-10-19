@@ -10,6 +10,8 @@ export interface Gathered {
   texts: string[];
   /** Addresses that could not be fetched or were not Aurora files. */
   failed: string[];
+  /** The name the first index file gives its content, when it has one. */
+  title?: string;
   /** True when the limits stopped the search before every listed file was visited. */
   truncated: boolean;
 }
@@ -39,12 +41,13 @@ async function download(url: string): Promise<string> {
 }
 
 /** The root element of an XML text and, for an index, the files it lists (obsolete ones left out). */
-function inspect(text: string, base?: string): { root: string; listed: string[] } {
+function inspect(text: string, base?: string): { root: string; listed: string[]; name: string } {
   const doc = new DOMParser().parseFromString(text.replace(/^﻿/, ""), "application/xml");
   if (doc.getElementsByTagName("parsererror").length > 0 || !doc.documentElement)
-    return { root: "", listed: [] };
+    return { root: "", listed: [], name: "" };
   const root = doc.documentElement.tagName;
-  if (root !== "index") return { root, listed: [] };
+  if (root !== "index") return { root, listed: [], name: "" };
+  const name = (doc.querySelector("info > name")?.textContent ?? "").trim();
   const listed: string[] = [];
   for (const file of Array.from(doc.querySelectorAll("files > file"))) {
     const href = file.getAttribute("url");
@@ -55,7 +58,7 @@ function inspect(text: string, base?: string): { root: string; listed: string[] 
       // not an address: nothing to fetch
     }
   }
-  return { root, listed };
+  return { root, listed, name };
 }
 
 /**
@@ -72,6 +75,7 @@ export async function gatherAurora(
   const texts: string[] = [];
   const failed: string[] = [];
   let truncated = false;
+  let title: string | undefined;
   let done = 0;
   let total = 0;
   let level: Item[] = [];
@@ -111,9 +115,10 @@ export async function gatherAurora(
           done++;
           options.onProgress?.(done, total);
           if (text === undefined) return;
-          const { root, listed } = inspect(text, item.url);
+          const { root, listed, name } = inspect(text, item.url);
           if (root === "elements") texts.push(text);
           else if (root === "index") {
+            if (name) title ??= name;
             if (item.depth >= MAX_DEPTH) truncated = true;
             else for (const url of listed) enqueue({ url, depth: item.depth + 1 }, next);
           } else failed.push(item.url ?? "file");
@@ -124,5 +129,5 @@ export async function gatherAurora(
   }
   if (texts.length === 0 && failed.length === 0)
     throw new AuroraParseError("Nothing to import: no Aurora files found");
-  return { texts, failed, truncated };
+  return { texts, failed, truncated, ...(title && { title }) };
 }

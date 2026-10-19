@@ -124,7 +124,7 @@ async function importAuroraSources(start: { text?: string; url?: string }[]): Pr
       index: loaded.index,
       nameOf: (entryId) => loaded.name(entryId),
     });
-    const name = result.title || "Imported content";
+    const name = `${gathered.title || result.title || "Imported content"} (Aurora)`;
     importReport.value = {
       added: result.entries.length,
       duplicates: result.duplicates,
