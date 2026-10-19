@@ -731,3 +731,9 @@ textarea {
 .packs .hb-form .pack-actions {
   margin-top: 0.75rem;
 }
+
+.machine-note {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}

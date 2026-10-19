@@ -14,6 +14,9 @@ What it does and does not do:
 - a key ending in `:fx` is a free-plan key and goes to `api-free.deepl.com`, any other key to
   `api.deepl.com`.
 
+The app's *Automatic translation* page points at `https://dnd-translate.mystikal91.workers.dev`
+by default; the address can be changed there, so anyone can run a relay of their own.
+
 ## Publishing it (no command line)
 
 1. Make a free account at [cloudflare.com](https://dash.cloudflare.com/sign-up). The free plan

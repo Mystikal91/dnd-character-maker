@@ -2,6 +2,7 @@ import { signal } from "@preact/signals";
 import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
 import { character, content } from "../../app/store";
 import { ui } from "../../i18n/ui";
+import { MachineNote } from "../sheet/parts";
 
 /** The spell whose full details are open in the dialog, if any. */
 export const spellDetail = signal<string | undefined>(undefined);
@@ -55,6 +56,7 @@ function SpellInfoBody({ id, short = false }: { id: string; short?: boolean }) {
       {shown.split("\n\n").map((p) => (
         <p key={p}>{p}</p>
       ))}
+      <MachineNote text={desc} />
       {!short && c.text(id, "higherLevel") && (
         <p>
           <strong>{ui("spells.higherLevel")}.</strong> {c.text(id, "higherLevel")}

@@ -7,6 +7,8 @@ import { loadContent } from "../content/browser";
 import { ui } from "../i18n/ui";
 import { CharacterBar } from "./CharacterBar";
 import { Credits } from "./Credits";
+import "../app/translate";
+import { AutoTranslatePage } from "./AutoTranslatePage";
 import { HomebrewPage } from "./HomebrewPage";
 import { PacksPage } from "./PacksPage";
 import { ShareDialog } from "./ShareDialog";
@@ -27,6 +29,8 @@ function Screen() {
       return <PacksPage />;
     case "homebrew":
       return <HomebrewPage />;
+    case "translate":
+      return <AutoTranslatePage />;
     case "print":
       return <PrintView />;
     case "sheet":
@@ -92,6 +96,10 @@ export function App() {
         <p>
           <button type="button" class="link" onClick={() => showView("packs")}>
             {ui("footer.packs")}
+          </button>
+          {" · "}
+          <button type="button" class="link" onClick={() => showView("translate")}>
+            {ui("footer.translate")}
           </button>
           {" · "}
           <button type="button" class="link" onClick={() => showView("credits")}>

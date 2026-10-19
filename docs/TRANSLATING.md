@@ -104,6 +104,22 @@ restrained and stunned (only their names are added, by hand, in `import_misc.py`
 not part of the running text. Item descriptions, proficiencies and the remaining gear are not
 imported yet.
 
+## Automatic translation of what is missing
+
+Texts that have no translation yet (about 13% of the rules texts, and everything imported from
+Aurora files, which is English) can be translated by [DeepL](https://www.deepl.com/pro-api) as
+they are read. It is off by default and each person uses their own DeepL key, free or paid, in
+*Automatic translation* (footer). Requests go through the relay in `workers/translate-proxy/`
+(see [TRANSLATION_PROXY.md](TRANSLATION_PROXY.md)), because DeepL does not accept calls from web
+pages.
+
+- only the text on screen is sent, once: translations are kept in IndexedDB by language and
+  English text, so nothing is translated twice, and a text translated by an official or a
+  Weblate translation is never sent;
+- a machine translation is marked, with a button to read the English original;
+- distances are converted to metric before the text is sent, when the units are metric;
+- text written by the person (homebrew) is never sent.
+
 ## Checking a translation locally
 
 ```bash

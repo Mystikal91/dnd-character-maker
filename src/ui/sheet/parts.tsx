@@ -1,5 +1,6 @@
 import type { ComponentChildren } from "preact";
 import { ui } from "../../i18n/ui";
+import { machineMode, toggleOriginal } from "../../translate/auto";
 
 /** A framed panel with a titled heading. */
 export function Panel({
@@ -19,6 +20,20 @@ export function Panel({
   );
 }
 
+/** Says that a text was translated by machine, and swaps it with the English original. */
+export function MachineNote({ text }: { text: string | undefined }) {
+  const mode = text ? machineMode(text) : undefined;
+  if (!mode) return null;
+  return (
+    <p class="machine-note">
+      <span>{ui("translate.machine")}</span>{" "}
+      <button type="button" class="link" onClick={() => toggleOriginal(mode.key)}>
+        {ui(mode.mode === "translated" ? "translate.showOriginal" : "translate.showTranslation")}
+      </button>
+    </p>
+  );
+}
+
 /** Text with blank lines between paragraphs, as stored in the rules texts. */
 export function Paragraphs({ text }: { text: string | undefined }) {
   return (
@@ -26,6 +41,7 @@ export function Paragraphs({ text }: { text: string | undefined }) {
       {text?.split("\n\n").map((p) => (
         <p key={p}>{p}</p>
       ))}
+      <MachineNote text={text} />
     </>
   );
 }

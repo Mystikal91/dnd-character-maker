@@ -1,6 +1,7 @@
 import { character, content, sheet } from "../app/store";
 import type { Content } from "../content/browser";
 import { ui } from "../i18n/ui";
+import { Paragraphs } from "./sheet/parts";
 import { type SpellRow, collectSpellRows } from "./spellRows";
 
 function SpellDetails({ c, ruleset, row }: { c: Content; ruleset: string; row: SpellRow }) {
@@ -42,12 +43,7 @@ function SpellDetails({ c, ruleset, row }: { c: Content; ruleset: string; row: S
           ) : null,
         )}
       </dl>
-      {c
-        .text(row.id, "desc")
-        ?.split("\n\n")
-        .map((p) => (
-          <p key={p}>{p}</p>
-        ))}
+      <Paragraphs text={c.text(row.id, "desc")} />
       {c.text(row.id, "higherLevel") && (
         <p>
           <strong>{ui("spells.higherLevel")}.</strong> {c.text(row.id, "higherLevel")}

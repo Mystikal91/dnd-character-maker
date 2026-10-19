@@ -2,6 +2,7 @@ import { type Pack, parsePack } from "../data/schema";
 import { type PackIndex, indexPacks } from "../engine/derive";
 import { convertText } from "../i18n/units";
 import type { UserPackRecord } from "../storage/packs";
+import { autoText } from "../translate/auto";
 
 /** Loaded rules content plus helpers to read its translated texts. */
 export interface Content {
@@ -36,6 +37,8 @@ export async function loadContent(
   userPacks: UserPackRecord[] = [],
 ): Promise<Content> {
   const texts = new Map<string, string>();
+  // Texts that are in English although another language is wanted: machine translation may help.
+  const english = new Set<string>();
   const packs: Pack[] = [];
 
   await Promise.all(
@@ -51,7 +54,11 @@ export async function loadContent(
         for (const [key, value] of Object.entries(await loadStrings())) {
           const dot = key.indexOf(".");
           const id = idBySlug.get(key.slice(0, dot));
-          if (id && value) texts.set(`${id}.${key.slice(dot + 1)}`, value);
+          if (!id || !value) continue;
+          const full = `${id}.${key.slice(dot + 1)}`;
+          texts.set(full, value);
+          if (locale === "en" && locales[0] !== "en") english.add(full);
+          else english.delete(full);
         }
       }
     }),
@@ -62,14 +69,22 @@ export async function loadContent(
     const pack = parsePack(record.pack);
     if (packs.some((p) => p.manifest.id === pack.manifest.id)) continue;
     packs.push(pack);
-    for (const [key, value] of Object.entries(record.strings)) if (value) texts.set(key, value);
+    for (const [key, value] of Object.entries(record.strings)) {
+      if (!value) continue;
+      texts.set(key, value);
+      // Content read from other tools is English; what a person wrote is in their own language.
+      if (record.origin === "personal" && record.lang !== locales[0]) english.add(key);
+    }
   }
 
   // Distances and weights read in the units in use. The call reads the unit signal, so whatever
   // shows a text follows a change of units.
   const text = (id: string, field: string) => {
-    const value = texts.get(`${id}.${field}`);
-    return value === undefined ? undefined : convertText(value);
+    const key = `${id}.${field}`;
+    const value = texts.get(key);
+    if (value === undefined) return undefined;
+    const converted = convertText(value);
+    return english.has(key) ? autoText(key, converted) : converted;
   };
   return {
     packs,
