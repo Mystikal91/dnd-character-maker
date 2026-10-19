@@ -14,6 +14,7 @@ import { Sheet } from "./Sheet";
 import { Tabs } from "./Tabs";
 import { ThemeControls } from "./ThemeControls";
 import { BuildTab } from "./build/BuildTab";
+import { LevelUp } from "./build/LevelUp";
 import { PlayTab } from "./play/PlayTab";
 import { PrintView } from "./print/PrintView";
 import { SpellDialog } from "./spells/SpellInfo";
@@ -85,6 +86,7 @@ export function App() {
       )}
       <SpellDialog />
       <ShareDialog />
+      <LevelUp />
       <footer class="site-footer no-print">
         <p>{ui("footer.unofficial")}</p>
         <p>

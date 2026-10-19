@@ -9,7 +9,6 @@ import { Choices } from "../Choices";
 import { SpellPicker } from "../SpellPicker";
 import { ClassStep } from "./ClassStep";
 import { FreeEditStep } from "./FreeEditStep";
-import { LevelUp } from "./LevelUp";
 import { StoryStep } from "./StoryStep";
 import { EquipmentStep, OriginStep } from "./steps";
 
@@ -185,7 +184,6 @@ export function BuildTab() {
   return (
     <div class="build">
       <div class="steps">
-        <LevelUp />
         {steps.map((step, i) => {
           const isOpen = i === current;
           return (

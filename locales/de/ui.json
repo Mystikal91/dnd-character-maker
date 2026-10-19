@@ -411,6 +411,7 @@
   "play.pact": "Paktmagie (Grad {level})",
   "levelUp.button": "Stufenaufstieg",
   "levelUp.title": "Stufenaufstieg",
+  "levelUp.celebrate": "Grad gestiegen!",
   "levelUp.intro": "Du bist auf Stufe {level}. Wähle die Klasse, die die neue Stufe erhält.",
   "levelUp.maxed": "Du hast bereits die höchste Stufe.",
   "levelUp.close": "Fertig",

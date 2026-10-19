@@ -1,5 +1,7 @@
+import { levelUpPhase } from "../../app/buildState";
 import { rollLog } from "../../app/play";
-import { content, sheet } from "../../app/store";
+import { character, content, sheet } from "../../app/store";
+import { MAX_LEVEL } from "../../engine/levelUp";
 import { ui } from "../../i18n/ui";
 import { ClassResources, Conditions, PlaySpells, Slots } from "./Resources";
 import { DiceTray, QuickRolls, RollHistory } from "./Rolls";
@@ -27,8 +29,21 @@ function LatestRoll() {
  */
 export function PlayTab() {
   if (!content.value || !sheet.value) return null;
+  const canLevelUp = character.value.classes.length > 0 && sheet.value.level < MAX_LEVEL;
   return (
     <div class="play">
+      {canLevelUp && (
+        <button
+          type="button"
+          class="level-up-button play-levelup"
+          onClick={() => {
+            levelUpPhase.value = "choose";
+          }}
+        >
+          <span aria-hidden="true">{"\u2726 "}</span>
+          {ui("levelUp.button")}
+        </button>
+      )}
       <div class="play-grid">
         <div class="play-col">
           <Vitals />

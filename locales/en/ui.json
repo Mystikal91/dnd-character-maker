@@ -411,6 +411,7 @@
   "play.pact": "Pact Magic (level {level})",
   "levelUp.button": "Level up",
   "levelUp.title": "Level up",
+  "levelUp.celebrate": "Level up!",
   "levelUp.intro": "You are level {level}. Choose the class that gains the new level.",
   "levelUp.maxed": "You are already at the highest level.",
   "levelUp.close": "Done",

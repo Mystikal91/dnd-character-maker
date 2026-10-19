@@ -411,6 +411,7 @@
   "play.pact": "Magia de pacto (nivel {level})",
   "levelUp.button": "Subir de nivel",
   "levelUp.title": "Subir de nivel",
+  "levelUp.celebrate": "¡Subes de nivel!",
   "levelUp.intro": "Eres de nivel {level}. Elige la clase que gana el nuevo nivel.",
   "levelUp.maxed": "Ya estás en el nivel máximo.",
   "levelUp.close": "Hecho",

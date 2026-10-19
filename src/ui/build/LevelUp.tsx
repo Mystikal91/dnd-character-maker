@@ -1,5 +1,6 @@
-import { useState } from "preact/hooks";
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { type StepId, levelUpPhase, levelUpResult, openStep } from "../../app/buildState";
+import { showView } from "../../app/navigation";
 import { character, content, sheet, updateCharacter } from "../../app/store";
 import type { Content } from "../../content/browser";
 import { classData } from "../../data/progression";
@@ -255,7 +256,7 @@ function Done({ c }: { c: Content }) {
     <>
       {summary && (
         <>
-          <p>{ui("levelUp.done", { level: summary.totalLevel })}</p>
+          <Celebration level={summary.totalLevel} key={summary.totalLevel} />
           <Changes summary={summary} c={c} />
         </>
       )}
@@ -272,12 +273,16 @@ function Done({ c }: { c: Content }) {
                 class="secondary"
                 onClick={() => {
                   const step = STEP_OF[task.kind];
+                  close();
+                  showView("build");
                   openStep.value = step;
-                  // Wait for the step to open, then bring it into view.
-                  requestAnimationFrame(() =>
-                    document
-                      .getElementById(`step-${step}`)
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" }),
+                  // Wait for the build tab and the step to open, then bring it into view.
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById(`step-${step}`)
+                        ?.scrollIntoView({ behavior: "smooth", block: "start" }),
+                    80,
                   );
                 }}
               >
@@ -294,17 +299,77 @@ function Done({ c }: { c: Content }) {
   );
 }
 
+/** The moment itself: rays, a burst of sparks, and the level number rolling over. */
+function Celebration({ level }: { level: number }) {
+  const sparks = useMemo(
+    () =>
+      Array.from({ length: 36 }, (_, i) => ({
+        angle: Math.round((i / 36) * 360 + (i % 3) * 7),
+        distance: 80 + ((i * 37) % 90),
+        delay: (i % 6) * 0.05,
+        size: 4 + (i % 4) * 2,
+        tone: i % 3,
+      })),
+    [],
+  );
+  return (
+    <div class="lv-stage">
+      <div class="lv-rays" aria-hidden="true" />
+      <div class="lv-sparks" aria-hidden="true">
+        {sparks.map((p) => (
+          <i
+            key={`${p.angle}-${p.size}`}
+            class={`lv-spark tone-${p.tone}`}
+            style={{
+              "--a": `${p.angle}deg`,
+              "--d": `${p.distance}px`,
+              "--delay": `${p.delay}s`,
+              "--size": `${p.size}px`,
+            }}
+          />
+        ))}
+      </div>
+      <p class="lv-kicker">{ui("levelUp.celebrate")}</p>
+      <div class="lv-number" role="img" aria-label={ui("levelUp.done", { level })}>
+        <span class="lv-old" aria-hidden="true">
+          {Math.max(1, level - 1)}
+        </span>
+        <span class="lv-new" aria-hidden="true">
+          {level}
+        </span>
+      </div>
+      <p class="lv-sub">{ui("levelUp.done", { level })}</p>
+    </div>
+  );
+}
+
 /** Level up: pick the class and the hit points, see what changes, then settle the open choices. */
 export function LevelUp() {
   const phase = levelUpPhase.value;
   const c = content.value;
-  if (phase === "closed" || !c) return null;
+  const dialog = useRef<HTMLDialogElement>(null);
+  const open = phase !== "closed" && Boolean(c);
+
+  useEffect(() => {
+    const el = dialog.current;
+    if (!el) return;
+    if (open && !el.open) el.showModal();
+    if (!open && el.open) el.close();
+  }, [open]);
+
   return (
-    <section class="card step open levelup">
-      <h3 class="step-title">
-        <span class="step-name">{ui("levelUp.title")}</span>
-      </h3>
-      <div class="step-body">{phase === "choose" ? <Choose c={c} /> : <Done c={c} />}</div>
-    </section>
+    <dialog
+      ref={dialog}
+      class="spell-dialog levelup-dialog"
+      aria-label={ui("levelUp.title")}
+      onClose={close}
+    >
+      {open && c && (
+        <div class="spell-dialog-body levelup">
+          {phase === "choose" && <h3 class="levelup-title">{ui("levelUp.title")}</h3>}
+          {phase === "choose" ? <Choose c={c} /> : <Done c={c} />}
+        </div>
+      )}
+    </dialog>
   );
 }
