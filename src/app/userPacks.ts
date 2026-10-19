@@ -1,4 +1,5 @@
 import { signal } from "@preact/signals";
+import { loadContent } from "../content/browser";
 import { AuroraParseError, parseAurora } from "../import/aurora";
 import { gatherAurora } from "../import/aurora/remote";
 import {
@@ -119,10 +120,13 @@ async function importAuroraSources(start: { text?: string; url?: string }[]): Pr
       },
     });
     const id = `imp${Date.now().toString(36)}`;
+    // Aurora content is in English, so duplicates are looked for by English names whatever the
+    // language of the app is.
+    const english = await loadContent(["en"], userPacks.value);
     const result = parseAurora(gathered.texts, {
       packId: id,
-      index: loaded.index,
-      nameOf: (entryId) => loaded.name(entryId),
+      index: english.index,
+      nameOf: (entryId) => english.name(entryId),
     });
     const name = `${gathered.title || result.title || "Imported content"} (Aurora)`;
     importReport.value = {
