@@ -71,12 +71,12 @@ export function PacksPage() {
             <li key={record.id} class="pack">
               <div>
                 <b>{record.name}</b>
-                <span class={`badge ${record.origin}`}>
+                <span class={`pack-tag ${record.origin}`}>
                   {ui(`packs.origin.${record.origin}` as UiKey)}
                 </span>
                 <div class="muted">{summary(record)}</div>
               </div>
-              <div class="btn-row">
+              <div class="pack-actions">
                 {record.origin === "homebrew" && (
                   <button type="button" onClick={() => exportPack(record)}>
                     {ui("bar.export")}
@@ -91,11 +91,12 @@ export function PacksPage() {
         </ul>
       )}
 
-      <div class="btn-row">
+      <h3>{ui("packs.add")}</h3>
+      <div class="pack-actions">
         <button type="button" onClick={() => fileInput.current?.click()}>
           {ui("packs.import")}
         </button>
-        <button type="button" onClick={() => auroraInput.current?.click()}>
+        <button type="button" class="primary" onClick={() => auroraInput.current?.click()}>
           {ui("packs.importAurora")}
         </button>
         <input
@@ -123,7 +124,7 @@ export function PacksPage() {
         />
       </div>
       <form
-        class="btn-row"
+        class="pack-address"
         onSubmit={(e) => {
           e.preventDefault();
           if (address.trim() && !progress) void importAuroraUrl(address);
@@ -136,7 +137,7 @@ export function PacksPage() {
           aria-label={ui("packs.addressLabel")}
           onInput={(e) => setAddress(e.currentTarget.value)}
         />
-        <button type="submit" disabled={!address.trim() || Boolean(progress)}>
+        <button type="submit" class="primary" disabled={!address.trim() || Boolean(progress)}>
           {ui("packs.addressGo")}
         </button>
       </form>

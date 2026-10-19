@@ -189,6 +189,7 @@
   "packs.builtIn": "Incluidos en la aplicación",
   "packs.entries": "entradas",
   "packs.yours": "Tus paquetes",
+  "packs.add": "Añadir contenido",
   "packs.none": "Aún no has añadido ningún paquete.",
   "packs.origin.personal": "Personal: se queda en este dispositivo",
   "packs.origin.homebrew": "Homebrew",

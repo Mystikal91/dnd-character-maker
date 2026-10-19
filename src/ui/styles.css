@@ -588,10 +588,56 @@ textarea {
   border-bottom: 1px solid var(--border);
 }
 
-.badge {
+.pack-tag {
   margin-left: 0.5rem;
   padding: 0.1rem 0.5rem;
   border: 1px solid var(--accent);
   border-radius: 999px;
   font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.packs .pack-actions,
+.packs .pack-address {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.packs .pack-address input {
+  flex: 1 1 14rem;
+  min-width: 0;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.6rem;
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.packs .pack-actions button,
+.packs .pack-address button {
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  background: var(--bg);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.packs .pack-actions button:hover,
+.packs .pack-address button:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.packs button.primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.packs .pack-address button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
