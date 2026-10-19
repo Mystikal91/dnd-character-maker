@@ -7,6 +7,7 @@ import { loadContent } from "../content/browser";
 import { ui } from "../i18n/ui";
 import { CharacterBar } from "./CharacterBar";
 import { Credits } from "./Credits";
+import { HomebrewPage } from "./HomebrewPage";
 import { PacksPage } from "./PacksPage";
 import { ShareDialog } from "./ShareDialog";
 import { Sheet } from "./Sheet";
@@ -23,6 +24,8 @@ function Screen() {
       return <Credits />;
     case "packs":
       return <PacksPage />;
+    case "homebrew":
+      return <HomebrewPage />;
     case "print":
       return <PrintView />;
     case "sheet":

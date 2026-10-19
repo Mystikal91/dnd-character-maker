@@ -14,6 +14,14 @@ in the browser (IndexedDB) of the device that added them. Open them from the foo
 A personal pack can be removed but never exported, and it is never part of a shared character
 link: a link carries only the character, so whoever opens it needs their own copy of the content.
 
+## Homebrew editor
+
+*New homebrew pack* on the packs page opens an editor with a form for each kind of entry:
+spells, weapons, armor, gear, languages, feats, species (with their traits) and backgrounds
+(with personality tables). Entries are saved as soon as the form is saved, appear in the build
+steps like the built-in ones, and can be edited or deleted later. A pack can be exported as a
+file and added on another device. Classes and subclasses are not in the editor yet.
+
 ## Aurora XML
 
 Files in the XML format used by the [Aurora character builder](https://aurorabuilder.com) can be

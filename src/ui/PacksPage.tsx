@@ -1,4 +1,5 @@
 import { useRef, useState } from "preact/hooks";
+import { createHomebrewPack, openHomebrewPack } from "../app/homebrew";
 import { leavePage } from "../app/navigation";
 import { content } from "../app/store";
 import {
@@ -28,6 +29,7 @@ export function PacksPage() {
   const fileInput = useRef<HTMLInputElement>(null);
   const auroraInput = useRef<HTMLInputElement>(null);
   const [address, setAddress] = useState("");
+  const [brewName, setBrewName] = useState("");
   const progress = importProgress.value;
   const report = importReport.value;
   const packs = userPacks.value;
@@ -78,9 +80,14 @@ export function PacksPage() {
               </div>
               <div class="pack-actions">
                 {record.origin === "homebrew" && (
-                  <button type="button" onClick={() => exportPack(record)}>
-                    {ui("bar.export")}
-                  </button>
+                  <>
+                    <button type="button" onClick={() => openHomebrewPack(record.id)}>
+                      {ui("hb.edit")}
+                    </button>
+                    <button type="button" onClick={() => exportPack(record)}>
+                      {ui("bar.export")}
+                    </button>
+                  </>
                 )}
                 <button type="button" class="danger" onClick={() => remove(record)}>
                   {ui("packs.remove")}
@@ -90,6 +97,27 @@ export function PacksPage() {
           ))}
         </ul>
       )}
+
+      <h3>{ui("hb.newPack")}</h3>
+      <form
+        class="pack-address"
+        onSubmit={(e) => {
+          e.preventDefault();
+          void createHomebrewPack(brewName);
+          setBrewName("");
+        }}
+      >
+        <input
+          type="text"
+          value={brewName}
+          placeholder={ui("hb.packName")}
+          aria-label={ui("hb.packName")}
+          onInput={(e) => setBrewName(e.currentTarget.value)}
+        />
+        <button type="submit" class="primary">
+          {ui("hb.create")}
+        </button>
+      </form>
 
       <h3>{ui("packs.add")}</h3>
       <div class="pack-actions">

@@ -641,3 +641,83 @@ textarea {
   opacity: 0.45;
   cursor: not-allowed;
 }
+
+/* ---- Homebrew editor ---- */
+
+.hb-form {
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.hb-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0 0.75rem;
+}
+
+.hb-many {
+  margin: 0 0 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.hb-many legend {
+  padding: 0 0.3rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.hb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 0.25rem 0.75rem;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hb-trait {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.packs textarea {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  color: inherit;
+}
+
+.packs .pack-address select {
+  flex: 1 1 10rem;
+  min-height: 2.5rem;
+}
+
+.packs .hb-many button,
+.packs .hb-form button {
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  background: var(--bg);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.packs .hb-form button.primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.packs .hb-form .pack-actions {
+  margin-top: 0.75rem;
+}
