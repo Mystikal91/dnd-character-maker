@@ -73,18 +73,34 @@ python scripts/srd-translations/import_classes.py it path/to/SRD_CC_v5.1_IT.pdf
 python scripts/srd-translations/import_tables.py it path/to/SRD_CC_v5.1_IT.pdf
 ```
 
+The options a class offers and the weapon properties come next. Run these after the importers
+above, in this order, because they add to the files instead of replacing them:
+
+```bash
+python scripts/srd-translations/import_options.py it path/to/SRD_CC_v5.1_IT.pdf
+python scripts/srd-translations/import_variants.py it path/to/SRD_CC_v5.1_IT.pdf
+python scripts/srd-translations/import_properties.py it path/to/SRD_CC_v5.1_IT.pdf
+python scripts/srd-translations/import_misc.py it
+```
+
+`import_options.py` pairs eldritch invocations, metamagic, fighting styles and pact boons with
+the PDF sections under their parent feature, using the numbers, the translated spell, skill and
+ability names a text mentions, and its length; pairs that were checked by hand and corrected
+are in `OVERRIDES`. `import_variants.py` gives the numbered variants ("Action Surge (2 uses)")
+the title of their section plus a translated suffix.
+
 Imported so far, in Italian, French, German and Spanish: spells, abilities, skills, conditions,
 alignments (names and descriptions), species, subspecies, the traits that belong to one species,
 the background with its personality tables, the twelve classes with their starting equipment and
-spellcasting text, the subclasses, about 55% of the class features (225 of 407), the languages,
+spellcasting text, the subclasses, about 90% of the class features (366 of 407), the languages,
 and 40-45% of the item names (all armor, nearly all weapons, and the gear whose cost and weight
 are unique). Tables are read by baseline from the Calibri 9 cells (`pdf_tables.py`); armor is
 paired by position and everything else by cost, weight and damage dice, keeping only unique
 matches. An item or feature stays in English when it cannot be paired with certainty. School
-names are missing in German.
+names are missing in German. The weapon properties are complete.
 
 Known gaps in the source PDFs: the Italian SRD has no text for the conditions frightened, prone,
-restrained and stunned, and exhaustion keeps its English text everywhere because its table is
+restrained and stunned (only their names are added, by hand, in `import_misc.py`), and exhaustion keeps its English text everywhere because its table is
 not part of the running text. Item descriptions, proficiencies and the remaining gear are not
 imported yet.
 

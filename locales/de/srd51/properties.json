@@ -1,0 +1,22 @@
+{
+  "ammunition.name": "Geschosse",
+  "ammunition.desc": "Du kannst eine Waffe mit der Geschosse- Eigenschaft nur für einen Fernkampfangriff verwenden, wenn du über entsprechende Geschosse verfügst, um mit der Waffe zu schießen. Jedes Mal, wenn du mit der Waffe angreifst, verbrauchst du Geschosse. Diese aus dem Köcher, Beutel oder anderem Behälter zu ziehen, ist Teil des Angriffs. Zum Laden einer Einhandwaffe muss die andere Hand frei sein. Am Ende des Kampfes kannst du das Schlachtfeld nach der Hälfte der verbrauchten Geschosse absuchen.\n\nWenn du eine Waffe mit dieser Eigenschaft im Nahkampf verwendest, wird sie wie eine improvisierte Waffe behandelt (siehe „Improvisierte Waffen“ weiter unten in diesem Abschnitt). Eine Schleuder muss geladen sein, damit du im Nahkampf Schaden damit verursachen kannst.",
+  "finesse.name": "Finesse",
+  "finesse.desc": "Wenn du mit einer Waffe mit Finesse angreifst, hast du bei Angriffs- und Schadenswürfen die Wahl zwischen deinem Stärke- oder Geschicklichkeitsmodifikator. Du musst allerdings bei beiden Würfen denselben Modifikator verwenden.",
+  "heavy.name": "Schwer",
+  "heavy.desc": "Kleine Kreaturen sind bei Angriffswürfen mit schweren Waffen im Nachteil. Der Grund ist, dass die Größe und Masse der Waffen ihren effektiven Einsatz erschweren.",
+  "light.name": "Leicht",
+  "light.desc": "Leichte Waffen sind klein und einfach zu handhaben, wodurch sie ideal für den Kampf mit zwei Waffen geeignet sind.",
+  "loading.name": "Laden",
+  "loading.desc": "Da das Laden einer solchen Waffe lange dauert, kannst du mit einer Aktion, Bonusaktion oder Reaktion immer nur ein Geschoss abfeuern, unabhängig davon, wie viele Angriffe dir zur Verfügung stehen.",
+  "reach.name": "Weitreichend",
+  "reach.desc": "Mit dieser Waffe steigt die normale Angriffsreichweite um zusätzliche 1,5 Meter. Dies gilt auch für Gelegenheitsangriffe.",
+  "special.name": "Besonders",
+  "special.desc": "Für eine Waffe mit der Eigenschaft Besonders gelten besondere Regeln zur Nutzung, die in der Waffenbeschreibung erklärt werden (siehe „Besondere Waffen“ weiter unten in diesem Abschnitt).",
+  "thrown.name": "Wurfwaffe",
+  "thrown.desc": "Du kannst Waffen mit dieser Eigenschaft werfen, um einen Fernkampfangriff auszuführen. Wenn die Waffe eine Nahkampfwaffe ist, verwendest du denselben Attributsmodifikator für diesen Angriffs- und Schadenswurf wie für einen Nahkampfangriff mit der Waffe. Wirfst du zum Beispiel ein Beil, verwendest du deine Stärke, und wenn du einen Dolch wirfst, kannst du entweder deine Stärke oder deine Geschicklichkeit verwenden, da der Dolch die Finesse-Eigenschaft hat.",
+  "two-handed.name": "Zweihändig",
+  "two-handed.desc": "Diese Waffen müssen mit zwei Händen geführt werden.",
+  "versatile.name": "Vielseitig",
+  "versatile.desc": "Diese Waffen können mit einer oder zwei Händen geführt werden. Der zweite Schadenswert in Klammern in der Beschreibung gilt, wenn die Waffe mit zwei Händen für einen Nahkampfangriff verwendet wird."
+}

@@ -1,0 +1,22 @@
+{
+  "ammunition.name": "Munición",
+  "ammunition.desc": "Solo puedes realizar un ataque a distancia usando un arma con esta propiedad si tienes munición para ella. Cada vez que hagas un ataque, gastarás una unidad de munición. Extraer la munición de una aljaba, un estuche u otro contenedor forma parte del ataque (necesitas una mano libre para cargar un arma a una mano). Al final del combate, podrás recuperar la mitad de la munición usada si dedicas un minuto a buscar en el campo de batalla.\n\nSi empleas un arma con esta propiedad para hacer un ataque cuerpo a cuerpo, se considerará un arma improvisada (consulta “Armas improvisadas” en esta misma sección). Además, una honda deberá estar cargada para hacer daño cuando se utilice de esta forma.",
+  "finesse.name": "Sutil",
+  "finesse.desc": "Cuando ataques con un arma sutil, podrás elegir realizar las tiradas de ataque y de daño con el modificador por Fuerza o con el modificador por Destreza. Eso sí, deberás usar el mismo modificador para ambas tiradas.",
+  "heavy.name": "Pesada",
+  "heavy.desc": "Las criaturas Pequeñas tienen desventaja en las tiradas de ataque con armas pesadas. Su tamaño y peso hacen que sean demasiado voluminosas para que una criatura Pequeña las use con efectividad.",
+  "light.name": "Ligera",
+  "light.desc": "Un arma ligera es pequeña y fácil de manejar, así que resulta ideal para luchar con dos armas.",
+  "loading.name": "Recarga",
+  "loading.desc": "Debido al tiempo que requiere recargar un arma con esta propiedad, cuando utilices una acción, acción adicional o reacción para atacar con ella, solo podrás disparar una unidad de munición, incluso aunque normalmente pudieras hacer más de un ataque.",
+  "reach.name": "Gran alcance",
+  "reach.desc": "Cuando empleas un arma de este tipo, tu alcance aumenta en 1,5 m, tanto al atacar como a efectos de ataques de oportunidad.",
+  "special.name": "Especial",
+  "special.desc": "Un arma con esta propiedad posee ciertas reglas inusuales que afectan a su uso, tal y como se explica en la descripción del arma (consulta “Armas especiales” en esta misma sección).",
+  "thrown.name": "Arrojadiza",
+  "thrown.desc": "Si un arma tiene esta propiedad, puedes lanzarla para realizar un ataque a distancia. Si se trata de un arma cuerpo a cuerpo, harás las tiradas de ataque y de daño con el mismo modificador que emplearías para hacer un ataque cuerpo a cuerpo con el arma. Por ejemplo, si lanzas un hacha de mano, utilizarás tu Fuerza, pero si arrojas una daga, podrás elegir entre usar la Fuerza o la Destreza, ya que la daga también posee la propiedad “sutil”.",
+  "two-handed.name": "A dos manos",
+  "two-handed.desc": "Estas armas requieren el uso de las dos manos.",
+  "versatile.name": "Versátil",
+  "versatile.desc": "Estas armas pueden utilizarse con una o con dos manos. Tras esta propiedad aparece entre paréntesis un valor de daño, que será el que uses cuando emplees esta arma a dos manos para hacer un ataque cuerpo a cuerpo."
+}

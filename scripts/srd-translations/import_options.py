@@ -39,8 +39,8 @@ COLORS = {
     "fr": {"black": "Noir", "blue": "Bleu", "brass": "Airain", "bronze": "Bronze", "copper": "Cuivre",
            "gold": "Or", "green": "Vert", "red": "Rouge", "silver": "Argent", "white": "Blanc"},
     "de": {"black": "Schwarz", "blue": "Blau", "brass": "Messing", "bronze": "Bronze", "copper": "Kupfer",
-           "gold": "Gold", "green": "Gruen", "red": "Rot", "silver": "Silber", "white": "Weiss"},
-    "es": {"black": "Negro", "blue": "Azul", "brass": "Laton", "bronze": "Bronce", "copper": "Cobre",
+           "gold": "Gold", "green": "Grün", "red": "Rot", "silver": "Silber", "white": "Weiß"},
+    "es": {"black": "Negro", "blue": "Azul", "brass": "Latón", "bronze": "Bronce", "copper": "Cobre",
            "gold": "Oro", "green": "Verde", "red": "Rojo", "silver": "Plata", "white": "Blanco"},
 }
 
