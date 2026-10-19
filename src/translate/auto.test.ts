@@ -95,12 +95,19 @@ describe("translating as texts are read", () => {
     expect(autoText("b.desc", text)).toBe(`IT ${text}`);
     expect(machineMode(`IT ${text}`)).toEqual({ key: "b.desc", mode: "translated" });
 
+    // The name of the same entry is translated too, and swaps together with the description.
+    expect(autoText("b.name", "Spell Name")).toBe("Spell Name");
+    await vi.advanceTimersByTimeAsync(300);
+    expect(autoText("b.name", "Spell Name")).toBe("IT Spell Name");
+
     toggleOriginal("b.desc");
     expect(autoText("b.desc", text)).toBe(text);
+    expect(autoText("b.name", "Spell Name")).toBe("Spell Name");
     expect(machineMode(text)).toEqual({ key: "b.desc", mode: "original" });
     toggleOriginal("b.desc");
     expect(autoText("b.desc", text)).toBe(`IT ${text}`);
-    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(autoText("b.name", "Spell Name")).toBe("IT Spell Name");
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
   it("does not send what is not words, and stops when the key is refused", async () => {

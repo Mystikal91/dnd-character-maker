@@ -55,7 +55,7 @@ export const autoTarget = signal<string | undefined>(undefined);
 /** Counts the translations that arrived, so what shows them draws again. */
 export const translationTick = signal(0);
 
-/** Texts the person asked to read in English, by `<entry id>.<field>`. */
+/** Entries whose texts the person asked to read in English (the name goes with the description). */
 const originals = signal<ReadonlySet<string>>(new Set());
 
 /** The last problem, shown on the settings page. */
@@ -71,6 +71,9 @@ const failed = new Set<string>();
 const shown = new Map<string, { key: string; mode: "translated" | "original" }>();
 
 const cacheKey = (target: string, text: string) => `${target}\n${text}`;
+
+/** The entry a text belongs to: `<entry id>.<field>` without its field. */
+const entryOf = (key: string) => (key.includes(".") ? key.slice(0, key.indexOf(".")) : key);
 
 /** Worth sending to DeepL: it holds letters, and is not something like a bare number or dice. */
 function worthTranslating(text: string): boolean {
@@ -88,7 +91,7 @@ export function autoText(key: string, source: string): string {
   const ck = cacheKey(target, source);
   const hit = cache.get(ck);
   if (hit !== undefined) {
-    if (asked.has(key)) {
+    if (asked.has(entryOf(key))) {
       shown.set(source, { key, mode: "original" });
       return source;
     }
@@ -112,11 +115,12 @@ export function machineMode(
   return shown.get(text);
 }
 
-/** Swaps one text between its translation and its English. */
+/** Swaps an entry's texts, its name included, between the translation and the English. */
 export function toggleOriginal(key: string): void {
+  const entry = entryOf(key);
   const next = new Set(originals.value);
-  if (next.has(key)) next.delete(key);
-  else next.add(key);
+  if (next.has(entry)) next.delete(entry);
+  else next.add(entry);
   originals.value = next;
 }
 
