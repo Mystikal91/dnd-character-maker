@@ -83,8 +83,10 @@ export function Choices() {
                       disabled={held || full}
                       onChange={(e) => toggle(choice, option, e.currentTarget.checked)}
                     />
-                    {optionLabel(c, ch.ruleset, choice, option)}
-                    {held && <span class="muted"> ({ui("choice.alreadyHave")})</span>}
+                    <span>
+                      {optionLabel(c, ch.ruleset, choice, option)}
+                      {held && <span class="muted"> ({ui("choice.alreadyHave")})</span>}
+                    </span>
                   </label>
                   {choice.grants === "spell" && <SpellInfoButton id={option} />}
                 </li>
