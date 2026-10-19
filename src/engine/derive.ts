@@ -14,6 +14,7 @@ import { type PendingChoice, collectEffects } from "./choices";
 import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
 import { type CasterInput, casterKind, slotPools, unmetPrerequisites } from "./multiclass";
 import { OVERRIDE, numberOverride } from "./overrides";
+import { type ClassFact, type ClassResource, classResources } from "./resources";
 import { type SpellLists, deriveSpellLists } from "./spells";
 import { type Warning, warn } from "./warnings";
 
@@ -65,6 +66,10 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   spellcasters: SpellcastingResult[];
   /** Spell slots of levels 1..9 shared by all spellcasting classes. */
   spellSlots: number[];
+  /** Limited-use class features (rages, ki, channel divinity...) and their recovery. */
+  resources: ClassResource[];
+  /** Class numbers worth showing during play: sneak attack dice, rage damage and the like. */
+  facts: ClassFact[];
   /** Pact Magic slots kept apart when a warlock multiclasses; they return on a short rest. */
   pactSlots?: { level: number; count: number };
   /** Choices offered by the current picks (species, class, background, traits), with their state. */
@@ -164,6 +169,8 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   const features: string[] = [];
   const casters: SpellcastingResult[] = [];
   const casterInputs: CasterInput[] = [];
+  const resources: ClassResource[] = [];
+  const facts: ClassFact[] = [];
   classEntries.forEach(({ cl, entry }, position) => {
     if (!entry) return;
     const data = classData(entry);
@@ -176,6 +183,14 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
 
     const row = data.levels.find((l) => l.level === cl.level);
     for (const l of data.levels) if (l.level <= cl.level) features.push(...l.features);
+    const classBits = classResources({
+      classId: cl.classId,
+      level: cl.level,
+      data,
+      modifier: (a) => abilities[a].modifier,
+    });
+    resources.push(...classBits.resources);
+    facts.push(...classBits.facts);
 
     let subEntry: Entry | undefined;
     if (cl.subclassId) {
@@ -286,6 +301,8 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     features: [...new Set(features)],
     ...(spellcasting && { spellcasting }),
     spellcasters: casters,
+    resources,
+    facts,
     spellSlots: pools.slots,
     ...(pools.pact && { pactSlots: pools.pact }),
     choices,

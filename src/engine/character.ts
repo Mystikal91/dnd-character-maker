@@ -78,6 +78,10 @@ export interface PlayState {
   hitDiceUsed: Record<string, number>;
   /** Spell slots spent per spell level 1..9. */
   slotsUsed: number[];
+  /** Uses spent of limited class features, by resource id (see `ClassResource`). */
+  resourcesUsed?: Record<string, number>;
+  /** The spell the character is concentrating on, if any. */
+  concentration?: string;
   /** Pact Magic slots spent, when they are kept apart from the shared slots (multiclass warlock). */
   pactUsed?: number;
   deathSaves: { successes: number; failures: number };

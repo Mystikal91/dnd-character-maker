@@ -1,7 +1,7 @@
 import { rollLog } from "../../app/play";
 import { content, sheet } from "../../app/store";
 import { ui } from "../../i18n/ui";
-import { Conditions, PlaySpells, Slots } from "./Resources";
+import { ClassResources, Conditions, PlaySpells, Slots } from "./Resources";
 import { DiceTray, QuickRolls, RollHistory } from "./Rolls";
 import { Vitals } from "./Vitals";
 
@@ -32,6 +32,7 @@ export function PlayTab() {
       <div class="play-grid">
         <div class="play-col">
           <Vitals />
+          <ClassResources />
           <Conditions />
         </div>
         <div class="play-col">

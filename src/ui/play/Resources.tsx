@@ -1,7 +1,18 @@
-import { changePlay } from "../../app/play";
+import { changePlay, concentrationAlert, rollCheck } from "../../app/play";
 import { character, content, sheet } from "../../app/store";
-import { pactLeft, setPactUsed, setSlotsUsed, slotsLeft, toggleCondition } from "../../engine/play";
-import { ui } from "../../i18n/ui";
+import {
+  endConcentration,
+  pactLeft,
+  resourceLeft,
+  setPactUsed,
+  setResourceUsed,
+  setSlotsUsed,
+  slotsLeft,
+  startConcentration,
+  toggleCondition,
+} from "../../engine/play";
+import type { ClassResource } from "../../engine/resources";
+import { type UiKey, signed, ui } from "../../i18n/ui";
 import { Panel, RulesText } from "../sheet/parts";
 import { collectSpellRows } from "../spellRows";
 import { SpellInfoButton } from "../spells/SpellInfo";
@@ -88,17 +99,135 @@ export function Slots() {
   );
 }
 
+/** Limited-use class features to tick off, and the class numbers that go with them. */
+export function ClassResources() {
+  const s = sheet.value;
+  const play = character.value.play;
+  if (!s || (s.resources.length === 0 && s.facts.length === 0)) return null;
+
+  const label = (r: ClassResource) => ui(`resource.${r.kind}` as UiKey, { level: r.level ?? 0 });
+  const spend = (r: ClassResource, change: number) =>
+    changePlay((p) => setResourceUsed(p, r.id, (p.resourcesUsed?.[r.id] ?? 0) + change, r.max));
+
+  return (
+    <Panel title={ui("play.classResources")}>
+      {s.facts.length > 0 && (
+        <ul class="plain class-facts">
+          {s.facts.map((f) => (
+            <li key={f.kind}>{ui(`fact.${f.kind}` as UiKey, f.params)}</li>
+          ))}
+        </ul>
+      )}
+      {s.resources.length > 0 && <p class="muted">{ui("play.resourcesHint")}</p>}
+      <ul class="plain slots-play">
+        {s.resources.map((r) => {
+          const left = resourceLeft(play, r.id, r.max);
+          return (
+            <li class="row-between" key={r.id}>
+              <span class="slot-level">
+                {label(r)}
+                <small class="muted">
+                  {" "}
+                  · {ui(r.recovery === "short" ? "play.recoverShort" : "play.recoverLong")}
+                </small>
+              </span>
+              {r.unlimited ? (
+                <span class="muted">{ui("play.unlimited")}</span>
+              ) : r.pool ? (
+                <span class="counter">
+                  <button
+                    type="button"
+                    class="secondary"
+                    aria-label={`${label(r)} −`}
+                    disabled={left === 0}
+                    onClick={() => spend(r, 1)}
+                  >
+                    −
+                  </button>
+                  <b>{ui("play.slotLeft", { left, total: r.max })}</b>
+                  <button
+                    type="button"
+                    class="secondary"
+                    aria-label={`${label(r)} +`}
+                    disabled={left === r.max}
+                    onClick={() => spend(r, -1)}
+                  >
+                    +
+                  </button>
+                </span>
+              ) : (
+                <>
+                  <span class="pips-btns">
+                    {Array.from({ length: r.max }, (_, i) => {
+                      const available = i < left;
+                      return (
+                        <button
+                          type="button"
+                          key={`${r.id}-${i + 1}`}
+                          class={`pip-btn${available ? " on" : ""}`}
+                          aria-pressed={available}
+                          aria-label={`${label(r)} ${i + 1}`}
+                          onClick={() => spend(r, available ? 1 : -1)}
+                        />
+                      );
+                    })}
+                  </span>
+                  <span class="muted">{ui("play.slotLeft", { left, total: r.max })}</span>
+                </>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </Panel>
+  );
+}
+
 /** The spells the character can cast, grouped by level, each with its details one tap away. */
 export function PlaySpells() {
   const c = content.value;
   const s = sheet.value;
+  const play = character.value.play;
   if (!c || !s) return null;
   const rows = collectSpellRows(c, s);
   if (rows.length === 0) return null;
   const levels = [...new Set(rows.map((r) => r.level))];
+  const concentrating = play.concentration;
+  const alert = concentrationAlert.value;
+  const conSave = s.saves.con.bonus;
 
   return (
     <Panel title={ui("play.spells")}>
+      {concentrating && (
+        <div class="concentration" aria-live="polite">
+          <b>{ui("play.concentrating", { spell: c.name(concentrating) })}</b>
+          {alert !== undefined && (
+            <p class="note">
+              {ui("play.concentrationCheck", { dc: alert })}{" "}
+              <button
+                type="button"
+                class="roll-btn"
+                onClick={() =>
+                  rollCheck(`${c.name(concentrating)} - ${ui("play.concentrationSave")}`, conSave)
+                }
+              >
+                <span>{ui("play.concentrationRoll")}</span>
+                <b>{signed(conSave)}</b>
+              </button>
+            </p>
+          )}
+          <button
+            type="button"
+            class="secondary"
+            onClick={() => {
+              concentrationAlert.value = undefined;
+              changePlay((p) => endConcentration(p));
+            }}
+          >
+            {ui("play.concentrationEnd")}
+          </button>
+        </div>
+      )}
       {levels.map((level) => (
         <div key={level}>
           <h4>{level === 0 ? ui("spells.cantrips") : ui("spells.level", { level })}</h4>
@@ -109,6 +238,23 @@ export function PlaySpells() {
                 <li key={row.id}>
                   {c.name(row.id)}
                   <SpellInfoButton id={row.id} />
+                  {c.index.get(row.id)?.data.concentration === true && (
+                    <button
+                      type="button"
+                      class={`chip${concentrating === row.id ? " on" : ""}`}
+                      aria-pressed={concentrating === row.id}
+                      onClick={() => {
+                        concentrationAlert.value = undefined;
+                        changePlay((p) =>
+                          concentrating === row.id
+                            ? endConcentration(p)
+                            : startConcentration(p, row.id),
+                        );
+                      }}
+                    >
+                      {ui("play.concentrate")}
+                    </button>
+                  )}
                 </li>
               ))}
           </ul>

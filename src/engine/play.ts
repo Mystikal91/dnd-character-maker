@@ -123,10 +123,46 @@ export type ShortRestRecovery = "all" | "pact" | "none";
  * A short rest. Warlocks get their pact slots back; everyone else's slots wait for a long rest.
  * Hit dice are spent separately, one at a time, so the player can stop when healthy enough.
  */
-export function shortRest(play: PlayState, recovers: ShortRestRecovery): PlayState {
-  if (recovers === "all") return { ...play, slotsUsed: play.slotsUsed.map(() => 0), pactUsed: 0 };
-  if (recovers === "pact") return { ...play, pactUsed: 0 };
-  return play;
+export function shortRest(
+  play: PlayState,
+  recovers: ShortRestRecovery,
+  /** Ids of the class resources that come back on a short rest. */
+  resources: string[] = [],
+): PlayState {
+  let next = play;
+  if (recovers === "all") next = { ...next, slotsUsed: next.slotsUsed.map(() => 0), pactUsed: 0 };
+  else if (recovers === "pact") next = { ...next, pactUsed: 0 };
+  if (resources.length > 0 && next.resourcesUsed) {
+    const used = { ...next.resourcesUsed };
+    for (const id of resources) delete used[id];
+    next = { ...next, resourcesUsed: used };
+  }
+  return next;
+}
+
+/** Uses of a class resource still available. */
+export function resourceLeft(play: PlayState, id: string, max: number): number {
+  return Math.max(0, max - (play.resourcesUsed?.[id] ?? 0));
+}
+
+/** Sets how many uses of a class resource are spent, never below 0 or above the maximum. */
+export function setResourceUsed(play: PlayState, id: string, used: number, max: number): PlayState {
+  return { ...play, resourcesUsed: { ...play.resourcesUsed, [id]: clamp(used, 0, max) } };
+}
+
+/** Starts concentrating on a spell, which ends any concentration already going. */
+export function startConcentration(play: PlayState, spell: string): PlayState {
+  return { ...play, concentration: spell };
+}
+
+export function endConcentration(play: PlayState): PlayState {
+  const { concentration: _ended, ...rest } = play;
+  return rest;
+}
+
+/** The Constitution save DC to keep concentrating after taking damage: 10 or half, if higher. */
+export function concentrationDc(damage: number): number {
+  return Math.max(10, Math.floor(damage / 2));
 }
 
 /**

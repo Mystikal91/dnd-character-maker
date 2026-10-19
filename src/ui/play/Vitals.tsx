@@ -1,12 +1,14 @@
 import { useState } from "preact/hooks";
-import { addLog, changePlay, vitals } from "../../app/play";
+import { addLog, changePlay, concentrationAlert, vitals } from "../../app/play";
 import { character, sheet } from "../../app/store";
 import { cryptoRandomInt } from "../../engine/dice";
 import {
   applyDamage,
   applyHealing,
+  concentrationDc,
   currentHp,
   deathStatus,
+  endConcentration,
   gainTempHp,
   hitDiceLeft,
   longRest,
@@ -57,7 +59,19 @@ function HitPoints() {
             type="button"
             class="danger-btn"
             disabled={n === 0}
-            onClick={() => apply((a) => changePlay((p) => applyDamage(p, v.max, a)))}
+            onClick={() =>
+              apply((a) => {
+                const concentrating = Boolean(play.concentration);
+                const after = applyDamage(play, v.max, a);
+                // Unconscious or dead ends concentration; otherwise the player owes a save.
+                if (concentrating && deathStatus(after, v.max) !== "alive") {
+                  changePlay((p) => endConcentration(applyDamage(p, v.max, a)));
+                } else {
+                  changePlay((p) => applyDamage(p, v.max, a));
+                  if (concentrating) concentrationAlert.value = concentrationDc(a);
+                }
+              })
+            }
           >
             {ui("play.damage")}
           </button>
@@ -181,7 +195,13 @@ function Rests() {
         <button
           type="button"
           onClick={() => {
-            changePlay((p) => shortRest(p, recovers));
+            changePlay((p) =>
+              shortRest(
+                p,
+                recovers,
+                s.resources.filter((r) => r.recovery === "short").map((r) => r.id),
+              ),
+            );
             addLog({ label: ui("play.shortRestLog"), detail: "" });
           }}
         >

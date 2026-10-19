@@ -65,6 +65,16 @@ export function formatDice({ terms, modifier }: DiceExpression): string {
   return modifier === 0 ? dice : `${dice}${modifier > 0 ? "+" : "-"}${Math.abs(modifier)}`;
 }
 
+/** The expression with its dice doubled and the bonus left alone, as a critical hit does. */
+export function doubleDice(text: string): string | undefined {
+  const parsed = parseDice(text);
+  if (!parsed) return undefined;
+  return formatDice({
+    modifier: parsed.modifier,
+    terms: parsed.terms.map((t) => ({ ...t, count: t.count * 2 })),
+  });
+}
+
 export function rollExpression(
   expression: DiceExpression,
   random: RandomInt = cryptoRandomInt,

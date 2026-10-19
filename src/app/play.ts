@@ -32,6 +32,12 @@ let nextId = 1;
 /** Recent rolls, newest first. Kept in memory only: a roll history is not part of the character. */
 export const rollLog = signal<LogEntry[]>([]);
 
+/** The Constitution save DC the player owes after damage broke their concentration, if any. */
+export const concentrationAlert = signal<number | undefined>(undefined);
+
+/** The weapon whose next damage roll counts as a critical hit (dice doubled), if any. */
+export const criticalWeapon = signal<string | undefined>(undefined);
+
 /** How d20 checks are rolled until the player changes it. */
 export const rollMode = signal<D20Mode>("normal");
 

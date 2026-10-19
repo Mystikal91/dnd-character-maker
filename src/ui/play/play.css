@@ -394,3 +394,41 @@ fieldset.segmented {
   padding: 0;
   border: 0;
 }
+
+/* ---- Class resources, concentration, critical hits ---- */
+
+.class-facts {
+  margin: 0 0 0.5rem;
+}
+
+.class-facts li {
+  padding: 0.15rem 0;
+  font-weight: 600;
+}
+
+.counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.counter button {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0;
+}
+
+.concentration {
+  margin-bottom: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+}
+
+.concentration .note {
+  margin: 0.4rem 0;
+}
+
+.crit-toggle {
+  font-size: 0.85rem;
+}

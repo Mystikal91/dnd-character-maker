@@ -2,6 +2,7 @@ import { useState } from "preact/hooks";
 import {
   type LogEntry,
   clearLog,
+  criticalWeapon,
   rollCheck,
   rollDiceText,
   rollLog,
@@ -9,7 +10,7 @@ import {
 } from "../../app/play";
 import { content, sheet } from "../../app/store";
 import { ABILITIES } from "../../data/schema";
-import type { D20Mode } from "../../engine/dice";
+import { type D20Mode, doubleDice } from "../../engine/dice";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { Panel } from "../sheet/parts";
 
@@ -101,22 +102,55 @@ export function QuickRolls() {
                 <li class="row-between" key={a.itemId}>
                   <span>{c.name(a.itemId)}</span>
                   <span class="btn-row">
-                    <RollButton
-                      label={ui("play.attackRoll")}
-                      name={`${c.name(a.itemId)} - ${ui("play.attackRoll")}`}
-                      bonus={a.attackBonus}
-                    />
+                    <button
+                      type="button"
+                      class="roll-btn"
+                      onClick={() => {
+                        const roll = rollCheck(
+                          `${c.name(a.itemId)} - ${ui("play.attackRoll")}`,
+                          a.attackBonus,
+                        );
+                        // A natural 20 arms the critical damage; any other attack clears it.
+                        if (roll.critical) criticalWeapon.value = a.itemId;
+                        else if (criticalWeapon.value === a.itemId)
+                          criticalWeapon.value = undefined;
+                      }}
+                    >
+                      <span>{ui("play.attackRoll")}</span>
+                      <b>{signed(a.attackBonus)}</b>
+                    </button>
                     {dmg && (
                       <button
                         type="button"
                         class="roll-btn"
-                        onClick={() =>
-                          rollDiceText(`${c.name(a.itemId)} - ${ui("play.damageRoll")}`, dice)
-                        }
+                        onClick={() => {
+                          const critical = criticalWeapon.value === a.itemId;
+                          const text = critical ? (doubleDice(dice) ?? dice) : dice;
+                          const name = `${c.name(a.itemId)} - ${ui("play.damageRoll")}`;
+                          rollDiceText(
+                            critical ? `${name} (${ui("play.criticalDamage")})` : name,
+                            text,
+                          );
+                          if (critical) criticalWeapon.value = undefined;
+                        }}
                       >
                         <span>{ui("play.damageRoll")}</span>
-                        <b>{dice}</b>
+                        <b>
+                          {criticalWeapon.value === a.itemId ? (doubleDice(dice) ?? dice) : dice}
+                        </b>
                       </button>
+                    )}
+                    {dmg && (
+                      <label class="check-row crit-toggle">
+                        <input
+                          type="checkbox"
+                          checked={criticalWeapon.value === a.itemId}
+                          onChange={(e) => {
+                            criticalWeapon.value = e.currentTarget.checked ? a.itemId : undefined;
+                          }}
+                        />
+                        {ui("play.criticalHit")}
+                      </label>
                     )}
                   </span>
                 </li>
