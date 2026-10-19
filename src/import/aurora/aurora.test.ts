@@ -516,6 +516,27 @@ describe("classes and archetypes", () => {
     });
   });
 
+  it("attaches an archetype to a class the app already has", () => {
+    const patron = wrap(`
+      <element name="The Hexblade" type="Archetype" source="Test Book" id="ID_H">
+        <supports>Otherworldly Patron</supports>
+        <description><p>A pact with a sentient weapon.</p></description>
+        <rules><grant type="Archetype Feature" id="ID_H_F1" level="1" /></rules>
+      </element>
+      <element name="Hex Warrior" type="Archetype Feature" source="Test Book" id="ID_H_F1">
+        <supports>Warlock</supports>
+        <description><p>You wear armor.</p></description>
+      </element>`);
+    const made = parseAurora([patron], options);
+    const sub = byId(made, "imp1:subclass/the-hexblade");
+    expect(sub.parent).toBe("srd51:class/warlock");
+    expect(made.skipped.Archetype).toBeUndefined();
+    expect(byId(made, "imp1:feature/hex-warrior").data).toMatchObject({
+      class: "srd51:class/warlock",
+      level: 1,
+    });
+  });
+
   it("works in a character sheet", () => {
     const pack = parsePack({
       manifest: {

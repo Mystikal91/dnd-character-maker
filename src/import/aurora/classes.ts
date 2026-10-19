@@ -9,7 +9,7 @@ import {
   requirementsMet,
   selectMatches,
 } from "./rules";
-import { clean, description, setters, slugify } from "./xml";
+import { clean, description, setters, slugify, supportsOf } from "./xml";
 
 /** Who a feature belongs to: the class (and subclass) that grants it, and at which level. */
 export interface Owner {
@@ -39,6 +39,22 @@ export function grantedFeatures(
     .filter((g): g is { feature: Source; level: number | undefined } => Boolean(g.feature));
 }
 
+/** What the SRD classes call the choice of their subclass, as Aurora writes it. */
+const SUBCLASS_CHOICES: Record<string, string> = {
+  "primal path": "barbarian",
+  "bard college": "bard",
+  "divine domain": "cleric",
+  "druid circle": "druid",
+  "martial archetype": "fighter",
+  "monastic tradition": "monk",
+  "sacred oath": "paladin",
+  "ranger archetype": "ranger",
+  "roguish archetype": "rogue",
+  "sorcerous origin": "sorcerer",
+  "otherworldly patron": "warlock",
+  "arcane tradition": "wizard",
+};
+
 /** The class an archetype belongs to: the one that has a feature offering archetypes like it. */
 export function archetypeParent(
   ctx: Context,
@@ -62,6 +78,12 @@ export function archetypeParent(
       }
       for (const g of grantedFeatures(ctx, feature)) stack.push(g.feature);
     }
+  }
+  // A class the app already has is not in the files: the archetype names its kind of choice.
+  for (const tag of supportsOf(archetype.el)) {
+    const name = SUBCLASS_CHOICES[tag.toLowerCase()];
+    const classId = name && ctx.existingByName.get(`class|${name}`);
+    if (classId) return { classId, flavor: tag };
   }
   return undefined;
 }
