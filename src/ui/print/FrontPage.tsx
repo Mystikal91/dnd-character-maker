@@ -5,6 +5,7 @@ import { ABILITIES } from "../../data/schema";
 import type { ClassLevel } from "../../engine/character";
 import type { DamageResult } from "../../engine/equipment";
 import { signed, ui } from "../../i18n/ui";
+import { distance } from "../../i18n/units";
 import { collectSpellRows } from "../spellRows";
 
 const BLANK_ATTACK_ROWS = 4;
@@ -160,7 +161,7 @@ export function FrontPage() {
               <span>{ui("sheet.initiative")}</span>
             </div>
             <div class="p-frame p-box">
-              <b>{s.speed ?? ""}</b>
+              <b>{s.speed === undefined ? "" : distance(s.speed)}</b>
               <span>{ui("sheet.speed")}</span>
             </div>
           </div>

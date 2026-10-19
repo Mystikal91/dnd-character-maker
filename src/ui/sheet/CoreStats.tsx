@@ -3,6 +3,7 @@ import { content, isForced, sheet } from "../../app/store";
 import type { DamageResult } from "../../engine/equipment";
 import { OVERRIDE } from "../../engine/overrides";
 import { signed, ui } from "../../i18n/ui";
+import { distance } from "../../i18n/units";
 import { Panel } from "./parts";
 
 export function Stat({
@@ -46,7 +47,7 @@ export function CoreStats() {
           {signed(s.initiative)}
         </Stat>
         <Stat label={ui("sheet.speed")} forced={isForced(OVERRIDE.speed)}>
-          {s.speed === undefined ? "—" : ui("sheet.speedValue", { feet: s.speed })}
+          {s.speed === undefined ? "—" : distance(s.speed)}
         </Stat>
       </div>
       {s.armorClass.stealthDisadvantage && <p class="note">{ui("sheet.stealthDisadvantage")}</p>}

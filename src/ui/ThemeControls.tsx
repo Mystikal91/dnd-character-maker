@@ -1,6 +1,7 @@
 import { LANGUAGES, type LanguageCode, language } from "../app/language";
 import { theme, updateTheme } from "../app/theme";
 import type { Scheme, StyleName } from "../app/theme.logic";
+import { UNIT_SETTINGS, type UnitSetting, unitSetting } from "../app/units";
 import { type UiKey, ui } from "../i18n/ui";
 
 const STYLES: StyleName[] = ["fantasy", "modern"];
@@ -35,6 +36,21 @@ export function ThemeControls() {
           {STYLES.map((style) => (
             <option key={style} value={style}>
               {ui(`theme.${style}` as UiKey)}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label class="field">
+        <span>{ui("units.label")}</span>
+        <select
+          value={unitSetting.value}
+          onChange={(e) => {
+            unitSetting.value = e.currentTarget.value as UnitSetting;
+          }}
+        >
+          {UNIT_SETTINGS.map((setting) => (
+            <option key={setting} value={setting}>
+              {ui(`units.${setting}` as UiKey)}
             </option>
           ))}
         </select>

@@ -1,5 +1,6 @@
 import { type Pack, parsePack } from "../data/schema";
 import { type PackIndex, indexPacks } from "../engine/derive";
+import { convertText } from "../i18n/units";
 import type { UserPackRecord } from "../storage/packs";
 
 /** Loaded rules content plus helpers to read its translated texts. */
@@ -64,7 +65,12 @@ export async function loadContent(
     for (const [key, value] of Object.entries(record.strings)) if (value) texts.set(key, value);
   }
 
-  const text = (id: string, field: string) => texts.get(`${id}.${field}`);
+  // Distances and weights read in the units in use. The call reads the unit signal, so whatever
+  // shows a text follows a change of units.
+  const text = (id: string, field: string) => {
+    const value = texts.get(`${id}.${field}`);
+    return value === undefined ? undefined : convertText(value);
+  };
   return {
     packs,
     index: indexPacks(...packs),
