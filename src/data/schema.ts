@@ -86,6 +86,7 @@ export const ENTRY_KINDS = [
   "ability",
   "skill",
   "language",
+  "feat",
   "proficiency",
   "school",
   "condition",

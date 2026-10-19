@@ -184,8 +184,7 @@ function Rests() {
   const ch = character.value;
   if (!v || !s) return null;
   // A lone warlock gets every slot back; a multiclass warlock only the separate pact slots.
-  const onlyWarlock =
-    s.spellcasters.length === 1 && s.spellcasters[0]?.classId.endsWith("/warlock");
+  const onlyWarlock = s.spellcasters.length === 1 && s.spellcasters[0]?.pact;
   const recovers = s.pactSlots ? "pact" : onlyWarlock ? "all" : "none";
 
   return (

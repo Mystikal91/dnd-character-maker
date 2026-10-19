@@ -1,6 +1,6 @@
 import { ABILITIES, type Ability } from "../data/schema";
 
-export const CHARACTER_SCHEMA_VERSION = 5;
+export const CHARACTER_SCHEMA_VERSION = 6;
 
 /** How ability scores were generated. Only `manual` has no constraints on the numbers. */
 export type AbilityMethod = "manual" | "standard" | "pointbuy" | "roll";
@@ -140,6 +140,8 @@ export interface Character {
    * two different abilities are +1 each.
    */
   asi: Ability[][];
+  /** Feats taken. Each one uses up an ability score improvement. */
+  feats: string[];
   /** Free edit: a forced value for a derived field, e.g. `ability.int`. Always wins. */
   overrides: Record<string, number | string | boolean>;
 }
@@ -160,6 +162,7 @@ export function createCharacter(ruleset: Character["ruleset"]): Character {
     play: createPlayState(),
     story: createStory(),
     asi: [],
+    feats: [],
     overrides: {},
   };
 }

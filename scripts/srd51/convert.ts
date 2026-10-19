@@ -405,7 +405,14 @@ function convertClasses(raw: RawSource, ctx: Context): Converted {
         return {
           level: l.level,
           features: (l.features as Raw[]).map((f) => id("feature", f.index)),
-          abilityScoreImprovements: l.ability_score_bonuses ?? 0,
+          // Counted from the improvement features: the source's own counter is wrong for rogues.
+          abilityScoreImprovements: (raw.levels as Raw[]).filter(
+            (o) =>
+              o.class.index === c.index &&
+              !o.subclass &&
+              o.level <= l.level &&
+              (o.features as Raw[]).some((f) => /ability-score-improvement/.test(f.index)),
+          ).length,
           ...(sc?.cantrips_known !== undefined && { cantripsKnown: sc.cantrips_known }),
           ...(sc?.spells_known !== undefined && { spellsKnown: sc.spells_known }),
           ...(sc && {

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import type { Entry } from "../data/schema";
 import { srd51Index as index } from "../test/srd51";
 import { createCharacter } from "./character";
 import { parseCharacter } from "./characterSchema";
@@ -133,6 +134,45 @@ describe("ability score improvements", () => {
   });
 });
 
+describe("feats", () => {
+  const feat = {
+    id: "test:feat/sturdy",
+    kind: "feat",
+    effects: [{ type: "abilityBonus", ability: "con", value: 1 }],
+    data: { prerequisites: [{ ability: "str", minimum: 17 }] },
+  } as unknown as Entry;
+  const withFeat = new Map([...index, [feat.id, feat]]);
+
+  function fighter(level: number) {
+    const c = createCharacter("srd51");
+    c.classes = [{ classId: "srd51:class/fighter", level }];
+    c.abilityBase = { str: 15, dex: 14, con: 13, int: 12, wis: 10, cha: 8 };
+    return c;
+  }
+
+  it("uses an improvement slot, applies its effects and checks its prerequisite", () => {
+    const c = fighter(4);
+    c.feats = [feat.id];
+    const sheet = deriveSheet(c, withFeat);
+    expect(sheet.feats).toEqual([feat.id]);
+    expect(sheet.abilities.con.score).toBe(14);
+    expect(sheet.asi).toEqual({ available: 1, used: 1 });
+    expect(sheet.warnings).toEqual(
+      expect.arrayContaining([
+        { code: "featPrerequisite", params: { feat: feat.id, ability: "str", minimum: 17 } },
+      ]),
+    );
+  });
+
+  it("gives the rogue the improvements of the SRD table", () => {
+    const rogue = createCharacter("srd51");
+    rogue.classes = [{ classId: "srd51:class/rogue", level: 12 }];
+    expect(deriveSheet(rogue, index).asi.available).toBe(4);
+    rogue.classes = [{ classId: "srd51:class/rogue", level: 19 }];
+    expect(deriveSheet(rogue, index).asi.available).toBe(6);
+  });
+});
+
 describe("character migration", () => {
   it("upgrades a version 1 character to the current version with empty guided state", () => {
     const v1 = {
@@ -148,7 +188,8 @@ describe("character migration", () => {
     };
     const upgraded = parseCharacter(v1);
     expect(upgraded).toMatchObject({
-      schemaVersion: 5,
+      schemaVersion: 6,
+      feats: [],
       story: { ideals: "", notes: "" },
       spells: {},
       play: { tempHp: 0, conditions: [], inspiration: false },

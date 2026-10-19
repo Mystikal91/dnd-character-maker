@@ -127,6 +127,7 @@ export function PacksPage() {
             <p>{ui("packs.reportNothing")}</p>
           )}
           {report.duplicates > 0 && <p>{ui("packs.reportDuplicates", { n: report.duplicates })}</p>}
+          {report.unsupported > 0 && <p>{ui("packs.reportRules", { n: report.unsupported })}</p>}
           {Object.keys(report.skipped).length > 0 && (
             <p>
               {ui("packs.reportSkipped", {

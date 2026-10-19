@@ -17,10 +17,13 @@ link: a link carries only the character, so whoever opens it needs their own cop
 ## Aurora XML
 
 Files in the XML format used by the [Aurora character builder](https://aurorabuilder.com) can be
-added with *Add Aurora XML files*. The reader only translates structure (`src/import/aurora.ts`):
-it supports spells, weapons, armor, adventuring gear and languages, and reports everything else
-(races, classes, feats, magic items...) as not supported yet. Entries the app already has (the
-SRD) are left out.
+added with *Add Aurora XML files*. The reader only translates structure (`src/import/aurora/`).
+It supports spells, weapons, armor, adventuring gear, languages, backgrounds (with their
+personality tables), races, sub-races and racial traits, feats, classes (hit die, spell tables,
+Pact Magic, ability score improvements, multiclassing), archetypes and their features. Everything
+else (magic items, companions...) is reported as not supported yet. Rules the app cannot apply
+automatically keep their text, and the report counts them. Entries the app already has (the SRD)
+are left out and anything that refers to them is pointed at the app's own entry.
 
 What the app deliberately does **not** do:
 

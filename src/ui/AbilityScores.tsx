@@ -12,6 +12,7 @@ import {
 } from "../engine/abilityScores";
 import type { AbilityMethod } from "../engine/character";
 import { type UiKey, signed, ui } from "../i18n/ui";
+import { entriesOfKind } from "./build/fields";
 
 const METHODS: AbilityMethod[] = ["manual", "standard", "pointbuy", "roll"];
 const asNumber = (value: string, fallback: number) => {
@@ -148,6 +149,65 @@ export function AbilityScores() {
   );
 }
 
+/** Feats can be taken in place of an ability score improvement, when the content has any. */
+function FeatPicker() {
+  const c = character.value;
+  const s = sheet.value;
+  const ct = content.value;
+  if (!s || !ct) return null;
+  const options = entriesOfKind("feat").filter((o) => !c.feats.includes(o.id));
+  if (options.length === 0 && c.feats.length === 0) return null;
+  const left = s.asi.available - s.asi.used;
+
+  return (
+    <div class="feats">
+      <h5>{ui("asi.feats")}</h5>
+      {c.feats.length > 0 && (
+        <ul class="plain">
+          {c.feats.map((id) => (
+            <li class="row-between" key={id}>
+              <span>{ct.name(id)}</span>
+              <button
+                type="button"
+                class="link"
+                onClick={() =>
+                  updateCharacter((d) => {
+                    d.feats = d.feats.filter((f) => f !== id);
+                  })
+                }
+              >
+                {ui("form.remove")}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {left > 0 && options.length > 0 && (
+        <label class="field">
+          <span>{ui("asi.addFeat")}</span>
+          <select
+            value=""
+            onChange={(e) => {
+              const id = e.currentTarget.value;
+              if (!id) return;
+              updateCharacter((d) => {
+                d.feats = [...d.feats, id];
+              });
+            }}
+          >
+            <option value="">{ui("form.none")}</option>
+            {options.map((o) => (
+              <option key={o.id} value={o.id}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
+    </div>
+  );
+}
+
 function ImprovementSlots() {
   const c = character.value;
   const s = sheet.value;
@@ -168,7 +228,8 @@ function ImprovementSlots() {
     <div class="asi">
       <h4>{ui("asi.title", { used: s.asi.used, available: s.asi.available })}</h4>
       <p class="muted">{ui("asi.hint")}</p>
-      {Array.from({ length: s.asi.available }, (_, i) => {
+      <FeatPicker />
+      {Array.from({ length: Math.max(0, s.asi.available - c.feats.length) }, (_, i) => {
         const slot = c.asi[i] ?? [];
         const first = slot[0] ?? "";
         const second = slot[1] ?? "";

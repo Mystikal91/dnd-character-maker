@@ -1,0 +1,332 @@
+import type { Effect } from "../../data/schema";
+import { emit } from "./emit";
+import { type Context, FEATURE_TYPES, type Source } from "./registry";
+import {
+  abilityFromWord,
+  mapRules,
+  proficiencyOf,
+  readRules,
+  requirementsMet,
+  selectMatches,
+} from "./rules";
+import { clean, description, setters, slugify } from "./xml";
+
+/** Who a feature belongs to: the class (and subclass) that grants it, and at which level. */
+export interface Owner {
+  classId: string;
+  subclassId?: string;
+  level?: number;
+}
+
+const ABILITY_ABBR: Record<string, string> = {
+  str: "str",
+  dex: "dex",
+  con: "con",
+  int: "int",
+  wis: "wis",
+  cha: "cha",
+};
+
+/** Every feature element granted by `source`, through grants with a level or without. */
+export function grantedFeatures(
+  ctx: Context,
+  source: Source,
+): { feature: Source; level: number | undefined }[] {
+  return readRules(source.el)
+    .filter((r) => r.tag === "grant" && FEATURE_TYPES.has(r.type))
+    .filter((r) => requirementsMet(r.requirements))
+    .map((r) => ({ feature: ctx.byAid.get(r.id), level: r.level }))
+    .filter((g): g is { feature: Source; level: number | undefined } => Boolean(g.feature));
+}
+
+/** The class an archetype belongs to: the one that has a feature offering archetypes like it. */
+export function archetypeParent(
+  ctx: Context,
+  archetype: Source,
+): { classId: string; flavor: string } | undefined {
+  for (const cls of ctx.all) {
+    if (cls.type !== "Class" || !cls.id) continue;
+    const seen = new Set<Source>();
+    const stack = grantedFeatures(ctx, cls).map((g) => g.feature);
+    while (stack.length > 0) {
+      const feature = stack.pop();
+      if (!feature || seen.has(feature)) continue;
+      seen.add(feature);
+      for (const rule of readRules(feature.el)) {
+        if (
+          rule.tag === "select" &&
+          rule.type === "Archetype" &&
+          selectMatches(rule.supports, archetype)
+        )
+          return { classId: cls.id, flavor: rule.name || feature.name };
+      }
+      for (const g of grantedFeatures(ctx, feature)) stack.push(g.feature);
+    }
+  }
+  return undefined;
+}
+
+/** Records which class (and level) each feature belongs to, starting from classes and archetypes. */
+export function claimFeatures(ctx: Context, owners: Map<Source, Owner>): void {
+  const visit = (feature: Source, owner: Owner, seen: Set<Source>) => {
+    if (seen.has(feature)) return;
+    seen.add(feature);
+    if (!owners.has(feature)) owners.set(feature, owner);
+    const here = owners.get(feature) ?? owner;
+    for (const g of grantedFeatures(ctx, feature))
+      visit(g.feature, { ...here, level: g.level ?? here.level }, seen);
+    for (const rule of readRules(feature.el)) {
+      if (rule.tag !== "select" || !FEATURE_TYPES.has(rule.type)) continue;
+      for (const option of ctx.all.filter(
+        (s) => s.type === rule.type && selectMatches(rule.supports, s),
+      ))
+        visit(option, { ...here, level: rule.level ?? here.level }, seen);
+    }
+  };
+  for (const cls of ctx.all) {
+    if (cls.type !== "Class" || !cls.id) continue;
+    for (const g of grantedFeatures(ctx, cls))
+      visit(g.feature, { classId: cls.id, level: g.level }, new Set());
+  }
+  for (const arch of ctx.all) {
+    if (arch.type !== "Archetype" || !arch.id) continue;
+    const parent = archetypeParent(ctx, arch);
+    if (!parent) continue;
+    for (const g of grantedFeatures(ctx, arch))
+      visit(g.feature, { classId: parent.classId, subclassId: arch.id, level: g.level }, new Set());
+  }
+}
+
+/** A class feature or archetype feature. */
+export function importFeature(ctx: Context, source: Source, owners: Map<Source, Owner>): void {
+  const owner = owners.get(source);
+  const mapped = mapRules(ctx, source, { idPrefix: "feature", skipLevelled: true });
+  emit(
+    ctx,
+    source,
+    {
+      ...(owner && { class: owner.classId }),
+      ...(owner?.subclassId && { subclass: owner.subclassId }),
+      ...(owner?.level !== undefined && { level: owner.level }),
+    },
+    { desc: description(source.el) },
+    { effects: mapped.effects as Effect[] },
+  );
+}
+
+/** `[str:13]` terms of a multiclass requirement, split into "all of these" and "any of these". */
+function parsePrerequisites(text: string) {
+  const terms = [...text.matchAll(/\[(str|dex|con|int|wis|cha):(\d+)\]/g)].map((m) => ({
+    ability: ABILITY_ABBR[m[1] ?? ""] ?? "int",
+    minimum: Number(m[2]),
+  }));
+  if (text.includes("||")) return { prerequisites: [], options: terms };
+  return { prerequisites: terms, options: [] };
+}
+
+interface Casting {
+  ability: string;
+  prepare: boolean;
+  pact: boolean;
+  startsAt: number;
+  preparation:
+    | { type: "known" }
+    | { type: "prepared"; levelDivisor: number }
+    | { type: "spellbook"; initial: number; perLevel: number };
+  slots: number[][]; // slots[level 1..20][spell level 1..9]
+  cantrips: number[];
+  spells: number[];
+}
+
+/** Reads a class's spellcasting feature: slots, cantrips and spells by level. */
+function readCasting(feature: Source): Casting | undefined {
+  const block = feature.el.querySelector(":scope > spellcasting");
+  if (!block) return undefined;
+  const rules = readRules(feature.el);
+  const slots = Array.from({ length: 20 }, () => Array.from({ length: 9 }, () => 0));
+  // Pact Magic: a count of slots and their level, each growing by steps at given class levels.
+  const pact = rules.some((r) => r.tag === "stat" && /:spellcasting:slots:count$/.test(r.name));
+  const stepped = (suffix: RegExp, level: number) =>
+    rules
+      .filter((r) => r.tag === "stat" && suffix.test(r.name) && (r.level ?? 0) <= level)
+      .reduce((sum, r) => sum + (Number.parseInt(r.value, 10) || 0), 0);
+  if (pact) {
+    for (let level = 1; level <= 20; level++) {
+      const count = stepped(/:spellcasting:slots:count$/, level);
+      const spellLevel = stepped(/:spellcasting:slot$/, level);
+      const row = slots[level - 1];
+      if (row && count > 0 && spellLevel >= 1 && spellLevel <= 9) row[spellLevel - 1] = count;
+    }
+  }
+  for (const rule of pact ? [] : rules) {
+    const m = rule.name.match(/:spellcasting:slots:(\d)$/);
+    if (rule.tag !== "stat" || !m || rule.level === undefined) continue;
+    const spellLevel = Number(m[1]) - 1;
+    const value = Number.parseInt(rule.value, 10) || 0;
+    for (let level = rule.level; level <= 20; level++) {
+      const row = slots[level - 1];
+      if (row) row[spellLevel] = (row[spellLevel] ?? 0) + value;
+    }
+  }
+  const cantrips = Array.from({ length: 20 }, () => 0);
+  const spells = Array.from({ length: 20 }, () => 0);
+  let spellbook = false;
+  let initial = 0;
+  let perLevel = 0;
+  for (const rule of rules) {
+    if (rule.tag !== "select" || rule.type !== "Spell" || rule.level === undefined) continue;
+    const isCantrip = /cantrip/i.test(rule.name);
+    const target = isCantrip ? cantrips : spells;
+    if (/spellbook/i.test(rule.name)) {
+      spellbook = true;
+      if (rule.level === 1) initial += rule.number;
+      else perLevel = rule.number;
+    }
+    for (let level = rule.level; level <= 20; level++)
+      target[level - 1] = (target[level - 1] ?? 0) + rule.number;
+  }
+  const prepares = block.getAttribute("prepare") === "true";
+  const half = rules.some(
+    (r) => r.tag === "stat" && /:spellcasting:prepare$/.test(r.name) && /:half$/.test(r.value),
+  );
+  const preparation: Casting["preparation"] = spellbook
+    ? { type: "spellbook", initial, perLevel }
+    : prepares
+      ? { type: "prepared", levelDivisor: half ? 2 : 1 }
+      : { type: "known" };
+  const firstSlot = slots.findIndex((row) => row.some((n) => n > 0));
+  return {
+    ability: abilityFromWord(block.getAttribute("ability") ?? "") ?? "int",
+    prepare: prepares,
+    pact,
+    startsAt: firstSlot === -1 ? 1 : firstSlot + 1,
+    preparation,
+    slots,
+    cantrips,
+    spells,
+  };
+}
+
+export function importClass(ctx: Context, source: Source): void {
+  const slug = slugify(source.name);
+  const set = setters(source.el);
+  const hitDie = Number(set.get("hd")?.text.match(/d(\d+)/)?.[1] ?? 8);
+
+  // What the class gives a character that starts with it.
+  const mapped = mapRules(ctx, source, {
+    idPrefix: `${slug}-proficiency`,
+    skipLevelled: true,
+    classSlug: slug,
+  });
+
+  // Features by level, and the special ones: spellcasting and ability score improvements.
+  const grants = grantedFeatures(ctx, source);
+  const byLevel = new Map<number, string[]>();
+  const everyFeature: Source[] = [];
+  const collect = (feature: Source, seen: Set<Source>) => {
+    if (seen.has(feature)) return;
+    seen.add(feature);
+    everyFeature.push(feature);
+    for (const g of grantedFeatures(ctx, feature)) collect(g.feature, seen);
+  };
+  for (const g of grants) {
+    collect(g.feature, new Set());
+    if (g.feature.id && g.level !== undefined) {
+      const list = byLevel.get(g.level) ?? [];
+      list.push(g.feature.id);
+      byLevel.set(g.level, list);
+    }
+  }
+
+  const casting = everyFeature.map(readCasting).find(Boolean);
+  const asiLevels = everyFeature
+    .filter((f) => /ability score improvement/i.test(f.name))
+    .flatMap((f) => readRules(f.el).filter((r) => r.tag === "select" && r.level !== undefined))
+    .map((r) => r.level as number);
+
+  // Multiclassing: the requirement and the proficiencies gained.
+  const multiclass = source.el.querySelector(":scope > multiclass");
+  const requirement = parsePrerequisites(
+    clean(multiclass?.querySelector(":scope > requirements")?.textContent),
+  );
+  const multiclassProficiencies = multiclass
+    ? readRules(multiclass)
+        .filter((r) => r.tag === "grant" && r.type === "Proficiency")
+        .map((r) => proficiencyOf(ctx, r.id))
+        .filter((p): p is NonNullable<typeof p> => Boolean(p))
+        .map((p) => `${p.category}:${p.target}`)
+    : [];
+
+  const levels = Array.from({ length: 20 }, (_, i) => {
+    const level = i + 1;
+    return {
+      level,
+      features: byLevel.get(level) ?? [],
+      abilityScoreImprovements: asiLevels.filter((l) => l <= level).length,
+      ...(casting?.cantrips[i] ? { cantripsKnown: casting.cantrips[i] } : {}),
+      ...(casting && casting.preparation.type === "known" && casting.spells[i]
+        ? { spellsKnown: casting.spells[i] }
+        : {}),
+      ...(casting && level >= casting.startsAt ? { spellSlots: casting.slots[i] } : {}),
+      classSpecific: {},
+    };
+  });
+
+  emit(
+    ctx,
+    source,
+    {
+      hitDie,
+      ...(casting && {
+        spellcasting: {
+          ability: casting.ability,
+          startsAtLevel: casting.startsAt,
+          ...(casting.pact && { pact: true }),
+          preparation: casting.preparation,
+        },
+      }),
+      multiclassing: {
+        prerequisites: requirement.prerequisites,
+        ...(requirement.options.length > 0 && {
+          prerequisiteOptions: { choose: 1, from: requirement.options },
+        }),
+        proficiencies: multiclassProficiencies,
+      },
+      levels,
+    },
+    { desc: description(source.el) },
+    { effects: mapped.effects as Effect[] },
+  );
+}
+
+export function importArchetype(ctx: Context, source: Source): void {
+  const parent = archetypeParent(ctx, source);
+  if (!parent) {
+    ctx.result.skipped.Archetype = (ctx.result.skipped.Archetype ?? 0) + 1;
+    return;
+  }
+  const byLevel = new Map<number, string[]>();
+  const spells: { spell: string; classLevel: number }[] = [];
+  for (const rule of readRules(source.el)) {
+    if (rule.tag !== "grant" || rule.level === undefined || !requirementsMet(rule.requirements))
+      continue;
+    const target = ctx.byAid.get(rule.id);
+    if (!target?.id) continue;
+    if (rule.type === "Spell") spells.push({ spell: target.id, classLevel: rule.level });
+    else if (FEATURE_TYPES.has(rule.type)) {
+      const list = byLevel.get(rule.level) ?? [];
+      list.push(target.id);
+      byLevel.set(rule.level, list);
+    }
+  }
+  const levels = [...byLevel.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([level, features]) => ({ level, features }));
+  emit(
+    ctx,
+    source,
+    { levels, spells },
+    { desc: description(source.el), flavor: parent.flavor },
+    { parent: parent.classId },
+  );
+}

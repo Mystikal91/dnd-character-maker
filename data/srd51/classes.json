@@ -5027,7 +5027,7 @@
             "features": [
               "srd51:feature/reliable-talent"
             ],
-            "abilityScoreImprovements": 2,
+            "abilityScoreImprovements": 3,
             "classSpecific": {
               "sneakAttack": {
                 "diceCount": 6,
@@ -5053,7 +5053,7 @@
             "features": [
               "srd51:feature/roguish-archetype-improvement-2"
             ],
-            "abilityScoreImprovements": 3,
+            "abilityScoreImprovements": 4,
             "classSpecific": {
               "sneakAttack": {
                 "diceCount": 7,
@@ -5066,7 +5066,7 @@
             "features": [
               "srd51:feature/blindsense"
             ],
-            "abilityScoreImprovements": 3,
+            "abilityScoreImprovements": 4,
             "classSpecific": {
               "sneakAttack": {
                 "diceCount": 7,
@@ -5079,7 +5079,7 @@
             "features": [
               "srd51:feature/slippery-mind"
             ],
-            "abilityScoreImprovements": 3,
+            "abilityScoreImprovements": 4,
             "classSpecific": {
               "sneakAttack": {
                 "diceCount": 8,
@@ -5105,7 +5105,7 @@
             "features": [
               "srd51:feature/roguish-archetype-improvement-3"
             ],
-            "abilityScoreImprovements": 4,
+            "abilityScoreImprovements": 5,
             "classSpecific": {
               "sneakAttack": {
                 "diceCount": 9,
@@ -5118,7 +5118,7 @@
             "features": [
               "srd51:feature/elusive"
             ],
-            "abilityScoreImprovements": 4,
+            "abilityScoreImprovements": 5,
             "classSpecific": {
               "sneakAttack": {
                 "diceCount": 9,
@@ -5144,7 +5144,7 @@
             "features": [
               "srd51:feature/stroke-of-luck"
             ],
-            "abilityScoreImprovements": 5,
+            "abilityScoreImprovements": 6,
             "classSpecific": {
               "sneakAttack": {
                 "diceCount": 10,

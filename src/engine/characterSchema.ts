@@ -85,6 +85,7 @@ const CharacterSchema = v.object({
     inspiration: v.boolean(),
   }),
   asi: v.array(v.pipe(v.array(AbilitySchema), v.minLength(1), v.maxLength(2))),
+  feats: v.array(v.string()),
   overrides: v.record(v.string(), v.union([v.number(), v.string(), v.boolean()])),
 });
 
@@ -102,6 +103,8 @@ const migrations: Record<number, (doc: Record<string, unknown>) => Record<string
   3: (doc) => ({ ...doc, play: createPlayState() }),
   // 4 -> 5: the character's story (personality, appearance, notes).
   4: (doc) => ({ ...doc, story: createStory() }),
+  // 5 -> 6: feats, taken in place of ability score improvements.
+  5: (doc) => ({ ...doc, feats: [] }),
 };
 
 export class CharacterParseError extends Error {}

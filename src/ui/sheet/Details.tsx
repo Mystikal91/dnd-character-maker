@@ -55,6 +55,20 @@ export function SpeciesTraits() {
   );
 }
 
+/** Feats the character took, each with its text one tap away. */
+export function Feats() {
+  const c = content.value;
+  const s = sheet.value;
+  if (!c || !s || s.feats.length === 0) return null;
+  return (
+    <Panel title={ui("sheet.feats")}>
+      {s.feats.map((id) => (
+        <RulesText key={id} name={c.name(id)} text={c.text(id, "desc")} />
+      ))}
+    </Panel>
+  );
+}
+
 /** Items carried and how heavy they are. */
 export function Inventory() {
   const c = content.value;

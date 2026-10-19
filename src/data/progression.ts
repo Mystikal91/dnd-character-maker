@@ -27,6 +27,8 @@ export const ClassDataSchema = v.object({
     v.object({
       ability: AbilitySchema,
       startsAtLevel: v.number(),
+      /** Pact Magic: slots all of one level, regained on a short rest. */
+      pact: v.optional(v.boolean()),
       preparation: v.variant("type", [
         v.object({ type: v.literal("known") }),
         v.object({ type: v.literal("prepared"), levelDivisor: v.number() }),

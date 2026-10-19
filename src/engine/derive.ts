@@ -36,6 +36,8 @@ export interface AbilityResult {
 
 export interface SpellcastingResult {
   classId: string;
+  /** Pact Magic: slots come back on a short rest. */
+  pact: boolean;
   ability: Ability;
   saveDc: number;
   attackBonus: number;
@@ -76,6 +78,8 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   choices: PendingChoice[];
   /** Spells granted outright or by a choice (e.g. a High Elf cantrip). */
   grantedSpells: string[];
+  /** Feats the character took. */
+  feats: string[];
   /** Ability Score Improvements available from class levels and how many are taken. */
   asi: { available: number; used: number };
   /** Problems found while deriving. Never blocking: the sheet is still produced. */
@@ -102,7 +106,8 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
 
   // Species, subspecies, background and the starting class contribute their effects;
   // other classes only contribute their multiclass proficiencies.
-  const chosen = Object.values(character.choices)
+  const featIds = character.feats ?? [];
+  const chosen = [...Object.values(character.choices), ...featIds]
     .filter((id): id is string => Boolean(id))
     .flatMap((id) => lookup(index, id, warnings) ?? []);
   const classEntries = character.classes.map((cl) => ({
@@ -133,10 +138,11 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     const row = entry && classData(entry).levels.find((l) => l.level === cl.level);
     return sum + (row?.abilityScoreImprovements ?? 0);
   }, 0);
-  if (character.asi.length > asiAvailable)
+  // Feats take their improvements first; the rest of the slots are ability increases.
+  if (character.asi.length + featIds.length > asiAvailable)
     warn(warnings, "asiTooMany", { available: asiAvailable });
-  let asiUsed = 0;
-  character.asi.slice(0, asiAvailable).forEach((slot, i) => {
+  let asiUsed = Math.min(featIds.length, asiAvailable);
+  character.asi.slice(0, Math.max(0, asiAvailable - featIds.length)).forEach((slot, i) => {
     if (new Set(slot).size !== slot.length) {
       warn(warnings, "asiInvalid", { slot: i + 1 });
       return;
@@ -160,6 +166,21 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     const score = override ?? base + bonus;
     if (!overridden && score > 20) warn(warnings, "abilityTooHigh", { ability, score });
     abilities[ability] = { base, bonus, score, modifier: abilityModifier(score), overridden };
+  }
+
+  // A feat may ask for minimum ability scores.
+  for (const entry of chosen) {
+    if (entry.kind !== "feat") continue;
+    const needs =
+      (entry.data.prerequisites as { ability: Ability; minimum: number }[] | undefined) ?? [];
+    for (const need of needs) {
+      if (abilities[need.ability].score < need.minimum)
+        warn(warnings, "featPrerequisite", {
+          feat: entry.id,
+          ability: need.ability,
+          minimum: need.minimum,
+        });
+    }
   }
 
   // Hit points, features, spellcasting
@@ -211,6 +232,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
       const modifier = abilities[ability].modifier;
       casters.push({
         classId: cl.classId,
+        pact: casterKind(cl.classId, data) === "pact",
         ability,
         saveDc:
           numberOverride(character.overrides, OVERRIDE.spellSaveDc) ??
@@ -307,6 +329,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     ...(pools.pact && { pactSlots: pools.pact }),
     choices,
     grantedSpells: [...new Set(effects.flatMap((e) => (e.type === "grantSpell" ? [e.spell] : [])))],
+    feats: chosen.filter((e) => e.kind === "feat").map((e) => e.id),
     asi: { available: asiAvailable, used: asiUsed },
     warnings,
   };

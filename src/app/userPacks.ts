@@ -74,6 +74,7 @@ export const importReport = signal<
       added: number;
       duplicates: number;
       skipped: Record<string, number>;
+      unsupported: number;
       name: string;
     }
   | undefined
@@ -90,23 +91,18 @@ export async function importAuroraFiles(files: File[]): Promise<void> {
   if (!loaded || files.length === 0) return;
   try {
     const texts = await Promise.all(files.map((f) => f.text()));
-    const names = new Map<string, Set<string>>();
-    for (const entry of loaded.index.values()) {
-      const set = names.get(entry.kind) ?? new Set<string>();
-      set.add(loaded.name(entry.id).toLowerCase());
-      names.set(entry.kind, set);
-    }
     const id = `imp${Date.now().toString(36)}`;
     const result = parseAurora(texts, {
       packId: id,
-      known: new Set(loaded.index.keys()),
-      exists: (kind, name) => names.get(kind)?.has(name.toLowerCase()) ?? false,
+      index: loaded.index,
+      nameOf: (entryId) => loaded.name(entryId),
     });
     const name = result.title || "Imported content";
     importReport.value = {
       added: result.entries.length,
       duplicates: result.duplicates,
       skipped: result.skipped,
+      unsupported: result.unsupportedRules,
       name,
     };
     if (result.entries.length === 0) return;

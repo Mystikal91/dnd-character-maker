@@ -10,7 +10,7 @@ export type CasterKind = "full" | "half" | "pact";
 
 export function casterKind(classId: string, data: ClassData): CasterKind | undefined {
   if (!data.spellcasting) return undefined;
-  if (classId.endsWith("/warlock")) return "pact";
+  if (data.spellcasting.pact || classId.endsWith("/warlock")) return "pact";
   return data.spellcasting.startsAtLevel <= 1 ? "full" : "half";
 }
 

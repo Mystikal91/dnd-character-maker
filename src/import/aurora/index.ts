@@ -1,0 +1,163 @@
+import { type Owner, claimFeatures, importArchetype, importClass, importFeature } from "./classes";
+import { importArmor, importGear, importLanguage, importSpell, importWeapon } from "./items";
+import { importBackground, importFeat, importRace, importSubRace, importTrait } from "./people";
+import {
+  type AuroraOptions,
+  type AuroraResult,
+  type Context,
+  FEATURE_TYPES,
+  KIND_OF,
+  ROOT_TYPES,
+  type Source,
+  allocate,
+  indexExisting,
+  readSources,
+} from "./registry";
+import { readRules, requirementsMet, selectMatches } from "./rules";
+import { AuroraParseError, clean } from "./xml";
+
+export { AuroraParseError, slugify } from "./xml";
+export type { AuroraOptions, AuroraResult } from "./registry";
+
+/**
+ * Reads files in the XML format that the Aurora character builder uses, so that people can bring
+ * content they already have. Nothing here knows any book's content: it only translates structure.
+ *
+ * Supported: spells, weapons, armor, gear, languages, backgrounds, races and sub-races with their
+ * traits, feats, classes and archetypes with their features. Other types (deities, companions,
+ * magic items...) are counted and reported as skipped.
+ */
+/** Elements that only exist to be picked by another one: nothing to report when not imported. */
+const SILENT_TYPES = new Set(["Background Feature", "Multiclass", "Ability Score Improvement"]);
+
+export function parseAurora(files: string[], options: AuroraOptions): AuroraResult {
+  const result: AuroraResult = {
+    entries: [],
+    strings: {},
+    sources: [],
+    skipped: {},
+    duplicates: 0,
+    unsupportedRules: 0,
+    title: "",
+  };
+  const ctx: Context = {
+    options,
+    result,
+    byAid: new Map(),
+    all: [],
+    needed: new Set(),
+    usedSlugs: new Set(),
+    existingByName: indexExisting(options),
+  };
+
+  for (const text of files) {
+    const doc = new DOMParser().parseFromString(text.replace(/^﻿/, ""), "application/xml");
+    if (doc.getElementsByTagName("parsererror").length > 0)
+      throw new AuroraParseError("The file is not valid XML");
+    const root = doc.documentElement;
+    if (!root || root.tagName !== "elements")
+      throw new AuroraParseError("Not an Aurora elements file");
+    result.title ||= clean(root.querySelector("info > name")?.textContent);
+    for (const source of readSources(doc)) {
+      if (ctx.byAid.has(source.aid)) continue;
+      ctx.byAid.set(source.aid, source);
+      ctx.all.push(source);
+    }
+  }
+
+  // What the app already has stays as it is; other roots are what the files are about.
+  for (const source of ctx.all) {
+    const kind = KIND_OF[source.type];
+    if (!kind) continue;
+    if (ROOT_TYPES.has(source.type)) {
+      const existing = ctx.existingByName.get(`${kind}|${source.name.toLowerCase()}`);
+      if (existing) {
+        source.id = existing;
+        source.kind = kind;
+        source.existing = true;
+        result.duplicates += 1;
+        continue;
+      }
+      ctx.needed.add(source);
+    }
+  }
+
+  // Features, traits and the like are created only when something that is created uses them.
+  const mark = (source: Source | undefined) => {
+    if (!source || source.existing || ctx.needed.has(source)) return;
+    ctx.needed.add(source);
+    visit(source);
+  };
+  const visit = (source: Source) => {
+    for (const rule of readRules(source.el)) {
+      if (!requirementsMet(rule.requirements)) continue;
+      if (rule.tag === "grant" && FEATURE_TYPES.has(rule.type)) mark(ctx.byAid.get(rule.id));
+      else if (rule.tag === "select" && FEATURE_TYPES.has(rule.type))
+        for (const option of ctx.all)
+          if (option.type === rule.type && selectMatches(rule.supports, option)) mark(option);
+    }
+  };
+  for (const source of [...ctx.needed]) visit(source);
+
+  // Ids, in the order of the files.
+  for (const source of ctx.all) if (ctx.needed.has(source)) allocate(ctx, source);
+  // Entries that are needed but could not get an id (no name) are dropped.
+  for (const source of [...ctx.needed]) if (!source.id) ctx.needed.delete(source);
+
+  const owners = new Map<Source, Owner>();
+  claimFeatures(ctx, owners);
+
+  for (const source of ctx.all) {
+    if (!ctx.needed.has(source)) {
+      if (!KIND_OF[source.type] && !SILENT_TYPES.has(source.type))
+        result.skipped[source.type] = (result.skipped[source.type] ?? 0) + 1;
+      continue;
+    }
+    switch (source.type) {
+      case "Spell":
+        importSpell(ctx, source);
+        break;
+      case "Weapon":
+        importWeapon(ctx, source);
+        break;
+      case "Armor":
+        importArmor(ctx, source);
+        break;
+      case "Item":
+        importGear(ctx, source);
+        break;
+      case "Language":
+        importLanguage(ctx, source);
+        break;
+      case "Background":
+        importBackground(ctx, source);
+        break;
+      case "Race":
+        importRace(ctx, source);
+        break;
+      case "Sub Race":
+        importSubRace(ctx, source);
+        break;
+      case "Racial Trait":
+      case "Feat Feature":
+        importTrait(ctx, source);
+        break;
+      case "Feat":
+        importFeat(ctx, source);
+        break;
+      case "Class":
+        importClass(ctx, source);
+        break;
+      case "Class Feature":
+      case "Archetype Feature":
+        importFeature(ctx, source, owners);
+        break;
+      case "Archetype":
+        importArchetype(ctx, source);
+        break;
+    }
+  }
+
+  result.sources = [...new Set(result.sources)].sort();
+  return result;
+}
