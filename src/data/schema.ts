@@ -96,6 +96,8 @@ export const EffectSchema = v.variant("type", [
   v.object({
     type: v.literal("grantSpell"),
     spell: EntryIdSchema,
+    /** The spell comes with this level of the class that gives it (always prepared). */
+    minLevel: v.optional(v.number()),
   }),
   /** A flat bonus to a number of the sheet, with an optional condition. */
   v.object({

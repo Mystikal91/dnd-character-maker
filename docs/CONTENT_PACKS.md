@@ -27,6 +27,13 @@ number comes from. The kinds are `abilityBonus`, `proficiency`, `trait`, `choice
 - `{ "type": "unarmoredDefense", "base": 10, "add": ["con"], "shield": true }` is armor class
   without armor: `base` + Dexterity + the listed abilities.
 
+A `grantSpell` effect can carry a `minLevel` (the spell comes with that level of the class).
+A subclass entry can list spells it always prepares (`spells`), spells it adds to the class's
+list (`expanded`, a warlock patron) and, for a class that does not cast, its own
+`spellcasting`: the ability, the class whose list it picks from and the cantrips, spells known
+and slots per level, like the Eldritch Knight. The homebrew editor offers the third caster's
+tables for a subclass.
+
 The features of the SRD get theirs from `scripts/srd51/effects.ts`; a feature that offers options
 (a fighting style) has a `choice` over its child features. Class features and subclass features
 count once the character has reached their level.

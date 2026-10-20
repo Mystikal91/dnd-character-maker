@@ -52,6 +52,15 @@ function classSpellPool(index: PackIndex, classId: string, min: number, max: num
     .map((e) => e.id);
 }
 
+/** The spells a patron adds to the list, within the levels the class can cast. */
+function expandedPool(index: PackIndex, subclass: Entry | undefined, min: number, max: number) {
+  const ids = subclass ? subclassData(subclass).expanded : [];
+  return ids.filter((id) => {
+    const level = index.get(id)?.data.level;
+    return typeof level === "number" && level >= min && level <= max;
+  });
+}
+
 /** Keeps the valid picks, warning about invalid and surplus ones. */
 function resolvePick(
   requested: string[],
@@ -93,13 +102,18 @@ export function deriveSpellLists(input: Input): SpellLists {
     lists.cantrips = resolvePick(
       picks?.cantrips ?? [],
       row.cantripsKnown,
-      classSpellPool(index, classId, 0, 0),
+      [...classSpellPool(index, classId, 0, 0), ...expandedPool(index, subclass, 0, 0)],
       classId,
       warnings,
     );
   }
 
-  const leveled = classSpellPool(index, classId, 1, maxSpellLevel);
+  const leveled = [
+    ...new Set([
+      ...classSpellPool(index, classId, 1, maxSpellLevel),
+      ...expandedPool(index, subclass, 1, maxSpellLevel),
+    ]),
+  ];
   const preparation = casting.preparation;
   if (preparation.type === "known") {
     lists.known = resolvePick(

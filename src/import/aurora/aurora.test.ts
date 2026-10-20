@@ -507,6 +507,7 @@ describe("classes and archetypes", () => {
         { level: 7, features: ["imp1:feature/wound-tight"] },
       ],
       spells: [{ spell: "imp1:spell/glimmer", classLevel: 3 }],
+      expanded: [],
     });
     expect(result.strings["imp1:subclass/clockwork.flavor"]).toBe("Tinker Path");
     expect(byId(result, "imp1:feature/spring-loaded").data).toMatchObject({
@@ -535,6 +536,56 @@ describe("classes and archetypes", () => {
       class: "srd51:class/warlock",
       level: 1,
     });
+  });
+
+  it("gives a subclass of a class that does not cast its own spellcasting", () => {
+    const knight = wrap(`
+      <element name="Spell Knight" type="Archetype" source="Test Book" id="ID_SK">
+        <supports>Martial Archetype</supports>
+        <description><p>A fighter who casts.</p></description>
+        <rules><grant type="Archetype Feature" id="ID_SK_CAST" level="3" /></rules>
+      </element>
+      <element name="Spellcasting" type="Archetype Feature" source="Test Book" id="ID_SK_CAST">
+        <supports>Fighter</supports>
+        <description><p>You cast.</p></description>
+        <spellcasting name="Spell Knight" ability="Intelligence"><list known="true">Wizard</list></spellcasting>
+        <rules>
+          <stat name="spell knight:spellcasting:slots:1" value="2" level="3" />
+          <stat name="spell knight:spellcasting:slots:1" value="1" level="4" />
+          <stat name="spell knight:spellcasting:slots:1" value="1" level="7" />
+          <stat name="spell knight:spellcasting:slots:2" value="2" level="7" />
+          <select type="Spell" name="Cantrip (Spell Knight)" supports="Wizard, 0" level="3" number="2" spellcasting="Spell Knight" />
+          <select type="Spell" name="Spell (Spell Knight)" supports="Wizard" level="3" number="3" spellcasting="Spell Knight" />
+          <select type="Spell" name="Spell (Spell Knight)" supports="Wizard" level="4" spellcasting="Spell Knight" />
+        </rules>
+      </element>`);
+    const made = parseAurora([knight], options);
+    const sub = byId(made, "imp1:subclass/spell-knight");
+    expect(sub.parent).toBe("srd51:class/fighter");
+    const data = subclassData(sub);
+    expect(data.spellcasting).toEqual({
+      ability: "int",
+      list: "srd51:class/wizard",
+      startsAtLevel: 3,
+      kind: "third",
+    });
+    const row = (level: number) => data.levels.find((l) => l.level === level);
+    expect(row(3)).toMatchObject({
+      cantripsKnown: 2,
+      spellsKnown: 3,
+      spellSlots: [2, 0, 0, 0, 0, 0, 0, 0, 0],
+    });
+    expect(row(4)?.spellSlots).toEqual([3, 0, 0, 0, 0, 0, 0, 0, 0]);
+    expect(row(7)?.spellSlots).toEqual([4, 2, 0, 0, 0, 0, 0, 0, 0]);
+
+    // It works in a character: a fighter of level 3 with this subclass casts.
+    const index = new Map([...srd51Index, ...made.entries.map((e) => [e.id, e] as const)]);
+    const c = createCharacter("srd51");
+    c.classes = [{ classId: "srd51:class/fighter", level: 3, subclassId: sub.id }];
+    const sheet = deriveSheet(c, index);
+    expect(sheet.spellcasters).toHaveLength(1);
+    expect(sheet.spellcasters[0]?.cantripsKnown).toBe(2);
+    expect(sheet.spellSlots).toEqual([2, 0, 0, 0, 0, 0, 0, 0, 0]);
   });
 
   it("tells apart entries that share a name by their book", () => {

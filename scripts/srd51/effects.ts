@@ -127,6 +127,21 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
   "feature/ranger-fighting-style-dueling": dueling,
 };
 
+/**
+ * What the source database leaves out of a subclass: a feature missing from its levels (the
+ * Circle of the Land's terrain choice) and a domain spell (the Life domain's Guardian of Faith).
+ */
+export const SUBCLASS_FIXES: Record<
+  string,
+  {
+    features?: { level: number; feature: string }[];
+    spells?: { spell: string; classLevel: number }[];
+  }
+> = {
+  land: { features: [{ level: 2, feature: "circle-of-the-land" }] },
+  life: { spells: [{ spell: "guardian-of-faith", classLevel: 7 }] },
+};
+
 export interface OptionFeature {
   /** How many options the character picks. */
   choose: number;

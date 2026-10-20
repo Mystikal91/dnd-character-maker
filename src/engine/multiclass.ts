@@ -6,7 +6,7 @@ import type { Ability } from "../data/schema";
  * (paladin, ranger), and the warlock's Pact Magic. SRD 5.1 has no third casters: those are
  * subclasses (Eldritch Knight, Arcane Trickster) that the SRD does not include.
  */
-export type CasterKind = "full" | "half" | "pact";
+export type CasterKind = "full" | "half" | "third" | "pact";
 
 export function casterKind(classId: string, data: ClassData): CasterKind | undefined {
   if (!data.spellcasting) return undefined;
@@ -63,6 +63,7 @@ export function casterLevel(casters: CasterInput[]): number {
   return casters.reduce((sum, c) => {
     if (c.kind === "full") return sum + c.level;
     if (c.kind === "half") return sum + Math.floor(c.level / 2);
+    if (c.kind === "third") return sum + Math.floor(c.level / 3);
     return sum;
   }, 0);
 }

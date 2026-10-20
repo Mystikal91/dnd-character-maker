@@ -178,3 +178,27 @@ describe("SRD 5.1 equipment", () => {
     });
   });
 });
+
+describe("features with effects", () => {
+  it("can all be reached: every feature that offers a choice is in a class or subclass level", () => {
+    const reachable = new Set<string>();
+    for (const entry of index.values()) {
+      if (entry.kind === "class") for (const l of classData(entry).levels) l.features.forEach((f) => reachable.add(f));
+      if (entry.kind === "subclass") for (const l of subclassData(entry).levels) l.features.forEach((f) => reachable.add(f));
+    }
+    const lost = [...index.values()]
+      .filter((e) => e.kind === "feature" && e.effects.some((x) => x.type === "choice"))
+      .filter((e) => !reachable.has(e.id))
+      .map((e) => e.id);
+    expect(lost).toEqual([]);
+  });
+
+  it("gives every terrain of the Circle of the Land its spells, four levels of two", () => {
+    const terrains = [...index.values()].filter((e) =>
+      e.id.startsWith("srd51:feature/circle-of-the-land-"),
+    );
+    expect(terrains).toHaveLength(7);
+    for (const terrain of terrains)
+      expect(terrain.effects.filter((x) => x.type === "grantSpell")).toHaveLength(8);
+  });
+});

@@ -1,5 +1,5 @@
 import type { Effect } from "../../data/schema";
-import { emit } from "./emit";
+import { classIdByName, emit } from "./emit";
 import { type Context, FEATURE_TYPES, type Source } from "./registry";
 import {
   abilityFromWord,
@@ -148,6 +148,8 @@ function parsePrerequisites(text: string) {
 
 interface Casting {
   ability: string;
+  /** The list it picks from as the file writes it: `Wizard`, or `Wizard,(Abjuration||Evocation)`. */
+  list: string;
   prepare: boolean;
   pact: boolean;
   startsAt: number;
@@ -219,6 +221,7 @@ function readCasting(feature: Source): Casting | undefined {
   const firstSlot = slots.findIndex((row) => row.some((n) => n > 0));
   return {
     ability: abilityFromWord(block.getAttribute("ability") ?? "") ?? "int",
+    list: clean(block.querySelector("list")?.textContent),
     prepare: prepares,
     pact,
     startsAt: firstSlot === -1 ? 1 : firstSlot + 1,
@@ -321,6 +324,25 @@ export function importClass(ctx: Context, source: Source): void {
   );
 }
 
+/** True when the class already has spellcasting, so its subclass needs none of its own. */
+function classCasting(ctx: Context, classId: string): boolean {
+  const entry = ctx.options.index.get(classId) ?? ctx.result.entries.find((e) => e.id === classId);
+  return Boolean(entry && (entry.data as { spellcasting?: unknown }).spellcasting);
+}
+
+/** The features an archetype grants, and those they grant in turn. */
+function archetypeFeatures(ctx: Context, source: Source): Source[] {
+  const seen = new Set<Source>();
+  const stack = grantedFeatures(ctx, source).map((g) => g.feature);
+  while (stack.length > 0) {
+    const feature = stack.pop();
+    if (!feature || seen.has(feature)) continue;
+    seen.add(feature);
+    for (const g of grantedFeatures(ctx, feature)) stack.push(g.feature);
+  }
+  return [...seen];
+}
+
 export function importArchetype(ctx: Context, source: Source): void {
   const parent = archetypeParent(ctx, source);
   if (!parent) {
@@ -341,13 +363,63 @@ export function importArchetype(ctx: Context, source: Source): void {
       byLevel.set(rule.level, list);
     }
   }
-  const levels = [...byLevel.entries()]
-    .sort(([a], [b]) => a - b)
-    .map(([level, features]) => ({ level, features }));
+  // An archetype that gives spellcasting (Eldritch Knight, Arcane Trickster): its own tables, and
+  // the class whose list it picks from, unless the class already casts.
+  const casting = archetypeFeatures(ctx, source).map(readCasting).find(Boolean);
+  const listClass = casting
+    ? classIdByName(ctx, casting.list.split(",")[0]?.trim() ?? "")
+    : undefined;
+  const classCasts = classCasting(ctx, parent.classId);
+  const casts = casting && listClass && !classCasts ? casting : undefined;
+
+  const rows = new Map<
+    number,
+    {
+      level: number;
+      features: string[];
+      cantripsKnown?: number;
+      spellsKnown?: number;
+      spellSlots?: number[];
+    }
+  >();
+  for (const [level, features] of byLevel) rows.set(level, { level, features });
+  if (casts) {
+    for (let level = casts.startsAt; level <= 20; level++) {
+      const row = rows.get(level) ?? { level, features: [] };
+      const cantrips = casts.cantrips[level - 1];
+      const known = casts.spells[level - 1];
+      rows.set(level, {
+        ...row,
+        ...(cantrips ? { cantripsKnown: cantrips } : {}),
+        ...(known ? { spellsKnown: known } : {}),
+        spellSlots: casts.slots[level - 1] ?? [],
+      });
+    }
+  }
+  const levels = [...rows.values()].sort((a, b) => a.level - b.level);
+  const kind = casts?.pact
+    ? "pact"
+    : (casts?.startsAt ?? 1) >= 3
+      ? "third"
+      : casts?.startsAt === 2
+        ? "half"
+        : "full";
   emit(
     ctx,
     source,
-    { levels, spells },
+    {
+      levels,
+      spells,
+      ...(casts &&
+        listClass && {
+          spellcasting: {
+            ability: casts.ability,
+            list: listClass,
+            startsAtLevel: casts.startsAt,
+            kind,
+          },
+        }),
+    },
     { desc: description(source.el), flavor: parent.flavor },
     { parent: parent.classId },
   );

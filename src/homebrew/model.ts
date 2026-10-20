@@ -67,6 +67,24 @@ export interface BuildContext {
 
 const ZERO_SLOTS = Array.from({ length: 9 }, () => 0);
 export const CASTING_KINDS = ["none", "full", "half", "pact"] as const;
+/** Slots and spells known of a third caster (Eldritch Knight), from level 3 on. */
+const THIRD_SLOTS: [number, number[]][] = [
+  [3, [2]],
+  [4, [3]],
+  [7, [4, 2]],
+  [10, [4, 3]],
+  [13, [4, 3, 2]],
+  [16, [4, 3, 3]],
+  [19, [4, 3, 3, 1]],
+];
+const THIRD_KNOWN = [3, 4, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 11, 11, 11, 12, 13];
+export const SUBCLASS_CASTING_KINDS = ["none", "third"] as const;
+
+function thirdSlots(level: number): number[] {
+  const row = [...THIRD_SLOTS].reverse().find(([from]) => from <= level)?.[1] ?? [];
+  return [...row, ...ZERO_SLOTS].slice(0, 9);
+}
+
 export const PREPARATION_KINDS = ["prepared", "known", "spellbook"] as const;
 export const HIT_DICE = [6, 8, 10, 12] as const;
 export const DEFAULT_ASI_LEVELS = "4,8,12,16,19";
@@ -432,16 +450,38 @@ export function buildDraft(draft: Draft, id: Id, context: BuildContext): Built {
     case "subclass": {
       const parent = text(values.parent) as Id;
       const byLevel = featureEntries(draft.traits, id, parent, strings, extra);
+      // A subclass can give its class spellcasting, as the Eldritch Knight does.
+      const casts = values.casting === "third";
+      const cantrips = Math.min(9, Math.max(0, whole(values.cantrips, 2)));
+      const levels = new Map<number, Record<string, unknown>>();
+      for (const [level, features] of byLevel) levels.set(level, { level, features });
+      if (casts) {
+        for (let level = 3; level <= 20; level++) {
+          levels.set(level, {
+            level,
+            features: byLevel.get(level) ?? [],
+            ...(cantrips > 0 && { cantripsKnown: cantrips + (level >= 10 ? 1 : 0) }),
+            spellsKnown: THIRD_KNOWN[level - 3] ?? 13,
+            spellSlots: thirdSlots(level),
+          });
+        }
+      }
       entry = {
         id,
         kind: "subclass",
         ...(parent && { parent }),
         effects: [],
         data: {
-          levels: [...byLevel.entries()]
-            .sort(([a], [b]) => a - b)
-            .map(([level, features]) => ({ level, features })),
+          levels: [...levels.values()].sort((a, b) => Number(a.level) - Number(b.level)),
           spells: [],
+          ...(casts && {
+            spellcasting: {
+              ability: ABILITY_IDS.find((a) => a === values.castAbility) ?? "int",
+              list: text(values.castList) || "srd51:class/wizard",
+              startsAtLevel: 3,
+              kind: "third",
+            },
+          }),
         },
       };
       break;
@@ -631,6 +671,15 @@ export function draftFromEntry(
     }
     case "subclass": {
       values.parent = entry.parent ?? "";
+      if (d.spellcasting) {
+        values.casting = "third";
+        values.castAbility = String(d.spellcasting.ability ?? "int");
+        values.castList = String(d.spellcasting.list ?? "");
+        const rows = (d.levels ?? []) as { cantripsKnown?: number }[];
+        values.cantrips = String(
+          rows.find((r) => r.cantripsKnown !== undefined)?.cantripsKnown ?? 0,
+        );
+      }
       const traits: DraftTrait[] = [];
       for (const row of (d.levels ?? []) as { level: number; features: string[] }[])
         for (const featureId of row.features) {

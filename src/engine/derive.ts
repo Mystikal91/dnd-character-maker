@@ -17,6 +17,7 @@ import { type CasterInput, casterKind, slotPools, unmetPrerequisites } from "./m
 import { OVERRIDE, numberOverride } from "./overrides";
 import { type ClassFact, type ClassResource, classResources } from "./resources";
 import { type SpellLists, deriveSpellLists } from "./spells";
+import { withSubclassCasting } from "./subclassCasting";
 import { type Warning, warn } from "./warnings";
 
 export type PackIndex = Map<string, Entry>;
@@ -244,7 +245,6 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
       hp += Math.max(1, roll + conMod);
     }
 
-    const row = data.levels.find((l) => l.level === cl.level);
     for (const l of data.levels) if (l.level <= cl.level) features.push(...l.features);
     const classBits = classResources({
       classId: cl.classId,
@@ -267,26 +267,30 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
       }
     }
 
-    if (data.spellcasting && cl.level >= data.spellcasting.startsAtLevel && row?.spellSlots) {
-      const kind = casterKind(cl.classId, data);
-      if (kind) casterInputs.push({ kind, level: cl.level, ownSlots: row.spellSlots });
-      const ability = data.spellcasting.ability;
+    // A class without spellcasting may get it from its subclass (Eldritch Knight).
+    const subCasting = subEntry ? subclassData(subEntry).spellcasting : undefined;
+    const cast = (subEntry && withSubclassCasting(data, subclassData(subEntry))) || data;
+    const castRow = cast.levels.find((l) => l.level === cl.level);
+    if (cast.spellcasting && cl.level >= cast.spellcasting.startsAtLevel && castRow?.spellSlots) {
+      const kind = subCasting && cast !== data ? subCasting.kind : casterKind(cl.classId, data);
+      if (kind) casterInputs.push({ kind, level: cl.level, ownSlots: castRow.spellSlots });
+      const ability = cast.spellcasting.ability;
       const modifier = abilities[ability].modifier;
       casters.push({
         classId: cl.classId,
-        pact: casterKind(cl.classId, data) === "pact",
+        pact: kind === "pact",
         ability,
         saveDc:
           numberOverride(character.overrides, OVERRIDE.spellSaveDc) ??
           8 + proficiencyBonus + modifier,
         attackBonus:
           numberOverride(character.overrides, OVERRIDE.spellAttack) ?? proficiencyBonus + modifier,
-        ...(row.cantripsKnown !== undefined && { cantripsKnown: row.cantripsKnown }),
-        ...(row.spellsKnown !== undefined && { spellsKnown: row.spellsKnown }),
-        spellSlots: row.spellSlots,
+        ...(castRow.cantripsKnown !== undefined && { cantripsKnown: castRow.cantripsKnown }),
+        ...(castRow.spellsKnown !== undefined && { spellsKnown: castRow.spellsKnown }),
+        spellSlots: castRow.spellSlots,
         lists: deriveSpellLists({
-          classId: cl.classId,
-          data,
+          classId: subCasting && cast !== data ? subCasting.list : cl.classId,
+          data: cast,
           level: cl.level,
           abilityModifier: modifier,
           picks: character.spells[cl.classId],
@@ -442,7 +446,16 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     spellSlots: pools.slots,
     ...(pools.pact && { pactSlots: pools.pact }),
     choices,
-    grantedSpells: [...new Set(effects.flatMap((e) => (e.type === "grantSpell" ? [e.spell] : [])))],
+    grantedSpells: [
+      ...new Set(
+        sourced.flatMap(({ effect, source }) =>
+          effect.type === "grantSpell" &&
+          (effect.minLevel === undefined || levelOf(source) >= effect.minLevel)
+            ? [effect.spell]
+            : [],
+        ),
+      ),
+    ],
     feats: chosen.filter((e) => e.kind === "feat").map((e) => e.id),
     asi: { available: asiAvailable, used: asiUsed },
     warnings,

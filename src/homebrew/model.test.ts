@@ -299,3 +299,40 @@ describe("homebrew classes", () => {
     expect(without.pack.entries.map((e) => e.kind)).toEqual(["subclass", "feature"]);
   });
 });
+
+describe("a homebrew subclass that casts", () => {
+  it("gives a fighter the tables of a third caster, and opens again for editing", () => {
+    const made = saveDraft(
+      newHomebrewPack("Mine", 1000),
+      draft(
+        "subclass",
+        {
+          name: "Spell Blade",
+          parent: "srd51:class/fighter",
+          casting: "third",
+          castAbility: "int",
+          castList: "srd51:class/wizard",
+          cantrips: "2",
+        },
+        [{ name: "Blade Bond", text: "A bond.", level: "3" }],
+      ),
+      context,
+    );
+    expect(() => parsePack(made.record.pack)).not.toThrow();
+    const index = new Map([
+      ...srd51Index,
+      ...made.record.pack.entries.map((e) => [e.id, e] as const),
+    ]);
+    const c = createCharacter("srd51");
+    c.classes = [{ classId: "srd51:class/fighter", level: 7, subclassId: made.id }];
+    const sheet = deriveSheet(c, index);
+    expect(sheet.spellSlots).toEqual([4, 2, 0, 0, 0, 0, 0, 0, 0]);
+    expect(sheet.spellcasters[0]?.cantripsKnown).toBe(2);
+    expect(sheet.spellcasters[0]?.spellsKnown).toBe(5);
+
+    const entry = made.record.pack.entries.find((e) => e.id === made.id) as Entry;
+    const back = draftFromEntry(entry, made.record.strings, made.record.pack.entries);
+    expect(back?.values).toMatchObject({ casting: "third", castAbility: "int", cantrips: "2" });
+    expect(back?.traits.map((t) => t.name)).toEqual(["Blade Bond"]);
+  });
+});

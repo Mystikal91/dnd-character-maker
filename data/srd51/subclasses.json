@@ -39,7 +39,8 @@
             ]
           }
         ],
-        "spells": []
+        "spells": [],
+        "expanded": []
       }
     },
     {
@@ -78,7 +79,8 @@
             }
           }
         ],
-        "spells": []
+        "spells": [],
+        "expanded": []
       }
     },
     {
@@ -150,6 +152,10 @@
             "classLevel": 7
           },
           {
+            "spell": "srd51:spell/guardian-of-faith",
+            "classLevel": 7
+          },
+          {
             "spell": "srd51:spell/mass-cure-wounds",
             "classLevel": 9
           },
@@ -157,7 +163,8 @@
             "spell": "srd51:spell/raise-dead",
             "classLevel": 9
           }
-        ]
+        ],
+        "expanded": []
       }
     },
     {
@@ -171,7 +178,8 @@
             "level": 2,
             "features": [
               "srd51:feature/bonus-cantrip",
-              "srd51:feature/natural-recovery"
+              "srd51:feature/natural-recovery",
+              "srd51:feature/circle-of-the-land"
             ]
           },
           {
@@ -193,232 +201,8 @@
             ]
           }
         ],
-        "spells": [
-          {
-            "spell": "srd51:spell/hold-person",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/spike-growth",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/sleet-storm",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/slow",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/freedom-of-movement",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/ice-storm",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/commune-with-nature",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/cone-of-cold",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/mirror-image",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/misty-step",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/water-breathing",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/water-walk",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/control-water",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/freedom-of-movement",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/conjure-elemental",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/scrying",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/blur",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/silence",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/create-food-and-water",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/protection-from-energy",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/blight",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/hallucinatory-terrain",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/insect-plague",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/wall-of-stone",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/barkskin",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/spider-climb",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/call-lightning",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/plant-growth",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/divination",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/freedom-of-movement",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/commune-with-nature",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/tree-stride",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/invisibility",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/pass-without-trace",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/daylight",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/haste",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/divination",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/freedom-of-movement",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/dream",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/insect-plague",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/spider-climb",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/spike-growth",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/lightning-bolt",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/meld-into-stone",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/stone-shape",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/stoneskin",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/passwall",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/wall-of-stone",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/acid-arrow",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/darkness",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/water-walk",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/stinking-cloud",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/freedom-of-movement",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/locate-creature",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/insect-plague",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/scrying",
-            "classLevel": 9
-          }
-        ]
+        "spells": [],
+        "expanded": []
       }
     },
     {
@@ -459,7 +243,8 @@
             ]
           }
         ],
-        "spells": []
+        "spells": [],
+        "expanded": []
       }
     },
     {
@@ -494,7 +279,8 @@
             ]
           }
         ],
-        "spells": []
+        "spells": [],
+        "expanded": []
       }
     },
     {
@@ -587,7 +373,8 @@
             "spell": "srd51:spell/flame-strike",
             "classLevel": 17
           }
-        ]
+        ],
+        "expanded": []
       }
     },
     {
@@ -622,7 +409,8 @@
             ]
           }
         ],
-        "spells": []
+        "spells": [],
+        "expanded": []
       }
     },
     {
@@ -658,7 +446,8 @@
             ]
           }
         ],
-        "spells": []
+        "spells": [],
+        "expanded": []
       }
     },
     {
@@ -694,7 +483,8 @@
             ]
           }
         ],
-        "spells": []
+        "spells": [],
+        "expanded": []
       }
     },
     {
@@ -729,47 +519,18 @@
             ]
           }
         ],
-        "spells": [
-          {
-            "spell": "srd51:spell/burning-hands",
-            "classLevel": 1
-          },
-          {
-            "spell": "srd51:spell/command",
-            "classLevel": 1
-          },
-          {
-            "spell": "srd51:spell/blindness-deafness",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/scorching-ray",
-            "classLevel": 3
-          },
-          {
-            "spell": "srd51:spell/fireball",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/stinking-cloud",
-            "classLevel": 5
-          },
-          {
-            "spell": "srd51:spell/fire-shield",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/wall-of-fire",
-            "classLevel": 7
-          },
-          {
-            "spell": "srd51:spell/flame-strike",
-            "classLevel": 9
-          },
-          {
-            "spell": "srd51:spell/hallow",
-            "classLevel": 9
-          }
+        "spells": [],
+        "expanded": [
+          "srd51:spell/burning-hands",
+          "srd51:spell/command",
+          "srd51:spell/blindness-deafness",
+          "srd51:spell/scorching-ray",
+          "srd51:spell/fireball",
+          "srd51:spell/stinking-cloud",
+          "srd51:spell/fire-shield",
+          "srd51:spell/wall-of-fire",
+          "srd51:spell/flame-strike",
+          "srd51:spell/hallow"
         ]
       }
     },
@@ -806,7 +567,8 @@
             ]
           }
         ],
-        "spells": []
+        "spells": [],
+        "expanded": []
       }
     }
   ]

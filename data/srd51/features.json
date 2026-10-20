@@ -1262,7 +1262,48 @@
       "id": "srd51:feature/circle-of-the-land-arctic",
       "kind": "feature",
       "parent": "srd51:feature/circle-of-the-land",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/hold-person",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/spike-growth",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/sleet-storm",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/slow",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/freedom-of-movement",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/ice-storm",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/commune-with-nature",
+          "minLevel": 9
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/cone-of-cold",
+          "minLevel": 9
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
         "level": 2,
@@ -1273,7 +1314,48 @@
       "id": "srd51:feature/circle-of-the-land-coast",
       "kind": "feature",
       "parent": "srd51:feature/circle-of-the-land",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/mirror-image",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/misty-step",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/water-breathing",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/water-walk",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/control-water",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/freedom-of-movement",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/conjure-elemental",
+          "minLevel": 9
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/scrying",
+          "minLevel": 9
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
         "level": 2,
@@ -1284,7 +1366,48 @@
       "id": "srd51:feature/circle-of-the-land-desert",
       "kind": "feature",
       "parent": "srd51:feature/circle-of-the-land",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/blur",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/silence",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/create-food-and-water",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/protection-from-energy",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/blight",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/hallucinatory-terrain",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/insect-plague",
+          "minLevel": 9
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/wall-of-stone",
+          "minLevel": 9
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
         "level": 2,
@@ -1295,7 +1418,48 @@
       "id": "srd51:feature/circle-of-the-land-forest",
       "kind": "feature",
       "parent": "srd51:feature/circle-of-the-land",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/barkskin",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/spider-climb",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/call-lightning",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/plant-growth",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/divination",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/freedom-of-movement",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/commune-with-nature",
+          "minLevel": 9
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/tree-stride",
+          "minLevel": 9
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
         "level": 2,
@@ -1306,7 +1470,48 @@
       "id": "srd51:feature/circle-of-the-land-grassland",
       "kind": "feature",
       "parent": "srd51:feature/circle-of-the-land",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/invisibility",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/pass-without-trace",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/daylight",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/haste",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/divination",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/freedom-of-movement",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/dream",
+          "minLevel": 9
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/insect-plague",
+          "minLevel": 9
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
         "level": 2,
@@ -1317,7 +1522,48 @@
       "id": "srd51:feature/circle-of-the-land-mountain",
       "kind": "feature",
       "parent": "srd51:feature/circle-of-the-land",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/spider-climb",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/spike-growth",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/lightning-bolt",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/meld-into-stone",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/stone-shape",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/stoneskin",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/passwall",
+          "minLevel": 9
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/wall-of-stone",
+          "minLevel": 9
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
         "level": 2,
@@ -1328,7 +1574,48 @@
       "id": "srd51:feature/circle-of-the-land-swamp",
       "kind": "feature",
       "parent": "srd51:feature/circle-of-the-land",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/acid-arrow",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/darkness",
+          "minLevel": 3
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/water-walk",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/stinking-cloud",
+          "minLevel": 5
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/freedom-of-movement",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/locate-creature",
+          "minLevel": 7
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/insect-plague",
+          "minLevel": 9
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/scrying",
+          "minLevel": 9
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
         "level": 2,

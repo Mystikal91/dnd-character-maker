@@ -3,7 +3,7 @@
  * Pure functions: no file or network access, so they can be unit tested.
  */
 import type { Ability, Effect, Entry, ProficiencyCategory } from "../../src/data/schema";
-import { FEATURE_EFFECTS, OPTION_FEATURES } from "./effects";
+import { FEATURE_EFFECTS, OPTION_FEATURES, SUBCLASS_FIXES } from "./effects";
 
 const PACK = "srd51";
 
@@ -493,6 +493,12 @@ function convertSubclasses(raw: RawSource): Converted {
         features: (l.features as Raw[]).map((f) => id("feature", f.index)),
         ...(l.subclass_specific && { subclassSpecific: cleanData(l.subclass_specific) }),
       }));
+    const fixes = SUBCLASS_FIXES[s.index];
+    for (const fix of fixes?.features ?? []) {
+      const row = levels.find((l) => l.level === fix.level);
+      const feature = id("feature", fix.feature);
+      if (row && !row.features.includes(feature)) row.features.push(feature);
+    }
     const spells = ((s.spells ?? []) as Raw[]).map((sp) => {
       const requirement = (sp.prerequisites as Raw[]).find((p) => p.type === "level");
       if (!requirement) throw new Error(`Subclass spell without level in ${s.index}`);
@@ -501,12 +507,26 @@ function convertSubclasses(raw: RawSource): Converted {
         classLevel: Number(String(requirement.index).split("-").pop()),
       };
     });
+    for (const fix of fixes?.spells ?? []) {
+      const spell = id("spell", fix.spell);
+      if (!spells.some((sp) => sp.spell === spell))
+        spells.push({ spell, classLevel: fix.classLevel });
+    }
+    spells.sort((a, b) => a.classLevel - b.classLevel);
+    // A warlock patron adds spells to the list to pick from; the others always prepare theirs. The
+    // Circle of the Land's depend on the terrain and sit on the terrain features instead.
+    const expands = s.class.index === "warlock";
+    const own = s.index === "land" ? [] : spells;
     entries.push({
       id: id("subclass", s.index),
       kind: "subclass",
       parent: id("class", s.class.index),
       effects: [],
-      data: { levels, spells },
+      data: {
+        levels,
+        spells: expands ? [] : own,
+        expanded: expands ? [...new Set(own.map((sp) => sp.spell))] : [],
+      },
     });
     strings[`${s.index}.name`] = s.name;
     strings[`${s.index}.flavor`] = s.subclass_flavor;
@@ -545,6 +565,25 @@ function convertFeatures(raw: RawSource): Converted {
     strings[`${f.index}.name`] = f.name;
     strings[`${f.index}.desc`] = text(f.desc) ?? "";
   }
+  // The Circle of the Land lists the spells of its seven terrains one after the other, eight each,
+  // in the order of the terrains: each belongs to its terrain feature.
+  const land = (raw.subclasses as Raw[]).find((s) => s.index === "land");
+  const terrains = entries
+    .filter((e) => e.id.startsWith(`${PACK}:feature/circle-of-the-land-`))
+    .sort((a, b) => a.id.localeCompare(b.id));
+  const landSpells = ((land?.spells ?? []) as Raw[]).map((sp) => ({
+    spell: id("spell", sp.spell.index),
+    minLevel: Number(
+      String((sp.prerequisites as Raw[]).find((p) => p.type === "level")?.index)
+        .split("-")
+        .pop(),
+    ),
+  }));
+  terrains.forEach((terrain, i) => {
+    for (const sp of landSpells.slice(i * 8, i * 8 + 8))
+      terrain.effects.push({ type: "grantSpell", spell: sp.spell, minLevel: sp.minLevel });
+  });
+
   // A feature that offers options (a fighting style) lets the character pick among its children.
   for (const [key, option] of Object.entries(OPTION_FEATURES)) {
     const parent = entries.find((e) => e.id === `${PACK}:${key}`);

@@ -21,6 +21,7 @@ import {
   type HomebrewKind,
   PREPARATION_KINDS,
   SIZES,
+  SUBCLASS_CASTING_KINDS,
   blankDraft,
   draftFromEntry,
   draftReady,
@@ -66,10 +67,15 @@ function Text({
   );
 }
 
-function Num({ api, name, min }: { api: FormApi; name: string; min?: number }) {
+function Num({
+  api,
+  name,
+  min,
+  text,
+}: { api: FormApi; name: string; min?: number; text?: string }) {
   return (
     <label class="field">
-      <span>{label(name)}</span>
+      <span>{text ?? label(name)}</span>
       <input
         type="number"
         min={min}
@@ -397,6 +403,24 @@ function Fields({ api }: { api: FormApi }) {
       return (
         <>
           <Pick api={api} name="parent" options={entriesOfKind("class")} blank />
+          <Pick
+            api={api}
+            name="casting"
+            fallback="none"
+            options={SUBCLASS_CASTING_KINDS.map((id) => ({ id, label: option(id) }))}
+          />
+          {api.draft.values.casting === "third" && (
+            <div class="hb-row">
+              <Pick api={api} name="castAbility" fallback="int" options={abilities} />
+              <Pick
+                api={api}
+                name="castList"
+                fallback="srd51:class/wizard"
+                options={entriesOfKind("class")}
+              />
+              <Num api={api} name="cantrips" min={0} text={label("cantripsThird")} />
+            </div>
+          )}
           <Text api={api} name="desc" area />
           <Features api={api} />
         </>

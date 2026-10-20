@@ -56,10 +56,28 @@ export const SubclassDataSchema = v.object({
     v.object({
       level: v.number(),
       features: v.array(EntryIdSchema),
+      /** For a subclass that casts spells: the tables of its levels, like a class's. */
+      cantripsKnown: v.optional(v.number()),
+      spellsKnown: v.optional(v.number()),
+      spellSlots: v.optional(v.array(v.number())),
     }),
   ),
   /** Spells always prepared once the class reaches `classLevel`. */
   spells: v.array(v.object({ spell: EntryIdSchema, classLevel: v.number() })),
+  /** Spells added to what the class can pick from (a warlock patron's expanded list). */
+  expanded: v.optional(v.array(EntryIdSchema), []),
+  /**
+   * A subclass that gives a class without spellcasting its own (Eldritch Knight, Arcane
+   * Trickster): the class whose list it picks from, and how its slots join a multiclass.
+   */
+  spellcasting: v.optional(
+    v.object({
+      ability: AbilitySchema,
+      list: EntryIdSchema,
+      startsAtLevel: v.number(),
+      kind: v.picklist(["full", "half", "third", "pact"]),
+    }),
+  ),
 });
 export type SubclassData = v.InferOutput<typeof SubclassDataSchema>;
 

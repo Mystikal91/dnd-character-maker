@@ -36,6 +36,13 @@ export const CHANGELOG: ChangelogEntry[] = [
         es: "Funcionan más rasgos: Pericia, Aprendiz de todo, Atleta extraordinario, Movimiento sin armadura y las opciones de invocaciones sobrenaturales (con los conjuros que otorgan), dones del pacto, metamagia, Presa del cazador y otras opciones de rasgos de clase, que se eligen según crece la clase.",
       },
       {
+        en: "Subclass spells: the Circle of the Land picks its terrain and gets that terrain's spells by level, a warlock patron adds its spells to the list to pick from, and the Life domain has its missing spell. Subclasses can now give spellcasting (Eldritch Knight, Arcane Trickster) in Aurora imports and in the homebrew editor.",
+        it: "Incantesimi di sottoclasse: il Circolo della terra sceglie il suo terreno e ottiene gli incantesimi di quel terreno per livello, un patrono del warlock aggiunge i suoi incantesimi alla lista da cui scegliere, e il dominio della Vita ha il suo incantesimo mancante. Le sottoclassi ora possono dare il lancio di incantesimi (Cavaliere Mistico, Mistificatore Arcano) nelle importazioni Aurora e nell'editor homebrew.",
+        fr: "Sorts de sous-classe : le Cercle de la Terre choisit son terrain et reçoit les sorts de ce terrain par niveau, un protecteur d'occultiste ajoute ses sorts à la liste de choix, et le domaine de la Vie retrouve son sort manquant. Les sous-classes peuvent désormais donner la magie (Chevalier occulte, Escroc arcanique) dans les imports Aurora et l'éditeur homebrew.",
+        de: "Unterklassenzauber: Der Zirkel des Landes wählt sein Gelände und erhält dessen Zauber nach Grad, ein Hexenmeister-Schutzherr fügt seine Zauber der Auswahlliste hinzu, und die Domäne des Lebens bekommt ihren fehlenden Zauber. Unterklassen können jetzt Zauberwirken geben (Mystischer Ritter, Arkaner Betrüger), in Aurora-Importen und im Homebrew-Editor.",
+        es: "Conjuros de subclase: el Círculo de la Tierra elige su terreno y recibe los conjuros de ese terreno por nivel, un patrón de brujo añade sus conjuros a la lista de elección, y el dominio de la Vida recupera su conjuro que faltaba. Las subclases ahora pueden dar lanzamiento de conjuros (Caballero sobrenatural, Embaucador arcano) en las importaciones de Aurora y en el editor homebrew.",
+      },
+      {
         en: "A fighting style is a choice in the Choices step and in level up, and the sheet lists where each bonus comes from.",
         it: "Lo stile di combattimento è una scelta nel passo Scelte e nel level up, e la scheda elenca da dove viene ogni bonus.",
         fr: "Le style de combat est un choix à l'étape Choix et à la montée de niveau, et la fiche indique d'où vient chaque bonus.",
@@ -172,11 +179,11 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "casters",
     text: {
-      en: "Subclasses that give spellcasting (Eldritch Knight, Arcane Trickster) and the spells that subclasses always prepare.",
-      it: "Le sottoclassi che danno incantesimi (Cavaliere Mistico, Mistificatore Arcano) e gli incantesimi che le sottoclassi hanno sempre preparati.",
-      fr: "Les sous-classes qui donnent la magie (Chevalier occulte, Escroc arcanique) et les sorts que les sous-classes ont toujours préparés.",
-      de: "Unterklassen, die Zauberwirken geben (Mystischer Ritter, Arkaner Betrüger), und die Zauber, die Unterklassen immer vorbereitet haben.",
-      es: "Las subclases que dan lanzamiento de hechizos (Caballero sobrenatural, Embaucador arcano) y los hechizos que las subclases siempre tienen preparados.",
+      en: "The Eldritch Knight and Arcane Trickster are not in the SRD: they come from Aurora files or the homebrew editor. Their spell lists are not limited to the schools the rules ask for.",
+      it: "Il Cavaliere Mistico e il Mistificatore Arcano non sono nell'SRD: arrivano da file Aurora o dall'editor homebrew. Le loro liste di incantesimi non sono limitate alle scuole che le regole richiedono.",
+      fr: "Le Chevalier occulte et l'Escroc arcanique ne sont pas dans le SRD : ils viennent de fichiers Aurora ou de l'éditeur homebrew. Leurs listes de sorts ne sont pas limitées aux écoles que demandent les règles.",
+      de: "Der Mystische Ritter und der Arkane Betrüger stehen nicht im SRD: Sie kommen aus Aurora-Dateien oder dem Homebrew-Editor. Ihre Zauberlisten sind nicht auf die Schulen beschränkt, die die Regeln verlangen.",
+      es: "El Caballero sobrenatural y el Embaucador arcano no están en el SRD: llegan de archivos de Aurora o del editor homebrew. Sus listas de conjuros no se limitan a las escuelas que piden las reglas.",
     },
   },
   {
