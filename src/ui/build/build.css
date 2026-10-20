@@ -515,3 +515,25 @@
     animation: none;
   }
 }
+
+/* The buttons of the level up dialog share one size and look. */
+.levelup .btn-row > button {
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0 1.25rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.levelup .btn-row > button.primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.levelup .btn-row > button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

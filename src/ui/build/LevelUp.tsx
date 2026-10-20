@@ -136,9 +136,11 @@ function Choose({ c }: { c: Content }) {
     return (
       <>
         <p>{ui("levelUp.maxed")}</p>
-        <button type="button" onClick={close}>
-          {ui("levelUp.close")}
-        </button>
+        <div class="btn-row">
+          <button type="button" class="primary" onClick={close}>
+            {ui("levelUp.close")}
+          </button>
+        </div>
       </>
     );
   }
@@ -235,7 +237,7 @@ function Choose({ c }: { c: Content }) {
       <h4>{ui("levelUp.preview")}</h4>
       <Changes summary={summary} c={c} />
       <div class="btn-row">
-        <button type="button" onClick={apply} disabled={needsRoll}>
+        <button type="button" class="primary" onClick={apply} disabled={needsRoll}>
           {ui("levelUp.apply")}
         </button>
         <button type="button" class="secondary" onClick={close}>
@@ -292,9 +294,11 @@ function Done({ c }: { c: Content }) {
           ))}
         </ul>
       )}
-      <button type="button" onClick={close}>
-        {ui("levelUp.close")}
-      </button>
+      <div class="btn-row">
+        <button type="button" class="primary" onClick={close}>
+          {ui("levelUp.close")}
+        </button>
+      </div>
     </>
   );
 }
