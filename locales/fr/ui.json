@@ -658,7 +658,7 @@
   "sheet.traits": "Traits",
   "sheet.features": "Aptitudes",
   "sheet.inventory": "Inventaire",
-  "sheet.load": "Charge portée : {carried} sur {capacity} lb",
+  "sheet.load": "Charge portée : {carried} sur {capacity}",
   "sheet.warnings": "Notes",
   "warning.unknownEntry": "Entrée inconnue : {id}.",
   "warning.levelTooHigh": "Le niveau total dépasse {max} ({level}).",

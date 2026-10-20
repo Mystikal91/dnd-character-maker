@@ -1,11 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { convertText, distance } from "./units";
+import { convertText, distance, weight } from "./units";
 
 describe("units", () => {
   it("shows a speed in feet or meters", () => {
     expect(distance(30, false)).toBe("30 ft");
     expect(distance(30, true, "en")).toBe("9 m");
     expect(distance(25, true, "it")).toBe("7,5 m");
+  });
+
+  it("shows a weight in pounds or kilos", () => {
+    expect(weight(12, false, "en")).toBe("12 lb");
+    expect(weight(12, true, "en")).toBe("6 kg");
+    expect(weight(5, true, "it")).toBe("2,5 kg");
   });
 
   it("converts the distances in an English text with the game's own ratio", () => {

@@ -658,7 +658,7 @@
   "sheet.traits": "Tratti",
   "sheet.features": "Privilegi",
   "sheet.inventory": "Inventario",
-  "sheet.load": "Trasportati {carried} di {capacity} lb",
+  "sheet.load": "Trasportati {carried} di {capacity}",
   "sheet.warnings": "Note",
   "warning.unknownEntry": "Voce sconosciuta: {id}.",
   "warning.levelTooHigh": "Il livello totale supera {max} ({level}).",

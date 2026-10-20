@@ -2,6 +2,28 @@ import { ABILITIES, type Ability } from "../data/schema";
 import type { AbilityResult, PackIndex } from "./derive";
 import { OVERRIDE, type Overrides, numberOverride } from "./overrides";
 
+/** Half the proficiency bonus on checks that do not use it, as features give it. */
+export interface HalfProficiency {
+  round: "down" | "up";
+  abilities?: Ability[];
+}
+
+/** What half proficiency adds to a check of this ability: the best of the features that apply. */
+export function halfBonus(
+  halves: HalfProficiency[],
+  ability: Ability,
+  proficiencyBonus: number,
+): number {
+  let best = 0;
+  for (const half of halves) {
+    if (half.abilities && !half.abilities.includes(ability)) continue;
+    const value =
+      half.round === "up" ? Math.ceil(proficiencyBonus / 2) : Math.floor(proficiencyBonus / 2);
+    best = Math.max(best, value);
+  }
+  return best;
+}
+
 export interface CheckResult {
   bonus: number;
   proficient: boolean;
@@ -26,6 +48,9 @@ interface ChecksInput {
   /** Held proficiencies as `category:target` keys. */
   held: Set<string>;
   proficiencyBonus: number;
+  /** Skills (by slug) with expertise: the proficiency bonus counts twice. */
+  expertise: Set<string>;
+  halves: HalfProficiency[];
   /** Free edit values: a forced bonus replaces the calculated one. */
   overrides: Overrides;
 }
@@ -36,6 +61,8 @@ export function deriveChecks({
   abilities,
   held,
   proficiencyBonus,
+  expertise,
+  halves,
   overrides,
 }: ChecksInput): ChecksResult {
   const saves = {} as Record<Ability, CheckResult>;
@@ -60,7 +87,10 @@ export function deriveChecks({
       ability,
       bonus:
         numberOverride(overrides, OVERRIDE.skill(slug)) ??
-        abilities[ability].modifier + (proficient ? proficiencyBonus : 0),
+        abilities[ability].modifier +
+          (proficient
+            ? proficiencyBonus * (expertise.has(slug) ? 2 : 1)
+            : halfBonus(halves, ability, proficiencyBonus)),
       proficient,
     });
   }

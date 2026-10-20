@@ -62,6 +62,8 @@ interface Context {
   proficiencyBonus: number;
   /** Every effect in force with its source: features and choices add to armor class and attacks. */
   sourced: SourcedEffect[];
+  /** The level that counts for what an entry gives: its class's, or the whole character's. */
+  levelOf: (source: string) => number;
   warnings: Warning[];
 }
 
@@ -136,7 +138,7 @@ function deriveArmorClass(ctx: Context, state: ArmorState): ArmorClassResult {
   }
   const shield = shields[0];
   if (shield) parts.push({ source: "shield", value: shield.armor.base });
-  for (const m of appliedModifiers(ctx.sourced, "ac", { armor: state }))
+  for (const m of appliedModifiers(ctx.sourced, "ac", { armor: state, levelOf: ctx.levelOf }))
     parts.push({ source: "feature", value: m.value, feature: m.source });
 
   for (const { itemId, armor } of armors) {
@@ -180,6 +182,7 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
     const proficient = isProficient(held, weapon.proficiency);
     const grip = (twoHanded: boolean) => ({
       armor,
+      levelOf: ctx.levelOf,
       weapon: { kind: weapon.kind, twoHanded, held: heldWeapons },
     });
     const alwaysTwoHanded = weapon.properties.some((p) => p.endsWith("/two-handed"));

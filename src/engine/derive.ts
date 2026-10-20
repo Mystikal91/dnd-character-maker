@@ -9,7 +9,7 @@ import {
 } from "../data/schema";
 import { abilityModifier } from "./abilities";
 import type { Character } from "./character";
-import { type ChecksResult, deriveChecks } from "./checks";
+import { type ChecksResult, deriveChecks, halfBonus } from "./checks";
 import { type PendingChoice, collectEffects } from "./choices";
 import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
 import { type AppliedModifier, appliedModifiers, total } from "./modifiers";
@@ -102,6 +102,17 @@ function lookup(index: PackIndex, id: string, warnings: Warning[]): Entry | unde
   return entry;
 }
 
+/** A feature that offers more picks as the class grows takes the number from the class table. */
+function sizeChoices(feature: Entry, table: Record<string, unknown> | undefined): Entry {
+  if (!feature.effects.some((e) => e.type === "choice" && e.chooseBy)) return feature;
+  const effects = feature.effects.flatMap((e) => {
+    if (e.type !== "choice" || !e.chooseBy) return [e];
+    const size = table?.[e.chooseBy];
+    return typeof size === "number" && size > 0 ? [{ ...e, choose: size }] : [];
+  });
+  return { ...feature, effects };
+}
+
 function overrideNumber(character: Character, key: string): number | undefined {
   const value = character.overrides[key];
   return typeof value === "number" ? value : undefined;
@@ -123,7 +134,8 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   const [starting, ...others] = classEntries;
 
   // The features a class has reached, and its subclass's, add their effects and offer their
-  // choices (a fighting style) like species and background do.
+  // choices (a fighting style) like species and background do. A choice whose size grows with
+  // the class (invocations, metamagic) takes its size from the class table.
   const reached: Entry[] = [];
   for (const { cl, entry } of classEntries) {
     if (!entry) continue;
@@ -132,11 +144,19 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     const sub = cl.subclassId ? index.get(cl.subclassId) : undefined;
     if (sub?.parent === cl.classId)
       for (const l of subclassData(sub).levels) if (l.level <= cl.level) ids.push(...l.features);
+    const row = classData(entry).levels.find((l) => l.level === cl.level);
     for (const id of ids) {
       const feature = index.get(id);
-      if (feature) reached.push(feature);
+      if (feature) reached.push(sizeChoices(feature, row?.classSpecific));
     }
   }
+  /** The level that counts for what an entry gives: its class's, or the whole character's. */
+  const levelOf = (source: string) => {
+    const owner = index.get(source)?.data.class;
+    return owner
+      ? (character.classes.find((cl) => cl.classId === owner)?.level ?? 0)
+      : character.classes.reduce((sum, cl) => sum + cl.level, 0);
+  };
   const { effects, sourced, choices } = collectEffects(
     [...chosen, ...(starting?.entry ? [starting.entry] : []), ...reached],
     { index, selections: character.selections, warnings },
@@ -318,18 +338,58 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     held,
     proficiencyBonus,
     sourced,
+    levelOf,
     warnings,
   });
+
+  // Expertise doubles the proficiency bonus of skills the character is proficient in.
+  const expertise = new Set<string>();
+  for (const effect of effects) {
+    if (effect.type !== "expertise") continue;
+    const isSkill = index.has(`${character.ruleset}:skill/${effect.skill}`);
+    if (isSkill && !held.has(`skill:${effect.skill}`))
+      warn(warnings, "expertiseNeedsProficiency", {
+        skill: `${character.ruleset}:skill/${effect.skill}`,
+      });
+    else if (isSkill) expertise.add(effect.skill);
+  }
+  const halves = effects.flatMap((e) =>
+    e.type === "halfProficiency"
+      ? [{ round: e.round, ...(e.abilities && { abilities: e.abilities }) }]
+      : [],
+  );
+
+  // What a feature asks of its options: a level, or another feature.
+  const known = new Set([...reached.map((e) => e.id), ...traits]);
+  for (const choice of choices) {
+    if (choice.grants !== "trait") continue;
+    for (const id of choice.selected) {
+      const option = index.get(id);
+      const needs = (option?.data.prerequisites ?? []) as {
+        type: string;
+        level?: number;
+        feature?: string;
+      }[];
+      for (const need of needs) {
+        if (need.type === "level" && need.level !== undefined && levelOf(id) < need.level)
+          warn(warnings, "optionLevel", { option: id, level: need.level });
+        if (need.type === "feature" && need.feature && !known.has(need.feature))
+          warn(warnings, "optionFeature", { option: id, feature: need.feature });
+      }
+    }
+  }
   const checks = deriveChecks({
     index,
     ruleset: character.ruleset,
     abilities,
     held,
     proficiencyBonus,
+    expertise,
+    halves,
     overrides: character.overrides,
   });
   const baseSpeed = chosen.find((e) => e.kind === "species")?.data.speed;
-  const state = { armor: equipment.armor };
+  const state = { armor: equipment.armor, levelOf };
   const speedMods = appliedModifiers(sourced, "speed", state);
   const initiativeMods = appliedModifiers(sourced, "initiative", state);
   const hpMods = appliedModifiers(sourced, "hpPerLevel", state);
@@ -364,7 +424,8 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     ...equipment,
     ...checks,
     initiative:
-      overrideNumber(character, "initiative") ?? abilities.dex.modifier + total(initiativeMods),
+      overrideNumber(character, "initiative") ??
+      abilities.dex.modifier + halfBonus(halves, "dex", proficiencyBonus) + total(initiativeMods),
     bonuses,
     ...(speed !== undefined && { speed }),
     level,

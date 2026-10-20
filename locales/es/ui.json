@@ -658,7 +658,7 @@
   "sheet.traits": "Rasgos",
   "sheet.features": "Características",
   "sheet.inventory": "Inventario",
-  "sheet.load": "Cargando {carried} de {capacity} lb",
+  "sheet.load": "Cargando {carried} de {capacity}",
   "sheet.warnings": "Notas",
   "warning.unknownEntry": "Entrada desconocida: {id}.",
   "warning.levelTooHigh": "El nivel total supera {max} ({level}).",

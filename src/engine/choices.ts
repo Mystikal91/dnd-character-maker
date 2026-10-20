@@ -58,6 +58,8 @@ function grantEffect(choice: ChoiceEffect, option: string): Effect {
       return { type: "grantSpell", spell: option };
     case "trait":
       return { type: "trait", id: option };
+    case "expertise":
+      return { type: "expertise", skill: option };
   }
 }
 

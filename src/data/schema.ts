@@ -42,6 +42,7 @@ export type ModifierTarget = (typeof MODIFIER_TARGETS)[number];
 /**
  * When a `modifier` applies, for what the character wears or wields:
  * `wearingArmor` (body armor, not a shield), `unarmored` (no body armor), `noHeavyArmor`,
+ * `unarmoredNoShield` (neither armor nor a shield),
  * `ranged` and `melee` (the weapon of an attack), and `dueling` (a melee weapon that is not
  * two-handed, with no other weapon).
  */
@@ -49,6 +50,7 @@ export const MODIFIER_CONDITIONS = [
   "wearingArmor",
   "unarmored",
   "noHeavyArmor",
+  "unarmoredNoShield",
   "ranged",
   "melee",
   "dueling",
@@ -81,10 +83,15 @@ export const EffectSchema = v.variant("type", [
     choose: v.pipe(v.number(), v.integer(), v.minValue(1)),
     /** What each pick grants. `from` holds the options: entry ids, `category:target` for
      * proficiencies, language slugs for languages, ability ids for ability bonuses. */
-    grants: v.picklist(["proficiency", "language", "spell", "trait", "abilityBonus"]),
+    grants: v.picklist(["proficiency", "language", "spell", "trait", "abilityBonus", "expertise"]),
     from: v.array(v.string()),
     /** Bonus applied per pick when `grants` is `abilityBonus`. */
     value: v.optional(v.number()),
+    /**
+     * A key of the class table (`classSpecific`): the number of picks is that value at the
+     * class level, and `choose` is only a placeholder. Invocations and metamagic grow this way.
+     */
+    chooseBy: v.optional(v.string()),
   }),
   v.object({
     type: v.literal("grantSpell"),
@@ -96,6 +103,19 @@ export const EffectSchema = v.variant("type", [
     target: v.picklist(MODIFIER_TARGETS),
     value: v.number(),
     when: v.optional(v.picklist(MODIFIER_CONDITIONS)),
+    /** Applies from this level of the class that gives it (of the whole character, for a species). */
+    minLevel: v.optional(v.number()),
+  }),
+  /** Double proficiency bonus on a skill the character is proficient in. */
+  v.object({ type: v.literal("expertise"), skill: v.string() }),
+  /**
+   * Half the proficiency bonus on ability checks that do not use it (Jack of All Trades,
+   * Remarkable Athlete): all abilities, or just those listed.
+   */
+  v.object({
+    type: v.literal("halfProficiency"),
+    round: v.picklist(["down", "up"]),
+    abilities: v.optional(v.array(AbilitySchema)),
   }),
   /**
    * Armor class without body armor: `base` + Dexterity + the abilities in `add`. Barbarian and

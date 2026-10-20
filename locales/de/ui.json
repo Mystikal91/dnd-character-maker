@@ -658,7 +658,7 @@
   "sheet.traits": "Eigenschaften",
   "sheet.features": "Merkmale",
   "sheet.inventory": "Inventar",
-  "sheet.load": "Getragen: {carried} von {capacity} lb",
+  "sheet.load": "Getragen: {carried} von {capacity}",
   "sheet.warnings": "Hinweise",
   "warning.unknownEntry": "Unbekannter Eintrag: {id}.",
   "warning.levelTooHigh": "Die Gesamtstufe liegt über {max} ({level}).",

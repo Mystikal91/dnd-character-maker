@@ -2,6 +2,7 @@ import { Fragment } from "preact";
 import { character, content, sheet } from "../../app/store";
 import type { Warning } from "../../engine/warnings";
 import { type UiKey, ui } from "../../i18n/ui";
+import { weight } from "../../i18n/units";
 import { Panel, RulesText } from "./parts";
 
 const PROFICIENCY_CATEGORIES = ["armor", "weapon", "tool", "language"] as const;
@@ -86,7 +87,7 @@ export function Inventory() {
         ))}
       </ul>
       <p class="muted">
-        {ui("sheet.load", { carried: s.load.carried, capacity: s.load.capacity })}
+        {ui("sheet.load", { carried: weight(s.load.carried), capacity: weight(s.load.capacity) })}
       </p>
     </Panel>
   );

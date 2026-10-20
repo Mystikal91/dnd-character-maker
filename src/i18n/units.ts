@@ -20,6 +20,11 @@ export function distance(feet: number, metric = metricUnits.value, locale = unit
   return metric ? `${format(feet * FEET_TO_METERS, locale)} m` : `${feet} ft`;
 }
 
+/** Pounds as a weight in the units in use: `12 lb` or `6 kg`. */
+export function weight(pounds: number, metric = metricUnits.value, locale = unitLocale.value) {
+  return metric ? `${format(pounds * POUNDS_TO_KG, locale)} kg` : `${format(pounds, locale)} lb`;
+}
+
 const FEET = /(\d[\d,]*(?:\.\d+)?)[- ]?(?:feet|foot|ft\b\.?)/gi;
 const MILES = /(\d[\d,]*(?:\.\d+)?)[- ]?miles?\b/gi;
 const POUNDS = /(\d[\d,]*(?:\.\d+)?)[- ]?(?:pounds?|lb\b)/gi;

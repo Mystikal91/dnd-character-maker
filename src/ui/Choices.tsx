@@ -20,6 +20,10 @@ function optionLabel(c: Content, ruleset: string, choice: PendingChoice, option:
     case "spell":
     case "trait":
       return c.name(option);
+    case "expertise":
+      return c.index.has(`${ruleset}:skill/${option}`)
+        ? c.name(`${ruleset}:skill/${option}`)
+        : c.name(`${ruleset}:proficiency/${option}`);
   }
 }
 
