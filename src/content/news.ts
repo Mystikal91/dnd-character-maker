@@ -157,6 +157,26 @@ export const ROADMAP: RoadmapItem[] = [
     },
   },
   {
+    id: "backup",
+    text: {
+      en: "A backup of all your characters in one file (export everything, import everything): they live only in this browser for now.",
+      it: "Una copia di sicurezza di tutti i personaggi in un solo file (esporta tutto, importa tutto): per ora vivono solo in questo browser.",
+      fr: "Une sauvegarde de tous tes personnages dans un seul fichier (tout exporter, tout importer) : pour l'instant ils ne vivent que dans ce navigateur.",
+      de: "Eine Sicherung aller Charaktere in einer Datei (alles exportieren, alles importieren): Sie liegen vorerst nur in diesem Browser.",
+      es: "Una copia de seguridad de todos los personajes en un solo archivo (exportar todo, importar todo): por ahora viven solo en este navegador.",
+    },
+  },
+  {
+    id: "spellRolls",
+    text: {
+      en: "Spell attack and damage rolls in Play, with the dice for the slot used.",
+      it: "Tiri per colpire e per i danni degli incantesimi in Gioca, con i dadi del livello di slot usato.",
+      fr: "Jets d'attaque et de dégâts des sorts dans Jouer, avec les dés de l'emplacement utilisé.",
+      de: "Angriffs- und Schadenswürfe von Zaubern im Spielmodus, mit den Würfeln des verwendeten Zauberplatzes.",
+      es: "Tiradas de ataque y de daño de los conjuros en Jugar, con los dados del espacio usado.",
+    },
+  },
+  {
     id: "rules2024",
     text: {
       en: "The 2024 rules (SRD 5.2.1), next to the 2014 ones.",
@@ -214,6 +234,36 @@ export const ROADMAP: RoadmapItem[] = [
       fr: "Un éditeur homebrew plus riche : effets des aptitudes, sorts de sous-classe et plus de types d'entrées.",
       de: "Ein reicherer Homebrew-Editor: Wirkungen von Merkmalen, Unterklassen-Zauber und mehr Arten von Einträgen.",
       es: "Un editor homebrew más completo: efectos de los rasgos, hechizos de subclase y más tipos de entradas.",
+    },
+  },
+  {
+    id: "auroraCharacters",
+    text: {
+      en: "Opening the characters saved by Aurora, to move to this app without starting over.",
+      it: "Aprire i personaggi salvati da Aurora, per passare a questa app senza ricominciare da capo.",
+      fr: "Ouvrir les personnages enregistrés par Aurora, pour passer à cette application sans repartir de zéro.",
+      de: "Die von Aurora gespeicherten Charaktere öffnen, um ohne Neustart zu dieser App zu wechseln.",
+      es: "Abrir los personajes guardados por Aurora, para pasar a esta app sin empezar de cero.",
+    },
+  },
+  {
+    id: "quality",
+    text: {
+      en: "Automatic visual tests of the screens and an accessibility review (keyboard, screen readers, contrast, larger text).",
+      it: "Prove visive automatiche delle schermate e una revisione dell'accessibilità (tastiera, lettori di schermo, contrasto, testo ingrandito).",
+      fr: "Des tests visuels automatiques des écrans et une revue de l'accessibilité (clavier, lecteurs d'écran, contraste, texte agrandi).",
+      de: "Automatische visuelle Tests der Bildschirme und eine Barrierefreiheitsprüfung (Tastatur, Screenreader, Kontrast, größerer Text).",
+      es: "Pruebas visuales automáticas de las pantallas y una revisión de la accesibilidad (teclado, lectores de pantalla, contraste, texto ampliado).",
+    },
+  },
+  {
+    id: "dm",
+    text: {
+      en: "Tools for the Game Master: a bestiary with the SRD monsters, an initiative tracker, animal companions and wild shapes.",
+      it: "Strumenti per il Master: un bestiario con i mostri dell'SRD, un tracciatore di iniziativa, compagni animali e forme selvatiche.",
+      fr: "Des outils pour le MJ : un bestiaire avec les monstres du SRD, un suivi d'initiative, des compagnons animaux et des formes sauvages.",
+      de: "Werkzeuge für den Spielleiter: ein Bestiarium mit den SRD-Monstern, ein Initiative-Tracker, Tiergefährten und Tiergestalten.",
+      es: "Herramientas para el Director de Juego: un bestiario con los monstruos del SRD, un registro de iniciativa, compañeros animales y formas salvajes.",
     },
   },
 ];
