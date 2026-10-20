@@ -30,6 +30,40 @@ export type { AuroraOptions, AuroraResult } from "./registry";
 /** Elements that only exist to be picked by another one: nothing to report when not imported. */
 const SILENT_TYPES = new Set(["Background Feature", "Multiclass", "Ability Score Improvement"]);
 
+/** Kinds a person picks from a list, where two entries with one name cannot be told apart. */
+const LISTED_KINDS = new Set([
+  "species",
+  "subspecies",
+  "spell",
+  "feat",
+  "background",
+  "item",
+  "class",
+  "subclass",
+  "language",
+]);
+
+/**
+ * The same name can come from two books (Kobold in Volo's Guide and in Monsters of the
+ * Multiverse, or a spell reprinted in a later book). Those get the book in brackets, so a list
+ * shows which one is which. A name that is alone keeps its plain name.
+ */
+function nameSameNames(ctx: Context): void {
+  const groups = new Map<string, Source[]>();
+  for (const source of ctx.needed) {
+    if (!source.id || !source.kind || !LISTED_KINDS.has(source.kind)) continue;
+    const key = `${source.kind}|${source.name.toLowerCase()}`;
+    groups.set(key, [...(groups.get(key) ?? []), source]);
+  }
+  for (const group of groups.values()) {
+    if (group.length < 2) continue;
+    for (const source of group) {
+      if (source.source)
+        ctx.result.strings[`${source.id}.name`] = `${source.name} (${source.source})`;
+    }
+  }
+}
+
 export function parseAurora(files: string[], options: AuroraOptions): AuroraResult {
   const result: AuroraResult = {
     entries: [],
@@ -158,6 +192,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     }
   }
 
+  nameSameNames(ctx);
   result.sources = [...new Set(result.sources)].sort();
   return result;
 }

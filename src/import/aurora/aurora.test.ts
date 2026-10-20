@@ -537,6 +537,25 @@ describe("classes and archetypes", () => {
     });
   });
 
+  it("tells apart entries that share a name by their book", () => {
+    const twice = wrap(`
+      <element name="Pebblekin" type="Race" source="First Book" id="ID_A_PEBBLE">
+        <description><p>From the first book.</p></description>
+        <rules><stat name="strength" value="1" /></rules>
+      </element>
+      <element name="Pebblekin" type="Race" source="Second Book" id="ID_B_PEBBLE">
+        <description><p>From the second book.</p></description>
+        <rules><stat name="dexterity" value="1" /></rules>
+      </element>
+      <element name="Loneliest" type="Race" source="First Book" id="ID_A_LONE">
+        <description><p>Only one.</p></description>
+      </element>`);
+    const made = parseAurora([twice], options);
+    expect(made.strings["imp1:species/pebblekin.name"]).toBe("Pebblekin (First Book)");
+    expect(made.strings["imp1:species/pebblekin-2.name"]).toBe("Pebblekin (Second Book)");
+    expect(made.strings["imp1:species/loneliest.name"]).toBe("Loneliest");
+  });
+
   it("works in a character sheet", () => {
     const pack = parsePack({
       manifest: {
