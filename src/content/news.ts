@@ -29,6 +29,13 @@ export const CHANGELOG: ChangelogEntry[] = [
         es: "Los rasgos de clase que cambian números ya funcionan: estilos de combate (Tiro, Defensa, Duelo), Defensa sin armadura de bárbaros, monjes y hechiceros dracónicos, Movimiento rápido y puntos de golpe por nivel (Resistencia dracónica, Dureza enana).",
       },
       {
+        en: "More features work: Expertise, Jack of All Trades, Remarkable Athlete, Unarmored Movement, and the options of eldritch invocations (with the spells they grant), pact boons, metamagic, Hunter's Prey and the other options of class features, picked as the class grows.",
+        it: "Funzionano altri privilegi: Maestria, Factotum, Atleta straordinario, Movimento senza armatura e le opzioni di suppliche occulte (con gli incantesimi che concedono), doni del patto, metamagia, Preda del cacciatore e le altre opzioni dei privilegi di classe, da scegliere man mano che la classe cresce.",
+        fr: "D'autres aptitudes fonctionnent : Expertise, Touche-à-tout, Athlète remarquable, Déplacement sans armure, et les options des manifestations occultes (avec les sorts qu'elles accordent), des dons de pacte, de la métamagie, de la Proie du chasseur et des autres aptitudes de classe, à choisir au fil de la progression.",
+        de: "Weitere Merkmale funktionieren: Expertise, Tausendsassa, Bemerkenswerter Athlet, Ungepanzerte Bewegung und die Optionen von Schauerlichen Anrufungen (mit den Zaubern, die sie gewähren), Paktgaben, Metamagie, Beute des Jägers und anderer Klassenmerkmale, gewählt, während die Klasse wächst.",
+        es: "Funcionan más rasgos: Pericia, Aprendiz de todo, Atleta extraordinario, Movimiento sin armadura y las opciones de invocaciones sobrenaturales (con los conjuros que otorgan), dones del pacto, metamagia, Presa del cazador y otras opciones de rasgos de clase, que se eligen según crece la clase.",
+      },
+      {
         en: "A fighting style is a choice in the Choices step and in level up, and the sheet lists where each bonus comes from.",
         it: "Lo stile di combattimento è una scelta nel passo Scelte e nel level up, e la scheda elenca da dove viene ogni bonus.",
         fr: "Le style de combat est un choix à l'étape Choix et à la montée de niveau, et la fiche indique d'où vient chaque bonus.",
@@ -155,11 +162,11 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "features",
     text: {
-      en: "More class features that change numbers: Expertise, Jack of All Trades, Unarmored Movement, invocations and metamagic are still only text for now: use Free edit for their effects.",
-      it: "Altri privilegi di classe che cambiano dei numeri: Maestria, Factotum, Movimento senza armatura, suppliche e metamagia per ora sono ancora solo testo: usa la Modifica libera per i loro effetti.",
-      fr: "D'autres aptitudes de classe qui changent des chiffres : Expertise, Touche-à-tout, Déplacement sans armure, manifestations et métamagie ne sont encore que du texte : utilise l'édition libre pour leurs effets.",
-      de: "Weitere Klassenmerkmale, die Zahlen ändern: Expertise, Tausendsassa, Ungepanzerte Bewegung, Anrufungen und Metamagie sind vorerst nur Text: Nutze für ihre Wirkung die freie Bearbeitung.",
-      es: "Más rasgos de clase que cambian números: Pericia, Aprendiz de todo, Movimiento sin armadura, invocaciones y metamagia por ahora son solo texto: usa la edición libre para sus efectos.",
+      en: "Features that depend on dice, reactions or spell damage (Great Weapon Fighting, Two-Weapon Fighting, Agonizing Blast, Divine Smite) are still only text: use Free edit for their effects.",
+      it: "I privilegi che dipendono da dadi, reazioni o danni degli incantesimi (Combattere con armi possenti, Combattere con due armi, Deflagrazione agonizzante, Punizione divina) per ora sono solo testo: usa la Modifica libera per i loro effetti.",
+      fr: "Les aptitudes qui dépendent des dés, des réactions ou des dégâts de sorts (Armes à deux mains, Combat à deux armes, Décharge déchirante, Châtiment divin) ne sont encore que du texte : utilise l'édition libre pour leurs effets.",
+      de: "Merkmale, die von Würfeln, Reaktionen oder Zauberschaden abhängen (Kampf mit großen Waffen, Zwei-Waffen-Kampf, Qualvoller Strahl, Göttliches Niederstrecken), sind vorerst nur Text: Nutze für ihre Wirkung die freie Bearbeitung.",
+      es: "Los rasgos que dependen de dados, reacciones o daño de conjuros (Combate con armas a dos manos, Combate con dos armas, Descarga agónica, Castigo divino) por ahora son solo texto: usa la edición libre para sus efectos.",
     },
   },
   {

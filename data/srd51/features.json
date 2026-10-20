@@ -291,7 +291,12 @@
     {
       "id": "srd51:feature/jack-of-all-trades",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "halfProficiency",
+          "round": "down"
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
         "level": 2
@@ -338,7 +343,34 @@
     {
       "id": "srd51:feature/bard-expertise-1",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "expertise",
+          "choose": 2,
+          "grants": "expertise",
+          "from": [
+            "acrobatics",
+            "animal-handling",
+            "arcana",
+            "athletics",
+            "deception",
+            "history",
+            "insight",
+            "intimidation",
+            "investigation",
+            "medicine",
+            "nature",
+            "perception",
+            "performance",
+            "persuasion",
+            "religion",
+            "sleight-of-hand",
+            "stealth",
+            "survival"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
         "level": 3,
@@ -548,7 +580,34 @@
     {
       "id": "srd51:feature/bard-expertise-2",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "expertise",
+          "choose": 2,
+          "grants": "expertise",
+          "from": [
+            "acrobatics",
+            "animal-handling",
+            "arcana",
+            "athletics",
+            "deception",
+            "history",
+            "insight",
+            "intimidation",
+            "investigation",
+            "medicine",
+            "nature",
+            "perception",
+            "performance",
+            "persuasion",
+            "religion",
+            "sleight-of-hand",
+            "stealth",
+            "survival"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
         "level": 10,
@@ -1123,7 +1182,23 @@
     {
       "id": "srd51:feature/circle-of-the-land",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/circle-of-the-land-arctic",
+            "srd51:feature/circle-of-the-land-coast",
+            "srd51:feature/circle-of-the-land-desert",
+            "srd51:feature/circle-of-the-land-forest",
+            "srd51:feature/circle-of-the-land-grassland",
+            "srd51:feature/circle-of-the-land-mountain",
+            "srd51:feature/circle-of-the-land-swamp"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
         "level": 2,
@@ -1686,7 +1761,17 @@
     {
       "id": "srd51:feature/remarkable-athlete",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "halfProficiency",
+          "round": "up",
+          "abilities": [
+            "str",
+            "dex",
+            "con"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/fighter",
         "level": 7,
@@ -1723,7 +1808,22 @@
     {
       "id": "srd51:feature/additional-fighting-style",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/fighter-fighting-style-archery",
+            "srd51:feature/fighter-fighting-style-defense",
+            "srd51:feature/fighter-fighting-style-dueling",
+            "srd51:feature/fighter-fighting-style-great-weapon-fighting",
+            "srd51:feature/fighter-fighting-style-protection",
+            "srd51:feature/fighter-fighting-style-two-weapon-fighting"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/fighter",
         "level": 10,
@@ -1971,7 +2071,43 @@
     {
       "id": "srd51:feature/unarmored-movement-1",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "modifier",
+          "target": "speed",
+          "value": 10,
+          "when": "unarmoredNoShield",
+          "minLevel": 2
+        },
+        {
+          "type": "modifier",
+          "target": "speed",
+          "value": 5,
+          "when": "unarmoredNoShield",
+          "minLevel": 6
+        },
+        {
+          "type": "modifier",
+          "target": "speed",
+          "value": 5,
+          "when": "unarmoredNoShield",
+          "minLevel": 10
+        },
+        {
+          "type": "modifier",
+          "target": "speed",
+          "value": 5,
+          "when": "unarmoredNoShield",
+          "minLevel": 14
+        },
+        {
+          "type": "modifier",
+          "target": "speed",
+          "value": 5,
+          "when": "unarmoredNoShield",
+          "minLevel": 18
+        }
+      ],
       "data": {
         "class": "srd51:class/monk",
         "level": 2
@@ -2785,7 +2921,19 @@
     {
       "id": "srd51:feature/hunters-prey",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/hunters-prey-colossus-slayer",
+            "srd51:feature/hunters-prey-giant-killer",
+            "srd51:feature/hunters-prey-horde-breaker"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/ranger",
         "level": 3,
@@ -2956,7 +3104,19 @@
     {
       "id": "srd51:feature/defensive-tactics",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/defensive-tactics-escape-the-horde",
+            "srd51:feature/defensive-tactics-multiattack-defense",
+            "srd51:feature/defensive-tactics-steel-will"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/ranger",
         "level": 7,
@@ -3092,7 +3252,18 @@
     {
       "id": "srd51:feature/multiattack",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/multiattack-volley",
+            "srd51:feature/multiattack-whirlwind-attack"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/ranger",
         "level": 11,
@@ -3209,7 +3380,19 @@
     {
       "id": "srd51:feature/superior-hunters-defense",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/superior-hunters-defense-evasion",
+            "srd51:feature/superior-hunters-defense-stand-against-the-tide",
+            "srd51:feature/superior-hunters-defense-uncanny-dodge"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/ranger",
         "level": 15,
@@ -3317,7 +3500,35 @@
     {
       "id": "srd51:feature/rogue-expertise-1",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "expertise",
+          "choose": 2,
+          "grants": "expertise",
+          "from": [
+            "acrobatics",
+            "animal-handling",
+            "arcana",
+            "athletics",
+            "deception",
+            "history",
+            "insight",
+            "intimidation",
+            "investigation",
+            "medicine",
+            "nature",
+            "perception",
+            "performance",
+            "persuasion",
+            "religion",
+            "sleight-of-hand",
+            "stealth",
+            "survival",
+            "thieves-tools"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/rogue",
         "level": 1,
@@ -3662,7 +3873,35 @@
     {
       "id": "srd51:feature/rogue-expertise-2",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "expertise",
+          "choose": 2,
+          "grants": "expertise",
+          "from": [
+            "acrobatics",
+            "animal-handling",
+            "arcana",
+            "athletics",
+            "deception",
+            "history",
+            "insight",
+            "intimidation",
+            "investigation",
+            "medicine",
+            "nature",
+            "perception",
+            "performance",
+            "persuasion",
+            "religion",
+            "sleight-of-hand",
+            "stealth",
+            "survival",
+            "thieves-tools"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/rogue",
         "level": 6,
@@ -4210,7 +4449,25 @@
     {
       "id": "srd51:feature/metamagic-1",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 2,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/metamagic-careful-spell",
+            "srd51:feature/metamagic-distant-spell",
+            "srd51:feature/metamagic-empowered-spell",
+            "srd51:feature/metamagic-extended-spell",
+            "srd51:feature/metamagic-heightened-spell",
+            "srd51:feature/metamagic-quickened-spell",
+            "srd51:feature/metamagic-subtle-spell",
+            "srd51:feature/metamagic-twinned-spell"
+          ],
+          "chooseBy": "metamagicKnown"
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 3,
@@ -4632,7 +4889,49 @@
     {
       "id": "srd51:feature/eldritch-invocations",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/eldritch-invocation-agonizing-blast",
+            "srd51:feature/eldritch-invocation-armor-of-shadows",
+            "srd51:feature/eldritch-invocation-ascendant-step",
+            "srd51:feature/eldritch-invocation-beast-speech",
+            "srd51:feature/eldritch-invocation-beguiling-influence",
+            "srd51:feature/eldritch-invocation-bewitching-whispers",
+            "srd51:feature/eldritch-invocation-book-of-ancient-secrets",
+            "srd51:feature/eldritch-invocation-chains-of-carceri",
+            "srd51:feature/eldritch-invocation-devils-sight",
+            "srd51:feature/eldritch-invocation-dreadful-word",
+            "srd51:feature/eldritch-invocation-eldritch-sight",
+            "srd51:feature/eldritch-invocation-eldritch-spear",
+            "srd51:feature/eldritch-invocation-eyes-of-the-rune-keeper",
+            "srd51:feature/eldritch-invocation-fiendish-vigor",
+            "srd51:feature/eldritch-invocation-gaze-of-two-minds",
+            "srd51:feature/eldritch-invocation-lifedrinker",
+            "srd51:feature/eldritch-invocation-mask-of-many-faces",
+            "srd51:feature/eldritch-invocation-master-of-myriad-forms",
+            "srd51:feature/eldritch-invocation-minions-of-chaos",
+            "srd51:feature/eldritch-invocation-mire-the-mind",
+            "srd51:feature/eldritch-invocation-misty-visions",
+            "srd51:feature/eldritch-invocation-one-with-shadows",
+            "srd51:feature/eldritch-invocation-otherworldly-leap",
+            "srd51:feature/eldritch-invocation-repelling-blast",
+            "srd51:feature/eldritch-invocation-sculptor-of-flesh",
+            "srd51:feature/eldritch-invocation-sign-of-ill-omen",
+            "srd51:feature/eldritch-invocation-thief-of-five-fates",
+            "srd51:feature/eldritch-invocation-thirsting-blade",
+            "srd51:feature/eldritch-invocation-visions-of-distant-realms",
+            "srd51:feature/eldritch-invocation-voice-of-the-chain-master",
+            "srd51:feature/eldritch-invocation-whispers-of-the-grave",
+            "srd51:feature/eldritch-invocation-witch-sight"
+          ],
+          "chooseBy": "invocationsKnown"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 2,
@@ -4758,7 +5057,12 @@
       "id": "srd51:feature/eldritch-invocation-armor-of-shadows",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/mage-armor"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 2
@@ -4768,7 +5072,12 @@
       "id": "srd51:feature/eldritch-invocation-beast-speech",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/speak-with-animals"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 2
@@ -4778,7 +5087,18 @@
       "id": "srd51:feature/eldritch-invocation-beguiling-influence",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "skill",
+          "target": "deception"
+        },
+        {
+          "type": "proficiency",
+          "category": "skill",
+          "target": "persuasion"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 2
@@ -4814,7 +5134,12 @@
       "id": "srd51:feature/eldritch-invocation-eldritch-sight",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/detect-magic"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 2
@@ -4850,7 +5175,12 @@
       "id": "srd51:feature/eldritch-invocation-fiendish-vigor",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/false-life"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 2
@@ -4870,7 +5200,12 @@
       "id": "srd51:feature/eldritch-invocation-mask-of-many-faces",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/disguise-self"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 2
@@ -4880,7 +5215,12 @@
       "id": "srd51:feature/eldritch-invocation-misty-visions",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/silent-image"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 2
@@ -4906,7 +5246,12 @@
       "id": "srd51:feature/eldritch-invocation-thief-of-five-fates",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/bane"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 2
@@ -4932,7 +5277,12 @@
       "id": "srd51:feature/eldritch-invocation-mire-the-mind",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/slow"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 5,
@@ -4964,7 +5314,12 @@
       "id": "srd51:feature/eldritch-invocation-sign-of-ill-omen",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/bestow-curse"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 5,
@@ -5009,7 +5364,12 @@
       "id": "srd51:feature/eldritch-invocation-bewitching-whispers",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/compulsion"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 7,
@@ -5025,7 +5385,12 @@
       "id": "srd51:feature/eldritch-invocation-dreadful-word",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/confusion"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 7,
@@ -5041,7 +5406,12 @@
       "id": "srd51:feature/eldritch-invocation-sculptor-of-flesh",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/polymorph"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 7,
@@ -5057,7 +5427,12 @@
       "id": "srd51:feature/eldritch-invocation-ascendant-step",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/levitate"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 9,
@@ -5073,7 +5448,12 @@
       "id": "srd51:feature/eldritch-invocation-minions-of-chaos",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/conjure-elemental"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 9,
@@ -5089,7 +5469,12 @@
       "id": "srd51:feature/eldritch-invocation-otherworldly-leap",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/jump"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 9,
@@ -5105,7 +5490,12 @@
       "id": "srd51:feature/eldritch-invocation-whispers-of-the-grave",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/speak-with-dead"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 9,
@@ -5159,7 +5549,12 @@
       "id": "srd51:feature/eldritch-invocation-chains-of-carceri",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/hold-monster"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 15,
@@ -5179,7 +5574,12 @@
       "id": "srd51:feature/eldritch-invocation-master-of-myriad-forms",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/alter-self"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 15,
@@ -5195,7 +5595,12 @@
       "id": "srd51:feature/eldritch-invocation-visions-of-distant-realms",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/arcane-eye"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 15,
@@ -5226,7 +5631,19 @@
     {
       "id": "srd51:feature/pact-boon",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/pact-of-the-blade",
+            "srd51:feature/pact-of-the-chain",
+            "srd51:feature/pact-of-the-tome"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 3,
@@ -5265,7 +5682,12 @@
       "id": "srd51:feature/pact-of-the-chain",
       "kind": "feature",
       "parent": "srd51:feature/pact-boon",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/find-familiar"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 3

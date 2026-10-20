@@ -546,14 +546,22 @@ function convertFeatures(raw: RawSource): Converted {
     strings[`${f.index}.desc`] = text(f.desc) ?? "";
   }
   // A feature that offers options (a fighting style) lets the character pick among its children.
-  for (const [key, choose] of Object.entries(OPTION_FEATURES)) {
+  for (const [key, option] of Object.entries(OPTION_FEATURES)) {
     const parent = entries.find((e) => e.id === `${PACK}:${key}`);
     if (!parent) continue; // a test source may hold only some features
-    const from = entries
-      .filter((e) => e.parent === parent.id)
-      .map((e) => e.id)
-      .sort();
-    parent.effects.push({ type: "choice", id: "option", choose, grants: "trait", from });
+    const owner = `${PACK}:${option.optionsOf ?? key}`;
+    const from = [
+      ...entries.filter((e) => e.parent === owner).map((e) => e.id),
+      ...(option.also ?? []).map((k) => `${PACK}:${k}`),
+    ].sort();
+    parent.effects.push({
+      type: "choice",
+      id: "option",
+      choose: option.choose,
+      grants: "trait",
+      from,
+      ...(option.chooseBy && { chooseBy: option.chooseBy }),
+    });
   }
   return { entries, strings };
 }

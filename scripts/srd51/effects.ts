@@ -7,12 +7,51 @@
  */
 import type { Effect, ModifierCondition, ModifierTarget } from "../../src/data/schema";
 
-const modifier = (target: ModifierTarget, value: number, when?: ModifierCondition): Effect => ({
+const modifier = (
+  target: ModifierTarget,
+  value: number,
+  when?: ModifierCondition,
+  minLevel?: number,
+): Effect => ({
   type: "modifier",
   target,
   value,
   ...(when && { when }),
+  ...(minLevel !== undefined && { minLevel }),
 });
+
+const SKILLS = [
+  "acrobatics",
+  "animal-handling",
+  "arcana",
+  "athletics",
+  "deception",
+  "history",
+  "insight",
+  "intimidation",
+  "investigation",
+  "medicine",
+  "nature",
+  "perception",
+  "performance",
+  "persuasion",
+  "religion",
+  "sleight-of-hand",
+  "stealth",
+  "survival",
+];
+
+/** Pick two skills to double the proficiency bonus of (a rogue may pick thieves' tools). */
+const expertise = (id: string, extra: string[] = []): Effect => ({
+  type: "choice",
+  id,
+  choose: 2,
+  grants: "expertise",
+  from: [...SKILLS, ...extra],
+});
+
+const spell = (slug: string): Effect => ({ type: "grantSpell", spell: `srd51:spell/${slug}` });
+const skill = (target: string): Effect => ({ type: "proficiency", category: "skill", target });
 
 const archery = [modifier("attack", 2, "ranged")];
 const defense = [modifier("ac", 1, "wearingArmor")];
@@ -34,6 +73,47 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
 
   // Speed.
   "feature/fast-movement": [modifier("speed", 10, "noHeavyArmor")],
+  // +10 feet at level 2, and 5 more at levels 6, 10, 14 and 18, without armor or a shield.
+  "feature/unarmored-movement-1": [
+    modifier("speed", 10, "unarmoredNoShield", 2),
+    modifier("speed", 5, "unarmoredNoShield", 6),
+    modifier("speed", 5, "unarmoredNoShield", 10),
+    modifier("speed", 5, "unarmoredNoShield", 14),
+    modifier("speed", 5, "unarmoredNoShield", 18),
+  ],
+
+  // Skills.
+  "feature/jack-of-all-trades": [{ type: "halfProficiency", round: "down" }],
+  "feature/remarkable-athlete": [
+    { type: "halfProficiency", round: "up", abilities: ["str", "dex", "con"] },
+  ],
+  "feature/bard-expertise-1": [expertise("expertise")],
+  "feature/bard-expertise-2": [expertise("expertise")],
+  "feature/rogue-expertise-1": [expertise("expertise", ["thieves-tools"])],
+  "feature/rogue-expertise-2": [expertise("expertise", ["thieves-tools"])],
+
+  // Eldritch invocations and the pact of the chain that give a spell or a proficiency.
+  "feature/eldritch-invocation-armor-of-shadows": [spell("mage-armor")],
+  "feature/eldritch-invocation-beast-speech": [spell("speak-with-animals")],
+  "feature/eldritch-invocation-eldritch-sight": [spell("detect-magic")],
+  "feature/eldritch-invocation-fiendish-vigor": [spell("false-life")],
+  "feature/eldritch-invocation-mask-of-many-faces": [spell("disguise-self")],
+  "feature/eldritch-invocation-misty-visions": [spell("silent-image")],
+  "feature/eldritch-invocation-whispers-of-the-grave": [spell("speak-with-dead")],
+  "feature/eldritch-invocation-ascendant-step": [spell("levitate")],
+  "feature/eldritch-invocation-otherworldly-leap": [spell("jump")],
+  "feature/eldritch-invocation-master-of-myriad-forms": [spell("alter-self")],
+  "feature/eldritch-invocation-visions-of-distant-realms": [spell("arcane-eye")],
+  "feature/eldritch-invocation-chains-of-carceri": [spell("hold-monster")],
+  "feature/eldritch-invocation-thief-of-five-fates": [spell("bane")],
+  "feature/eldritch-invocation-sign-of-ill-omen": [spell("bestow-curse")],
+  "feature/eldritch-invocation-bewitching-whispers": [spell("compulsion")],
+  "feature/eldritch-invocation-dreadful-word": [spell("confusion")],
+  "feature/eldritch-invocation-minions-of-chaos": [spell("conjure-elemental")],
+  "feature/eldritch-invocation-sculptor-of-flesh": [spell("polymorph")],
+  "feature/eldritch-invocation-mire-the-mind": [spell("slow")],
+  "feature/eldritch-invocation-beguiling-influence": [skill("deception"), skill("persuasion")],
+  "feature/pact-of-the-chain": [spell("find-familiar")],
 
   // Fighting styles that change a number. Great Weapon Fighting, Two-Weapon Fighting and
   // Protection depend on dice rerolls, the off hand and reactions, so they stay text.
@@ -47,12 +127,35 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
   "feature/ranger-fighting-style-dueling": dueling,
 };
 
+export interface OptionFeature {
+  /** How many options the character picks. */
+  choose: number;
+  /** A key of the class table that sets the number instead (invocations, metamagic). */
+  chooseBy?: string;
+  /** Take the options of another feature (an extra fighting style picks among the same). */
+  optionsOf?: string;
+  /** Options the source does not link to the feature (Twinned Spell has no parent). */
+  also?: string[];
+}
+
 /**
- * Features whose child features are options to pick from (`parent` in the source): the number
- * is how many the character picks.
+ * Features whose child features are options to pick from (`parent` in the source).
  */
-export const OPTION_FEATURES: Record<string, number> = {
-  "feature/fighter-fighting-style": 1,
-  "feature/paladin-fighting-style": 1,
-  "feature/ranger-fighting-style": 1,
+export const OPTION_FEATURES: Record<string, OptionFeature> = {
+  "feature/fighter-fighting-style": { choose: 1 },
+  "feature/paladin-fighting-style": { choose: 1 },
+  "feature/ranger-fighting-style": { choose: 1 },
+  "feature/additional-fighting-style": { choose: 1, optionsOf: "feature/fighter-fighting-style" },
+  "feature/eldritch-invocations": { choose: 1, chooseBy: "invocationsKnown" },
+  "feature/pact-boon": { choose: 1 },
+  "feature/metamagic-1": {
+    choose: 2,
+    chooseBy: "metamagicKnown",
+    also: ["feature/metamagic-twinned-spell"],
+  },
+  "feature/hunters-prey": { choose: 1 },
+  "feature/defensive-tactics": { choose: 1 },
+  "feature/multiattack": { choose: 1 },
+  "feature/superior-hunters-defense": { choose: 1 },
+  "feature/circle-of-the-land": { choose: 1 },
 };

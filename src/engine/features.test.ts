@@ -148,3 +148,119 @@ describe("speed", () => {
     expect(deriveSheet(c, index).speed).toBe(25);
   });
 });
+
+describe("Unarmored Movement", () => {
+  it("adds speed as the monk grows, without armor or a shield", () => {
+    const speed = (level: number, items: string[] = []) =>
+      deriveSheet(make("monk", level, {}, items), index).speed;
+    expect(speed(1)).toBe(30);
+    expect(speed(2)).toBe(40);
+    expect(speed(6)).toBe(45);
+    expect(speed(10)).toBe(50);
+    expect(speed(18)).toBe(60);
+    expect(speed(6, ["shield"])).toBe(30);
+    expect(speed(6, ["chain-shirt"])).toBe(30);
+  });
+});
+
+describe("half proficiency", () => {
+  it("gives a bard half the proficiency bonus on checks without it, and on initiative", () => {
+    const c = make("bard", 2, { dex: 14, wis: 10, str: 10 });
+    const sheet = deriveSheet(c, index);
+    const stealth = sheet.skills.find((s) => s.id.endsWith("/stealth"));
+    expect(stealth?.proficient).toBe(false);
+    expect(stealth?.bonus).toBe(2 + 1);
+    expect(sheet.initiative).toBe(2 + 1);
+    const without = deriveSheet(make("bard", 1, { dex: 14 }), index);
+    expect(without.initiative).toBe(2);
+  });
+
+  it("gives a champion Remarkable Athlete on Strength, Dexterity and Constitution only", () => {
+    const c = make("fighter", 7, { str: 10, dex: 10, wis: 10 });
+    c.classes = [
+      { classId: "srd51:class/fighter", level: 7, subclassId: "srd51:subclass/champion" },
+    ];
+    const sheet = deriveSheet(c, index);
+    const bonus = (slug: string) => sheet.skills.find((s) => s.id.endsWith(`/${slug}`));
+    expect(bonus("stealth")?.bonus).toBe(0 + 2);
+    expect(bonus("insight")?.bonus).toBe(0);
+  });
+});
+
+describe("expertise", () => {
+  const PICK = "srd51:feature/rogue-expertise-1/expertise";
+
+  it("doubles the proficiency bonus of a skill the rogue is proficient in", () => {
+    const c = make("rogue", 1, { dex: 16 });
+    c.selections["srd51:class/rogue/rogue-proficiency-1"] = ["skill:stealth", "skill:perception"];
+    c.selections[PICK] = ["stealth", "thieves-tools"];
+    const sheet = deriveSheet(c, index);
+    expect(sheet.skills.find((s) => s.id.endsWith("/stealth"))?.bonus).toBe(3 + 4);
+    expect(sheet.skills.find((s) => s.id.endsWith("/perception"))?.bonus).toBe(0 + 2);
+    expect(sheet.warnings).toEqual([]);
+  });
+
+  it("warns when the skill is not one the character is proficient in", () => {
+    const c = make("rogue", 1, { dex: 16 });
+    c.selections[PICK] = ["stealth"];
+    const sheet = deriveSheet(c, index);
+    expect(sheet.warnings.map((w) => w.code)).toContain("expertiseNeedsProficiency");
+    expect(sheet.skills.find((s) => s.id.endsWith("/stealth"))?.bonus).toBe(3);
+  });
+});
+
+describe("options that grow with the class", () => {
+  const INVOCATIONS = "srd51:feature/eldritch-invocations/option";
+  const invocation = (name: string) => `srd51:feature/eldritch-invocation-${name}`;
+
+  it("lets a warlock pick as many invocations as the table says", () => {
+    expect(
+      deriveSheet(make("warlock", 1, {}), index).choices.some((c) => c.key === INVOCATIONS),
+    ).toBe(false);
+    const two = deriveSheet(make("warlock", 2, {}), index).choices.find(
+      (c) => c.key === INVOCATIONS,
+    );
+    expect(two?.choose).toBe(2);
+    expect(two?.options).toHaveLength(32);
+    const five = deriveSheet(make("warlock", 10, {}), index).choices.find(
+      (c) => c.key === INVOCATIONS,
+    );
+    expect(five?.choose).toBe(5);
+  });
+
+  it("gives the spell an invocation or a pact grants", () => {
+    const c = make("warlock", 2, {});
+    c.selections[INVOCATIONS] = [invocation("armor-of-shadows"), invocation("mask-of-many-faces")];
+    const sheet = deriveSheet(c, index);
+    expect(sheet.grantedSpells).toEqual(
+      expect.arrayContaining(["srd51:spell/mage-armor", "srd51:spell/disguise-self"]),
+    );
+    expect(sheet.warnings).toEqual([]);
+  });
+
+  it("warns about an invocation that asks for a level or a pact the warlock lacks", () => {
+    const c = make("warlock", 2, {});
+    c.selections[INVOCATIONS] = [invocation("lifedrinker"), invocation("one-with-shadows")];
+    const codes = deriveSheet(c, index).warnings.map((w) => w.code);
+    expect(codes).toContain("optionLevel");
+    expect(codes).toContain("optionFeature");
+  });
+
+  it("gives a sorcerer two metamagic options at level 3 and three at level 10", () => {
+    const pick = (level: number) =>
+      deriveSheet(make("sorcerer", level, {}), index).choices.find((c) =>
+        c.key.includes("metamagic-1"),
+      );
+    expect(pick(3)?.choose).toBe(2);
+    expect(pick(3)?.options).toHaveLength(8);
+    expect(pick(10)?.choose).toBe(3);
+    expect(pick(2)).toBeUndefined();
+  });
+
+  it("offers a warlock the pact boon at level 3", () => {
+    const boon = deriveSheet(make("warlock", 3, {}), index).choices.find((c) =>
+      c.key.includes("pact-boon"),
+    );
+    expect(boon?.options).toHaveLength(3);
+  });
+});
