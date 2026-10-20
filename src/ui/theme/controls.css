@@ -76,3 +76,56 @@ input[type="checkbox"]:disabled {
   background: var(--accent);
   border-color: var(--accent);
 }
+
+/* Radio buttons: round, with a gem or a dot inside when picked, in both styles. */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  display: inline-grid;
+  place-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--accent);
+  cursor: pointer;
+  transition: background-color 0.12s, border-color 0.12s;
+}
+
+input[type="radio"]::after {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: scale(0);
+  transition: transform 0.12s;
+}
+
+input[type="radio"]:checked {
+  border-color: var(--accent);
+}
+
+input[type="radio"]:checked::after {
+  transform: scale(1);
+}
+
+input[type="radio"]:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+input[type="radio"]:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+:root[data-style="modern"] input[type="radio"] {
+  border-color: var(--border);
+}
+
+:root[data-style="modern"] input[type="radio"]:checked {
+  border-color: var(--accent);
+}
