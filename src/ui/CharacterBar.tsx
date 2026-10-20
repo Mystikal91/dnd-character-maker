@@ -39,7 +39,7 @@ export function CharacterBar() {
   };
 
   return (
-    <div class="card bar">
+    <div class="card bar no-print">
       <label class="field bar-select">
         <span>{ui("bar.character")}</span>
         <select value={current.id} onChange={(e) => void openCharacter(e.currentTarget.value)}>

@@ -12,7 +12,7 @@ const TABS: { id: Tab; label: UiKey }[] = [
 export function Tabs() {
   const current = view.value;
   return (
-    <nav class="tabs" aria-label={ui("tab.label")}>
+    <nav class="tabs no-print" aria-label={ui("tab.label")}>
       {TABS.map((tab) => (
         <button
           type="button"
