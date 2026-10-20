@@ -23,9 +23,17 @@ export interface PendingChoice {
 
 export type ChoiceGrant = ChoiceEffect["grants"];
 
+/** An effect with the entry it comes from, so the sheet can say where a number comes from. */
+export interface SourcedEffect {
+  effect: Effect;
+  source: string;
+}
+
 export interface Collected {
   /** Every effect in force: direct ones, those of expanded traits and those of chosen options. */
   effects: Effect[];
+  /** The same effects, each with the entry that gave it. */
+  sourced: SourcedEffect[];
   choices: PendingChoice[];
 }
 
@@ -63,6 +71,7 @@ export function collectEffects(
   { index, selections, warnings }: Input,
 ): Collected {
   const effects: Effect[] = [];
+  const sourced: SourcedEffect[] = [];
   const choices: PendingChoice[] = [];
   const expanded = new Set<string>();
 
@@ -102,9 +111,10 @@ export function collectEffects(
   const apply = (effect: Effect, source: string) => {
     if (effect.type === "choice") return resolve(effect, source);
     effects.push(effect);
+    sourced.push({ effect, source });
     if (effect.type === "trait") expandTrait(effect.id);
   };
 
   for (const entry of entries) for (const effect of entry.effects) apply(effect, entry.id);
-  return { effects, choices };
+  return { effects, sourced, choices };
 }

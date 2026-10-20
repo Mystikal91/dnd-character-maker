@@ -18,6 +18,33 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.1 beta",
+    date: "2026-10-20",
+    notes: [
+      {
+        en: "Class features that change numbers now work: fighting styles (Archery, Defense, Dueling), Unarmored Defense for barbarians, monks and draconic sorcerers, Fast Movement, and hit points per level (Draconic Resilience, Dwarven Toughness).",
+        it: "I privilegi di classe che cambiano dei numeri ora funzionano: stili di combattimento (Tiro, Difesa, Duellare), Difesa senza armatura di barbari, monaci e stregoni draconici, Movimento veloce e punti ferita per livello (Resilienza draconica, Robustezza nanica).",
+        fr: "Les aptitudes de classe qui changent des chiffres fonctionnent désormais : styles de combat (Tir, Défense, Duel), Défense sans armure des barbares, moines et ensorceleurs draconiques, Déplacement rapide et points de vie par niveau (Résilience draconique, Robustesse naine).",
+        de: "Klassenmerkmale, die Zahlen ändern, funktionieren jetzt: Kampfstile (Bogenschießen, Verteidigung, Duellieren), Ungepanzerte Verteidigung von Barbaren, Mönchen und Drachenzauberern, Schnelle Bewegung und Trefferpunkte pro Grad (Drachenresistenz, Zwergische Zähigkeit).",
+        es: "Los rasgos de clase que cambian números ya funcionan: estilos de combate (Tiro, Defensa, Duelo), Defensa sin armadura de bárbaros, monjes y hechiceros dracónicos, Movimiento rápido y puntos de golpe por nivel (Resistencia dracónica, Dureza enana).",
+      },
+      {
+        en: "A fighting style is a choice in the Choices step and in level up, and the sheet lists where each bonus comes from.",
+        it: "Lo stile di combattimento è una scelta nel passo Scelte e nel level up, e la scheda elenca da dove viene ogni bonus.",
+        fr: "Le style de combat est un choix à l'étape Choix et à la montée de niveau, et la fiche indique d'où vient chaque bonus.",
+        de: "Ein Kampfstil ist eine Wahl im Schritt Entscheidungen und beim Stufenaufstieg, und der Bogen zeigt, woher jeder Bonus kommt.",
+        es: "El estilo de combate es una elección en el paso Elecciones y en la subida de nivel, y la hoja indica de dónde viene cada bonificador.",
+      },
+      {
+        en: "Entries from different books that share a name now show their book in brackets when imported from Aurora.",
+        it: "Le voci di libri diversi con lo stesso nome ora mostrano il libro tra parentesi quando vengono importate da Aurora.",
+        fr: "Les entrées de livres différents qui portent le même nom affichent désormais leur livre entre parenthèses à l'import depuis Aurora.",
+        de: "Einträge aus verschiedenen Büchern mit gleichem Namen zeigen beim Aurora-Import jetzt ihr Buch in Klammern.",
+        es: "Las entradas de libros distintos con el mismo nombre ahora muestran su libro entre paréntesis al importarlas desde Aurora.",
+      },
+    ],
+  },
+  {
     version: "1.0 beta",
     date: "2026-10-19",
     notes: [
@@ -128,11 +155,11 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "features",
     text: {
-      en: "Class features that change numbers (fighting styles, invocations, metamagic) are only text for now: use Free edit for their effects.",
-      it: "I privilegi di classe che cambiano dei numeri (stili di combattimento, suppliche, metamagia) per ora sono solo testo: usa la Modifica libera per i loro effetti.",
-      fr: "Les aptitudes de classe qui changent des chiffres (styles de combat, manifestations, métamagie) ne sont encore que du texte : utilise l'édition libre pour leurs effets.",
-      de: "Klassenmerkmale, die Zahlen ändern (Kampfstile, Anrufungen, Metamagie), sind vorerst nur Text: Nutze für ihre Wirkung die freie Bearbeitung.",
-      es: "Los rasgos de clase que cambian números (estilos de combate, invocaciones, metamagia) por ahora son solo texto: usa la edición libre para sus efectos.",
+      en: "More class features that change numbers: Expertise, Jack of All Trades, Unarmored Movement, invocations and metamagic are still only text for now: use Free edit for their effects.",
+      it: "Altri privilegi di classe che cambiano dei numeri: Maestria, Factotum, Movimento senza armatura, suppliche e metamagia per ora sono ancora solo testo: usa la Modifica libera per i loro effetti.",
+      fr: "D'autres aptitudes de classe qui changent des chiffres : Expertise, Touche-à-tout, Déplacement sans armure, manifestations et métamagie ne sont encore que du texte : utilise l'édition libre pour leurs effets.",
+      de: "Weitere Klassenmerkmale, die Zahlen ändern: Expertise, Tausendsassa, Ungepanzerte Bewegung, Anrufungen und Metamagie sind vorerst nur Text: Nutze für ihre Wirkung die freie Bearbeitung.",
+      es: "Más rasgos de clase que cambian números: Pericia, Aprendiz de todo, Movimiento sin armadura, invocaciones y metamagia por ahora son solo texto: usa la edición libre para sus efectos.",
     },
   },
   {

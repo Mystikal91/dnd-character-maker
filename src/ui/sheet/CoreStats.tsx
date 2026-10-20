@@ -2,7 +2,7 @@ import type { ComponentChildren } from "preact";
 import { content, isForced, sheet } from "../../app/store";
 import type { DamageResult } from "../../engine/equipment";
 import { OVERRIDE } from "../../engine/overrides";
-import { signed, ui } from "../../i18n/ui";
+import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { Panel } from "./parts";
 
@@ -29,6 +29,31 @@ export function Stat({
 const formatDamage = (d: DamageResult) =>
   `${d.dice}${d.bonus === 0 ? "" : signed(d.bonus)} ${d.type}`;
 
+/** Where the bonuses of features and choices come from, so a number can be trusted. */
+function Bonuses() {
+  const s = sheet.value;
+  const c = content.value;
+  if (!s || !c || s.bonuses.length === 0) return null;
+  return (
+    <details class="bonuses">
+      <summary>{ui("sheet.bonuses")}</summary>
+      <ul class="plain">
+        {s.bonuses.map((b) => (
+          <li key={`${b.target}-${b.source}-${b.value}`}>
+            {ui(`sheet.bonus.${b.target}` as UiKey, {
+              value:
+                b.target === "speed"
+                  ? `${b.value > 0 ? "+" : "-"}${distance(Math.abs(b.value))}`
+                  : signed(b.value),
+            })}{" "}
+            <span class="muted">· {c.name(b.source)}</span>
+          </li>
+        ))}
+      </ul>
+    </details>
+  );
+}
+
 /** Armor class, initiative, speed, hit points and hit dice. */
 export function CoreStats() {
   const s = sheet.value;
@@ -51,6 +76,7 @@ export function CoreStats() {
         </Stat>
       </div>
       {s.armorClass.stealthDisadvantage && <p class="note">{ui("sheet.stealthDisadvantage")}</p>}
+      <Bonuses />
       <div class="stat-row stat-row-2">
         <Stat label={ui("sheet.hitPoints")} forced={isForced(OVERRIDE.hitPoints)}>
           {s.hitPoints.max}

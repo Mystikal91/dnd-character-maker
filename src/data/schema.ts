@@ -28,6 +28,33 @@ export const PROFICIENCY_CATEGORIES = [
 export const ProficiencyCategorySchema = v.picklist(PROFICIENCY_CATEGORIES);
 export type ProficiencyCategory = v.InferOutput<typeof ProficiencyCategorySchema>;
 
+/** What a `modifier` effect changes. */
+export const MODIFIER_TARGETS = [
+  "ac",
+  "speed",
+  "initiative",
+  "attack",
+  "damage",
+  "hpPerLevel",
+] as const;
+export type ModifierTarget = (typeof MODIFIER_TARGETS)[number];
+
+/**
+ * When a `modifier` applies, for what the character wears or wields:
+ * `wearingArmor` (body armor, not a shield), `unarmored` (no body armor), `noHeavyArmor`,
+ * `ranged` and `melee` (the weapon of an attack), and `dueling` (a melee weapon that is not
+ * two-handed, with no other weapon).
+ */
+export const MODIFIER_CONDITIONS = [
+  "wearingArmor",
+  "unarmored",
+  "noHeavyArmor",
+  "ranged",
+  "melee",
+  "dueling",
+] as const;
+export type ModifierCondition = (typeof MODIFIER_CONDITIONS)[number];
+
 /**
  * Closed set of declarative effects. Extend deliberately, one type at a time.
  * Features that need custom logic are expressed as `trait` (+ optional `resource`)
@@ -62,6 +89,23 @@ export const EffectSchema = v.variant("type", [
   v.object({
     type: v.literal("grantSpell"),
     spell: EntryIdSchema,
+  }),
+  /** A flat bonus to a number of the sheet, with an optional condition. */
+  v.object({
+    type: v.literal("modifier"),
+    target: v.picklist(MODIFIER_TARGETS),
+    value: v.number(),
+    when: v.optional(v.picklist(MODIFIER_CONDITIONS)),
+  }),
+  /**
+   * Armor class without body armor: `base` + Dexterity + the abilities in `add`. Barbarian and
+   * monk use 10; a draconic sorcerer 13. `shield` says whether a shield may be carried.
+   */
+  v.object({
+    type: v.literal("unarmoredDefense"),
+    base: v.number(),
+    add: v.array(AbilitySchema),
+    shield: v.boolean(),
   }),
   v.object({
     type: v.literal("resource"),

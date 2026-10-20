@@ -3,6 +3,7 @@
  * Pure functions: no file or network access, so they can be unit tested.
  */
 import type { Ability, Effect, Entry, ProficiencyCategory } from "../../src/data/schema";
+import { FEATURE_EFFECTS, OPTION_FEATURES } from "./effects";
 
 const PACK = "srd51";
 
@@ -201,6 +202,7 @@ function convertTraits(raw: RawSource, ctx: Context): Converted {
       });
     }
     const leftover = cleanData(specific);
+    effects.push(...(FEATURE_EFFECTS[`trait/${t.index}`] ?? []));
     const entry: Entry = {
       id: id("trait", t.index),
       kind: "trait",
@@ -532,11 +534,26 @@ function convertFeatures(raw: RawSource): Converted {
     if (f.subclass) data.subclass = id("subclass", f.subclass.index);
     if (f.prerequisites.length) data.prerequisites = f.prerequisites.map(normalizePrerequisite);
     if (f.feature_specific) data.featureSpecific = cleanData(f.feature_specific);
-    const entry: Entry = { id: id("feature", f.index), kind: "feature", effects: [], data };
+    const entry: Entry = {
+      id: id("feature", f.index),
+      kind: "feature",
+      effects: [...(FEATURE_EFFECTS[`feature/${f.index}`] ?? [])],
+      data,
+    };
     if (f.parent) entry.parent = id("feature", f.parent.index);
     entries.push(entry);
     strings[`${f.index}.name`] = f.name;
     strings[`${f.index}.desc`] = text(f.desc) ?? "";
+  }
+  // A feature that offers options (a fighting style) lets the character pick among its children.
+  for (const [key, choose] of Object.entries(OPTION_FEATURES)) {
+    const parent = entries.find((e) => e.id === `${PACK}:${key}`);
+    if (!parent) continue; // a test source may hold only some features
+    const from = entries
+      .filter((e) => e.parent === parent.id)
+      .map((e) => e.id)
+      .sort();
+    parent.effects.push({ type: "choice", id: "option", choose, grants: "trait", from });
   }
   return { entries, strings };
 }

@@ -73,7 +73,13 @@
     {
       "id": "srd51:trait/dwarven-toughness",
       "kind": "trait",
-      "effects": [],
+      "effects": [
+        {
+          "type": "modifier",
+          "target": "hpPerLevel",
+          "value": 1
+        }
+      ],
       "data": {}
     },
     {

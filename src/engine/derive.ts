@@ -12,6 +12,7 @@ import type { Character } from "./character";
 import { type ChecksResult, deriveChecks } from "./checks";
 import { type PendingChoice, collectEffects } from "./choices";
 import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
+import { type AppliedModifier, appliedModifiers, total } from "./modifiers";
 import { type CasterInput, casterKind, slotPools, unmetPrerequisites } from "./multiclass";
 import { OVERRIDE, numberOverride } from "./overrides";
 import { type ClassFact, type ClassResource, classResources } from "./resources";
@@ -54,6 +55,11 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   level: number;
   proficiencyBonus: number;
   initiative: number;
+  /**
+   * The bonuses that features and choices give right now, with where each comes from: armor
+   * class, speed, initiative, hit points per level, and attack and damage rolls.
+   */
+  bonuses: AppliedModifier[];
   /** Walking speed in feet; undefined while no species is chosen. */
   speed?: number;
   abilities: Record<Ability, AbilityResult>;
@@ -115,8 +121,24 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     entry: lookup(index, cl.classId, warnings),
   }));
   const [starting, ...others] = classEntries;
-  const { effects, choices } = collectEffects(
-    [...chosen, ...(starting?.entry ? [starting.entry] : [])],
+
+  // The features a class has reached, and its subclass's, add their effects and offer their
+  // choices (a fighting style) like species and background do.
+  const reached: Entry[] = [];
+  for (const { cl, entry } of classEntries) {
+    if (!entry) continue;
+    const ids: string[] = [];
+    for (const l of classData(entry).levels) if (l.level <= cl.level) ids.push(...l.features);
+    const sub = cl.subclassId ? index.get(cl.subclassId) : undefined;
+    if (sub?.parent === cl.classId)
+      for (const l of subclassData(sub).levels) if (l.level <= cl.level) ids.push(...l.features);
+    for (const id of ids) {
+      const feature = index.get(id);
+      if (feature) reached.push(feature);
+    }
+  }
+  const { effects, sourced, choices } = collectEffects(
+    [...chosen, ...(starting?.entry ? [starting.entry] : []), ...reached],
     { index, selections: character.selections, warnings },
   );
   for (const { entry } of others) {
@@ -295,6 +317,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     abilities,
     held,
     proficiencyBonus,
+    sourced,
     warnings,
   });
   const checks = deriveChecks({
@@ -306,18 +329,48 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     overrides: character.overrides,
   });
   const baseSpeed = chosen.find((e) => e.kind === "species")?.data.speed;
+  const state = { armor: equipment.armor };
+  const speedMods = appliedModifiers(sourced, "speed", state);
+  const initiativeMods = appliedModifiers(sourced, "initiative", state);
+  const hpMods = appliedModifiers(sourced, "hpPerLevel", state);
   const speed =
-    overrideNumber(character, "speed") ?? (typeof baseSpeed === "number" ? baseSpeed : undefined);
+    overrideNumber(character, "speed") ??
+    (typeof baseSpeed === "number" ? baseSpeed + total(speedMods) : undefined);
+  // A feature of a class counts that class's levels; a trait of the species counts all of them.
+  const hpBonus = hpMods.reduce((sum, m) => {
+    const owner = index.get(m.source)?.data.class;
+    const levels = owner
+      ? (character.classes.find((cl) => cl.classId === owner)?.level ?? 0)
+      : level;
+    return sum + m.value * levels;
+  }, 0);
+
+  // Where each bonus comes from, once, for the sheet to show.
+  const bonuses: AppliedModifier[] = [];
+  const seen = new Set<string>();
+  const note = (m: AppliedModifier) => {
+    const key = `${m.target}|${m.source}|${m.value}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    bonuses.push(m);
+  };
+  for (const part of equipment.armorClass.parts)
+    if (part.source === "feature" && part.feature)
+      note({ target: "ac", value: part.value, source: part.feature });
+  for (const m of [...speedMods, ...initiativeMods, ...hpMods]) note(m);
+  for (const attack of equipment.attacks) for (const m of attack.modifiers ?? []) note(m);
 
   return {
     ...equipment,
     ...checks,
-    initiative: overrideNumber(character, "initiative") ?? abilities.dex.modifier,
+    initiative:
+      overrideNumber(character, "initiative") ?? abilities.dex.modifier + total(initiativeMods),
+    bonuses,
     ...(speed !== undefined && { speed }),
     level,
     proficiencyBonus,
     abilities,
-    hitPoints: { max: hpOverride ?? hp, overridden: hpOverride !== undefined, hitDice },
+    hitPoints: { max: hpOverride ?? hp + hpBonus, overridden: hpOverride !== undefined, hitDice },
     proficiencies,
     traits,
     features: [...new Set(features)],

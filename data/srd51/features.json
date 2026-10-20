@@ -19,7 +19,16 @@
     {
       "id": "srd51:feature/barbarian-unarmored-defense",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "unarmoredDefense",
+          "base": 10,
+          "add": [
+            "con"
+          ],
+          "shield": true
+        }
+      ],
       "data": {
         "class": "srd51:class/barbarian",
         "level": 1
@@ -83,7 +92,14 @@
     {
       "id": "srd51:feature/fast-movement",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "modifier",
+          "target": "speed",
+          "value": 10,
+          "when": "noHeavyArmor"
+        }
+      ],
       "data": {
         "class": "srd51:class/barbarian",
         "level": 5
@@ -1454,7 +1470,22 @@
     {
       "id": "srd51:feature/fighter-fighting-style",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/fighter-fighting-style-archery",
+            "srd51:feature/fighter-fighting-style-defense",
+            "srd51:feature/fighter-fighting-style-dueling",
+            "srd51:feature/fighter-fighting-style-great-weapon-fighting",
+            "srd51:feature/fighter-fighting-style-protection",
+            "srd51:feature/fighter-fighting-style-two-weapon-fighting"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/fighter",
         "level": 1,
@@ -1511,7 +1542,14 @@
       "id": "srd51:feature/fighter-fighting-style-archery",
       "kind": "feature",
       "parent": "srd51:feature/fighter-fighting-style",
-      "effects": [],
+      "effects": [
+        {
+          "type": "modifier",
+          "target": "attack",
+          "value": 2,
+          "when": "ranged"
+        }
+      ],
       "data": {
         "class": "srd51:class/fighter",
         "level": 1
@@ -1521,7 +1559,14 @@
       "id": "srd51:feature/fighter-fighting-style-defense",
       "kind": "feature",
       "parent": "srd51:feature/fighter-fighting-style",
-      "effects": [],
+      "effects": [
+        {
+          "type": "modifier",
+          "target": "ac",
+          "value": 1,
+          "when": "wearingArmor"
+        }
+      ],
       "data": {
         "class": "srd51:class/fighter",
         "level": 1
@@ -1531,7 +1576,14 @@
       "id": "srd51:feature/fighter-fighting-style-dueling",
       "kind": "feature",
       "parent": "srd51:feature/fighter-fighting-style",
-      "effects": [],
+      "effects": [
+        {
+          "type": "modifier",
+          "target": "damage",
+          "value": 2,
+          "when": "dueling"
+        }
+      ],
       "data": {
         "class": "srd51:class/fighter",
         "level": 1
@@ -1856,7 +1908,16 @@
     {
       "id": "srd51:feature/monk-unarmored-defense",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "unarmoredDefense",
+          "base": 10,
+          "add": [
+            "wis"
+          ],
+          "shield": false
+        }
+      ],
       "data": {
         "class": "srd51:class/monk",
         "level": 1
@@ -2184,7 +2245,20 @@
     {
       "id": "srd51:feature/paladin-fighting-style",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/fighting-style-defense",
+            "srd51:feature/fighting-style-dueling",
+            "srd51:feature/fighting-style-great-weapon-fighting",
+            "srd51:feature/fighting-style-protection"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/paladin",
         "level": 2,
@@ -2229,7 +2303,14 @@
       "id": "srd51:feature/fighting-style-defense",
       "kind": "feature",
       "parent": "srd51:feature/paladin-fighting-style",
-      "effects": [],
+      "effects": [
+        {
+          "type": "modifier",
+          "target": "ac",
+          "value": 1,
+          "when": "wearingArmor"
+        }
+      ],
       "data": {
         "class": "srd51:class/paladin",
         "level": 2
@@ -2239,7 +2320,14 @@
       "id": "srd51:feature/fighting-style-dueling",
       "kind": "feature",
       "parent": "srd51:feature/paladin-fighting-style",
-      "effects": [],
+      "effects": [
+        {
+          "type": "modifier",
+          "target": "damage",
+          "value": 2,
+          "when": "dueling"
+        }
+      ],
       "data": {
         "class": "srd51:class/paladin",
         "level": 2
@@ -2561,7 +2649,20 @@
     {
       "id": "srd51:feature/ranger-fighting-style",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/ranger-fighting-style-archery",
+            "srd51:feature/ranger-fighting-style-defense",
+            "srd51:feature/ranger-fighting-style-dueling",
+            "srd51:feature/ranger-fighting-style-two-weapon-fighting"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/ranger",
         "level": 2,
@@ -2606,7 +2707,14 @@
       "id": "srd51:feature/ranger-fighting-style-archery",
       "kind": "feature",
       "parent": "srd51:feature/ranger-fighting-style",
-      "effects": [],
+      "effects": [
+        {
+          "type": "modifier",
+          "target": "attack",
+          "value": 2,
+          "when": "ranged"
+        }
+      ],
       "data": {
         "class": "srd51:class/ranger",
         "level": 2
@@ -2616,7 +2724,14 @@
       "id": "srd51:feature/ranger-fighting-style-defense",
       "kind": "feature",
       "parent": "srd51:feature/ranger-fighting-style",
-      "effects": [],
+      "effects": [
+        {
+          "type": "modifier",
+          "target": "ac",
+          "value": 1,
+          "when": "wearingArmor"
+        }
+      ],
       "data": {
         "class": "srd51:class/ranger",
         "level": 2
@@ -2626,7 +2741,14 @@
       "id": "srd51:feature/ranger-fighting-style-dueling",
       "kind": "feature",
       "parent": "srd51:feature/ranger-fighting-style",
-      "effects": [],
+      "effects": [
+        {
+          "type": "modifier",
+          "target": "damage",
+          "value": 2,
+          "when": "dueling"
+        }
+      ],
       "data": {
         "class": "srd51:class/ranger",
         "level": 2
@@ -4039,7 +4161,19 @@
     {
       "id": "srd51:feature/draconic-resilience",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "unarmoredDefense",
+          "base": 13,
+          "add": [],
+          "shield": true
+        },
+        {
+          "type": "modifier",
+          "target": "hpPerLevel",
+          "value": 1
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 1,

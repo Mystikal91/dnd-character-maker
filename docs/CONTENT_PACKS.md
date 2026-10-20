@@ -14,6 +14,23 @@ in the browser (IndexedDB) of the device that added them. Open them from the foo
 A personal pack can be removed but never exported, and it is never part of a shared character
 link: a link carries only the character, so whoever opens it needs their own copy of the content.
 
+## What an entry can do
+
+Entries carry declarative `effects`; the engine applies them and the sheet shows where each
+number comes from. The kinds are `abilityBonus`, `proficiency`, `trait`, `choice`, `grantSpell`,
+`resource`, and two for numbers of the sheet:
+
+- `{ "type": "modifier", "target": "ac", "value": 1, "when": "wearingArmor" }` adds a flat bonus.
+  Targets: `ac`, `speed`, `initiative`, `attack`, `damage`, `hpPerLevel`. Conditions: `wearingArmor`,
+  `unarmored`, `noHeavyArmor`, `ranged`, `melee`, `dueling` (a one-handed melee weapon with no other
+  weapon).
+- `{ "type": "unarmoredDefense", "base": 10, "add": ["con"], "shield": true }` is armor class
+  without armor: `base` + Dexterity + the listed abilities.
+
+The features of the SRD get theirs from `scripts/srd51/effects.ts`; a feature that offers options
+(a fighting style) has a `choice` over its child features. Class features and subclass features
+count once the character has reached their level.
+
 ## Homebrew editor
 
 *New homebrew pack* on the packs page opens an editor with a form for each kind of entry:
