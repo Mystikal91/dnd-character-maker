@@ -75,6 +75,8 @@ export const importReport = signal<
   | {
       added: number;
       duplicates: number;
+      merged: number;
+      editions: number;
       skipped: Record<string, number>;
       unsupported: number;
       name: string;
@@ -87,6 +89,9 @@ export const importReport = signal<
 >(undefined);
 
 /** Files fetched so far while following an address or an index file. */
+/** Keep the 2024 versions of what already has a 2014 one when importing from Aurora files. */
+export const keepEditions = signal(false);
+
 export const importProgress = signal<{ done: number; total: number } | undefined>(undefined);
 
 /**
@@ -129,11 +134,14 @@ async function importAuroraSources(start: { text?: string; url?: string }[]): Pr
       packId: id,
       index: english.index,
       nameOf: (entryId) => english.name(entryId),
+      keepEditions: keepEditions.value,
     });
     const name = `${gathered.title || result.title || "Imported content"} (Aurora)`;
     importReport.value = {
       added: result.entries.length,
       duplicates: result.duplicates,
+      merged: result.merged,
+      editions: result.editions,
       skipped: result.skipped,
       unsupported: result.unsupportedRules,
       name,

@@ -29,6 +29,7 @@ import {
   ofType,
   readSources,
 } from "./registry";
+import { mergeRepeats, preferOlderEdition } from "./repeats";
 import { readRules, requirementsMet, selectMatches } from "./rules";
 import { AuroraParseError, clean } from "./xml";
 
@@ -77,6 +78,19 @@ const LISTED_KINDS = new Set([
   "language",
   "deity",
 ]);
+
+/**
+ * Items that exist only so Aurora can keep its books (feat unlockers, the packs a class or a
+ * background starts with, selections of a companion): nothing a character carries.
+ */
+function isBookkeeping(source: Source): boolean {
+  if (source.type !== "Item" && source.type !== "Magic Item") return false;
+  return (
+    source.source === "Internal" ||
+    source.aid.startsWith("ID_INTERNAL_") ||
+    /\b(feat unlocker|equipment pack)\b/i.test(source.name)
+  );
+}
 
 /**
  * The same name can come from two books (Kobold in Volo's Guide and in Monsters of the
@@ -129,6 +143,8 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     sources: [],
     skipped: {},
     duplicates: 0,
+    merged: 0,
+    editions: 0,
     unsupportedRules: 0,
     title: "",
   };
@@ -166,6 +182,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     const kind = KIND_OF[source.type];
     if (!kind) continue;
     if (ROOT_TYPES.has(source.type)) {
+      if (isBookkeeping(source)) continue;
       const existing = ctx.existingByName.get(`${kind}|${source.name.toLowerCase()}`);
       if (existing) {
         source.id = existing;
@@ -263,6 +280,8 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     }
   }
 
+  result.editions = options.keepEditions ? 0 : preferOlderEdition(ctx);
+  result.merged = mergeRepeats(ctx);
   nameSameNames(ctx);
   nameVariantsBySpecies(ctx);
   result.sources = [...new Set(result.sources)].sort();

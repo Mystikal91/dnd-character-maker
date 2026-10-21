@@ -1,5 +1,5 @@
 import type { ComponentChildren } from "preact";
-import { useEffect, useRef } from "preact/hooks";
+import { useEffect, useId, useRef } from "preact/hooks";
 
 interface PopoverProps {
   /** The button that opens it. */
@@ -12,50 +12,85 @@ interface PopoverProps {
   children: ComponentChildren;
 }
 
+const supported = typeof HTMLElement !== "undefined" && "popover" in HTMLElement.prototype;
+
 /**
- * A small menu that opens under its button and closes on a tap outside, on Escape, and when
- * something inside it is chosen (a button or a link). Built on `details`, so it works with a
- * keyboard and a screen reader without more code.
+ * A small menu that opens under its button, closes on a tap outside and on Escape, and closes
+ * when something inside it is chosen (a button or a link). It uses the browser's popover layer,
+ * so a frame with a clipped edge (the fantasy cards) or a sticky bar cannot cut or cover it.
  */
 export function Popover({ label, title, align = "end", class: extra, children }: PopoverProps) {
-  const box = useRef<HTMLDetailsElement>(null);
+  const id = useId();
+  const button = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const box = panel.current;
+    const opener = button.current;
+    if (!box || !opener) return;
+
+    /** Puts the panel under the button, lined up with the chosen edge and inside the screen. */
+    const place = () => {
+      const at = opener.getBoundingClientRect();
+      box.style.top = `${at.bottom + 6}px`;
+      box.style.maxHeight = `${window.innerHeight - at.bottom - 16}px`;
+      if (align === "end") {
+        box.style.right = `${Math.max(8, window.innerWidth - at.right)}px`;
+        box.style.left = "auto";
+      } else {
+        box.style.left = `${Math.max(8, at.left)}px`;
+        box.style.right = "auto";
+      }
+    };
     const close = () => {
-      if (box.current) box.current.open = false;
+      if (supported) box.hidePopover();
+      else delete box.dataset.open;
     };
-    const outside = (e: Event) => {
-      if (box.current?.open && !box.current.contains(e.target as Node)) close();
-    };
-    const onEscape = (e: KeyboardEvent) => {
-      if (e.key !== "Escape" || !box.current?.open) return;
-      close();
-      box.current.querySelector("summary")?.focus();
-    };
-    // A button or link inside (but not a field) closes the menu once it has done its job.
     const chosen = (e: Event) => {
       if ((e.target as HTMLElement).closest("button, a")) close();
     };
-    const inside = panel.current;
-    inside?.addEventListener("click", chosen);
-    document.addEventListener("pointerdown", outside);
-    document.addEventListener("keydown", onEscape);
-    return () => {
-      inside?.removeEventListener("click", chosen);
-      document.removeEventListener("pointerdown", outside);
-      document.removeEventListener("keydown", onEscape);
+    const toggled = (e: Event) => {
+      if ((e as ToggleEvent).newState === "open") place();
     };
-  }, []);
+    // Without the popover layer the button opens and closes the panel itself.
+    const fallback = () => {
+      if (supported) return;
+      place();
+      if (box.dataset.open) delete box.dataset.open;
+      else box.dataset.open = "true";
+    };
+    const dismiss = (e: Event) => {
+      if (supported || !box.dataset.open) return;
+      if (!box.contains(e.target as Node) && !opener.contains(e.target as Node)) close();
+    };
+
+    box.addEventListener("click", chosen);
+    box.addEventListener("beforetoggle", toggled);
+    opener.addEventListener("click", fallback);
+    document.addEventListener("pointerdown", dismiss);
+    return () => {
+      box.removeEventListener("click", chosen);
+      box.removeEventListener("beforetoggle", toggled);
+      opener.removeEventListener("click", fallback);
+      document.removeEventListener("pointerdown", dismiss);
+    };
+  }, [align]);
 
   return (
-    <details ref={box} class={`popover popover-${align}${extra ? ` ${extra}` : ""}`}>
-      <summary class="popover-button" aria-label={title} title={title}>
+    <div class={`popover${extra ? ` ${extra}` : ""}`}>
+      <button
+        ref={button}
+        type="button"
+        class="popover-button"
+        aria-label={title}
+        title={title}
+        popovertarget={id}
+      >
         {label}
-      </summary>
-      <div class="popover-panel" ref={panel}>
+      </button>
+      <div ref={panel} id={id} popover="auto" class="popover-panel">
         {children}
       </div>
-    </details>
+    </div>
   );
 }

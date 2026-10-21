@@ -27,11 +27,9 @@
   position: relative;
   display: flex;
   flex: none;
-  padding: 0;
-  border: 0;
 }
 
-.popover > summary {
+.popover > .popover-button {
   flex: 1;
   display: grid;
   place-items: center;
@@ -42,40 +40,36 @@
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--fg);
+  font: inherit;
   font-size: 1.3rem;
   line-height: 1;
-  list-style: none;
   cursor: pointer;
 }
 
-.popover > summary::-webkit-details-marker {
-  display: none;
-}
-
-.popover > summary:hover,
-.popover[open] > summary {
+.popover > .popover-button:hover,
+.popover > .popover-button:has(+ .popover-panel:popover-open) {
   border-color: var(--accent);
 }
 
+/* The panel sits in the browser's top layer; the script puts it under its button. */
 .popover-panel {
-  position: absolute;
-  top: calc(100% + 0.35rem);
-  z-index: 40;
+  position: fixed;
+  inset: auto;
+  margin: 0;
   min-width: 15rem;
-  max-width: min(22rem, calc(100vw - 2rem));
+  max-width: min(22rem, calc(100vw - 1rem));
+  overflow-y: auto;
   padding: 0.75rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
+  color: var(--fg);
   box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
 }
 
-.popover-end .popover-panel {
-  right: 0;
-}
-
-.popover-start .popover-panel {
-  left: 0;
+/* Browsers without the popover layer open it with this flag instead. */
+.popover-panel:not(:popover-open):not([data-open]) {
+  display: none;
 }
 
 .popover-heading {
@@ -230,7 +224,7 @@
 /* ---- Taps: a line of text that opens something is a comfortable target ---- */
 
 @media (pointer: coarse), (max-width: 40rem) {
-  details > summary:not(.popover-button) {
+  details > summary {
     padding-block: 0.65rem;
   }
 }

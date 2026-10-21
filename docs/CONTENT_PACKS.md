@@ -77,6 +77,13 @@ proficiencies, visions, flags) are not reported. Race variants and dragonmarks b
 and statblocks are reported as not supported yet. Rules the app cannot apply
 automatically keep their text, and the report counts them.
 
+The same thing often comes from several books. Entries with one name that say exactly the same
+(text, effects and data, ignoring spacing and curly quotes) are merged into one, and whatever
+referred to the others refers to it. This app follows the 2014 rules, so when something has both a
+2014 and a 2024 version the 2014 one is used and the 2024 one is left out (a checkbox on the packs
+page keeps both); things that exist only in 2024 stay. Items Aurora keeps for its own books (feat
+unlockers, starting equipment packs) are not imported.
+
 A whole collection can be imported from its index file: the reader follows up to 1500 files, and
 the Aurora Legacy collection (`AuroraLegacy.index`, about 750 files and 8000 entries) fits. Entries the app already has (the SRD)
 are left out and anything that refers to them is pointed at the app's own entry.

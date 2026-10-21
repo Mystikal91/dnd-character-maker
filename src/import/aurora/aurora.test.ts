@@ -858,6 +858,56 @@ const LEGACY = wrap(`
       <stat name="intelligence" value="1" />
     </rules>
   </element>
+  <element name="Echo Bolt" type="Spell" source="Test Book" id="ID_R_SPELL_ECHO_1">
+    <supports>Wizard</supports>
+    <description><p>A bolt of sound.</p></description>
+    <setters><set name="level">0</set><set name="school">Evocation</set></setters>
+  </element>
+  <element name="Echo Bolt" type="Spell" source="Another Book" id="ID_R_SPELL_ECHO_2">
+    <supports>Wizard</supports>
+    <description><p>A  bolt of  sound.</p></description>
+    <setters><set name="level">0</set><set name="school">Evocation</set></setters>
+  </element>
+  <element name="Edge Bolt" type="Spell" source="Test Book" id="ID_R_SPELL_EDGE_1">
+    <supports>Wizard</supports>
+    <description><p>A bolt of edges.</p></description>
+    <setters><set name="level">0</set><set name="school">Evocation</set></setters>
+  </element>
+  <element name="Edge Bolt" type="Spell" source="Another Book" id="ID_R_SPELL_EDGE_2">
+    <supports>Wizard</supports>
+    <description><p>A bolt of sharper edges.</p></description>
+    <setters><set name="level">0</set><set name="school">Evocation</set></setters>
+  </element>
+  <element name="Reborn Bolt" type="Spell" source="Test Book" id="ID_R_SPELL_REBORN_OLD">
+    <supports>Wizard</supports>
+    <description><p>The old words.</p></description>
+    <setters><set name="level">1</set><set name="school">Evocation</set></setters>
+  </element>
+  <element name="Reborn Bolt" type="Spell" source="Test Book (2024)" id="ID_R_SPELL_REBORN_NEW">
+    <supports>Wizard</supports>
+    <description><p>The new words.</p></description>
+    <setters><set name="level">1</set><set name="school">Evocation</set></setters>
+  </element>
+  <element name="Brand New Bolt" type="Spell" source="Test Book (2024)" id="ID_R_SPELL_BRANDNEW">
+    <supports>Wizard</supports>
+    <description><p>Only in the new book.</p></description>
+    <setters><set name="level">1</set><set name="school">Evocation</set></setters>
+  </element>
+  <element name="Many Times" type="Feat" source="Test Book" id="ID_R_FEAT_MANY">
+    <requirements>[character:4]</requirements>
+    <description><p>You can take this again.</p></description>
+  </element>
+  <element name="Many Times" type="Feat" source="Test Book" id="ID_R_FEAT_MANY_2">
+    <requirements>ID_R_FEAT_MANY</requirements>
+    <description><p>You can take this again.</p></description>
+  </element>
+  <element name="Echo Folk" type="Race" source="Test Book" id="ID_R_RACE_ECHO">
+    <description><p>They hear things.</p></description>
+    <rules><grant type="Spell" id="ID_R_SPELL_ECHO_2" /></rules>
+  </element>
+  <element name="Feat Unlocker" type="Item" source="Test Book" id="ID_R_ITEM_UNLOCKER">
+    <description><p>Bookkeeping.</p></description>
+  </element>
   <element name="Test Proficiency" type="Proficiency" source="Internal" id="ID_L_PROF" />
   <element name="Test Rule" type="Rule" source="Internal" id="ID_L_RULE" />`);
 
@@ -1022,6 +1072,52 @@ describe("collections written for other readers", () => {
       { type: "abilityBonus", ability: "int", value: 1 },
     ]);
     expect(byId(result, "imp1:item/ring-of-warding").data.attunement).toBe(true);
+  });
+
+  it("merges entries that say exactly the same and points what referred to them at the one kept", () => {
+    const echoes = result.entries.filter((e) =>
+      result.strings[`${e.id}.name`]?.startsWith("Echo Bolt"),
+    );
+    expect(echoes.map((e) => e.id)).toEqual(["imp1:spell/echo-bolt"]);
+    expect(byId(result, "imp1:species/echo-folk").effects).toEqual([
+      { type: "grantSpell", spell: "imp1:spell/echo-bolt" },
+    ]);
+    // A feat written as copies that ask for the one before is one feat.
+    expect(result.entries.filter((e) => e.id.startsWith("imp1:feat/many-times"))).toHaveLength(1);
+    expect(result.merged).toBeGreaterThanOrEqual(2);
+  });
+
+  it("keeps two versions that differ in a word, with the book to tell them apart", () => {
+    const edges = result.entries.filter((e) => e.id.startsWith("imp1:spell/edge-bolt"));
+    expect(edges).toHaveLength(2);
+    expect(edges.map((e) => result.strings[`${e.id}.name`]).sort()).toEqual([
+      "Edge Bolt (Another Book)",
+      "Edge Bolt (Test Book)",
+    ]);
+  });
+
+  it("uses the 2014 version when a 2024 one exists, and keeps what is only in 2024", () => {
+    const reborn = result.entries.filter((e) =>
+      result.strings[`${e.id}.name`]?.startsWith("Reborn"),
+    );
+    expect(reborn).toHaveLength(1);
+    expect(result.strings[`${reborn[0]?.id}.desc`]).toBe("The old words.");
+    expect(result.editions).toBe(1);
+    expect(result.entries.some((e) => result.strings[`${e.id}.name`] === "Brand New Bolt")).toBe(
+      true,
+    );
+
+    const both = parseAurora([LEGACY], { ...options, keepEditions: true });
+    expect(
+      both.entries.filter((e) => both.strings[`${e.id}.name`]?.startsWith("Reborn")),
+    ).toHaveLength(2);
+    expect(both.editions).toBe(0);
+  });
+
+  it("leaves out the items Aurora keeps for its own books", () => {
+    expect(result.entries.some((e) => result.strings[`${e.id}.name`] === "Feat Unlocker")).toBe(
+      false,
+    );
   });
 
   it("does not report definitions as unsupported", () => {

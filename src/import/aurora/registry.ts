@@ -8,6 +8,8 @@ export interface AuroraOptions {
   index: ReadonlyMap<string, Entry>;
   /** The display name of an entry of the app (used to recognise duplicates by name). */
   nameOf: (id: string) => string;
+  /** Keep the 2024 version of what already has a 2014 one (by default the 2014 one is used). */
+  keepEditions?: boolean;
 }
 
 export interface AuroraResult {
@@ -20,6 +22,10 @@ export interface AuroraResult {
   skipped: Record<string, number>;
   /** Elements the app already has, so they were left out. */
   duplicates: number;
+  /** Entries that repeated another one (same name, text and effects) and were merged into it. */
+  merged: number;
+  /** 2024 versions left out because the 2014 version of the same thing is there. */
+  editions: number;
   /** Rules (stat formulas, conditions...) that the app cannot apply by itself. */
   unsupportedRules: number;
   /** The name the files give themselves, if any. */

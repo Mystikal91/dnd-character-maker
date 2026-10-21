@@ -9,6 +9,7 @@ import {
   importPackFile,
   importProgress,
   importReport,
+  keepEditions,
   packError,
   removeUserPack,
   userPacks,
@@ -99,6 +100,16 @@ export function PacksPage() {
       )}
 
       <h3>{ui("hb.newPack")}</h3>
+      <label class="check">
+        <input
+          type="checkbox"
+          checked={keepEditions.value}
+          onChange={(e) => {
+            keepEditions.value = e.currentTarget.checked;
+          }}
+        />
+        <span>{ui("packs.keepEditions")}</span>
+      </label>
       <form
         class="pack-address"
         onSubmit={(e) => {
@@ -185,6 +196,8 @@ export function PacksPage() {
           {report.failed > 0 && <p>{ui("packs.reportFailed", { n: report.failed })}</p>}
           {report.truncated && <p>{ui("packs.reportTruncated")}</p>}
           {report.duplicates > 0 && <p>{ui("packs.reportDuplicates", { n: report.duplicates })}</p>}
+          {report.editions > 0 && <p>{ui("packs.reportEditions", { n: report.editions })}</p>}
+          {report.merged > 0 && <p>{ui("packs.reportMerged", { n: report.merged })}</p>}
           {report.unsupported > 0 && <p>{ui("packs.reportRules", { n: report.unsupported })}</p>}
           {Object.keys(report.skipped).length > 0 && (
             <p>
