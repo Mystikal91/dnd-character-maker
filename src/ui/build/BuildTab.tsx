@@ -3,10 +3,12 @@ import { type StepId, levelUpPhase, openStep } from "../../app/buildState";
 import { showView } from "../../app/navigation";
 import { character, content, sheet } from "../../app/store";
 import { countOverrides } from "../../engine/overrides";
+import { classesNeedingSubclass } from "../../engine/subclass";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { AbilityScores } from "../AbilityScores";
 import { Choices } from "../Choices";
 import { SpellPicker } from "../SpellPicker";
+import { Welcome } from "../Welcome";
 import { ClassStep } from "./ClassStep";
 import { FreeEditStep } from "./FreeEditStep";
 import { StoryStep } from "./StoryStep";
@@ -29,6 +31,7 @@ function buildSteps(): StepInfo[] {
   const name = (id: string | undefined) => (id && c ? c.name(id) : "");
 
   const first = ch.classes[0];
+  const needsSubclass = c ? classesNeedingSubclass(ch, c.index).length > 0 : false;
   const pendingChoices = s?.choices.reduce((sum, choice) => sum + choice.remaining, 0) ?? 0;
   const asiLeft = s ? s.asi.available - s.asi.used : 0;
   const spellsLeft = (s?.spellcasters ?? []).reduce(
@@ -52,8 +55,13 @@ function buildSteps(): StepInfo[] {
     {
       id: "class",
       title: "build.class",
-      status: ch.classes.map((cl) => `${name(cl.classId)} ${cl.level}`).join(" / "),
-      done: Boolean(first),
+      status: [
+        ch.classes.map((cl) => `${name(cl.classId)} ${cl.level}`).join(" / "),
+        needsSubclass ? ui("build.needsSubclass") : "",
+      ]
+        .filter(Boolean)
+        .join(" · "),
+      done: Boolean(first) && !needsSubclass,
       body: <ClassStep />,
     },
     {
@@ -229,6 +237,7 @@ export function BuildTab() {
 
   return (
     <>
+      <Welcome />
       <SummaryStrip />
       <div class="build">
         <div class="steps">

@@ -16,7 +16,14 @@ import {
   setCurrentId,
 } from "../storage/characters";
 import { decodeShare, isShareHash } from "../storage/share";
-import { exportFileName, parseImport, serializeCharacter } from "../storage/transfer";
+import {
+  backupFileName,
+  exportFileName,
+  parseBackup,
+  parseImport,
+  serializeBackup,
+  serializeCharacter,
+} from "../storage/transfer";
 
 export type SaveStatus = "idle" | "saving" | "saved" | "failed";
 
@@ -33,6 +40,20 @@ export const character = signal<Character>(createNewCharacter());
 export const characters = signal<CharacterSummary[]>([]);
 export const saveStatus = signal<SaveStatus>("idle");
 export const importFailed = signal(false);
+/** What the last import of a backup did, shown in the character bar. */
+export const importNotice = signal<{ added: number; skipped: number } | undefined>(undefined);
+
+const BACKUP_KEY = "lastBackup";
+function readLastBackup(): number | undefined {
+  try {
+    const saved = Number(localStorage.getItem(BACKUP_KEY));
+    return saved > 0 ? saved : undefined;
+  } catch {
+    return undefined;
+  }
+}
+/** When all the characters were last exported, if they ever were (kept in this browser). */
+export const lastBackup = signal<number | undefined>(readLastBackup());
 /** The character just deleted, kept for a few seconds so it can be brought back. */
 export const deletedCharacter = signal<Character | undefined>(undefined);
 let undoTimer: ReturnType<typeof setTimeout> | undefined;
@@ -233,9 +254,77 @@ export function exportCharacter() {
   URL.revokeObjectURL(url);
 }
 
-export async function importCharacterFile(file: File) {
+/** Hands a text to the user as a file download. */
+function download(name: string, text: string, type: string) {
+  const url = URL.createObjectURL(new Blob([text], { type }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = name;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+/** Downloads every saved character in one file, so they can be kept or moved to another device. */
+export async function exportAllCharacters() {
+  await saveNow();
+  const all: Character[] = [];
+  for (const summary of characters.value) {
+    const loaded = await loadCharacter(summary.id);
+    if (loaded) all.push(loaded);
+  }
+  download(backupFileName(), serializeBackup(all), "application/json");
+  const now = Date.now();
+  lastBackup.value = now;
   try {
-    await switchTo(parseImport(await file.text()));
+    localStorage.setItem(BACKUP_KEY, String(now));
+  } catch {
+    // Not remembered: the file was still made.
+  }
+}
+
+/**
+ * Puts the characters of a backup back. One that is already here and the same is left alone; one
+ * with the same id that differs becomes a copy, so nothing is overwritten.
+ */
+async function restoreBackup(backup: { characters: Character[]; unreadable: number }) {
+  let added = 0;
+  let skipped = backup.unreadable;
+  let last: Character | undefined;
+  for (const incoming of backup.characters) {
+    const here = characters.value.some((s) => s.id === incoming.id)
+      ? await loadCharacter(incoming.id)
+      : undefined;
+    if (here && JSON.stringify(here) === JSON.stringify(incoming)) {
+      skipped += 1;
+      continue;
+    }
+    const kept = here
+      ? {
+          ...incoming,
+          id: crypto.randomUUID(),
+          name: ui("bar.copyName", { name: incoming.name || ui("sheet.unnamed") }),
+        }
+      : incoming;
+    await saveCharacter(kept);
+    last = kept;
+    added += 1;
+  }
+  await refreshList();
+  if (last) await switchTo(last);
+  importNotice.value = { added, skipped };
+}
+
+export async function importCharacterFile(file: File) {
+  importNotice.value = undefined;
+  try {
+    const text = await file.text();
+    const backup = parseBackup(text);
+    if (backup) {
+      await restoreBackup(backup);
+      importFailed.value = false;
+      return;
+    }
+    await switchTo(parseImport(text));
   } catch (error) {
     if (!(error instanceof CharacterParseError)) console.error("Import failed", error);
     importFailed.value = true;

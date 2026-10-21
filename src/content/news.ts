@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-21",
     notes: [
       {
+        en: "A backup of all characters: the character menu exports every character in one file and importing it puts them back (what is already there is left alone, a different version of the same character becomes a copy), and it shows when the last backup was made. First visit: a short welcome. On the sheet, tap the name to type another one and tap species, background, level, alignment or class to change them. The Class step says when a subclass is due. A new version of the app is offered with an Update button instead of installing silently.",
+        it: "Una copia di sicurezza di tutti i personaggi: il menu del personaggio esporta tutti i personaggi in un file e importandolo li rimette a posto (ciò che c'è già resta com'è, una versione diversa dello stesso personaggio diventa una copia), e mostra quando è stata fatta l'ultima copia. Alla prima visita, un breve benvenuto. Sulla scheda, tocca il nome per scriverne un altro e tocca specie, background, livello, allineamento o classe per cambiarli. Il passo Classe dice quando è dovuta una sottoclasse. Una nuova versione dell'app viene proposta con un pulsante Aggiorna invece di installarsi in silenzio.",
+        fr: "Une sauvegarde de tous les personnages : le menu du personnage exporte tous les personnages dans un fichier et l'importer les remet en place (ce qui est déjà là reste tel quel, une version différente du même personnage devient une copie), et il montre quand la dernière sauvegarde a été faite. À la première visite, un court message d'accueil. Sur la fiche, touche le nom pour en saisir un autre et touche espèce, historique, niveau, alignement ou classe pour les changer. L'étape Classe indique quand une sous-classe est due. Une nouvelle version de l'application est proposée avec un bouton Mettre à jour au lieu de s'installer en silence.",
+        de: "Eine Sicherung aller Charaktere: Das Charaktermenü exportiert alle Charaktere in eine Datei, und das Importieren stellt sie wieder her (was schon da ist, bleibt, eine abweichende Version desselben Charakters wird zur Kopie), und es zeigt, wann die letzte Sicherung gemacht wurde. Beim ersten Besuch ein kurzer Willkommenstext. Auf dem Bogen tippe den Namen an, um einen anderen einzugeben, und tippe Spezies, Hintergrund, Grad, Gesinnung oder Klasse an, um sie zu ändern. Der Schritt Klasse sagt, wann eine Unterklasse fällig ist. Eine neue Version der App wird mit einem Knopf Aktualisieren angeboten, statt sich still zu installieren.",
+        es: "Una copia de seguridad de todos los personajes: el menú del personaje exporta todos los personajes en un archivo e importarlo los devuelve (lo que ya está se deja, una versión distinta del mismo personaje pasa a ser una copia), y muestra cuándo se hizo la última copia. En la primera visita, una breve bienvenida. En la hoja, toca el nombre para escribir otro y toca especie, trasfondo, nivel, alineamiento o clase para cambiarlos. El paso Clase avisa cuando toca una subclase. Una nueva versión de la app se ofrece con un botón Actualizar en lugar de instalarse en silencio.",
+      },
+      {
         en: "Importing from Aurora files no longer fills the lists with repeats: entries with the same name that say exactly the same are merged, the 2014 version is used when a 2024 one exists (a checkbox keeps both), and the items Aurora keeps for its own books are left out. The import report says how many were merged or left out. The character bar menu now opens on phones too.",
         it: "L'importazione dai file Aurora non riempie più le liste di doppioni: le voci con lo stesso nome che dicono esattamente lo stesso si uniscono, si usa la versione 2014 quando ne esiste una 2024 (una casella le tiene entrambe) e gli oggetti che Aurora tiene per i propri conti restano fuori. Il rapporto dell'importazione dice quante voci sono state unite o lasciate fuori. Il menu della barra dei personaggi ora si apre anche da telefono.",
         fr: "L'import des fichiers Aurora ne remplit plus les listes de doublons : les entrées de même nom qui disent exactement la même chose sont fusionnées, la version 2014 est utilisée quand il en existe une 2024 (une case garde les deux) et les objets qu'Aurora garde pour sa propre comptabilité sont écartés. Le rapport d'import dit combien ont été fusionnées ou écartées. Le menu de la barre des personnages s'ouvre maintenant aussi sur téléphone.",
@@ -230,16 +237,6 @@ export const ROADMAP: RoadmapItem[] = [
       fr: "Les traductions manquantes : environ 170 objets, les maîtrises et quelques options de classe. La traduction automatique les comble en attendant.",
       de: "Die fehlenden Übersetzungen: etwa 170 Gegenstände, die Übungen und einige Klassenoptionen. Die automatische Übersetzung füllt sie in der Zwischenzeit.",
       es: "Las traducciones que faltan: unos 170 objetos, las competencias y algunas opciones de clase. La traducción automática las cubre mientras tanto.",
-    },
-  },
-  {
-    id: "backup",
-    text: {
-      en: "A backup of all your characters in one file (export everything, import everything): they live only in this browser for now.",
-      it: "Una copia di sicurezza di tutti i personaggi in un solo file (esporta tutto, importa tutto): per ora vivono solo in questo browser.",
-      fr: "Une sauvegarde de tous tes personnages dans un seul fichier (tout exporter, tout importer) : pour l'instant ils ne vivent que dans ce navigateur.",
-      de: "Eine Sicherung aller Charaktere in einer Datei (alles exportieren, alles importieren): Sie liegen vorerst nur in diesem Browser.",
-      es: "Una copia de seguridad de todos los personajes en un solo archivo (exportar todo, importar todo): por ahora viven solo en este navegador.",
     },
   },
   {

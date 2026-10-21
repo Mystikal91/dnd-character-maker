@@ -17,6 +17,7 @@ import { PacksPage } from "./PacksPage";
 import { ShareDialog } from "./ShareDialog";
 import { Sheet } from "./Sheet";
 import { Tabs } from "./Tabs";
+import { UpdateNotice } from "./UpdateNotice";
 import { BuildTab } from "./build/BuildTab";
 import { LevelUp } from "./build/LevelUp";
 import { PlayTab } from "./play/PlayTab";
@@ -101,6 +102,7 @@ export function App() {
           <Screen />
         </>
       )}
+      <UpdateNotice />
       <SpellDialog />
       <ShareDialog />
       <LevelUp />

@@ -1,5 +1,69 @@
-import { character, content } from "../../app/store";
+import { useEffect, useRef, useState } from "preact/hooks";
+import { type StepId, openStep } from "../../app/buildState";
+import { showView } from "../../app/navigation";
+import { character, content, updateCharacter } from "../../app/store";
 import { ui } from "../../i18n/ui";
+
+/** Opens a step of the build screen, for changing what the sheet shows. */
+function goTo(step: StepId) {
+  openStep.value = step;
+  showView("build");
+}
+
+/** A value on the sheet that takes you to where it is chosen. */
+function Change({ step, what, children }: { step: StepId; what: string; children: string }) {
+  return (
+    <button
+      type="button"
+      class="change-link"
+      aria-label={ui("sheet.change", { what })}
+      onClick={() => goTo(step)}
+    >
+      {children}
+    </button>
+  );
+}
+
+/** The name of the character: tap it to type another, right on the sheet. */
+function EditableName() {
+  const ch = character.value;
+  const [editing, setEditing] = useState(false);
+  const input = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (editing) input.current?.select();
+  }, [editing]);
+  if (!editing)
+    return (
+      <h2>
+        <button
+          type="button"
+          class="change-link"
+          aria-label={ui("sheet.change", { what: ui("sheet.name") })}
+          onClick={() => setEditing(true)}
+        >
+          {ch.name || ui("sheet.unnamed")}
+        </button>
+      </h2>
+    );
+  return (
+    <input
+      ref={input}
+      class="name-input"
+      type="text"
+      value={ch.name}
+      aria-label={ui("sheet.name")}
+      onInput={(e) =>
+        updateCharacter((d) => {
+          d.name = e.currentTarget.value;
+        })
+      }
+      onBlur={() => setEditing(false)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === "Escape") setEditing(false);
+      }}
+    />
+  );
+}
 
 /** Name banner, who the character is, and the class banner. */
 export function SheetHeader() {
@@ -23,31 +87,51 @@ export function SheetHeader() {
   return (
     <header class="sheet-header">
       <div class="banner banner-name">
-        <h2>{ch.name || ui("sheet.unnamed")}</h2>
+        <EditableName />
         <span class="banner-label">{ui("sheet.name")}</span>
       </div>
 
       <dl class="card sheet-info">
         <div>
-          <dd>{species || "—"}</dd>
+          <dd>
+            <Change step="origin" what={ui("print.species")}>
+              {species || "—"}
+            </Change>
+          </dd>
           <dt>{ui("print.species")}</dt>
         </div>
         <div>
-          <dd>{ch.choices.background ? name(ch.choices.background) : "—"}</dd>
+          <dd>
+            <Change step="origin" what={ui("print.background")}>
+              {ch.choices.background ? name(ch.choices.background) : "—"}
+            </Change>
+          </dd>
           <dt>{ui("print.background")}</dt>
         </div>
         <div>
-          <dd>{ui("sheet.levelLabel", { level: totalLevel })}</dd>
+          <dd>
+            <Change step="class" what={ui("form.level")}>
+              {ui("sheet.levelLabel", { level: totalLevel })}
+            </Change>
+          </dd>
           <dt>{ui("form.level")}</dt>
         </div>
         <div>
-          <dd>{ch.story.alignment ? name(ch.story.alignment) : "—"}</dd>
+          <dd>
+            <Change step="story" what={ui("story.alignment")}>
+              {ch.story.alignment ? name(ch.story.alignment) : "—"}
+            </Change>
+          </dd>
           <dt>{ui("story.alignment")}</dt>
         </div>
       </dl>
 
       <div class="banner banner-class">
-        <h2>{classTitle}</h2>
+        <h2>
+          <Change step="class" what={ui("form.class")}>
+            {classTitle}
+          </Change>
+        </h2>
         <span class="banner-label">{classLabel}</span>
       </div>
     </header>

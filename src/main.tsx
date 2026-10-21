@@ -9,6 +9,7 @@ import "@fontsource/eb-garamond/latin-ext-400-italic.css";
 import "@fontsource/eb-garamond/latin-ext-400.css";
 import "@fontsource/eb-garamond/latin-ext-600.css";
 import { render } from "preact";
+import { applyUpdate } from "./app/updates";
 import { App } from "./ui/App";
 import "./app/theme";
 import "./ui/build/build.css";
@@ -21,6 +22,21 @@ import "./ui/theme/fantasy.css";
 import "./ui/sheet/sheet.css";
 import "./ui/styles.css";
 import "./ui/chrome.css";
+
+// The app updates when the person agrees: a notice offers it when a new version is ready.
+if ("serviceWorker" in navigator && import.meta.env.PROD) {
+  void import("virtual:pwa-register").then(({ registerSW }) => {
+    const update = registerSW({
+      onNeedRefresh() {
+        applyUpdate.value = () => void update(true);
+      },
+      onRegisteredSW(_url, registration) {
+        // A long-open app looks for a new version now and then.
+        if (registration) setInterval(() => void registration.update(), 60 * 60 * 1000);
+      },
+    });
+  });
+}
 
 const root = document.getElementById("app");
 if (root) render(<App />, root);

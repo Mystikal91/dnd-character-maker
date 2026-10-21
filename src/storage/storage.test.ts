@@ -10,7 +10,14 @@ import {
   setCurrentId,
 } from "./characters";
 import { dbPut } from "./db";
-import { exportFileName, parseImport, serializeCharacter } from "./transfer";
+import {
+  backupFileName,
+  exportFileName,
+  parseBackup,
+  parseImport,
+  serializeBackup,
+  serializeCharacter,
+} from "./transfer";
 
 function named(name: string) {
   const c = createCharacter("srd51");
@@ -82,5 +89,37 @@ describe("export and import", () => {
   it("builds a safe file name", () => {
     expect(exportFileName(named("Elowen of the Vale!"))).toBe("elowen-of-the-vale.dndchar.json");
     expect(exportFileName(named(""))).toBe("character.dndchar.json");
+  });
+});
+
+describe("backup of all characters", () => {
+  it("keeps every character, with the same ids, in one file", () => {
+    const a = named("Elowen");
+    const b = named("Brom");
+    const backup = parseBackup(serializeBackup([a, b]));
+    expect(backup?.unreadable).toBe(0);
+    expect(backup?.characters).toEqual([a, b]);
+  });
+
+  it("counts a character it cannot read instead of failing the whole file", () => {
+    const text = serializeBackup([named("Elowen")]);
+    const doc = JSON.parse(text);
+    doc.characters.push({ ...doc.characters[0], schemaVersion: 999 }, "junk");
+    const backup = parseBackup(JSON.stringify(doc));
+    expect(backup?.characters.map((c) => c.name)).toEqual(["Elowen"]);
+    expect(backup?.unreadable).toBe(2);
+  });
+
+  it("is not mistaken for a single character, and the other way round", () => {
+    expect(parseBackup(serializeCharacter(named("Solo")))).toBeUndefined();
+    expect(parseBackup("not json")).toBeUndefined();
+    expect(parseBackup(JSON.stringify({ format: "other", characters: [] }))).toBeUndefined();
+    expect(() => parseImport(serializeBackup([named("A")]))).toThrow();
+  });
+
+  it("names the file with the day", () => {
+    expect(backupFileName(new Date("2026-10-21T10:00:00Z"))).toBe(
+      "dnd-characters-2026-10-21.dndbackup.json",
+    );
   });
 });

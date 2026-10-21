@@ -228,3 +228,99 @@
     padding-block: 0.65rem;
   }
 }
+
+/* ---- Menu entry with a second line ---- */
+
+.popover-panel .menu-list button.menu-two-lines {
+  display: grid;
+  gap: 0.1rem;
+  padding-block: 0.4rem;
+}
+
+.menu-two-lines small {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+/* ---- Welcome ---- */
+
+.welcome {
+  margin-bottom: 0.75rem;
+}
+
+.welcome h2 {
+  margin-top: 0;
+}
+
+/* ---- New version ---- */
+
+.update-notice {
+  position: fixed;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.3);
+}
+
+.update-notice button {
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ---- Sheet header: a value that takes you to where it is chosen ---- */
+
+.change-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.change-link:hover,
+.change-link:focus-visible {
+  text-decoration: underline dotted;
+  text-underline-offset: 0.25em;
+}
+
+.banner h2 .change-link {
+  width: 100%;
+}
+
+.name-input {
+  width: 100%;
+  min-height: 2.5rem;
+  font: inherit;
+  font-size: 1.35rem;
+  text-align: center;
+}
+
+/* A faint pencil says the value can be changed, since a phone has no hover. */
+.change-link::after {
+  content: "\270E";
+  margin-left: 0.35em;
+  font-size: 0.7em;
+  opacity: 0.45;
+}

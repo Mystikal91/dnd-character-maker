@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     preact(),
     VitePWA({
-      registerType: "autoUpdate",
+      registerType: "prompt",
       includeAssets: ["icon.svg"],
       manifest: {
         name: "DND Character Maker",

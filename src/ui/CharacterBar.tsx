@@ -6,9 +6,12 @@ import {
   deleteCurrentCharacter,
   deletedCharacter,
   duplicateCharacter,
+  exportAllCharacters,
   exportCharacter,
   importCharacterFile,
   importFailed,
+  importNotice,
+  lastBackup,
   newCharacter,
   openCharacter,
   saveStatus,
@@ -82,6 +85,22 @@ export function CharacterBar() {
             <li>
               <button
                 type="button"
+                class="menu-two-lines"
+                onClick={() => void exportAllCharacters()}
+              >
+                {ui("bar.backup")}
+                <small>
+                  {lastBackup.value
+                    ? ui("bar.backupLast", {
+                        date: new Date(lastBackup.value).toLocaleDateString(),
+                      })
+                    : ui("bar.backupNever")}
+                </small>
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
                 onClick={() => {
                   shareOpen.value = true;
                 }}
@@ -126,6 +145,7 @@ export function CharacterBar() {
           {ui(shareNotice.value === "failed" ? "share.openFailed" : "share.opened")}
         </p>
       )}
+      {importNotice.value && <output class="note">{ui("bar.restored", importNotice.value)}</output>}
       {importFailed.value && (
         <p class="note" role="alert">
           {ui("bar.importError")}
