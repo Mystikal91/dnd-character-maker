@@ -77,6 +77,7 @@ export function EquipmentStep() {
     });
   const armor = itemOptions("armor");
   const weapons = itemOptions("weapon");
+  const magic = entriesOfKind("item").filter((o) => index?.get(o.id)?.data.rarity);
 
   return (
     <>
@@ -109,6 +110,15 @@ export function EquipmentStep() {
               </option>
             ))}
           </optgroup>
+          {magic.length > 0 && (
+            <optgroup label={ui("form.magicGroup")}>
+              {magic.map((o) => (
+                <option key={o.id} value={o.id}>
+                  {o.label}
+                </option>
+              ))}
+            </optgroup>
+          )}
         </select>
       </label>
       <ul class="inventory">

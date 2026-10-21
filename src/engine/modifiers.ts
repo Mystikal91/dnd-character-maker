@@ -44,6 +44,8 @@ function holds(when: ModifierCondition | undefined, { armor, weapon }: ModifierS
       return !armor.heavy;
     case "unarmoredNoShield":
       return !armor.wearing && !armor.shield;
+    case "wearingShield":
+      return armor.shield;
     case "ranged":
       return weapon?.kind === "ranged";
     case "melee":

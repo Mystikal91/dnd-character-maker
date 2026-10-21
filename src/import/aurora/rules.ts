@@ -418,6 +418,34 @@ function spellChoices(ctx: Context, supports: string, className: string): string
   return found.length > 0 ? found : undefined;
 }
 
+/**
+ * The stats of a magic item that the sheet can apply: armor class, saving throws, initiative,
+ * speed and an ability score that is raised to a value. Returns false for the rest.
+ */
+function itemStat(name: string, value: number, mapped: MappedRules, saves: Map<string, number>) {
+  const key = name.toLowerCase();
+  const modifier = (
+    target: "ac" | "initiative" | "speed",
+    when?: "wearingArmor" | "wearingShield",
+  ) => mapped.effects.push({ type: "modifier", target, value, ...(when && { when }) });
+  if (key === "ac:misc") modifier("ac");
+  else if (key === "ac:armored:enhancement") modifier("ac", "wearingArmor");
+  else if (key === "ac:shield") modifier("ac", "wearingShield");
+  else if (key === "initiative") modifier("initiative");
+  else if (key === "speed:misc") modifier("speed");
+  else {
+    const save = key.match(/^([a-z]+):save:misc$/);
+    const floor = key.match(/^([a-z]+):score:set$/);
+    const saveAbility = save?.[1] ? abilityFromWord(save[1]) : undefined;
+    const floorAbility = floor?.[1] ? abilityFromWord(floor[1]) : undefined;
+    if (saveAbility) saves.set(saveAbility, value);
+    else if (floorAbility)
+      mapped.effects.push({ type: "abilityFloor", ability: floorAbility, value });
+    else return false;
+  }
+  return true;
+}
+
 export interface MappedRules {
   effects: Effect[];
   /** Granted elements, with the class level they come at (undefined: right away). */
@@ -437,6 +465,8 @@ interface MapOptions {
   skipLevelled?: boolean;
   /** The class being described, so `$(spellcasting:list)` knows which list to use. */
   classSlug?: string;
+  /** The element is a magic item: its stats (armor class, saves...) are read as bonuses. */
+  item?: boolean;
   idPrefix: string;
 }
 
@@ -444,6 +474,7 @@ interface MapOptions {
 export function mapRules(ctx: Context, source: Source, options: MapOptions): MappedRules {
   const mapped: MappedRules = { effects: [], grants: [], offers: [], unsupported: 0 };
   let choiceCount = 0;
+  const saves = new Map<string, number>();
   const nextChoiceId = () => `${options.idPrefix}-${++choiceCount}`;
 
   for (const rule of readRules(source.el)) {
@@ -453,6 +484,8 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
     if (rule.tag === "stat") {
       const ability = abilityFromWord(rule.name);
       const value = Number.parseInt(rule.value, 10);
+      if (options.item && Number.isFinite(value) && itemStat(rule.name, value, mapped, saves))
+        continue;
       if (ability && Number.isFinite(value) && !rule.attrs.hasAttribute("level")) {
         mapped.effects.push({ type: "abilityBonus", ability, value });
       } else if (rule.name === "innate speed" && Number.isFinite(value)) {
@@ -598,6 +631,11 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
       mapped.unsupported += 1;
     }
   }
+  // The same bonus to all six saving throws is one bonus to saving throws.
+  const first = [...saves.values()][0];
+  if (saves.size === 6 && [...saves.values()].every((v) => v === first) && first !== undefined)
+    mapped.effects.push({ type: "modifier", target: "save", value: first });
+  else mapped.unsupported += saves.size;
   ctx.result.unsupportedRules += mapped.unsupported;
   return mapped;
 }

@@ -53,6 +53,8 @@ interface ChecksInput {
   halves: HalfProficiency[];
   /** Free edit values: a forced bonus replaces the calculated one. */
   overrides: Overrides;
+  /** A bonus to every saving throw (a Ring of Protection). */
+  saveBonus?: number;
 }
 
 export function deriveChecks({
@@ -64,6 +66,7 @@ export function deriveChecks({
   expertise,
   halves,
   overrides,
+  saveBonus = 0,
 }: ChecksInput): ChecksResult {
   const saves = {} as Record<Ability, CheckResult>;
   for (const ability of ABILITIES) {
@@ -71,7 +74,7 @@ export function deriveChecks({
     saves[ability] = {
       bonus:
         numberOverride(overrides, OVERRIDE.save(ability)) ??
-        abilities[ability].modifier + (proficient ? proficiencyBonus : 0),
+        abilities[ability].modifier + (proficient ? proficiencyBonus : 0) + saveBonus,
       proficient,
     };
   }

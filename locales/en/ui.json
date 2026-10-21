@@ -18,6 +18,7 @@
   "form.remove": "Remove",
   "form.armorGroup": "Armor",
   "form.weaponGroup": "Weapons",
+  "form.magicGroup": "Magic items",
   "form.background": "Background",
   "abilities.method": "Method",
   "abilities.method.manual": "Manual",
@@ -689,6 +690,7 @@
   "warning.multiclassPrerequisite": "{class} asks for {ability} {minimum} to multiclass.",
   "warning.multipleArmor": "More than one suit of armor is equipped.",
   "warning.multipleShields": "More than one shield is equipped.",
+  "warning.attunementTooMany": "{count} equipped items need attunement; a character can attune to 3.",
   "warning.strengthMinimum": "{item} needs Strength {minimum}.",
   "warning.notProficient": "Not proficient with {item}."
 }

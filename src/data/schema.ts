@@ -36,6 +36,7 @@ export const MODIFIER_TARGETS = [
   "attack",
   "damage",
   "hpPerLevel",
+  "save",
 ] as const;
 export type ModifierTarget = (typeof MODIFIER_TARGETS)[number];
 
@@ -43,7 +44,7 @@ export type ModifierTarget = (typeof MODIFIER_TARGETS)[number];
  * When a `modifier` applies, for what the character wears or wields:
  * `wearingArmor` (body armor, not a shield), `unarmored` (no body armor), `noHeavyArmor`,
  * `unarmoredNoShield` (neither armor nor a shield),
- * `ranged` and `melee` (the weapon of an attack), and `dueling` (a melee weapon that is not
+ * `wearingShield`, `ranged` and `melee` (the weapon of an attack), and `dueling` (a melee weapon that is not
  * two-handed, with no other weapon).
  */
 export const MODIFIER_CONDITIONS = [
@@ -51,6 +52,7 @@ export const MODIFIER_CONDITIONS = [
   "unarmored",
   "noHeavyArmor",
   "unarmoredNoShield",
+  "wearingShield",
   "ranged",
   "melee",
   "dueling",
@@ -119,6 +121,8 @@ export const EffectSchema = v.variant("type", [
   }),
   /** Double proficiency bonus on a skill the character is proficient in. */
   v.object({ type: v.literal("expertise"), skill: v.string() }),
+  /** The ability score is at least this high (Gauntlets of Ogre Power): it never lowers it. */
+  v.object({ type: v.literal("abilityFloor"), ability: AbilitySchema, value: v.number() }),
   /** Resistance, immunity or vulnerability to a type of damage (`fire`, `poison`...). */
   v.object({
     type: v.literal("defense"),

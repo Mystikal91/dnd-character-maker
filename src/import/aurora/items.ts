@@ -1,5 +1,7 @@
+import type { Effect } from "../../data/schema";
 import { classIdByName, emit } from "./emit";
 import type { Context, Source } from "./registry";
+import { mapRules } from "./rules";
 import {
   description,
   number,
@@ -179,6 +181,12 @@ function magicLine(set: ReturnType<typeof setters>): string {
  */
 export function importMagicItem(ctx: Context, source: Source): void {
   const set = setters(source.el);
+  const mapped = mapRules(ctx, source, { idPrefix: "item", item: true });
+  const effects: Effect[] = [...mapped.effects];
+  for (const grant of mapped.grants) {
+    if (grant.source.id && grant.level === undefined)
+      effects.push({ type: "trait", id: grant.source.id as `${string}:${string}/${string}` });
+  }
   const weight = parseWeight(set.get("weight"));
   const rarity = slugify(set.get("rarity")?.text ?? "");
   emit(
@@ -192,5 +200,6 @@ export function importMagicItem(ctx: Context, source: Source): void {
       attunement: /^\s*true/i.test(set.get("attunement")?.text ?? ""),
     },
     { desc: [magicLine(set), description(source.el)].filter(Boolean).join("\n\n") },
+    { effects },
   );
 }

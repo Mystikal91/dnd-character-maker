@@ -14,6 +14,7 @@ export type WarningCode =
   | "expertiseNeedsProficiency"
   | "multipleArmor"
   | "multipleShields"
+  | "attunementTooMany"
   | "strengthMinimum"
   | "notProficient"
   | "invalidChoice"

@@ -21,13 +21,19 @@ number comes from. The kinds are `abilityBonus`, `proficiency`, `trait`, `choice
 `resource`, and two for numbers of the sheet:
 
 - `{ "type": "modifier", "target": "ac", "value": 1, "when": "wearingArmor" }` adds a flat bonus.
-  Targets: `ac`, `speed`, `initiative`, `attack`, `damage`, `hpPerLevel`. Conditions: `wearingArmor`,
-  `unarmored`, `noHeavyArmor`, `ranged`, `melee`, `dueling` (a one-handed melee weapon with no other
+  Targets: `ac`, `speed`, `initiative`, `attack`, `damage`, `hpPerLevel`, `save` (every saving
+  throw). Conditions: `wearingArmor`, `wearingShield`, `unarmored`, `noHeavyArmor`, `ranged`, `melee`, `dueling` (a one-handed melee weapon with no other
   weapon).
+- `{ "type": "abilityFloor", "ability": "str", "value": 19 }` raises an ability score to at
+  least that value (Gauntlets of Ogre Power) and never lowers it.
 - `{ "type": "defense", "kind": "resistance", "damage": "fire" }` is a resistance, an
   immunity or a vulnerability to a type of damage; the sheet lists them.
 - `{ "type": "unarmoredDefense", "base": 10, "add": ["con"], "shield": true }` is armor class
   without armor: `base` + Dexterity + the listed abilities.
+
+Items carry effects too: whatever a character has **equipped** adds the effects of the item (a ring
+that gives +1 armor class and a resistance). A character that equips more than three items
+with `"attunement": true` in their `data` gets a warning.
 
 A `subspecies` entry with `"replacesSpecies": true` in its `data` stands in for its species: the
 species' own effects are not applied and the variant lists everything it gives (a half-elf of
@@ -63,7 +69,9 @@ added with *Add Aurora XML files*. The reader only translates structure (`src/im
 It supports spells, weapons, armor, adventuring gear, languages, backgrounds (with their
 personality tables), races, sub-races and racial traits, feats, classes (hit die, spell tables,
 Pact Magic, ability score improvements, multiclassing), archetypes and their features, magic
-items (as items: rarity and attunement are kept, what they do stays in the text) and deities
+items (as items: rarity and attunement are kept; bonuses to armor class, saving throws,
+initiative and speed, ability scores, resistances, languages and proficiencies are applied while
+the item is equipped, and the rest stays in the text) and deities
 (picked in the Story step of a character). Definitions the reader uses by itself (sources,
 proficiencies, visions, flags) are not reported. Race variants and dragonmarks become sub-species of their race. Companions, background variants
 and statblocks are reported as not supported yet. Rules the app cannot apply

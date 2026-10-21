@@ -169,11 +169,18 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
       ? (character.classes.find((cl) => cl.classId === owner)?.level ?? 0)
       : character.classes.reduce((sum, cl) => sum + cl.level, 0);
   };
+  // What the character has equipped adds its effects, like a ring that grants a resistance.
+  const wornWithEffects = character.inventory
+    .filter((i) => i.equipped)
+    .flatMap((i) => {
+      const entry = index.get(i.itemId);
+      return entry && entry.effects.length > 0 ? [entry] : [];
+    });
   // A variant of a species (a half-elf of another descent) carries the species' effects itself.
   const standsIn = chosen.some((e) => e.kind === "subspecies" && e.data.replacesSpecies === true);
   const contributing = standsIn ? chosen.filter((e) => e.kind !== "species") : chosen;
   const { effects, sourced, choices } = collectEffects(
-    [...contributing, ...(starting?.entry ? [starting.entry] : []), ...reached],
+    [...contributing, ...wornWithEffects, ...(starting?.entry ? [starting.entry] : []), ...reached],
     { index, selections: character.selections, warnings },
   );
   for (const { entry } of others) {
@@ -220,9 +227,20 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     );
     const override = overrideNumber(character, `ability.${ability}`);
     const overridden = override !== undefined;
-    const score = override ?? base + bonus;
+    const floor = effects.reduce(
+      (most, e) =>
+        e.type === "abilityFloor" && e.ability === ability ? Math.max(most, e.value) : most,
+      0,
+    );
+    const score = override ?? Math.max(base + bonus, floor);
     if (!overridden && score > 20) warn(warnings, "abilityTooHigh", { ability, score });
-    abilities[ability] = { base, bonus, score, modifier: abilityModifier(score), overridden };
+    abilities[ability] = {
+      base,
+      bonus: overridden ? bonus : score - base,
+      score,
+      modifier: abilityModifier(score),
+      overridden,
+    };
   }
 
   // A feat may ask for minimum ability scores.
@@ -239,6 +257,12 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
         });
     }
   }
+
+  // A character can attune to three items at once.
+  const attuned = character.inventory.filter(
+    (i) => i.equipped && index.get(i.itemId)?.data.attunement === true,
+  ).length;
+  if (attuned > 3) warn(warnings, "attunementTooMany", { count: attuned });
 
   // Hit points, features, spellcasting
   const conMod = abilities.con.modifier;
@@ -409,6 +433,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     expertise,
     halves,
     overrides: character.overrides,
+    saveBonus: total(appliedModifiers(sourced, "save", { armor: equipment.armor, levelOf })),
   });
   const baseSpeed = chosen.find((e) => e.kind === "species")?.data.speed;
   const state = { armor: equipment.armor, levelOf };

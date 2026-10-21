@@ -18,6 +18,7 @@
   "form.remove": "Entfernen",
   "form.armorGroup": "Rüstungen",
   "form.weaponGroup": "Waffen",
+  "form.magicGroup": "Magische Gegenstände",
   "form.background": "Hintergrund",
   "abilities.method": "Methode",
   "abilities.method.manual": "Manuell",
@@ -689,6 +690,7 @@
   "warning.multiclassPrerequisite": "{class} verlangt {ability} {minimum} für eine Klassenkombination.",
   "warning.multipleArmor": "Es ist mehr als eine Rüstung ausgerüstet.",
   "warning.multipleShields": "Es ist mehr als ein Schild ausgerüstet.",
+  "warning.attunementTooMany": "{count} ausgerüstete Gegenstände benötigen Einstimmung; ein Charakter kann sich auf 3 einstimmen.",
   "warning.strengthMinimum": "{item} erfordert Stärke {minimum}.",
   "warning.notProficient": "Keine Übung mit {item}."
 }

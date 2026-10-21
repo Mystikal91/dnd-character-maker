@@ -833,6 +833,31 @@ const LEGACY = wrap(`
       <stat name="intelligence" value="2" />
     </rules>
   </element>
+  <element name="Ring of Warding" type="Magic Item" source="Test Book" id="ID_L_MAGIC_WARD">
+    <description><p>Wards you.</p></description>
+    <setters><set name="category">Rings</set><set name="type">Ring</set><set name="rarity">Rare</set><set name="attunement">true</set></setters>
+    <rules>
+      <stat name="ac:misc" value="1" />
+      <stat name="strength:save:misc" value="1" />
+      <stat name="dexterity:save:misc" value="1" />
+      <stat name="constitution:save:misc" value="1" />
+      <stat name="intelligence:save:misc" value="1" />
+      <stat name="wisdom:save:misc" value="1" />
+      <stat name="charisma:save:misc" value="1" />
+      <grant type="Condition" id="ID_INTERNAL_CONDITION_DAMAGE_RESISTANCE_FIRE" />
+      <stat name="spellcasting:attack" value="2" />
+    </rules>
+  </element>
+  <element name="Belt of Might" type="Magic Item" source="Test Book" id="ID_L_MAGIC_BELT">
+    <description><p>Strong.</p></description>
+    <setters><set name="category">Wondrous Items</set><set name="type">Wondrous Item</set><set name="rarity">Rare</set></setters>
+    <rules>
+      <stat name="strength:score:set" value="21" bonus="base" />
+      <stat name="ac:armored:enhancement" value="1" bonus="enhancement" />
+      <stat name="ac:shield" value="2" bonus="enhancement" />
+      <stat name="intelligence" value="1" />
+    </rules>
+  </element>
   <element name="Test Proficiency" type="Proficiency" source="Internal" id="ID_L_PROF" />
   <element name="Test Rule" type="Rule" source="Internal" id="ID_L_RULE" />`);
 
@@ -982,6 +1007,21 @@ describe("collections written for other readers", () => {
     expect(bonuses).toEqual([{ type: "abilityBonus", ability: "int", value: 2 }]);
     // The rest of the dwarf stays (languages, traits).
     expect(sub.effects.some((e) => e.type === "trait")).toBe(true);
+  });
+
+  it("reads what a magic item gives as effects", () => {
+    expect(byId(result, "imp1:item/ring-of-warding").effects).toEqual([
+      { type: "modifier", target: "ac", value: 1 },
+      { type: "defense", kind: "resistance", damage: "fire" },
+      { type: "modifier", target: "save", value: 1 },
+    ]);
+    expect(byId(result, "imp1:item/belt-of-might").effects).toEqual([
+      { type: "abilityFloor", ability: "str", value: 21 },
+      { type: "modifier", target: "ac", value: 1, when: "wearingArmor" },
+      { type: "modifier", target: "ac", value: 2, when: "wearingShield" },
+      { type: "abilityBonus", ability: "int", value: 1 },
+    ]);
+    expect(byId(result, "imp1:item/ring-of-warding").data.attunement).toBe(true);
   });
 
   it("does not report definitions as unsupported", () => {

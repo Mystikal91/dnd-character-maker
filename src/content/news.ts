@@ -19,8 +19,15 @@ export interface ChangelogEntry {
 export const CHANGELOG: ChangelogEntry[] = [
   {
     version: "1.1 beta",
-    date: "2026-10-20",
+    date: "2026-10-21",
     notes: [
+      {
+        en: "Magic items can be added to the character in the Equipment step, and what they give counts while they are equipped: bonuses to armor class, saving throws, initiative and speed, ability scores (a belt that sets Strength to 21), resistances, languages and proficiencies. More than three items that need attunement give a warning.",
+        it: "Gli oggetti magici si aggiungono al personaggio nel passo Equipaggiamento e ciò che danno conta finché sono equipaggiati: bonus a classe armatura, tiri salvezza, iniziativa e velocità, punteggi di caratteristica (una cintura che porta la Forza a 21), resistenze, linguaggi e competenze. Più di tre oggetti che richiedono sintonia danno un avviso.",
+        fr: "Les objets magiques s'ajoutent au personnage à l'étape Équipement et ce qu'ils apportent compte tant qu'ils sont équipés : bonus à la classe d'armure, aux jets de sauvegarde, à l'initiative et à la vitesse, valeurs de caractéristique (une ceinture qui porte la Force à 21), résistances, langues et maîtrises. Plus de trois objets demandant une harmonisation donnent un avertissement.",
+        de: "Magische Gegenstände lassen sich im Schritt Ausrüstung hinzufügen, und was sie geben, zählt, solange sie angelegt sind: Boni auf Rüstungsklasse, Rettungswürfe, Initiative und Bewegungsrate, Attributswerte (ein Gürtel, der Stärke auf 21 setzt), Resistenzen, Sprachen und Übungen. Mehr als drei Gegenstände mit Einstimmung geben eine Warnung.",
+        es: "Los objetos mágicos se añaden al personaje en el paso Equipo y lo que dan cuenta mientras están equipados: bonos a la clase de armadura, tiradas de salvación, iniciativa y velocidad, puntuaciones de característica (un cinturón que lleva la Fuerza a 21), resistencias, idiomas y competencias. Más de tres objetos que requieren sintonización dan un aviso.",
+      },
       {
         en: 'Race variants from Aurora files now work: the half-elf of the Sword Coast, the dragonborn of Wildemount, the races of the dragonmarks of Eberron and others are picked as a subspecies that replaces what the race gives (and what the base race loses is taken away). Requirements written as "not any of these" are read correctly now.',
         it: 'Le varianti di razza dei file Aurora ora funzionano: il mezzelfo della Costa della Spada, il dragonide di Wildemount, le razze dei marchi del drago di Eberron e altre si scelgono come sottospecie che sostituisce ciò che la razza dà (e ciò che la razza base perde viene tolto). I requisiti scritti come "nessuno di questi" ora sono letti correttamente.',
@@ -254,11 +261,11 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "items",
     text: {
-      en: "What magic items do on the sheet (bonuses, charges, attunement), coins and carried weight.",
-      it: "Cosa fanno gli oggetti magici sulla scheda (bonus, cariche, sintonia), monete e peso trasportato.",
-      fr: "Ce que font les objets magiques sur la fiche (bonus, charges, harmonisation), pièces et poids porté.",
-      de: "Was magische Gegenstände auf dem Bogen bewirken (Boni, Ladungen, Einstimmung), Münzen und Traglast.",
-      es: "Lo que hacen los objetos mágicos en la hoja (bonos, cargas, sintonización), monedas y peso transportado.",
+      en: "More of what magic items do on the sheet (weapon bonuses, charges, attunement slots), coins and carried weight.",
+      it: "Altro di ciò che fanno gli oggetti magici sulla scheda (bonus alle armi, cariche, posti di sintonia), monete e peso trasportato.",
+      fr: "Plus de ce que font les objets magiques sur la fiche (bonus d'armes, charges, places d'harmonisation), pièces et poids porté.",
+      de: "Mehr davon, was magische Gegenstände auf dem Bogen bewirken (Waffenboni, Ladungen, Einstimmungsplätze), Münzen und Traglast.",
+      es: "Más de lo que hacen los objetos mágicos en la hoja (bonos de armas, cargas, ranuras de sintonización), monedas y peso transportado.",
     },
   },
   {

@@ -18,6 +18,7 @@
   "form.remove": "Rimuovi",
   "form.armorGroup": "Armature",
   "form.weaponGroup": "Armi",
+  "form.magicGroup": "Oggetti magici",
   "form.background": "Background",
   "abilities.method": "Metodo",
   "abilities.method.manual": "Manuale",
@@ -689,6 +690,7 @@
   "warning.multiclassPrerequisite": "{class} richiede {ability} {minimum} per il multiclasse.",
   "warning.multipleArmor": "È equipaggiata più di un'armatura.",
   "warning.multipleShields": "È equipaggiato più di uno scudo.",
+  "warning.attunementTooMany": "{count} oggetti equipaggiati richiedono sintonia; un personaggio può sintonizzarsi con 3.",
   "warning.strengthMinimum": "{item} richiede Forza {minimum}.",
   "warning.notProficient": "Non hai competenza con {item}."
 }

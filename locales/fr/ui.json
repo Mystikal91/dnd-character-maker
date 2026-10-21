@@ -18,6 +18,7 @@
   "form.remove": "Retirer",
   "form.armorGroup": "Armures",
   "form.weaponGroup": "Armes",
+  "form.magicGroup": "Objets magiques",
   "form.background": "Historique",
   "abilities.method": "Méthode",
   "abilities.method.manual": "Manuelle",
@@ -689,6 +690,7 @@
   "warning.multiclassPrerequisite": "{class} demande {ability} {minimum} pour le multiclassage.",
   "warning.multipleArmor": "Plus d'une armure est équipée.",
   "warning.multipleShields": "Plus d'un bouclier est équipé.",
+  "warning.attunementTooMany": "{count} objets équipés demandent une harmonisation ; un personnage peut s'harmoniser avec 3.",
   "warning.strengthMinimum": "{item} nécessite Force {minimum}.",
   "warning.notProficient": "Pas de maîtrise de {item}."
 }
