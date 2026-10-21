@@ -1,5 +1,5 @@
 import { ABILITIES, type Ability, type Effect } from "../../data/schema";
-import { type Context, FEATURE_TYPES, type Source, elementTags } from "./registry";
+import { type Context, FEATURE_TYPES, type Source, elementTags, ofType } from "./registry";
 import { clean, slugify } from "./xml";
 
 /** The `<rules>` of an element, as plain data. */
@@ -86,12 +86,15 @@ export function selectMatches(expression: string, option: Source): boolean {
     .map((p) => p.trim())
     .filter(Boolean);
   if (parts.length === 0) return false;
-  return parts.every((part) =>
-    part
+  const has = (alt: string) => alt === option.aid.toLowerCase() || tags.includes(alt);
+  return parts.every((part) => {
+    // `!TCOE Base` asks for options that do not carry the tag.
+    if (part.startsWith("!")) return !has(part.slice(1).trim().toLowerCase());
+    return part
       .split(/\|\|?/)
       .map((alt) => alt.trim().toLowerCase())
-      .some((alt) => alt === option.aid.toLowerCase() || tags.includes(alt)),
-  );
+      .some(has);
+  });
 }
 
 /** The words after the last underscore-separated prefix: `ID_LANGUAGE_COMMON` gives `common`. */
@@ -126,7 +129,16 @@ export function proficiencyOf(
   m = aid.match(/^ID_PROFICIENCY_WEAPON_PROFICIENCY_(.+)$/);
   if (m?.[1]) {
     const x = slugify(m[1].replace(/_/g, " "));
-    const target = [x, `${x}s`, `${x}-weapons`, x.replace(/-weapon$/, "s")].find(has);
+    // Aurora writes `CROSSBOW_HAND`, the app has `hand-crossbows`; and `crossbows-light`.
+    const words = x.split("-");
+    const target = [
+      x,
+      `${x}s`,
+      `${x}-weapons`,
+      x.replace(/-weapon$/, "s"),
+      `${[...words].reverse().join("-")}s`,
+      [`${words[0]}s`, ...words.slice(1)].join("-"),
+    ].find(has);
     return target ? { category: "weapon", target } : undefined;
   }
 
@@ -148,9 +160,8 @@ function allLanguages(ctx: Context): string[] {
     const m = id.match(/^srd\d+:language\/(.+)$/);
     if (m?.[1]) slugs.add(m[1]);
   }
-  for (const source of ctx.all) {
-    if (source.type === "Language" && source.id && !source.existing)
-      slugs.add(slugify(source.name));
+  for (const source of ofType(ctx, "Language")) {
+    if (source.id && !source.existing) slugs.add(slugify(source.name));
   }
   return [...slugs];
 }
@@ -321,7 +332,7 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
       rule.type === "Archetype" ||
       rule.type === "Sub Race"
     ) {
-      const list = ctx.all.filter((s) => s.type === rule.type && selectMatches(rule.supports, s));
+      const list = ofType(ctx, rule.type).filter((s) => selectMatches(rule.supports, s));
       mapped.offers.push({ rule, options: list });
     } else if (rule.type === "List") {
       // Personality tables of a background: read by the background importer.

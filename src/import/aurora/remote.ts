@@ -1,7 +1,7 @@
 import { AuroraParseError } from "./xml";
 
 /** Where the reader stops following index files: a safety net, not a rule about content. */
-const MAX_FILES = 400;
+const MAX_FILES = 1500;
 const MAX_DEPTH = 6;
 const PARALLEL = 6;
 

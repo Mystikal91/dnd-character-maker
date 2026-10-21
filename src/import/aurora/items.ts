@@ -53,7 +53,11 @@ export function importSpell(ctx: Context, source: Source): void {
 export function importWeapon(ctx: Context, source: Source): void {
   const set = setters(source.el);
   const supports = supportsOf(source.el);
-  const category = supports.join(" ").match(/WEAPON_CATEGORY_(SIMPLE|MARTIAL)_(MELEE|RANGED)/);
+  const text = supports.join(" ");
+  // A firearm with no other category is a martial ranged weapon.
+  const category =
+    text.match(/WEAPON_CATEGORY_(SIMPLE|MARTIAL)_(MELEE|RANGED)/) ??
+    (/WEAPON_CATEGORY_FIREARM/.test(text) ? ["", "MARTIAL", "RANGED"] : null);
   if (!category) {
     ctx.result.skipped.Weapon = (ctx.result.skipped.Weapon ?? 0) + 1;
     return;
@@ -158,5 +162,35 @@ export function importLanguage(ctx: Context, source: Source): void {
       speakers: set.get("speakers")?.text,
       script: set.get("script")?.text,
     },
+  );
+}
+
+/** The line a magic item starts with: what it is, how rare, and whether it needs attunement. */
+function magicLine(set: ReturnType<typeof setters>): string {
+  const type = set.get("type")?.text ?? "";
+  const rarity = (set.get("rarity")?.text ?? "").toLowerCase();
+  const attune = /^\s*true/i.test(set.get("attunement")?.text ?? "");
+  return [type, rarity].filter(Boolean).join(", ") + (attune ? " (requires attunement)" : "");
+}
+
+/**
+ * A magic item becomes a plain item: its text carries the rules, since what it does (a bonus to
+ * attacks, charges, a spell) is not something the sheet applies by itself yet.
+ */
+export function importMagicItem(ctx: Context, source: Source): void {
+  const set = setters(source.el);
+  const weight = parseWeight(set.get("weight"));
+  const rarity = slugify(set.get("rarity")?.text ?? "");
+  emit(
+    ctx,
+    source,
+    {
+      category: slugify(set.get("category")?.text ?? "") || "magic-items",
+      cost: parseCost(set.get("cost")),
+      ...(weight !== undefined && { weight }),
+      ...(rarity && { rarity }),
+      attunement: /^\s*true/i.test(set.get("attunement")?.text ?? ""),
+    },
+    { desc: [magicLine(set), description(source.el)].filter(Boolean).join("\n\n") },
   );
 }

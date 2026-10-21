@@ -4,7 +4,7 @@ import type { Story } from "../../engine/character";
 import { type UiKey, ui } from "../../i18n/ui";
 import { Select, entriesOfKind } from "./fields";
 
-type TextField = Exclude<keyof Story, "alignment">;
+type TextField = Exclude<keyof Story, "alignment" | "deity">;
 
 const LOOKS: TextField[] = ["age", "height", "weight", "eyes", "skin", "hair"];
 const SUGGESTED: SuggestionField[] = ["personalityTraits", "ideals", "bonds", "flaws"];
@@ -65,6 +65,7 @@ export function StoryStep() {
   const c = content.value;
   const ch = character.value;
   const background = ch.choices.background;
+  const deities = entriesOfKind("deity");
   const choose = (c?.index.get(background ?? "")?.data.choose ?? {}) as Record<string, number>;
 
   return (
@@ -80,6 +81,19 @@ export function StoryStep() {
           })
         }
       />
+
+      {deities.length > 0 && (
+        <Select
+          label={ui("story.deity")}
+          value={ch.story.deity}
+          options={deities}
+          onChange={(id) =>
+            updateCharacter((d) => {
+              d.story.deity = id;
+            })
+          }
+        />
+      )}
 
       {SUGGESTED.map((field) => (
         <TextArea

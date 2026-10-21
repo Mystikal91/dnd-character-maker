@@ -564,6 +564,7 @@
   "build.story": "Story",
   "story.intro": "Optional. Write it now or later; it shows on the sheet and fills the printed story page.",
   "story.alignment": "Alignment",
+  "story.deity": "Deity",
   "story.personalityTraits": "Personality traits",
   "story.ideals": "Ideals",
   "story.bonds": "Bonds",

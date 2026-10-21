@@ -1,5 +1,5 @@
 import type { Effect, Entry } from "../../data/schema";
-import type { Context, Source } from "./registry";
+import { type Context, type Source, ofType } from "./registry";
 
 /** Adds an entry for an element, with its name and any other texts. */
 export function emit(
@@ -29,5 +29,5 @@ export function classIdByName(ctx: Context, name: string): string | undefined {
   const lower = name.trim().toLowerCase();
   const existing = ctx.existingByName.get(`class|${lower}`);
   if (existing) return existing;
-  return ctx.all.find((s) => s.type === "Class" && s.name.toLowerCase() === lower && s.id)?.id;
+  return ofType(ctx, "Class").find((s) => s.name.toLowerCase() === lower && s.id)?.id;
 }

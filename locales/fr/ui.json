@@ -564,6 +564,7 @@
   "build.story": "Histoire",
   "story.intro": "Facultatif. Écris-la maintenant ou plus tard ; elle apparaît sur la feuille et remplit la page d'histoire imprimée.",
   "story.alignment": "Alignement",
+  "story.deity": "Divinité",
   "story.personalityTraits": "Traits de personnalité",
   "story.ideals": "Idéaux",
   "story.bonds": "Liens",

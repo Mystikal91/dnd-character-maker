@@ -29,6 +29,8 @@ export interface ClassSpells {
 export interface Story {
   /** Alignment entry id, e.g. `srd51:alignment/chaotic-good`. */
   alignment?: string;
+  /** Deity entry id, from a pack that has deities (the SRD has none). */
+  deity?: string;
   personalityTraits: string;
   ideals: string;
   bonds: string;

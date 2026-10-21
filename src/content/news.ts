@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-20",
     notes: [
       {
+        en: "Aurora Legacy: the whole collection (about 750 files) can be imported in one go. Magic items (rarity and attunement, the rules stay in the text) and deities (picked in the Story step) are now read, sub-races and subclasses that were left out (Artificer, Genasi, Shifter, Merfolk...) find their race or class, and definitions such as sources, proficiencies and flags are no longer reported as unsupported.",
+        it: "Aurora Legacy: l'intera raccolta (circa 750 file) si importa in un colpo solo. Ora si leggono gli oggetti magici (rarità e sintonia, le regole restano nel testo) e le divinità (da scegliere nel passo Storia), le sottorazze e sottoclassi che restavano fuori (Artefice, Genasi, Mutaforma, Tritoni...) trovano la loro razza o classe, e definizioni come fonti, competenze e segnalatori non vengono più indicate come non supportate.",
+        fr: "Aurora Legacy : toute la collection (environ 750 fichiers) s'importe en une fois. Les objets magiques (rareté et harmonisation, les règles restent dans le texte) et les divinités (à choisir à l'étape Histoire) sont lus, les sous-races et sous-classes laissées de côté (Artificier, Génasi, Changeforme, Homme-poisson...) retrouvent leur race ou classe, et les définitions comme les sources, maîtrises et marqueurs ne sont plus signalées comme non prises en charge.",
+        de: "Aurora Legacy: Die ganze Sammlung (etwa 750 Dateien) lässt sich auf einmal importieren. Magische Gegenstände (Seltenheit und Einstimmung, die Regeln bleiben im Text) und Gottheiten (im Schritt Geschichte wählbar) werden gelesen, bisher ausgelassene Unterrassen und Unterklassen (Artifizier, Dschinn-Abkömmlinge, Gestaltwandler, Meervolk...) finden ihre Rasse oder Klasse, und Definitionen wie Quellen, Übungen und Marker werden nicht mehr als nicht unterstützt gemeldet.",
+        es: "Aurora Legacy: toda la colección (unos 750 archivos) se importa de una vez. Ya se leen los objetos mágicos (rareza y sintonización, las reglas quedan en el texto) y las deidades (se eligen en el paso Historia), las subrazas y subclases que quedaban fuera (Artífice, Genasi, Cambiapieles, Tritones...) encuentran su raza o clase, y las definiciones como fuentes, competencias y marcas ya no se señalan como no admitidas.",
+      },
+      {
         en: "Class features that change numbers now work: fighting styles (Archery, Defense, Dueling), Unarmored Defense for barbarians, monks and draconic sorcerers, Fast Movement, and hit points per level (Draconic Resilience, Dwarven Toughness).",
         it: "I privilegi di classe che cambiano dei numeri ora funzionano: stili di combattimento (Tiro, Difesa, Duellare), Difesa senza armatura di barbari, monaci e stregoni draconici, Movimento veloce e punti ferita per livello (Resilienza draconica, Robustezza nanica).",
         fr: "Les aptitudes de classe qui changent des chiffres fonctionnent désormais : styles de combat (Tir, Défense, Duel), Défense sans armure des barbares, moines et ensorceleurs draconiques, Déplacement rapide et points de vie par niveau (Résilience draconique, Robustesse naine).",
@@ -209,21 +216,21 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "aurora",
     text: {
-      en: "More of Aurora: magic items, companions and deities are not read yet, and rules that need custom logic keep only their text.",
-      it: "Più Aurora: oggetti magici, compagni e divinità non vengono ancora letti, e le regole che richiedono logica propria restano solo testo.",
-      fr: "Plus d'Aurora : objets magiques, compagnons et divinités ne sont pas encore lus, et les règles qui demandent une logique propre restent du texte.",
-      de: "Mehr Aurora: Magische Gegenstände, Gefährten und Gottheiten werden noch nicht gelesen, und Regeln mit eigener Logik bleiben nur Text.",
-      es: "Más Aurora: los objetos mágicos, compañeros y deidades aún no se leen, y las reglas que necesitan lógica propia solo conservan su texto.",
+      en: "More of Aurora: companions, race and background variants and dragonmarks are not read yet, and rules that need custom logic keep only their text.",
+      it: "Più Aurora: compagni, varianti di razze e background e marchi del drago non vengono ancora letti, e le regole che richiedono logica propria restano solo testo.",
+      fr: "Plus d'Aurora : compagnons, variantes de races et d'historiques et marques draconiques ne sont pas encore lus, et les règles qui demandent une logique propre restent du texte.",
+      de: "Mehr Aurora: Gefährten, Varianten von Rassen und Hintergründen und Drachenmale werden noch nicht gelesen, und Regeln mit eigener Logik bleiben nur Text.",
+      es: "Más Aurora: los compañeros, variantes de razas y trasfondos y marcas del dragón aún no se leen, y las reglas que necesitan lógica propia solo conservan su texto.",
     },
   },
   {
     id: "items",
     text: {
-      en: "Magic items and attunement, coins and carried weight.",
-      it: "Oggetti magici e sintonia, monete e peso trasportato.",
-      fr: "Objets magiques et harmonisation, pièces et poids porté.",
-      de: "Magische Gegenstände und Einstimmung, Münzen und Traglast.",
-      es: "Objetos mágicos y sintonización, monedas y peso transportado.",
+      en: "What magic items do on the sheet (bonuses, charges, attunement), coins and carried weight.",
+      it: "Cosa fanno gli oggetti magici sulla scheda (bonus, cariche, sintonia), monete e peso trasportato.",
+      fr: "Ce que font les objets magiques sur la fiche (bonus, charges, harmonisation), pièces et poids porté.",
+      de: "Was magische Gegenstände auf dem Bogen bewirken (Boni, Ladungen, Einstimmung), Münzen und Traglast.",
+      es: "Lo que hacen los objetos mágicos en la hoja (bonos, cargas, sintonización), monedas y peso transportado.",
     },
   },
   {

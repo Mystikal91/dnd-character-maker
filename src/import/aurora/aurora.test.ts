@@ -38,9 +38,11 @@ const SPELLS = wrap(`
     <description><p>Another one with the same name.</p></description>
     <setters><set name="level">0</set><set name="school">Divination</set></setters>
   </element>
-  <element name="Mystery" type="Deity" source="Test Book" id="ID_TEST_DEITY">
+  <element name="Mystery" type="Companion" source="Test Book" id="ID_TEST_COMPANION">
     <description><p>Not supported.</p></description>
-  </element>`);
+  </element>
+  <element name="Test Book" type="Source" source="Internal" id="ID_TEST_SOURCE" />
+  <element name="Test Flag" type="Grants" source="Internal" id="ID_TEST_FLAG" />`);
 
 const ITEMS = wrap(`
   <element name="Test Spear" type="Weapon" source="Test Book" id="ID_TEST_WEAPON_SPEAR">
@@ -295,7 +297,8 @@ describe("spells", () => {
 
   it("gives equal names their own ids, and reports what it cannot import", () => {
     expect(result.entries.map((e) => e.id)).toEqual(["imp1:spell/glimmer", "imp1:spell/glimmer-2"]);
-    expect(result.skipped).toEqual({ Deity: 1 });
+    // Companions are not read; books and flags are definitions, nothing to report.
+    expect(result.skipped).toEqual({ Companion: 1 });
     expect(result.sources).toEqual(["Test Book"]);
     expect(result.title).toBe("Test Set");
   });
@@ -655,5 +658,138 @@ describe("options and errors", () => {
   it("rejects text that is not an Aurora file", () => {
     expect(() => parseAurora(["not xml at all <<"], options)).toThrow(AuroraParseError);
     expect(() => parseAurora(["<other><x/></other>"], options)).toThrow(AuroraParseError);
+  });
+});
+
+const LEGACY = wrap(`
+  <element name="Test Smith" type="Class" source="Test Book" id="ID_L_CLASS_SMITH">
+    <description><p>Makes things.</p></description>
+    <setters><set name="hd">d8</set></setters>
+    <rules>
+      <grant type="Class Feature" id="ID_L_FEATURE_SPECIALIST" level="3" />
+    </rules>
+  </element>
+  <element name="Test Smith" type="Class" source="Other Book" id="ID_L_CLASS_SMITH_2">
+    <description><p>Makes things, another way.</p></description>
+    <setters><set name="hd">d8</set></setters>
+    <rules>
+      <grant type="Class Feature" id="ID_L_FEATURE_SPECIALIST_2" level="3" />
+    </rules>
+  </element>
+  <element name="Specialist" type="Class Feature" source="Test Book" id="ID_L_FEATURE_SPECIALIST">
+    <description><p>Pick a specialty.</p></description>
+    <rules><select type="Archetype" name="Specialty" supports="Specialty, !Other Version" /></rules>
+  </element>
+  <element name="Specialist" type="Class Feature" source="Other Book" id="ID_L_FEATURE_SPECIALIST_2">
+    <description><p>Pick a specialty.</p></description>
+    <rules><select type="Archetype" name="Specialty" supports="Specialty, !Base Version" /></rules>
+  </element>
+  <element name="Gilder" type="Archetype" source="Test Book" id="ID_L_ARCH_GILDER">
+    <supports>Specialty, Base Version</supports>
+    <description><p>Gold work.</p></description>
+  </element>
+  <element name="Gilder" type="Archetype" source="Other Book" id="ID_L_ARCH_GILDER_2">
+    <supports>Specialty, Other Version</supports>
+    <description><p>Gold work, the other way.</p></description>
+  </element>
+  <element name="Merfolk" type="Race" source="Test Book" id="ID_L_RACE_MERFOLK">
+    <description><p>Of the water.</p></description>
+    <rules>
+      <grant type="Racial Trait" id="ID_L_TRAIT_CREED" />
+      <grant type="Proficiency" id="ID_PROFICIENCY_WEAPON_PROFICIENCY_CROSSBOW_HAND" />
+    </rules>
+  </element>
+  <element name="Creed" type="Racial Trait" source="Test Book" id="ID_L_TRAIT_CREED">
+    <description><p>Choose a creed.</p></description>
+    <rules><select type="Sub Race" name="Creed" supports="Tide Creed" /></rules>
+  </element>
+  <element name="Blue Tide" type="Sub Race" source="Test Book" id="ID_L_SUB_BLUE">
+    <supports>Tide Creed</supports>
+    <description><p>Deep water.</p></description>
+  </element>
+  <element name="Thunder Cannon" type="Weapon" source="Test Book" id="ID_L_WEAPON_CANNON">
+    <supports>ID_INTERNAL_WEAPON_CATEGORY_FIREARM, ID_INTERNAL_DAMAGE_TYPE_PIERCING</supports>
+    <description><p>Boom.</p></description>
+    <setters>
+      <set name="cost" currency="gp">100</set>
+      <set name="damage" type="piercing">2d6</set>
+      <set name="range">150/500</set>
+    </setters>
+  </element>
+  <element name="Ring of Testing" type="Magic Item" source="Test Book" id="ID_L_MAGIC_RING">
+    <description><p>It glows when you pass a test.</p></description>
+    <setters>
+      <set name="category">Rings</set>
+      <set name="type">Ring</set>
+      <set name="rarity">Very Rare</set>
+      <set name="attunement">true</set>
+      <set name="cost" currency="gp">0</set>
+    </setters>
+  </element>
+  <element name="Auril" type="Deity" source="Test Book" id="ID_L_DEITY_AURIL">
+    <description><p class="flavor">goddess of winter</p></description>
+    <setters>
+      <set name="setting">Test Realms</set>
+      <set name="alignment">NE</set>
+      <set name="domains">Nature, Tempest</set>
+      <set name="symbol">A snowflake</set>
+    </setters>
+  </element>
+  <element name="Test Proficiency" type="Proficiency" source="Internal" id="ID_L_PROF" />
+  <element name="Test Rule" type="Rule" source="Internal" id="ID_L_RULE" />`);
+
+describe("collections written for other readers", () => {
+  const result = parseAurora([LEGACY], options);
+
+  it("keeps each version of a class with its own archetypes, even when tags exclude each other", () => {
+    const parents = result.entries
+      .filter((e) => e.kind === "subclass")
+      .map((e) => [e.id, e.parent] as const);
+    expect(parents).toHaveLength(2);
+    expect(new Set(parents.map(([, parent]) => parent)).size).toBe(2);
+  });
+
+  it("finds the race that offers a sub-race through one of its traits", () => {
+    const sub = byId(result, "imp1:subspecies/blue-tide");
+    expect(sub.parent).toBe("imp1:species/merfolk");
+    expect(result.skipped["Sub Race"]).toBeUndefined();
+  });
+
+  it("maps a proficiency written in another word order, and a firearm with no other category", () => {
+    const race = byId(result, "imp1:species/merfolk");
+    expect(race.effects).toContainEqual({
+      type: "proficiency",
+      category: "weapon",
+      target: "hand-crossbows",
+    });
+    expect(itemData(byId(result, "imp1:item/thunder-cannon")).weapon).toMatchObject({
+      category: "martial",
+      kind: "ranged",
+      range: { normal: 150, long: 500 },
+    });
+  });
+
+  it("imports magic items as items, with their rarity and attunement in the text", () => {
+    const ring = byId(result, "imp1:item/ring-of-testing");
+    expect(itemData(ring).category).toBe("rings");
+    expect(ring.data).toMatchObject({ rarity: "very-rare", attunement: true });
+    expect(result.strings["imp1:item/ring-of-testing.desc"]).toBe(
+      "Ring, very rare (requires attunement)\n\nIt glows when you pass a test.",
+    );
+  });
+
+  it("imports deities, with the alignment the app knows and a line of facts", () => {
+    const deity = byId(result, "imp1:deity/auril");
+    expect(deity.data).toMatchObject({
+      alignment: "srd51:alignment/neutral-evil",
+      domains: "Nature, Tempest",
+    });
+    expect(result.strings["imp1:deity/auril.desc"]).toContain(
+      "Test Realms \u00b7 Neutral Evil \u00b7 Domains: Nature, Tempest \u00b7 Symbol: A snowflake",
+    );
+  });
+
+  it("does not report definitions as unsupported", () => {
+    expect(result.skipped).toEqual({});
   });
 });

@@ -1,8 +1,8 @@
 import type { Effect } from "../../data/schema";
 import { emit } from "./emit";
-import { type Context, type Source, sharesTag } from "./registry";
-import { mapRules, readRules, requirementsMet } from "./rules";
-import { clean, description, supportsOf } from "./xml";
+import { type Context, FEATURE_TYPES, type Source, ofType, sharesTag } from "./registry";
+import { mapRules, readRules, requirementsMet, selectMatches } from "./rules";
+import { clean, description, setters, supportsOf } from "./xml";
 
 /** Effects from rules, plus the traits or features the element grants right away. */
 function baseEffects(ctx: Context, source: Source, prefix: string) {
@@ -76,10 +76,32 @@ export function importRace(ctx: Context, source: Source): void {
   );
 }
 
+/** True when the race, or a trait it grants (at any depth), offers this sub-race to pick. */
+function offers(ctx: Context, race: Source, sub: Source): boolean {
+  const seen = new Set<Source>();
+  const stack = [race];
+  while (stack.length > 0) {
+    const here = stack.pop();
+    if (!here || seen.has(here)) continue;
+    seen.add(here);
+    for (const rule of readRules(here.el)) {
+      if (rule.tag === "select" && rule.type === "Sub Race" && selectMatches(rule.supports, sub))
+        return true;
+      const granted = rule.tag === "grant" ? ctx.byAid.get(rule.id) : undefined;
+      if (granted && FEATURE_TYPES.has(rule.type)) stack.push(granted);
+    }
+  }
+  return false;
+}
+
 /** The race a sub-race belongs to: the one its `supports` names, in this pack or in the app. */
 function parentRace(ctx: Context, source: Source): string | undefined {
   const tags = supportsOf(source.el);
-  const inPack = ctx.all.find((s) => s.type === "Race" && s.id && sharesTag([s.name], tags));
+  // The race, or a trait it grants, says which sub-races it offers
+  // (`select type="Sub Race" supports="MOTM Genasi"`).
+  const offering = ofType(ctx, "Race").find((s) => s.id && offers(ctx, s, source));
+  if (offering?.id) return offering.id;
+  const inPack = ofType(ctx, "Race").find((s) => s.id && sharesTag([s.name], tags));
   if (inPack?.id) return inPack.id;
   for (const tag of tags) {
     const existing = ctx.existingByName.get(`species|${tag.toLowerCase()}`);
@@ -122,5 +144,39 @@ export function importFeat(ctx: Context, source: Source): void {
     { prerequisites: prerequisites(source.el), requirements },
     { desc: description(source.el) },
     { effects },
+  );
+}
+
+const ALIGNMENT_CODES: Record<string, string> = {
+  LG: "lawful-good",
+  NG: "neutral-good",
+  CG: "chaotic-good",
+  LN: "lawful-neutral",
+  N: "neutral",
+  CN: "chaotic-neutral",
+  LE: "lawful-evil",
+  NE: "neutral-evil",
+  CE: "chaotic-evil",
+};
+
+/** A deity: who it is in a line (setting, alignment, domains, symbol) and what the book says. */
+export function importDeity(ctx: Context, source: Source): void {
+  const set = setters(source.el);
+  const slug = ALIGNMENT_CODES[(set.get("alignment")?.text ?? "").toUpperCase()];
+  const alignmentId = `srd51:alignment/${slug}`;
+  const alignment = slug && ctx.options.index.has(alignmentId) ? alignmentId : undefined;
+  const domains = set.get("domains")?.text ?? "";
+  const symbol = set.get("symbol")?.text ?? "";
+  const facts = [
+    set.get("setting")?.text,
+    alignment ? ctx.options.nameOf(alignment) : undefined,
+    domains ? `Domains: ${domains}` : undefined,
+    symbol ? `Symbol: ${symbol}` : undefined,
+  ].filter(Boolean);
+  emit(
+    ctx,
+    source,
+    { ...(alignment && { alignment }), ...(domains && { domains }) },
+    { desc: [facts.join(" \u00b7 "), description(source.el)].filter(Boolean).join("\n\n") },
   );
 }

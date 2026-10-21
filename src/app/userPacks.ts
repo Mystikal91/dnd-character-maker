@@ -119,6 +119,8 @@ async function importAuroraSources(start: { text?: string; url?: string }[]): Pr
         importProgress.value = { done, total };
       },
     });
+    // Reading a large collection takes a few seconds: let the page show it is working first.
+    await new Promise((resolve) => setTimeout(resolve, 0));
     const id = `imp${Date.now().toString(36)}`;
     // Aurora content is in English, so duplicates are looked for by English names whatever the
     // language of the app is.

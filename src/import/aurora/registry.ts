@@ -48,6 +48,8 @@ export interface Context {
   /** Every element of the files, by Aurora id. */
   byAid: Map<string, Source>;
   all: Source[];
+  /** The same elements, by Aurora type: the files can hold fifteen thousand of them. */
+  byType: Map<string, Source[]>;
   /** Elements that must be created, in file order. */
   needed: Set<Source>;
   usedSlugs: Set<string>;
@@ -61,6 +63,8 @@ export const KIND_OF: Record<string, string> = {
   Weapon: "item",
   Armor: "item",
   Item: "item",
+  "Magic Item": "item",
+  Deity: "deity",
   Language: "language",
   Background: "background",
   Race: "species",
@@ -80,6 +84,8 @@ export const ROOT_TYPES = new Set([
   "Weapon",
   "Armor",
   "Item",
+  "Magic Item",
+  "Deity",
   "Language",
   "Background",
   "Race",
@@ -146,5 +152,17 @@ export function allocate(ctx: Context, source: Source): void {
   source.id = `${ctx.options.packId}:${kind}/${slug}`;
 }
 
-/** The supports tags of an element (what it can be selected as). */
-export const elementTags = (source: Source) => supportsOf(source.el);
+/** The elements of one type, in file order. */
+export const ofType = (ctx: Context, type: string): Source[] => ctx.byType.get(type) ?? [];
+
+const tagCache = new WeakMap<Source, string[]>();
+
+/** The supports tags of an element (what it can be selected as). Read once per element. */
+export function elementTags(source: Source): string[] {
+  let tags = tagCache.get(source);
+  if (!tags) {
+    tags = supportsOf(source.el);
+    tagCache.set(source, tags);
+  }
+  return tags;
+}

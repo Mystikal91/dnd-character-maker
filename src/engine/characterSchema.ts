@@ -53,6 +53,7 @@ const CharacterSchema = v.object({
   ),
   story: v.object({
     alignment: v.optional(v.string()),
+    deity: v.optional(v.string()),
     personalityTraits: v.string(),
     ideals: v.string(),
     bonds: v.string(),

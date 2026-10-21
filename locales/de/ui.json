@@ -564,6 +564,7 @@
   "build.story": "Geschichte",
   "story.intro": "Optional. Schreibe sie jetzt oder später; sie erscheint auf dem Bogen und füllt die gedruckte Geschichtsseite.",
   "story.alignment": "Gesinnung",
+  "story.deity": "Gottheit",
   "story.personalityTraits": "Persönlichkeitsmerkmale",
   "story.ideals": "Ideale",
   "story.bonds": "Bindungen",

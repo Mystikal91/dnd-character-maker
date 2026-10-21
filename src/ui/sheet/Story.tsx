@@ -23,10 +23,18 @@ export function StoryPanel() {
   if (!c) return null;
   const looks = LOOKS.filter((f) => story[f].trim());
   const texts = TEXTS.filter((f) => story[f].trim());
-  if (looks.length === 0 && texts.length === 0) return null;
+  const deity = story.deity ? c.name(story.deity) : "";
+  if (looks.length === 0 && texts.length === 0 && !deity) return null;
 
   return (
     <Panel title={ui("sheet.story")}>
+      {deity && (
+        <p class="story-looks">
+          <span>
+            <span class="muted">{ui("story.deity")}</span> {deity}
+          </span>
+        </p>
+      )}
       {looks.length > 0 && (
         <p class="story-looks">
           {looks.map((f) => (

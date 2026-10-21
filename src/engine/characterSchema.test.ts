@@ -13,6 +13,12 @@ describe("parseCharacter", () => {
     expect(parseCharacter(JSON.parse(JSON.stringify(c)))).toEqual(c);
   });
 
+  it("keeps the deity the player picked", () => {
+    const c = createCharacter("srd51");
+    c.story.deity = "imp1:deity/auril";
+    expect(parseCharacter(JSON.parse(JSON.stringify(c))).story.deity).toBe("imp1:deity/auril");
+  });
+
   it.each([
     ["a non-object", 42],
     ["a missing schemaVersion", { ...createCharacter("srd51"), schemaVersion: undefined }],

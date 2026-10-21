@@ -1,6 +1,20 @@
 import { type Owner, claimFeatures, importArchetype, importClass, importFeature } from "./classes";
-import { importArmor, importGear, importLanguage, importSpell, importWeapon } from "./items";
-import { importBackground, importFeat, importRace, importSubRace, importTrait } from "./people";
+import {
+  importArmor,
+  importGear,
+  importLanguage,
+  importMagicItem,
+  importSpell,
+  importWeapon,
+} from "./items";
+import {
+  importBackground,
+  importDeity,
+  importFeat,
+  importRace,
+  importSubRace,
+  importTrait,
+} from "./people";
 import {
   type AuroraOptions,
   type AuroraResult,
@@ -11,6 +25,7 @@ import {
   type Source,
   allocate,
   indexExisting,
+  ofType,
   readSources,
 } from "./registry";
 import { readRules, requirementsMet, selectMatches } from "./rules";
@@ -28,7 +43,23 @@ export type { AuroraOptions, AuroraResult } from "./registry";
  * magic items...) are counted and reported as skipped.
  */
 /** Elements that only exist to be picked by another one: nothing to report when not imported. */
-const SILENT_TYPES = new Set(["Background Feature", "Multiclass", "Ability Score Improvement"]);
+const SILENT_TYPES = new Set([
+  "Background Feature",
+  "Multiclass",
+  "Ability Score Improvement",
+  // Definitions the reader uses by itself, or that only describe the program's own settings:
+  // the books, the proficiency and vision definitions, flags other elements test for.
+  "Source",
+  "Proficiency",
+  "Rule",
+  "Alignment",
+  "Vision",
+  "Weapon Group",
+  "Weapon Property",
+  "Option",
+  "Support",
+  "Grants",
+]);
 
 /** Kinds a person picks from a list, where two entries with one name cannot be told apart. */
 const LISTED_KINDS = new Set([
@@ -41,6 +72,7 @@ const LISTED_KINDS = new Set([
   "class",
   "subclass",
   "language",
+  "deity",
 ]);
 
 /**
@@ -79,6 +111,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     result,
     byAid: new Map(),
     all: [],
+    byType: new Map(),
     needed: new Set(),
     usedSlugs: new Set(),
     existingByName: indexExisting(options),
@@ -96,6 +129,9 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
       if (ctx.byAid.has(source.aid)) continue;
       ctx.byAid.set(source.aid, source);
       ctx.all.push(source);
+      const same = ctx.byType.get(source.type);
+      if (same) same.push(source);
+      else ctx.byType.set(source.type, [source]);
     }
   }
 
@@ -127,8 +163,8 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
       if (!requirementsMet(rule.requirements)) continue;
       if (rule.tag === "grant" && FEATURE_TYPES.has(rule.type)) mark(ctx.byAid.get(rule.id));
       else if (rule.tag === "select" && FEATURE_TYPES.has(rule.type))
-        for (const option of ctx.all)
-          if (option.type === rule.type && selectMatches(rule.supports, option)) mark(option);
+        for (const option of ofType(ctx, rule.type))
+          if (selectMatches(rule.supports, option)) mark(option);
     }
   };
   for (const source of [...ctx.needed]) visit(source);
@@ -159,6 +195,12 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
         break;
       case "Item":
         importGear(ctx, source);
+        break;
+      case "Magic Item":
+        importMagicItem(ctx, source);
+        break;
+      case "Deity":
+        importDeity(ctx, source);
         break;
       case "Language":
         importLanguage(ctx, source);

@@ -84,6 +84,12 @@ export function StoryPage() {
               <dd>{story.alignment ? c.name(story.alignment) : " "}</dd>
               <dt>{ui("story.alignment")}</dt>
             </div>
+            {story.deity && (
+              <div>
+                <dd>{c.name(story.deity)}</dd>
+                <dt>{ui("story.deity")}</dt>
+              </div>
+            )}
             {FIELDS.map((f) => (
               <div key={f}>
                 <dd>{story[f] || " "}</dd>

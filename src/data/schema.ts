@@ -157,6 +157,7 @@ export const ENTRY_KINDS = [
   "school",
   "condition",
   "alignment",
+  "deity",
 ] as const;
 
 export const EntrySchema = v.object({

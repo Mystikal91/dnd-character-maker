@@ -1,6 +1,6 @@
 import type { Effect } from "../../data/schema";
 import { classIdByName, emit } from "./emit";
-import { type Context, FEATURE_TYPES, type Source } from "./registry";
+import { type Context, FEATURE_TYPES, type Source, ofType } from "./registry";
 import {
   abilityFromWord,
   mapRules,
@@ -60,8 +60,8 @@ export function archetypeParent(
   ctx: Context,
   archetype: Source,
 ): { classId: string; flavor: string } | undefined {
-  for (const cls of ctx.all) {
-    if (cls.type !== "Class" || !cls.id) continue;
+  for (const cls of ofType(ctx, "Class")) {
+    if (!cls.id) continue;
     const seen = new Set<Source>();
     const stack = grantedFeatures(ctx, cls).map((g) => g.feature);
     while (stack.length > 0) {
@@ -99,19 +99,17 @@ export function claimFeatures(ctx: Context, owners: Map<Source, Owner>): void {
       visit(g.feature, { ...here, level: g.level ?? here.level }, seen);
     for (const rule of readRules(feature.el)) {
       if (rule.tag !== "select" || !FEATURE_TYPES.has(rule.type)) continue;
-      for (const option of ctx.all.filter(
-        (s) => s.type === rule.type && selectMatches(rule.supports, s),
-      ))
+      for (const option of ofType(ctx, rule.type).filter((s) => selectMatches(rule.supports, s)))
         visit(option, { ...here, level: rule.level ?? here.level }, seen);
     }
   };
-  for (const cls of ctx.all) {
-    if (cls.type !== "Class" || !cls.id) continue;
+  for (const cls of ofType(ctx, "Class")) {
+    if (!cls.id) continue;
     for (const g of grantedFeatures(ctx, cls))
       visit(g.feature, { classId: cls.id, level: g.level }, new Set());
   }
-  for (const arch of ctx.all) {
-    if (arch.type !== "Archetype" || !arch.id) continue;
+  for (const arch of ofType(ctx, "Archetype")) {
+    if (!arch.id) continue;
     const parent = archetypeParent(ctx, arch);
     if (!parent) continue;
     for (const g of grantedFeatures(ctx, arch))
