@@ -1,7 +1,7 @@
 import { useEffect } from "preact/hooks";
 import { language, localeChain } from "../app/language";
 import { isPage, showView, view } from "../app/navigation";
-import { content, initStorage, loadError, storageReady } from "../app/store";
+import { character, content, initStorage, loadError, storageReady } from "../app/store";
 import { loadUserPacks, userPacks, userPacksReady } from "../app/userPacks";
 import { loadContent } from "../content/browser";
 import { ui } from "../i18n/ui";
@@ -74,8 +74,22 @@ export function App() {
     };
   }, [lang, added, packsReady]);
 
+  // The tab names the character, so several open tabs can be told apart.
+  const heading = character.value.name.trim();
+  const appTitle = ui("app.title");
+  useEffect(() => {
+    document.title = heading ? `${heading} · ${appTitle}` : appTitle;
+  }, [heading, appTitle]);
+
   return (
     <main class="shell">
+      <button
+        type="button"
+        class="skip-link no-print"
+        onClick={() => document.getElementById("content")?.focus()}
+      >
+        {ui("app.skip")}
+      </button>
       <header class="app-header no-print">
         <div class="app-title">
           <h1>
@@ -92,7 +106,7 @@ export function App() {
       ) : !content.value || !storageReady.value ? (
         <p>{ui("app.loading")}</p>
       ) : (
-        <>
+        <div id="content" tabIndex={-1} class="content-anchor">
           {!isPage(view.value) && (
             <>
               <CharacterBar />
@@ -100,7 +114,7 @@ export function App() {
             </>
           )}
           <Screen />
-        </>
+        </div>
       )}
       <UpdateNotice />
       <SpellDialog />

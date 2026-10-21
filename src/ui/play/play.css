@@ -136,6 +136,12 @@
   transition: width 0.2s;
 }
 
+.play-notes {
+  width: 100%;
+  min-height: 6rem;
+  resize: vertical;
+}
+
 .hp-quick {
   display: grid;
   grid-template-columns: repeat(6, 1fr);

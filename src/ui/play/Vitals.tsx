@@ -48,11 +48,11 @@ function HitPoints() {
 
   return (
     <Panel title={ui("play.hitPoints")}>
-      <div class="hp-readout">
+      <output class="hp-readout">
         <b class={hp === 0 ? "zero" : ""}>{hp}</b>
         <span>{ui("play.of", { max: v.max })}</span>
         {play.tempHp > 0 && <em>{ui("play.temp", { n: play.tempHp })}</em>}
-      </div>
+      </output>
       <div class="hp-bar" role="img" aria-label={`${hp} ${ui("play.of", { max: v.max })}`}>
         <span style={{ width: `${percent}%` }} />
       </div>

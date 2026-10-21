@@ -1,6 +1,7 @@
-import { changePlay, concentrationAlert, rollCheck } from "../../app/play";
-import { character, content, sheet } from "../../app/store";
+import { addLog, changePlay, concentrationAlert, rollCheck } from "../../app/play";
+import { character, content, sheet, updateCharacter } from "../../app/store";
 import {
+  castSpell,
   endConcentration,
   pactLeft,
   resourceLeft,
@@ -238,6 +239,32 @@ export function PlaySpells() {
                 <li key={row.id}>
                   {c.name(row.id)}
                   <SpellInfoButton id={row.id} />
+                  {row.level > 0 && (
+                    <button
+                      type="button"
+                      class="chip"
+                      onClick={() => {
+                        const cast = castSpell(play, row.level, s.spellSlots, s.pactSlots);
+                        const name = c.name(row.id);
+                        if (!cast) {
+                          addLog({ label: name, detail: ui("play.noSlot") });
+                          return;
+                        }
+                        changePlay(() => cast.play);
+                        addLog({
+                          label: name,
+                          detail: ui(
+                            cast.slot.kind === "pact" ? "play.castPact" : "play.castSlot",
+                            {
+                              level: cast.slot.level,
+                            },
+                          ),
+                        });
+                      }}
+                    >
+                      {ui("play.cast")}
+                    </button>
+                  )}
                   {c.index.get(row.id)?.data.concentration === true && (
                     <button
                       type="button"
@@ -260,6 +287,26 @@ export function PlaySpells() {
           </ul>
         </div>
       ))}
+    </Panel>
+  );
+}
+
+/** The session notes: the same notes as the Story step, written while playing. */
+export function PlayNotes() {
+  const notes = character.value.story.notes;
+  return (
+    <Panel title={ui("story.notes")}>
+      <textarea
+        class="play-notes"
+        rows={5}
+        aria-label={ui("story.notes")}
+        value={notes}
+        onInput={(e) =>
+          updateCharacter((d) => {
+            d.story.notes = e.currentTarget.value;
+          })
+        }
+      />
     </Panel>
   );
 }

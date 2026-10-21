@@ -9,9 +9,9 @@ import "@fontsource/eb-garamond/latin-ext-400-italic.css";
 import "@fontsource/eb-garamond/latin-ext-400.css";
 import "@fontsource/eb-garamond/latin-ext-600.css";
 import { render } from "preact";
+import { matchThemeColor } from "./app/theme";
 import { applyUpdate } from "./app/updates";
 import { App } from "./ui/App";
-import "./app/theme";
 import "./ui/build/build.css";
 import "./ui/play/play.css";
 import "./ui/print/print.css";
@@ -40,3 +40,5 @@ if ("serviceWorker" in navigator && import.meta.env.PROD) {
 
 const root = document.getElementById("app");
 if (root) render(<App />, root);
+// The style sheets are in by now, so the page colour can be read.
+addEventListener("load", matchThemeColor);

@@ -1,3 +1,4 @@
+import { useState } from "preact/hooks";
 import { character, content, updateCharacter } from "../../app/store";
 import { itemData } from "../../data/items";
 import { ui } from "../../i18n/ui";
@@ -75,12 +76,21 @@ export function EquipmentStep() {
       const entry = index?.get(o.id);
       return entry && itemData(entry)[group];
     });
-  const armor = itemOptions("armor");
-  const weapons = itemOptions("weapon");
-  const magic = entriesOfKind("item").filter((o) => index?.get(o.id)?.data.rarity);
+  const [filter, setFilter] = useState("");
+  const wanted = filter.trim().toLowerCase();
+  const found = (o: { label: string }) => !wanted || o.label.toLowerCase().includes(wanted);
+  const armor = itemOptions("armor").filter(found);
+  const weapons = itemOptions("weapon").filter(found);
+  const magic = entriesOfKind("item")
+    .filter((o) => index?.get(o.id)?.data.rarity)
+    .filter(found);
 
   return (
     <>
+      <label class="field">
+        <span>{ui("form.searchItems")}</span>
+        <input type="search" value={filter} onInput={(e) => setFilter(e.currentTarget.value)} />
+      </label>
       <label class="field">
         <span>{ui("form.addItem")}</span>
         <select

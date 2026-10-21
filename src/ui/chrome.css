@@ -364,3 +364,27 @@
     grid-template-columns: minmax(0, 1fr) 20rem;
   }
 }
+
+/* ---- Skip link: for the keyboard, shown only when focused ---- */
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 60;
+  padding: 0.6rem 1rem;
+  border: 2px solid var(--accent);
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+  transform: translateY(-300%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+.content-anchor:focus {
+  outline: none;
+}
