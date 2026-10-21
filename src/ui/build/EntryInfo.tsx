@@ -84,14 +84,14 @@ function Block({
   );
 }
 
-const Pick = () => <p class="muted">{ui("build.info.pick")}</p>;
+const Pick = ({ text }: { text: UiKey }) => <p class="muted">{ui(text)}</p>;
 
 /** What the chosen species (and subspecies) give: size, speed, bonuses, languages and traits. */
 export function SpeciesInfo() {
   const c = content.value;
   const ch = character.value;
   const species = c?.index.get(ch.choices.species ?? "");
-  if (!c || !species) return <Pick />;
+  if (!c || !species) return <Pick text="build.info.pickSpecies" />;
   const sub = c.index.get(ch.choices.subspecies ?? "");
   const effects = [...species.effects, ...(sub?.effects ?? [])];
   const rs = ch.ruleset;
@@ -144,7 +144,7 @@ export function BackgroundInfo() {
   const c = content.value;
   const ch = character.value;
   const background = c?.index.get(ch.choices.background ?? "");
-  if (!c || !background) return ch.choices.species ? <Pick /> : null;
+  if (!c || !background) return <Pick text="build.info.pickBackground" />;
   const effects = background.effects;
   const featureName = c.text(background.id, "featureName");
 

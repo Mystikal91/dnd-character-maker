@@ -29,7 +29,7 @@ export function ClassStep() {
             />
           </div>
           <div class="step-info">
-            <p class="muted">{ui("build.info.pick")}</p>
+            <p class="muted">{ui("build.info.pickClass")}</p>
           </div>
         </div>
       )}
