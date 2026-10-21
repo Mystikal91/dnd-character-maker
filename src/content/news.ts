@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-20",
     notes: [
       {
+        en: 'Race variants from Aurora files now work: the half-elf of the Sword Coast, the dragonborn of Wildemount, the races of the dragonmarks of Eberron and others are picked as a subspecies that replaces what the race gives (and what the base race loses is taken away). Requirements written as "not any of these" are read correctly now.',
+        it: 'Le varianti di razza dei file Aurora ora funzionano: il mezzelfo della Costa della Spada, il dragonide di Wildemount, le razze dei marchi del drago di Eberron e altre si scelgono come sottospecie che sostituisce ciò che la razza dà (e ciò che la razza base perde viene tolto). I requisiti scritti come "nessuno di questi" ora sono letti correttamente.',
+        fr: "Les variantes de race des fichiers Aurora fonctionnent désormais : le demi-elfe de la Côte des Épées, le drakéide de Wildemount, les races des marques du dragon d'Eberron et d'autres se choisissent comme sous-espèce qui remplace ce que la race apporte (et ce que la race de base perd est retiré). Les conditions écrites « aucun de ceux-ci » sont maintenant lues correctement.",
+        de: 'Rassenvarianten aus Aurora-Dateien funktionieren jetzt: der Halbelf der Schwertküste, der Drachenblütige aus Wildemount, die Rassen der Drachenmale von Eberron und weitere werden als Unterspezies gewählt, die ersetzt, was die Rasse gibt (und was die Grundrasse verliert, entfällt). Voraussetzungen der Art "keines davon" werden jetzt richtig gelesen.',
+        es: "Las variantes de raza de los archivos de Aurora ya funcionan: el semielfo de la Costa de la Espada, el dracónido de Wildemount, las razas de las marcas del dragón de Eberron y otras se eligen como subespecie que sustituye lo que da la raza (y lo que pierde la raza base se quita). Los requisitos escritos como «ninguno de estos» ahora se leen bien.",
+      },
+      {
         en: "More of what Aurora files say now works: the feat a race or background lets you pick (Custom Lineage and the customised origins of Tasha), resistances, immunities and vulnerabilities (listed on the sheet, and given by the SRD's dwarves, tieflings and dragonborn), spells picked by school or level, and groups of tools to choose from.",
         it: "Altro di ciò che dicono i file Aurora ora funziona: il talento che una razza o un background fa scegliere (Stirpe personalizzata e origini personalizzate di Tasha), resistenze, immunità e vulnerabilità (elencate in scheda, e date da nani, tiefling e dragonidi dell'SRD), incantesimi scelti per scuola o livello e gruppi di strumenti tra cui scegliere.",
         fr: "Davantage de ce que disent les fichiers Aurora fonctionne : le don qu'une race ou un historique fait choisir (Lignage personnalisé et origines personnalisées de Tasha), résistances, immunités et vulnérabilités (listées sur la fiche, et données par les nains, tieflings et drakéides du SRD), sorts choisis par école ou niveau, et groupes d'outils à choisir.",
@@ -237,11 +244,11 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "aurora",
     text: {
-      en: "More of Aurora: companions, race and background variants and dragonmarks are not read yet, and rules that need custom logic keep only their text.",
-      it: "Più Aurora: compagni, varianti di razze e background e marchi del drago non vengono ancora letti, e le regole che richiedono logica propria restano solo testo.",
-      fr: "Plus d'Aurora : compagnons, variantes de races et d'historiques et marques draconiques ne sont pas encore lus, et les règles qui demandent une logique propre restent du texte.",
-      de: "Mehr Aurora: Gefährten, Varianten von Rassen und Hintergründen und Drachenmale werden noch nicht gelesen, und Regeln mit eigener Logik bleiben nur Text.",
-      es: "Más Aurora: los compañeros, variantes de razas y trasfondos y marcas del dragón aún no se leen, y las reglas que necesitan lógica propia solo conservan su texto.",
+      en: "More of Aurora: companions and background variants are not read yet, and rules that need custom logic keep only their text.",
+      it: "Più Aurora: compagni e varianti di background non vengono ancora letti, e le regole che richiedono logica propria restano solo testo.",
+      fr: "Plus d'Aurora : compagnons et variantes d'historiques ne sont pas encore lus, et les règles qui demandent une logique propre restent du texte.",
+      de: "Mehr Aurora: Gefährten und Varianten von Hintergründen werden noch nicht gelesen, und Regeln mit eigener Logik bleiben nur Text.",
+      es: "Más Aurora: los compañeros y variantes de trasfondos aún no se leen, y las reglas que necesitan lógica propia solo conservan su texto.",
     },
   },
   {

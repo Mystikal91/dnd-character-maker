@@ -29,6 +29,11 @@ number comes from. The kinds are `abilityBonus`, `proficiency`, `trait`, `choice
 - `{ "type": "unarmoredDefense", "base": 10, "add": ["con"], "shield": true }` is armor class
   without armor: `base` + Dexterity + the listed abilities.
 
+A `subspecies` entry with `"replacesSpecies": true` in its `data` stands in for its species: the
+species' own effects are not applied and the variant lists everything it gives (a half-elf of
+another descent, a dragonborn of Wildemount, a race with a dragonmark). The Aurora reader builds
+these from Aurora's race variants, taking from the race what the variant replaces.
+
 A `choice` can grant a `feat`: with an empty `from` it offers every feat there is, and the pick
 (like a feat a species gives outright, as a `trait`) is listed with the feats of the sheet.
 
@@ -60,8 +65,8 @@ personality tables), races, sub-races and racial traits, feats, classes (hit die
 Pact Magic, ability score improvements, multiclassing), archetypes and their features, magic
 items (as items: rarity and attunement are kept, what they do stays in the text) and deities
 (picked in the Story step of a character). Definitions the reader uses by itself (sources,
-proficiencies, visions, flags) are not reported. Companions, race and background variants,
-dragonmarks and statblocks are reported as not supported yet. Rules the app cannot apply
+proficiencies, visions, flags) are not reported. Race variants and dragonmarks become sub-species of their race. Companions, background variants
+and statblocks are reported as not supported yet. Rules the app cannot apply
 automatically keep their text, and the report counts them.
 
 A whole collection can be imported from its index file: the reader follows up to 1500 files, and

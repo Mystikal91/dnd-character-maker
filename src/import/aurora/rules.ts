@@ -46,6 +46,8 @@ export function readRules(el: Element): Rule[] {
 /**
  * Whether a rule applies in the plain case: nothing optional is chosen. A requirement written as
  * `!SOMETHING` holds, a bare `SOMETHING` does not, unless it is one of the ids in `holds`.
+ * Commas mean "and", `||` means "or", brackets group, and `!` negates a word or a whole group:
+ * `!(A||B)` holds when neither is held.
  */
 export function requirementsMet(
   requirements: string,
@@ -53,18 +55,54 @@ export function requirementsMet(
 ): boolean {
   const text = requirements.trim();
   if (!text) return true;
-  // Several alternatives: any group that holds is enough. Commas inside a group all must hold.
-  return text.split("||").some((group) =>
-    group
-      .replace(/[()]/g, "")
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean)
-      .every((token) => {
-        if (token.startsWith("!")) return !holds.has(token.slice(1));
-        return holds.has(token);
-      }),
-  );
+  let at = 0;
+  const skip = () => {
+    while (text[at] === " ") at++;
+  };
+  const term = (): boolean => {
+    skip();
+    if (text[at] === "!") {
+      at++;
+      return !term();
+    }
+    if (text[at] === "(") {
+      at++;
+      const inside = or();
+      skip();
+      if (text[at] === ")") at++;
+      return inside;
+    }
+    const word = /^[^,()|!]+/.exec(text.slice(at));
+    if (!word) {
+      at++; // a stray character: skip it rather than loop
+      return true;
+    }
+    at += word[0].length;
+    return holds.has(word[0].trim());
+  };
+  const and = (): boolean => {
+    let value = term();
+    skip();
+    while (text[at] === ",") {
+      at++;
+      const next = term();
+      value = value && next;
+      skip();
+    }
+    return value;
+  };
+  const or = (): boolean => {
+    let value = and();
+    skip();
+    while (text[at] === "|") {
+      at += text.startsWith("||", at) ? 2 : 1;
+      const next = and();
+      value = value || next;
+      skip();
+    }
+    return value;
+  };
+  return or();
 }
 
 const ABILITY_BY_NAME: Record<string, Ability> = {
@@ -443,6 +481,8 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
         const spell = ctx.byAid.get(rule.id)?.id;
         if (spell) mapped.effects.push({ type: "grantSpell", spell });
         else mapped.unsupported += 1;
+      } else if (rule.type === "Dragonmark") {
+        // A mark only sets a flag; the variant that grants it holds the rules.
       } else if (rule.type === "Condition") {
         const m = rule.id.match(
           /^ID_INTERNAL_CONDITION_DAMAGE_(RESISTANCE|IMMUNITY|VULNERABILITY|VULNERAILITY)_([A-Z_]+)$/,

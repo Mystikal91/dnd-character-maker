@@ -169,8 +169,11 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
       ? (character.classes.find((cl) => cl.classId === owner)?.level ?? 0)
       : character.classes.reduce((sum, cl) => sum + cl.level, 0);
   };
+  // A variant of a species (a half-elf of another descent) carries the species' effects itself.
+  const standsIn = chosen.some((e) => e.kind === "subspecies" && e.data.replacesSpecies === true);
+  const contributing = standsIn ? chosen.filter((e) => e.kind !== "species") : chosen;
   const { effects, sourced, choices } = collectEffects(
-    [...chosen, ...(starting?.entry ? [starting.entry] : []), ...reached],
+    [...contributing, ...(starting?.entry ? [starting.entry] : []), ...reached],
     { index, selections: character.selections, warnings },
   );
   for (const { entry } of others) {

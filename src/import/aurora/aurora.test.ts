@@ -7,6 +7,7 @@ import { createCharacter } from "../../engine/character";
 import { deriveSheet, indexPacks } from "../../engine/derive";
 import { SRD51_FILES, loadSrd51Strings, srd51Index, srd51Packs } from "../../test/srd51";
 import { AuroraParseError, type AuroraResult, parseAurora, slugify } from "./index";
+import { requirementsMet } from "./rules";
 
 // Invented content in the shape of an Aurora file; nothing here comes from a real book.
 const wrap = (body: string, title = "Test Set") =>
@@ -791,6 +792,47 @@ const LEGACY = wrap(`
       <grant type="Proficiency" id="ID_PROFICIENCY_ARMOR_PROFICIENCY_SHIELD" />
     </rules>
   </element>
+  <element name="Dune Race" type="Race" source="Test Book" id="ID_V_RACE">
+    <description><p>Of the dunes.</p></description>
+    <rules>
+      <stat name="strength" value="2" requirements="!(ID_V_FLAG||ID_V_OTHER)" />
+      <stat name="constitution" value="1" />
+      <grant type="Racial Trait" id="ID_V_TRAIT_OLD" requirements="!ID_V_FLAG" />
+      <select type="Race Variant" name="Variant" supports="Dune Variant" optional="true" />
+    </rules>
+  </element>
+  <element name="Old Trick" type="Racial Trait" source="Test Book" id="ID_V_TRAIT_OLD">
+    <description><p>An old trick.</p></description>
+  </element>
+  <element name="New Trick" type="Racial Trait" source="Test Book" id="ID_V_TRAIT_NEW">
+    <description><p>A new trick.</p></description>
+  </element>
+  <element name="Variant Flag" type="Grants" source="Internal" id="ID_V_FLAG" />
+  <element name="Dune Wanderer" type="Race Variant" source="Test Book" id="ID_V_VARIANT">
+    <supports>Dune Variant</supports>
+    <description><p>Of the far dunes.</p></description>
+    <rules>
+      <grant type="Grants" id="ID_V_FLAG" />
+      <grant type="Racial Trait" id="ID_V_TRAIT_NEW" />
+      <stat name="dexterity" value="2" />
+    </rules>
+  </element>
+  <element name="Dwarf" type="Race" source="Test Book" id="ID_V_DWARF">
+    <description><p>Already in the app.</p></description>
+    <rules>
+      <stat name="constitution" value="2" requirements="!ID_V_FLAG2" />
+      <select type="Race Variant" name="Variant" supports="Dwarf Variant" optional="true" />
+    </rules>
+  </element>
+  <element name="Flag Two" type="Grants" source="Internal" id="ID_V_FLAG2" />
+  <element name="Scholar Dwarf" type="Race Variant" source="Test Book" id="ID_V_SCHOLAR">
+    <supports>Dwarf Variant</supports>
+    <description><p>Bookish.</p></description>
+    <rules>
+      <grant type="Grants" id="ID_V_FLAG2" />
+      <stat name="intelligence" value="2" />
+    </rules>
+  </element>
   <element name="Test Proficiency" type="Proficiency" source="Internal" id="ID_L_PROF" />
   <element name="Test Rule" type="Rule" source="Internal" id="ID_L_RULE" />`);
 
@@ -902,6 +944,44 @@ describe("collections written for other readers", () => {
       category: "armor",
       target: "shields",
     });
+  });
+
+  it("reads a requirement that negates a whole group", () => {
+    const held = new Set(["B"]);
+    expect(requirementsMet("!(A||B)", held)).toBe(false);
+    expect(requirementsMet("!(A||B)", new Set(["C"]))).toBe(true);
+    expect(requirementsMet("A,!B", new Set(["A"]))).toBe(true);
+    expect(requirementsMet("A,!B", new Set(["A", "B"]))).toBe(false);
+    expect(requirementsMet("(A||B),C", new Set(["B", "C"]))).toBe(true);
+    expect(requirementsMet("A||B,C", new Set(["B"]))).toBe(false);
+    expect(requirementsMet("")).toBe(true);
+  });
+
+  it("makes a variant a sub-species that stands in for a race of the pack", () => {
+    const sub = byId(result, "imp1:subspecies/dune-wanderer");
+    expect(sub.parent).toBe("imp1:species/dune-race");
+    expect(sub.data.replacesSpecies).toBe(true);
+    // The race without what the variant replaces (the strength and the old trick), plus its own.
+    expect(sub.effects).toEqual([
+      { type: "abilityBonus", ability: "con", value: 1 },
+      { type: "abilityBonus", ability: "dex", value: 2 },
+      { type: "trait", id: "imp1:trait/new-trick" },
+    ]);
+    // The race itself is unchanged.
+    expect(byId(result, "imp1:species/dune-race").effects).toEqual([
+      { type: "abilityBonus", ability: "str", value: 2 },
+      { type: "abilityBonus", ability: "con", value: 1 },
+      { type: "trait", id: "imp1:trait/old-trick" },
+    ]);
+  });
+
+  it("takes from the app's own race what a variant replaces", () => {
+    const sub = byId(result, "imp1:subspecies/scholar-dwarf");
+    expect(sub.parent).toBe("srd51:species/dwarf");
+    const bonuses = sub.effects.flatMap((e) => (e.type === "abilityBonus" ? [e] : []));
+    expect(bonuses).toEqual([{ type: "abilityBonus", ability: "int", value: 2 }]);
+    // The rest of the dwarf stays (languages, traits).
+    expect(sub.effects.some((e) => e.type === "trait")).toBe(true);
   });
 
   it("does not report definitions as unsupported", () => {

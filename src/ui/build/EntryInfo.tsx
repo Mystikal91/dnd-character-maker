@@ -93,7 +93,9 @@ export function SpeciesInfo() {
   const species = c?.index.get(ch.choices.species ?? "");
   if (!c || !species) return <Pick text="build.info.pickSpecies" />;
   const sub = c.index.get(ch.choices.subspecies ?? "");
-  const effects = [...species.effects, ...(sub?.effects ?? [])];
+  const effects = sub?.data.replacesSpecies
+    ? sub.effects
+    : [...species.effects, ...(sub?.effects ?? [])];
   const rs = ch.ruleset;
 
   const bonuses = effects

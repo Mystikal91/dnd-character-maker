@@ -12,6 +12,7 @@ import {
   importDeity,
   importFeat,
   importRace,
+  importRaceVariant,
   importSubRace,
   importTrait,
 } from "./people";
@@ -59,6 +60,8 @@ const SILENT_TYPES = new Set([
   "Option",
   "Support",
   "Grants",
+  // A dragonmark only says which flag it sets; the variants that use it carry the rules.
+  "Dragonmark",
 ]);
 
 /** Kinds a person picks from a list, where two entries with one name cannot be told apart. */
@@ -92,6 +95,29 @@ function nameSameNames(ctx: Context): void {
     for (const source of group) {
       if (source.source)
         ctx.result.strings[`${source.id}.name`] = `${source.name} (${source.source})`;
+    }
+  }
+}
+
+/**
+ * The same variant can exist for several species (the Mark of Finding for humans and for
+ * half-orcs): those get the species in brackets, whatever book they come from.
+ */
+function nameVariantsBySpecies(ctx: Context): void {
+  const parents = new Map(ctx.result.entries.map((e) => [e.id, e.parent]));
+  const groups = new Map<string, Source[]>();
+  for (const source of ctx.needed) {
+    if (source.type !== "Race Variant" || !source.id || !parents.get(source.id)) continue;
+    const key = source.name.toLowerCase();
+    groups.set(key, [...(groups.get(key) ?? []), source]);
+  }
+  for (const group of groups.values()) {
+    const species = new Set(group.map((s) => parents.get(s.id ?? "")));
+    if (group.length < 2 || species.size < 2) continue;
+    for (const source of group) {
+      const parent = parents.get(source.id ?? "") ?? "";
+      const name = ctx.result.strings[`${parent}.name`] ?? ctx.options.nameOf(parent);
+      ctx.result.strings[`${source.id}.name`] = `${source.name} (${name})`;
     }
   }
 }
@@ -214,6 +240,9 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
       case "Sub Race":
         importSubRace(ctx, source);
         break;
+      case "Race Variant":
+        importRaceVariant(ctx, source);
+        break;
       case "Racial Trait":
       case "Feat Feature":
         importTrait(ctx, source);
@@ -235,6 +264,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
   }
 
   nameSameNames(ctx);
+  nameVariantsBySpecies(ctx);
   result.sources = [...new Set(result.sources)].sort();
   return result;
 }
