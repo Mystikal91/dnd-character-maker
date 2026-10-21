@@ -388,3 +388,33 @@
 .content-anchor:focus {
   outline: none;
 }
+
+/* ---- Equipping: the checkbox says what it does ---- */
+
+.equip-list {
+  margin: 0 0 0.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.equip-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.75rem;
+}
+
+.equip-tag {
+  flex: none;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+input:checked + .equip-tag {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+}

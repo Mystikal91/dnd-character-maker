@@ -1,5 +1,5 @@
 import { Fragment } from "preact";
-import { character, content, sheet } from "../../app/store";
+import { character, content, sheet, updateCharacter } from "../../app/store";
 import type { Warning } from "../../engine/warnings";
 import { type UiKey, ui } from "../../i18n/ui";
 import { weight } from "../../i18n/units";
@@ -110,11 +110,27 @@ export function Inventory() {
   if (!c || !s || ch.inventory.length === 0) return null;
   return (
     <Panel title={ui("sheet.inventory")}>
-      <ul>
+      <p class="muted">{ui("sheet.equipHint")}</p>
+      <ul class="equip-list">
         {ch.inventory.map((i) => (
           <li key={i.itemId}>
-            {c.name(i.itemId)}
-            {i.quantity > 1 && ` ×${i.quantity}`}
+            <label class="equip-row">
+              <input
+                type="checkbox"
+                checked={i.equipped}
+                onChange={(e) =>
+                  updateCharacter((d) => {
+                    const found = d.inventory.find((x) => x.itemId === i.itemId);
+                    if (found) found.equipped = e.currentTarget.checked;
+                  })
+                }
+              />
+              <span class="equip-tag">{ui("form.equipped")}</span>
+              <span>
+                {c.name(i.itemId)}
+                {i.quantity > 1 && ` ×${i.quantity}`}
+              </span>
+            </label>
           </li>
         ))}
       </ul>

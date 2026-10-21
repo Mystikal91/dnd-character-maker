@@ -131,6 +131,7 @@ export function EquipmentStep() {
           )}
         </select>
       </label>
+      <p class="muted">{ui("sheet.equipHint")}</p>
       <ul class="inventory">
         {c.inventory.map((item) => (
           <li key={item.itemId}>
@@ -145,7 +146,7 @@ export function EquipmentStep() {
                   })
                 }
               />
-              <span class="sr-only">{ui("form.equipped")}</span>
+              <span class="equip-tag">{ui("form.equipped")}</span>
               {content.value?.name(item.itemId)}
               {item.quantity > 1 && ` ×${item.quantity}`}
             </label>

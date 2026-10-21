@@ -1,5 +1,5 @@
 import type { ComponentChildren } from "preact";
-import { content, isForced, sheet } from "../../app/store";
+import { character, content, isForced, sheet, updateCharacter } from "../../app/store";
 import type { DamageResult } from "../../engine/equipment";
 import { OVERRIDE } from "../../engine/overrides";
 import { type UiKey, signed, ui } from "../../i18n/ui";
@@ -92,11 +92,34 @@ export function Attacks() {
   const c = content.value;
   const s = sheet.value;
   if (!c || !s) return null;
+  // Weapons in the inventory that are not equipped yet: the sheet offers to equip them.
+  const carried = character.value.inventory
+    .filter((i) => !i.equipped && c.index.get(i.itemId)?.data.weapon !== undefined)
+    .map((i) => i.itemId);
 
   return (
     <Panel title={ui("sheet.attacks")}>
       {s.attacks.length === 0 ? (
-        <p class="muted">{ui("sheet.noAttacks")}</p>
+        <>
+          <p class="muted">
+            {ui(carried.length > 0 ? "sheet.noAttacksCarried" : "sheet.noAttacks")}
+          </p>
+          {carried.map((id) => (
+            <button
+              type="button"
+              class="secondary"
+              key={id}
+              onClick={() =>
+                updateCharacter((d) => {
+                  const found = d.inventory.find((x) => x.itemId === id);
+                  if (found) found.equipped = true;
+                })
+              }
+            >
+              {ui("sheet.equipItem", { name: c.name(id) })}
+            </button>
+          ))}
+        </>
       ) : (
         <table>
           <thead>
