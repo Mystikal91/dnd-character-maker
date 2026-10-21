@@ -138,6 +138,61 @@
 .step-body {
   padding: 1rem;
   border-top: 1px solid var(--border);
+  container-type: inline-size;
+}
+
+/* Fields on the left, what the chosen options give on the right; stacked on narrow screens. */
+.step-split {
+  display: grid;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+/* Narrow cards (a phone, or a window with the summary beside it) stack the two halves. */
+@container (min-width: 38rem) {
+  .step-split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.step-fields {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.step-info {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  min-width: 0;
+}
+
+@container (min-width: 38rem) {
+  .step-info {
+    padding-left: 1.25rem;
+    border-left: 1px solid var(--border);
+  }
+}
+
+.entry-info h4 {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+}
+
+.entry-info > p {
+  margin: 0 0 0.5rem;
+}
+
+.entry-info .pairs {
+  margin: 0.5rem 0;
+}
+
+.entry-info-list {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0.5rem 0;
 }
 
 /* The step title already names the section, so the inner legend is only for screen readers. */
