@@ -2,7 +2,9 @@ import { useRef } from "preact/hooks";
 import {
   character,
   characters,
+  content,
   deleteCurrentCharacter,
+  deletedCharacter,
   duplicateCharacter,
   exportCharacter,
   importCharacterFile,
@@ -11,8 +13,10 @@ import {
   openCharacter,
   saveStatus,
   shareNotice,
+  undoDelete,
 } from "../app/store";
 import { ui } from "../i18n/ui";
+import { Popover } from "./Popover";
 import { shareOpen } from "./ShareDialog";
 
 const STATUS_KEYS = {
@@ -25,55 +29,78 @@ const STATUS_KEYS = {
 export function CharacterBar() {
   const fileInput = useRef<HTMLInputElement>(null);
   const current = character.value;
-  const label = (name: string) => name || ui("sheet.unnamed");
+  const c = content.value;
+  const unnamed = ui("sheet.unnamed");
 
-  // The list is saved data; the open character may be newer, so show its live name.
-  const options = characters.value.some((c) => c.id === current.id)
-    ? characters.value.map((c) => (c.id === current.id ? { ...c, name: current.name } : c))
-    : [{ id: current.id, name: current.name, updatedAt: 0 }, ...characters.value];
-
-  const confirmDelete = () => {
-    if (confirm(ui("bar.deleteConfirm", { name: label(current.name) }))) {
-      void deleteCurrentCharacter();
-    }
+  /** "Elowen · Wizard 3": the name and what the character is, so unnamed ones can be told apart. */
+  const label = (name: string, classes: { classId: string; level: number }[]) => {
+    const what = classes.map((cl) => `${c?.name(cl.classId) ?? ""} ${cl.level}`.trim()).join(" / ");
+    return [name || unnamed, what].filter(Boolean).join(" · ");
   };
+
+  // The list is saved data; the open character may be newer, so show its live name and classes.
+  const live = { id: current.id, name: current.name, updatedAt: 0, classes: current.classes };
+  const options = characters.value.some((s) => s.id === current.id)
+    ? characters.value.map((s) => (s.id === current.id ? { ...s, ...live } : s))
+    : [live, ...characters.value];
 
   return (
     <div class="card bar no-print">
-      <label class="field bar-select">
-        <span>{ui("bar.character")}</span>
-        <select value={current.id} onChange={(e) => void openCharacter(e.currentTarget.value)}>
-          {options.map((c) => (
-            <option key={c.id} value={c.id}>
-              {label(c.name)}
+      <div class="bar-head">
+        <label for="character-select">{ui("bar.character")}</label>
+        <output class={`bar-status status-${saveStatus.value}`}>
+          {ui(STATUS_KEYS[saveStatus.value])}
+        </output>
+      </div>
+      <div class="bar-row">
+        <select
+          id="character-select"
+          value={current.id}
+          onChange={(e) => void openCharacter(e.currentTarget.value)}
+        >
+          {options.map((s) => (
+            <option key={s.id} value={s.id}>
+              {label(s.name, s.classes)}
             </option>
           ))}
         </select>
-      </label>
-      <div class="bar-actions">
-        <button type="button" onClick={() => void newCharacter()}>
+        <button type="button" class="bar-new" onClick={() => void newCharacter()}>
           {ui("bar.new")}
         </button>
-        <button type="button" onClick={() => void duplicateCharacter()}>
-          {ui("bar.duplicate")}
-        </button>
-        <button type="button" onClick={exportCharacter}>
-          {ui("bar.export")}
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            shareOpen.value = true;
-          }}
-        >
-          {ui("bar.share")}
-        </button>
-        <button type="button" onClick={() => fileInput.current?.click()}>
-          {ui("bar.import")}
-        </button>
-        <button type="button" class="danger" onClick={confirmDelete}>
-          {ui("bar.delete")}
-        </button>
+        <Popover label={<span aria-hidden="true">⋯</span>} title={ui("bar.more")}>
+          <ul class="menu-list">
+            <li>
+              <button type="button" onClick={() => void duplicateCharacter()}>
+                {ui("bar.duplicate")}
+              </button>
+            </li>
+            <li>
+              <button type="button" onClick={exportCharacter}>
+                {ui("bar.export")}
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  shareOpen.value = true;
+                }}
+              >
+                {ui("bar.share")}
+              </button>
+            </li>
+            <li>
+              <button type="button" onClick={() => fileInput.current?.click()}>
+                {ui("bar.import")}
+              </button>
+            </li>
+            <li>
+              <button type="button" class="danger" onClick={() => void deleteCurrentCharacter()}>
+                {ui("bar.delete")}
+              </button>
+            </li>
+          </ul>
+        </Popover>
         <input
           ref={fileInput}
           type="file"
@@ -86,9 +113,14 @@ export function CharacterBar() {
           }}
         />
       </div>
-      <output class={`bar-status status-${saveStatus.value}`}>
-        {ui(STATUS_KEYS[saveStatus.value])}
-      </output>
+      {deletedCharacter.value && (
+        <output class="note bar-undo">
+          <span>{ui("bar.deleted", { name: deletedCharacter.value.name || unnamed })}</span>
+          <button type="button" class="link" onClick={() => void undoDelete()}>
+            {ui("bar.undo")}
+          </button>
+        </output>
+      )}
       {shareNotice.value && (
         <p class="note" role={shareNotice.value === "failed" ? "alert" : "status"}>
           {ui(shareNotice.value === "failed" ? "share.openFailed" : "share.opened")}

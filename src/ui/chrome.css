@@ -1,0 +1,236 @@
+/*
+ * The frame around every screen: header, menus, the character bar and the tabs. It takes little
+ * room on a phone, and the tabs stay in view while the page scrolls.
+ */
+
+/* ---- Header: the title and one menu button ---- */
+
+.app-header {
+  flex-wrap: nowrap;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.app-title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+:root[data-style="fantasy"] .shell > .app-header h1 {
+  font-size: clamp(1.2rem, 5.2vw, 2.1rem);
+  letter-spacing: 0.1em;
+}
+
+/* ---- Popover menus ---- */
+
+.popover {
+  position: relative;
+  display: flex;
+  flex: none;
+  padding: 0;
+  border: 0;
+}
+
+.popover > summary {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--fg);
+  font-size: 1.3rem;
+  line-height: 1;
+  list-style: none;
+  cursor: pointer;
+}
+
+.popover > summary::-webkit-details-marker {
+  display: none;
+}
+
+.popover > summary:hover,
+.popover[open] > summary {
+  border-color: var(--accent);
+}
+
+.popover-panel {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  z-index: 40;
+  min-width: 15rem;
+  max-width: min(22rem, calc(100vw - 2rem));
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
+}
+
+.popover-end .popover-panel {
+  right: 0;
+}
+
+.popover-start .popover-panel {
+  left: 0;
+}
+
+.popover-heading {
+  margin: 0.25rem 0 0.5rem;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.popover-panel .theme-controls {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.menu-list {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.popover-panel .menu-list button {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.popover-panel .menu-list button:hover {
+  border-color: var(--border);
+  background: var(--surface-2);
+}
+
+.popover-panel .menu-list button.danger {
+  color: var(--accent);
+}
+
+/* ---- Character bar: one line, with the less used actions in a menu ---- */
+
+.bar {
+  display: block;
+  margin-bottom: 0.5rem;
+  padding: 0.6rem 0.75rem;
+}
+
+.bar-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.bar-status {
+  flex: 0 1 auto;
+  text-align: right;
+}
+
+.bar-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.bar-row select {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 2.75rem;
+}
+
+.bar .bar-new {
+  flex: none;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+}
+
+.bar-undo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0.5rem 0 0;
+}
+
+.bar-undo .link {
+  min-height: 2.75rem;
+  font-weight: 700;
+}
+
+/* ---- Tabs: always in view, and all four fit on a phone ---- */
+
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin-bottom: 0.75rem;
+  background: var(--bg);
+}
+
+@media (max-width: 40rem) {
+  .tab,
+  :root[data-style] .tab {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0.6rem 0.1rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+}
+
+/* ---- Build: a strip with the numbers where the summary would be far away ---- */
+
+.summary-strip {
+  display: none;
+}
+
+@media (max-width: 55.99rem) {
+  .summary-strip {
+    display: block;
+    margin-bottom: 0.75rem;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .summary-strip .summary-stats {
+    margin: 0 0 0.5rem;
+  }
+
+  .summary-strip .level-up-button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .build > .summary {
+    display: none;
+  }
+}
+
+/* ---- Taps: a line of text that opens something is a comfortable target ---- */
+
+@media (pointer: coarse), (max-width: 40rem) {
+  details > summary:not(.popover-button) {
+    padding-block: 0.65rem;
+  }
+}

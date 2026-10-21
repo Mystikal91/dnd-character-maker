@@ -33,6 +33,10 @@ export const character = signal<Character>(createNewCharacter());
 export const characters = signal<CharacterSummary[]>([]);
 export const saveStatus = signal<SaveStatus>("idle");
 export const importFailed = signal(false);
+/** The character just deleted, kept for a few seconds so it can be brought back. */
+export const deletedCharacter = signal<Character | undefined>(undefined);
+let undoTimer: ReturnType<typeof setTimeout> | undefined;
+const UNDO_MS = 15000;
 /** What happened to a character that arrived in the page link, if one did. */
 export const shareNotice = signal<"imported" | "failed" | undefined>(undefined);
 /** True once saved characters have been read (or storage turned out to be unavailable). */
@@ -178,7 +182,8 @@ export function duplicateCharacter() {
 }
 
 export async function deleteCurrentCharacter() {
-  const removed = character.value.id;
+  const snapshot = structuredClone(character.value);
+  const removed = snapshot.id;
   clearTimeout(saveTimer);
   saveTimer = undefined;
   try {
@@ -189,9 +194,30 @@ export async function deleteCurrentCharacter() {
     saveStatus.value = "failed";
     return;
   }
+  deletedCharacter.value = snapshot;
+  clearTimeout(undoTimer);
+  undoTimer = setTimeout(() => {
+    deletedCharacter.value = undefined;
+  }, UNDO_MS);
   const next = characters.value[0];
   const loaded = next ? await loadCharacter(next.id) : undefined;
   await switchTo(loaded ?? createNewCharacter());
+}
+
+/** Brings back the character that was just deleted. */
+export async function undoDelete() {
+  const back = deletedCharacter.value;
+  if (!back) return;
+  clearTimeout(undoTimer);
+  deletedCharacter.value = undefined;
+  // Deleting the only character opened a blank one: it is not worth keeping next to this one.
+  const open = character.value;
+  const blank =
+    !open.name && open.classes.length === 0 && !open.choices.species && !open.choices.background;
+  if (blank) await deleteCharacter(open.id).catch(() => undefined);
+  await saveCharacter(back);
+  await refreshList();
+  await switchTo(back);
 }
 
 /** Downloads the current character as a file the user can keep, send or import elsewhere. */

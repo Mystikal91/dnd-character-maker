@@ -33,6 +33,19 @@ function HitPoints() {
   };
   const percent = v.max > 0 ? Math.round((hp / v.max) * 100) : 0;
 
+  /** Damage, with what it does to concentration: the save to make, or the end of it. */
+  const takeDamage = (a: number) => {
+    const concentrating = Boolean(play.concentration);
+    const after = applyDamage(play, v.max, a);
+    // Unconscious or dead ends concentration; otherwise the player owes a save.
+    if (concentrating && deathStatus(after, v.max) !== "alive") {
+      changePlay((p) => endConcentration(applyDamage(p, v.max, a)));
+    } else {
+      changePlay((p) => applyDamage(p, v.max, a));
+      if (concentrating) concentrationAlert.value = concentrationDc(a);
+    }
+  };
+
   return (
     <Panel title={ui("play.hitPoints")}>
       <div class="hp-readout">
@@ -42,6 +55,30 @@ function HitPoints() {
       </div>
       <div class="hp-bar" role="img" aria-label={`${hp} ${ui("play.of", { max: v.max })}`}>
         <span style={{ width: `${percent}%` }} />
+      </div>
+      <div class="hp-quick">
+        {[10, 5, 1].map((a) => (
+          <button
+            type="button"
+            key={`d${a}`}
+            class="danger-btn"
+            aria-label={ui("play.damageBy", { n: a })}
+            onClick={() => takeDamage(a)}
+          >
+            {"\u2212"}
+            {a}
+          </button>
+        ))}
+        {[1, 5, 10].map((a) => (
+          <button
+            type="button"
+            key={`h${a}`}
+            aria-label={ui("play.healBy", { n: a })}
+            onClick={() => changePlay((p) => applyHealing(p, v.max, a))}
+          >
+            +{a}
+          </button>
+        ))}
       </div>
       <div class="hp-controls">
         <label class="field">
@@ -59,19 +96,7 @@ function HitPoints() {
             type="button"
             class="danger-btn"
             disabled={n === 0}
-            onClick={() =>
-              apply((a) => {
-                const concentrating = Boolean(play.concentration);
-                const after = applyDamage(play, v.max, a);
-                // Unconscious or dead ends concentration; otherwise the player owes a save.
-                if (concentrating && deathStatus(after, v.max) !== "alive") {
-                  changePlay((p) => endConcentration(applyDamage(p, v.max, a)));
-                } else {
-                  changePlay((p) => applyDamage(p, v.max, a));
-                  if (concentrating) concentrationAlert.value = concentrationDc(a);
-                }
-              })
-            }
+            onClick={() => apply(takeDamage)}
           >
             {ui("play.damage")}
           </button>

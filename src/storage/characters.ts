@@ -13,6 +13,8 @@ export interface CharacterSummary {
   id: string;
   name: string;
   updatedAt: number;
+  /** The classes and levels, so the list can say "Elowen \u00b7 Wizard 3". */
+  classes: { classId: string; level: number }[];
 }
 
 const CURRENT_KEY = "currentCharacterId";
@@ -38,7 +40,12 @@ export async function loadCharacter(id: string): Promise<Character | undefined> 
 export async function listCharacters(): Promise<CharacterSummary[]> {
   const records = await dbGetAll<CharacterRecord>("characters");
   return records
-    .map((r) => ({ id: r.id, name: r.character?.name ?? "", updatedAt: r.updatedAt }))
+    .map((r) => ({
+      id: r.id,
+      name: r.character?.name ?? "",
+      updatedAt: r.updatedAt,
+      classes: (r.character?.classes ?? []).map((c) => ({ classId: c.classId, level: c.level })),
+    }))
     .sort((a, b) => b.updatedAt - a.updatedAt);
 }
 

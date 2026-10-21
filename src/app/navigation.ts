@@ -27,7 +27,7 @@ function savedTab(): "build" | "sheet" | "play" {
 
 export const view = signal<View>(savedTab());
 
-const isPage = (v: View) =>
+export const isPage = (v: View) =>
   v === "credits" || v === "packs" || v === "homebrew" || v === "translate" || v === "about";
 
 /** The tab to go back to when leaving a page. */

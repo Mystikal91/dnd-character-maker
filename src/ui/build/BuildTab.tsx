@@ -168,6 +168,52 @@ function Summary() {
   );
 }
 
+/** The same numbers as the summary, in a strip at the top: on a phone the summary is far below. */
+function SummaryStrip() {
+  const s = sheet.value;
+  const ch = character.value;
+  const c = content.value;
+  if (!s || !c) return null;
+  return (
+    <section class="card summary-strip" aria-label={ui("build.summary")}>
+      <div class="summary-stats">
+        <div>
+          <b>{s.armorClass.value}</b>
+          <span>{ui("sheet.armorClass")}</span>
+        </div>
+        <div>
+          <b>{s.hitPoints.max}</b>
+          <span>{ui("sheet.hitPoints")}</span>
+        </div>
+        <div>
+          <b>{signed(s.initiative)}</b>
+          <span>{ui("sheet.initiative")}</span>
+        </div>
+      </div>
+      <ul class="summary-abilities">
+        {(["str", "dex", "con", "int", "wis", "cha"] as const).map((a) => (
+          <li key={a}>
+            <span>{c.text(`${ch.ruleset}:ability/${a}`, "abbreviation")}</span>
+            <b>{s.abilities[a].score}</b>
+            <small>{signed(s.abilities[a].modifier)}</small>
+          </li>
+        ))}
+      </ul>
+      {ch.classes.length > 0 && (
+        <button
+          type="button"
+          class="level-up-button"
+          onClick={() => {
+            levelUpPhase.value = "choose";
+          }}
+        >
+          {ui("levelUp.button")}
+        </button>
+      )}
+    </section>
+  );
+}
+
 /** Guided building: a list of steps that open one at a time, with a live summary. */
 export function BuildTab() {
   const steps = buildSteps();
@@ -182,41 +228,44 @@ export function BuildTab() {
   };
 
   return (
-    <div class="build">
-      <div class="steps">
-        {steps.map((step, i) => {
-          const isOpen = i === current;
-          return (
-            <section class={`card step${isOpen ? " open" : ""}`} key={step.id}>
-              <h3 class="step-title">
-                <button
-                  type="button"
-                  aria-expanded={isOpen}
-                  aria-controls={`step-${step.id}`}
-                  onClick={() => {
-                    openStep.value = step.id;
-                  }}
-                >
-                  <span class={`step-mark${step.done ? " done" : ""}`} aria-hidden="true">
-                    {step.done ? "✓" : i + 1}
-                  </span>
-                  <span class="step-name">{ui(step.title)}</span>
-                  {step.status && <span class="step-status">{step.status}</span>}
-                </button>
-              </h3>
-              {isOpen && (
-                <div class="step-body" id={`step-${step.id}`}>
-                  {step.body}
-                  <button type="button" class="secondary step-next" onClick={() => next(i)}>
-                    {i === steps.length - 1 ? ui("build.viewSheet") : ui("build.continue")}
+    <>
+      <SummaryStrip />
+      <div class="build">
+        <div class="steps">
+          {steps.map((step, i) => {
+            const isOpen = i === current;
+            return (
+              <section class={`card step${isOpen ? " open" : ""}`} key={step.id}>
+                <h3 class="step-title">
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={`step-${step.id}`}
+                    onClick={() => {
+                      openStep.value = step.id;
+                    }}
+                  >
+                    <span class={`step-mark${step.done ? " done" : ""}`} aria-hidden="true">
+                      {step.done ? "✓" : i + 1}
+                    </span>
+                    <span class="step-name">{ui(step.title)}</span>
+                    {step.status && <span class="step-status">{step.status}</span>}
                   </button>
-                </div>
-              )}
-            </section>
-          );
-        })}
+                </h3>
+                {isOpen && (
+                  <div class="step-body" id={`step-${step.id}`}>
+                    {step.body}
+                    <button type="button" class="secondary step-next" onClick={() => next(i)}>
+                      {i === steps.length - 1 ? ui("build.viewSheet") : ui("build.continue")}
+                    </button>
+                  </div>
+                )}
+              </section>
+            );
+          })}
+        </div>
+        <Summary />
       </div>
-      <Summary />
-    </div>
+    </>
   );
 }

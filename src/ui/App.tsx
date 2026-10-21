@@ -1,6 +1,6 @@
 import { useEffect } from "preact/hooks";
 import { language, localeChain } from "../app/language";
-import { showView, view } from "../app/navigation";
+import { isPage, showView, view } from "../app/navigation";
 import { content, initStorage, loadError, storageReady } from "../app/store";
 import { loadUserPacks, userPacks, userPacksReady } from "../app/userPacks";
 import { loadContent } from "../content/browser";
@@ -10,13 +10,13 @@ import { Credits } from "./Credits";
 import "../app/translate";
 import { STAGE } from "../app/version";
 import { AboutPage } from "./AboutPage";
+import { AppMenu } from "./AppMenu";
 import { AutoTranslatePage } from "./AutoTranslatePage";
 import { HomebrewPage } from "./HomebrewPage";
 import { PacksPage } from "./PacksPage";
 import { ShareDialog } from "./ShareDialog";
 import { Sheet } from "./Sheet";
 import { Tabs } from "./Tabs";
-import { ThemeControls } from "./ThemeControls";
 import { BuildTab } from "./build/BuildTab";
 import { LevelUp } from "./build/LevelUp";
 import { PlayTab } from "./play/PlayTab";
@@ -84,7 +84,7 @@ export function App() {
             <span class="beta-badge">{STAGE}</span>
           </h1>
         </div>
-        <ThemeControls />
+        <AppMenu />
       </header>
       {loadError.value ? (
         <p role="alert">{ui("app.loadError")}</p>
@@ -92,8 +92,12 @@ export function App() {
         <p>{ui("app.loading")}</p>
       ) : (
         <>
-          <CharacterBar />
-          <Tabs />
+          {!isPage(view.value) && (
+            <>
+              <CharacterBar />
+              <Tabs />
+            </>
+          )}
           <Screen />
         </>
       )}

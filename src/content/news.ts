@@ -18,6 +18,33 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.2 beta",
+    date: "2026-10-21",
+    notes: [
+      {
+        en: "A lighter frame, made for phones: the title and one menu button (settings and every other page, the homebrew editor included) take one line, the character bar fits on one line with the other actions behind a button, the four tabs fit on screen and stay at the top while you scroll, and the pages (packs, about, credits...) no longer carry the bar and the tabs.",
+        it: "Una cornice più leggera, pensata per il telefono: titolo e un solo pulsante menu (impostazioni e tutte le altre pagine, editor homebrew compreso) occupano una riga, la barra dei personaggi sta su una riga con le altre azioni dietro un pulsante, le quattro schede stanno nello schermo e restano in alto mentre scorri, e le pagine (pacchetti, info, crediti...) non portano più barra e schede.",
+        fr: "Un cadre plus léger, pensé pour le téléphone : le titre et un seul bouton de menu (réglages et toutes les autres pages, éditeur homebrew compris) tiennent sur une ligne, la barre des personnages tient sur une ligne avec les autres actions derrière un bouton, les quatre onglets tiennent à l'écran et restent en haut pendant le défilement, et les pages (paquets, infos, crédits...) n'ont plus la barre ni les onglets.",
+        de: "Ein schlankerer Rahmen, gemacht fürs Handy: Titel und ein Menüknopf (Einstellungen und alle anderen Seiten, auch der Homebrew-Editor) brauchen eine Zeile, die Charakterleiste passt in eine Zeile mit den übrigen Aktionen hinter einem Knopf, die vier Reiter passen auf den Bildschirm und bleiben beim Scrollen oben, und die Seiten (Pakete, Info, Danksagung...) tragen Leiste und Reiter nicht mehr.",
+        es: "Un marco más ligero, pensado para el teléfono: el título y un solo botón de menú (ajustes y todas las demás páginas, el editor homebrew incluido) ocupan una línea, la barra de personajes cabe en una línea con las otras acciones tras un botón, las cuatro pestañas caben en pantalla y se quedan arriba al desplazarte, y las páginas (paquetes, info, créditos...) ya no llevan barra ni pestañas.",
+      },
+      {
+        en: 'The character list says who is who ("Elowen · Wizard 3"), deleting no longer asks with a browser box: it deletes at once and offers Undo for a few seconds, and in Build on a phone the numbers (armor class, hit points, initiative, ability scores) sit in a strip at the top.',
+        it: 'L\'elenco dei personaggi dice chi è chi ("Elowen · Mago 3"), eliminare non chiede più con una finestra del browser: elimina subito e offre Annulla per qualche secondo, e in Crea da telefono i numeri (classe armatura, punti ferita, iniziativa, caratteristiche) stanno in una striscia in alto.',
+        fr: "La liste des personnages dit qui est qui (« Elowen · Magicien 3 »), supprimer ne demande plus avec une fenêtre du navigateur : cela supprime aussitôt et propose Annuler pendant quelques secondes, et dans Créer sur téléphone les chiffres (classe d'armure, points de vie, initiative, caractéristiques) tiennent dans une bande en haut.",
+        de: 'Die Charakterliste sagt, wer wer ist ("Elowen · Magier 3"), Löschen fragt nicht mehr mit einem Browserfenster: Es löscht sofort und bietet einige Sekunden lang Rückgängig an, und in Erstellen auf dem Handy stehen die Zahlen (Rüstungsklasse, Trefferpunkte, Initiative, Attribute) in einem Streifen oben.',
+        es: 'La lista de personajes dice quién es quién ("Elowen · Mago 3"), eliminar ya no pregunta con una ventana del navegador: elimina al instante y ofrece Deshacer unos segundos, y en Crear en el teléfono los números (clase de armadura, puntos de golpe, iniciativa, características) van en una franja arriba.',
+      },
+      {
+        en: "In Play, quick buttons change hit points by 1, 5 or 10, and the lines you tap to open (traits, features) and the small labels of the sheet are bigger, to be easier to hit and to read.",
+        it: "In Gioca, pulsanti rapidi cambiano i punti ferita di 1, 5 o 10, e le righe che si toccano per aprire (tratti, privilegi) e le piccole etichette della scheda sono più grandi, per toccarle e leggerle meglio.",
+        fr: "Dans Jouer, des boutons rapides changent les points de vie de 1, 5 ou 10, et les lignes à toucher pour ouvrir (traits, aptitudes) et les petites étiquettes de la fiche sont plus grandes, pour être plus faciles à toucher et à lire.",
+        de: "In Spielen ändern Schnellknöpfe die Trefferpunkte um 1, 5 oder 10, und die Zeilen zum Aufklappen (Merkmale) sowie die kleinen Beschriftungen des Bogens sind größer, besser zu treffen und zu lesen.",
+        es: "En Jugar, botones rápidos cambian los puntos de golpe en 1, 5 o 10, y las líneas que se tocan para abrir (rasgos) y las etiquetas pequeñas de la hoja son más grandes, para tocarlas y leerlas mejor.",
+      },
+    ],
+  },
+  {
     version: "1.1 beta",
     date: "2026-10-21",
     notes: [

@@ -39,7 +39,7 @@
   display: block;
   margin-top: 0.15rem;
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -66,7 +66,7 @@
 
 .sheet-info dt {
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -163,7 +163,7 @@
 .badge span {
   max-width: 5.5rem;
   color: var(--muted);
-  font-size: 0.62rem;
+  font-size: 0.75rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -192,7 +192,7 @@
 
 .ability-name {
   font-family: var(--font-display);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -301,7 +301,7 @@
 
 .stat-label {
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -354,7 +354,7 @@
 }
 
 .level-frame summary {
-  padding-right: 3rem;
+  padding-right: 3.6rem;
 }
 
 .level-badge {
@@ -366,8 +366,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 3rem;
+  height: 3rem;
   border: 2px solid var(--ink);
   border-radius: 50%;
   background: var(--surface);
@@ -379,7 +379,7 @@
 
 .level-badge small {
   color: var(--muted);
-  font-size: 0.45rem;
+  font-size: 0.62rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }

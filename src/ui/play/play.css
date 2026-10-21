@@ -136,6 +136,18 @@
   transition: width 0.2s;
 }
 
+.hp-quick {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.hp-quick button {
+  padding: 0 !important;
+  font-weight: 700;
+}
+
 .hp-controls .field {
   margin-bottom: 0.5rem;
 }

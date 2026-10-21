@@ -20,6 +20,7 @@ import "./ui/theme/tokens.css";
 import "./ui/theme/fantasy.css";
 import "./ui/sheet/sheet.css";
 import "./ui/styles.css";
+import "./ui/chrome.css";
 
 const root = document.getElementById("app");
 if (root) render(<App />, root);
