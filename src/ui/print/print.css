@@ -15,13 +15,15 @@
   --p-font: "EB Garamond", Georgia, serif;
   --p-display: "Cinzel", "EB Garamond", Georgia, serif;
   --p-n: 3mm; /* corner cut of frames */
-  --p-page-h: 273mm; /* printable height: A4 minus margins */
+  /* Printable height: A4 minus the 12 mm margins is 273 mm; 2 mm less, so a page that rounds up
+     a little (as the phone print dialogs do) never spills a sliver onto the next sheet. */
+  --p-page-h: 271mm;
   --p-front-cols: 0.95fr 1.1fr 0.95fr; /* header and columns share these */
   --p-story-cols: 0.9fr 1fr 1fr;
 }
 
 .print-root.paper-letter {
-  --p-page-h: 255.4mm;
+  --p-page-h: 253.4mm;
 }
 
 :root[data-style="modern"] .print-root {

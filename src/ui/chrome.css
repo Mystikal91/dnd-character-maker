@@ -324,3 +324,43 @@
   font-size: 0.7em;
   opacity: 0.45;
 }
+
+/* ---- Fields never wider than their box; the ability steppers wrap on a phone ---- */
+
+.field {
+  min-width: 0;
+}
+
+.field > select,
+.field > input {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ability-inputs {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.stepper button {
+  flex: 1 1 0;
+  min-width: 2.25rem;
+}
+
+@media (max-width: 30rem) {
+  .ability-inputs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---- The build steps never grow wider than the screen ---- */
+
+.steps,
+.build {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 56rem) {
+  .build {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+  }
+}
