@@ -36,11 +36,11 @@ export const CHANGELOG: ChangelogEntry[] = [
         es: 'En Jugar, un botón Lanzar junto a cada conjuro gasta el espacio más bajo que sirva (uno de Magia de pacto si no hay) y dice cuál en el registro de tiradas, y también se pueden escribir allí las notas. En Equipo, un cuadro de búsqueda reduce la larga lista de objetos. Además: la página se anuncia mejor a los lectores de pantalla (los puntos de golpe se leen al cambiar), un botón "saltar al contenido" para el teclado, la pestaña del navegador muestra el nombre del personaje y la barra del navegador toma el color de la página.',
       },
       {
-        en: "Fixes on phones: the point buy no longer overflows its box and the printed sheet no longer spills a sliver onto a second page.",
-        it: "Correzioni da telefono: l'acquisto a punti non sborda più dal suo riquadro e la scheda stampata non riversa più una striscia sulla seconda pagina.",
-        fr: "Corrections sur téléphone : l'achat de points ne déborde plus de son cadre et la fiche imprimée ne laisse plus déborder une bande sur une deuxième page.",
-        de: "Korrekturen auf dem Handy: Der Punktekauf läuft nicht mehr über seinen Kasten, und der gedruckte Bogen schiebt keinen Streifen mehr auf eine zweite Seite.",
-        es: "Correcciones en el teléfono: la compra de puntos ya no se sale de su cuadro y la hoja impresa ya no deja una franja en una segunda página.",
+        en: "Fixes: the point buy no longer overflows its box on phones, and printing no longer leaves a blank page after the first sheet (the page's own padding pushed the sheet down; it showed up on computers too).",
+        it: "Correzioni: l'acquisto a punti non sborda più dal suo riquadro sul telefono, e la stampa non lascia più una pagina vuota dopo la prima scheda (il margine interno della pagina spingeva giù la scheda; succedeva anche sui computer).",
+        fr: "Corrections : l'achat de points ne déborde plus de son cadre sur téléphone, et l'impression ne laisse plus de page blanche après la première fiche (la marge interne de la page poussait la fiche vers le bas ; cela arrivait aussi sur ordinateur).",
+        de: "Korrekturen: Der Punktekauf läuft auf dem Handy nicht mehr über seinen Kasten, und der Druck lässt nach dem ersten Bogen keine leere Seite mehr (der Innenabstand der Seite schob den Bogen nach unten; es trat auch am Computer auf).",
+        es: "Correcciones: la compra de puntos ya no se sale de su cuadro en el teléfono, y la impresión ya no deja una página en blanco tras la primera hoja (el relleno de la página empujaba la hoja hacia abajo; también ocurría en ordenador).",
       },
       {
         en: "A backup of all characters: the character menu exports every character in one file and importing it puts them back (what is already there is left alone, a different version of the same character becomes a copy), and it shows when the last backup was made. First visit: a short welcome. On the sheet, tap the name to type another one and tap species, background, level, alignment or class to change them. The Class step says when a subclass is due. A new version of the app is offered with an Update button instead of installing silently.",

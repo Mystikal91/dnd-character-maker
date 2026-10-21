@@ -1148,9 +1148,11 @@
     background: #fff;
   }
 
-  .shell {
+  /* The page's own padding would push the first sheet down and spill it onto a blank page; the
+     style sheet that sets it comes later, so this has to insist. */
+  main.shell {
     max-width: none;
-    padding: 0;
+    padding: 0 !important;
   }
 
   .no-print {
