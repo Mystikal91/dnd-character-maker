@@ -317,14 +317,16 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
       const abilities = [...rule.supports.matchAll(/ASI_([A-Z]+)/g)]
         .map((m) => abilityFromWord(m[1] ?? ""))
         .filter((a): a is Ability => Boolean(a));
-      if (abilities.length > 0)
+      // Tasha's customised origins: "one ability score of your choice increases by 2".
+      const custom = rule.supports.match(/Custom Ability Score Increase\s*(\d+)/i);
+      if (abilities.length > 0 || custom)
         mapped.effects.push({
           type: "choice",
           id: nextChoiceId(),
           choose: rule.number,
           grants: "abilityBonus",
-          from: abilities,
-          value: 1,
+          from: abilities.length > 0 ? abilities : [...ABILITIES],
+          value: custom ? Number(custom[1]) : 1,
         });
       else mapped.unsupported += 1;
     } else if (

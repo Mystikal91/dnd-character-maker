@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-20",
     notes: [
       {
+        en: "Aurora imports: the custom ability score increase of Tasha's Custom Lineage (and other customised origins) is now a choice you make, instead of being lost.",
+        it: "Importazioni Aurora: l'aumento di caratteristica personalizzato della Stirpe personalizzata di Tasha (e delle altre origini personalizzate) ora è una scelta da fare, invece di andare perso.",
+        fr: "Imports Aurora : l'augmentation de caractéristique personnalisée du Lignage personnalisé de Tasha (et des autres origines personnalisées) est maintenant un choix à faire, au lieu d'être perdue.",
+        de: "Aurora-Importe: Die frei wählbare Attributserhöhung von Tashas Benutzerdefinierter Abstammung (und anderer angepasster Herkünfte) ist jetzt eine Auswahl, statt verloren zu gehen.",
+        es: "Importaciones de Aurora: el aumento de característica personalizado del Linaje personalizado de Tasha (y de otros orígenes personalizados) ahora es una elección, en lugar de perderse.",
+      },
+      {
         en: "The Origin and Class steps use the width of a computer screen: the menus stay on the left and, on the right, what the chosen species, background, class and subclass give (size, speed, proficiencies, traits and features, each one tap away). On phones and tablets the two parts stack.",
         it: "I passi Origine e Classe sfruttano la larghezza di uno schermo da computer: i menu restano a sinistra e a destra compare cosa danno la specie, il background, la classe e la sottoclasse scelti (taglia, velocità, competenze, tratti e privilegi, ognuno a un tocco). Su telefono e tablet le due parti si impilano.",
         fr: "Les étapes Origine et Classe profitent de la largeur d'un écran d'ordinateur : les menus restent à gauche et, à droite, ce qu'apportent l'espèce, l'historique, la classe et la sous-classe choisis (taille, vitesse, maîtrises, traits et aptitudes, chacun à portée d'un toucher). Sur téléphone et tablette, les deux parties s'empilent.",

@@ -735,6 +735,13 @@ const LEGACY = wrap(`
       <set name="symbol">A snowflake</set>
     </setters>
   </element>
+  <element name="Custom Folk" type="Race" source="Test Book" id="ID_L_RACE_CUSTOM">
+    <description><p>Build your own.</p></description>
+    <rules>
+      <select type="Ability Score Improvement" name="Increase +2" supports="Custom Ability Score Increase 2" requirements="!ID_INTERNAL_GRANTS_BACKGROUND_ASI" />
+      <select type="Ability Score Improvement" name="Increase +1" supports="Custom Ability Score Increase 1" requirements="ID_OPTION_NEVER_HELD" />
+    </rules>
+  </element>
   <element name="Test Proficiency" type="Proficiency" source="Internal" id="ID_L_PROF" />
   <element name="Test Rule" type="Rule" source="Internal" id="ID_L_RULE" />`);
 
@@ -787,6 +794,20 @@ describe("collections written for other readers", () => {
     expect(result.strings["imp1:deity/auril.desc"]).toContain(
       "Test Realms \u00b7 Neutral Evil \u00b7 Domains: Nature, Tempest \u00b7 Symbol: A snowflake",
     );
+  });
+
+  it("reads Tasha's custom ability increase as a choice of any ability", () => {
+    const race = byId(result, "imp1:species/custom-folk");
+    expect(race.effects).toEqual([
+      {
+        type: "choice",
+        id: "species-1",
+        choose: 1,
+        grants: "abilityBonus",
+        from: ["str", "dex", "con", "int", "wis", "cha"],
+        value: 2,
+      },
+    ]);
   });
 
   it("does not report definitions as unsupported", () => {
