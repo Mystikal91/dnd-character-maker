@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-20",
     notes: [
       {
+        en: "More of what Aurora files say now works: the feat a race or background lets you pick (Custom Lineage and the customised origins of Tasha), resistances, immunities and vulnerabilities (listed on the sheet, and given by the SRD's dwarves, tieflings and dragonborn), spells picked by school or level, and groups of tools to choose from.",
+        it: "Altro di ciò che dicono i file Aurora ora funziona: il talento che una razza o un background fa scegliere (Stirpe personalizzata e origini personalizzate di Tasha), resistenze, immunità e vulnerabilità (elencate in scheda, e date da nani, tiefling e dragonidi dell'SRD), incantesimi scelti per scuola o livello e gruppi di strumenti tra cui scegliere.",
+        fr: "Davantage de ce que disent les fichiers Aurora fonctionne : le don qu'une race ou un historique fait choisir (Lignage personnalisé et origines personnalisées de Tasha), résistances, immunités et vulnérabilités (listées sur la fiche, et données par les nains, tieflings et drakéides du SRD), sorts choisis par école ou niveau, et groupes d'outils à choisir.",
+        de: "Mehr von dem, was Aurora-Dateien sagen, funktioniert jetzt: das Talent, das eine Rasse oder ein Hintergrund wählen lässt (Benutzerdefinierte Abstammung und angepasste Herkünfte aus Tasha), Resistenzen, Immunitäten und Verwundbarkeiten (auf dem Bogen aufgeführt, und von den Zwergen, Tieflingen und Drachenblütigen des SRD gegeben), nach Schule oder Grad gewählte Zauber und Werkzeuggruppen zur Auswahl.",
+        es: "Más de lo que dicen los archivos de Aurora ya funciona: la dote que una raza o trasfondo deja elegir (Linaje personalizado y orígenes personalizados de Tasha), resistencias, inmunidades y vulnerabilidades (listadas en la hoja, y dadas por los enanos, tieflings y dracónidos del SRD), conjuros elegidos por escuela o nivel y grupos de herramientas entre los que elegir.",
+      },
+      {
         en: "Aurora imports: the custom ability score increase of Tasha's Custom Lineage (and other customised origins) is now a choice you make, instead of being lost.",
         it: "Importazioni Aurora: l'aumento di caratteristica personalizzato della Stirpe personalizzata di Tasha (e delle altre origini personalizzate) ora è una scelta da fare, invece di andare perso.",
         fr: "Imports Aurora : l'augmentation de caractéristique personnalisée du Lignage personnalisé de Tasha (et des autres origines personnalisées) est maintenant un choix à faire, au lieu d'être perdue.",

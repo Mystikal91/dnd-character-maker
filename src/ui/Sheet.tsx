@@ -3,7 +3,7 @@ import { SpellSheet } from "./SpellSheet";
 import { AbilityBlocks, Badges } from "./sheet/AbilityBlocks";
 import { ClassFeatures } from "./sheet/ClassFeatures";
 import { Attacks, CoreStats } from "./sheet/CoreStats";
-import { Feats, Inventory, Notes, Proficiencies, SpeciesTraits } from "./sheet/Details";
+import { Defenses, Feats, Inventory, Notes, Proficiencies, SpeciesTraits } from "./sheet/Details";
 import { SheetHeader } from "./sheet/SheetHeader";
 import { SpellcastingPanel } from "./sheet/SpellcastingPanel";
 import { StoryPanel } from "./sheet/Story";
@@ -22,6 +22,7 @@ export function Sheet() {
           <Badges />
           <AbilityBlocks />
           <Proficiencies />
+          <Defenses />
         </div>
         <div class="sheet-col col-center">
           <CoreStats />

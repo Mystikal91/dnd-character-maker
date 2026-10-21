@@ -7,6 +7,8 @@
  */
 import type { Effect, ModifierCondition, ModifierTarget } from "../../src/data/schema";
 
+const resists = (damage: string): Effect => ({ type: "defense", kind: "resistance", damage });
+
 const modifier = (
   target: ModifierTarget,
   value: number,
@@ -70,6 +72,20 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
     modifier("hpPerLevel", 1),
   ],
   "trait/dwarven-toughness": [modifier("hpPerLevel", 1)],
+
+  // Resistance to damage.
+  "trait/dwarven-resilience": [resists("poison")],
+  "trait/hellish-resistance": [resists("fire")],
+  "trait/draconic-ancestry-black": [resists("acid")],
+  "trait/draconic-ancestry-blue": [resists("lightning")],
+  "trait/draconic-ancestry-brass": [resists("fire")],
+  "trait/draconic-ancestry-bronze": [resists("lightning")],
+  "trait/draconic-ancestry-copper": [resists("acid")],
+  "trait/draconic-ancestry-gold": [resists("fire")],
+  "trait/draconic-ancestry-green": [resists("poison")],
+  "trait/draconic-ancestry-red": [resists("fire")],
+  "trait/draconic-ancestry-silver": [resists("cold")],
+  "trait/draconic-ancestry-white": [resists("cold")],
 
   // Speed.
   "feature/fast-movement": [modifier("speed", 10, "noHeavyArmor")],

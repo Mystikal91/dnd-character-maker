@@ -742,6 +742,55 @@ const LEGACY = wrap(`
       <select type="Ability Score Improvement" name="Increase +1" supports="Custom Ability Score Increase 1" requirements="ID_OPTION_NEVER_HELD" />
     </rules>
   </element>
+  <element name="Gifted Folk" type="Race" source="Test Book" id="ID_L_RACE_GIFTED">
+    <description><p>With a feat.</p></description>
+    <rules>
+      <select type="Feat" name="Feat (Gifted)" />
+      <select type="Feat" name="Origin Feat" supports="Origin" />
+      <grant type="Feat" id="ID_L_FEAT_TOUGH" />
+    </rules>
+  </element>
+  <element name="Tough" type="Feat" source="Test Book" id="ID_L_FEAT_TOUGH">
+    <description><p>You are tough.</p></description>
+  </element>
+  <element name="Lucky" type="Feat" source="Test Book" id="ID_L_FEAT_LUCKY">
+    <supports>Origin</supports>
+    <description><p>You are lucky.</p></description>
+  </element>
+  <element name="Stonefolk" type="Race" source="Test Book" id="ID_L_RACE_STONE">
+    <description><p>Hard to hurt.</p></description>
+    <rules>
+      <grant type="Condition" id="ID_INTERNAL_CONDITION_DAMAGE_RESISTANCE_NECROTIC" />
+      <grant type="Condition" id="ID_INTERNAL_CONDITION_DAMAGE_IMMUNITY_POISON" />
+      <grant type="Condition" id="ID_INTERNAL_CONDITION_DAMAGE_VULNERAILITY_FIRE" />
+    </rules>
+  </element>
+  <element name="Grim Touch" type="Spell" source="Test Book" id="ID_L_SPELL_GRIM">
+    <supports>Wizard</supports>
+    <description><p>A cold hand.</p></description>
+    <setters><set name="level">0</set><set name="school">Necromancy</set></setters>
+  </element>
+  <element name="Light Dab" type="Spell" source="Test Book" id="ID_L_SPELL_DAB">
+    <supports>Wizard</supports>
+    <description><p>A spark.</p></description>
+    <setters><set name="level">0</set><set name="school">Evocation</set></setters>
+  </element>
+  <element name="Gravefolk" type="Race" source="Test Book" id="ID_L_RACE_GRAVE">
+    <description><p>Of the tombs.</p></description>
+    <rules>
+      <select type="Spell" name="Cantrip" supports="0,Necromancy" />
+      <select type="Spell" name="Another" supports="(0||1),(Evocation||Illusion),Wizard" />
+      <select type="Spell" name="Per slot" supports="$(spellcasting:slots),Wizard" />
+    </rules>
+  </element>
+  <element name="Toolfolk" type="Race" source="Test Book" id="ID_L_RACE_TOOLS">
+    <description><p>Handy.</p></description>
+    <rules>
+      <select type="Proficiency" name="Tool" supports="Gaming Set||Musical Instrument" number="2" />
+      <select type="Proficiency" name="Odd" supports="Simple||Tool" />
+      <grant type="Proficiency" id="ID_PROFICIENCY_ARMOR_PROFICIENCY_SHIELD" />
+    </rules>
+  </element>
   <element name="Test Proficiency" type="Proficiency" source="Internal" id="ID_L_PROF" />
   <element name="Test Rule" type="Rule" source="Internal" id="ID_L_RULE" />`);
 
@@ -808,6 +857,51 @@ describe("collections written for other readers", () => {
         value: 2,
       },
     ]);
+  });
+
+  it("reads a feat choice and a granted feat", () => {
+    const race = byId(result, "imp1:species/gifted-folk");
+    expect(race.effects).toEqual([
+      { type: "choice", id: "species-1", choose: 1, grants: "feat", from: [] },
+      { type: "choice", id: "species-2", choose: 1, grants: "feat", from: ["imp1:feat/lucky"] },
+      { type: "trait", id: "imp1:feat/tough" },
+    ]);
+  });
+
+  it("reads resistances, immunities and vulnerabilities", () => {
+    const race = byId(result, "imp1:species/stonefolk");
+    expect(race.effects).toEqual([
+      { type: "defense", kind: "resistance", damage: "necrotic" },
+      { type: "defense", kind: "immunity", damage: "poison" },
+      { type: "defense", kind: "vulnerability", damage: "fire" },
+    ]);
+  });
+
+  it("offers the spells a select asks for by level, school, class and alternatives", () => {
+    const race = byId(result, "imp1:species/gravefolk");
+    const picks = race.effects.flatMap((e) => (e.type === "choice" ? [e.from] : []));
+    expect(picks).toHaveLength(2); // the one that depends on spell slots is left out
+    expect(picks[0]).toContain("imp1:spell/grim-touch");
+    expect(picks[0]).toContain("srd51:spell/chill-touch");
+    expect(picks[0]).not.toContain("imp1:spell/light-dab");
+    expect(picks[1]).toContain("imp1:spell/light-dab");
+    expect(picks[1]).toContain("srd51:spell/magic-missile");
+    expect(picks[1]).not.toContain("imp1:spell/grim-touch");
+  });
+
+  it("offers groups of tools, and finds the shield proficiency", () => {
+    const race = byId(result, "imp1:species/toolfolk");
+    const choices = race.effects.flatMap((e) => (e.type === "choice" ? [e] : []));
+    expect(choices).toHaveLength(1); // "Simple||Tool" mixes weapons in and is left alone
+    expect(choices[0]).toMatchObject({ choose: 2, grants: "proficiency" });
+    expect(choices[0]?.from).toContain("tool:dice-set");
+    expect(choices[0]?.from).toContain("tool:lute");
+    expect(choices[0]?.from).not.toContain("tool:thieves-tools");
+    expect(race.effects).toContainEqual({
+      type: "proficiency",
+      category: "armor",
+      target: "shields",
+    });
   });
 
   it("does not report definitions as unsupported", () => {

@@ -43,6 +43,12 @@ interface Input {
   warnings: Warning[];
 }
 
+/** The options of a choice: what it lists, or every feat when a feat choice lists none. */
+function optionsOf(index: PackIndex, choice: ChoiceEffect): string[] {
+  if (choice.grants !== "feat" || choice.from.length > 0) return choice.from;
+  return [...index.values()].filter((e) => e.kind === "feat").map((e) => e.id);
+}
+
 /** The effect that picking `option` of a choice results in. */
 function grantEffect(choice: ChoiceEffect, option: string): Effect {
   switch (choice.grants) {
@@ -57,6 +63,7 @@ function grantEffect(choice: ChoiceEffect, option: string): Effect {
     case "spell":
       return { type: "grantSpell", spell: option };
     case "trait":
+    case "feat":
       return { type: "trait", id: option };
     case "expertise":
       return { type: "expertise", skill: option };
@@ -91,8 +98,9 @@ export function collectEffects(
   const resolve = (choice: ChoiceEffect, source: string) => {
     const key = `${source}/${choice.id}`;
     const selected: string[] = [];
+    const options = optionsOf(index, choice);
     for (const option of selections[key] ?? []) {
-      if (!choice.from.includes(option)) warn(warnings, "invalidChoice", { source, option });
+      if (!options.includes(option)) warn(warnings, "invalidChoice", { source, option });
       else if (selected.length >= choice.choose) warn(warnings, "tooManyChoices", { source });
       else if (!selected.includes(option)) selected.push(option);
     }
@@ -103,7 +111,7 @@ export function collectEffects(
       grants: choice.grants,
       choose: choice.choose,
       ...(choice.value !== undefined && { value: choice.value }),
-      options: choice.from,
+      options,
       selected,
       remaining: choice.choose - selected.length,
     });

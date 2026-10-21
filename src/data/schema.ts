@@ -82,8 +82,17 @@ export const EffectSchema = v.variant("type", [
     id: v.string(),
     choose: v.pipe(v.number(), v.integer(), v.minValue(1)),
     /** What each pick grants. `from` holds the options: entry ids, `category:target` for
-     * proficiencies, language slugs for languages, ability ids for ability bonuses. */
-    grants: v.picklist(["proficiency", "language", "spell", "trait", "abilityBonus", "expertise"]),
+     * proficiencies, language slugs for languages, ability ids for ability bonuses. A `feat`
+     * choice with an empty `from` offers every feat there is. */
+    grants: v.picklist([
+      "proficiency",
+      "language",
+      "spell",
+      "trait",
+      "abilityBonus",
+      "expertise",
+      "feat",
+    ]),
     from: v.array(v.string()),
     /** Bonus applied per pick when `grants` is `abilityBonus`. */
     value: v.optional(v.number()),
@@ -110,6 +119,12 @@ export const EffectSchema = v.variant("type", [
   }),
   /** Double proficiency bonus on a skill the character is proficient in. */
   v.object({ type: v.literal("expertise"), skill: v.string() }),
+  /** Resistance, immunity or vulnerability to a type of damage (`fire`, `poison`...). */
+  v.object({
+    type: v.literal("defense"),
+    kind: v.picklist(["resistance", "immunity", "vulnerability"]),
+    damage: v.string(),
+  }),
   /**
    * Half the proficiency bonus on ability checks that do not use it (Jack of All Trades,
    * Remarkable Athlete): all abilities, or just those listed.

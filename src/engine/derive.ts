@@ -2,6 +2,7 @@ import { classData, subclassData } from "../data/progression";
 import {
   ABILITIES,
   type Ability,
+  type Effect,
   type Entry,
   PROFICIENCY_CATEGORIES,
   type Pack,
@@ -67,6 +68,8 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   hitPoints: { max: number; overridden: boolean; hitDice: Record<string, number> };
   proficiencies: Record<ProficiencyCategory, string[]>;
   traits: string[];
+  /** Damage types the character resists, is immune to or is vulnerable to. */
+  defenses: Record<"resistance" | "immunity" | "vulnerability", string[]>;
   /** Class and subclass features unlocked at the current levels. */
   features: string[];
   /** The first spellcasting class: the one whose numbers the sheet headlines. */
@@ -112,6 +115,14 @@ function sizeChoices(feature: Entry, table: Record<string, unknown> | undefined)
     return typeof size === "number" && size > 0 ? [{ ...e, choose: size }] : [];
   });
   return { ...feature, effects };
+}
+
+function defensesOf(effects: Effect[]): DerivedSheet["defenses"] {
+  const found: DerivedSheet["defenses"] = { resistance: [], immunity: [], vulnerability: [] };
+  for (const e of effects) {
+    if (e.type === "defense" && !found[e.kind].includes(e.damage)) found[e.kind].push(e.damage);
+  }
+  return found;
 }
 
 function overrideNumber(character: Character, key: string): number | undefined {
@@ -325,12 +336,16 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     PROFICIENCY_CATEGORIES.map((c) => [c, [] as string[]]),
   ) as Record<ProficiencyCategory, string[]>;
   const traits: string[] = [];
+  // A feat that a species, background or class gives (or lets you pick) is listed as a feat.
+  const givenFeats: string[] = [];
   for (const effect of effects) {
     if (effect.type === "proficiency") {
       const list = proficiencies[effect.category];
       if (!list.includes(effect.target)) list.push(effect.target);
-    } else if (effect.type === "trait" && !traits.includes(effect.id)) {
-      traits.push(effect.id);
+    } else if (effect.type === "trait") {
+      if (index.get(effect.id)?.kind === "feat") {
+        if (!givenFeats.includes(effect.id)) givenFeats.push(effect.id);
+      } else if (!traits.includes(effect.id)) traits.push(effect.id);
     }
   }
 
@@ -438,6 +453,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     hitPoints: { max: hpOverride ?? hp + hpBonus, overridden: hpOverride !== undefined, hitDice },
     proficiencies,
     traits,
+    defenses: defensesOf(effects),
     features: [...new Set(features)],
     ...(spellcasting && { spellcasting }),
     spellcasters: casters,
@@ -456,7 +472,9 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
         ),
       ),
     ],
-    feats: chosen.filter((e) => e.kind === "feat").map((e) => e.id),
+    feats: [
+      ...new Set([...chosen.filter((e) => e.kind === "feat").map((e) => e.id), ...givenFeats]),
+    ],
     asi: { available: asiAvailable, used: asiUsed },
     warnings,
   };

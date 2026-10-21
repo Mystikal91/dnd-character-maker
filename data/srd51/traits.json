@@ -16,7 +16,13 @@
     {
       "id": "srd51:trait/dwarven-resilience",
       "kind": "trait",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "resistance",
+          "damage": "poison"
+        }
+      ],
       "data": {}
     },
     {
@@ -244,7 +250,13 @@
       "id": "srd51:trait/draconic-ancestry-black",
       "kind": "trait",
       "parent": "srd51:trait/draconic-ancestry",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "resistance",
+          "damage": "acid"
+        }
+      ],
       "data": {
         "traitSpecific": {
           "damageType": {
@@ -288,7 +300,13 @@
       "id": "srd51:trait/draconic-ancestry-blue",
       "kind": "trait",
       "parent": "srd51:trait/draconic-ancestry",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "resistance",
+          "damage": "lightning"
+        }
+      ],
       "data": {
         "traitSpecific": {
           "damageType": {
@@ -332,7 +350,13 @@
       "id": "srd51:trait/draconic-ancestry-brass",
       "kind": "trait",
       "parent": "srd51:trait/draconic-ancestry",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "resistance",
+          "damage": "fire"
+        }
+      ],
       "data": {
         "traitSpecific": {
           "damageType": {
@@ -376,7 +400,13 @@
       "id": "srd51:trait/draconic-ancestry-bronze",
       "kind": "trait",
       "parent": "srd51:trait/draconic-ancestry",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "resistance",
+          "damage": "lightning"
+        }
+      ],
       "data": {
         "traitSpecific": {
           "damageType": {
@@ -420,7 +450,13 @@
       "id": "srd51:trait/draconic-ancestry-copper",
       "kind": "trait",
       "parent": "srd51:trait/draconic-ancestry",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "resistance",
+          "damage": "acid"
+        }
+      ],
       "data": {
         "traitSpecific": {
           "damageType": {
@@ -464,7 +500,13 @@
       "id": "srd51:trait/draconic-ancestry-gold",
       "kind": "trait",
       "parent": "srd51:trait/draconic-ancestry",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "resistance",
+          "damage": "fire"
+        }
+      ],
       "data": {
         "traitSpecific": {
           "damageType": {
@@ -508,7 +550,13 @@
       "id": "srd51:trait/draconic-ancestry-green",
       "kind": "trait",
       "parent": "srd51:trait/draconic-ancestry",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "resistance",
+          "damage": "poison"
+        }
+      ],
       "data": {
         "traitSpecific": {
           "damageType": {
@@ -552,7 +600,13 @@
       "id": "srd51:trait/draconic-ancestry-red",
       "kind": "trait",
       "parent": "srd51:trait/draconic-ancestry",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "resistance",
+          "damage": "fire"
+        }
+      ],
       "data": {
         "traitSpecific": {
           "damageType": {
@@ -596,7 +650,13 @@
       "id": "srd51:trait/draconic-ancestry-silver",
       "kind": "trait",
       "parent": "srd51:trait/draconic-ancestry",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "resistance",
+          "damage": "cold"
+        }
+      ],
       "data": {
         "traitSpecific": {
           "damageType": {
@@ -640,7 +700,13 @@
       "id": "srd51:trait/draconic-ancestry-white",
       "kind": "trait",
       "parent": "srd51:trait/draconic-ancestry",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "resistance",
+          "damage": "cold"
+        }
+      ],
       "data": {
         "traitSpecific": {
           "damageType": {
@@ -776,7 +842,13 @@
     {
       "id": "srd51:trait/hellish-resistance",
       "kind": "trait",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "resistance",
+          "damage": "fire"
+        }
+      ],
       "data": {}
     },
     {

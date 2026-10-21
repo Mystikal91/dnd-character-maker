@@ -24,8 +24,13 @@ number comes from. The kinds are `abilityBonus`, `proficiency`, `trait`, `choice
   Targets: `ac`, `speed`, `initiative`, `attack`, `damage`, `hpPerLevel`. Conditions: `wearingArmor`,
   `unarmored`, `noHeavyArmor`, `ranged`, `melee`, `dueling` (a one-handed melee weapon with no other
   weapon).
+- `{ "type": "defense", "kind": "resistance", "damage": "fire" }` is a resistance, an
+  immunity or a vulnerability to a type of damage; the sheet lists them.
 - `{ "type": "unarmoredDefense", "base": 10, "add": ["con"], "shield": true }` is armor class
   without armor: `base` + Dexterity + the listed abilities.
+
+A `choice` can grant a `feat`: with an empty `from` it offers every feat there is, and the pick
+(like a feat a species gives outright, as a `trait`) is listed with the feats of the sheet.
 
 A `grantSpell` effect can carry a `minLevel` (the spell comes with that level of the class).
 A subclass entry can list spells it always prepares (`spells`), spells it adds to the class's

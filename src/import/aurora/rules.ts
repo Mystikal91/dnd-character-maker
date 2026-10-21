@@ -1,6 +1,7 @@
 import { ABILITIES, type Ability, type Effect } from "../../data/schema";
+import { classIdByName } from "./emit";
 import { type Context, FEATURE_TYPES, type Source, elementTags, ofType } from "./registry";
-import { clean, slugify } from "./xml";
+import { clean, number, setters, slugify, supportsOf } from "./xml";
 
 /** The `<rules>` of an element, as plain data. */
 export interface Rule {
@@ -122,7 +123,9 @@ export function proficiencyOf(
   m = aid.match(/^ID_PROFICIENCY_ARMOR_PROFICIENCY_(.+)$/);
   if (m?.[1]) {
     const x = slugify(m[1].replace(/_/g, " "));
-    const target = [x, `${x}-armor`, x.replace(/-armor$/, ""), x.replace(/s$/, "")].find(has);
+    const target = [x, `${x}-armor`, x.replace(/-armor$/, ""), x.replace(/s$/, ""), `${x}s`].find(
+      has,
+    );
     return target ? { category: "armor", target } : undefined;
   }
 
@@ -166,6 +169,68 @@ function allLanguages(ctx: Context): string[] {
   return [...slugs];
 }
 
+/** The tools a select can ask for by group, as the app names them. */
+const TOOL_GROUPS: Record<string, string[]> = {
+  "artisan tools": [
+    "alchemists-supplies",
+    "brewers-supplies",
+    "calligraphers-supplies",
+    "carpenters-tools",
+    "cartographers-tools",
+    "cobblers-tools",
+    "cooks-utensils",
+    "glassblowers-tools",
+    "jewelers-tools",
+    "leatherworkers-tools",
+    "masons-tools",
+    "painters-supplies",
+    "potters-tools",
+    "smiths-tools",
+    "tinkers-tools",
+    "weavers-tools",
+    "woodcarvers-tools",
+  ],
+  "musical instrument": [
+    "bagpipes",
+    "drum",
+    "dulcimer",
+    "flute",
+    "lute",
+    "lyre",
+    "horn",
+    "pan-flute",
+    "shawm",
+    "viol",
+  ],
+  "gaming set": ["dice-set", "playing-card-set"],
+};
+TOOL_GROUPS.tool = [
+  ...(TOOL_GROUPS["artisan tools"] ?? []),
+  ...(TOOL_GROUPS["gaming set"] ?? []),
+  ...(TOOL_GROUPS["musical instrument"] ?? []),
+  "disguise-kit",
+  "forgery-kit",
+  "herbalism-kit",
+  "navigators-tools",
+  "poisoners-kit",
+  "thieves-tools",
+];
+
+/** "Artisan tools", "Skill||Tool"...: the options when every word names a group of skills or tools. */
+function groupedProficiencies(supports: string): string[] | undefined {
+  const words = supports.split("||").map((w) => w.trim().toLowerCase());
+  if (words.length === 0 || words.some((w) => w !== "skill" && !TOOL_GROUPS[w])) return undefined;
+  return [
+    ...new Set(
+      words.flatMap((w) =>
+        w === "skill"
+          ? ALL_SKILLS.map((s) => `skill:${s}`)
+          : (TOOL_GROUPS[w] ?? []).map((t) => `tool:${t}`),
+      ),
+    ),
+  ];
+}
+
 const ALL_SKILLS = [
   "acrobatics",
   "animal-handling",
@@ -187,15 +252,132 @@ const ALL_SKILLS = [
   "survival",
 ];
 
-/** Spells of one class and level in the app and in this pack, for "choose a wizard cantrip". */
-function spellsFor(ctx: Context, classSlug: string, level: number): string[] {
-  const classId = `srd51:class/${classSlug}`;
-  const found: string[] = [];
+const SCHOOLS = new Set([
+  "abjuration",
+  "conjuration",
+  "divination",
+  "enchantment",
+  "evocation",
+  "illusion",
+  "necromancy",
+  "transmutation",
+]);
+
+interface SpellFacts {
+  id: string;
+  level: number;
+  school: string;
+  ritual: boolean;
+  classes: Set<string>;
+}
+
+const factsCache = new WeakMap<Context, SpellFacts[]>();
+
+/** Every spell the app has and every spell this pack creates, with what a select can ask about. */
+function allSpells(ctx: Context): SpellFacts[] {
+  const cached = factsCache.get(ctx);
+  if (cached) return cached;
+  const found: SpellFacts[] = [];
   for (const entry of ctx.options.index.values()) {
-    if (entry.kind !== "spell" || entry.data.level !== level) continue;
-    if ((entry.data.classes as string[] | undefined)?.includes(classId)) found.push(entry.id);
+    if (entry.kind !== "spell") continue;
+    found.push({
+      id: entry.id,
+      level: Number(entry.data.level ?? 0),
+      school: String(entry.data.school ?? ""),
+      ritual: entry.data.ritual === true,
+      classes: new Set((entry.data.classes as string[] | undefined) ?? []),
+    });
   }
+  for (const source of ofType(ctx, "Spell")) {
+    if (!source.id || source.existing) continue;
+    const set = setters(source.el);
+    found.push({
+      id: source.id,
+      level: number(set.get("level")?.text ?? "") ?? 0,
+      school: slugify(set.get("school")?.text ?? ""),
+      ritual: set.get("isRitual")?.text === "true",
+      classes: new Set(
+        supportsOf(source.el)
+          .map((name) => classIdByName(ctx, name))
+          .filter((id): id is string => Boolean(id)),
+      ),
+    });
+  }
+  factsCache.set(ctx, found);
   return found;
+}
+
+/** Splits at commas that are not inside brackets. */
+function splitTop(text: string, separator: string): string[] {
+  const parts: string[] = [];
+  let depth = 0;
+  let from = 0;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === "(") depth++;
+    else if (ch === ")") depth--;
+    else if (depth === 0 && text.startsWith(separator, i)) {
+      parts.push(text.slice(from, i));
+      from = i + separator.length;
+      i += separator.length - 1;
+    }
+  }
+  parts.push(text.slice(from));
+  return parts.map((p) => p.trim()).filter(Boolean);
+}
+
+const unwrap = (text: string) => {
+  let t = text.trim();
+  while (t.startsWith("(") && t.endsWith(")") && splitTop(t.slice(1, -1), "||").length >= 1) {
+    const inner = t.slice(1, -1);
+    // Only strip brackets that wrap the whole text.
+    let depth = 0;
+    let whole = true;
+    for (let i = 0; i < inner.length; i++) {
+      if (inner[i] === "(") depth++;
+      else if (inner[i] === ")" && --depth < 0) whole = false;
+    }
+    if (!whole) break;
+    t = inner.trim();
+  }
+  return t;
+};
+
+/**
+ * The spells a select offers, from its `supports`: spell levels, classes, schools and "Ritual"
+ * joined by commas (all must hold) with `||` between alternatives, or a plain list of spells.
+ * Returns undefined for what cannot be worked out here (slot levels that depend on the class).
+ */
+function spellChoices(ctx: Context, supports: string, className: string): string[] | undefined {
+  const text = supports.replace(/\$\(spellcasting:list\)/g, className).trim();
+  if (!text || text.includes("$(")) return undefined;
+  if (/^ID_[A-Z0-9_]+(\s*[|,]\s*ID_[A-Z0-9_]+)*$/.test(text)) {
+    const ids = text
+      .split(/\s*[|,]\s*/)
+      .map((aid) => ctx.byAid.get(aid)?.id)
+      .filter((id): id is string => Boolean(id));
+    return ids.length > 0 ? ids : undefined;
+  }
+  const tests: ((s: SpellFacts) => boolean)[] = [];
+  for (const part of splitTop(text, ",")) {
+    const alternatives: ((s: SpellFacts) => boolean)[] = [];
+    for (const raw of splitTop(unwrap(part), "||")) {
+      const token = unwrap(raw);
+      const lower = token.toLowerCase();
+      const classId = classIdByName(ctx, token);
+      if (/^\d+$/.test(token)) alternatives.push((s) => s.level === Number(token));
+      else if (lower === "ritual") alternatives.push((s) => s.ritual);
+      else if (SCHOOLS.has(lower)) alternatives.push((s) => s.school === lower);
+      else if (classId) alternatives.push((s) => s.classes.has(classId));
+      else return undefined;
+    }
+    if (alternatives.length === 0) return undefined;
+    tests.push((s) => alternatives.some((test) => test(s)));
+  }
+  const found = allSpells(ctx)
+    .filter((s) => tests.every((test) => test(s)))
+    .map((s) => s.id);
+  return found.length > 0 ? found : undefined;
 }
 
 export interface MappedRules {
@@ -261,6 +443,27 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
         const spell = ctx.byAid.get(rule.id)?.id;
         if (spell) mapped.effects.push({ type: "grantSpell", spell });
         else mapped.unsupported += 1;
+      } else if (rule.type === "Condition") {
+        const m = rule.id.match(
+          /^ID_INTERNAL_CONDITION_DAMAGE_(RESISTANCE|IMMUNITY|VULNERABILITY|VULNERAILITY)_([A-Z_]+)$/,
+        );
+        if (m?.[1] && m[2])
+          mapped.effects.push({
+            type: "defense",
+            kind:
+              m[1] === "RESISTANCE"
+                ? "resistance"
+                : m[1] === "IMMUNITY"
+                  ? "immunity"
+                  : "vulnerability",
+            damage: slugify(m[2].replace(/_/g, " ")),
+          });
+        else mapped.unsupported += 1;
+      } else if (rule.type === "Feat") {
+        // A feat that comes with the race, background or class.
+        const feat = ctx.byAid.get(rule.id)?.id;
+        if (feat) mapped.effects.push({ type: "trait", id: feat });
+        else mapped.unsupported += 1;
       } else if (FEATURE_TYPES.has(rule.type)) {
         const target = ctx.byAid.get(rule.id);
         if (target) mapped.grants.push({ source: target, level: rule.level });
@@ -287,9 +490,8 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
               .map((aid) => proficiencyOf(ctx, aid))
               .filter((p): p is NonNullable<typeof p> => Boolean(p))
               .map((p) => `${p.category}:${p.target}`)
-          : /skill/i.test(rule.supports)
-            ? ALL_SKILLS.map((s) => `skill:${s}`)
-            : [];
+          : (groupedProficiencies(rule.supports) ??
+            (/skill/i.test(rule.supports) ? ALL_SKILLS.map((s) => `skill:${s}`) : []));
       if (from.length > 0)
         mapped.effects.push({
           type: "choice",
@@ -300,10 +502,8 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
         });
       else mapped.unsupported += 1;
     } else if (rule.type === "Spell") {
-      const text = rule.supports.replace("$(spellcasting:list)", options.classSlug ?? "");
-      const wanted = text.match(/^([A-Za-z' ]+?)\s*(?:&&|,)\s*(\d+)$/);
-      const classSlug = slugify(wanted?.[1] ?? "");
-      const from = wanted ? spellsFor(ctx, classSlug, Number(wanted[2])) : [];
+      const from =
+        spellChoices(ctx, rule.supports, (options.classSlug ?? "").replace(/-/g, " ")) ?? [];
       if (from.length > 0 && rule.level === undefined)
         mapped.effects.push({
           type: "choice",
@@ -313,6 +513,22 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
           from,
         });
       else if (rule.level === undefined) mapped.unsupported += 1;
+    } else if (rule.type === "Feat" && !rule.optional) {
+      // "One feat of your choice": every feat, or the ones the select asks for.
+      const listed = rule.supports
+        ? ofType(ctx, "Feat")
+            .filter((s) => s.id && selectMatches(rule.supports, s))
+            .map((s) => s.id as string)
+        : [];
+      if (!rule.supports || listed.length > 0)
+        mapped.effects.push({
+          type: "choice",
+          id: nextChoiceId(),
+          choose: rule.number,
+          grants: "feat",
+          from: listed,
+        });
+      else mapped.unsupported += 1;
     } else if (rule.type === "Ability Score Improvement") {
       const abilities = [...rule.supports.matchAll(/ASI_([A-Z]+)/g)]
         .map((m) => abilityFromWord(m[1] ?? ""))

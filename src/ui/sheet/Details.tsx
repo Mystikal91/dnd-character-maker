@@ -42,6 +42,38 @@ export function Proficiencies() {
   );
 }
 
+const DEFENSE_LABELS = {
+  resistance: "sheet.resistances",
+  immunity: "sheet.immunities",
+  vulnerability: "sheet.vulnerabilities",
+} as const;
+
+/** Resistances, immunities and vulnerabilities to damage. Hidden when there are none. */
+export function Defenses() {
+  const s = sheet.value;
+  if (!s) return null;
+  const kinds = (["resistance", "immunity", "vulnerability"] as const).filter(
+    (kind) => s.defenses[kind].length > 0,
+  );
+  if (kinds.length === 0) return null;
+  const damage = (type: string) => {
+    const key = `hb.o.${type}` as UiKey;
+    return ui(key) === key ? type : ui(key);
+  };
+  return (
+    <Panel title={ui("sheet.defenses")}>
+      <dl class="pairs">
+        {kinds.map((kind) => (
+          <Fragment key={kind}>
+            <dt>{ui(DEFENSE_LABELS[kind])}</dt>
+            <dd>{s.defenses[kind].map(damage).join(", ")}</dd>
+          </Fragment>
+        ))}
+      </dl>
+    </Panel>
+  );
+}
+
 /** Traits from the species and subspecies. */
 export function SpeciesTraits() {
   const c = content.value;

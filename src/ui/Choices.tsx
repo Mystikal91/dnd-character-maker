@@ -2,6 +2,7 @@ import { character, content, sheet, updateCharacter } from "../app/store";
 import type { Content } from "../content/browser";
 import type { PendingChoice } from "../engine/choices";
 import { type UiKey, ui } from "../i18n/ui";
+import { RulesText } from "./sheet/parts";
 import { SpellInfoButton } from "./spells/SpellInfo";
 
 /** The display name of one option of a choice, whatever it grants. */
@@ -19,12 +20,62 @@ function optionLabel(c: Content, ruleset: string, choice: PendingChoice, option:
       return c.name(`${ruleset}:ability/${option}`);
     case "spell":
     case "trait":
+    case "feat":
       return c.name(option);
     case "expertise":
       return c.index.has(`${ruleset}:skill/${option}`)
         ? c.name(`${ruleset}:skill/${option}`)
         : c.name(`${ruleset}:proficiency/${option}`);
   }
+}
+
+/** A pick among many options (every feat): one menu per pick, with the text of what was picked. */
+function MenuPicks({ choice }: { choice: PendingChoice }) {
+  const c = content.value;
+  const s = sheet.value;
+  if (!c || !s) return null;
+  const name = (id: string) => c.name(id);
+  const sorted = [...choice.options].sort((a, b) => name(a).localeCompare(name(b)));
+  const set = (slot: number, id: string) =>
+    updateCharacter((d) => {
+      const next = [...(d.selections[choice.key] ?? [])];
+      if (id) next[slot] = id;
+      else next.splice(slot, 1);
+      const kept = next.filter(Boolean);
+      if (kept.length === 0) delete d.selections[choice.key];
+      else d.selections[choice.key] = kept;
+    });
+  const slots = Array.from({ length: choice.choose }, (_, slot) => ({
+    slot,
+    id: `${choice.key}#${slot}`,
+  }));
+  return (
+    <div class="menu-picks">
+      {slots.map(({ slot, id }) => {
+        const own = choice.selected[slot];
+        const taken = new Set([...choice.selected, ...s.feats]);
+        return (
+          <div key={id}>
+            <select
+              aria-label={name(choice.source)}
+              value={own ?? ""}
+              onChange={(e) => set(slot, e.currentTarget.value)}
+            >
+              <option value="">{ui("form.none")}</option>
+              {sorted
+                .filter((id) => id === own || !taken.has(id))
+                .map((id) => (
+                  <option key={id} value={id}>
+                    {name(id)}
+                  </option>
+                ))}
+            </select>
+            {own && <RulesText name={name(own)} text={c.text(own, "desc")} />}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export function Choices() {
@@ -73,30 +124,34 @@ export function Choices() {
             {ui(`choice.kind.${choice.grants}` as UiKey)} ·{" "}
             {ui("choice.hint", { n: choice.choose, left: choice.remaining })}
           </p>
-          <ul class="options">
-            {choice.options.map((option) => {
-              const held = alreadyHeld(choice, option);
-              const checked = choice.selected.includes(option);
-              const full = !checked && choice.remaining === 0;
-              return (
-                <li key={option}>
-                  <label class={held ? "disabled" : ""}>
-                    <input
-                      type="checkbox"
-                      checked={checked}
-                      disabled={held || full}
-                      onChange={(e) => toggle(choice, option, e.currentTarget.checked)}
-                    />
-                    <span>
-                      {optionLabel(c, ch.ruleset, choice, option)}
-                      {held && <span class="muted"> ({ui("choice.alreadyHave")})</span>}
-                    </span>
-                  </label>
-                  {choice.grants === "spell" && <SpellInfoButton id={option} />}
-                </li>
-              );
-            })}
-          </ul>
+          {choice.grants === "feat" ? (
+            <MenuPicks choice={choice} />
+          ) : (
+            <ul class="options">
+              {choice.options.map((option) => {
+                const held = alreadyHeld(choice, option);
+                const checked = choice.selected.includes(option);
+                const full = !checked && choice.remaining === 0;
+                return (
+                  <li key={option}>
+                    <label class={held ? "disabled" : ""}>
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        disabled={held || full}
+                        onChange={(e) => toggle(choice, option, e.currentTarget.checked)}
+                      />
+                      <span>
+                        {optionLabel(c, ch.ruleset, choice, option)}
+                        {held && <span class="muted"> ({ui("choice.alreadyHave")})</span>}
+                      </span>
+                    </label>
+                    {choice.grants === "spell" && <SpellInfoButton id={option} />}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </fieldset>
       ))}
     </fieldset>
