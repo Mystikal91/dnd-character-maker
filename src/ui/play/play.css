@@ -7,12 +7,14 @@
 
 .play-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
   align-items: start;
 }
 
 .play-col {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
   align-content: start;
   min-width: 0;
@@ -20,23 +22,23 @@
 
 @container play (min-width: 42rem) {
   .play-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
   .play-col:last-child {
     grid-column: 1 / -1;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
 @container play (min-width: 66rem) {
   .play-grid {
-    grid-template-columns: 0.95fr 1.15fr 1fr;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr) minmax(0, 1fr);
   }
 
   .play-col:last-child {
     grid-column: auto;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -309,6 +311,12 @@
 .dice-form .field {
   flex: 1;
   margin: 0;
+  min-width: 0;
+}
+
+.dice-form input {
+  width: 100%;
+  min-width: 0;
 }
 
 .dice-form button {

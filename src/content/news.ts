@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-22",
     notes: [
       {
+        en: "Fix on phones: in Play, the boxes from Dice down no longer grow wider than the screen (they were cut off and the page scrolled sideways).",
+        it: "Correzione da telefono: in Gioca i riquadri da Dadi in poi non si allargano più oltre lo schermo (venivano tagliati e la pagina scorreva di lato).",
+        fr: "Correction sur téléphone : dans Jouer, les cadres à partir de Dés ne dépassent plus la largeur de l'écran (ils étaient coupés et la page défilait sur le côté).",
+        de: "Korrektur auf dem Handy: In Spielen werden die Kästen ab Würfel nicht mehr breiter als der Bildschirm (sie wurden abgeschnitten und die Seite scrollte seitlich).",
+        es: "Corrección en el teléfono: en Jugar, los cuadros desde Dados ya no se ensanchan más que la pantalla (se cortaban y la página se desplazaba hacia los lados).",
+      },
+      {
         en: "Weapons can use another ability when a feature says so: a Hexblade's Hex Warrior (Charisma, for a one-handed weapon you are proficient with) and a Battle Smith's Battle Ready (Intelligence, for a magic weapon) now change the attack and damage on the sheet. Content packs can use the same rule for anything else.",
         it: "Le armi possono usare un'altra caratteristica quando un privilegio lo dice: Hex Warrior dell'Hexblade (Carisma, per un'arma a una mano in cui sei competente) e Battle Ready del Battle Smith (Intelligenza, per un'arma magica) ora cambiano attacco e danno nella scheda. I pacchetti di contenuti possono usare la stessa regola per qualsiasi altro caso.",
         fr: "Les armes peuvent utiliser une autre caractéristique quand un trait le dit : Hex Warrior du Hexblade (Charisme, pour une arme à une main maniée avec maîtrise) et Battle Ready du Forgeguerre (Intelligence, pour une arme magique) changent désormais l'attaque et les dégâts sur la fiche. Les paquets de contenu peuvent utiliser la même règle pour tout autre cas.",
