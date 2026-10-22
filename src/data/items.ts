@@ -32,6 +32,8 @@ export const ItemDataSchema = v.object({
   category: v.string(),
   cost: v.object({ amount: v.number(), unit: v.picklist(["cp", "sp", "gp"]) }),
   weight: v.optional(v.number()),
+  /** Present on a magic item: how rare it is. */
+  rarity: v.optional(v.string()),
   weapon: v.optional(WeaponSchema),
   armor: v.optional(ArmorSchema),
 });

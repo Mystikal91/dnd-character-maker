@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.2.1 beta",
+    date: "2026-10-22",
+    notes: [
+      {
+        en: "Weapons can use another ability when a feature says so: a Hexblade's Hex Warrior (Charisma, for a one-handed weapon you are proficient with) and a Battle Smith's Battle Ready (Intelligence, for a magic weapon) now change the attack and damage on the sheet. Content packs can use the same rule for anything else.",
+        it: "Le armi possono usare un'altra caratteristica quando un privilegio lo dice: Hex Warrior dell'Hexblade (Carisma, per un'arma a una mano in cui sei competente) e Battle Ready del Battle Smith (Intelligenza, per un'arma magica) ora cambiano attacco e danno nella scheda. I pacchetti di contenuti possono usare la stessa regola per qualsiasi altro caso.",
+        fr: "Les armes peuvent utiliser une autre caractéristique quand un trait le dit : Hex Warrior du Hexblade (Charisme, pour une arme à une main maniée avec maîtrise) et Battle Ready du Forgeguerre (Intelligence, pour une arme magique) changent désormais l'attaque et les dégâts sur la fiche. Les paquets de contenu peuvent utiliser la même règle pour tout autre cas.",
+        de: "Waffen können eine andere Fähigkeit nutzen, wenn ein Merkmal es sagt: Hex Warrior des Hexblade (Charisma, für eine einhändige Waffe, mit der du geübt bist) und Battle Ready des Kampfschmieds (Intelligenz, für eine magische Waffe) ändern jetzt Angriff und Schaden auf dem Bogen. Inhaltspakete können dieselbe Regel für alles andere nutzen.",
+        es: "Las armas pueden usar otra característica cuando un rasgo lo dice: Hex Warrior del Hexblade (Carisma, para un arma de una mano con la que tienes competencia) y Battle Ready del Herrero de batalla (Inteligencia, para un arma mágica) ahora cambian el ataque y el daño en la hoja. Los paquetes de contenido pueden usar la misma regla para cualquier otro caso.",
+      },
+    ],
+  },
+  {
     version: "1.2 beta",
     date: "2026-10-21",
     notes: [

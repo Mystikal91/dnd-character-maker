@@ -446,6 +446,24 @@ function itemStat(name: string, value: number, mapped: MappedRules, saves: Map<s
   return true;
 }
 
+/**
+ * Features that make a weapon use another ability. Aurora does not say it in a way a program can
+ * read, so these few are listed by id; others are reported by users.
+ */
+const WEAPON_ABILITIES: Record<string, Effect> = {
+  ID_WOTC_XGTE_ARCHETYPE_FEATURE_HEXBLADE_HEX_WARRIOR: {
+    type: "weaponAbility",
+    ability: "cha",
+    when: "oneHanded",
+    proficient: true,
+  },
+  ID_WOTC_ERLW_ARCHETYPE_FEATURE_BATTLE_SMITH_BATTLE_READY: {
+    type: "weaponAbility",
+    ability: "int",
+    when: "magic",
+  },
+};
+
 export interface MappedRules {
   effects: Effect[];
   /** Granted elements, with the class level they come at (undefined: right away). */
@@ -631,6 +649,9 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
       mapped.unsupported += 1;
     }
   }
+  // Aurora only describes these in words (or in a stat that feeds the text), so they are known by id.
+  const weaponAbility = WEAPON_ABILITIES[source.aid];
+  if (weaponAbility) mapped.effects.push(weaponAbility);
   // The same bonus to all six saving throws is one bonus to saving throws.
   const first = [...saves.values()][0];
   if (saves.size === 6 && [...saves.values()].every((v) => v === first) && first !== undefined)

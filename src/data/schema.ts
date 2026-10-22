@@ -123,6 +123,18 @@ export const EffectSchema = v.variant("type", [
   v.object({ type: v.literal("expertise"), skill: v.string() }),
   /** The ability score is at least this high (Gauntlets of Ogre Power): it never lowers it. */
   v.object({ type: v.literal("abilityFloor"), ability: AbilitySchema, value: v.number() }),
+  /**
+   * Attacks with weapons may use this ability instead of Strength or Dexterity (Hex Warrior,
+   * Battle Ready). The attack takes the best ability that applies. `when` narrows the weapons:
+   * `oneHanded` (without the two-handed property) or `magic` (a magic item). `proficient` asks
+   * for a weapon the character is proficient with.
+   */
+  v.object({
+    type: v.literal("weaponAbility"),
+    ability: AbilitySchema,
+    when: v.optional(v.picklist(["oneHanded", "magic"])),
+    proficient: v.optional(v.boolean()),
+  }),
   /** Resistance, immunity or vulnerability to a type of damage (`fire`, `poison`...). */
   v.object({
     type: v.literal("defense"),

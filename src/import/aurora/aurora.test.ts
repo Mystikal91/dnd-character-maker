@@ -542,6 +542,41 @@ describe("classes and archetypes", () => {
     });
   });
 
+  it("lets Hex Warrior and Battle Ready make a weapon use another ability", () => {
+    const features = wrap(`
+      <element name="The Hexblade" type="Archetype" source="Test Book" id="ID_H">
+        <supports>Otherworldly Patron</supports>
+        <description><p>A pact with a sentient weapon.</p></description>
+        <rules><grant type="Archetype Feature" id="ID_WOTC_XGTE_ARCHETYPE_FEATURE_HEXBLADE_HEX_WARRIOR" level="1" /></rules>
+      </element>
+      <element name="Hex Warrior" type="Archetype Feature" source="Test Book" id="ID_WOTC_XGTE_ARCHETYPE_FEATURE_HEXBLADE_HEX_WARRIOR">
+        <supports>Warlock</supports>
+        <description><p>Use Charisma.</p></description>
+        <rules><stat name="hex warrior:attack" value="charisma:modifier" bonus="ability" /></rules>
+      </element>
+      <element name="Battle Smith" type="Archetype" source="Test Book" id="ID_B">
+        <supports>Martial Archetype</supports>
+        <description><p>A smith.</p></description>
+        <rules><grant type="Archetype Feature" id="ID_WOTC_ERLW_ARCHETYPE_FEATURE_BATTLE_SMITH_BATTLE_READY" level="3" /></rules>
+      </element>
+      <element name="Battle Ready" type="Archetype Feature" source="Test Book" id="ID_WOTC_ERLW_ARCHETYPE_FEATURE_BATTLE_SMITH_BATTLE_READY">
+        <supports>Fighter</supports>
+        <description><p>Use Intelligence.</p></description>
+      </element>`);
+    const made = parseAurora([features], options);
+    expect(byId(made, "imp1:feature/hex-warrior").effects).toContainEqual({
+      type: "weaponAbility",
+      ability: "cha",
+      when: "oneHanded",
+      proficient: true,
+    });
+    expect(byId(made, "imp1:feature/battle-ready").effects).toContainEqual({
+      type: "weaponAbility",
+      ability: "int",
+      when: "magic",
+    });
+  });
+
   it("gives a subclass of a class that does not cast its own spellcasting", () => {
     const knight = wrap(`
       <element name="Spell Knight" type="Archetype" source="Test Book" id="ID_SK">

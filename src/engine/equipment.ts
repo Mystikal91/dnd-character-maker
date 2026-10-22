@@ -15,6 +15,8 @@ export interface DamageResult {
 export interface AttackResult {
   itemId: string;
   ability: Ability;
+  /** The entry that lets the weapon use an ability other than Strength or Dexterity. */
+  abilityFrom?: string;
   attackBonus: number;
   proficient: boolean;
   damage?: DamageResult;
@@ -172,14 +174,27 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
     if (!weapon) continue;
 
     const finesse = weapon.properties.some((p) => p.endsWith("/finesse"));
-    const ability: Ability =
+    let ability: Ability =
       weapon.kind === "ranged"
         ? "dex"
         : finesse && abilities.dex.modifier > abilities.str.modifier
           ? "dex"
           : "str";
-    const modifier = abilities[ability].modifier;
     const proficient = isProficient(held, weapon.proficiency);
+    // Features that let the weapon use another ability: the best one that applies wins.
+    let abilityFrom: string | undefined;
+    for (const { effect, source } of ctx.sourced) {
+      if (effect.type !== "weaponAbility") continue;
+      if (effect.proficient && !proficient) continue;
+      if (effect.when === "oneHanded" && weapon.properties.some((p) => p.endsWith("/two-handed")))
+        continue;
+      if (effect.when === "magic" && !itemData(entry).rarity) continue;
+      if (abilities[effect.ability].modifier > abilities[ability].modifier) {
+        ability = effect.ability;
+        abilityFrom = source;
+      }
+    }
+    const modifier = abilities[ability].modifier;
     const grip = (twoHanded: boolean) => ({
       armor,
       levelOf: ctx.levelOf,
@@ -201,6 +216,7 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
     attacks.push({
       itemId: item.itemId,
       ability,
+      ...(abilityFrom && { abilityFrom }),
       attackBonus: modifier + (proficient ? proficiencyBonus : 0) + total(toHit),
       proficient,
       ...(weapon.damage && { damage: withBonus(weapon.damage, oneHand) }),

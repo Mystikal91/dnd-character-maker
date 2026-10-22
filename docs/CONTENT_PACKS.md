@@ -26,6 +26,10 @@ number comes from. The kinds are `abilityBonus`, `proficiency`, `trait`, `choice
   weapon).
 - `{ "type": "abilityFloor", "ability": "str", "value": 19 }` raises an ability score to at
   least that value (Gauntlets of Ogre Power) and never lowers it.
+- `{ "type": "weaponAbility", "ability": "cha", "when": "oneHanded", "proficient": true }` lets
+  weapons use that ability for attack and damage instead of Strength or Dexterity (the best one
+  that applies wins). `when` narrows the weapons: `oneHanded` (no two-handed property) or
+  `magic` (an item with a `rarity`); `proficient` asks for a weapon the character is proficient with.
 - `{ "type": "defense", "kind": "resistance", "damage": "fire" }` is a resistance, an
   immunity or a vulnerability to a type of damage; the sheet lists them.
 - `{ "type": "unarmoredDefense", "base": 10, "add": ["con"], "shield": true }` is armor class
