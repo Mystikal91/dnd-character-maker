@@ -55,6 +55,20 @@ const APPLY_RANK = { personal: 0, homebrew: 1, edits: 2 } as const;
 export const orderUserPacks = (records: UserPackRecord[]): UserPackRecord[] =>
   [...records].sort((a, b) => APPLY_RANK[a.origin] - APPLY_RANK[b.origin] || a.addedAt - b.addedAt);
 
+/** An address shortened for a list: the site, then "..." and the file (`github.com/.../index.xml`). */
+export function shortAddress(address: string): string {
+  const max = 42;
+  try {
+    const url = new URL(address);
+    const parts = url.pathname.split("/").filter(Boolean);
+    const last = decodeURIComponent(parts[parts.length - 1] ?? "");
+    const short = parts.length > 1 ? `${url.host}/…/${last}` : `${url.host}/${last}`;
+    return short.length > max ? `${short.slice(0, max - 1)}…` : short;
+  } catch {
+    return address.length > max ? `${address.slice(0, max - 1)}…` : address;
+  }
+}
+
 export class PackParseError extends Error {}
 
 /** Validates what comes out of storage or a file; throws `PackParseError` when it is not a pack. */

@@ -19,7 +19,7 @@ import {
   userPacks,
 } from "../app/userPacks";
 import { type UiKey, ui } from "../i18n/ui";
-import type { UserPackRecord } from "../storage/packs";
+import { type UserPackRecord, shortAddress } from "../storage/packs";
 
 /** How many entries of each kind a pack has, e.g. `3 spell, 2 item`. */
 function summary(record: UserPackRecord): string {
@@ -103,7 +103,11 @@ export function PacksPage() {
                   </span>
                 )}
                 <div class="muted">{summary(record)}</div>
-                {record.source?.url && <div class="muted">{record.source.url}</div>}
+                {record.source?.url && (
+                  <div class="muted" title={record.source.url}>
+                    {shortAddress(record.source.url)}
+                  </div>
+                )}
                 {record.source?.files && <div class="muted">{record.source.files.join(", ")}</div>}
               </div>
               <div class="pack-actions">

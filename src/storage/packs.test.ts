@@ -12,6 +12,7 @@ import {
   parseUserPack,
   saveUserPack,
   serializePack,
+  shortAddress,
 } from "./packs";
 
 function record(over: Partial<UserPackRecord> = {}): UserPackRecord {
@@ -188,5 +189,23 @@ describe("quick edits", () => {
     const fields = content.fields("srd51:spell/fireball");
     expect(fields).toEqual(expect.arrayContaining(["name", "desc", "castingTime"]));
     expect(content.raw("srd51:spell/fireball", "name")).toBe("Fireball");
+  });
+});
+
+describe("a short address", () => {
+  it("keeps the site and the file", () => {
+    expect(
+      shortAddress(
+        "https://raw.githubusercontent.com/AuroraLegacy/elements/master/core/players-handbook/index.xml",
+      ),
+    ).toBe("raw.githubusercontent.com/…/index.xml");
+    expect(shortAddress("https://example.org/a.xml")).toBe("example.org/a.xml");
+  });
+
+  it("cuts a very long name, and leaves what is not an address alone", () => {
+    const long = shortAddress(`https://example.org/x/${"a".repeat(80)}.xml`);
+    expect(long.length).toBeLessThanOrEqual(42);
+    expect(long.endsWith("…")).toBe(true);
+    expect(shortAddress("not an address")).toBe("not an address");
   });
 });

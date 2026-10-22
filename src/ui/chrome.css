@@ -828,3 +828,11 @@ input:checked + .equip-tag {
   min-height: 2.5rem;
   padding: 0 1rem;
 }
+
+/* ---- Pack rows: long names, lists and addresses wrap instead of widening the page ---- */
+
+.pack-list .pack > div:first-child {
+  flex: 1 1 14rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
