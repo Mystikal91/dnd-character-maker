@@ -17,6 +17,9 @@ const POINT_BUY_COST: Record<number, number> = {
   15: 9,
 };
 
+/** Points a single score costs in the point buy (8 to 15). */
+export const pointBuyCost = (score: number) => POINT_BUY_COST[score] ?? 0;
+
 /** Points spent by a set of scores; Infinity if any score is outside the 8-15 range. */
 export function pointBuySpent(base: Record<Ability, number>): number {
   return ABILITIES.reduce(

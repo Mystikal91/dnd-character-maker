@@ -1,12 +1,14 @@
 import { character, content, sheet, updateCharacter } from "../app/store";
 import { ABILITIES, type Ability } from "../data/schema";
 import {
+  POINT_BUY_BUDGET,
   POINT_BUY_MAX,
   applyAbilityMethod,
   assignValue,
   assignableValues,
   canLower,
   canRaise,
+  pointBuyCost,
   pointBuyRemaining,
   reroll,
 } from "../engine/abilityScores";
@@ -50,94 +52,107 @@ export function AbilityScores() {
         </select>
       </label>
 
-      {c.abilityMethod === "pointbuy" && (
-        <p class="muted">
-          {ui("abilities.pointsLeft", { points: pointBuyRemaining(c.abilityBase) })}
-        </p>
-      )}
+      {c.abilityMethod === "pointbuy" && <PointsBar />}
       {c.abilityMethod === "roll" && (
         <button type="button" class="secondary" onClick={() => updateCharacter((d) => reroll(d))}>
           {ui("abilities.roll")}
         </button>
       )}
 
-      <div class="ability-inputs">
+      <div class="ability-cards">
         {ABILITIES.map((ability) => {
-          const bonus = s?.abilities[ability].bonus ?? 0;
+          const derived = s?.abilities[ability];
+          const bonus = derived?.bonus ?? 0;
           return (
-            <div class="field" key={ability}>
-              <span>
-                {abbreviation(ability)}
-                {bonus !== 0 && (
-                  <span class="bonus-hint" title={ui("abilities.bonus", { bonus: signed(bonus) })}>
-                    {" "}
-                    {signed(bonus)}
-                  </span>
+            <div class="ability-card" key={ability}>
+              <div class="ac-head">
+                <b>{abbreviation(ability)}</b>
+                <span class="ac-name">{fullName(ability)}</span>
+              </div>
+              <div class="ac-control">
+                {c.abilityMethod === "manual" && (
+                  <input
+                    type="number"
+                    min={1}
+                    max={30}
+                    aria-label={fullName(ability)}
+                    value={c.abilityBase[ability]}
+                    onInput={(e) => {
+                      const n = asNumber(e.currentTarget.value, 10);
+                      updateCharacter((d) => {
+                        d.abilityBase[ability] = n;
+                      });
+                    }}
+                  />
                 )}
-              </span>
-              {c.abilityMethod === "manual" && (
-                <input
-                  type="number"
-                  min={1}
-                  max={30}
-                  aria-label={fullName(ability)}
-                  value={c.abilityBase[ability]}
-                  onInput={(e) => {
-                    const n = asNumber(e.currentTarget.value, 10);
-                    updateCharacter((d) => {
-                      d.abilityBase[ability] = n;
-                    });
-                  }}
-                />
-              )}
-              {(c.abilityMethod === "standard" || c.abilityMethod === "roll") && (
-                <select
-                  aria-label={fullName(ability)}
-                  value={String(c.abilityBase[ability])}
-                  onChange={(e) => {
-                    const n = asNumber(e.currentTarget.value, c.abilityBase[ability]);
-                    updateCharacter((d) => {
-                      d.abilityBase = assignValue(d.abilityBase, ability, n);
-                    });
-                  }}
-                >
-                  {values.map((v) => (
-                    <option key={v} value={v}>
-                      {v}
-                    </option>
-                  ))}
-                </select>
+                {(c.abilityMethod === "standard" || c.abilityMethod === "roll") && (
+                  <select
+                    aria-label={fullName(ability)}
+                    value={String(c.abilityBase[ability])}
+                    onChange={(e) => {
+                      const n = asNumber(e.currentTarget.value, c.abilityBase[ability]);
+                      updateCharacter((d) => {
+                        d.abilityBase = assignValue(d.abilityBase, ability, n);
+                      });
+                    }}
+                  >
+                    {values.map((v) => (
+                      <option key={v} value={v}>
+                        {v}
+                      </option>
+                    ))}
+                  </select>
+                )}
+                {c.abilityMethod === "pointbuy" && (
+                  <div class="stepper">
+                    <button
+                      type="button"
+                      aria-label={ui("abilities.lower", { ability: fullName(ability) })}
+                      disabled={!canLower(c.abilityBase, ability)}
+                      onClick={() =>
+                        updateCharacter((d) => {
+                          d.abilityBase[ability] -= 1;
+                        })
+                      }
+                    >
+                      −
+                    </button>
+                    <output>{c.abilityBase[ability]}</output>
+                    <button
+                      type="button"
+                      aria-label={ui("abilities.raise", { ability: fullName(ability) })}
+                      disabled={
+                        !canRaise(c.abilityBase, ability) || c.abilityBase[ability] >= POINT_BUY_MAX
+                      }
+                      onClick={() =>
+                        updateCharacter((d) => {
+                          d.abilityBase[ability] += 1;
+                        })
+                      }
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
+              </div>
+              {derived && (
+                <p class="ac-total">
+                  {ui("abilities.total", { score: derived.score, mod: signed(derived.modifier) })}
+                  {bonus !== 0 && (
+                    <span
+                      class="bonus-hint"
+                      title={ui("abilities.bonus", { bonus: signed(bonus) })}
+                    >
+                      {" "}
+                      {signed(bonus)}
+                    </span>
+                  )}
+                </p>
               )}
               {c.abilityMethod === "pointbuy" && (
-                <div class="stepper">
-                  <button
-                    type="button"
-                    aria-label={ui("abilities.lower", { ability: fullName(ability) })}
-                    disabled={!canLower(c.abilityBase, ability)}
-                    onClick={() =>
-                      updateCharacter((d) => {
-                        d.abilityBase[ability] -= 1;
-                      })
-                    }
-                  >
-                    −
-                  </button>
-                  <output>{c.abilityBase[ability]}</output>
-                  <button
-                    type="button"
-                    aria-label={ui("abilities.raise", { ability: fullName(ability) })}
-                    disabled={
-                      !canRaise(c.abilityBase, ability) || c.abilityBase[ability] >= POINT_BUY_MAX
-                    }
-                    onClick={() =>
-                      updateCharacter((d) => {
-                        d.abilityBase[ability] += 1;
-                      })
-                    }
-                  >
-                    +
-                  </button>
-                </div>
+                <p class="ac-cost">
+                  {ui("abilities.cost", { points: pointBuyCost(c.abilityBase[ability]) })}
+                </p>
               )}
             </div>
           );
@@ -146,6 +161,24 @@ export function AbilityScores() {
 
       {s && s.asi.available > 0 && <ImprovementSlots />}
     </fieldset>
+  );
+}
+
+/** Points left in the point buy, as words and as a bar that fills while they are spent. */
+function PointsBar() {
+  const base = character.value.abilityBase;
+  const left = pointBuyRemaining(base);
+  const spent = POINT_BUY_BUDGET - left;
+  return (
+    <div class="points-bar">
+      <p>
+        <b>{ui("abilities.pointsLeft", { points: left })}</b>
+        <span class="muted"> / {POINT_BUY_BUDGET}</span>
+      </p>
+      <div class="points-track" aria-hidden="true">
+        <span style={{ width: `${Math.min(100, (spent / POINT_BUY_BUDGET) * 100)}%` }} />
+      </div>
+    </div>
   );
 }
 

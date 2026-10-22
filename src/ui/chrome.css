@@ -337,19 +337,9 @@
   max-width: 100%;
 }
 
-.ability-inputs {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
 .stepper button {
   flex: 1 1 0;
   min-width: 2.25rem;
-}
-
-@media (max-width: 30rem) {
-  .ability-inputs {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 /* ---- The build steps never grow wider than the screen ---- */
@@ -454,4 +444,126 @@ input:checked + .equip-tag {
 
 .weapon-magic .field {
   margin-top: 0.5rem;
+}
+
+/* ---- Ability scores: one card per ability ---- */
+
+.ability-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+@container (min-width: 26rem) {
+  .ability-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container (min-width: 46rem) {
+  .ability-cards {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.ability-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 0.6rem 0.25rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  text-align: center;
+}
+
+.ac-head {
+  display: grid;
+  line-height: 1.15;
+}
+
+.ac-head b {
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.ac-name {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.ac-control {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.ac-control input,
+.ac-control select {
+  width: 100%;
+  max-width: 6.5rem;
+  text-align: center;
+}
+
+.ability-card .stepper {
+  gap: 0.35rem;
+}
+
+.ability-card .stepper button {
+  flex: none;
+  width: 2.5rem;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.ability-card .stepper output {
+  min-width: 2rem;
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.ac-total,
+.ac-cost {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.ac-cost {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.points-bar {
+  margin: 0.5rem 0 0.9rem;
+}
+
+.points-bar p {
+  margin: 0 0 0.3rem;
+}
+
+.points-track {
+  height: 0.55rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+}
+
+.points-track span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.15s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .points-track span {
+    transition: none;
+  }
 }

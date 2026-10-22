@@ -30,6 +30,8 @@
   "abilities.raise": "Augmenter {ability}",
   "abilities.lower": "Diminuer {ability}",
   "abilities.bonus": "{bonus} grâce à tes choix",
+  "abilities.total": "Total {score} · mod {mod}",
+  "abilities.cost": "{points} points",
   "asi.title": "Augmentations de caractéristiques ({used} sur {available})",
   "asi.hint": "Choisis une caractéristique pour +2, ou deux caractéristiques différentes pour +1 chacune.",
   "asi.slot": "Augmentation {n}",

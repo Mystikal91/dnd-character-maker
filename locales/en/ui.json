@@ -30,6 +30,8 @@
   "abilities.raise": "Raise {ability}",
   "abilities.lower": "Lower {ability}",
   "abilities.bonus": "{bonus} from your choices",
+  "abilities.total": "Total {score} · mod {mod}",
+  "abilities.cost": "{points} points",
   "asi.title": "Ability Score Improvements ({used} of {available})",
   "asi.hint": "Pick one ability for +2, or two different abilities for +1 each.",
   "asi.slot": "Improvement {n}",

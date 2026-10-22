@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-22",
     notes: [
       {
+        en: "The ability scores step shows one card per ability: the score big between round buttons, the total with your species and choices added, the modifier, and in the point buy the cost of the score and a bar of the points spent. Six cards in a row on a computer, two or three on a phone.",
+        it: "Il passo dei punteggi di caratteristica mostra una carta per caratteristica: il punteggio grande tra pulsanti tondi, il totale con specie e scelte già aggiunte, il modificatore e, nell'acquisto a punti, il costo del punteggio e una barra dei punti spesi. Sei carte in fila sul computer, due o tre sul telefono.",
+        fr: "L'étape des caractéristiques montre une carte par caractéristique : le score en grand entre des boutons ronds, le total avec l'espèce et tes choix ajoutés, le modificateur et, dans l'achat de points, le coût du score et une barre des points dépensés. Six cartes en ligne sur ordinateur, deux ou trois sur téléphone.",
+        de: "Der Schritt für die Fähigkeitswerte zeigt eine Karte je Fähigkeit: den Wert groß zwischen runden Knöpfen, die Summe mit Art und Entscheidungen, den Modifikator und beim Punktekauf die Kosten des Werts und einen Balken der ausgegebenen Punkte. Sechs Karten in einer Reihe am Computer, zwei oder drei am Handy.",
+        es: "El paso de las características muestra una tarjeta por característica: la puntuación grande entre botones redondos, el total con la especie y tus elecciones sumadas, el modificador y, en la compra de puntos, el coste de la puntuación y una barra de los puntos gastados. Seis tarjetas en fila en el ordenador, dos o tres en el teléfono.",
+      },
+      {
         en: 'Shillelagh: a club or quarterstaff in the inventory has a tick "Shillelagh is on it": the weapon becomes magical, uses your spellcasting ability for attack and damage, and its damage die becomes a d8.',
         it: "Shillelagh: una clava o un bastone nell'inventario ha una spunta \"Ha su Shillelagh\": l'arma diventa magica, usa la tua caratteristica da incantatore per attacco e danno e il suo dado di danno diventa un d8.",
         fr: "Gourdin magique (Shillelagh) : un gourdin ou un bâton de l'inventaire a une case « Gourdin magique actif » : l'arme devient magique, utilise ta caractéristique d'incantation pour l'attaque et les dégâts, et son dé de dégâts devient un d8.",

@@ -112,16 +112,6 @@ legend {
   color: var(--muted);
 }
 
-.ability-inputs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-}
-
-.ability-inputs .field {
-  margin: 0;
-}
-
 .inventory {
   list-style: none;
   margin: 0;

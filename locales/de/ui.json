@@ -30,6 +30,8 @@
   "abilities.raise": "{ability} erhöhen",
   "abilities.lower": "{ability} senken",
   "abilities.bonus": "{bonus} durch deine Auswahl",
+  "abilities.total": "Gesamt {score} · Mod {mod}",
+  "abilities.cost": "{points} Punkte",
   "asi.title": "Attributserhöhungen ({used} von {available})",
   "asi.hint": "Wähle ein Attribut für +2 oder zwei verschiedene Attribute für je +1.",
   "asi.slot": "Erhöhung {n}",
