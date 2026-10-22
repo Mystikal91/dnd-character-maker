@@ -13,6 +13,10 @@ function format(value: number, locale: string): string {
   return new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(value);
 }
 
+/** A weight typed in the units in use, as pounds. */
+export const toPounds = (value: number, metric = metricUnits.value) =>
+  metric ? value / POUNDS_TO_KG : value;
+
 const amount = (text: string) => Number(text.replace(/,/g, ""));
 
 /** Feet as a distance in the units in use: `30 ft` or `9 m`. */

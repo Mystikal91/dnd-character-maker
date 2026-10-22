@@ -1,10 +1,8 @@
 import { Fragment } from "preact";
-import { character, content, sheet, updateCharacter } from "../../app/store";
+import { character, content, sheet } from "../../app/store";
 import type { Warning } from "../../engine/warnings";
 import { type UiKey, ui } from "../../i18n/ui";
-import { weight } from "../../i18n/units";
-import { ItemTag } from "../ItemTag";
-import { WeaponMagic } from "../WeaponMagic";
+import { InventoryList, LoadLine } from "../InventoryList";
 import { Panel, RulesText } from "./parts";
 
 const PROFICIENCY_CATEGORIES = ["armor", "weapon", "tool", "language"] as const;
@@ -113,34 +111,8 @@ export function Inventory() {
   return (
     <Panel title={ui("sheet.inventory")}>
       <p class="muted">{ui("sheet.equipHint")}</p>
-      <ul class="equip-list">
-        {ch.inventory.map((i) => (
-          <li key={i.itemId}>
-            <label class="equip-row">
-              <input
-                type="checkbox"
-                checked={i.equipped}
-                onChange={(e) =>
-                  updateCharacter((d) => {
-                    const found = d.inventory.find((x) => x.itemId === i.itemId);
-                    if (found) found.equipped = e.currentTarget.checked;
-                  })
-                }
-              />
-              <span class="equip-tag">{ui("form.equipped")}</span>
-              <span>
-                {c.name(i.itemId)}
-                {i.quantity > 1 && ` ×${i.quantity}`}
-                <ItemTag id={i.itemId} />
-              </span>
-            </label>
-            <WeaponMagic item={i} />
-          </li>
-        ))}
-      </ul>
-      <p class="muted">
-        {ui("sheet.load", { carried: weight(s.load.carried), capacity: weight(s.load.capacity) })}
-      </p>
+      <InventoryList removable={false} />
+      <LoadLine />
     </Panel>
   );
 }

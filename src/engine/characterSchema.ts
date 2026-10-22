@@ -18,6 +18,13 @@ const InventoryItemSchema = v.object({
   itemId: v.string(),
   quantity: v.pipe(v.number(), v.integer(), v.minValue(1)),
   equipped: v.boolean(),
+  custom: v.optional(
+    v.object({
+      name: v.pipe(v.string(), v.minLength(1), v.maxLength(80)),
+      weight: v.optional(v.pipe(v.number(), v.minValue(0))),
+      note: v.optional(v.string()),
+    }),
+  ),
   magical: v.optional(v.boolean()),
   bonus: v.optional(v.pipe(v.number(), v.integer(), v.minValue(0), v.maxValue(3))),
   shillelagh: v.optional(v.boolean()),

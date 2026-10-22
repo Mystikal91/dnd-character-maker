@@ -171,7 +171,7 @@ export function StoryPage() {
           <ul class="p-lines">
             {carried.map((i) => (
               <li key={i.itemId}>
-                {c.name(i.itemId)}
+                {i.custom?.name ?? c.name(i.itemId)}
                 {i.quantity > 1 && ` ×${i.quantity}`}
               </li>
             ))}

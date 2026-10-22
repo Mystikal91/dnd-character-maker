@@ -653,3 +653,91 @@ input:checked + .equip-tag {
   color: var(--muted);
   font-size: 0.82rem;
 }
+
+/* ---- The inventory: groups, rows with a quantity, facts, info ---- */
+
+.inventory-groups h5 {
+  margin: 0.9rem 0 0.2rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.inv-row {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.inv-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+}
+
+.inv-main .equip-row {
+  flex: 1 1 14rem;
+  min-width: 0;
+}
+
+.inv-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.qty button {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg);
+  color: inherit;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.qty button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.qty output {
+  min-width: 1.6rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.inv-facts {
+  margin: 0.1rem 0 0 2.2rem;
+  font-size: 0.85rem;
+}
+
+.inv-info,
+.custom-item {
+  margin: 0.2rem 0 0.2rem 2.2rem;
+}
+
+.inv-info summary,
+.custom-item summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.custom-item {
+  margin: 1rem 0 0;
+}
+
+.custom-item input {
+  width: 100%;
+  max-width: 100%;
+}

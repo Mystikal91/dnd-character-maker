@@ -286,7 +286,9 @@ function deriveLoad(ctx: Context): LoadResult {
   for (const item of ctx.character.inventory) {
     const entry = ctx.index.get(item.itemId);
     if (!entry) {
-      warn(ctx.warnings, "unknownEntry", { id: item.itemId });
+      // An item of the player's own weighs what they said; any other unknown one is a problem.
+      if (item.custom) carried += (item.custom.weight ?? 0) * item.quantity;
+      else warn(ctx.warnings, "unknownEntry", { id: item.itemId });
       continue;
     }
     carried += (itemData(entry).weight ?? 0) * item.quantity;

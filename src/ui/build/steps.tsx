@@ -2,10 +2,11 @@ import { useState } from "preact/hooks";
 import { character, content, sheet, updateCharacter } from "../../app/store";
 import { itemData } from "../../data/items";
 import { proficiencyKeys } from "../../engine/equipment";
-import { addToInventory, packContents } from "../../engine/gear";
+import { addToInventory, itemKind, packContents } from "../../engine/gear";
 import { ui } from "../../i18n/ui";
-import { ItemTag, itemLabel } from "../ItemTag";
-import { WeaponMagic } from "../WeaponMagic";
+import { InventoryList, LoadLine } from "../InventoryList";
+import { itemLabel } from "../ItemTag";
+import { CustomItem } from "./CustomItem";
 import { BackgroundInfo, SpeciesInfo } from "./EntryInfo";
 import { StartingEquipment } from "./StartingEquipment";
 import { Select, entriesOfKind } from "./fields";
@@ -72,40 +73,40 @@ export function OriginStep() {
   );
 }
 
-/** Armor and weapons to carry, and which of them are worn or wielded. */
+const PICKER_GROUPS = [
+  ["armor", "form.armorGroup"],
+  ["weapon", "form.weaponGroup"],
+  ["pack", "form.packGroup"],
+  ["gear", "inv.group.gear"],
+  ["tool", "inv.group.tool"],
+  ["mount", "inv.group.mount"],
+  ["magic", "form.magicGroup"],
+] as const;
+
+/** Everything the character carries: add items, say how many, and what is worn or wielded. */
 export function EquipmentStep() {
-  const c = character.value;
   const index = content.value?.index;
-  const itemOptions = (group: "armor" | "weapon") =>
-    entriesOfKind("item").filter((o) => {
-      const entry = index?.get(o.id);
-      return entry && itemData(entry)[group];
-    });
   const [filter, setFilter] = useState("");
   const [onlyProficient, setOnlyProficient] = useState(false);
   const held = sheet.value ? proficiencyKeys(sheet.value.proficiencies) : undefined;
+  const wanted = filter.trim().toLowerCase();
+
   // With the tick on, armor and weapons the character is not proficient with are left out.
-  const proficientIn = (o: { id: string }) => {
-    const entry = index?.get(o.id);
+  const proficientIn = (id: string) => {
+    const entry = index?.get(id);
     if (!onlyProficient || !held || !entry) return true;
     const data = itemData(entry);
-    const keys = (data.armor ?? data.weapon)?.proficiency ?? [];
-    return keys.some((k) => held.has(k));
+    const keys = (data.armor ?? data.weapon)?.proficiency;
+    return keys === undefined || keys.some((k) => held.has(k));
   };
-  const wanted = filter.trim().toLowerCase();
-  const labelled = (o: { id: string; label: string }) => ({ id: o.id, label: itemLabel(o.id) });
-  const found = (o: { label: string }) => !wanted || o.label.toLowerCase().includes(wanted);
-  const armor = itemOptions("armor").filter(proficientIn).map(labelled).filter(found);
-  const weapons = itemOptions("weapon").filter(proficientIn).map(labelled).filter(found);
-  const packs = entriesOfKind("item")
-    .filter((o) => {
-      const entry = index?.get(o.id);
-      return entry && packContents(entry).length > 0;
-    })
-    .filter(found);
-  const magic = entriesOfKind("item")
-    .filter((o) => index?.get(o.id)?.data.rarity && !index.get(o.id)?.data.enchants)
-    .filter(found);
+  const options = entriesOfKind("item").flatMap((o) => {
+    const entry = index?.get(o.id);
+    if (!entry) return [];
+    const kind = itemKind(entry);
+    const label = itemLabel(o.id);
+    const shown = (!wanted || label.toLowerCase().includes(wanted)) && proficientIn(o.id);
+    return shown && kind !== "enchantment" ? [{ id: o.id, kind, label }] : [];
+  });
 
   return (
     <>
@@ -140,75 +141,24 @@ export function EquipmentStep() {
           }}
         >
           <option value="">{ui("form.chooseItem")}</option>
-          <optgroup label={ui("form.armorGroup")}>
-            {armor.map((o) => (
-              <option key={o.id} value={o.id}>
-                {o.label}
-              </option>
-            ))}
-          </optgroup>
-          <optgroup label={ui("form.weaponGroup")}>
-            {weapons.map((o) => (
-              <option key={o.id} value={o.id}>
-                {o.label}
-              </option>
-            ))}
-          </optgroup>
-          {packs.length > 0 && (
-            <optgroup label={ui("form.packGroup")}>
-              {packs.map((o) => (
-                <option key={o.id} value={o.id}>
-                  {o.label}
-                </option>
-              ))}
-            </optgroup>
-          )}
-          {magic.length > 0 && (
-            <optgroup label={ui("form.magicGroup")}>
-              {magic.map((o) => (
-                <option key={o.id} value={o.id}>
-                  {o.label}
-                </option>
-              ))}
-            </optgroup>
-          )}
+          {PICKER_GROUPS.map(([kind, label]) => {
+            const group = options.filter((o) => o.kind === kind);
+            return group.length > 0 ? (
+              <optgroup key={kind} label={ui(label)}>
+                {group.map((o) => (
+                  <option key={o.id} value={o.id}>
+                    {o.label}
+                  </option>
+                ))}
+              </optgroup>
+            ) : null;
+          })}
         </select>
       </label>
       <p class="muted">{ui("sheet.equipHint")}</p>
-      <ul class="inventory">
-        {c.inventory.map((item) => (
-          <li key={item.itemId}>
-            <label>
-              <input
-                type="checkbox"
-                checked={item.equipped}
-                onChange={(e) =>
-                  updateCharacter((d) => {
-                    const found = d.inventory.find((i) => i.itemId === item.itemId);
-                    if (found) found.equipped = e.currentTarget.checked;
-                  })
-                }
-              />
-              <span class="equip-tag">{ui("form.equipped")}</span>
-              {content.value?.name(item.itemId)}
-              {item.quantity > 1 && ` ×${item.quantity}`}
-              <ItemTag id={item.itemId} />
-            </label>
-            <button
-              type="button"
-              class="link"
-              onClick={() =>
-                updateCharacter((d) => {
-                  d.inventory = d.inventory.filter((i) => i.itemId !== item.itemId);
-                })
-              }
-            >
-              {ui("form.remove")}
-            </button>
-            <WeaponMagic item={item} />
-          </li>
-        ))}
-      </ul>
+      <InventoryList removable />
+      <LoadLine />
+      <CustomItem />
     </>
   );
 }

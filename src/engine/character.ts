@@ -108,6 +108,8 @@ export interface InventoryItem {
   itemId: string;
   quantity: number;
   equipped: boolean;
+  /** An item of the player's own, with no entry in any pack: `itemId` is only a key. Weight is in pounds. */
+  custom?: { name: string; weight?: number; note?: string };
   /** A weapon that is magic (made so by a spell such as Magic Weapon, or by a ritual). */
   magical?: boolean;
   /** A bonus to attack and damage rolls that a spell or an enchantment gives (0 to 3). */
