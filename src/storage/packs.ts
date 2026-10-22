@@ -20,6 +20,12 @@ export interface UserPackRecord {
   strings: Record<string, string>;
   /** Language the texts are written in, e.g. `en`. */
   lang: string;
+  /** Where an imported pack came from: the address, or the names of the files. */
+  source?: { url?: string; files?: string[] };
+  /** The version of the importer that made it (see `AURORA_IMPORT_VERSION`); absent in old packs. */
+  importVersion?: number;
+  /** Whether the 2024 versions were kept when it was imported, so importing again does the same. */
+  keepEditions?: boolean;
 }
 
 const RecordSchema = v.object({
@@ -30,6 +36,11 @@ const RecordSchema = v.object({
   pack: v.unknown(),
   strings: v.record(v.string(), v.string()),
   lang: v.string(),
+  source: v.optional(
+    v.object({ url: v.optional(v.string()), files: v.optional(v.array(v.string())) }),
+  ),
+  importVersion: v.optional(v.number()),
+  keepEditions: v.optional(v.boolean()),
 });
 
 /** Ids of the packs that ship with the app: a user pack may not take their place. */

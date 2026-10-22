@@ -126,3 +126,7 @@ Quick edits are the texts a person rewrote with the pencil next to a name or a t
 in one pack per language (`edits<language>`, for example `editsit`) that holds only texts, keyed
 by the full entry id (`srd51:spell/fireball.name`), and they apply only while that language is in
 use. They never change an entry's data or effects.
+
+## Importing a pack again
+
+A pack imported from Aurora keeps where it came from (`source`: the address, or the names of the files), the version of the importer that made it (`importVersion`, compared with `AURORA_IMPORT_VERSION` in `src/import/aurora/index.ts`) and whether the 2024 versions were kept. When the importer is improved, raise the constant: older packs are marked "Needs updating" on the packs page and can be made again with one click. The pack keeps its id, so the characters that use its entries keep working. Raise the constant whenever a change alters what the importer produces.

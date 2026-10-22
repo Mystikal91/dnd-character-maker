@@ -9,8 +9,11 @@ import {
   importPackFile,
   importProgress,
   importReport,
+  isStale,
   keepEditions,
   packError,
+  reimportPack,
+  reimportStalePacks,
   removeUserPack,
   userPacks,
 } from "../app/userPacks";
@@ -33,6 +36,8 @@ export function PacksPage() {
   const auroraInput = useRef<HTMLInputElement>(null);
   const [address, setAddress] = useState("");
   const [brewName, setBrewName] = useState("");
+  // The pack being made again when its address is not known: typed or chosen from files.
+  const [target, setTarget] = useState<string | undefined>(undefined);
   const progress = importProgress.value;
   const report = importReport.value;
   const packs = userPacks.value;
@@ -44,6 +49,13 @@ export function PacksPage() {
     totals.set(p.manifest.id, (totals.get(p.manifest.id) ?? 0) + p.entries.length);
   }
   const builtIn = [...totals.entries()];
+
+  const stale = packs.filter(isStale);
+  const targetPack = packs.find((p) => p.id === target);
+  const chooseFiles = (id?: string) => {
+    setTarget(id);
+    auroraInput.current?.click();
+  };
 
   const remove = (record: UserPackRecord) => {
     if (confirm(ui("packs.removeConfirm", { name: record.name }))) void removeUserPack(record.id);
@@ -84,7 +96,14 @@ export function PacksPage() {
                 <span class={`pack-tag ${record.origin}`}>
                   {ui(`packs.origin.${record.origin}` as UiKey)}
                 </span>
+                {isStale(record) && (
+                  <span class="pack-tag stale" title={ui("packs.staleHint")}>
+                    {ui("packs.stale")}
+                  </span>
+                )}
                 <div class="muted">{summary(record)}</div>
+                {record.source?.url && <div class="muted">{record.source.url}</div>}
+                {record.source?.files && <div class="muted">{record.source.files.join(", ")}</div>}
               </div>
               <div class="pack-actions">
                 {record.origin === "homebrew" && (
@@ -97,6 +116,18 @@ export function PacksPage() {
                     </button>
                   </>
                 )}
+                {record.origin === "personal" && (
+                  <button
+                    type="button"
+                    class={isStale(record) ? "primary" : undefined}
+                    disabled={Boolean(progress)}
+                    onClick={() =>
+                      record.source?.url ? void reimportPack(record) : setTarget(record.id)
+                    }
+                  >
+                    {ui("packs.reimport")}
+                  </button>
+                )}
                 <button type="button" class="danger" onClick={() => remove(record)}>
                   {ui("packs.remove")}
                 </button>
@@ -104,6 +135,51 @@ export function PacksPage() {
             </li>
           ))}
         </ul>
+      )}
+
+      {stale.some((r) => r.source?.url) && (
+        <p>
+          <button
+            type="button"
+            class="primary"
+            disabled={Boolean(progress)}
+            onClick={() => void reimportStalePacks()}
+          >
+            {ui("packs.reimportAll", { n: stale.filter((r) => r.source?.url).length })}
+          </button>
+        </p>
+      )}
+      {targetPack && (
+        <div class="note">
+          <p>{ui("packs.reimportHint", { name: targetPack.name })}</p>
+          <form
+            class="pack-address"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (address.trim() && !progress) {
+                void importAuroraUrl(address, targetPack.id);
+                setTarget(undefined);
+              }
+            }}
+          >
+            <input
+              type="url"
+              value={address}
+              placeholder="https://"
+              aria-label={ui("packs.addressLabel")}
+              onInput={(e) => setAddress(e.currentTarget.value)}
+            />
+            <button type="submit" class="primary" disabled={!address.trim() || Boolean(progress)}>
+              {ui("packs.addressGo")}
+            </button>
+            <button type="button" onClick={() => chooseFiles(targetPack.id)}>
+              {ui("packs.importAurora")}
+            </button>
+            <button type="button" class="link" onClick={() => setTarget(undefined)}>
+              {ui("quickEdit.cancel")}
+            </button>
+          </form>
+        </div>
       )}
 
       <h3>{ui("hb.newPack")}</h3>
@@ -142,7 +218,7 @@ export function PacksPage() {
         <button type="button" onClick={() => fileInput.current?.click()}>
           {ui("packs.import")}
         </button>
-        <button type="button" class="primary" onClick={() => auroraInput.current?.click()}>
+        <button type="button" class="primary" onClick={() => chooseFiles()}>
           {ui("packs.importAurora")}
         </button>
         <input
@@ -154,7 +230,8 @@ export function PacksPage() {
           onChange={(e) => {
             const files = Array.from(e.currentTarget.files ?? []);
             e.currentTarget.value = "";
-            if (files.length > 0) void importAuroraFiles(files);
+            if (files.length > 0) void importAuroraFiles(files, target);
+            setTarget(undefined);
           }}
         />
         <input

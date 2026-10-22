@@ -794,3 +794,11 @@ input:checked + .equip-tag {
   text-align: center;
   font-weight: 700;
 }
+
+/* ---- A pack made by an older importer ---- */
+
+.pack-tag.stale {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+}

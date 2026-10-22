@@ -1,6 +1,6 @@
 import { signal } from "@preact/signals";
 import { loadContent } from "../content/browser";
-import { AuroraParseError, parseAurora } from "../import/aurora";
+import { AURORA_IMPORT_VERSION, AuroraParseError, parseAurora } from "../import/aurora";
 import { gatherAurora } from "../import/aurora/remote";
 import {
   PackParseError,
@@ -94,25 +94,52 @@ export const keepEditions = signal(false);
 
 export const importProgress = signal<{ done: number; total: number } | undefined>(undefined);
 
+/** A personal pack made by an older version of the importer than this one. */
+export const isStale = (record: UserPackRecord) =>
+  record.origin === "personal" && (record.importVersion ?? 0) < AURORA_IMPORT_VERSION;
+
 /**
  * Adds a personal pack from Aurora XML files the user chose. The files are read here and kept
- * only on this device; entries the app already has are left out.
+ * only on this device; entries the app already has are left out. With `replaceId` the pack of
+ * that id is made again from the files, keeping its id so the characters that use it still work.
  */
-export async function importAuroraFiles(files: File[]): Promise<void> {
+export async function importAuroraFiles(files: File[], replaceId?: string): Promise<void> {
   const texts = await Promise.all(files.map((f) => f.text()));
-  await importAuroraSources(texts.map((text) => ({ text })));
+  await importAuroraSources(
+    texts.map((text) => ({ text })),
+    replaceId,
+    {
+      files: files.map((f) => f.name),
+    },
+  );
 }
 
 /** Adds a personal pack from an address typed by the user: an index file or a content file. */
-export async function importAuroraUrl(url: string): Promise<void> {
-  await importAuroraSources([{ url }]);
+export async function importAuroraUrl(url: string, replaceId?: string): Promise<void> {
+  await importAuroraSources([{ url }], replaceId, { url });
+}
+
+/** Makes a pack again from the address it came from, with one click. */
+export async function reimportPack(record: UserPackRecord): Promise<void> {
+  const url = record.source?.url;
+  if (url) await importAuroraUrl(url, record.id);
+}
+
+/** Makes again every outdated pack that remembers its address, one after the other. */
+export async function reimportStalePacks(): Promise<void> {
+  for (const record of userPacks.value.filter((r) => isStale(r) && r.source?.url))
+    await reimportPack(record);
 }
 
 /**
  * Reads what the user gave, following index files to the content files they list. Fetching
  * starts only from a file or an address the user chose.
  */
-async function importAuroraSources(start: { text?: string; url?: string }[]): Promise<void> {
+async function importAuroraSources(
+  start: { text?: string; url?: string }[],
+  replaceId?: string,
+  source?: UserPackRecord["source"],
+): Promise<void> {
   const loaded = content.value;
   packError.value = undefined;
   importReport.value = undefined;
@@ -126,15 +153,21 @@ async function importAuroraSources(start: { text?: string; url?: string }[]): Pr
     });
     // Reading a large collection takes a few seconds: let the page show it is working first.
     await new Promise((resolve) => setTimeout(resolve, 0));
-    const id = `imp${Date.now().toString(36)}`;
+    // Importing again keeps the id: the entries are named after it, and characters use them.
+    const old = replaceId ? userPacks.value.find((p) => p.id === replaceId) : undefined;
+    const id = old?.id ?? `imp${Date.now().toString(36)}`;
+    const keep = old?.keepEditions ?? keepEditions.value;
     // Aurora content is in English, so duplicates are looked for by English names whatever the
     // language of the app is.
-    const english = await loadContent(["en"], userPacks.value);
+    const english = await loadContent(
+      ["en"],
+      userPacks.value.filter((p) => p.id !== id),
+    );
     const result = parseAurora(gathered.texts, {
       packId: id,
       index: english.index,
       nameOf: (entryId) => english.name(entryId),
-      keepEditions: keepEditions.value,
+      keepEditions: keep,
     });
     const name = `${gathered.title || result.title || "Imported content"} (Aurora)`;
     importReport.value = {
@@ -153,7 +186,7 @@ async function importAuroraSources(start: { text?: string; url?: string }[]): Pr
       id,
       name,
       origin: "personal",
-      addedAt: Date.now(),
+      addedAt: old?.addedAt ?? Date.now(),
       lang: "en",
       pack: {
         manifest: {
@@ -166,6 +199,9 @@ async function importAuroraSources(start: { text?: string; url?: string }[]): Pr
         entries: result.entries,
       },
       strings: result.strings,
+      ...(source && { source }),
+      importVersion: AURORA_IMPORT_VERSION,
+      keepEditions: keep,
     });
   } catch (error) {
     if (!(error instanceof AuroraParseError)) console.error("Importing files failed", error);

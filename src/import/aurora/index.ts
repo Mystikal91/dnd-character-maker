@@ -34,6 +34,13 @@ import { readRules, requirementsMet, selectMatches } from "./rules";
 import { AuroraParseError, clean } from "./xml";
 
 export { AuroraParseError, slugify } from "./xml";
+
+/**
+ * The version of what the importer produces. Raise it whenever a change to the importer changes
+ * the entries or texts it makes: packs imported with an older version are marked as needing an
+ * update, and can be imported again with a click.
+ */
+export const AURORA_IMPORT_VERSION = 1;
 export type { AuroraOptions, AuroraResult } from "./registry";
 
 /**
