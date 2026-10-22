@@ -1,7 +1,7 @@
 import { content, updateCharacter } from "../app/store";
 import { itemData } from "../data/items";
-import { takesShillelagh } from "../engine/equipment";
 import type { InventoryItem } from "../engine/character";
+import { takesShillelagh } from "../engine/equipment";
 import { ui } from "../i18n/ui";
 import { entriesOfKind } from "./build/fields";
 
