@@ -1,6 +1,7 @@
 import { useState } from "preact/hooks";
-import { character, content, updateCharacter } from "../../app/store";
+import { character, content, sheet, updateCharacter } from "../../app/store";
 import { itemData } from "../../data/items";
+import { proficiencyKeys } from "../../engine/equipment";
 import { addToInventory, packContents } from "../../engine/gear";
 import { ui } from "../../i18n/ui";
 import { ItemTag, itemLabel } from "../ItemTag";
@@ -81,11 +82,21 @@ export function EquipmentStep() {
       return entry && itemData(entry)[group];
     });
   const [filter, setFilter] = useState("");
+  const [onlyProficient, setOnlyProficient] = useState(false);
+  const held = sheet.value ? proficiencyKeys(sheet.value.proficiencies) : undefined;
+  // With the tick on, armor and weapons the character is not proficient with are left out.
+  const proficientIn = (o: { id: string }) => {
+    const entry = index?.get(o.id);
+    if (!onlyProficient || !held || !entry) return true;
+    const data = itemData(entry);
+    const keys = (data.armor ?? data.weapon)?.proficiency ?? [];
+    return keys.some((k) => held.has(k));
+  };
   const wanted = filter.trim().toLowerCase();
   const labelled = (o: { id: string; label: string }) => ({ id: o.id, label: itemLabel(o.id) });
   const found = (o: { label: string }) => !wanted || o.label.toLowerCase().includes(wanted);
-  const armor = itemOptions("armor").map(labelled).filter(found);
-  const weapons = itemOptions("weapon").map(labelled).filter(found);
+  const armor = itemOptions("armor").filter(proficientIn).map(labelled).filter(found);
+  const weapons = itemOptions("weapon").filter(proficientIn).map(labelled).filter(found);
   const packs = entriesOfKind("item")
     .filter((o) => {
       const entry = index?.get(o.id);
@@ -102,6 +113,14 @@ export function EquipmentStep() {
       <label class="field">
         <span>{ui("form.searchItems")}</span>
         <input type="search" value={filter} onInput={(e) => setFilter(e.currentTarget.value)} />
+      </label>
+      <label class="check">
+        <input
+          type="checkbox"
+          checked={onlyProficient}
+          onChange={(e) => setOnlyProficient(e.currentTarget.checked)}
+        />
+        <span>{ui("form.onlyProficient")}</span>
       </label>
       <label class="field">
         <span>{ui("form.addItem")}</span>

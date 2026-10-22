@@ -685,6 +685,7 @@
   "play.noSlot": "Plus d'emplacement pour le lancer",
   "app.skip": "Aller au contenu",
   "form.searchItems": "Chercher des objets",
+  "form.onlyProficient": "Seulement les armures et armes que je maîtrise",
   "bar.backup": "Sauvegarder tous les personnages",
   "bar.backupNever": "Aucune sauvegarde pour l'instant",
   "bar.backupLast": "Dernière : {date}",

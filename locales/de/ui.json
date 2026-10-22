@@ -685,6 +685,7 @@
   "play.noSlot": "Kein Zauberplatz mehr dafür übrig",
   "app.skip": "Zum Inhalt springen",
   "form.searchItems": "Gegenstände suchen",
+  "form.onlyProficient": "Nur Rüstungen und Waffen, mit denen ich geübt bin",
   "bar.backup": "Alle Charaktere sichern",
   "bar.backupNever": "Noch keine Sicherung",
   "bar.backupLast": "Zuletzt: {date}",

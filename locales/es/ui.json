@@ -685,6 +685,7 @@
   "play.noSlot": "No queda espacio para lanzarlo",
   "app.skip": "Saltar al contenido",
   "form.searchItems": "Buscar objetos",
+  "form.onlyProficient": "Solo armaduras y armas con las que tengo competencia",
   "bar.backup": "Copia de seguridad de todos",
   "bar.backupNever": "Aún sin copia",
   "bar.backupLast": "Última: {date}",

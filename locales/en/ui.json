@@ -685,6 +685,7 @@
   "play.noSlot": "No slot left for it",
   "app.skip": "Skip to the content",
   "form.searchItems": "Search items",
+  "form.onlyProficient": "Only armor and weapons I am proficient with",
   "bar.backup": "Back up all characters",
   "bar.backupNever": "No backup yet",
   "bar.backupLast": "Last: {date}",

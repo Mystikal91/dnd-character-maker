@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-22",
     notes: [
       {
+        en: 'In Equipment, a tick "Only armor and weapons I am proficient with" narrows the list to what your class, species and choices let you use well.',
+        it: 'In Equipaggiamento, una spunta "Solo armature e armi in cui sono competente" restringe l\'elenco a ciò che classe, specie e scelte ti permettono di usare bene.',
+        fr: "Dans Équipement, une case « Seulement les armures et armes que je maîtrise » réduit la liste à ce que ta classe, ton espèce et tes choix te permettent de bien utiliser.",
+        de: 'In Ausrüstung grenzt ein Haken "Nur Rüstungen und Waffen, mit denen ich geübt bin" die Liste auf das ein, was deine Klasse, Art und Entscheidungen dich gut nutzen lassen.',
+        es: 'En Equipo, una casilla "Solo armaduras y armas con las que tengo competencia" reduce la lista a lo que tu clase, especie y elecciones te dejan usar bien.',
+      },
+      {
         en: 'Equipment: the step starts with a reminder of the starting equipment the rules give your class and background (the choices as text, plus what you get without choosing). The list of items to add now has equipment packs: pick one and everything it holds goes into the inventory. Armor, shields and weapons say what they are next to the name ("Leather [Light armor]", "Longsword [Martial weapon · Melee]"), in the list and in the inventory.',
         it: "Equipaggiamento: il passo comincia con un promemoria dell'equipaggiamento iniziale che le regole danno a classe e background (le scelte come testo, più ciò che ricevi senza scegliere). L'elenco degli oggetti da aggiungere ora ha gli zaini: ne scegli uno e tutto il suo contenuto va nell'inventario. Armature, scudi e armi dicono cosa sono accanto al nome (\"Cuoio [Armatura leggera]\", \"Spada lunga [Arma da guerra · Mischia]\"), nell'elenco e nell'inventario.",
         fr: "Équipement : l'étape commence par un rappel de l'équipement de départ que les règles donnent à ta classe et à ton background (les choix en texte, plus ce que tu reçois sans choisir). La liste des objets à ajouter propose maintenant les paquetages : choisis-en un et tout son contenu va dans l'inventaire. Armures, boucliers et armes disent ce qu'ils sont à côté du nom (« Cuir [Armure légère] », « Épée longue [Arme de guerre · Mêlée] »), dans la liste et dans l'inventaire.",

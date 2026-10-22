@@ -685,6 +685,7 @@
   "play.noSlot": "Nessuno slot rimasto per lanciarlo",
   "app.skip": "Vai al contenuto",
   "form.searchItems": "Cerca oggetti",
+  "form.onlyProficient": "Solo armature e armi in cui sono competente",
   "bar.backup": "Copia di sicurezza di tutti",
   "bar.backupNever": "Nessuna copia finora",
   "bar.backupLast": "Ultima: {date}",
