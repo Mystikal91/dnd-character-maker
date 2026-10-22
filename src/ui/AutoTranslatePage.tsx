@@ -63,6 +63,16 @@ export function AutoTranslatePage() {
         <span>{ui("translate.enable")}</span>
       </label>
 
+      <label class="check">
+        <input
+          type="checkbox"
+          checked={settings.descriptionsOnly}
+          onChange={(e) => save({ descriptionsOnly: e.currentTarget.checked })}
+        />
+        <span>{ui("translate.descOnly")}</span>
+      </label>
+      <p class="muted">{ui("translate.descOnlyHint")}</p>
+
       <h3>{ui("translate.connection")}</h3>
       <label class="field">
         <span>{ui("translate.key")}</span>

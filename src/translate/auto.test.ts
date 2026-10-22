@@ -71,7 +71,12 @@ describe("translating as texts are read", () => {
     vi.useRealTimers();
     vi.unstubAllGlobals();
     autoTarget.value = undefined;
-    saveAutoSettings({ enabled: false, relay: "https://relay.example", key: "" });
+    saveAutoSettings({
+      enabled: false,
+      relay: "https://relay.example",
+      key: "",
+      descriptionsOnly: true,
+    });
   });
 
   it("leaves texts alone until it is switched on", () => {
@@ -83,7 +88,12 @@ describe("translating as texts are read", () => {
       answer(JSON.parse(String(init.body)).text),
     );
     vi.stubGlobal("fetch", fetchMock);
-    saveAutoSettings({ enabled: true, relay: "https://relay.example", key: "k:fx" });
+    saveAutoSettings({
+      enabled: true,
+      relay: "https://relay.example",
+      key: "k:fx",
+      descriptionsOnly: false,
+    });
 
     const text = "Roll twice and take the better result";
     expect(autoText("b.desc", text)).toBe(text);
@@ -110,10 +120,38 @@ describe("translating as texts are read", () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
+  it("leaves names and other short fields in English when only descriptions are asked for", async () => {
+    const fetchMock = vi.fn(async (_url: string, init: RequestInit) =>
+      answer(JSON.parse(String(init.body)).text),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    saveAutoSettings({
+      enabled: true,
+      relay: "https://relay.example",
+      key: "k:fx",
+      descriptionsOnly: true,
+    });
+
+    expect(autoText("d.name", "Fireball Storm")).toBe("Fireball Storm");
+    expect(autoText("d.range", "Self (60-foot cone)")).toBe("Self (60-foot cone)");
+    const text = "A bright streak flashes from your finger";
+    expect(autoText("d.desc", text)).toBe(text);
+    await vi.advanceTimersByTimeAsync(300);
+
+    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1].body)).text).toEqual([text]);
+    expect(autoText("d.desc", text)).toBe(`IT ${text}`);
+    expect(autoText("d.name", "Fireball Storm")).toBe("Fireball Storm");
+  });
+
   it("does not send what is not words, and stops when the key is refused", async () => {
     const fetchMock = vi.fn(async () => new Response("{}", { status: 403 }));
     vi.stubGlobal("fetch", fetchMock);
-    saveAutoSettings({ enabled: true, relay: "https://relay.example", key: "bad" });
+    saveAutoSettings({
+      enabled: true,
+      relay: "https://relay.example",
+      key: "bad",
+      descriptionsOnly: false,
+    });
 
     expect(autoText("d.desc", "1d8 + 2")).toBe("1d8 + 2");
     expect(autoText("e.desc", "A text that will be refused")).toBe("A text that will be refused");

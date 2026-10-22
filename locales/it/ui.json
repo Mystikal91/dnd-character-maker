@@ -219,6 +219,8 @@
   "translate.intro": "I testi che non hanno ancora una traduzione nella tua lingua possono essere tradotti da DeepL mentre li leggi. Un testo tradotto lo dice e si può riportare all'originale inglese. Le traduzioni restano su questo dispositivo, quindi ogni testo viene tradotto una sola volta.",
   "translate.english": "Non c'è nulla da tradurre finché l'app è in inglese. Scegli prima un'altra lingua.",
   "translate.enable": "Traduci i testi ancora in inglese",
+  "translate.descOnly": "Traduci solo le descrizioni",
+  "translate.descOnlyHint": "La traduzione automatica se la cava bene con le frasi e male con poche parole: nomi, durate e gittate perdono il contesto e spesso vengono sbagliati. Con la spunta attiva restano in inglese e si traducono solo le descrizioni. Si consumano anche meno caratteri della tua quota.",
   "translate.connection": "Collegamento a DeepL",
   "translate.key": "Chiave DeepL",
   "translate.keyHint": "Una chiave gratuita (finisce in :fx) o a pagamento, dal tuo account DeepL. Resta su questo dispositivo e viaggia fino a DeepL, attraverso il relay, a ogni richiesta.",

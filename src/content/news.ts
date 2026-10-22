@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-22",
     notes: [
       {
+        en: 'In Automatic translation, a tick (on by default) "Translate descriptions only" leaves names, durations and ranges in English, since a machine translates a few words badly, and saves characters of your allowance.',
+        it: 'In Traduzione automatica, una spunta (attiva di default) "Traduci solo le descrizioni" lascia in inglese nomi, durate e gittate, perché una macchina traduce male poche parole, e risparmia caratteri della tua quota.',
+        fr: "Dans Traduction automatique, une case (cochée par défaut) « Traduire seulement les descriptions » laisse en anglais noms, durées et portées, car une machine traduit mal quelques mots, et économise des caractères de ton quota.",
+        de: 'In Automatische Übersetzung lässt ein Haken (standardmäßig an) "Nur Beschreibungen übersetzen" Namen, Dauern und Reichweiten englisch, da eine Maschine wenige Wörter schlecht übersetzt, und spart Zeichen deines Kontingents.',
+        es: 'En Traducción automática, una casilla (activa por defecto) "Traducir solo las descripciones" deja en inglés nombres, duraciones y alcances, porque una máquina traduce mal pocas palabras, y ahorra caracteres de tu cuota.',
+      },
+      {
         en: 'In Automatic translation, a short guide says how to get a DeepL key (an account for the DeepL API, the API Keys tab, copy and paste), and the message about a used-up allowance no longer says "this month", since the free plan may be a one-time allowance.',
         it: 'In Traduzione automatica, una breve guida spiega come ottenere una chiave DeepL (un account per l\'API di DeepL, la scheda API Keys, copia e incolla), e il messaggio sulla quota esaurita non dice più "di questo mese", perché il piano gratuito potrebbe avere una quota una tantum.',
         fr: "Dans Traduction automatique, un court guide explique comment obtenir une clé DeepL (un compte pour l'API de DeepL, l'onglet API Keys, copier-coller), et le message sur le quota épuisé ne dit plus « de ce mois », car l'offre gratuite peut avoir un quota unique.",

@@ -13,12 +13,14 @@ export interface AutoSettings {
   enabled: boolean;
   relay: string;
   key: string;
+  /** Leave short texts (names, durations, ranges...) alone: they come out worst. */
+  descriptionsOnly: boolean;
 }
 
 const STORAGE_KEY = "autoTranslate";
 
 function readSettings(): AutoSettings {
-  const blank = { enabled: false, relay: DEFAULT_RELAY, key: "" };
+  const blank = { enabled: false, relay: DEFAULT_RELAY, key: "", descriptionsOnly: true };
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "null");
     if (saved && typeof saved === "object")
@@ -26,6 +28,7 @@ function readSettings(): AutoSettings {
         enabled: saved.enabled === true,
         relay: typeof saved.relay === "string" && saved.relay ? saved.relay : DEFAULT_RELAY,
         key: typeof saved.key === "string" ? saved.key : "",
+        descriptionsOnly: saved.descriptionsOnly !== false,
       };
   } catch {
     // Storage may be refused or hold something else: start blank.
@@ -75,6 +78,20 @@ const cacheKey = (target: string, text: string) => `${target}\n${text}`;
 /** The entry a text belongs to: `<entry id>.<field>` without its field. */
 const entryOf = (key: string) => (key.includes(".") ? key.slice(0, key.indexOf(".")) : key);
 
+/** The fields that hold a few words: a name, a duration, a range. */
+const SHORT_FIELDS = new Set([
+  "name",
+  "abbreviation",
+  "castingTime",
+  "duration",
+  "range",
+  "material",
+  "script",
+  "speakers",
+]);
+
+const fieldOf = (key: string) => key.slice(key.lastIndexOf(".") + 1);
+
 /** Worth sending to DeepL: it holds letters, and is not something like a bare number or dice. */
 function worthTranslating(text: string): boolean {
   return /\p{L}{3,}/u.test(text);
@@ -87,6 +104,7 @@ export function autoText(key: string, source: string): string {
   translationTick.value;
   const asked = originals.value;
   if (!settings.enabled || !settings.key || !target || !worthTranslating(source)) return source;
+  if (settings.descriptionsOnly && SHORT_FIELDS.has(fieldOf(key))) return source;
 
   const ck = cacheKey(target, source);
   const hit = cache.get(ck);
