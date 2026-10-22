@@ -27,7 +27,7 @@ function SpellDetails({ c, ruleset, row }: { c: Content; ruleset: string; row: S
       <summary>
         {c.name(row.id)}
         <span class="muted">
-          {" "}
+          {" · "}
           {row.level === 0
             ? ui("spells.cantripSchool", { school })
             : ui("spells.levelSchool", { level: row.level, school })}
