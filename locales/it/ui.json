@@ -472,6 +472,7 @@
   "packs.removeConfirm": "Rimuovere il pacchetto {name}? I personaggi che lo usano mostreranno le sue voci come sconosciute.",
   "packs.import": "Aggiungi un file di pacchetto",
   "packs.exists": "C'è già un pacchetto personale con quell'id. Rimuovilo prima.",
+  "packs.sameAddress": "Quell'indirizzo è già importato come {name}. Usa Reimporta su quel pacchetto per aggiornarlo.",
   "packs.invalid": "Quel file non è un pacchetto di contenuti valido.",
   "packs.importAurora": "Aggiungi file XML di Aurora",
   "packs.report": "{name}: aggiunte {n} voci.",

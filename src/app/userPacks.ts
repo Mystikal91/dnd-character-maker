@@ -1,7 +1,7 @@
 import { signal } from "@preact/signals";
 import { loadContent } from "../content/browser";
 import { AURORA_IMPORT_VERSION, AuroraParseError, parseAurora } from "../import/aurora";
-import { gatherAurora } from "../import/aurora/remote";
+import { gatherAurora, rawAddress } from "../import/aurora/remote";
 import {
   PackParseError,
   type UserPackRecord,
@@ -21,7 +21,12 @@ export const userPacks = signal<UserPackRecord[]>([]);
 export const userPacksReady = signal(false);
 
 /** What went wrong with the last file the user tried to add, if anything. */
-export const packError = signal<"invalid" | "exists" | undefined>(undefined);
+export const packError = signal<"invalid" | "exists" | "sameAddress" | undefined>(undefined);
+
+/** The pack that already came from the address the user typed, when that is the problem. */
+export const sameAddressPack = signal<string | undefined>(undefined);
+
+const normalAddress = (url: string) => rawAddress(url).replace(/\/+$/, "").toLowerCase();
 
 export async function loadUserPacks(): Promise<void> {
   try {
@@ -116,6 +121,18 @@ export async function importAuroraFiles(files: File[], replaceId?: string): Prom
 
 /** Adds a personal pack from an address typed by the user: an index file or a content file. */
 export async function importAuroraUrl(url: string, replaceId?: string): Promise<void> {
+  // The same address twice would only make a second copy of the pack.
+  const known = replaceId
+    ? undefined
+    : userPacks.value.find(
+        (p) => p.source?.url && normalAddress(p.source.url) === normalAddress(url),
+      );
+  if (known) {
+    importReport.value = undefined;
+    sameAddressPack.value = known.name;
+    packError.value = "sameAddress";
+    return;
+  }
   await importAuroraSources([{ url }], replaceId, { url });
 }
 

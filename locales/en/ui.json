@@ -472,6 +472,7 @@
   "packs.removeConfirm": "Remove the pack {name}? Characters that use it will show its entries as unknown.",
   "packs.import": "Add a pack file",
   "packs.exists": "A personal pack with that id is already here. Remove it first.",
+  "packs.sameAddress": "That address is already imported as {name}. Use Import again on that pack to update it.",
   "packs.invalid": "That file is not a valid content pack.",
   "packs.importAurora": "Add Aurora XML files",
   "packs.report": "{name}: {n} entries added.",

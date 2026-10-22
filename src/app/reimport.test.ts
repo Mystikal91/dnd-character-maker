@@ -4,7 +4,14 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { loadContent } from "../content/browser";
 import { AURORA_IMPORT_VERSION } from "../import/aurora";
 import { content } from "./store";
-import { importAuroraFiles, isStale, userPacks } from "./userPacks";
+import {
+  importAuroraFiles,
+  importAuroraUrl,
+  isStale,
+  packError,
+  sameAddressPack,
+  userPacks,
+} from "./userPacks";
 
 const XML = `<?xml version="1.0" encoding="utf-8" ?><elements><info><name>Test Set</name></info>
   <element name="Glimmer" type="Spell" source="Test Book" id="ID_TEST_SPELL_GLIMMER">
@@ -47,5 +54,39 @@ describe("importing a pack again", () => {
     expect(again?.pack.entries.length).toBeGreaterThan(0);
     expect(again?.addedAt).toBe(123);
     expect(again && isStale(again)).toBe(false);
+  });
+});
+
+describe("the same address twice", () => {
+  it("is not imported again, whatever the way it is written", async () => {
+    userPacks.value = [
+      {
+        id: "impaddr",
+        name: "From GitHub (Aurora)",
+        origin: "personal",
+        addedAt: 1,
+        lang: "en",
+        pack: {
+          manifest: {
+            id: "impaddr",
+            ruleset: "custom",
+            version: "1",
+            license: "Personal use",
+            attribution: "Test",
+          },
+          entries: [],
+        },
+        strings: {},
+        source: { url: "https://github.com/someone/elements/blob/master/core/index.xml" },
+      },
+    ];
+    packError.value = undefined;
+    // The same file as its page and as its raw address, with a closing slash.
+    await importAuroraUrl(
+      "https://raw.githubusercontent.com/someone/elements/master/core/index.xml/",
+    );
+    expect(packError.value).toBe("sameAddress");
+    expect(sameAddressPack.value).toBe("From GitHub (Aurora)");
+    expect(userPacks.value).toHaveLength(1);
   });
 });

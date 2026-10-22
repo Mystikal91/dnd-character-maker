@@ -472,6 +472,7 @@
   "packs.removeConfirm": "Das Paket {name} entfernen? Charaktere, die es nutzen, zeigen seine Einträge als unbekannt an.",
   "packs.import": "Paketdatei hinzufügen",
   "packs.exists": "Ein persönliches Paket mit dieser ID gibt es schon. Entferne es zuerst.",
+  "packs.sameAddress": "Diese Adresse ist schon als {name} importiert. Nutze Erneut importieren bei diesem Paket, um es zu aktualisieren.",
   "packs.invalid": "Diese Datei ist kein gültiges Inhaltspaket.",
   "packs.importAurora": "Aurora-XML-Dateien hinzufügen",
   "packs.report": "{name}: {n} Einträge hinzugefügt.",

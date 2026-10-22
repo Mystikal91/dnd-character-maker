@@ -15,6 +15,7 @@ import {
   reimportPack,
   reimportStalePacks,
   removeUserPack,
+  sameAddressPack,
   userPacks,
 } from "../app/userPacks";
 import { type UiKey, ui } from "../i18n/ui";
@@ -296,7 +297,9 @@ export function PacksPage() {
       )}
       {error && (
         <p class="note" role="alert">
-          {ui(error === "exists" ? "packs.exists" : "packs.invalid")}
+          {error === "sameAddress"
+            ? ui("packs.sameAddress", { name: sameAddressPack.value ?? "" })
+            : ui(error === "exists" ? "packs.exists" : "packs.invalid")}
         </p>
       )}
     </article>

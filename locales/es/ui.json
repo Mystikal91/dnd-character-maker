@@ -472,6 +472,7 @@
   "packs.removeConfirm": "¿Quitar el paquete {name}? Los personajes que lo usen mostrarán sus entradas como desconocidas.",
   "packs.import": "Añadir un archivo de paquete",
   "packs.exists": "Ya hay un paquete personal con ese id. Quítalo primero.",
+  "packs.sameAddress": "Esa dirección ya está importada como {name}. Usa Importar de nuevo en ese paquete para actualizarlo.",
   "packs.invalid": "Ese archivo no es un paquete de contenido válido.",
   "packs.importAurora": "Añadir archivos XML de Aurora",
   "packs.report": "{name}: {n} entradas añadidas.",
