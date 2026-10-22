@@ -19,6 +19,8 @@ import type { UserPackRecord } from "../storage/packs";
 
 /** How many entries of each kind a pack has, e.g. `3 spell, 2 item`. */
 function summary(record: UserPackRecord): string {
+  if (record.origin === "edits")
+    return ui("packs.editedTexts", { n: Object.keys(record.strings).length });
   const counts = new Map<string, number>();
   for (const entry of record.pack.entries)
     counts.set(entry.kind, (counts.get(entry.kind) ?? 0) + 1);
@@ -66,6 +68,7 @@ export function PacksPage() {
       </ul>
 
       <h3>{ui("packs.yours")}</h3>
+      <p class="muted">{ui("packs.priority")}</p>
       {packs.length === 0 ? (
         <p class="muted">{ui("packs.none")}</p>
       ) : (
@@ -73,7 +76,11 @@ export function PacksPage() {
           {packs.map((record) => (
             <li key={record.id} class="pack">
               <div>
-                <b>{record.name}</b>
+                <b>
+                  {record.origin === "edits"
+                    ? `${ui("packs.origin.edits")} (${record.lang})`
+                    : record.name}
+                </b>
                 <span class={`pack-tag ${record.origin}`}>
                   {ui(`packs.origin.${record.origin}` as UiKey)}
                 </span>

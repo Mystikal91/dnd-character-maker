@@ -83,7 +83,7 @@ export function SpeciesTraits() {
   return (
     <Panel title={ui("sheet.speciesTraits")}>
       {s.traits.map((id) => (
-        <RulesText key={id} name={c.name(id)} text={c.text(id, "desc")} />
+        <RulesText key={id} id={id} name={c.name(id)} text={c.text(id, "desc")} />
       ))}
     </Panel>
   );
@@ -97,7 +97,7 @@ export function Feats() {
   return (
     <Panel title={ui("sheet.feats")}>
       {s.feats.map((id) => (
-        <RulesText key={id} name={c.name(id)} text={c.text(id, "desc")} />
+        <RulesText key={id} id={id} name={c.name(id)} text={c.text(id, "desc")} />
       ))}
     </Panel>
   );

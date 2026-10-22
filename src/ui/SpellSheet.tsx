@@ -1,6 +1,7 @@
 import { character, content, sheet } from "../app/store";
 import type { Content } from "../content/browser";
 import { ui } from "../i18n/ui";
+import { EditPencil } from "./QuickEdit";
 import { Paragraphs } from "./sheet/parts";
 import { type SpellRow, collectSpellRows } from "./spellRows";
 
@@ -43,6 +44,7 @@ function SpellDetails({ c, ruleset, row }: { c: Content; ruleset: string; row: S
           ) : null,
         )}
       </dl>
+      <EditPencil id={row.id} />
       <Paragraphs text={c.text(row.id, "desc")} />
       {c.text(row.id, "higherLevel") && (
         <p>

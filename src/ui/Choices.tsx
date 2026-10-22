@@ -70,7 +70,7 @@ function MenuPicks({ choice }: { choice: PendingChoice }) {
                   </option>
                 ))}
             </select>
-            {own && <RulesText name={name(own)} text={c.text(own, "desc")} />}
+            {own && <RulesText id={own} name={name(own)} text={c.text(own, "desc")} />}
           </div>
         );
       })}

@@ -1,7 +1,7 @@
 import { type Pack, parsePack } from "../data/schema";
 import { type PackIndex, indexPacks } from "../engine/derive";
 import { convertText } from "../i18n/units";
-import type { UserPackRecord } from "../storage/packs";
+import { type UserPackRecord, orderUserPacks } from "../storage/packs";
 import { autoText } from "../translate/auto";
 
 /** Loaded rules content plus helpers to read its translated texts. */
@@ -12,6 +12,14 @@ export interface Content {
   text(id: string, field: string): string | undefined;
   /** An entry's display name; falls back to a readable form of its id. */
   name(id: string): string;
+  /** The text fields an entry has (`name`, `desc`, ...). */
+  fields(id: string): string[];
+  /** A text exactly as stored: no units converted, no machine translation. */
+  raw(id: string, field: string): string | undefined;
+  /** The text before the quick edits, if a quick edit changed it. */
+  base(id: string, field: string): string | undefined;
+  /** A quick edit changed this text. */
+  isEdited(id: string, field: string): boolean;
 }
 
 const packFiles = import.meta.glob<Pack>("/data/*/*.json", { import: "default" });
@@ -65,12 +73,22 @@ export async function loadContent(
   );
 
   // Packs the user added: their texts are keyed by full entry id and carry their own language.
-  for (const record of userPacks) {
+  // They apply in order, so a quick edit (the last kind) wins over everything.
+  const original = new Map<string, string | undefined>();
+  for (const record of orderUserPacks(userPacks)) {
+    // Quick edits are written in one language and only apply while it is in use.
+    if (record.origin === "edits" && record.lang !== locales[0]) continue;
     const pack = parsePack(record.pack);
     if (packs.some((p) => p.manifest.id === pack.manifest.id)) continue;
     packs.push(pack);
     for (const [key, value] of Object.entries(record.strings)) {
       if (!value) continue;
+      if (record.origin === "edits") {
+        if (!original.has(key)) original.set(key, texts.get(key));
+        texts.set(key, value);
+        english.delete(key);
+        continue;
+      }
       texts.set(key, value);
       // Content read from other tools is English; what a person wrote is in their own language.
       if (record.origin === "personal" && record.lang !== locales[0]) english.add(key);
@@ -91,5 +109,18 @@ export async function loadContent(
     index: indexPacks(...packs),
     text,
     name: (id) => text(id, "name") ?? prettify(id.split("/")[1] ?? id),
+    fields: (id) => {
+      const prefix = `${id}.`;
+      return [...texts.keys()]
+        .filter((key) => key.startsWith(prefix))
+        .map((key) => key.slice(prefix.length))
+        .filter((field) => !/^\d+$/.test(field));
+    },
+    raw: (id, field) => texts.get(`${id}.${field}`),
+    base: (id, field) => {
+      const key = `${id}.${field}`;
+      return original.has(key) ? original.get(key) : texts.get(key);
+    },
+    isEdited: (id, field) => original.has(`${id}.${field}`),
   };
 }

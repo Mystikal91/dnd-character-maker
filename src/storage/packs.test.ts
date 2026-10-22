@@ -6,6 +6,7 @@ import {
   type UserPackRecord,
   deleteUserPack,
   listUserPacks,
+  orderUserPacks,
   packFileName,
   parsePackFile,
   parseUserPack,
@@ -114,5 +115,78 @@ describe("content with user packs", () => {
     const without = await loadContent(["en"]);
     const content = await loadContent(["en"], [clash]);
     expect(content.packs).toHaveLength(without.packs.length);
+  });
+});
+
+function edits(over: Partial<UserPackRecord> = {}): UserPackRecord {
+  return {
+    id: "editsit",
+    name: "Quick edits (it)",
+    origin: "edits",
+    addedAt: 5,
+    lang: "it",
+    pack: {
+      manifest: {
+        id: "editsit",
+        ruleset: "custom",
+        version: "1",
+        license: "Personal use",
+        attribution: "Quick edits",
+      },
+      entries: [],
+    },
+    strings: { "srd51:spell/fireball.name": "Palla di fuoco dorata" },
+    ...over,
+  };
+}
+
+describe("the order packs apply in", () => {
+  const at = (origin: UserPackRecord["origin"], addedAt: number, id: string) =>
+    record({ id, origin, addedAt });
+
+  it("puts other tools first, then homebrew, then quick edits, and the later pack last", () => {
+    const ordered = orderUserPacks([
+      at("edits", 1, "e"),
+      at("homebrew", 9, "h2"),
+      at("personal", 7, "p2"),
+      at("homebrew", 3, "h1"),
+      at("personal", 2, "p1"),
+    ]).map((r) => r.id);
+    expect(ordered).toEqual(["p1", "p2", "h1", "h2", "e"]);
+  });
+});
+
+describe("quick edits", () => {
+  it("replace a text of the built-in rules, in their own language only", async () => {
+    const italian = await loadContent(["it", "en"], [edits()]);
+    expect(italian.name("srd51:spell/fireball")).toBe("Palla di fuoco dorata");
+    expect(italian.isEdited("srd51:spell/fireball", "name")).toBe(true);
+    expect(italian.base("srd51:spell/fireball", "name")).toBe("Palla di fuoco");
+    // Other texts of the same entry stay as they were.
+    expect(italian.isEdited("srd51:spell/fireball", "desc")).toBe(false);
+
+    const english = await loadContent(["en"], [edits()]);
+    expect(english.name("srd51:spell/fireball")).toBe("Fireball");
+    expect(english.isEdited("srd51:spell/fireball", "name")).toBe(false);
+  });
+
+  it("win over a homebrew pack that gives the same text, whatever the order", async () => {
+    const brew = record({
+      id: "brew",
+      addedAt: 99,
+      pack: { ...record().pack, manifest: { ...record().pack.manifest, id: "brew" }, entries: [] },
+      strings: { "srd51:spell/fireball.name": "Sfera infuocata" },
+      lang: "it",
+    });
+    const content = await loadContent(["it", "en"], [edits(), brew]);
+    expect(content.name("srd51:spell/fireball")).toBe("Palla di fuoco dorata");
+    expect(content.base("srd51:spell/fireball", "name")).toBe("Sfera infuocata");
+  });
+
+  it("list the text fields of an entry, as stored", async () => {
+    const content = await loadContent(["en"]);
+    const fields = content.fields("srd51:spell/fireball");
+    expect(fields).toEqual(expect.arrayContaining(["name", "desc", "castingTime"]));
+    expect(content.raw("srd51:spell/fireball", "name")).toBe("Fireball");
   });
 });

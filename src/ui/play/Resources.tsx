@@ -341,7 +341,7 @@ export function Conditions() {
         })}
       </div>
       {active.map((e) => (
-        <RulesText key={e.id} name={c.name(e.id)} text={c.text(e.id, "desc")} />
+        <RulesText key={e.id} id={e.id} name={c.name(e.id)} text={c.text(e.id, "desc")} />
       ))}
     </Panel>
   );

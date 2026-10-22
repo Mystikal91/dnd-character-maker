@@ -8,11 +8,12 @@ import { dbDelete, dbGetAll, dbPut } from "./db";
  * `personal` packs come from files the user already has (such as content imported from other
  * tools). They stay on this device: they can be removed but never exported or shared as a pack.
  * `homebrew` packs are the user's own work and can be exported.
+ * `edits` is the pack of quick edits (the texts the user rewrote), one per language.
  */
 export interface UserPackRecord {
   id: string;
   name: string;
-  origin: "personal" | "homebrew";
+  origin: "personal" | "homebrew" | "edits";
   addedAt: number;
   pack: Pack;
   /** Texts keyed by `<entry id>.<field>` (`name`, `desc`, ...). */
@@ -24,7 +25,7 @@ export interface UserPackRecord {
 const RecordSchema = v.object({
   id: v.string(),
   name: v.string(),
-  origin: v.picklist(["personal", "homebrew"]),
+  origin: v.picklist(["personal", "homebrew", "edits"]),
   addedAt: v.number(),
   pack: v.unknown(),
   strings: v.record(v.string(), v.string()),
@@ -33,6 +34,15 @@ const RecordSchema = v.object({
 
 /** Ids of the packs that ship with the app: a user pack may not take their place. */
 const RESERVED_IDS = new Set(["srd51", "srd52"]);
+
+/**
+ * The order packs apply in: what comes later wins. Content read from other tools first, then the
+ * user's homebrew, then the quick edits, which always have the last word. Within one kind, the
+ * pack added later wins.
+ */
+const APPLY_RANK = { personal: 0, homebrew: 1, edits: 2 } as const;
+export const orderUserPacks = (records: UserPackRecord[]): UserPackRecord[] =>
+  [...records].sort((a, b) => APPLY_RANK[a.origin] - APPLY_RANK[b.origin] || a.addedAt - b.addedAt);
 
 export class PackParseError extends Error {}
 

@@ -2,6 +2,7 @@ import { signal } from "@preact/signals";
 import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
 import { character, content } from "../../app/store";
 import { ui } from "../../i18n/ui";
+import { EditPencil } from "../QuickEdit";
 import { MachineNote } from "../sheet/parts";
 
 /** The spell whose full details are open in the dialog, if any. */
@@ -36,7 +37,10 @@ function SpellInfoBody({ id, short = false }: { id: string; short?: boolean }) {
 
   return (
     <>
-      <h4 class="spell-info-title">{c.name(id)}</h4>
+      <h4 class="spell-info-title">
+        {c.name(id)}
+        {!short && <EditPencil id={id} />}
+      </h4>
       <p class="muted">
         {level === 0
           ? ui("spells.cantripSchool", { school })

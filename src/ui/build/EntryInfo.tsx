@@ -4,6 +4,7 @@ import { classData, subclassData } from "../../data/progression";
 import type { Effect } from "../../data/schema";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
+import { EditPencil } from "../QuickEdit";
 import { Paragraphs, RulesText } from "../sheet/parts";
 
 /** The longest list of options named in a line before it is cut. */
@@ -73,11 +74,23 @@ function Facts({ rows }: { rows: [string, string | undefined][] }) {
 function Block({
   title,
   subtitle,
+  edit = [],
   children,
-}: { title: string; subtitle?: string | undefined; children: ComponentChildren }) {
+}: {
+  title: string;
+  subtitle?: string | undefined;
+  /** The entries whose texts the pencils edit. */
+  edit?: string[];
+  children: ComponentChildren;
+}) {
   return (
     <section class="entry-info">
-      <h4>{title}</h4>
+      <h4>
+        {title}
+        {edit.map((id) => (
+          <EditPencil key={id} id={id} />
+        ))}
+      </h4>
       {subtitle && <p class="muted">{subtitle}</p>}
       {children}
     </section>
@@ -113,7 +126,11 @@ export function SpeciesInfo() {
     .join("\n\n");
 
   return (
-    <Block title={c.name(species.id)} subtitle={sub ? c.name(sub.id) : undefined}>
+    <Block
+      title={c.name(species.id)}
+      subtitle={sub ? c.name(sub.id) : undefined}
+      edit={sub ? [species.id, sub.id] : [species.id]}
+    >
       <Facts
         rows={[
           [ui("hb.f.size"), size ? (ui(`hb.o.${size}` as UiKey) ?? size) : undefined],
@@ -127,7 +144,7 @@ export function SpeciesInfo() {
       {traits.length > 0 && (
         <div class="entry-info-list">
           {traits.map((id) => (
-            <RulesText key={id} name={c.name(id)} text={c.text(id, "desc")} />
+            <RulesText key={id} id={id} name={c.name(id)} text={c.text(id, "desc")} />
           ))}
         </div>
       )}
@@ -151,7 +168,7 @@ export function BackgroundInfo() {
   const featureName = c.text(background.id, "featureName");
 
   return (
-    <Block title={c.name(background.id)}>
+    <Block title={c.name(background.id)} edit={[background.id]}>
       <Paragraphs text={c.text(background.id, "desc")} />
       <Facts
         rows={[
@@ -163,7 +180,11 @@ export function BackgroundInfo() {
       />
       {featureName && (
         <div class="entry-info-list">
-          <RulesText name={featureName} text={c.text(background.id, "featureDesc")} />
+          <RulesText
+            id={background.id}
+            name={featureName}
+            text={c.text(background.id, "featureDesc")}
+          />
         </div>
       )}
     </Block>
@@ -194,7 +215,7 @@ export function ClassInfo({
 
   return (
     <>
-      <Block title={c.name(classId)}>
+      <Block title={c.name(classId)} edit={[classId]}>
         <Paragraphs text={c.text(classId, "desc")} />
         <Facts
           rows={[
@@ -220,7 +241,7 @@ export function ClassInfo({
         {levelOne.length > 0 && (
           <div class="entry-info-list">
             {levelOne.map((id) => (
-              <RulesText key={id} name={c.name(id)} text={c.text(id, "desc")} />
+              <RulesText key={id} id={id} name={c.name(id)} text={c.text(id, "desc")} />
             ))}
           </div>
         )}
@@ -239,7 +260,7 @@ export function ClassInfo({
         )}
       </Block>
       {sub && (
-        <Block title={c.name(sub.id)} subtitle={c.text(sub.id, "flavor")}>
+        <Block title={c.name(sub.id)} subtitle={c.text(sub.id, "flavor")} edit={[sub.id]}>
           <Paragraphs text={c.text(sub.id, "desc")} />
           {subLevels.length > 0 && (
             <dl class="pairs">

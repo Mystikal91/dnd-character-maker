@@ -14,6 +14,7 @@ import { AppMenu } from "./AppMenu";
 import { AutoTranslatePage } from "./AutoTranslatePage";
 import { HomebrewPage } from "./HomebrewPage";
 import { PacksPage } from "./PacksPage";
+import { QuickEditDialog } from "./QuickEdit";
 import { ShareDialog } from "./ShareDialog";
 import { Sheet } from "./Sheet";
 import { Tabs } from "./Tabs";
@@ -118,6 +119,7 @@ export function App() {
       )}
       <UpdateNotice />
       <SpellDialog />
+      <QuickEditDialog />
       <ShareDialog />
       <LevelUp />
       <footer class="site-footer no-print">

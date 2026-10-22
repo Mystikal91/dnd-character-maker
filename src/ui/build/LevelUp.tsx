@@ -86,7 +86,7 @@ function Changes({ summary, c }: { summary: LevelUpSummary; c: Content }) {
         <>
           <h4>{ui("levelUp.change.features")}</h4>
           {summary.newFeatures.map((id) => (
-            <RulesText key={id} name={c.name(id)} text={c.text(id, "desc")} />
+            <RulesText key={id} id={id} name={c.name(id)} text={c.text(id, "desc")} />
           ))}
         </>
       )}

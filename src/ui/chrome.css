@@ -567,3 +567,59 @@ input:checked + .equip-tag {
     transition: none;
   }
 }
+
+/* ---- Quick edit: the pencil and its dialog ---- */
+
+.edit-pencil {
+  margin-left: 0.4rem;
+  padding: 0 0.35rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  cursor: pointer;
+}
+
+.edit-pencil:hover,
+.edit-pencil:focus-visible {
+  color: var(--accent);
+}
+
+.quick-edit {
+  width: min(40rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: 1rem 1.1rem;
+  overflow-y: auto;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.quick-edit::backdrop {
+  background: rgb(0 0 0 / 0.55);
+}
+
+.quick-edit h3 {
+  margin-top: 0;
+}
+
+.quick-edit textarea {
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  resize: vertical;
+}
+
+.quick-edit small {
+  display: block;
+  margin-top: 0.2rem;
+}
+
+.quick-edit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}

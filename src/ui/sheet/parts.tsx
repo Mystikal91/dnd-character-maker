@@ -1,6 +1,7 @@
 import type { ComponentChildren } from "preact";
 import { ui } from "../../i18n/ui";
 import { machineMode, toggleOriginal } from "../../translate/auto";
+import { EditPencil } from "../QuickEdit";
 
 /** A framed panel with a titled heading. */
 export function Panel({
@@ -67,10 +68,15 @@ export function Pips({ count }: { count: number }) {
 }
 
 /** A collapsible rules text: the name is the summary, the text is revealed on demand. */
-export function RulesText({ name, text }: { name: string; text: string | undefined }) {
+export function RulesText({
+  name,
+  text,
+  id,
+}: { name: string; text: string | undefined; id?: string | undefined }) {
   return (
     <details>
       <summary>{name}</summary>
+      {id && <EditPencil id={id} />}
       <Paragraphs text={text} />
     </details>
   );

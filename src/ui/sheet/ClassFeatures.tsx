@@ -36,7 +36,7 @@ function LevelFrame({
         {level}
       </span>
       {features.map((id) => (
-        <RulesText key={id} name={c.name(id)} text={c.text(id, "desc")} />
+        <RulesText key={id} id={id} name={c.name(id)} text={c.text(id, "desc")} />
       ))}
     </article>
   );

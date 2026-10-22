@@ -114,3 +114,15 @@ you have the right to use.
 A homebrew pack file is JSON with `format: "dnd-character-maker-pack"`, an `id`, a `name`, the
 `lang` of its texts, a `pack` (manifest and entries, as in `src/data/schema.ts`) and `strings`
 keyed by `<entry id>.<field>` (`name`, `desc`, ...). Pack ids may not be `srd51` or `srd52`.
+
+## Which pack wins
+
+Packs apply in this order, and what comes later wins when two give the same text: the built-in
+rules, then content imported from other tools (the pack added later wins), then your homebrew
+packs, then your **quick edits**. Entries of different packs have different id prefixes, so they
+never replace each other; the order matters for texts.
+
+Quick edits are the texts a person rewrote with the pencil next to a name or a text. They are kept
+in one pack per language (`edits<language>`, for example `editsit`) that holds only texts, keyed
+by the full entry id (`srd51:spell/fireball.name`), and they apply only while that language is in
+use. They never change an entry's data or effects.
