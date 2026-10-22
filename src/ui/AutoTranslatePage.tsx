@@ -76,6 +76,20 @@ export function AutoTranslatePage() {
         />
       </label>
       <p class="muted">{ui("translate.keyHint")}</p>
+      <details class="howto">
+        <summary>{ui("translate.howTo")}</summary>
+        <ol>
+          <li>
+            {ui("translate.howTo1")}{" "}
+            <a href="https://www.deepl.com/pro-api" target="_blank" rel="noopener noreferrer">
+              deepl.com/pro-api
+            </a>
+          </li>
+          <li>{ui("translate.howTo2")}</li>
+          <li>{ui("translate.howTo3")}</li>
+        </ol>
+        <p class="muted">{ui("translate.howToNote")}</p>
+      </details>
       <label class="field">
         <span>{ui("translate.relay")}</span>
         <input

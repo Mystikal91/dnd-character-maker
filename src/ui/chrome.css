@@ -418,3 +418,19 @@ input:checked + .equip-tag {
   color: var(--accent);
   font-weight: 700;
 }
+
+/* ---- Where to get a DeepL key ---- */
+
+.howto {
+  margin: 0.25rem 0 1rem;
+}
+
+.howto summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.howto ol {
+  margin: 0.5rem 0;
+  padding-left: 1.4rem;
+}

@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-22",
     notes: [
       {
+        en: 'In Automatic translation, a short guide says how to get a DeepL key (an account for the DeepL API, the API Keys tab, copy and paste), and the message about a used-up allowance no longer says "this month", since the free plan may be a one-time allowance.',
+        it: 'In Traduzione automatica, una breve guida spiega come ottenere una chiave DeepL (un account per l\'API di DeepL, la scheda API Keys, copia e incolla), e il messaggio sulla quota esaurita non dice più "di questo mese", perché il piano gratuito potrebbe avere una quota una tantum.',
+        fr: "Dans Traduction automatique, un court guide explique comment obtenir une clé DeepL (un compte pour l'API de DeepL, l'onglet API Keys, copier-coller), et le message sur le quota épuisé ne dit plus « de ce mois », car l'offre gratuite peut avoir un quota unique.",
+        de: 'In Automatische Übersetzung erklärt eine kurze Anleitung, wie man einen DeepL-Schlüssel bekommt (ein Konto für die DeepL-API, der Reiter API Keys, kopieren und einfügen), und die Meldung über ein aufgebrauchtes Kontingent sagt nicht mehr "dieses Monats", da der kostenlose Tarif auch ein einmaliges Kontingent sein kann.',
+        es: 'En Traducción automática, una breve guía explica cómo obtener una clave de DeepL (una cuenta para la API de DeepL, la pestaña API Keys, copiar y pegar), y el mensaje de cuota agotada ya no dice "de este mes", porque el plan gratuito puede tener una cuota única.',
+      },
+      {
         en: "Fix on phones: in Play, the boxes from Dice down no longer grow wider than the screen (they were cut off and the page scrolled sideways).",
         it: "Correzione da telefono: in Gioca i riquadri da Dadi in poi non si allargano più oltre lo schermo (venivano tagliati e la pagina scorreva di lato).",
         fr: "Correction sur téléphone : dans Jouer, les cadres à partir de Dés ne dépassent plus la largeur de l'écran (ils étaient coupés et la page défilait sur le côté).",
