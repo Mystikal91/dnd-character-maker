@@ -3,6 +3,7 @@ import { rollLog } from "../../app/play";
 import { character, content, sheet } from "../../app/store";
 import { MAX_LEVEL } from "../../engine/levelUp";
 import { ui } from "../../i18n/ui";
+import { CoinsPanel } from "../Coins";
 import { ClassResources, Conditions, PlayNotes, PlaySpells, Slots } from "./Resources";
 import { DiceTray, QuickRolls, RollHistory } from "./Rolls";
 import { Vitals } from "./Vitals";
@@ -48,6 +49,7 @@ export function PlayTab() {
         <div class="play-col">
           <Vitals />
           <ClassResources />
+          <CoinsPanel />
           <Conditions />
           <PlayNotes />
         </div>

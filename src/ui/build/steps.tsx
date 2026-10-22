@@ -4,6 +4,7 @@ import { itemData } from "../../data/items";
 import { proficiencyKeys } from "../../engine/equipment";
 import { addToInventory, itemKind, packContents } from "../../engine/gear";
 import { ui } from "../../i18n/ui";
+import { Coins } from "../Coins";
 import { InventoryList, LoadLine } from "../InventoryList";
 import { itemLabel } from "../ItemTag";
 import { CustomItem } from "./CustomItem";
@@ -158,6 +159,8 @@ export function EquipmentStep() {
       <p class="muted">{ui("sheet.equipHint")}</p>
       <InventoryList removable />
       <LoadLine />
+      <h4>{ui("coin.title")}</h4>
+      <Coins />
       <CustomItem />
     </>
   );

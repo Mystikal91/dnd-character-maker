@@ -2,6 +2,7 @@ import { character, content } from "../../app/store";
 import type { Content } from "../../content/browser";
 import { itemData } from "../../data/items";
 import type { Character } from "../../engine/character";
+import { COINS } from "../../engine/coins";
 import { type UiKey, ui } from "../../i18n/ui";
 import { FitBox } from "./FitBox";
 
@@ -147,10 +148,10 @@ export function StoryPage() {
               </div>
             ))}
             <div class="p-coins">
-              {["CP", "SP", "EP", "GP", "PP"].map((coin) => (
+              {COINS.map((coin) => (
                 <div key={coin}>
-                  <div class="p-coin" />
-                  {coin}
+                  <div class="p-coin">{ch.coins?.[coin] || ""}</div>
+                  {coin.toUpperCase()}
                 </div>
               ))}
             </div>

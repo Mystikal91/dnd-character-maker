@@ -14,6 +14,8 @@ const ClassLevelSchema = v.object({
   hpRolls: v.optional(v.array(v.number())),
 });
 
+const CoinCount = v.pipe(v.number(), v.integer(), v.minValue(0));
+
 const InventoryItemSchema = v.object({
   itemId: v.string(),
   quantity: v.pipe(v.number(), v.integer(), v.minValue(1)),
@@ -43,6 +45,15 @@ const CharacterSchema = v.object({
   }),
   classes: v.array(ClassLevelSchema),
   inventory: v.array(InventoryItemSchema),
+  coins: v.optional(
+    v.object({
+      cp: CoinCount,
+      sp: CoinCount,
+      ep: CoinCount,
+      gp: CoinCount,
+      pp: CoinCount,
+    }),
+  ),
   abilityBase: v.object({
     str: v.number(),
     dex: v.number(),

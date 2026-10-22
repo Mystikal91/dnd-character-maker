@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-22",
     notes: [
       {
+        en: "Coins: counters for copper, silver, electrum, gold and platinum pieces, in Equipment, on the sheet and in Play, with the total in gold. They only keep count, and the printed sheet fills in the coin boxes.",
+        it: "Monete: contatori per monete di rame, argento, electrum, oro e platino, in Equipaggiamento, nella scheda e in Gioca, con il totale in monete d'oro. Servono solo a tenere il conto, e la scheda stampata compila le caselle delle monete.",
+        fr: "Pièces : des compteurs pour les pièces de cuivre, d'argent, d'électrum, d'or et de platine, dans Équipement, sur la fiche et dans Jouer, avec le total en pièces d'or. Ils ne servent qu'à compter, et la fiche imprimée remplit les cases des pièces.",
+        de: "Münzen: Zähler für Kupfer-, Silber-, Elektrum-, Gold- und Platinmünzen, in Ausrüstung, auf dem Bogen und im Spielmodus, mit der Summe in Gold. Sie zählen nur mit, und der gedruckte Bogen füllt die Münzfelder aus.",
+        es: "Monedas: contadores de monedas de cobre, plata, electro, oro y platino, en Equipo, en la hoja y en Jugar, con el total en oro. Solo llevan la cuenta, y la hoja impresa rellena las casillas de monedas.",
+      },
+      {
         en: "Equipment, more complete: every item of the rules can be added (gear, tools, mounts and vehicles, not only armor and weapons), each line has a counter for how many, the inventory is listed by type with the load always in view, armor and weapons show their numbers (damage, armor class, strength needed) and every item has a Details section with its text, weight and cost. You can also add an item of your own, with a name, a weight and a note, for what the rules do not list.",
         it: "Equipaggiamento più completo: si può aggiungere qualsiasi oggetto delle regole (equipaggiamento, strumenti, cavalcature e veicoli, non solo armature e armi), ogni riga ha un contatore per quanti ne hai, l'inventario è ordinato per tipo con il carico sempre in vista, armature e armi mostrano i loro numeri (danno, classe armatura, forza richiesta) e ogni oggetto ha una sezione Dettagli con testo, peso e costo. Puoi anche aggiungere un oggetto tuo, con nome, peso e nota, per ciò che le regole non elencano.",
         fr: "Équipement plus complet : on peut ajouter n'importe quel objet des règles (équipement, outils, montures et véhicules, pas seulement armures et armes), chaque ligne a un compteur du nombre, l'inventaire est classé par type avec la charge toujours visible, armures et armes montrent leurs chiffres (dégâts, classe d'armure, force requise) et chaque objet a une section Détails avec son texte, son poids et son coût. Tu peux aussi ajouter un objet à toi, avec un nom, un poids et une note, pour ce que les règles ne listent pas.",
@@ -357,6 +364,46 @@ export const ROADMAP: RoadmapItem[] = [
       fr: "Jets d'attaque et de dégâts des sorts dans Jouer, avec les dés de l'emplacement utilisé.",
       de: "Angriffs- und Schadenswürfe von Zaubern im Spielmodus, mit den Würfeln des verwendeten Zauberplatzes.",
       es: "Tiradas de ataque y de daño de los conjuros en Jugar, con los dados del espacio usado.",
+    },
+  },
+  {
+    id: "money",
+    text: {
+      en: "Money that does something: buying items takes their cost from the coins, the gold a class starts with, and coins that weigh (50 to a pound).",
+      it: "Soldi che fanno qualcosa: comprare gli oggetti toglie il loro costo dalle monete, l'oro con cui parte una classe e le monete che pesano (50 per libbra).",
+      fr: "Un argent qui sert à quelque chose : acheter un objet retire son coût des pièces, l'or de départ d'une classe, et des pièces qui pèsent (50 pour une livre).",
+      de: "Geld, das etwas tut: Der Kauf von Gegenständen zieht die Kosten von den Münzen ab, dazu das Startgold einer Klasse und Münzen, die Gewicht haben (50 auf ein Pfund).",
+      es: "Dinero que hace algo: comprar objetos descuenta su coste de las monedas, el oro con el que empieza una clase y monedas que pesan (50 por libra).",
+    },
+  },
+  {
+    id: "playInventory",
+    text: {
+      en: "The inventory in Play: counters to use up potions, arrows and rations at the table, and the equipment to switch on and off.",
+      it: "L'inventario in Gioca: contatori per consumare pozioni, frecce e razioni al tavolo, e l'equipaggiamento da accendere e spegnere.",
+      fr: "L'inventaire dans Jouer : des compteurs pour consommer potions, flèches et rations à table, et l'équipement à activer et désactiver.",
+      de: "Das Inventar im Spielmodus: Zähler, um Tränke, Pfeile und Rationen am Tisch zu verbrauchen, und die Ausrüstung zum An- und Ausschalten.",
+      es: "El inventario en Jugar: contadores para gastar pociones, flechas y raciones en la mesa, y el equipo para activar y desactivar.",
+    },
+  },
+  {
+    id: "startingEquipment",
+    text: {
+      en: "Starting equipment: a button that adds what you get without choosing, and the choices as steps to follow.",
+      it: "Equipaggiamento iniziale: un pulsante che aggiunge ciò che ricevi senza scegliere, e le scelte come passi da seguire.",
+      fr: "Équipement de départ : un bouton qui ajoute ce que tu reçois sans choisir, et les choix sous forme d'étapes à suivre.",
+      de: "Startausrüstung: ein Knopf, der hinzufügt, was du ohne Wahl bekommst, und die Wahlmöglichkeiten als Schritte zum Folgen.",
+      es: "Equipo inicial: un botón que añade lo que recibes sin elegir, y las opciones como pasos que seguir.",
+    },
+  },
+  {
+    id: "quickEditMore",
+    text: {
+      en: "Quick edit everywhere (the lists of items and more), and Edit everything: copy an entry as a new one in your homebrew, or replace the original, rules included.",
+      it: "Modifica rapida ovunque (gli elenchi di oggetti e altro), e Modifica tutto: copiare una voce come nuova nel tuo homebrew, o sostituire l'originale, regole comprese.",
+      fr: "Modification rapide partout (les listes d'objets et plus), et Tout modifier : copier une entrée comme nouvelle dans ton homebrew, ou remplacer l'original, règles comprises.",
+      de: "Schnellbearbeitung überall (die Listen der Gegenstände und mehr) und Alles bearbeiten: einen Eintrag als neuen in deinem Homebrew kopieren oder das Original ersetzen, Regeln eingeschlossen.",
+      es: "Edición rápida en todas partes (las listas de objetos y más), y Editar todo: copiar una entrada como nueva en tu homebrew, o sustituir el original, reglas incluidas.",
     },
   },
   {

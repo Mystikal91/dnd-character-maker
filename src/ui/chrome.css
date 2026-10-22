@@ -741,3 +741,56 @@ input:checked + .equip-tag {
   width: 100%;
   max-width: 100%;
 }
+
+/* ---- Coins: a counter for each ---- */
+
+.coin-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+  gap: 0.6rem;
+}
+
+.coin {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.coin label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.coin-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.coin-controls button {
+  flex: none;
+  width: 2rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.coin-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.coin-controls input {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 2.5rem;
+  text-align: center;
+  font-weight: 700;
+}

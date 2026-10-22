@@ -1,4 +1,5 @@
 import { ABILITIES, type Ability } from "../data/schema";
+import type { Coins } from "./coins";
 
 export const CHARACTER_SCHEMA_VERSION = 6;
 
@@ -134,6 +135,8 @@ export interface Character {
   };
   classes: ClassLevel[];
   inventory: InventoryItem[];
+  /** The money carried. Absent in characters saved before coins were kept. */
+  coins?: Coins;
   abilityBase: Record<Ability, number>;
   abilityMethod: AbilityMethod;
   /** The six rolled values, when `abilityMethod` is `roll`. */

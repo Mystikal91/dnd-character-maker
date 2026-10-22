@@ -2,6 +2,7 @@ import { Fragment } from "preact";
 import { character, content, sheet } from "../../app/store";
 import type { Warning } from "../../engine/warnings";
 import { type UiKey, ui } from "../../i18n/ui";
+import { Coins } from "../Coins";
 import { InventoryList, LoadLine } from "../InventoryList";
 import { Panel, RulesText } from "./parts";
 
@@ -102,17 +103,19 @@ export function Feats() {
   );
 }
 
-/** Items carried and how heavy they are. */
+/** Items carried, how heavy they are, and the coins. */
 export function Inventory() {
   const c = content.value;
   const s = sheet.value;
   const ch = character.value;
-  if (!c || !s || ch.inventory.length === 0) return null;
+  if (!c || !s) return null;
   return (
     <Panel title={ui("sheet.inventory")}>
-      <p class="muted">{ui("sheet.equipHint")}</p>
+      {ch.inventory.length > 0 && <p class="muted">{ui("sheet.equipHint")}</p>}
       <InventoryList removable={false} />
       <LoadLine />
+      <h5>{ui("coin.title")}</h5>
+      <Coins />
     </Panel>
   );
 }

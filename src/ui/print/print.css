@@ -881,6 +881,11 @@
 }
 
 .p-coin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8pt;
+  font-weight: 700;
   height: 7mm;
   margin-bottom: 0.5mm;
   border: 0.3mm solid var(--p-line);
