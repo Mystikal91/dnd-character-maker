@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-22",
     notes: [
       {
+        en: "Magic weapons: a weapon in your inventory has a Magic weapon section where you tick Magical (for a spell such as Magic Weapon or a ritual), set a +1 to +3 bonus to attack and damage, and pick an enchantment imported from Aurora (a +1 weapon, a Giant Slayer...). Battle Ready now sees them, and the Attacks panel shows the bonus.",
+        it: "Armi magiche: un'arma nel tuo inventario ha una sezione Arma magica dove spunti Magica (per un incantesimo come Arma Magica o un rituale), imposti un bonus da +1 a +3 ad attacco e danno e scegli un incantamento importato da Aurora (un'arma +1, un Giant Slayer...). Battle Ready ora le riconosce e il pannello Attacchi mostra il bonus.",
+        fr: "Armes magiques : une arme de ton inventaire a une section Arme magique où tu coches Magique (pour un sort comme Arme magique ou un rituel), fixes un bonus de +1 à +3 à l'attaque et aux dégâts, et choisis un enchantement importé d'Aurora (une arme +1, un Giant Slayer...). Battle Ready les reconnaît désormais et le panneau Attaques montre le bonus.",
+        de: "Magische Waffen: Eine Waffe in deinem Inventar hat einen Bereich Magische Waffe, in dem du Magisch anhakst (für einen Zauber wie Magische Waffe oder ein Ritual), einen Bonus von +1 bis +3 auf Angriff und Schaden einstellst und eine aus Aurora importierte Verzauberung wählst (eine +1-Waffe, einen Giant Slayer...). Battle Ready erkennt sie jetzt, und das Feld Angriffe zeigt den Bonus.",
+        es: "Armas mágicas: un arma de tu inventario tiene una sección Arma mágica donde marcas Mágica (para un conjuro como Arma mágica o un ritual), fijas un bonificador de +1 a +3 al ataque y al daño y eliges un encantamiento importado de Aurora (un arma +1, un Giant Slayer...). Battle Ready ahora las reconoce y el panel Ataques muestra el bonificador.",
+      },
+      {
         en: 'In Automatic translation, a tick (on by default) "Translate descriptions, not names" leaves names in English, since a name on its own often comes out wrong, and saves characters of your allowance.',
         it: 'In Traduzione automatica, una spunta (attiva di default) "Traduci le descrizioni, non i nomi" lascia in inglese i nomi, perché un nome da solo spesso viene sbagliato, e risparmia caratteri della tua quota.',
         fr: "Dans Traduction automatique, une case (cochée par défaut) « Traduire les descriptions, pas les noms » laisse les noms en anglais, car un nom seul est souvent faux, et économise des caractères de ton quota.",

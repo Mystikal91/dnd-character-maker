@@ -3,6 +3,7 @@ import { character, content, sheet, updateCharacter } from "../../app/store";
 import type { Warning } from "../../engine/warnings";
 import { type UiKey, ui } from "../../i18n/ui";
 import { weight } from "../../i18n/units";
+import { WeaponMagic } from "../WeaponMagic";
 import { Panel, RulesText } from "./parts";
 
 const PROFICIENCY_CATEGORIES = ["armor", "weapon", "tool", "language"] as const;
@@ -131,6 +132,7 @@ export function Inventory() {
                 {i.quantity > 1 && ` ×${i.quantity}`}
               </span>
             </label>
+            <WeaponMagic item={i} />
           </li>
         ))}
       </ul>

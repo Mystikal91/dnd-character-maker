@@ -30,6 +30,10 @@ number comes from. The kinds are `abilityBonus`, `proficiency`, `trait`, `choice
   weapons use that ability for attack and damage instead of Strength or Dexterity (the best one
   that applies wins). `when` narrows the weapons: `oneHanded` (no two-handed property) or
   `magic` (an item with a `rarity`); `proficient` asks for a weapon the character is proficient with.
+- Item data can hold `rarity` (a magic item), `enhancement` (+1 to +3 to attack and damage) and
+  `enchants: true` (the item is put on a weapon of the inventory instead of being carried: the
+  Aurora importer sets it for the magic weapons it reads). A weapon in the inventory can also
+  be marked `magical` and given a `bonus` by the person using the sheet.
 - `{ "type": "defense", "kind": "resistance", "damage": "fire" }` is a resistance, an
   immunity or a vulnerability to a type of damage; the sheet lists them.
 - `{ "type": "unarmoredDefense", "base": 10, "add": ["con"], "shield": true }` is armor class

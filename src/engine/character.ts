@@ -108,6 +108,12 @@ export interface InventoryItem {
   itemId: string;
   quantity: number;
   equipped: boolean;
+  /** A weapon that is magic (made so by a spell such as Magic Weapon, or by a ritual). */
+  magical?: boolean;
+  /** A bonus to attack and damage rolls that a spell or an enchantment gives (0 to 3). */
+  bonus?: number;
+  /** A magic item (an entry with `enchants`) that the weapon carries: its bonus and effects apply. */
+  enchantment?: string;
 }
 
 /** What gets saved. Everything on the sheet is derived from this by the engine. */

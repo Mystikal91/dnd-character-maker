@@ -2,6 +2,7 @@ import { useState } from "preact/hooks";
 import { character, content, updateCharacter } from "../../app/store";
 import { itemData } from "../../data/items";
 import { ui } from "../../i18n/ui";
+import { WeaponMagic } from "../WeaponMagic";
 import { BackgroundInfo, SpeciesInfo } from "./EntryInfo";
 import { Select, entriesOfKind } from "./fields";
 
@@ -82,7 +83,7 @@ export function EquipmentStep() {
   const armor = itemOptions("armor").filter(found);
   const weapons = itemOptions("weapon").filter(found);
   const magic = entriesOfKind("item")
-    .filter((o) => index?.get(o.id)?.data.rarity)
+    .filter((o) => index?.get(o.id)?.data.rarity && !index.get(o.id)?.data.enchants)
     .filter(found);
 
   return (
@@ -161,6 +162,7 @@ export function EquipmentStep() {
             >
               {ui("form.remove")}
             </button>
+            <WeaponMagic item={item} />
           </li>
         ))}
       </ul>

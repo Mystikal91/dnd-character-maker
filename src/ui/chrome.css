@@ -434,3 +434,24 @@ input:checked + .equip-tag {
   margin: 0.5rem 0;
   padding-left: 1.4rem;
 }
+
+/* ---- Magic weapons ---- */
+
+.inventory li {
+  flex-wrap: wrap;
+}
+
+.weapon-magic {
+  flex-basis: 100%;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.weapon-magic summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.weapon-magic .field {
+  margin-top: 0.5rem;
+}

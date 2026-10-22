@@ -132,7 +132,11 @@ export function Attacks() {
           <tbody>
             {s.attacks.map((a) => (
               <tr key={a.itemId}>
-                <td>{c.name(a.itemId)}</td>
+                <td>
+                  {c.name(a.itemId)}
+                  {a.enhancement > 0 && ` +${a.enhancement}`}
+                  {a.enchantment && <div class="muted">{c.name(a.enchantment)}</div>}
+                </td>
                 <td>{signed(a.attackBonus)}</td>
                 <td>
                   {a.damage && formatDamage(a.damage)}

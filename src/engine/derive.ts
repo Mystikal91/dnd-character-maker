@@ -172,10 +172,12 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   // What the character has equipped adds its effects, like a ring that grants a resistance.
   const wornWithEffects = character.inventory
     .filter((i) => i.equipped)
-    .flatMap((i) => {
-      const entry = index.get(i.itemId);
-      return entry && entry.effects.length > 0 ? [entry] : [];
-    });
+    .flatMap((i) =>
+      [i.itemId, i.enchantment].flatMap((id) => {
+        const entry = id ? index.get(id) : undefined;
+        return entry && entry.effects.length > 0 ? [entry] : [];
+      }),
+    );
   // A variant of a species (a half-elf of another descent) carries the species' effects itself.
   const standsIn = chosen.some((e) => e.kind === "subspecies" && e.data.replacesSpecies === true);
   const contributing = standsIn ? chosen.filter((e) => e.kind !== "species") : chosen;
@@ -260,7 +262,10 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
 
   // A character can attune to three items at once.
   const attuned = character.inventory.filter(
-    (i) => i.equipped && index.get(i.itemId)?.data.attunement === true,
+    (i) =>
+      i.equipped &&
+      (index.get(i.itemId)?.data.attunement === true ||
+        (i.enchantment !== undefined && index.get(i.enchantment)?.data.attunement === true)),
   ).length;
   if (attuned > 3) warn(warnings, "attunementTooMany", { count: attuned });
 

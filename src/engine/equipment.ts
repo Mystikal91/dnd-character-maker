@@ -17,6 +17,12 @@ export interface AttackResult {
   ability: Ability;
   /** The entry that lets the weapon use an ability other than Strength or Dexterity. */
   abilityFrom?: string;
+  /** The weapon counts as magic. */
+  magical: boolean;
+  /** The bonus to attack and damage rolls from a spell or an enchantment. */
+  enhancement: number;
+  /** The enchantment the weapon carries, when it has one. */
+  enchantment?: string;
   attackBonus: number;
   proficient: boolean;
   damage?: DamageResult;
@@ -181,6 +187,16 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
           ? "dex"
           : "str";
     const proficient = isProficient(held, weapon.proficiency);
+    const enchanted = item.enchantment ? index.get(item.enchantment) : undefined;
+    const enhancement = Math.max(
+      item.bonus ?? 0,
+      enchanted ? (itemData(enchanted).enhancement ?? 0) : 0,
+    );
+    const magical =
+      item.magical === true ||
+      enchanted !== undefined ||
+      enhancement > 0 ||
+      Boolean(itemData(entry).rarity);
     // Features that let the weapon use another ability: the best one that applies wins.
     let abilityFrom: string | undefined;
     for (const { effect, source } of ctx.sourced) {
@@ -188,7 +204,7 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       if (effect.proficient && !proficient) continue;
       if (effect.when === "oneHanded" && weapon.properties.some((p) => p.endsWith("/two-handed")))
         continue;
-      if (effect.when === "magic" && !itemData(entry).rarity) continue;
+      if (effect.when === "magic" && !magical) continue;
       if (abilities[effect.ability].modifier > abilities[ability].modifier) {
         ability = effect.ability;
         abilityFrom = source;
@@ -209,7 +225,7 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       extra: AppliedModifier[],
     ): DamageResult => ({
       dice: d.dice,
-      bonus: modifier + total(extra),
+      bonus: modifier + enhancement + total(extra),
       type: d.type,
     });
     const applied = [...toHit, ...oneHand];
@@ -217,7 +233,10 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       itemId: item.itemId,
       ability,
       ...(abilityFrom && { abilityFrom }),
-      attackBonus: modifier + (proficient ? proficiencyBonus : 0) + total(toHit),
+      magical,
+      enhancement,
+      ...(item.enchantment && enchanted && { enchantment: item.enchantment }),
+      attackBonus: modifier + enhancement + (proficient ? proficiencyBonus : 0) + total(toHit),
       proficient,
       ...(weapon.damage && { damage: withBonus(weapon.damage, oneHand) }),
       ...(weapon.twoHandedDamage && {

@@ -189,6 +189,10 @@ export function importMagicItem(ctx: Context, source: Source): void {
   }
   const weight = parseWeight(set.get("weight"));
   const rarity = slugify(set.get("rarity")?.text ?? "");
+  // A magic weapon of Aurora names the weapons it can be (`weapon`) and may give a bonus
+  // (`enhancement`): it is put on a weapon the character has, not carried as a thing of its own.
+  const enhancement = number(set.get("enhancement")?.text ?? "");
+  const enchants = set.get("weapon") !== undefined;
   emit(
     ctx,
     source,
@@ -197,6 +201,8 @@ export function importMagicItem(ctx: Context, source: Source): void {
       cost: parseCost(set.get("cost")),
       ...(weight !== undefined && { weight }),
       ...(rarity && { rarity }),
+      ...(enchants && { enchants: true }),
+      ...(enchants && enhancement !== undefined && enhancement > 0 && { enhancement }),
       attunement: /^\s*true/i.test(set.get("attunement")?.text ?? ""),
     },
     { desc: [magicLine(set), description(source.el)].filter(Boolean).join("\n\n") },

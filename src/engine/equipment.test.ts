@@ -79,6 +79,8 @@ describe("attacks", () => {
         itemId: "srd51:item/longsword",
         ability: "str",
         attackBonus: 5,
+        magical: false,
+        enhancement: 0,
         proficient: true,
         damage: { dice: "1d8", bonus: 3, type: "slashing" },
         twoHandedDamage: { dice: "1d10", bonus: 3, type: "slashing" },

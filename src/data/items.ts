@@ -34,6 +34,10 @@ export const ItemDataSchema = v.object({
   weight: v.optional(v.number()),
   /** Present on a magic item: how rare it is. */
   rarity: v.optional(v.string()),
+  /** A bonus to attack and damage rolls (+1, +2, +3) that a magic weapon gives. */
+  enhancement: v.optional(v.number()),
+  /** The item is not carried by itself: it is an enchantment put on a weapon in the inventory. */
+  enchants: v.optional(v.boolean()),
   weapon: v.optional(WeaponSchema),
   armor: v.optional(ArmorSchema),
 });

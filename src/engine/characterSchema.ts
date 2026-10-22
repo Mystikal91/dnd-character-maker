@@ -18,6 +18,9 @@ const InventoryItemSchema = v.object({
   itemId: v.string(),
   quantity: v.pipe(v.number(), v.integer(), v.minValue(1)),
   equipped: v.boolean(),
+  magical: v.optional(v.boolean()),
+  bonus: v.optional(v.pipe(v.number(), v.integer(), v.minValue(0), v.maxValue(3))),
+  enchantment: v.optional(v.string()),
 });
 
 const CharacterSchema = v.object({

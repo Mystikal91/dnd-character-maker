@@ -752,6 +752,16 @@ const LEGACY = wrap(`
       <set name="range">150/500</set>
     </setters>
   </element>
+  <element name="Weapon, +2" type="Magic Item" source="Test Book" id="ID_L_MAGIC_WEAPON_2">
+    <description><p>You have a +2 bonus to attack and damage rolls made with this magic weapon.</p></description>
+    <setters>
+      <set name="category">Magic Weapons</set>
+      <set name="type" addition="any">Weapon</set>
+      <set name="rarity">Rare</set>
+      <set name="enhancement">2</set>
+      <set name="weapon">ID_INTERNAL_WEAPON_CATEGORY_SIMPLE_MELEE||ID_INTERNAL_WEAPON_CATEGORY_MARTIAL_MELEE</set>
+    </setters>
+  </element>
   <element name="Ring of Testing" type="Magic Item" source="Test Book" id="ID_L_MAGIC_RING">
     <description><p>It glows when you pass a test.</p></description>
     <setters>
@@ -984,6 +994,14 @@ describe("collections written for other readers", () => {
     expect(result.strings["imp1:item/ring-of-testing.desc"]).toBe(
       "Ring, very rare (requires attunement)\n\nIt glows when you pass a test.",
     );
+  });
+
+  it("imports a magic weapon as an enchantment that gives a bonus", () => {
+    const weapon = byId(result, "imp1:item/weapon-2");
+    expect(weapon.data).toMatchObject({ rarity: "rare", enchants: true, enhancement: 2 });
+    const ring = byId(result, "imp1:item/ring-of-testing");
+    expect(ring.data.enchants).toBeUndefined();
+    expect(ring.data.enhancement).toBeUndefined();
   });
 
   it("imports deities, with the alignment the app knows and a line of facts", () => {
