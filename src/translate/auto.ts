@@ -13,7 +13,7 @@ export interface AutoSettings {
   enabled: boolean;
   relay: string;
   key: string;
-  /** Leave short texts (names, durations, ranges...) alone: they come out worst. */
+  /** Leave names alone: a few words without context come out worst. */
   descriptionsOnly: boolean;
 }
 
@@ -78,17 +78,12 @@ const cacheKey = (target: string, text: string) => `${target}\n${text}`;
 /** The entry a text belongs to: `<entry id>.<field>` without its field. */
 const entryOf = (key: string) => (key.includes(".") ? key.slice(0, key.indexOf(".")) : key);
 
-/** The fields that hold a few words: a name, a duration, a range. */
-const SHORT_FIELDS = new Set([
-  "name",
-  "abbreviation",
-  "castingTime",
-  "duration",
-  "range",
-  "material",
-  "script",
-  "speakers",
-]);
+/**
+ * The fields left alone when only descriptions are wanted: names, which lose their context.
+ * Short texts like a casting time or a range translate well, and repeat so often that they cost
+ * little.
+ */
+const SHORT_FIELDS = new Set(["name"]);
 
 const fieldOf = (key: string) => key.slice(key.lastIndexOf(".") + 1);
 

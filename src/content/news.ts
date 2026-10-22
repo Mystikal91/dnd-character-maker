@@ -22,11 +22,11 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-22",
     notes: [
       {
-        en: 'In Automatic translation, a tick (on by default) "Translate descriptions only" leaves names, durations and ranges in English, since a machine translates a few words badly, and saves characters of your allowance.',
-        it: 'In Traduzione automatica, una spunta (attiva di default) "Traduci solo le descrizioni" lascia in inglese nomi, durate e gittate, perché una macchina traduce male poche parole, e risparmia caratteri della tua quota.',
-        fr: "Dans Traduction automatique, une case (cochée par défaut) « Traduire seulement les descriptions » laisse en anglais noms, durées et portées, car une machine traduit mal quelques mots, et économise des caractères de ton quota.",
-        de: 'In Automatische Übersetzung lässt ein Haken (standardmäßig an) "Nur Beschreibungen übersetzen" Namen, Dauern und Reichweiten englisch, da eine Maschine wenige Wörter schlecht übersetzt, und spart Zeichen deines Kontingents.',
-        es: 'En Traducción automática, una casilla (activa por defecto) "Traducir solo las descripciones" deja en inglés nombres, duraciones y alcances, porque una máquina traduce mal pocas palabras, y ahorra caracteres de tu cuota.',
+        en: 'In Automatic translation, a tick (on by default) "Translate descriptions, not names" leaves names in English, since a name on its own often comes out wrong, and saves characters of your allowance.',
+        it: 'In Traduzione automatica, una spunta (attiva di default) "Traduci le descrizioni, non i nomi" lascia in inglese i nomi, perché un nome da solo spesso viene sbagliato, e risparmia caratteri della tua quota.',
+        fr: "Dans Traduction automatique, une case (cochée par défaut) « Traduire les descriptions, pas les noms » laisse les noms en anglais, car un nom seul est souvent faux, et économise des caractères de ton quota.",
+        de: 'In Automatische Übersetzung lässt ein Haken (standardmäßig an) "Beschreibungen übersetzen, keine Namen" die Namen englisch, da ein einzelner Name oft falsch wird, und spart Zeichen deines Kontingents.',
+        es: 'En Traducción automática, una casilla (activa por defecto) "Traducir las descripciones, no los nombres" deja los nombres en inglés, porque un nombre solo suele salir mal, y ahorra caracteres de tu cuota.',
       },
       {
         en: 'In Automatic translation, a short guide says how to get a DeepL key (an account for the DeepL API, the API Keys tab, copy and paste), and the message about a used-up allowance no longer says "this month", since the free plan may be a one-time allowance.',

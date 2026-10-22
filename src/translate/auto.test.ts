@@ -120,7 +120,7 @@ describe("translating as texts are read", () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
-  it("leaves names and other short fields in English when only descriptions are asked for", async () => {
+  it("leaves names in English when only descriptions are asked for", async () => {
     const fetchMock = vi.fn(async (_url: string, init: RequestInit) =>
       answer(JSON.parse(String(init.body)).text),
     );
@@ -133,7 +133,6 @@ describe("translating as texts are read", () => {
     });
 
     expect(autoText("d.name", "Fireball Storm")).toBe("Fireball Storm");
-    expect(autoText("d.range", "Self (60-foot cone)")).toBe("Self (60-foot cone)");
     const text = "A bright streak flashes from your finger";
     expect(autoText("d.desc", text)).toBe(text);
     await vi.advanceTimersByTimeAsync(300);
