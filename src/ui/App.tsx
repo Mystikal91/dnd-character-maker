@@ -13,6 +13,7 @@ import { AboutPage } from "./AboutPage";
 import { AppMenu } from "./AppMenu";
 import { AutoTranslatePage } from "./AutoTranslatePage";
 import { HomebrewPage } from "./HomebrewPage";
+import { PacksNotice } from "./PacksNotice";
 import { PacksPage } from "./PacksPage";
 import { QuickEditDialog } from "./QuickEdit";
 import { ShareDialog } from "./ShareDialog";
@@ -110,6 +111,7 @@ export function App() {
         <div id="content" tabIndex={-1} class="content-anchor">
           {!isPage(view.value) && (
             <>
+              <PacksNotice />
               <CharacterBar />
               <Tabs />
             </>

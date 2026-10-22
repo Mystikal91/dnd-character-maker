@@ -3,6 +3,7 @@ import "fake-indexeddb/auto";
 import { beforeAll, describe, expect, it } from "vitest";
 import { loadContent } from "../content/browser";
 import { AURORA_IMPORT_VERSION } from "../import/aurora";
+import { dismissPacksNotice, dismissedVersion, showsPacksNotice } from "./packsNotice";
 import { content } from "./store";
 import {
   importAuroraFiles,
@@ -88,5 +89,17 @@ describe("the same address twice", () => {
     expect(packError.value).toBe("sameAddress");
     expect(sameAddressPack.value).toBe("From GitHub (Aurora)");
     expect(userPacks.value).toHaveLength(1);
+  });
+});
+
+describe("the notice about outdated packs", () => {
+  it("shows while packs are outdated, and Later hides it until the importer changes", () => {
+    expect(showsPacksNotice(0, 0)).toBe(false);
+    expect(showsPacksNotice(2, 0)).toBe(true);
+    dismissPacksNotice();
+    expect(dismissedVersion.value).toBe(AURORA_IMPORT_VERSION);
+    expect(showsPacksNotice(2, dismissedVersion.value)).toBe(false);
+    // A newer importer version brings it back.
+    expect(showsPacksNotice(2, AURORA_IMPORT_VERSION - 1)).toBe(true);
   });
 });
