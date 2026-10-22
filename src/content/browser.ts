@@ -2,7 +2,7 @@ import { type Pack, parsePack } from "../data/schema";
 import { type PackIndex, indexPacks } from "../engine/derive";
 import { convertText } from "../i18n/units";
 import { type UserPackRecord, orderUserPacks } from "../storage/packs";
-import { autoText } from "../translate/auto";
+import { autoText, displayedText } from "../translate/auto";
 
 /** Loaded rules content plus helpers to read its translated texts. */
 export interface Content {
@@ -14,6 +14,8 @@ export interface Content {
   name(id: string): string;
   /** The text fields an entry has (`name`, `desc`, ...). */
   fields(id: string): string[];
+  /** The text as it reads on screen now (a kept machine translation included), asking for none. */
+  displayed(id: string, field: string): string | undefined;
   /** A text exactly as stored: no units converted, no machine translation. */
   raw(id: string, field: string): string | undefined;
   /** The text before the quick edits, if a quick edit changed it. */
@@ -115,6 +117,13 @@ export async function loadContent(
         .filter((key) => key.startsWith(prefix))
         .map((key) => key.slice(prefix.length))
         .filter((field) => !/^\d+$/.test(field));
+    },
+    displayed: (id, field) => {
+      const key = `${id}.${field}`;
+      const value = texts.get(key);
+      if (value === undefined) return undefined;
+      const converted = convertText(value);
+      return english.has(key) ? displayedText(key, converted) : converted;
     },
     raw: (id, field) => texts.get(`${id}.${field}`),
     base: (id, field) => {

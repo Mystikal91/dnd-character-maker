@@ -78,9 +78,12 @@ function Editor({ id }: { id: string }) {
   const c = content.value;
   const dialog = useRef<HTMLDialogElement>(null);
   const fields = c ? orderedFields(c.fields(id)) : [];
-  const [values, setValues] = useState<Record<string, string>>(() =>
-    Object.fromEntries(fields.map((f) => [f, c?.raw(id, f) ?? ""])),
+  // The boxes start from what is on screen (a machine translation, or the English original if
+  // that is what is shown); only the ones the person changes are saved.
+  const [initial] = useState<Record<string, string>>(() =>
+    Object.fromEntries(fields.map((f) => [f, c?.displayed(id, f) ?? c?.raw(id, f) ?? ""])),
   );
+  const [values, setValues] = useState<Record<string, string>>(initial);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -106,7 +109,10 @@ function Editor({ id }: { id: string }) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          void finish(() => saveQuickEdit(id, values));
+          const changed = Object.fromEntries(
+            Object.entries(values).filter(([field, text]) => text !== initial[field]),
+          );
+          void finish(() => saveQuickEdit(id, changed));
         }}
       >
         <h3>{ui("quickEdit.title", { name: c.name(id) })}</h3>

@@ -4,6 +4,7 @@ import {
   autoSettings,
   autoTarget,
   autoText,
+  displayedText,
   machineMode,
   saveAutoSettings,
   toggleOriginal,
@@ -140,6 +141,33 @@ describe("translating as texts are read", () => {
     expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1].body)).text).toEqual([text]);
     expect(autoText("d.desc", text)).toBe(`IT ${text}`);
     expect(autoText("d.name", "Fireball Storm")).toBe("Fireball Storm");
+  });
+
+  it("tells what is on screen without asking for anything", async () => {
+    const fetchMock = vi.fn(async (_url: string, init: RequestInit) =>
+      answer(JSON.parse(String(init.body)).text),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    saveAutoSettings({
+      enabled: true,
+      relay: "https://relay.example",
+      key: "k:fx",
+      descriptionsOnly: false,
+    });
+
+    const text = "Gain a bonus to your next roll";
+    // Nothing kept yet: the English, and no request.
+    expect(displayedText("e.desc", text)).toBe(text);
+    await vi.advanceTimersByTimeAsync(300);
+    expect(fetchMock).not.toHaveBeenCalled();
+
+    expect(autoText("e.desc", text)).toBe(text);
+    await vi.advanceTimersByTimeAsync(300);
+    expect(displayedText("e.desc", text)).toBe(`IT ${text}`);
+    toggleOriginal("e.desc");
+    expect(displayedText("e.desc", text)).toBe(text);
+    toggleOriginal("e.desc");
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it("does not send what is not words, and stops when the key is refused", async () => {

@@ -92,6 +92,20 @@ function worthTranslating(text: string): boolean {
   return /\p{L}{3,}/u.test(text);
 }
 
+/**
+ * What `autoText` shows right now, without asking for a translation: the translation if one is
+ * kept and not switched back to the English original, otherwise the text itself.
+ */
+export function displayedText(key: string, source: string): string {
+  const settings = autoSettings.value;
+  const target = autoTarget.value;
+  translationTick.value;
+  if (!settings.enabled || !settings.key || !target || !worthTranslating(source)) return source;
+  if (settings.descriptionsOnly && SHORT_FIELDS.has(fieldOf(key))) return source;
+  const hit = cache.get(cacheKey(target, source));
+  return hit === undefined || originals.value.has(entryOf(key)) ? source : hit;
+}
+
 /** The translation of an English text if there is one; otherwise the text, and one is asked for. */
 export function autoText(key: string, source: string): string {
   const settings = autoSettings.value;
