@@ -644,6 +644,8 @@
   "weapon.magical": "Magical",
   "weapon.bonus": "Bonus to attack and damage",
   "weapon.enchantment": "Enchantment",
+  "weapon.shillelagh": "Shillelagh is on it",
+  "weapon.shillelaghHint": "For a club or quarterstaff under the cantrip Shillelagh: it is magical, uses your spellcasting ability for attack and damage, and its damage die becomes a d8. Untick it when the spell ends.",
   "play.cast": "Cast",
   "play.castSlot": "Cast with a level {level} slot",
   "play.castPact": "Cast with a Pact Magic slot (level {level})",

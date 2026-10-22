@@ -644,6 +644,8 @@
   "weapon.magical": "Magica",
   "weapon.bonus": "Bonus ad attacco e danno",
   "weapon.enchantment": "Incantamento",
+  "weapon.shillelagh": "Ha su Shillelagh",
+  "weapon.shillelaghHint": "Per una clava o un bastone sotto l'incantesimo Shillelagh: è magica, usa la tua caratteristica da incantatore per attacco e danno e il suo dado di danno diventa un d8. Togli la spunta quando l'incantesimo finisce.",
   "play.cast": "Lancia",
   "play.castSlot": "Lanciato con uno slot di livello {level}",
   "play.castPact": "Lanciato con uno slot della Magia del Patto (livello {level})",

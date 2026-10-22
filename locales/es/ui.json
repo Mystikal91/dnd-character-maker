@@ -644,6 +644,8 @@
   "weapon.magical": "Mágica",
   "weapon.bonus": "Bonificador al ataque y al daño",
   "weapon.enchantment": "Encantamiento",
+  "weapon.shillelagh": "Tiene Shillelagh",
+  "weapon.shillelaghHint": "Para una maza o un bastón bajo el truco Shillelagh: es mágica, usa tu característica de lanzamiento para el ataque y el daño, y su dado de daño pasa a ser un d8. Desmárcalo cuando termine el conjuro.",
   "play.cast": "Lanzar",
   "play.castSlot": "Lanzado con un espacio de nivel {level}",
   "play.castPact": "Lanzado con un espacio de Magia de pacto (nivel {level})",

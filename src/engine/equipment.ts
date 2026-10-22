@@ -17,6 +17,8 @@ export interface AttackResult {
   ability: Ability;
   /** The entry that lets the weapon use an ability other than Strength or Dexterity. */
   abilityFrom?: string;
+  /** The cantrip Shillelagh is on the weapon. */
+  shillelagh?: boolean;
   /** The weapon counts as magic. */
   magical: boolean;
   /** The bonus to attack and damage rolls from a spell or an enchantment. */
@@ -73,6 +75,8 @@ interface Context {
   /** The level that counts for what an entry gives: its class's, or the whole character's. */
   levelOf: (source: string) => number;
   warnings: Warning[];
+  /** The ability of each class that casts spells. */
+  spellAbilities: Ability[];
 }
 
 const isProficient = (held: Set<string>, keys: string[]) => keys.some((k) => held.has(k));
@@ -166,6 +170,15 @@ function deriveArmorClass(ctx: Context, state: ArmorState): ArmorClassResult {
   };
 }
 
+/** Shillelagh works on a club or a quarterstaff. */
+export const takesShillelagh = (itemId: string) => /\/(club|quarterstaff)$/.test(itemId);
+
+/** A d4 or d6 becomes a d8; anything bigger stays. */
+function shillelaghDice(dice: string): string {
+  const m = dice.match(/^1d(\d+)$/);
+  return m && Number(m[1]) < 8 ? "1d8" : dice;
+}
+
 function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
   const { character, index, abilities, held, proficiencyBonus } = ctx;
   const attacks: AttackResult[] = [];
@@ -192,7 +205,9 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       item.bonus ?? 0,
       enchanted ? (itemData(enchanted).enhancement ?? 0) : 0,
     );
+    const shillelagh = item.shillelagh === true && takesShillelagh(item.itemId);
     const magical =
+      shillelagh ||
       item.magical === true ||
       enchanted !== undefined ||
       enhancement > 0 ||
@@ -208,6 +223,14 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       if (abilities[effect.ability].modifier > abilities[ability].modifier) {
         ability = effect.ability;
         abilityFrom = source;
+      }
+    }
+    if (shillelagh) {
+      for (const a of ctx.spellAbilities) {
+        if (abilities[a].modifier > abilities[ability].modifier) {
+          ability = a;
+          abilityFrom = "srd51:spell/shillelagh";
+        }
       }
     }
     const modifier = abilities[ability].modifier;
@@ -233,12 +256,20 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       itemId: item.itemId,
       ability,
       ...(abilityFrom && { abilityFrom }),
+      ...(shillelagh && { shillelagh }),
       magical,
       enhancement,
       ...(item.enchantment && enchanted && { enchantment: item.enchantment }),
       attackBonus: modifier + enhancement + (proficient ? proficiencyBonus : 0) + total(toHit),
       proficient,
-      ...(weapon.damage && { damage: withBonus(weapon.damage, oneHand) }),
+      ...(weapon.damage && {
+        damage: withBonus(
+          shillelagh
+            ? { ...weapon.damage, dice: shillelaghDice(weapon.damage.dice) }
+            : weapon.damage,
+          oneHand,
+        ),
+      }),
       ...(weapon.twoHandedDamage && {
         twoHandedDamage: withBonus(weapon.twoHandedDamage, twoHands),
       }),

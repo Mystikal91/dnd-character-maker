@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-22",
     notes: [
       {
+        en: 'Shillelagh: a club or quarterstaff in the inventory has a tick "Shillelagh is on it": the weapon becomes magical, uses your spellcasting ability for attack and damage, and its damage die becomes a d8.',
+        it: "Shillelagh: una clava o un bastone nell'inventario ha una spunta \"Ha su Shillelagh\": l'arma diventa magica, usa la tua caratteristica da incantatore per attacco e danno e il suo dado di danno diventa un d8.",
+        fr: "Gourdin magique (Shillelagh) : un gourdin ou un bâton de l'inventaire a une case « Gourdin magique actif » : l'arme devient magique, utilise ta caractéristique d'incantation pour l'attaque et les dégâts, et son dé de dégâts devient un d8.",
+        de: 'Shillelagh: Eine Keule oder ein Kampfstab im Inventar hat einen Haken "Shillelagh liegt darauf": Die Waffe wird magisch, nutzt deine Zauberfähigkeit für Angriff und Schaden, und ihr Schadenswürfel wird ein W8.',
+        es: 'Shillelagh: una maza o un bastón del inventario tiene una casilla "Tiene Shillelagh": el arma se vuelve mágica, usa tu característica de lanzamiento para el ataque y el daño, y su dado de daño pasa a ser un d8.',
+      },
+      {
         en: "Magic weapons: a weapon in your inventory has a Magic weapon section where you tick Magical (for a spell such as Magic Weapon or a ritual), set a +1 to +3 bonus to attack and damage, and pick an enchantment imported from Aurora (a +1 weapon, a Giant Slayer...). Battle Ready now sees them, and the Attacks panel shows the bonus.",
         it: "Armi magiche: un'arma nel tuo inventario ha una sezione Arma magica dove spunti Magica (per un incantesimo come Arma Magica o un rituale), imposti un bonus da +1 a +3 ad attacco e danno e scegli un incantamento importato da Aurora (un'arma +1, un Giant Slayer...). Battle Ready ora le riconosce e il pannello Attacchi mostra il bonus.",
         fr: "Armes magiques : une arme de ton inventaire a une section Arme magique où tu coches Magique (pour un sort comme Arme magique ou un rituel), fixes un bonus de +1 à +3 à l'attaque et aux dégâts, et choisis un enchantement importé d'Aurora (une arme +1, un Giant Slayer...). Battle Ready les reconnaît désormais et le panneau Attaques montre le bonus.",

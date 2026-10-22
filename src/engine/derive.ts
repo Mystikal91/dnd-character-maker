@@ -391,6 +391,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     sourced,
     levelOf,
     warnings,
+    spellAbilities: casters.map((c) => c.ability),
   });
 
   // Expertise doubles the proficiency bonus of skills the character is proficient in.

@@ -112,6 +112,8 @@ export interface InventoryItem {
   magical?: boolean;
   /** A bonus to attack and damage rolls that a spell or an enchantment gives (0 to 3). */
   bonus?: number;
+  /** The cantrip Shillelagh is on this club or quarterstaff: it is magic and uses the spellcasting ability. */
+  shillelagh?: boolean;
   /** A magic item (an entry with `enchants`) that the weapon carries: its bonus and effects apply. */
   enchantment?: string;
 }

@@ -43,6 +43,48 @@ function sheetWith(sword: Partial<InventoryItem>, ...others: string[]) {
 const longsword = (sheet: ReturnType<typeof sheetWith>) =>
   sheet.attacks.find((a) => a.itemId === "srd51:item/longsword");
 
+function druid(item: Partial<InventoryItem> & { itemId: string }) {
+  const c = createCharacter("srd51");
+  c.classes = [{ classId: "srd51:class/druid", level: 1 }];
+  c.abilityBase = { str: 10, dex: 10, con: 10, int: 10, wis: 16, cha: 10 };
+  c.inventory = [{ quantity: 1, equipped: true, ...item }];
+  return deriveSheet(c, index).attacks[0];
+}
+
+describe("Shillelagh", () => {
+  const staff = "srd51:item/quarterstaff";
+
+  it("changes nothing until it is ticked", () => {
+    expect(druid({ itemId: staff })).toMatchObject({ ability: "str", magical: false });
+  });
+
+  it("makes a quarterstaff magic, with the spellcasting ability and a d8", () => {
+    const a = druid({ itemId: staff, shillelagh: true });
+    expect(a).toMatchObject({ ability: "wis", magical: true, shillelagh: true });
+    expect(a?.damage?.dice).toBe("1d8");
+    // Wisdom 16 (+3) and the proficiency bonus (+2).
+    expect(a?.attackBonus).toBe(5);
+    expect(a?.damage?.bonus).toBe(3);
+  });
+
+  it("makes a club a d8 too, and leaves other weapons alone", () => {
+    expect(druid({ itemId: "srd51:item/club", shillelagh: true })?.damage?.dice).toBe("1d8");
+    const dagger = druid({ itemId: "srd51:item/dagger", shillelagh: true });
+    expect(dagger).toMatchObject({ ability: "str", magical: false });
+    expect(dagger?.shillelagh).toBeUndefined();
+  });
+
+  it("keeps Strength for a character that casts no spells", () => {
+    const c = createCharacter("srd51");
+    c.classes = [{ classId: "srd51:class/fighter", level: 1 }];
+    c.abilityBase = { str: 10, dex: 10, con: 10, int: 10, wis: 16, cha: 10 };
+    c.inventory = [{ itemId: "srd51:item/club", quantity: 1, equipped: true, shillelagh: true }];
+    const a = deriveSheet(c, index).attacks[0];
+    expect(a?.ability).toBe("str");
+    expect(a?.damage?.dice).toBe("1d8");
+  });
+});
+
 describe("magic weapons", () => {
   it("is plain without a spell or an enchantment", () => {
     expect(longsword(sheetWith({}))).toMatchObject({ magical: false, enhancement: 0 });

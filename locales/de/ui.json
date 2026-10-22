@@ -644,6 +644,8 @@
   "weapon.magical": "Magisch",
   "weapon.bonus": "Bonus auf Angriff und Schaden",
   "weapon.enchantment": "Verzauberung",
+  "weapon.shillelagh": "Shillelagh liegt darauf",
+  "weapon.shillelaghHint": "Für eine Keule oder einen Kampfstab unter dem Zaubertrick Shillelagh: Sie ist magisch, nutzt deine Zauberfähigkeit für Angriff und Schaden, und ihr Schadenswürfel wird ein W8. Nimm den Haken weg, wenn der Zauber endet.",
   "play.cast": "Wirken",
   "play.castSlot": "Mit einem Zauberplatz von Grad {level} gewirkt",
   "play.castPact": "Mit einem Paktmagie-Platz gewirkt (Grad {level})",

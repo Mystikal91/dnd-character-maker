@@ -1,5 +1,6 @@
 import { content, updateCharacter } from "../app/store";
 import { itemData } from "../data/items";
+import { takesShillelagh } from "../engine/equipment";
 import type { InventoryItem } from "../engine/character";
 import { ui } from "../i18n/ui";
 import { entriesOfKind } from "./build/fields";
@@ -24,7 +25,7 @@ export function WeaponMagic({ item }: { item: InventoryItem }) {
     <details class="weapon-magic">
       <summary>
         {ui("weapon.magic")}
-        {(item.magical || item.enchantment || (item.bonus ?? 0) > 0) && " ✦"}
+        {(item.magical || item.shillelagh || item.enchantment || (item.bonus ?? 0) > 0) && " ✦"}
       </summary>
       <p class="muted">{ui("weapon.magicHint")}</p>
       <label class="check">
@@ -39,6 +40,23 @@ export function WeaponMagic({ item }: { item: InventoryItem }) {
         />
         <span>{ui("weapon.magical")}</span>
       </label>
+      {takesShillelagh(item.itemId) && (
+        <>
+          <label class="check">
+            <input
+              type="checkbox"
+              checked={item.shillelagh === true}
+              onChange={(e) =>
+                change((found) => {
+                  found.shillelagh = e.currentTarget.checked;
+                })
+              }
+            />
+            <span>{ui("weapon.shillelagh")}</span>
+          </label>
+          <p class="muted">{ui("weapon.shillelaghHint")}</p>
+        </>
+      )}
       <label class="field">
         <span>{ui("weapon.bonus")}</span>
         <select

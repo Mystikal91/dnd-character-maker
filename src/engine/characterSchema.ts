@@ -20,6 +20,7 @@ const InventoryItemSchema = v.object({
   equipped: v.boolean(),
   magical: v.optional(v.boolean()),
   bonus: v.optional(v.pipe(v.number(), v.integer(), v.minValue(0), v.maxValue(3))),
+  shillelagh: v.optional(v.boolean()),
   enchantment: v.optional(v.string()),
 });
 

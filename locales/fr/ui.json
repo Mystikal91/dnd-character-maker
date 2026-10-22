@@ -644,6 +644,8 @@
   "weapon.magical": "Magique",
   "weapon.bonus": "Bonus à l'attaque et aux dégâts",
   "weapon.enchantment": "Enchantement",
+  "weapon.shillelagh": "Gourdin magique actif",
+  "weapon.shillelaghHint": "Pour un gourdin ou un bâton sous le sort Gourdin magique (Shillelagh) : il est magique, utilise ta caractéristique d'incantation pour l'attaque et les dégâts, et son dé de dégâts devient un d8. Décoche quand le sort prend fin.",
   "play.cast": "Lancer",
   "play.castSlot": "Lancé avec un emplacement de niveau {level}",
   "play.castPact": "Lancé avec un emplacement de Magie de pacte (niveau {level})",
