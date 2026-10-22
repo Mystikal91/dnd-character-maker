@@ -1,9 +1,12 @@
 import { useState } from "preact/hooks";
 import { character, content, updateCharacter } from "../../app/store";
 import { itemData } from "../../data/items";
+import { addToInventory, packContents } from "../../engine/gear";
 import { ui } from "../../i18n/ui";
+import { ItemTag, itemLabel } from "../ItemTag";
 import { WeaponMagic } from "../WeaponMagic";
 import { BackgroundInfo, SpeciesInfo } from "./EntryInfo";
+import { StartingEquipment } from "./StartingEquipment";
 import { Select, entriesOfKind } from "./fields";
 
 /** Name, species, subspecies and background. */
@@ -79,15 +82,23 @@ export function EquipmentStep() {
     });
   const [filter, setFilter] = useState("");
   const wanted = filter.trim().toLowerCase();
+  const labelled = (o: { id: string; label: string }) => ({ id: o.id, label: itemLabel(o.id) });
   const found = (o: { label: string }) => !wanted || o.label.toLowerCase().includes(wanted);
-  const armor = itemOptions("armor").filter(found);
-  const weapons = itemOptions("weapon").filter(found);
+  const armor = itemOptions("armor").map(labelled).filter(found);
+  const weapons = itemOptions("weapon").map(labelled).filter(found);
+  const packs = entriesOfKind("item")
+    .filter((o) => {
+      const entry = index?.get(o.id);
+      return entry && packContents(entry).length > 0;
+    })
+    .filter(found);
   const magic = entriesOfKind("item")
     .filter((o) => index?.get(o.id)?.data.rarity && !index.get(o.id)?.data.enchants)
     .filter(found);
 
   return (
     <>
+      <StartingEquipment />
       <label class="field">
         <span>{ui("form.searchItems")}</span>
         <input type="search" value={filter} onInput={(e) => setFilter(e.currentTarget.value)} />
@@ -99,10 +110,13 @@ export function EquipmentStep() {
           onChange={(e) => {
             const itemId = e.currentTarget.value;
             if (!itemId) return;
+            // A pack adds everything it holds instead of itself.
+            const entry = index?.get(itemId);
+            const contents = entry ? packContents(entry) : [];
             updateCharacter((d) => {
-              const existing = d.inventory.find((i) => i.itemId === itemId);
-              if (existing) existing.quantity += 1;
-              else d.inventory.push({ itemId, quantity: 1, equipped: false });
+              if (contents.length > 0)
+                for (const part of contents) addToInventory(d.inventory, part.item, part.quantity);
+              else addToInventory(d.inventory, itemId, 1);
             });
           }}
         >
@@ -121,6 +135,15 @@ export function EquipmentStep() {
               </option>
             ))}
           </optgroup>
+          {packs.length > 0 && (
+            <optgroup label={ui("form.packGroup")}>
+              {packs.map((o) => (
+                <option key={o.id} value={o.id}>
+                  {o.label}
+                </option>
+              ))}
+            </optgroup>
+          )}
           {magic.length > 0 && (
             <optgroup label={ui("form.magicGroup")}>
               {magic.map((o) => (
@@ -150,6 +173,7 @@ export function EquipmentStep() {
               <span class="equip-tag">{ui("form.equipped")}</span>
               {content.value?.name(item.itemId)}
               {item.quantity > 1 && ` ×${item.quantity}`}
+              <ItemTag id={item.itemId} />
             </label>
             <button
               type="button"

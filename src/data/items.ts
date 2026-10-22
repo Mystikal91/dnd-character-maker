@@ -40,6 +40,13 @@ export const ItemDataSchema = v.object({
   enchants: v.optional(v.boolean()),
   weapon: v.optional(WeaponSchema),
   armor: v.optional(ArmorSchema),
+  /** Gear that is not a weapon or armor: an equipment pack lists what it holds in `contents`. */
+  gear: v.optional(
+    v.object({
+      category: v.optional(v.string()),
+      contents: v.optional(v.array(v.object({ item: v.string(), quantity: v.number() }))),
+    }),
+  ),
 });
 export type ItemData = v.InferOutput<typeof ItemDataSchema>;
 export type WeaponData = v.InferOutput<typeof WeaponSchema>;

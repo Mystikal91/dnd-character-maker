@@ -3,6 +3,7 @@ import { character, content, sheet, updateCharacter } from "../../app/store";
 import type { Warning } from "../../engine/warnings";
 import { type UiKey, ui } from "../../i18n/ui";
 import { weight } from "../../i18n/units";
+import { ItemTag } from "../ItemTag";
 import { WeaponMagic } from "../WeaponMagic";
 import { Panel, RulesText } from "./parts";
 
@@ -130,6 +131,7 @@ export function Inventory() {
               <span>
                 {c.name(i.itemId)}
                 {i.quantity > 1 && ` ×${i.quantity}`}
+                <ItemTag id={i.itemId} />
               </span>
             </label>
             <WeaponMagic item={i} />

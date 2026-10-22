@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.3 beta",
+    date: "2026-10-22",
+    notes: [
+      {
+        en: 'Equipment: the step starts with a reminder of the starting equipment the rules give your class and background (the choices as text, plus what you get without choosing). The list of items to add now has equipment packs: pick one and everything it holds goes into the inventory. Armor, shields and weapons say what they are next to the name ("Leather [Light armor]", "Longsword [Martial weapon · Melee]"), in the list and in the inventory.',
+        it: "Equipaggiamento: il passo comincia con un promemoria dell'equipaggiamento iniziale che le regole danno a classe e background (le scelte come testo, più ciò che ricevi senza scegliere). L'elenco degli oggetti da aggiungere ora ha gli zaini: ne scegli uno e tutto il suo contenuto va nell'inventario. Armature, scudi e armi dicono cosa sono accanto al nome (\"Cuoio [Armatura leggera]\", \"Spada lunga [Arma da guerra · Mischia]\"), nell'elenco e nell'inventario.",
+        fr: "Équipement : l'étape commence par un rappel de l'équipement de départ que les règles donnent à ta classe et à ton background (les choix en texte, plus ce que tu reçois sans choisir). La liste des objets à ajouter propose maintenant les paquetages : choisis-en un et tout son contenu va dans l'inventaire. Armures, boucliers et armes disent ce qu'ils sont à côté du nom (« Cuir [Armure légère] », « Épée longue [Arme de guerre · Mêlée] »), dans la liste et dans l'inventaire.",
+        de: 'Ausrüstung: Der Schritt beginnt mit einer Erinnerung an die Startausrüstung, die die Regeln deiner Klasse und deinem Hintergrund geben (die Wahlmöglichkeiten als Text, dazu was du ohne Wahl bekommst). Die Liste der Gegenstände enthält jetzt Ausrüstungspakete: Wähle eins, und alles darin kommt ins Inventar. Rüstungen, Schilde und Waffen nennen neben dem Namen, was sie sind ("Leder [Leichte Rüstung]", "Langschwert [Kriegswaffe · Nahkampf]"), in der Liste und im Inventar.',
+        es: 'Equipo: el paso empieza con un recordatorio del equipo inicial que las reglas dan a tu clase y a tu trasfondo (las opciones como texto, más lo que recibes sin elegir). La lista de objetos para añadir tiene ahora paquetes de equipo: elige uno y todo lo que contiene va al inventario. Armaduras, escudos y armas dicen qué son junto al nombre ("Cuero [Armadura ligera]", "Espada larga [Arma marcial · Cuerpo a cuerpo]"), en la lista y en el inventario.',
+      },
+    ],
+  },
+  {
     version: "1.2.1 beta",
     date: "2026-10-22",
     notes: [
