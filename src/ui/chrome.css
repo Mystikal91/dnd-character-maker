@@ -836,3 +836,30 @@ input:checked + .equip-tag {
   min-width: 0;
   overflow-wrap: anywhere;
 }
+
+/* ---- Who you are on the sheet: long names break instead of running into the next one ---- */
+
+.sheet-info {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@container sheet (min-width: 44rem) and (max-width: 65.99rem) {
+  .sheet-info {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.sheet-info > div {
+  min-width: 0;
+}
+
+.sheet-info dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+.sheet-info .change-link {
+  display: block;
+  width: 100%;
+}
