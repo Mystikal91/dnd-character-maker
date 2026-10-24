@@ -3,6 +3,7 @@ import type { Content } from "../../content/browser";
 import { classData, subclassData } from "../../data/progression";
 import type { ClassLevel } from "../../engine/character";
 import { ui } from "../../i18n/ui";
+import { sourceLabel } from "../SourceTag";
 import { RulesText } from "./parts";
 
 /** Features of one class (and its subclass) grouped by the level that grants them. */
@@ -36,7 +37,13 @@ function LevelFrame({
         {level}
       </span>
       {features.map((id) => (
-        <RulesText key={id} id={id} name={c.name(id)} text={c.text(id, "desc")} />
+        <RulesText
+          key={id}
+          id={id}
+          name={c.name(id)}
+          text={c.text(id, "desc")}
+          tag={sourceLabel(id)}
+        />
       ))}
     </article>
   );

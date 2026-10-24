@@ -863,3 +863,11 @@ input:checked + .equip-tag {
   display: block;
   width: 100%;
 }
+
+/* ---- Where a class feature comes from ---- */
+
+.source-tag {
+  color: var(--muted);
+  font-size: 0.85em;
+  font-weight: 400;
+}

@@ -907,6 +907,13 @@
 .p-flow {
   columns: 2;
   column-gap: 6mm;
+  padding-top: 3mm;
+}
+
+.p-source {
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .p-flow article {

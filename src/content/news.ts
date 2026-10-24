@@ -22,6 +22,13 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-10-22",
     notes: [
       {
+        en: 'Features and traits say where they come from: on the printed sheet, in brackets after the name ("Sneak Attack [Rogue Lv. 1]", "Darkvision [Dwarf]"), and on the sheet for class features, which helps when a character has more than one class. The printed list also has a little more room under its title.',
+        it: 'Privilegi e tratti dicono da dove vengono: nella scheda stampata, tra parentesi dopo il nome ("Attacco furtivo [Ladro Lv. 1]", "Scurovisione [Nano]"), e nella scheda per i privilegi di classe, utile quando un personaggio ha più di una classe. L\'elenco stampato ha anche un po\' più di spazio sotto il titolo.',
+        fr: "Les traits et capacités disent d'où ils viennent : sur la fiche imprimée, entre crochets après le nom (« Attaque sournoise [Roublard niv. 1] », « Vision dans le noir [Nain] »), et sur la fiche pour les capacités de classe, ce qui aide quand un personnage a plusieurs classes. La liste imprimée a aussi un peu plus de place sous son titre.",
+        de: 'Merkmale und Eigenschaften nennen ihre Herkunft: auf dem gedruckten Bogen in Klammern hinter dem Namen ("Hinterhältiger Angriff [Schurke Stf. 1]", "Dunkelsicht [Zwerg]"), und auf dem Bogen bei den Klassenmerkmalen, was hilft, wenn ein Charakter mehr als eine Klasse hat. Die gedruckte Liste hat auch etwas mehr Platz unter dem Titel.',
+        es: 'Los rasgos dicen de dónde vienen: en la hoja impresa, entre corchetes tras el nombre ("Ataque furtivo [Pícaro niv. 1]", "Visión en la oscuridad [Enano]"), y en la hoja para los rasgos de clase, lo que ayuda cuando un personaje tiene más de una clase. La lista impresa tiene también algo más de espacio bajo su título.',
+      },
+      {
         en: "A strip at the top says when packs imported from Aurora need updating, with Update now (every pack that remembers its address is made again at once) or Open the packs, and Later to put it off until the importer improves again. Nothing is downloaded unless you press it.",
         it: "Una striscia in alto dice quando i pacchetti importati da Aurora vanno aggiornati, con Aggiorna ora (ogni pacchetto che ricorda il suo indirizzo viene rifatto in un colpo solo) oppure Apri i pacchetti, e Più tardi per rimandare fino al prossimo miglioramento dell'importatore. Non viene scaricato niente se non premi tu.",
         fr: "Une bande en haut dit quand les paquets importés d'Aurora doivent être mis à jour, avec Mettre à jour (chaque paquet qui se souvient de son adresse est refait d'un coup) ou Ouvrir les paquets, et Plus tard pour attendre la prochaine amélioration de l'importateur. Rien n'est téléchargé sans que tu appuies.",

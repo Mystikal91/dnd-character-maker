@@ -1,5 +1,6 @@
 import { content, sheet } from "../../app/store";
 import { ui } from "../../i18n/ui";
+import { SourceTag } from "../SourceTag";
 
 /** The full text of species traits and class features, flowing over as many pages as needed. */
 export function FeatureText() {
@@ -12,7 +13,10 @@ export function FeatureText() {
       <div class="p-flow">
         {[...s.traits, ...s.features].map((id) => (
           <article key={id}>
-            <h3>{c.name(id)}</h3>
+            <h3>
+              {c.name(id)}
+              <SourceTag id={id} />
+            </h3>
             {c
               .text(id, "desc")
               ?.split("\n\n")

@@ -72,10 +72,20 @@ export function RulesText({
   name,
   text,
   id,
-}: { name: string; text: string | undefined; id?: string | undefined }) {
+  tag,
+}: {
+  name: string;
+  text: string | undefined;
+  id?: string | undefined;
+  /** Where it comes from, shown after the name. */
+  tag?: string | undefined;
+}) {
   return (
     <details>
-      <summary>{name}</summary>
+      <summary>
+        {name}
+        {tag && <span class="source-tag"> [{tag}]</span>}
+      </summary>
       {id && <EditPencil id={id} />}
       <Paragraphs text={text} />
     </details>

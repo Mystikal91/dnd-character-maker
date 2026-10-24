@@ -17,6 +17,7 @@ import { type AppliedModifier, appliedModifiers, total } from "./modifiers";
 import { type CasterInput, casterKind, slotPools, unmetPrerequisites } from "./multiclass";
 import { OVERRIDE, numberOverride } from "./overrides";
 import { type ClassFact, type ClassResource, classResources } from "./resources";
+import { type FeatureSource, featureSources } from "./sources";
 import { type SpellLists, deriveSpellLists } from "./spells";
 import { withSubclassCasting } from "./subclassCasting";
 import { type Warning, warn } from "./warnings";
@@ -72,6 +73,8 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   defenses: Record<"resistance" | "immunity" | "vulnerability", string[]>;
   /** Class and subclass features unlocked at the current levels. */
   features: string[];
+  /** Where each feature and trait comes from, to name it next to the text. */
+  featureSources: Record<string, FeatureSource>;
   /** The first spellcasting class: the one whose numbers the sheet headlines. */
   spellcasting?: SpellcastingResult;
   /** Every spellcasting class, in the order the character took them. */
@@ -489,6 +492,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     traits,
     defenses: defensesOf(effects),
     features: [...new Set(features)],
+    featureSources: featureSources(index, character, sourced),
     ...(spellcasting && { spellcasting }),
     spellcasters: casters,
     resources,
