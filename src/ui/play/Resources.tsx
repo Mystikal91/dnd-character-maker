@@ -100,11 +100,15 @@ export function Slots() {
   );
 }
 
+const EXTRA_FACTS = new Set(["rageDamage", "sneakAttack", "martialArts"]);
+
 /** Limited-use class features to tick off, and the class numbers that go with them. */
 export function ClassResources() {
   const s = sheet.value;
   const play = character.value.play;
-  if (!s || (s.resources.length === 0 && s.facts.length === 0)) return null;
+  // What the extra damage panel of the rolls covers is not listed twice.
+  const facts = s?.facts.filter((f) => !EXTRA_FACTS.has(f.kind)) ?? [];
+  if (!s || (s.resources.length === 0 && facts.length === 0)) return null;
 
   const label = (r: ClassResource) => ui(`resource.${r.kind}` as UiKey, { level: r.level ?? 0 });
   const spend = (r: ClassResource, change: number) =>
@@ -112,9 +116,9 @@ export function ClassResources() {
 
   return (
     <Panel title={ui("play.classResources")}>
-      {s.facts.length > 0 && (
+      {facts.length > 0 && (
         <ul class="plain class-facts">
-          {s.facts.map((f) => (
+          {facts.map((f) => (
             <li key={f.kind}>{ui(`fact.${f.kind}` as UiKey, f.params)}</li>
           ))}
         </ul>

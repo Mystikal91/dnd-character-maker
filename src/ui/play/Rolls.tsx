@@ -1,17 +1,23 @@
 import { useState } from "preact/hooks";
 import {
   type LogEntry,
+  addLog,
+  changePlay,
   clearLog,
+  criticalExtra,
   criticalWeapon,
+  raging,
   rollCheck,
   rollDiceText,
   rollLog,
   rollMode,
 } from "../../app/play";
-import { content, sheet } from "../../app/store";
+import { character, content, sheet } from "../../app/store";
 import { ABILITIES } from "../../data/schema";
 import { type D20Mode, doubleDice } from "../../engine/dice";
+import { castSpell, slotsLeft } from "../../engine/play";
 import { type UiKey, signed, ui } from "../../i18n/ui";
+import { ExtraDamageList, extraName } from "../sheet/ExtraDamage";
 import { Panel } from "../sheet/parts";
 
 const MODES: D20Mode[] = ["normal", "advantage", "disadvantage"];
@@ -57,6 +63,101 @@ function ModePicker() {
   );
 }
 
+/** Roll one extra damage: the dice double on a critical hit. */
+function rollExtra(label: string, dice: string) {
+  const critical = criticalExtra.value;
+  const text = critical ? (doubleDice(dice) ?? dice) : dice;
+  rollDiceText(critical ? `${label} (${ui("play.criticalDamage")})` : label, text);
+}
+
+/** Damage the classes add to an attack, to roll after the weapon's: sneak attack, smite, rage. */
+function ExtraRolls() {
+  const s = sheet.value;
+  const [slot, setSlot] = useState(1);
+  if (!s || s.extraDamage.length === 0) return null;
+  const play = character.value.play;
+  const sneak = s.extraDamage.find((e) => e.kind === "sneakAttack");
+  const hasRage = s.extraDamage.some((e) => e.kind === "rage");
+  const smite = s.extraDamage.find((e) => e.kind === "divineSmite");
+  const levels = s.spellSlots
+    .map((total, i) => ({ level: i + 1, left: slotsLeft(play, i + 1, total), total }))
+    .filter((x) => x.total > 0 && x.level <= 5);
+  const chosen = levels.find((x) => x.level === slot)?.level ?? levels[0]?.level ?? 1;
+
+  return (
+    <>
+      <ExtraDamageList />
+      <div class="extra-rolls">
+        <label class="check-row">
+          <input
+            type="checkbox"
+            checked={criticalExtra.value}
+            onChange={(e) => {
+              criticalExtra.value = e.currentTarget.checked;
+            }}
+          />
+          {ui("play.criticalHit")}
+        </label>
+        {hasRage && (
+          <label class="check-row">
+            <input
+              type="checkbox"
+              checked={raging.value}
+              onChange={(e) => {
+                raging.value = e.currentTarget.checked;
+              }}
+            />
+            {ui("extra.raging")}
+          </label>
+        )}
+        {sneak?.kind === "sneakAttack" && (
+          <button
+            type="button"
+            class="roll-btn"
+            onClick={() => rollExtra(extraName(sneak), sneak.dice)}
+          >
+            <span>{extraName(sneak)}</span>
+            <b>{sneak.dice}</b>
+          </button>
+        )}
+        {smite && levels.length > 0 && (
+          <span class="btn-row">
+            <label>
+              <span class="sr-only">{ui("extra.slot")}</span>
+              <select value={chosen} onChange={(e) => setSlot(Number(e.currentTarget.value))}>
+                {levels.map((x) => (
+                  <option key={x.level} value={x.level} disabled={x.left === 0}>
+                    {ui("sheet.slotLevel", { level: x.level })} ({x.left})
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button
+              type="button"
+              class="roll-btn"
+              onClick={() => {
+                const cast = castSpell(play, chosen, s.spellSlots);
+                if (!cast) {
+                  addLog({ label: extraName(smite), detail: ui("play.noSlot") });
+                  return;
+                }
+                changePlay(() => cast.play);
+                rollExtra(
+                  `${extraName(smite)} (${ui("play.castSlot", { level: cast.slot.level })})`,
+                  `${Math.min(5, 1 + cast.slot.level)}d8`,
+                );
+              }}
+            >
+              <span>{extraName(smite)}</span>
+              <b>{Math.min(5, 1 + chosen)}d8</b>
+            </button>
+          </span>
+        )}
+      </div>
+    </>
+  );
+}
+
 /** Checks, saves, skills and attacks that roll with one tap. */
 export function QuickRolls() {
   const c = content.value;
@@ -95,8 +196,12 @@ export function QuickRolls() {
           <ul class="plain">
             {s.attacks.map((a) => {
               const dmg = a.damage;
+              // A rage adds to melee weapon attacks.
+              const rage = s.extraDamage.find((e) => e.kind === "rage");
+              const rageBonus = raging.value && !a.ranged && rage?.kind === "rage" ? rage.bonus : 0;
+              const bonus = (dmg?.bonus ?? 0) + rageBonus;
               const dice = dmg
-                ? `${dmg.dice}${dmg.bonus === 0 ? "" : dmg.bonus > 0 ? `+${dmg.bonus}` : dmg.bonus}`
+                ? `${dmg.dice}${bonus === 0 ? "" : bonus > 0 ? `+${bonus}` : bonus}`
                 : "";
               return (
                 <li class="row-between" key={a.itemId}>
@@ -110,6 +215,7 @@ export function QuickRolls() {
                           `${c.name(a.itemId)} - ${ui("play.attackRoll")}`,
                           a.attackBonus,
                         );
+                        criticalExtra.value = roll.critical;
                         // A natural 20 arms the critical damage; any other attack clears it.
                         if (roll.critical) criticalWeapon.value = a.itemId;
                         else if (criticalWeapon.value === a.itemId)
@@ -159,6 +265,7 @@ export function QuickRolls() {
           </ul>
         </>
       )}
+      <ExtraRolls />
     </Panel>
   );
 }

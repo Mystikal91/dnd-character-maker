@@ -19,6 +19,8 @@ export interface AttackResult {
   abilityFrom?: string;
   /** The cantrip Shillelagh is on the weapon. */
   shillelagh?: boolean;
+  /** The attack is made at range. */
+  ranged: boolean;
   /** The weapon counts as magic. */
   magical: boolean;
   /** The bonus to attack and damage rolls from a spell or an enchantment. */
@@ -257,6 +259,7 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       ability,
       ...(abilityFrom && { abilityFrom }),
       ...(shillelagh && { shillelagh }),
+      ranged: weapon.kind === "ranged",
       magical,
       enhancement,
       ...(item.enchantment && enchanted && { enchantment: item.enchantment }),

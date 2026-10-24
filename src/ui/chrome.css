@@ -871,3 +871,21 @@ input:checked + .equip-tag {
   font-size: 0.85em;
   font-weight: 400;
 }
+
+/* ---- Extra damage: the list under the attacks and the rolls in Play ---- */
+
+.extra-damage h4 {
+  margin: 0.9rem 0 0.2rem;
+}
+
+.extra-damage li {
+  padding: 0.15rem 0;
+}
+
+.extra-rolls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin: 0.5rem 0;
+}

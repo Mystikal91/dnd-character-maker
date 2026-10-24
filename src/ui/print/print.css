@@ -880,6 +880,12 @@
   font-size: 6.5pt;
 }
 
+.p-extra {
+  margin: 1mm 0 0;
+  font-size: 7pt;
+  line-height: 1.25;
+}
+
 .p-coin {
   display: flex;
   align-items: center;

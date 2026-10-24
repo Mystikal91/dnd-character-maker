@@ -16,7 +16,7 @@ import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipm
 import { type AppliedModifier, appliedModifiers, total } from "./modifiers";
 import { type CasterInput, casterKind, slotPools, unmetPrerequisites } from "./multiclass";
 import { OVERRIDE, numberOverride } from "./overrides";
-import { type ClassFact, type ClassResource, classResources } from "./resources";
+import { type ClassFact, type ClassResource, type ExtraDamage, classResources } from "./resources";
 import { type FeatureSource, featureSources } from "./sources";
 import { type SpellLists, deriveSpellLists } from "./spells";
 import { withSubclassCasting } from "./subclassCasting";
@@ -85,6 +85,8 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   resources: ClassResource[];
   /** Class numbers worth showing during play: sneak attack dice, rage damage and the like. */
   facts: ClassFact[];
+  /** Damage the classes add to attacks: sneak attack, rage, smite... */
+  extraDamage: ExtraDamage[];
   /** Pact Magic slots kept apart when a warlock multiclasses; they return on a short rest. */
   pactSlots?: { level: number; count: number };
   /** Choices offered by the current picks (species, class, background, traits), with their state. */
@@ -281,6 +283,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   const casterInputs: CasterInput[] = [];
   const resources: ClassResource[] = [];
   const facts: ClassFact[] = [];
+  const extraDamage: ExtraDamage[] = [];
   classEntries.forEach(({ cl, entry }, position) => {
     if (!entry) return;
     const data = classData(entry);
@@ -300,6 +303,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     });
     resources.push(...classBits.resources);
     facts.push(...classBits.facts);
+    extraDamage.push(...classBits.extras);
 
     let subEntry: Entry | undefined;
     if (cl.subclassId) {
@@ -497,6 +501,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     spellcasters: casters,
     resources,
     facts,
+    extraDamage,
     spellSlots: pools.slots,
     ...(pools.pact && { pactSlots: pools.pact }),
     choices,

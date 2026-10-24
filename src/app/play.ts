@@ -38,6 +38,12 @@ export const concentrationAlert = signal<number | undefined>(undefined);
 /** The weapon whose next damage roll counts as a critical hit (dice doubled), if any. */
 export const criticalWeapon = signal<string | undefined>(undefined);
 
+/** The last attack was a critical hit, so the extra damage rolls double their dice. */
+export const criticalExtra = signal(false);
+
+/** The barbarian is raging: the rage bonus is added to melee damage rolls. */
+export const raging = signal(false);
+
 /** How d20 checks are rolled until the player changes it. */
 export const rollMode = signal<D20Mode>("normal");
 

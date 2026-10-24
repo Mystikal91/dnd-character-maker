@@ -4,6 +4,7 @@ import type { DamageResult } from "../../engine/equipment";
 import { OVERRIDE } from "../../engine/overrides";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
+import { ExtraDamageList } from "./ExtraDamage";
 import { Panel } from "./parts";
 
 export function Stat({
@@ -151,6 +152,7 @@ export function Attacks() {
           </tbody>
         </table>
       )}
+      <ExtraDamageList />
     </Panel>
   );
 }

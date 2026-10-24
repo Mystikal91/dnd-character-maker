@@ -6,6 +6,7 @@ import type { ClassLevel } from "../../engine/character";
 import type { DamageResult } from "../../engine/equipment";
 import { signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
+import { extraAmount, extraName } from "../sheet/ExtraDamage";
 import { collectSpellRows } from "../spellRows";
 
 const BLANK_ATTACK_ROWS = 4;
@@ -227,6 +228,11 @@ export function FrontPage() {
                 })}
               </tbody>
             </table>
+            {s.extraDamage.length > 0 && (
+              <p class="p-extra">
+                {s.extraDamage.map((x) => `${extraName(x)} ${extraAmount(x)}`).join(" · ")}
+              </p>
+            )}
           </section>
 
           {caster && (

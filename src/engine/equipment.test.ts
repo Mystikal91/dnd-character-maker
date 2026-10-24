@@ -79,6 +79,7 @@ describe("attacks", () => {
         itemId: "srd51:item/longsword",
         ability: "str",
         attackBonus: 5,
+        ranged: false,
         magical: false,
         enhancement: 0,
         proficient: true,
