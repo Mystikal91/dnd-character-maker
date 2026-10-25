@@ -116,6 +116,17 @@ export function withOriginRules(pack: Pack): Pack {
     entries: pack.entries.map((entry) => {
       const slug = entry.id.split("/")[1] ?? "";
       if (entry.kind === "species" && SPECIES[slug]) return gateSpecies(entry, SPECIES[slug]);
+      // The legacy of the Tiefling gives its spells; the SRD only says so in words.
+      if (entry.id === "srd51:trait/infernal-legacy")
+        return {
+          ...entry,
+          effects: [
+            ...entry.effects,
+            { type: "grantSpell", spell: "srd51:spell/thaumaturgy" },
+            { type: "grantSpell", spell: "srd51:spell/hellish-rebuke", minLevel: 3 },
+            { type: "grantSpell", spell: "srd51:spell/darkness", minLevel: 5 },
+          ],
+        };
       if (entry.kind === "subspecies")
         // A sub-race's own increase gives way to the customised origin and to a background's.
         return {
