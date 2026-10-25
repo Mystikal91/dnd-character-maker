@@ -19,7 +19,7 @@ export interface ChangelogEntry {
 export const CHANGELOG: ChangelogEntry[] = [
   {
     version: "1.3 beta",
-    date: "2026-10-22",
+    date: "2026-10-25",
     notes: [
       {
         en: "Move to another device: a window in the character menu makes one file with what you choose (characters, homebrew packs, quick edits, the addresses of the Aurora packs, settings, and on request the DeepL key and the saved translations) and brings it in on the other device, where you pick again what to take. The file can be protected with a passphrase, and can be shared straight from the phone, for example to Google Drive. Aurora packs travel as addresses and are downloaded again.",
