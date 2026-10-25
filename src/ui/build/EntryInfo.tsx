@@ -76,12 +76,15 @@ function Block({
   title,
   subtitle,
   edit = [],
+  subtitleEdit,
   children,
 }: {
   title: string;
   subtitle?: string | undefined;
-  /** The entries whose texts the pencils edit. */
+  /** The entries whose texts the pencils next to the title edit. */
   edit?: string[];
+  /** The entry the pencil next to the subtitle edits (a subspecies). */
+  subtitleEdit?: string | undefined;
   children: ComponentChildren;
 }) {
   return (
@@ -92,7 +95,12 @@ function Block({
           <EditPencil key={id} id={id} />
         ))}
       </h4>
-      {subtitle && <p class="muted">{subtitle}</p>}
+      {subtitle && (
+        <p class="muted">
+          {subtitle}
+          {subtitleEdit && <EditPencil id={subtitleEdit} />}
+        </p>
+      )}
       {children}
     </section>
   );
@@ -138,7 +146,8 @@ export function SpeciesInfo() {
     <Block
       title={c.name(species.id)}
       subtitle={sub ? c.name(sub.id) : undefined}
-      edit={sub ? [species.id, sub.id] : [species.id]}
+      edit={[species.id]}
+      subtitleEdit={sub?.id}
     >
       <Facts
         rows={[

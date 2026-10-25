@@ -13,6 +13,20 @@ export const slugify = (text: string): string =>
 
 export const clean = (text: string | null | undefined) => (text ?? "").replace(/\s+/g, " ").trim();
 
+/**
+ * The text of an element. A label written as a span (`<span class="feature">Speed.</span>Your...`)
+ * has no space after it in the files, so one is put there; a line break is a space.
+ */
+function plainText(node: Node): string {
+  if (node.nodeType === 3) return node.textContent ?? "";
+  if (node.nodeType !== 1) return "";
+  const el = node as Element;
+  const inner = Array.from(el.childNodes).map(plainText).join("");
+  const tag = el.tagName.toLowerCase();
+  if (tag === "br") return " ";
+  return tag === "span" && /\bfeature\b/.test(el.getAttribute("class") ?? "") ? `${inner} ` : inner;
+}
+
 /** The visible text of a description: paragraphs, with list items as `- item`. */
 export function paragraphs(description: Element | null | undefined): string[] {
   if (!description) return [];
@@ -20,9 +34,9 @@ export function paragraphs(description: Element | null | undefined): string[] {
   const walk = (node: Element) => {
     for (const child of Array.from(node.children)) {
       const tag = child.tagName.toLowerCase();
-      if (tag === "p") out.push(clean(child.textContent));
+      if (tag === "p") out.push(clean(plainText(child)));
       else if (tag === "ul" || tag === "ol")
-        for (const li of Array.from(child.children)) out.push(`- ${clean(li.textContent)}`);
+        for (const li of Array.from(child.children)) out.push(`- ${clean(plainText(li))}`);
       else if (tag === "table")
         continue; // tables do not survive as plain text
       else walk(child);

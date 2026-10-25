@@ -708,6 +708,22 @@ describe("classes and archetypes", () => {
     expect(on.choices.filter((p) => p.grants === "abilityBonus")).toHaveLength(1);
   });
 
+  it("puts a space after a label written as a span, which the files leave out", () => {
+    const set = wrap(`
+      <element name="Labelled" type="Background" source="Test Book" id="ID_T_LABELLED">
+        <description>
+          <p>
+            <span class="feature">Speed.</span>You move fast.
+            <span class="feature">Eyes.</span>You see well.
+          </p>
+        </description>
+      </element>`);
+    const made = parseAurora([set], options);
+    expect(made.strings["imp1:background/labelled.desc"]).toBe(
+      "Speed. You move fast. Eyes. You see well.",
+    );
+  });
+
   it("gives a subclass of a class that does not cast its own spellcasting", () => {
     const knight = wrap(`
       <element name="Spell Knight" type="Archetype" source="Test Book" id="ID_SK">

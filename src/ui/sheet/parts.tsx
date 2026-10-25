@@ -84,9 +84,9 @@ export function RulesText({
     <details>
       <summary>
         {name}
+        {id && <EditPencil id={id} />}
         {tag && <span class="source-tag"> [{tag}]</span>}
       </summary>
-      {id && <EditPencil id={id} />}
       <Paragraphs text={text} />
     </details>
   );

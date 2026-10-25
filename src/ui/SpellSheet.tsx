@@ -26,6 +26,7 @@ function SpellDetails({ c, ruleset, row }: { c: Content; ruleset: string; row: S
     <details>
       <summary>
         {c.name(row.id)}
+        <EditPencil id={row.id} />
         <span class="muted">
           {" · "}
           {row.level === 0
@@ -44,7 +45,6 @@ function SpellDetails({ c, ruleset, row }: { c: Content; ruleset: string; row: S
           ) : null,
         )}
       </dl>
-      <EditPencil id={row.id} />
       <Paragraphs text={c.text(row.id, "desc")} />
       {c.text(row.id, "higherLevel") && (
         <p>
