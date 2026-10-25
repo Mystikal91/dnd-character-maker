@@ -18,7 +18,7 @@ transfer file). Everything stays on the person's devices; the app uploads nothin
 
 Packs imported from Aurora travel only as addresses: the app says it never exports or shares
 that content, so the other device downloads it again (and on import the addresses are listed,
-not followed: a button downloads them). A pack made from files has no address and cannot
+not followed: a button downloads them). A pack downloaded this way keeps the id it had, because the entries that characters use are named after it; and a character that still points at a pack under another id (a file made before this) is put right when the same entries are found in one other pack. A pack made from files has no address and cannot
 travel; the file only names it, so the person knows what to select again.
 
 On import the person chooses again which parts to bring in. Characters follow the rule of the
@@ -30,7 +30,7 @@ becomes a copy. A homebrew pack with the same id is replaced.
 ```
 { "format": "dnd-character-maker-transfer", "version": 1, "exportedAt": "...",
   "characters": [...], "homebrew": [...], "edits": [...],
-  "links": [{ "name", "url", "keepEditions" }], "files": ["name"],
+  "links": [{ "id", "name", "url", "keepEditions" }], "files": ["name"],
   "settings": {...}, "deeplKey": "...", "translations": [["key", "text"]] }
 ```
 

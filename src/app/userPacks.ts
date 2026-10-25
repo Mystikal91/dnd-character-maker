@@ -124,7 +124,12 @@ export async function importAuroraFiles(files: File[], replaceId?: string): Prom
 }
 
 /** Adds a personal pack from an address typed by the user: an index file or a content file. */
-export async function importAuroraUrl(url: string, replaceId?: string): Promise<void> {
+export async function importAuroraUrl(
+  url: string,
+  replaceId?: string,
+  /** The id to give the new pack, when it is a copy of one made on another device. */
+  wantedId?: string,
+): Promise<void> {
   // The same address twice would only make a second copy of the pack.
   const known = replaceId ? undefined : packFromAddress(url);
   if (known) {
@@ -133,7 +138,7 @@ export async function importAuroraUrl(url: string, replaceId?: string): Promise<
     packError.value = "sameAddress";
     return;
   }
-  await importAuroraSources([{ url }], replaceId, { url });
+  await importAuroraSources([{ url }], replaceId, { url }, wantedId);
 }
 
 /** Makes a pack again from the address it came from, with one click. */
@@ -156,6 +161,7 @@ async function importAuroraSources(
   start: { text?: string; url?: string }[],
   replaceId?: string,
   source?: UserPackRecord["source"],
+  wantedId?: string,
 ): Promise<void> {
   const loaded = content.value;
   packError.value = undefined;
@@ -172,7 +178,8 @@ async function importAuroraSources(
     await new Promise((resolve) => setTimeout(resolve, 0));
     // Importing again keeps the id: the entries are named after it, and characters use them.
     const old = replaceId ? userPacks.value.find((p) => p.id === replaceId) : undefined;
-    const id = old?.id ?? `imp${Date.now().toString(36)}`;
+    const taken = wantedId ? userPacks.value.some((p) => p.id === wantedId) : true;
+    const id = old?.id ?? (wantedId && !taken ? wantedId : `imp${Date.now().toString(36)}`);
     const keep = old?.keepEditions ?? keepEditions.value;
     // Aurora content is in English, so duplicates are looked for by English names whatever the
     // language of the app is.

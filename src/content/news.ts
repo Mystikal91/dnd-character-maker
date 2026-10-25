@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.4.3 beta",
+    date: "2026-10-25",
+    notes: [
+      {
+        en: "Fix: moving to another device now keeps characters that use Aurora content (a Custom Lineage, an Aurora background). The packs downloaded again keep the id they had, and a character that already points at an old id (a transfer made before) is put right by itself when the same content is found, so there is no need to import it again.",
+        it: "Correzione: il passaggio a un altro dispositivo ora conserva i personaggi che usano contenuti di Aurora (un Lignaggio personalizzato, un background di Aurora). I pacchetti scaricati di nuovo mantengono l’id che avevano e un personaggio che punta già a un vecchio id (un trasferimento fatto prima) viene sistemato da solo quando si ritrova lo stesso contenuto, senza doverlo importare di nuovo.",
+        fr: "Correction : passer à un autre appareil conserve maintenant les personnages qui utilisent du contenu d’Aurora (une Lignée personnalisée, un background d’Aurora). Les paquets téléchargés de nouveau gardent l’id qu’ils avaient, et un personnage qui pointe déjà vers un ancien id (un transfert fait avant) est remis en ordre tout seul quand le même contenu est retrouvé, sans devoir l’importer de nouveau.",
+        de: "Korrektur: Beim Wechsel auf ein anderes Gerät bleiben jetzt Charaktere erhalten, die Aurora-Inhalte nutzen (eine eigene Abstammung, ein Aurora-Hintergrund). Erneut geladene Pakete behalten die Id, die sie hatten, und ein Charakter, der schon auf eine alte Id zeigt (eine frühere Übertragung), wird von selbst in Ordnung gebracht, sobald derselbe Inhalt gefunden wird, ohne ihn erneut importieren zu müssen.",
+        es: "Corrección: pasar a otro dispositivo ahora conserva los personajes que usan contenido de Aurora (un Linaje personalizado, un trasfondo de Aurora). Los paquetes descargados de nuevo mantienen el id que tenían, y un personaje que ya apunta a un id antiguo (una transferencia hecha antes) se arregla solo cuando se encuentra el mismo contenido, sin tener que importarlo otra vez.",
+      },
+    ],
+  },
+  {
     version: "1.4.2 beta",
     date: "2026-10-25",
     notes: [

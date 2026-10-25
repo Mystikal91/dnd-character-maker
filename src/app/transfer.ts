@@ -199,7 +199,8 @@ export async function downloadLinks(links: PackLink[]): Promise<void> {
   try {
     for (const link of links) {
       keepEditions.value = link.keepEditions ?? false;
-      await importAuroraUrl(link.url);
+      // The pack keeps the id it had, so the characters that use it find their entries.
+      await importAuroraUrl(link.url, undefined, link.id);
     }
   } finally {
     keepEditions.value = before;

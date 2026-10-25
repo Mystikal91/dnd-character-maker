@@ -1,9 +1,10 @@
-import { computed, signal } from "@preact/signals";
+import { computed, effect, signal } from "@preact/signals";
 import type { Content } from "../content/browser";
 import { applyAbilityMethod } from "../engine/abilityScores";
 import { type Character, createCharacter } from "../engine/character";
 import { CharacterParseError } from "../engine/characterSchema";
 import { type DerivedSheet, deriveSheet } from "../engine/derive";
+import { relinkCharacter } from "../engine/relink";
 import { ui } from "../i18n/ui";
 import { openTransfer } from "../storage/bundle";
 import {
@@ -124,6 +125,22 @@ async function switchTo(next: Character) {
   importFailed.value = false;
   await saveNow();
 }
+
+/**
+ * A character that uses entries of a pack that has another id on this device (the pack was
+ * downloaded again after moving to another device) is put right when the content is there.
+ */
+const openId = computed(() => character.value.id);
+effect(() => {
+  const loaded = content.value;
+  openId.value;
+  if (!loaded) return;
+  const fixed = relinkCharacter(character.peek(), loaded.index);
+  if (fixed) {
+    character.value = fixed;
+    scheduleSave();
+  }
+});
 
 /** Loads saved characters at startup; creates the first one if there are none. */
 export async function initStorage(): Promise<void> {

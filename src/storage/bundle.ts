@@ -30,6 +30,8 @@ export interface TransferSettings {
 
 /** An imported pack that can be downloaded again, with how it was imported. */
 export interface PackLink {
+  /** The id the pack had, so that the entries characters use keep their names. */
+  id?: string;
   name: string;
   url: string;
   keepEditions?: boolean;
@@ -69,6 +71,7 @@ export function linksOf(packs: UserPackRecord[]): { links: PackLink[]; files: st
   for (const record of packs.filter((p) => p.origin === "personal")) {
     if (record.source?.url)
       links.push({
+        id: record.id,
         name: record.name,
         url: record.source.url,
         ...(record.keepEditions !== undefined && { keepEditions: record.keepEditions }),

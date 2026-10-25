@@ -78,7 +78,7 @@ describe("a transfer file", () => {
   it("sends the packs of Aurora as addresses, and names the ones made from files", () => {
     const bundle = buildBundle(sources, new Set<Section>(["links"]));
     expect(bundle.links).toEqual([
-      { name: "From a link", url: "https://example.org/a.xml", keepEditions: true },
+      { id: "impa", name: "From a link", url: "https://example.org/a.xml", keepEditions: true },
     ]);
     expect(bundle.files).toEqual(["From files"]);
     expect(JSON.stringify(bundle)).not.toContain("manifest");
