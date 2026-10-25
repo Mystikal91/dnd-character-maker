@@ -640,6 +640,37 @@ describe("classes and archetypes", () => {
     ]);
   });
 
+  it("takes the race that offers a sub-race as its parent when two races are the same one of the app", () => {
+    const set = wrap(`
+      <element name="Dwarf" type="Race" source="New Rules" id="ID_T_DWARF_NEW">
+        <description><p>Without increases.</p></description>
+        <rules><stat name="innate speed" value="25" bonus="base"/></rules>
+      </element>
+      <element name="Dwarf" type="Race" source="Old Rules" id="ID_T_DWARF_OLD">
+        <description><p>With increases.</p></description>
+        <rules>
+          <stat name="constitution" value="2" requirements="!ID_T_LINE" />
+          <select type="Sub Race" name="Line" supports="Dwarf" optional="true" />
+        </rules>
+      </element>
+      <element name="Line Flag" type="Grants" source="Test Book" id="ID_T_LINE" />
+      <element name="Dwarf (Deep)" type="Sub Race" source="Old Rules" id="ID_T_DEEP">
+        <supports>Dwarf</supports>
+        <description><p>Its own.</p></description>
+        <rules>
+          <grant type="Grants" id="ID_T_LINE" />
+          <stat name="strength" value="1" />
+        </rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    const deep = byId(made, "imp1:subspecies/dwarf-deep");
+    expect(deep.parent).toBe("srd51:species/dwarf");
+    expect(deep.data.replacesSpecies).toBe(true);
+    expect(
+      deep.effects.flatMap((e) => (e.type === "abilityBonus" ? [e.ability + e.value] : [])),
+    ).toEqual(["str1"]);
+  });
+
   it("gives a subclass of a class that does not cast its own spellcasting", () => {
     const knight = wrap(`
       <element name="Spell Knight" type="Archetype" source="Test Book" id="ID_SK">

@@ -138,7 +138,10 @@ export function importSubRace(ctx: Context, source: Source): void {
   // this pack keeps those rules behind a `when` and the sub-race just sets its flags. A race the
   // app already has cannot be changed, so the sub-race stands in for the species, like a variant,
   // instead of adding to it.
-  const parentSource = ofType(ctx, "Race").find((s) => s.id === parent);
+  // Several races can be the same one of the app (the Tiefling of 2014 and of 2024): the one
+  // that offers this sub-race is the parent, not the first with the same id.
+  const sameId = ofType(ctx, "Race").filter((s) => s.id === parent);
+  const parentSource = sameId.find((s) => offers(ctx, s, source)) ?? sameId[0];
   const holds = flagsOf(ctx, source);
   if (parentSource?.existing && takesAway(ctx, parentSource, holds)) {
     const own = baseEffects(ctx, source, "subspecies", holds).effects;
