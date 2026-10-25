@@ -28,6 +28,15 @@ describe("finding again what a character used from a pack that changed its id", 
     expect(fixed?.selections["impnew:species/custom-lineage/species-1"]).toEqual(["con"]);
   });
 
+  it("takes the entry of the same pack that differs only by its number", () => {
+    const c = createCharacter("srd51");
+    c.choices.background = "impnew:background/entertainer-2";
+    expect(relinkCharacter(c, index)?.choices.background).toBe("impnew:background/entertainer");
+    // Two candidates with that name: nothing is guessed.
+    const two = new Map(index).set(...entry("impnew:background/entertainer-3", "background"));
+    expect(relinkCharacter(c, two)).toBeUndefined();
+  });
+
   it("leaves alone what is known, what is of the SRD, and what is ambiguous or missing", () => {
     const c = createCharacter("srd51");
     c.choices.species = "srd51:species/dwarf";

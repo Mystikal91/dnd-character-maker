@@ -44,6 +44,15 @@ interface Input {
   warnings: Warning[];
 }
 
+/** The id without the number that makes it unique within its pack. */
+export const withoutNumber = (id: string) => id.replace(/-\d+$/, "");
+
+/** The only option that has the id of `picked` apart from the number, if there is just one. */
+function renumbered(picked: string, options: string[]): string | undefined {
+  const same = options.filter((o) => withoutNumber(o) === withoutNumber(picked));
+  return same.length === 1 ? same[0] : undefined;
+}
+
 /** The options of a choice: what it lists, or every feat when a feat choice lists none. */
 function optionsOf(index: PackIndex, choice: ChoiceEffect): string[] {
   if (choice.grants !== "feat" || choice.from.length > 0) return choice.from;
@@ -125,10 +134,14 @@ function walkEffects(
     const key = `${source}/${choice.id}`;
     const selected: string[] = [];
     const options = optionsOf(index, choice);
-    for (const option of selections[key] ?? []) {
-      if (!options.includes(option)) warn(warnings, "invalidChoice", { source, option });
+    for (const picked of selections[key] ?? []) {
+      // An entry that was numbered differently when the pack was imported again (`charisma-2`
+      // became `charisma-11`) is the one option of the choice with the same name.
+      const option = options.includes(picked) ? picked : renumbered(picked, options);
+      if (!option) warn(warnings, "invalidChoice", { source, option: picked });
+      else if (selected.includes(option)) continue;
       else if (selected.length >= choice.choose) warn(warnings, "tooManyChoices", { source });
-      else if (!selected.includes(option)) selected.push(option);
+      else selected.push(option);
     }
     choices.push({
       key,

@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.5.1 beta",
+    date: "2026-10-25",
+    notes: [
+      {
+        en: "Fix: a character that made a choice from Aurora content (a feat’s ability, a background) no longer shows a false warning, or loses the background, when the packs are imported again and an entry gets another number (`charisma-2` becomes `charisma-11`, `entertainer-2` becomes `entertainer`). The app now finds the entry with the same name, when there is only one.",
+        it: "Correzione: un personaggio che ha fatto una scelta su contenuti di Aurora (la caratteristica di un talento, un background) non mostra più un falso avviso, né perde il background, quando i pacchetti vengono importati di nuovo e una voce prende un altro numero («charisma-2» diventa «charisma-11», «entertainer-2» diventa «entertainer»). L’app ora ritrova la voce con lo stesso nome, quando ce n’è una sola.",
+        fr: "Correction : un personnage qui a fait un choix sur du contenu d’Aurora (la caractéristique d’un don, un background) n’affiche plus de faux avertissement, ni ne perd son background, quand les paquets sont importés de nouveau et qu’une entrée reçoit un autre numéro (« charisma-2 » devient « charisma-11 », « entertainer-2 » devient « entertainer »). L’app retrouve maintenant l’entrée du même nom, quand il n’y en a qu’une.",
+        de: "Korrektur: Ein Charakter, der eine Wahl bei Aurora-Inhalten getroffen hat (das Attribut eines Talents, ein Hintergrund), zeigt keine falsche Warnung mehr und verliert den Hintergrund nicht, wenn die Pakete erneut importiert werden und ein Eintrag eine andere Nummer bekommt („charisma-2“ wird „charisma-11“, „entertainer-2“ wird „entertainer“). Die App findet jetzt den Eintrag mit demselben Namen, wenn es nur einen gibt.",
+        es: "Corrección: un personaje que hizo una elección sobre contenido de Aurora (la característica de una dote, un trasfondo) ya no muestra un aviso falso ni pierde el trasfondo cuando los paquetes se importan de nuevo y una entrada recibe otro número («charisma-2» pasa a ser «charisma-11», «entertainer-2» pasa a ser «entertainer»). La app ahora encuentra la entrada con el mismo nombre, cuando solo hay una.",
+      },
+    ],
+  },
+  {
     version: "1.5 beta",
     date: "2026-10-25",
     notes: [

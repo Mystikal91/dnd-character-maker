@@ -181,6 +181,29 @@ describe("effects behind a requirement", () => {
     expect(on.warnings).toEqual([]);
   });
 
+  it("find a choice made before an option was numbered anew", () => {
+    const pick = (id: string): Entry => entry(id, "trait", []);
+    const feat = entry("test:feat/touched", "feat", [
+      {
+        type: "choice",
+        id: "offer",
+        choose: 1,
+        grants: "trait",
+        from: ["test:trait/charisma-11", "test:trait/wisdom-10"],
+      },
+    ]);
+    const known = new Map(index).set(feat.id, feat);
+    for (const e of [pick("test:trait/charisma-11"), pick("test:trait/wisdom-10")])
+      known.set(e.id, e);
+    const stale = {
+      "test:feat/touched/offer": ["test:trait/charisma-2", "test:trait/charisma-16"],
+    };
+    const warnings: never[] = [];
+    const found = collectEffects([feat], { index: known, selections: stale, warnings });
+    expect(found.choices[0]?.selected).toEqual(["test:trait/charisma-11"]);
+    expect(warnings).toEqual([]);
+  });
+
   it("are told apart by the entry that sets them", () => {
     expect([...heldBy(line.id, line.effects)].sort()).toEqual(["LINE", line.id].sort());
   });
