@@ -270,6 +270,19 @@ export function importRaceVariant(ctx: Context, source: Source): void {
   );
 }
 
+/** A rule a table switches on for a character: it is held by the character that has it. */
+export function importOption(ctx: Context, source: Source): void {
+  const { effects } = baseEffects(ctx, source, "option");
+  // Held by its Aurora id as well, for rules of another pack that ask for it by that name.
+  emit(
+    ctx,
+    source,
+    {},
+    { desc: description(source.el) },
+    { effects: [{ type: "flag", id: source.aid }, ...effects] },
+  );
+}
+
 /** A racial trait, a feat feature or any other named option that has effects of its own. */
 export function importTrait(ctx: Context, source: Source): void {
   const { effects } = baseEffects(ctx, source, "trait");

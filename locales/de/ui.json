@@ -734,6 +734,8 @@
   "build.left": "Noch {n}",
   "build.continue": "Weiter",
   "build.viewSheet": "Bogen ansehen",
+  "build.options.title": "Optionale Regeln",
+  "build.options.hint": "Regeln aus deinen Paketen, die du für diesen Charakter aktivieren kannst. Mit Tashas angepasster Herkunft weichen die festen Attributssteigerungen, Sprachen und Übungen der Art deinen eigenen Entscheidungen.",
   "build.info.pickSpecies": "Wähle eine Spezies, um zu sehen, was sie gibt.",
   "build.info.pickBackground": "Wähle einen Hintergrund, um zu sehen, was er gibt.",
   "build.info.pickClass": "Wähle eine Klasse, um zu sehen, was sie gibt.",

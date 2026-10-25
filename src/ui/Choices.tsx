@@ -1,7 +1,7 @@
 import { character, content, sheet, updateCharacter } from "../app/store";
 import type { Content } from "../content/browser";
 import type { PendingChoice } from "../engine/choices";
-import { type UiKey, ui } from "../i18n/ui";
+import { type UiKey, signed, ui } from "../i18n/ui";
 import { RulesText } from "./sheet/parts";
 import { SpellInfoButton } from "./spells/SpellInfo";
 
@@ -121,8 +121,11 @@ export function Choices() {
         <fieldset class="choice" key={choice.key}>
           <legend>{c.name(choice.source)}</legend>
           <p class="muted">
-            {ui(`choice.kind.${choice.grants}` as UiKey)} ·{" "}
-            {ui("choice.hint", { n: choice.choose, left: choice.remaining })}
+            {ui(`choice.kind.${choice.grants}` as UiKey)}
+            {choice.grants === "abilityBonus" && choice.value !== undefined
+              ? ` ${signed(choice.value)}`
+              : ""}{" "}
+            · {ui("choice.hint", { n: choice.choose, left: choice.remaining })}
           </p>
           {choice.grants === "feat" ? (
             <MenuPicks choice={choice} />

@@ -137,6 +137,11 @@ export interface Character {
   inventory: InventoryItem[];
   /** The money carried. Absent in characters saved before coins were kept. */
   coins?: Coins;
+  /**
+   * The optional rules switched on for this character (ids of `option` entries, such as
+   * Tasha's customised origin). Other rules ask for them by id, and their own effects apply.
+   */
+  options?: string[];
   abilityBase: Record<Ability, number>;
   abilityMethod: AbilityMethod;
   /** The six rolled values, when `abilityMethod` is `roll`. */

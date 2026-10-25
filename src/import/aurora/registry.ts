@@ -71,6 +71,8 @@ export const KIND_OF: Record<string, string> = {
   Item: "item",
   "Magic Item": "item",
   Deity: "deity",
+  // A rule a table may switch on (Tasha's customised origin); only the ones other rules ask for.
+  Option: "option",
   Language: "language",
   Background: "background",
   Race: "species",

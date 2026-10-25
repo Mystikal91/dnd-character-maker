@@ -42,6 +42,12 @@ number comes from. The kinds are `abilityBonus`, `proficiency`, `trait`, `choice
   so a flag inside a `when` is set only while that holds. Together they let a species keep the
   increases that a sub-species takes away: `when !LINE` on the species, `flag LINE` on the
   sub-species.
+
+An entry of kind `option` is a rule a character can switch on (`options` of the character, a list
+of entry ids; the build step lists them). A switched-on option is held by its id, and its own
+effects apply. The Aurora importer makes the options that other rules ask for (Tasha's customised
+origin) and gives each a `flag` with its Aurora id, so that rules of another pack, which can only
+name it by that id, see it too.
 - Item data can hold `rarity` (a magic item), `enhancement` (+1 to +3 to attack and damage) and
   `enchants: true` (the item is put on a weapon of the inventory instead of being carried: the
   Aurora importer sets it for the magic weapons it reads). A weapon in the inventory can also

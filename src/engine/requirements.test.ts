@@ -143,6 +143,44 @@ describe("effects behind a requirement", () => {
     expect(sheet.abilities.int.bonus).toBe(1);
   });
 
+  it("follow an optional rule the character has switched on", () => {
+    const option = entry("test:option/custom", "option", []);
+    const tuned = entry("test:species/tuned", "species", [
+      {
+        type: "when",
+        requires: "!test:option/custom",
+        effects: [{ type: "abilityBonus", ability: "str", value: 2 }],
+      },
+      {
+        type: "when",
+        requires: "test:option/custom",
+        effects: [
+          {
+            type: "choice",
+            id: "any",
+            choose: 1,
+            grants: "abilityBonus",
+            from: ["str", "dex"],
+            value: 2,
+          },
+        ],
+      },
+    ]);
+    const withOption = new Map(index).set(option.id, option).set(tuned.id, tuned);
+    const c = createCharacter("srd51");
+    c.choices.species = tuned.id;
+    c.classes = [{ classId: "srd51:class/fighter", level: 1 }];
+    const off = deriveSheet(c, withOption);
+    expect(off.abilities.str.bonus).toBe(2);
+    expect(off.choices.filter((p) => p.id === "any")).toEqual([]);
+    c.options = [option.id, "test:option/gone"]; // an option of a pack that is gone is ignored
+    c.selections[`${tuned.id}/any`] = ["dex"];
+    const on = deriveSheet(c, withOption);
+    expect(on.abilities.str.bonus).toBe(0);
+    expect(on.abilities.dex.bonus).toBe(2);
+    expect(on.warnings).toEqual([]);
+  });
+
   it("are told apart by the entry that sets them", () => {
     expect([...heldBy(line.id, line.effects)].sort()).toEqual(["LINE", line.id].sort());
   });

@@ -54,6 +54,8 @@ const CharacterSchema = v.object({
       pp: CoinCount,
     }),
   ),
+  /** The optional rules switched on for this character (ids of `option` entries). */
+  options: v.optional(v.array(v.string())),
   abilityBase: v.object({
     str: v.number(),
     dex: v.number(),

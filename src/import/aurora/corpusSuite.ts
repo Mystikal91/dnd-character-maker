@@ -142,6 +142,35 @@ export function corpusSuite(reverse: boolean) {
         expect(one("imp1:subspecies/fallen-aasimar")).toMatchObject({ str: 1, cha: 2 });
       });
 
+      it("lets Tasha's customised origin swap the fixed increases for choices", () => {
+        const option = result.entries.find(
+          (e) => e.id === "imp1:option/customized-ability-score-increases",
+        );
+        expect(option).toBeDefined();
+        const make = (species: string, on: boolean) => {
+          const c = createCharacter("srd51");
+          c.choices.species = species;
+          c.classes = [{ classId: "srd51:class/fighter", level: 1 }];
+          if (on) c.options = [option?.id ?? ""];
+          return deriveSheet(c, index);
+        };
+        const fixed = (s: ReturnType<typeof make>) =>
+          Object.values(s.abilities).reduce((sum, a) => sum + Math.max(0, a.bonus), 0);
+        // Whatever a species gives as fixed increases comes back as picks to make (at least).
+        let swapped = 0;
+        for (const species of result.entries.filter((e) => e.kind === "species")) {
+          const plain = make(species.id, false);
+          const custom = make(species.id, true);
+          if (fixed(custom) >= fixed(plain)) continue;
+          swapped += 1;
+          const picks = custom.choices
+            .filter((p) => p.grants === "abilityBonus")
+            .reduce((sum, p) => sum + (p.value ?? 1) * p.choose, 0);
+          expect(fixed(custom) + picks, species.id).toBeGreaterThanOrEqual(fixed(plain));
+        }
+        expect(swapped).toBeGreaterThan(20);
+      });
+
       it("derives every sub-species without trouble", () => {
         for (const sub of subs) expect(() => bonuses(sub)).not.toThrow();
       });

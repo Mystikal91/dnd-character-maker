@@ -141,7 +141,9 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   // Species, subspecies, background and the starting class contribute their effects;
   // other classes only contribute their multiclass proficiencies.
   const featIds = character.feats ?? [];
-  const chosen = [...Object.values(character.choices), ...featIds]
+  // An option whose pack is gone is left out quietly: it is a switch, not something chosen.
+  const options = (character.options ?? []).filter((id) => index.has(id));
+  const chosen = [...Object.values(character.choices), ...featIds, ...options]
     .filter((id): id is string => Boolean(id))
     .flatMap((id) => lookup(index, id, warnings) ?? []);
   const classEntries = character.classes.map((cl) => ({

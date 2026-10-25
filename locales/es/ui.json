@@ -734,6 +734,8 @@
   "build.left": "Faltan {n}",
   "build.continue": "Continuar",
   "build.viewSheet": "Ver la hoja",
+  "build.options.title": "Reglas opcionales",
+  "build.options.hint": "Reglas de tus paquetes que puedes activar para este personaje. Con el origen personalizado de Tasha, los aumentos de característica, idiomas y competencias fijos de la especie dan paso a tus elecciones.",
   "build.info.pickSpecies": "Elige una especie para ver qué da.",
   "build.info.pickBackground": "Elige un trasfondo para ver qué da.",
   "build.info.pickClass": "Elige una clase para ver qué da.",

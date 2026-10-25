@@ -110,7 +110,14 @@ export function SpeciesInfo() {
   const all = sub?.data.replacesSpecies
     ? sub.effects
     : [...species.effects, ...(sub?.effects ?? [])];
-  const effects = plainEffects(all, sub ? heldBy(sub.id, sub.effects) : undefined);
+  const held = new Set([
+    ...(sub ? heldBy(sub.id, sub.effects) : []),
+    ...(ch.options ?? []).flatMap((id) => {
+      const option = c.index.get(id);
+      return option ? [...heldBy(id, option.effects)] : [];
+    }),
+  ]);
+  const effects = plainEffects(all, held);
   const rs = ch.ruleset;
 
   const bonuses = effects

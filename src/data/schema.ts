@@ -211,6 +211,7 @@ export const ENTRY_KINDS = [
   "condition",
   "alignment",
   "deity",
+  "option",
 ] as const;
 
 export const EntrySchema = v.object({

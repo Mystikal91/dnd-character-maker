@@ -734,6 +734,8 @@
   "build.left": "{n} left",
   "build.continue": "Continue",
   "build.viewSheet": "View the sheet",
+  "build.options.title": "Optional rules",
+  "build.options.hint": "Rules from your packs that you can switch on for this character. With Tasha's customised origin, the fixed ability increases, languages and proficiencies of the species give way to choices you make.",
   "build.info.pickSpecies": "Pick a species to see what it gives.",
   "build.info.pickBackground": "Pick a background to see what it gives.",
   "build.info.pickClass": "Pick a class to see what it gives.",

@@ -9,6 +9,7 @@ import { InventoryList, LoadLine } from "../InventoryList";
 import { itemLabel } from "../ItemTag";
 import { CustomItem } from "./CustomItem";
 import { BackgroundInfo, SpeciesInfo } from "./EntryInfo";
+import { OptionalRules } from "./OptionalRules";
 import { StartingEquipment } from "./StartingEquipment";
 import { Select, entriesOfKind } from "./fields";
 
@@ -65,6 +66,7 @@ export function OriginStep() {
             })
           }
         />
+        <OptionalRules />
       </div>
       <div class="step-info">
         <SpeciesInfo />

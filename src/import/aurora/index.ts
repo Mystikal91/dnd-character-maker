@@ -1,3 +1,4 @@
+import { requirementWords } from "../../engine/requirements";
 import { type Owner, claimFeatures, importArchetype, importClass, importFeature } from "./classes";
 import {
   importArmor,
@@ -11,6 +12,7 @@ import {
   importBackground,
   importDeity,
   importFeat,
+  importOption,
   importRace,
   importRaceVariant,
   importSubRace,
@@ -30,7 +32,7 @@ import {
   readSources,
 } from "./registry";
 import { mergeRepeats, preferOlderEdition } from "./repeats";
-import { readRules, requirementsMet, selectMatches } from "./rules";
+import { readRules, selectMatches } from "./rules";
 import { AuroraParseError, clean } from "./xml";
 
 export { AuroraParseError, slugify } from "./xml";
@@ -40,7 +42,7 @@ export { AuroraParseError, slugify } from "./xml";
  * the entries or texts it makes: packs imported with an older version are marked as needing an
  * update, and can be imported again with a click.
  */
-export const AURORA_IMPORT_VERSION = 3;
+export const AURORA_IMPORT_VERSION = 5;
 export type { AuroraOptions, AuroraResult } from "./registry";
 
 /**
@@ -210,7 +212,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
   };
   const visit = (source: Source) => {
     for (const rule of readRules(source.el)) {
-      if (!requirementsMet(rule.requirements)) continue;
+      // A rule that does not hold now may hold with the next choice: what it grants is made too.
       if (rule.tag === "grant" && FEATURE_TYPES.has(rule.type)) mark(ctx.byAid.get(rule.id));
       else if (rule.tag === "select" && FEATURE_TYPES.has(rule.type))
         for (const option of ofType(ctx, rule.type))
@@ -218,6 +220,13 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     }
   };
   for (const source of [...ctx.needed]) visit(source);
+
+  // An option is made when a rule of what is made asks for it (a table can then switch it on).
+  const asked = new Set<string>();
+  for (const source of ctx.needed)
+    for (const rule of readRules(source.el))
+      for (const word of requirementWords(rule.requirements)) asked.add(word);
+  for (const option of ctx.byType.get("Option") ?? []) if (asked.has(option.aid)) mark(option);
 
   // Ids, in the order of the files.
   for (const source of ctx.all) if (ctx.needed.has(source)) allocate(ctx, source);
@@ -283,6 +292,9 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
         break;
       case "Archetype":
         importArchetype(ctx, source);
+        break;
+      case "Option":
+        importOption(ctx, source);
         break;
     }
   }

@@ -670,6 +670,44 @@ describe("classes and archetypes", () => {
     ).toEqual(["str1"]);
   });
 
+  it("lets an option of one pack switch rules of another, which ask for it by its Aurora id", () => {
+    const folk = wrap(`
+      <element name="Plain Folk" type="Race" source="Core" id="ID_T_PLAIN_FOLK">
+        <description><p>Fixed.</p></description>
+        <rules>
+          <stat name="strength" value="2" requirements="!ID_T_OPT_FREE" />
+          <select type="Ability Score Improvement" name="Free" supports="Custom Ability Score Increase 2" requirements="ID_T_OPT_FREE" />
+        </rules>
+      </element>`);
+    const extras = wrap(`
+      <element name="Free Origin" type="Option" source="Extras" id="ID_T_OPT_FREE">
+        <description><p>Choose your own.</p></description>
+      </element>
+      <element name="Extra Folk" type="Race" source="Extras" id="ID_T_EXTRA_FOLK">
+        <description><p>Also fixed.</p></description>
+        <rules><stat name="dexterity" value="2" requirements="!ID_T_OPT_FREE" /></rules>
+      </element>`);
+    const core = parseAurora([folk], { ...options, packId: "impa" });
+    const more = parseAurora([extras], { ...options, packId: "impb" });
+    const option = byId(more, "impb:option/free-origin");
+    expect(option.effects).toContainEqual({ type: "flag", id: "ID_T_OPT_FREE" });
+    const index = new Map([
+      ...srd51Index,
+      ...[...core.entries, ...more.entries].map((e): [string, Entry] => [e.id, e]),
+    ]);
+    const strength = (on: boolean) => {
+      const c = createCharacter("srd51");
+      c.choices.species = "impa:species/plain-folk";
+      c.classes = [{ classId: "srd51:class/fighter", level: 1 }];
+      if (on) c.options = [option.id];
+      return deriveSheet(c, index);
+    };
+    expect(strength(false).abilities.str.bonus).toBe(2);
+    const on = strength(true);
+    expect(on.abilities.str.bonus).toBe(0);
+    expect(on.choices.filter((p) => p.grants === "abilityBonus")).toHaveLength(1);
+  });
+
   it("gives a subclass of a class that does not cast its own spellcasting", () => {
     const knight = wrap(`
       <element name="Spell Knight" type="Archetype" source="Test Book" id="ID_SK">
