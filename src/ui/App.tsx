@@ -19,6 +19,7 @@ import { QuickEditDialog } from "./QuickEdit";
 import { ShareDialog } from "./ShareDialog";
 import { Sheet } from "./Sheet";
 import { Tabs } from "./Tabs";
+import { TransferDialog } from "./TransferDialog";
 import { UpdateNotice } from "./UpdateNotice";
 import { BuildTab } from "./build/BuildTab";
 import { LevelUp } from "./build/LevelUp";
@@ -122,6 +123,7 @@ export function App() {
       <UpdateNotice />
       <SpellDialog />
       <QuickEditDialog />
+      <TransferDialog />
       <ShareDialog />
       <LevelUp />
       <footer class="site-footer no-print">

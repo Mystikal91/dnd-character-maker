@@ -28,6 +28,10 @@ export const sameAddressPack = signal<string | undefined>(undefined);
 
 const normalAddress = (url: string) => rawAddress(url).replace(/\/+$/, "").toLowerCase();
 
+/** The pack that was imported from this address, however it is written. */
+export const packFromAddress = (url: string) =>
+  userPacks.value.find((p) => p.source?.url && normalAddress(p.source.url) === normalAddress(url));
+
 export async function loadUserPacks(): Promise<void> {
   try {
     userPacks.value = await listUserPacks();
@@ -122,11 +126,7 @@ export async function importAuroraFiles(files: File[], replaceId?: string): Prom
 /** Adds a personal pack from an address typed by the user: an index file or a content file. */
 export async function importAuroraUrl(url: string, replaceId?: string): Promise<void> {
   // The same address twice would only make a second copy of the pack.
-  const known = replaceId
-    ? undefined
-    : userPacks.value.find(
-        (p) => p.source?.url && normalAddress(p.source.url) === normalAddress(url),
-      );
+  const known = replaceId ? undefined : packFromAddress(url);
   if (known) {
     importReport.value = undefined;
     sameAddressPack.value = known.name;

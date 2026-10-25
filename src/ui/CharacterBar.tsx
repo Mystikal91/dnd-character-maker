@@ -18,6 +18,7 @@ import {
   shareNotice,
   undoDelete,
 } from "../app/store";
+import { transferDialog } from "../app/transferState";
 import { ui } from "../i18n/ui";
 import { Popover } from "./Popover";
 import { shareOpen } from "./ShareDialog";
@@ -96,6 +97,16 @@ export function CharacterBar() {
                       })
                     : ui("bar.backupNever")}
                 </small>
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  transferDialog.value = "export";
+                }}
+              >
+                {ui("transfer.menu")}
               </button>
             </li>
             <li>

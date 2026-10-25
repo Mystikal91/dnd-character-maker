@@ -5,6 +5,7 @@ import { type Character, createCharacter } from "../engine/character";
 import { CharacterParseError } from "../engine/characterSchema";
 import { type DerivedSheet, deriveSheet } from "../engine/derive";
 import { ui } from "../i18n/ui";
+import { openTransfer } from "../storage/bundle";
 import {
   type CharacterSummary,
   deleteCharacter,
@@ -24,6 +25,7 @@ import {
   serializeBackup,
   serializeCharacter,
 } from "../storage/transfer";
+import { transferDialog, transferInbox } from "./transferState";
 
 export type SaveStatus = "idle" | "saving" | "saved" | "failed";
 
@@ -264,14 +266,20 @@ function download(name: string, text: string, type: string) {
   URL.revokeObjectURL(url);
 }
 
-/** Downloads every saved character in one file, so they can be kept or moved to another device. */
-export async function exportAllCharacters() {
+/** Every saved character, as saved. */
+export async function allCharacters(): Promise<Character[]> {
   await saveNow();
   const all: Character[] = [];
   for (const summary of characters.value) {
     const loaded = await loadCharacter(summary.id);
     if (loaded) all.push(loaded);
   }
+  return all;
+}
+
+/** Downloads every saved character in one file, so they can be kept or moved to another device. */
+export async function exportAllCharacters() {
+  const all = await allCharacters();
   download(backupFileName(), serializeBackup(all), "application/json");
   const now = Date.now();
   lastBackup.value = now;
@@ -286,11 +294,13 @@ export async function exportAllCharacters() {
  * Puts the characters of a backup back. One that is already here and the same is left alone; one
  * with the same id that differs becomes a copy, so nothing is overwritten.
  */
-async function restoreBackup(backup: { characters: Character[]; unreadable: number }) {
+export async function restoreCharacters(
+  incomingList: Character[],
+): Promise<{ added: number; skipped: number }> {
   let added = 0;
-  let skipped = backup.unreadable;
+  let skipped = 0;
   let last: Character | undefined;
-  for (const incoming of backup.characters) {
+  for (const incoming of incomingList) {
     const here = characters.value.some((s) => s.id === incoming.id)
       ? await loadCharacter(incoming.id)
       : undefined;
@@ -311,13 +321,25 @@ async function restoreBackup(backup: { characters: Character[]; unreadable: numb
   }
   await refreshList();
   if (last) await switchTo(last);
-  importNotice.value = { added, skipped };
+  return { added, skipped };
+}
+
+async function restoreBackup(backup: { characters: Character[]; unreadable: number }) {
+  const done = await restoreCharacters(backup.characters);
+  importNotice.value = { added: done.added, skipped: done.skipped + backup.unreadable };
 }
 
 export async function importCharacterFile(file: File) {
   importNotice.value = undefined;
   try {
     const text = await file.text();
+    // A transfer file (possibly protected) has a window of its own.
+    if (openTransfer(text)) {
+      transferInbox.value = text;
+      transferDialog.value = "import";
+      importFailed.value = false;
+      return;
+    }
     const backup = parseBackup(text);
     if (backup) {
       await restoreBackup(backup);

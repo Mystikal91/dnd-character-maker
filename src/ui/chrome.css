@@ -889,3 +889,19 @@ input:checked + .equip-tag {
   gap: 0.5rem 1rem;
   margin: 0.5rem 0;
 }
+
+/* ---- Moving to another device ---- */
+
+.transfer .segmented {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.transfer-rows li {
+  padding: 0.2rem 0;
+}
+
+.transfer .note {
+  margin: 0.6rem 0;
+}
