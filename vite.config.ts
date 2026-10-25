@@ -33,6 +33,8 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,svg,json,woff2}"],
+        // The privacy and terms pages are pages of their own, not the app.
+        navigateFallbackDenylist: [/\/(privacy|terms)\.html$/],
       },
     }),
   ],

@@ -59,6 +59,16 @@ export function Credits() {
         </blockquote>
       ))}
 
+      <h3>{ui("credits.legal")}</h3>
+      <ul>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}privacy.html`}>{ui("credits.privacy")}</a>
+        </li>
+        <li>
+          <a href={`${import.meta.env.BASE_URL}terms.html`}>{ui("credits.terms")}</a>
+        </li>
+      </ul>
+
       <h3>{ui("credits.data")}</h3>
       <p>
         {ui("credits.dataText")}{" "}
