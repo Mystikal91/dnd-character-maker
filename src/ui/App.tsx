@@ -8,7 +8,7 @@ import { ui } from "../i18n/ui";
 import { CharacterBar } from "./CharacterBar";
 import { Credits } from "./Credits";
 import "../app/translate";
-import { STAGE } from "../app/version";
+import { STAGE, VERSION } from "../app/version";
 import { AboutPage } from "./AboutPage";
 import { AppMenu } from "./AppMenu";
 import { AutoTranslatePage } from "./AutoTranslatePage";
@@ -146,6 +146,9 @@ export function App() {
           <button type="button" class="link" onClick={() => showView("credits")}>
             {ui("footer.credits")}
           </button>
+        </p>
+        <p class="muted">
+          v{VERSION} {STAGE}
         </p>
       </footer>
     </main>
