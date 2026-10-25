@@ -27,9 +27,9 @@ next time the page is opened. Google's sign-in script is fetched only when the w
 
 ## Giving the id to the app
 
-- For the published site: in the repository, **Settings → Secrets and variables → Actions →
-  Variables**, add `GOOGLE_CLIENT_ID`. The workflow passes it to the build.
-- For development: a file `.env.local` (not committed) with
-  `VITE_GOOGLE_CLIENT_ID=....apps.googleusercontent.com`.
-
-Without an id nothing changes for the person: the window works with files, as before.
+The id of the published app is in `src/app/driveConfig.ts`. A build can use another id (for
+example to try the app at another address, which has to be among the authorised origins of that
+id): in development a file `.env.local` (not committed) with
+`VITE_GOOGLE_CLIENT_ID=....apps.googleusercontent.com`, and for the published site the repository
+variable `GOOGLE_CLIENT_ID` (Settings → Secrets and variables → Actions → Variables), which the
+workflow passes to the build.
