@@ -17,14 +17,7 @@ import {
   setCurrentId,
 } from "../storage/characters";
 import { decodeShare, isShareHash } from "../storage/share";
-import {
-  backupFileName,
-  exportFileName,
-  parseBackup,
-  parseImport,
-  serializeBackup,
-  serializeCharacter,
-} from "../storage/transfer";
+import { backupFileName, parseBackup, parseImportFile, serializeBackup } from "../storage/transfer";
 import { transferDialog, transferInbox } from "./transferState";
 
 export type SaveStatus = "idle" | "saving" | "saved" | "failed";
@@ -43,7 +36,9 @@ export const characters = signal<CharacterSummary[]>([]);
 export const saveStatus = signal<SaveStatus>("idle");
 export const importFailed = signal(false);
 /** What the last import of a backup did, shown in the character bar. */
-export const importNotice = signal<{ added: number; skipped: number } | undefined>(undefined);
+export const importNotice = signal<{ added: number; skipped: number; packs?: number } | undefined>(
+  undefined,
+);
 
 const BACKUP_KEY = "lastBackup";
 function readLastBackup(): number | undefined {
@@ -243,19 +238,6 @@ export async function undoDelete() {
   await switchTo(back);
 }
 
-/** Downloads the current character as a file the user can keep, send or import elsewhere. */
-export function exportCharacter() {
-  const current = character.value;
-  const url = URL.createObjectURL(
-    new Blob([serializeCharacter(current)], { type: "application/json" }),
-  );
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = exportFileName(current);
-  link.click();
-  URL.revokeObjectURL(url);
-}
-
 /** Hands a text to the user as a file download. */
 function download(name: string, text: string, type: string) {
   const url = URL.createObjectURL(new Blob([text], { type }));
@@ -346,7 +328,13 @@ export async function importCharacterFile(file: File) {
       importFailed.value = false;
       return;
     }
-    await switchTo(parseImport(text));
+    const parsed = parseImportFile(text);
+    await switchTo(parsed.character);
+    // The packs that came with it are put with the ones here (a module loaded now: it uses this one).
+    if (parsed.packs.length > 0) {
+      const { addCarriedPacks } = await import("./carry");
+      importNotice.value = { added: 1, skipped: 0, packs: await addCarriedPacks(parsed.packs) };
+    }
   } catch (error) {
     if (!(error instanceof CharacterParseError)) console.error("Import failed", error);
     importFailed.value = true;

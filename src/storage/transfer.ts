@@ -1,12 +1,18 @@
 import type { Character } from "../engine/character";
 import { CharacterParseError, parseCharacter } from "../engine/characterSchema";
+import { carriedPacks } from "./carried";
+import type { UserPackRecord } from "./packs";
 
 const FORMAT = "dnd-character-maker";
 const BACKUP_FORMAT = "dnd-character-maker-backup";
 
-/** The text of an export file for one character. */
-export function serializeCharacter(character: Character): string {
-  return `${JSON.stringify({ format: FORMAT, character }, null, 2)}\n`;
+/**
+ * The text of an export file for one character, with the homebrew packs it uses so that it opens
+ * the same anywhere (a spell the person wrote, a class of their own).
+ */
+export function serializeCharacter(character: Character, homebrew: UserPackRecord[] = []): string {
+  const doc = { format: FORMAT, character, ...(homebrew.length > 0 && { homebrew }) };
+  return `${JSON.stringify(doc, null, 2)}\n`;
 }
 
 /**
@@ -14,6 +20,11 @@ export function serializeCharacter(character: Character): string {
  * importing can never overwrite an existing character.
  */
 export function parseImport(text: string): Character {
+  return parseImportFile(text).character;
+}
+
+/** Like `parseImport`, with the homebrew packs that came in the file. */
+export function parseImportFile(text: string): { character: Character; packs: UserPackRecord[] } {
   let raw: unknown;
   try {
     raw = JSON.parse(text);
@@ -24,7 +35,10 @@ export function parseImport(text: string): Character {
     typeof raw === "object" && raw !== null && "format" in raw && "character" in raw
       ? (raw as { character: unknown }).character
       : raw;
-  return { ...parseCharacter(document), id: crypto.randomUUID() };
+  return {
+    character: { ...parseCharacter(document), id: crypto.randomUUID() },
+    packs: carriedPacks(raw),
+  };
 }
 
 /** The text of a backup file: every character in one document. */

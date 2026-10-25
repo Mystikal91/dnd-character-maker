@@ -748,6 +748,7 @@
   "spells.create": "Write a spell of your own",
   "spells.createHint": "The spell is saved in your homebrew pack “My spells” and added to the list of this class. You can change it later in the homebrew editor.",
   "spells.myPack": "My spells",
+  "bar.withPacks": "Character imported, with {packs} homebrew pack(s) that it uses.",
   "build.info.pickSpecies": "Pick a species to see what it gives.",
   "build.info.pickBackground": "Pick a background to see what it gives.",
   "build.info.pickClass": "Pick a class to see what it gives.",

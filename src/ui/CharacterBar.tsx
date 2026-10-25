@@ -1,4 +1,5 @@
 import { useRef } from "preact/hooks";
+import { exportCharacterWithPacks } from "../app/carry";
 import {
   character,
   characters,
@@ -7,7 +8,6 @@ import {
   deletedCharacter,
   duplicateCharacter,
   exportAllCharacters,
-  exportCharacter,
   importCharacterFile,
   importFailed,
   importNotice,
@@ -79,7 +79,7 @@ export function CharacterBar() {
               </button>
             </li>
             <li>
-              <button type="button" onClick={exportCharacter}>
+              <button type="button" onClick={exportCharacterWithPacks}>
                 {ui("bar.export")}
               </button>
             </li>
@@ -156,7 +156,14 @@ export function CharacterBar() {
           {ui(shareNotice.value === "failed" ? "share.openFailed" : "share.opened")}
         </p>
       )}
-      {importNotice.value && <output class="note">{ui("bar.restored", importNotice.value)}</output>}
+      {importNotice.value && (
+        <output class="note">
+          {ui(importNotice.value.packs === undefined ? "bar.restored" : "bar.withPacks", {
+            ...importNotice.value,
+            packs: importNotice.value.packs ?? 0,
+          })}
+        </output>
+      )}
       {importFailed.value && (
         <p class="note" role="alert">
           {ui("bar.importError")}

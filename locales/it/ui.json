@@ -748,6 +748,7 @@
   "spells.create": "Scrivi un incantesimo tuo",
   "spells.createHint": "L’incantesimo viene salvato nel tuo pacchetto homebrew «Miei incantesimi» e aggiunto all’elenco di questa classe. Potrai modificarlo dopo nell’editor homebrew.",
   "spells.myPack": "Miei incantesimi",
+  "bar.withPacks": "Personaggio importato, con {packs} pacchetto/i homebrew che usa.",
   "build.info.pickSpecies": "Scegli una specie per vedere cosa dà.",
   "build.info.pickBackground": "Scegli un background per vedere cosa dà.",
   "build.info.pickClass": "Scegli una classe per vedere cosa dà.",

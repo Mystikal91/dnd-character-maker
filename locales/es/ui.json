@@ -748,6 +748,7 @@
   "spells.create": "Escribir un conjuro propio",
   "spells.createHint": "El conjuro se guarda en tu paquete homebrew «Mis conjuros» y se añade a la lista de esta clase. Podrás cambiarlo después en el editor homebrew.",
   "spells.myPack": "Mis conjuros",
+  "bar.withPacks": "Personaje importado, con {packs} paquete(s) homebrew que usa.",
   "build.info.pickSpecies": "Elige una especie para ver qué da.",
   "build.info.pickBackground": "Elige un trasfondo para ver qué da.",
   "build.info.pickClass": "Elige una clase para ver qué da.",
