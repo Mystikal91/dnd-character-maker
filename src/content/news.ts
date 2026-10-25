@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.5 beta",
+    date: "2026-10-25",
+    notes: [
+      {
+        en: "The window to move to another device is new: it opens with two clear actions, “Prepare a file” and “Open a file” (which asks for the file at once), the steps have a back button, and one button adds what you chose. When the site is set up for it, the file can also be saved in your own Google Drive and loaded from there on the other device. The app sees only the one file it makes in your Drive, nothing else.",
+        it: "La finestra per passare a un altro dispositivo è nuova: si apre con due azioni chiare, «Prepara un file» e «Apri un file» (che chiede subito il file), i passi hanno il tasto per tornare indietro e un solo pulsante aggiunge ciò che hai scelto. Quando il sito è predisposto, il file si può anche salvare nel tuo Google Drive e caricare da lì sull’altro dispositivo. L’app vede solo il file che crea lei nel tuo Drive, nient’altro.",
+        fr: "La fenêtre pour passer à un autre appareil est nouvelle : elle s’ouvre sur deux actions claires, « Préparer un fichier » et « Ouvrir un fichier » (qui demande tout de suite le fichier), les étapes ont un bouton de retour et un seul bouton ajoute ce que tu as choisi. Quand le site est prévu pour cela, le fichier peut aussi être enregistré dans ton propre Google Drive et chargé depuis là sur l’autre appareil. L’app ne voit que le fichier qu’elle crée dans ton Drive, rien d’autre.",
+        de: "Das Fenster für den Wechsel auf ein anderes Gerät ist neu: Es öffnet sich mit zwei klaren Aktionen, „Datei vorbereiten“ und „Datei öffnen“ (das sofort nach der Datei fragt), die Schritte haben eine Zurück-Taste und eine einzige Schaltfläche übernimmt, was du gewählt hast. Ist die Seite dafür eingerichtet, lässt sich die Datei auch in deinem eigenen Google Drive speichern und dort auf dem anderen Gerät laden. Die App sieht nur die eine Datei, die sie selbst in deinem Drive anlegt, sonst nichts.",
+        es: "La ventana para pasar a otro dispositivo es nueva: se abre con dos acciones claras, «Preparar un archivo» y «Abrir un archivo» (que pide el archivo enseguida), los pasos tienen un botón para volver y un solo botón añade lo que elegiste. Cuando el sitio está preparado, el archivo también se puede guardar en tu propio Google Drive y cargarlo desde allí en el otro dispositivo. La app solo ve el archivo que ella misma crea en tu Drive, nada más.",
+      },
+    ],
+  },
+  {
     version: "1.4.3 beta",
     date: "2026-10-25",
     notes: [

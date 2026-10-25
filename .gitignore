@@ -7,3 +7,6 @@ dev-dist
 .cache
 
 __pycache__/
+
+# Local settings for the dev server (for example a test Google client id)
+*.local

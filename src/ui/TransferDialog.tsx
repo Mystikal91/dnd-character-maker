@@ -1,5 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import {
+  driveConfigured,
+  driveProblem,
+  driveState,
+  loadFromDrive,
+  loadSignIn,
+  saveToDrive,
+} from "../app/drive";
+import {
   type TransferReport,
   applyTransfer,
   currentCounts,
@@ -70,6 +78,25 @@ function Rows({
   );
 }
 
+/** What the Drive buttons are doing or have done, under them. */
+function DriveMessage() {
+  const state = driveState.value;
+  if (!driveConfigured || state === "idle") return null;
+  const text =
+    state === "working"
+      ? ui("transfer.drive.working")
+      : state === "saved"
+        ? ui("transfer.drive.saved")
+        : state === "none"
+          ? ui("transfer.drive.none")
+          : ui("transfer.drive.failed", { why: driveProblem.value ?? "" });
+  return (
+    <p class="note" aria-live="polite">
+      {text}
+    </p>
+  );
+}
+
 const Back = () => (
   <button
     type="button"
@@ -86,6 +113,11 @@ const Back = () => (
 /** The first screen: two things to do, each a big button that says what it does. */
 function Start() {
   const picker = useRef<HTMLInputElement>(null);
+  // Google's script is fetched now, so that the sign-in window opens at once when it is asked for.
+  useEffect(() => {
+    driveState.value = "idle";
+    if (driveConfigured) void loadSignIn().catch(() => undefined);
+  }, []);
   return (
     <>
       <p class="muted">{ui("transfer.intro")}</p>
@@ -124,6 +156,26 @@ function Start() {
           <small>{ui("transfer.importHint")}</small>
         </button>
       </div>
+      {driveConfigured && (
+        <>
+          <button
+            type="button"
+            class="secondary"
+            disabled={driveState.value === "working"}
+            onClick={async () => {
+              const text = await loadFromDrive();
+              if (text) {
+                transferInbox.value = text;
+                transferDialog.value = "import";
+              }
+            }}
+          >
+            {ui("transfer.drive.load")}
+          </button>
+          <p class="muted">{ui("transfer.drive.hint")}</p>
+          <DriveMessage />
+        </>
+      )}
     </>
   );
 }
@@ -175,6 +227,7 @@ function ExportPane() {
           {ui("transfer.saved", { name: saved })}
         </p>
       )}
+      <DriveMessage />
       <div class="quick-edit-actions">
         <button
           type="button"
@@ -188,6 +241,18 @@ function ExportPane() {
         >
           {ui("transfer.save")}
         </button>
+        {driveConfigured && (
+          <button
+            type="button"
+            disabled={busy || chosen.size === 0 || driveState.value === "working"}
+            onClick={async () => {
+              const file = await make();
+              await saveToDrive(file.text);
+            }}
+          >
+            {ui("transfer.drive.save")}
+          </button>
+        )}
         {canShare && (
           <button
             type="button"

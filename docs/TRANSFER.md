@@ -2,7 +2,7 @@
 
 The character menu has **Move to another device**: one file with the parts the person chooses,
 opened on the other device with Import (or with the ordinary Import in the menu, which notices a
-transfer file). Everything stays on the person's devices; the app uploads nothing.
+transfer file). Everything stays on the person's devices; the app uploads nothing, unless the person asks to save the file in their own Google Drive (see docs/GOOGLE_DRIVE.md).
 
 ## What a file can hold
 
