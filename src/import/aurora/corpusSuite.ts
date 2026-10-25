@@ -209,12 +209,12 @@ export function splitSuite() {
       index = new Map();
     });
 
-    const sheet = (species: string, sub?: string, options: string[] = []) => {
+    const sheet = (species: string, sub?: string, options: string[] = [], level = 1) => {
       const c = createCharacter("srd51");
       c.choices.species = species;
       if (sub) c.choices.subspecies = sub;
       if (options.length > 0) c.options = options;
-      c.classes = [{ classId: "srd51:class/fighter", level: 1 }];
+      c.classes = [{ classId: "srd51:class/fighter", level }];
       return deriveSheet(c, index);
     };
     const bonus = (s: ReturnType<typeof sheet>) =>
@@ -236,6 +236,15 @@ export function splitSuite() {
       expect(traits("imp2:subspecies/tiefling-dispater")).not.toContain(
         "srd51:trait/infernal-legacy",
       );
+    });
+
+    it("gives the spells of the legacy of a bloodline, each from its level", () => {
+      const spells = (level: number) =>
+        sheet("srd51:species/tiefling", "imp2:subspecies/tiefling-dispater", [], level)
+          .grantedSpells;
+      expect(spells(1)).toEqual(["srd51:spell/thaumaturgy"]);
+      expect(spells(3)).toContain("srd51:spell/disguise-self");
+      expect(spells(5)).toContain("srd51:spell/detect-thoughts");
     });
 
     it("lets Tasha's customised origin swap the increases of a race of the app", () => {

@@ -459,6 +459,34 @@ export function translateRequirement(ctx: Context, requirements: string): string
   );
 }
 
+const spellSlugs = new WeakMap<Context, Map<string, string>>();
+
+/**
+ * The id of the spell an Aurora id names: the one imported, or, when its files are not among the
+ * ones being imported (the spells are in Core and the race in Supplements), the spell of the app
+ * with that name (`ID_PHB_SPELL_DISGUISE_SELF` is `disguise-self`), the ones of the app first.
+ */
+function spellIdOf(ctx: Context, aid: string): string | undefined {
+  const known = ctx.byAid.get(aid)?.id;
+  if (known) return known;
+  const slug = aid
+    .replace(/^ID_.*?_SPELL_/, "")
+    .toLowerCase()
+    .replace(/_/g, "-");
+  if (slug === aid.toLowerCase() || !slug) return undefined;
+  let bySlug = spellSlugs.get(ctx);
+  if (!bySlug) {
+    bySlug = new Map();
+    for (const entry of ctx.options.index.values()) {
+      if (entry.kind !== "spell") continue;
+      const name = entry.id.split("/")[1] ?? "";
+      if (!bySlug.has(name) || entry.id.startsWith("srd")) bySlug.set(name, entry.id);
+    }
+    spellSlugs.set(ctx, bySlug);
+  }
+  return bySlug.get(slug);
+}
+
 /** Turns an element's rules into the app's effects, and lists what it grants or offers. */
 export function mapRules(ctx: Context, source: Source, options: MapOptions): MappedRules {
   const mapped: MappedRules = { effects: [], grants: [], offers: [], unsupported: 0 };
@@ -497,8 +525,14 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
         if (ctx.options.index.has(trait)) mapped.effects.push({ type: "trait", id: trait });
         else mapped.unsupported += 1;
       } else if (rule.type === "Spell") {
-        const spell = ctx.byAid.get(rule.id)?.id;
-        if (spell) mapped.effects.push({ type: "grantSpell", spell });
+        const spell = spellIdOf(ctx, rule.id);
+        // A spell that comes at a level (the legacy of a tiefling) counts from that level.
+        if (spell)
+          mapped.effects.push({
+            type: "grantSpell",
+            spell,
+            ...(rule.level !== undefined && { minLevel: rule.level }),
+          });
         else mapped.unsupported += 1;
       } else if (rule.type === "Dragonmark") {
         // A mark sets the flags that its own rules name, which the race tests for.

@@ -734,6 +734,27 @@ describe("classes and archetypes", () => {
     );
   });
 
+  it("grants the spells of a trait from their level, also when the spells are in other files", () => {
+    const set = wrap(`
+      <element name="Legacy of Dis" type="Racial Trait" source="Test Book" id="ID_T_LEGACY">
+        <description><p>You know a cantrip, and more later.</p></description>
+        <rules>
+          <grant type="Spell" id="ID_PHB_SPELL_THAUMATURGY" />
+          <grant type="Spell" id="ID_PHB_SPELL_DISGUISE_SELF" level="3" />
+          <grant type="Spell" id="ID_PHB_SPELL_NO_SUCH_THING" level="5" />
+        </rules>
+      </element>
+      <element name="Dis Folk" type="Race" source="Test Book" id="ID_T_DIS_FOLK">
+        <description><p>Of Dis.</p></description>
+        <rules><grant type="Racial Trait" id="ID_T_LEGACY" /></rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    expect(byId(made, "imp1:trait/legacy-of-dis").effects).toEqual([
+      { type: "grantSpell", spell: "srd51:spell/thaumaturgy" },
+      { type: "grantSpell", spell: "srd51:spell/disguise-self", minLevel: 3 },
+    ]);
+  });
+
   it("puts a space after a label written as a span, which the files leave out", () => {
     const set = wrap(`
       <element name="Labelled" type="Background" source="Test Book" id="ID_T_LABELLED">

@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.4.2 beta",
+    date: "2026-10-25",
+    notes: [
+      {
+        en: "Fix: the spells that a trait gives (the legacy of the Tiefling bloodlines: thaumaturgy, then disguise self at 3rd level and detect thoughts at 5th) now come with the sub-race, each from its level, also when the spells are in the other index (Core). The footer shows the version. Update the Aurora packs from the packs page.",
+        it: "Correzione: gli incantesimi che un tratto concede (il retaggio delle stirpi dei Tiefling: taumaturgia, poi camuffare se stessi al 3º livello e individuare pensieri al 5º) ora arrivano con la sotto-razza, ciascuno dal suo livello, anche quando gli incantesimi stanno nell’altro indice (Core). Il piè di pagina mostra la versione. Aggiorna i pacchetti di Aurora dalla pagina dei pacchetti.",
+        fr: "Correction : les sorts qu’un trait accorde (l’héritage des lignées des Tieffelins : thaumaturgie, puis déguisement au niveau 3 et détection des pensées au niveau 5) arrivent maintenant avec la sous-race, chacun à son niveau, même quand les sorts sont dans l’autre index (Core). Le pied de page affiche la version. Mets à jour les paquets d’Aurora depuis la page des paquets.",
+        de: "Korrektur: Die Zauber, die ein Merkmal gewährt (das Erbe der Tiefling-Linien: Thaumaturgie, dann Verkleiden auf Stufe 3 und Gedanken wahrnehmen auf Stufe 5), kommen jetzt mit der Unterart, jeder ab seiner Stufe, auch wenn die Zauber im anderen Index (Core) liegen. Die Fußzeile zeigt die Version. Aktualisiere die Aurora-Pakete auf der Paketseite.",
+        es: "Corrección: los conjuros que otorga un rasgo (el legado de los linajes de los tiefling: taumaturgia, luego disfrazarse a nivel 3 y detectar pensamientos a nivel 5) ahora llegan con la subraza, cada uno desde su nivel, aunque los conjuros estén en el otro índice (Core). El pie de página muestra la versión. Actualiza los paquetes de Aurora desde la página de paquetes.",
+      },
+    ],
+  },
+  {
     version: "1.4.1 beta",
     date: "2026-10-25",
     notes: [
