@@ -12,6 +12,7 @@ import { STAGE } from "../app/version";
 import { AboutPage } from "./AboutPage";
 import { AppMenu } from "./AppMenu";
 import { AutoTranslatePage } from "./AutoTranslatePage";
+import { CustomSpellDialog } from "./CustomSpellDialog";
 import { HomebrewPage } from "./HomebrewPage";
 import { PacksNotice } from "./PacksNotice";
 import { PacksPage } from "./PacksPage";
@@ -124,6 +125,7 @@ export function App() {
       <SpellDialog />
       <QuickEditDialog />
       <TransferDialog />
+      <CustomSpellDialog />
       <ShareDialog />
       <LevelUp />
       <footer class="site-footer no-print">

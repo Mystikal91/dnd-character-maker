@@ -1,4 +1,5 @@
 import { useState } from "preact/hooks";
+import { customSpellFor } from "../app/customSpell";
 import { content, sheet, updateCharacter } from "../app/store";
 import type { Content } from "../content/browser";
 import type { ClassSpells } from "../engine/character";
@@ -119,6 +120,15 @@ function CasterSpells({
           c={c}
         />
       )}
+      <button
+        type="button"
+        class="secondary"
+        onClick={() => {
+          customSpellFor.value = `${classId}|${lists.preparation === "prepared" ? "prepared" : "known"}`;
+        }}
+      >
+        {ui("spells.create")}
+      </button>
       {lists.alwaysPrepared.length > 0 && (
         <p class="muted">
           {ui("spells.alwaysPrepared")}: {lists.alwaysPrepared.map((id) => c.name(id)).join(", ")}

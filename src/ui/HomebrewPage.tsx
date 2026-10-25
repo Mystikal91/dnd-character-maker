@@ -34,10 +34,12 @@ const label = (key: string) => ui(`hb.f.${key}` as UiKey);
 const option = (key: string) => ui(`hb.o.${key}` as UiKey);
 const kindName = (kind: HomebrewKind) => ui(`hb.kind.${kind}` as UiKey);
 
-interface FormApi {
+export interface FormApi {
   draft: Draft;
   set: (key: string, value: string) => void;
   setTraits: (traits: DraftTrait[]) => void;
+  /** Fields to leave out, when the place that opens the form already knows them. */
+  hide?: string[];
 }
 
 function Text({
@@ -220,7 +222,9 @@ function Fields({ api }: { api: FormApi }) {
             <Check api={api} name="concentration" />
           </div>
           <Text api={api} name="material" />
-          <Many api={api} name="classes" options={entriesOfKind("class")} />
+          {!api.hide?.includes("classes") && (
+            <Many api={api} name="classes" options={entriesOfKind("class")} />
+          )}
           <Text api={api} name="desc" area />
           <Text api={api} name="higherLevel" area />
         </>
@@ -541,6 +545,15 @@ function Traits({ api }: { api: FormApi }) {
   );
 }
 
+/** The fields of a spell, for writing one from the spells of a character. */
+export function SpellFields({ api }: { api: FormApi }) {
+  return (
+    <>
+      <Text api={api} name="name" />
+      <Fields api={api} />
+    </>
+  );
+}
 function EntryForm({
   initial,
   editing,
