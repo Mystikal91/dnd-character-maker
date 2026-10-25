@@ -892,14 +892,109 @@ input:checked + .equip-tag {
 
 /* ---- Moving to another device ---- */
 
-.transfer .segmented {
+.transfer-head {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.transfer-head h3 {
+  margin: 0;
+}
+
+.transfer-head .link {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  font-size: 1.1rem;
+}
+
+.transfer-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0 0.5rem;
+}
+
+/* Two big buttons at the start: each says what it does and does it. */
+.transfer-card {
+  display: grid;
+  justify-items: start;
+  gap: 0.3rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card-bg, transparent);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.transfer-card:hover,
+.transfer-card:focus-visible {
+  border-color: var(--accent);
+}
+
+.transfer-card b {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+}
+
+.transfer-card small {
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: normal;
+  font-variant: normal;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.transfer-arrow {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.transfer-back {
+  margin: 0.6rem 0 0.2rem;
+  padding: 0.3rem 0;
+}
+
+.transfer h4 {
+  margin: 0.6rem 0 0.4rem;
+}
+
+.transfer-rows {
+  display: grid;
   gap: 0.4rem;
-  margin: 0.5rem 0 1rem;
+  margin: 0.4rem 0 0.8rem;
 }
 
 .transfer-rows li {
-  padding: 0.2rem 0;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.transfer-rows li.empty {
+  opacity: 0.55;
+}
+
+.transfer-protect {
+  margin: 0.6rem 0;
+}
+
+.transfer-protect > summary {
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .transfer .note {

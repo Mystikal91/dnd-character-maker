@@ -49,7 +49,7 @@ function Rows({
   return (
     <ul class="plain transfer-rows">
       {SECTIONS.filter((s) => !only || counts[s] > 0).map((section) => (
-        <li key={section}>
+        <li key={section} class={counts[section] === 0 ? "empty" : ""}>
           <label class="check">
             <input
               type="checkbox"
@@ -70,6 +70,64 @@ function Rows({
   );
 }
 
+const Back = () => (
+  <button
+    type="button"
+    class="link transfer-back"
+    onClick={() => {
+      transferDialog.value = "start";
+      transferInbox.value = undefined;
+    }}
+  >
+    ← {ui("transfer.back")}
+  </button>
+);
+
+/** The first screen: two things to do, each a big button that says what it does. */
+function Start() {
+  const picker = useRef<HTMLInputElement>(null);
+  return (
+    <>
+      <p class="muted">{ui("transfer.intro")}</p>
+      <input
+        ref={picker}
+        type="file"
+        accept=".json,application/json"
+        hidden
+        onChange={async (e) => {
+          const file = e.currentTarget.files?.[0];
+          e.currentTarget.value = "";
+          if (!file) return;
+          transferInbox.value = await file.text();
+          transferDialog.value = "import";
+        }}
+      />
+      <div class="transfer-cards">
+        <button
+          type="button"
+          class="transfer-card"
+          onClick={() => {
+            transferDialog.value = "export";
+          }}
+        >
+          <span class="transfer-arrow" aria-hidden="true">
+            ↑
+          </span>
+          <b>{ui("transfer.export")}</b>
+          <small>{ui("transfer.exportHint")}</small>
+        </button>
+        <button type="button" class="transfer-card" onClick={() => picker.current?.click()}>
+          <span class="transfer-arrow" aria-hidden="true">
+            ↓
+          </span>
+          <b>{ui("transfer.import")}</b>
+          <small>{ui("transfer.importHint")}</small>
+        </button>
+      </div>
+    </>
+  );
+}
+
 function ExportPane() {
   const info = currentCounts();
   const [chosen, setChosen] = useState<Set<Section>>(
@@ -77,6 +135,7 @@ function ExportPane() {
   );
   const [pass, setPass] = useState("");
   const [busy, setBusy] = useState(false);
+  const [saved, setSaved] = useState<string | undefined>(undefined);
   const canShare = typeof navigator.canShare === "function" && typeof File !== "undefined";
 
   const make = async () => {
@@ -90,23 +149,32 @@ function ExportPane() {
 
   return (
     <>
-      <p class="muted">{ui("transfer.exportHint")}</p>
+      <Back />
+      <h4>{ui("transfer.takeWhat")}</h4>
       <Rows counts={info.counts} chosen={chosen} onChange={setChosen} />
       {chosen.has("links") && info.files.length > 0 && (
         <p class="muted">{ui("transfer.filesNote", { names: info.files.join(", ") })}</p>
       )}
-      <label class="field">
-        <span>{ui("transfer.passphrase")}</span>
-        <input
-          type="password"
-          autocomplete="new-password"
-          value={pass}
-          onInput={(e) => setPass(e.currentTarget.value)}
-        />
-      </label>
-      <p class="muted">{ui("transfer.passphraseHint")}</p>
+      <details class="transfer-protect" open={chosen.has("deeplKey")}>
+        <summary>{ui("transfer.protect")}</summary>
+        <label class="field">
+          <span>{ui("transfer.passphrase")}</span>
+          <input
+            type="password"
+            autocomplete="new-password"
+            value={pass}
+            onInput={(e) => setPass(e.currentTarget.value)}
+          />
+        </label>
+        <p class="muted">{ui("transfer.passphraseHint")}</p>
+      </details>
       {chosen.has("deeplKey") && !pass && <p class="note">{ui("transfer.deeplWarn")}</p>}
       {chosen.size === 0 && <p class="muted">{ui("transfer.nothing")}</p>}
+      {saved && (
+        <p class="note" aria-live="polite">
+          {ui("transfer.saved", { name: saved })}
+        </p>
+      )}
       <div class="quick-edit-actions">
         <button
           type="button"
@@ -115,6 +183,7 @@ function ExportPane() {
           onClick={async () => {
             const file = await make();
             save(file.name, file.text);
+            setSaved(file.name);
           }}
         >
           {ui("transfer.save")}
@@ -126,9 +195,14 @@ function ExportPane() {
             onClick={async () => {
               const file = await make();
               const shared = new File([file.text], file.name, { type: "application/json" });
-              if (!navigator.canShare({ files: [shared] })) return save(file.name, file.text);
+              if (!navigator.canShare({ files: [shared] })) {
+                save(file.name, file.text);
+                setSaved(file.name);
+                return;
+              }
               try {
                 await navigator.share({ files: [shared], title: file.name });
+                setSaved(file.name);
               } catch {
                 // The person closed the share sheet: nothing to do.
               }
@@ -209,7 +283,6 @@ function ImportPane() {
   const [chosen, setChosen] = useState<Set<Section>>(new Set());
   const [report, setReport] = useState<TransferReport | undefined>(undefined);
   const [busy, setBusy] = useState(false);
-  const picker = useRef<HTMLInputElement>(null);
 
   const take = useCallback((found: Bundle) => {
     const counts = describeBundle(found);
@@ -245,23 +318,7 @@ function ImportPane() {
 
   return (
     <>
-      <p class="muted">{ui("transfer.importHint")}</p>
-      <input
-        ref={picker}
-        type="file"
-        accept=".json,application/json"
-        hidden
-        onChange={async (e) => {
-          const file = e.currentTarget.files?.[0];
-          e.currentTarget.value = "";
-          if (file) transferInbox.value = await file.text();
-        }}
-      />
-      {!text && (
-        <button type="button" class="primary" onClick={() => picker.current?.click()}>
-          {ui("transfer.choose")}
-        </button>
-      )}
+      <Back />
       {error === "unreadable" && <p class="note">{ui("transfer.unreadable")}</p>}
       {sealed && (
         <>
@@ -273,6 +330,9 @@ function ImportPane() {
               autocomplete="current-password"
               value={pass}
               onInput={(e) => setPass(e.currentTarget.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && pass) void unlock();
+              }}
             />
           </label>
           {error === "wrong" && <p class="note">{ui("transfer.wrong")}</p>}
@@ -283,6 +343,7 @@ function ImportPane() {
       )}
       {bundle && (
         <>
+          <h4>{ui("transfer.bringWhat")}</h4>
           <p class="muted">
             {ui("transfer.madeOn", { date: new Date(bundle.exportedAt).toLocaleDateString() })}
           </p>
@@ -290,28 +351,30 @@ function ImportPane() {
           {bundle.files && bundle.files.length > 0 && (
             <p class="muted">{ui("transfer.filesNote", { names: bundle.files.join(", ") })}</p>
           )}
-          <button
-            type="button"
-            class="primary"
-            disabled={busy || chosen.size === 0}
-            onClick={async () => {
-              setBusy(true);
-              try {
-                setReport(await applyTransfer(bundle, chosen));
-              } finally {
-                setBusy(false);
-              }
-            }}
-          >
-            {ui("transfer.doImport")}
-          </button>
+          <div class="quick-edit-actions">
+            <button
+              type="button"
+              class="primary"
+              disabled={busy || chosen.size === 0}
+              onClick={async () => {
+                setBusy(true);
+                try {
+                  setReport(await applyTransfer(bundle, chosen));
+                } finally {
+                  setBusy(false);
+                }
+              }}
+            >
+              {ui("transfer.doImport")}
+            </button>
+          </div>
         </>
       )}
     </>
   );
 }
 
-/** The window for moving the app's data to another device: export on one, import on the other. */
+/** The window for moving the app's data to another device: prepare a file here, open it there. */
 export function TransferDialog() {
   const mode = transferDialog.value;
   const dialog = useRef<HTMLDialogElement>(null);
@@ -324,28 +387,13 @@ export function TransferDialog() {
   if (!mode) return null;
   return (
     <dialog ref={dialog} class="quick-edit transfer" onClose={close}>
-      <h3>{ui("transfer.title")}</h3>
-      <div class="segmented">
-        {(["export", "import"] as const).map((m) => (
-          <button
-            type="button"
-            key={m}
-            class={mode === m ? "on" : ""}
-            aria-pressed={mode === m}
-            onClick={() => {
-              transferDialog.value = m;
-            }}
-          >
-            {ui(`transfer.${m}` as UiKey)}
-          </button>
-        ))}
-      </div>
-      {mode === "export" ? <ExportPane /> : <ImportPane />}
-      <div class="quick-edit-actions">
-        <button type="button" onClick={close}>
-          {ui("transfer.close")}
+      <header class="transfer-head">
+        <h3>{ui("transfer.title")}</h3>
+        <button type="button" class="link" aria-label={ui("transfer.close")} onClick={close}>
+          ✕
         </button>
-      </div>
+      </header>
+      {mode === "start" ? <Start /> : mode === "export" ? <ExportPane /> : <ImportPane />}
     </dialog>
   );
 }

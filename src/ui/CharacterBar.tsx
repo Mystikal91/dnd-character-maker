@@ -103,7 +103,7 @@ export function CharacterBar() {
               <button
                 type="button"
                 onClick={() => {
-                  transferDialog.value = "export";
+                  transferDialog.value = "start";
                 }}
               >
                 {ui("transfer.menu")}
