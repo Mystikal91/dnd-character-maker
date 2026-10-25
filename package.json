@@ -16,6 +16,7 @@
     "lint": "biome check .",
     "format": "biome check --write .",
     "test": "vitest run",
+    "test:corpus": "vitest run src/import/aurora/corpus",
     "data:srd51": "tsx scripts/srd51/build.ts"
   },
   "dependencies": {
