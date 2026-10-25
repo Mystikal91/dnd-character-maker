@@ -708,6 +708,29 @@ describe("classes and archetypes", () => {
     expect(on.choices.filter((p) => p.grants === "abilityBonus")).toHaveLength(1);
   });
 
+  it("merges a spell reprinted with other punctuation and with more classes, keeping all the classes", () => {
+    const spell = (book: string, aid: string, ending: string, classes: string) => `
+      <element name="Mold Dust" type="Spell" source="${book}" id="${aid}">
+        <supports>${classes}</supports>
+        <description><p>You shape the dust in one of the following ways${ending}</p></description>
+        <setters><set name="level">0</set><set name="school">Transmutation</set></setters>
+      </element>`;
+    const made = parseAurora(
+      [
+        wrap(
+          spell("First Book", "ID_T_DUST_1", ":", "Wizard") +
+            spell("Second Book", "ID_T_DUST_2", ".", "Wizard, Sorcerer"),
+        ),
+      ],
+      options,
+    );
+    const dust = made.entries.filter((e) => e.kind === "spell" && /mold-dust/.test(e.id));
+    expect(dust).toHaveLength(1);
+    expect(dust[0]?.data.classes).toEqual(
+      expect.arrayContaining(["srd51:class/wizard", "srd51:class/sorcerer"]),
+    );
+  });
+
   it("puts a space after a label written as a span, which the files leave out", () => {
     const set = wrap(`
       <element name="Labelled" type="Background" source="Test Book" id="ID_T_LABELLED">

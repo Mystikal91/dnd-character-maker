@@ -1,15 +1,16 @@
 import type { Entry } from "../../data/schema";
 import type { Context } from "./registry";
 
-/** Text compared without the differences of typesetting: spacing, case and curly quotes. */
+/**
+ * Text compared by its words: spacing, case, quotes and punctuation do not count, so a colon
+ * where another printing has a full stop does not make a second spell.
+ */
 const plain = (text: string) =>
   text
     .normalize("NFKC")
-    .replace(/[‘’]/g, "'")
-    .replace(/[“”]/g, '"')
-    .replace(/\s+/g, " ")
-    .trim()
-    .toLowerCase();
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim();
 
 /** The texts of each entry, by entry id. */
 function textsByEntry(strings: Record<string, string>): Map<string, [string, string][]> {
@@ -34,7 +35,10 @@ function signature(entry: Entry, texts: [string, string][] | undefined): string 
   const body = (texts ?? [])
     .map(([field, value]) => [field, plain(value)] as const)
     .sort(([a], [b]) => a.localeCompare(b));
-  const { requirements: _raw, ...data } = entry.data as Record<string, unknown>;
+  // The classes that have a spell grow with each book that adds some (the artificer came later):
+  // the same spell with another list of classes is the same spell, with all the classes.
+  const { requirements: _raw, classes: _classes, ...data } = entry.data as Record<string, unknown>;
+  if (entry.kind !== "spell") Object.assign(data, { classes: _classes });
   return JSON.stringify([entry.kind, entry.parent ?? null, entry.effects, data, body]);
 }
 
@@ -134,6 +138,18 @@ export function mergeRepeats(ctx: Context): number {
     }
     if (replace.size === 0) break;
 
+    // A spell kept takes the classes of the copies that go.
+    const byId = new Map(result.entries.map((e) => [e.id, e]));
+    for (const [gone, kept] of replace) {
+      const to = byId.get(kept);
+      const from = byId.get(gone);
+      if (to?.kind !== "spell" || from?.kind !== "spell") continue;
+      const classes = new Set([
+        ...((to.data.classes as string[] | undefined) ?? []),
+        ...((from.data.classes as string[] | undefined) ?? []),
+      ]);
+      to.data = { ...to.data, classes: [...classes] };
+    }
     drop(ctx, replace);
     merged += replace.size;
   }
