@@ -25,8 +25,8 @@ function collect(dir: string, found: string[] = []): string[] {
 }
 
 /** Core and supplements are what the app offers to import; the other folders are left out. */
-function readElements(dir: string): string[] {
-  const parts = ["core", "supplements"].map((n) => join(dir, n)).filter((p) => existsSync(p));
+function readElements(dir: string, folders = ["core", "supplements"]): string[] {
+  const parts = folders.map((n) => join(dir, n)).filter((p) => existsSync(p));
   return (parts.length > 0 ? parts : [dir])
     .flatMap((p) => collect(p))
     .map((path) => readFileSync(path, "utf8").replace(/^﻿/, ""))
@@ -177,4 +177,76 @@ export function corpusSuite(reverse: boolean) {
     },
     120_000,
   );
+}
+
+/**
+ * Core and supplements imported one after the other, as people do from the two indexes: the races
+ * of the app (the Tiefling) are not among the files that bring their sub-races.
+ */
+export function splitSuite() {
+  describe.skipIf(!available)("Aurora's core and supplements imported apart", () => {
+    let index = new Map<string, Entry>();
+    beforeAll(() => {
+      const names = nameOf();
+      const core = parseAurora(readElements(DIR, ["core"]), {
+        packId: "imp1",
+        index: srd51Index,
+        nameOf: names,
+      });
+      const more = parseAurora(readElements(DIR, ["supplements"]), {
+        packId: "imp2",
+        index: srd51Index,
+        nameOf: names,
+      });
+      const make = (id: string, entries: Entry[]) =>
+        parsePack({
+          manifest: { id, ruleset: "custom", version: "1", license: "x", attribution: "x" },
+          entries,
+        });
+      index = indexPacks(...srd51Packs, make("imp1", core.entries), make("imp2", more.entries));
+    }, 120_000);
+    afterAll(() => {
+      index = new Map();
+    });
+
+    const sheet = (species: string, sub?: string, options: string[] = []) => {
+      const c = createCharacter("srd51");
+      c.choices.species = species;
+      if (sub) c.choices.subspecies = sub;
+      if (options.length > 0) c.options = options;
+      c.classes = [{ classId: "srd51:class/fighter", level: 1 }];
+      return deriveSheet(c, index);
+    };
+    const bonus = (s: ReturnType<typeof sheet>) =>
+      Object.fromEntries(Object.entries(s.abilities).map(([k, a]) => [k, a.bonus]));
+
+    it("gives a bloodline of the Tiefling of the app its own increase, once", () => {
+      const line = (id: string) =>
+        bonus(sheet("srd51:species/tiefling", `imp2:subspecies/tiefling-${id}`));
+      expect(line("asmodeus")).toMatchObject({ int: 1, cha: 2 });
+      expect(line("dispater")).toMatchObject({ dex: 1, int: 0, cha: 2 });
+      expect(line("fierna")).toMatchObject({ wis: 1, int: 0, cha: 2 });
+      expect(line("zariel")).toMatchObject({ str: 1, int: 0, cha: 2 });
+      expect(bonus(sheet("srd51:species/tiefling"))).toMatchObject({ int: 1, cha: 2 });
+    });
+
+    it("keeps the legacy of the Tiefling only for the Tiefling without a bloodline", () => {
+      const traits = (sub?: string) => sheet("srd51:species/tiefling", sub).traits;
+      expect(traits()).toContain("srd51:trait/infernal-legacy");
+      expect(traits("imp2:subspecies/tiefling-dispater")).not.toContain(
+        "srd51:trait/infernal-legacy",
+      );
+    });
+
+    it("lets Tasha's customised origin swap the increases of a race of the app", () => {
+      const option = [...index.keys()].find((id) => /^imp2:option\/customized-ability/.test(id));
+      expect(option).toBeDefined();
+      const plain = sheet("srd51:species/dwarf");
+      expect(plain.abilities.con.bonus).toBe(2);
+      const custom = sheet("srd51:species/dwarf", undefined, [option ?? ""]);
+      expect(custom.abilities.con.bonus).toBe(0);
+      const picks = custom.choices.filter((p) => p.grants === "abilityBonus");
+      expect(picks.map((p) => p.value).sort()).toEqual([1, 2]);
+    });
+  });
 }

@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { withOriginRules } from "../data/originRules";
 import { type Pack, parsePack } from "../data/schema";
 import { indexPacks } from "../engine/derive";
 
@@ -24,7 +25,7 @@ export const SRD51_FILES = [
 ] as const;
 
 export function loadSrd51Pack(file: string): Pack {
-  return parsePack(JSON.parse(readFileSync(`data/srd51/${file}.json`, "utf8")));
+  return withOriginRules(parsePack(JSON.parse(readFileSync(`data/srd51/${file}.json`, "utf8"))));
 }
 
 export function loadSrd51Strings(file: string): Record<string, string> {

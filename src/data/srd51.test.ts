@@ -10,6 +10,7 @@ import {
 } from "../test/srd51";
 import { itemData } from "./items";
 import { classData, subclassData } from "./progression";
+import { plainEffects } from "../engine/requirements";
 import { findBrokenReferences } from "./schema";
 
 describe("SRD 5.1 pack", () => {
@@ -60,7 +61,7 @@ describe("SRD 5.1 pack", () => {
 
   it("represents choices as data: Half-Elf ability bonuses and High Elf cantrip", () => {
     const halfElf = index.get("srd51:species/half-elf");
-    expect(halfElf?.effects).toContainEqual(
+    expect(plainEffects(halfElf?.effects ?? [])).toContainEqual(
       expect.objectContaining({ type: "choice", grants: "abilityBonus", choose: 2, value: 1 }),
     );
     const cantrip = index.get("srd51:trait/high-elf-cantrip");

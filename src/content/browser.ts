@@ -1,3 +1,4 @@
+import { withOriginRules } from "../data/originRules";
 import { type Pack, parsePack } from "../data/schema";
 import { type PackIndex, indexPacks } from "../engine/derive";
 import { convertText } from "../i18n/units";
@@ -53,7 +54,7 @@ export async function loadContent(
 
   await Promise.all(
     Object.entries(packFiles).map(async ([path, load]) => {
-      const pack = parsePack(await load());
+      const pack = withOriginRules(parsePack(await load()));
       packs.push(pack);
       const idBySlug = new Map(pack.entries.map((e) => [e.id.split("/")[1] ?? "", e.id]));
 

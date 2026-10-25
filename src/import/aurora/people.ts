@@ -133,115 +133,21 @@ export function importSubRace(ctx: Context, source: Source): void {
     ctx.result.skipped["Sub Race"] = (ctx.result.skipped["Sub Race"] ?? 0) + 1;
     return;
   }
-  // A sub-race can set a flag that rules of the race test for ("unless you have a sub-race"):
-  // the Tiefling's ability increase and legacy give way to the ones of its sub-race. A race of
-  // this pack keeps those rules behind a `when` and the sub-race just sets its flags. A race the
-  // app already has cannot be changed, so the sub-race stands in for the species, like a variant,
-  // instead of adding to it.
-  // Several races can be the same one of the app (the Tiefling of 2014 and of 2024): the one
-  // that offers this sub-race is the parent, not the first with the same id.
-  const sameId = ofType(ctx, "Race").filter((s) => s.id === parent);
-  const parentSource = sameId.find((s) => offers(ctx, s, source)) ?? sameId[0];
-  const holds = flagsOf(ctx, source);
-  if (parentSource?.existing && takesAway(ctx, parentSource, holds)) {
-    const own = baseEffects(ctx, source, "subspecies", holds).effects;
-    const appEntry = parentSource.existing ? ctx.options.index.get(parent) : undefined;
-    const base = appEntry
-      ? withoutRemoved(ctx, parentSource, holds, appEntry.effects)
-      : baseEffects(ctx, parentSource, "subspecies-base", holds).effects;
-    emit(
-      ctx,
-      source,
-      { replacesSpecies: true },
-      { desc: description(source.el) },
-      { effects: [...base, ...own], parent },
-    );
-    return;
-  }
+  // A sub-race only adds. What it takes away from its race ("unless you have a sub-race": the
+  // Tiefling's increase and legacy give way to those of its bloodline) is written on the race as
+  // a requirement, which the sheet checks against the flag the sub-race sets; the races of the
+  // app carry the same requirements (see `withOriginRules`), so this holds even when the files of
+  // the race are not among the ones imported.
   const { effects } = baseEffects(ctx, source, "subspecies");
-  emit(ctx, source, {}, { desc: description(source.el) }, { effects, parent });
-}
-
-/** True when setting these flags takes away rules that the race has without them. */
-function takesAway(ctx: Context, race: Source, holds: ReadonlySet<string>): boolean {
-  const counted = ctx.result.unsupportedRules;
-  const before = mapRules(ctx, race, { idPrefix: "species" });
-  const after = mapRules(ctx, race, { idPrefix: "species", holds });
-  ctx.result.unsupportedRules = counted; // only looking, nothing to report twice
-  const kept = after.effects.map((e) => JSON.stringify(e));
-  const lostEffect = before.effects.some((e) => {
-    const at = kept.indexOf(JSON.stringify(e));
-    if (at < 0) return true;
-    kept.splice(at, 1);
-    return false;
-  });
-  const lostGrant = before.grants.some((g) => !after.grants.some((a) => a.source === g.source));
-  return lostEffect || lostGrant;
-}
-
-/**
- * The flags an element sets (`grant type="Grants"`), which other rules test for, including those
- * set by what it grants in turn (a variant that grants a dragonmark, which sets the flag).
- */
-function flagsOf(ctx: Context, source: Source): Set<string> {
-  const flags = new Set<string>();
-  const seen = new Set<Source>();
-  const stack = [source];
-  while (stack.length > 0) {
-    const here = stack.pop();
-    if (!here || seen.has(here)) continue;
-    seen.add(here);
-    flags.add(here.aid); // a chosen element counts as held, too
-    for (const rule of readRules(here.el)) {
-      if (rule.tag !== "grant") continue;
-      if (rule.type === "Grants") flags.add(rule.id);
-      else {
-        const granted = ctx.byAid.get(rule.id);
-        if (granted) stack.push(granted);
-      }
-    }
-  }
-  return flags;
-}
-
-/** What a species of the app loses when the flags are set: the rules that said "unless". */
-function withoutRemoved(
-  ctx: Context,
-  parent: Source,
-  holds: ReadonlySet<string>,
-  effects: Effect[],
-): Effect[] {
-  const counted = ctx.result.unsupportedRules;
-  const before = mapRules(ctx, parent, { idPrefix: "species" });
-  const after = mapRules(ctx, parent, { idPrefix: "species", holds });
-  ctx.result.unsupportedRules = counted; // only looking, nothing to report twice
-
-  const kept = [...effects];
-  const drop = (match: (e: Effect) => boolean) => {
-    const at = kept.findIndex(match);
-    if (at >= 0) kept.splice(at, 1);
-  };
-  const remaining = [...after.effects];
-  for (const gone of before.effects) {
-    const same = remaining.findIndex((e) => JSON.stringify(e) === JSON.stringify(gone));
-    if (same >= 0) remaining.splice(same, 1);
-    else drop((e) => JSON.stringify(e) === JSON.stringify(gone));
-  }
-  for (const grant of before.grants) {
-    if (after.grants.some((g) => g.source === grant.source)) continue;
-    const id =
-      grant.source.id ?? ctx.existingByName.get(`trait|${grant.source.name.toLowerCase()}`);
-    if (id) drop((e) => e.type === "trait" && e.id === id);
-  }
-  return kept;
+  // Held by its Aurora id too, for requirements of races that name it so (they may be elsewhere).
+  const held: Effect[] = [{ type: "flag", id: source.aid }, ...effects];
+  emit(ctx, source, {}, { desc: description(source.el) }, { effects: held, parent });
 }
 
 /**
  * A variant of a race (the half-elf of the Sword Coast, a dragonborn of Wildemount, a race with a
- * dragonmark) replaces some of the race's traits. Of a race in this pack it is a sub-species that
- * only adds, the race holding what the variant takes away behind a `when`. Of a race the app has
- * already, it carries the race's effects without what the variant takes away, plus its own, and
- * says it stands in for the species.
+ * dragonmark) replaces some of the race's traits. It is a sub-species that only adds: the race
+ * keeps what the variant takes away behind a requirement, and the variant sets the flag it tests.
  */
 export function importRaceVariant(ctx: Context, source: Source): void {
   const parent = ofType(ctx, "Race").find((s) => s.id && offers(ctx, s, source, "Race Variant"));
@@ -249,25 +155,9 @@ export function importRaceVariant(ctx: Context, source: Source): void {
     ctx.result.skipped["Race Variant"] = (ctx.result.skipped["Race Variant"] ?? 0) + 1;
     return;
   }
-  if (!parent.existing) {
-    // The race keeps what the variant takes away behind a `when`: the variant only adds.
-    const { effects } = baseEffects(ctx, source, "variant");
-    emit(ctx, source, {}, { desc: description(source.el) }, { effects, parent: parent.id });
-    return;
-  }
-  const holds = flagsOf(ctx, source);
-  const own = baseEffects(ctx, source, "variant", holds).effects;
-  const appEntry = parent.existing ? ctx.options.index.get(parent.id) : undefined;
-  const base = appEntry
-    ? withoutRemoved(ctx, parent, holds, appEntry.effects)
-    : baseEffects(ctx, parent, "variant-base", holds).effects;
-  emit(
-    ctx,
-    source,
-    { replacesSpecies: true },
-    { desc: description(source.el) },
-    { effects: [...base, ...own], parent: parent.id },
-  );
+  const { effects } = baseEffects(ctx, source, "variant");
+  const held: Effect[] = [{ type: "flag", id: source.aid }, ...effects];
+  emit(ctx, source, {}, { desc: description(source.el) }, { effects: held, parent: parent.id });
 }
 
 /** A rule a table switches on for a character: it is held by the character that has it. */

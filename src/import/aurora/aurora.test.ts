@@ -664,10 +664,13 @@ describe("classes and archetypes", () => {
     const made = parseAurora([set], options);
     const deep = byId(made, "imp1:subspecies/dwarf-deep");
     expect(deep.parent).toBe("srd51:species/dwarf");
-    expect(deep.data.replacesSpecies).toBe(true);
-    expect(
-      deep.effects.flatMap((e) => (e.type === "abilityBonus" ? [e.ability + e.value] : [])),
-    ).toEqual(["str1"]);
+    // It only adds, and sets the flag that the right race, the second one, tests for.
+    expect(deep.data.replacesSpecies).toBeUndefined();
+    expect(deep.effects).toEqual([
+      { type: "flag", id: "ID_T_DEEP" },
+      { type: "flag", id: "ID_T_LINE" },
+      { type: "abilityBonus", ability: "str", value: 1 },
+    ]);
   });
 
   it("lets an option of one pack switch rules of another, which ask for it by its Aurora id", () => {
@@ -1270,6 +1273,7 @@ describe("collections written for other readers", () => {
     expect(sub.parent).toBe("imp1:species/dune-race");
     expect(sub.data.replacesSpecies).toBeUndefined();
     expect(sub.effects).toEqual([
+      { type: "flag", id: "ID_V_VARIANT" },
       { type: "flag", id: "ID_V_FLAG" },
       { type: "abilityBonus", ability: "dex", value: 2 },
       { type: "trait", id: "imp1:trait/new-trick" },
@@ -1299,13 +1303,15 @@ describe("collections written for other readers", () => {
     expect(traits("imp1:species/dune-race", sub.id)).toEqual(["imp1:trait/new-trick"]);
   });
 
-  it("takes from the app's own race what a variant replaces", () => {
+  it("makes a variant of the app's own race an addition that sets its flag", () => {
     const sub = byId(result, "imp1:subspecies/scholar-dwarf");
     expect(sub.parent).toBe("srd51:species/dwarf");
-    const bonuses = sub.effects.flatMap((e) => (e.type === "abilityBonus" ? [e] : []));
-    expect(bonuses).toEqual([{ type: "abilityBonus", ability: "int", value: 2 }]);
-    // The rest of the dwarf stays (languages, traits).
-    expect(sub.effects.some((e) => e.type === "trait")).toBe(true);
+    expect(sub.data.replacesSpecies).toBeUndefined();
+    expect(sub.effects).toEqual([
+      { type: "flag", id: "ID_V_SCHOLAR" },
+      { type: "flag", id: "ID_V_FLAG2" },
+      { type: "abilityBonus", ability: "int", value: 2 },
+    ]);
   });
 
   it("reads what a magic item gives as effects", () => {

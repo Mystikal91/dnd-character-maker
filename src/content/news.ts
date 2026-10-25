@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.4.1 beta",
+    date: "2026-10-25",
+    notes: [
+      {
+        en: "Fix: the sub-races of Aurora (the Tiefling bloodlines and the like) no longer add their increases to those of the race of the app, even when the race and its sub-races come from different indexes (Core and Supplements). The races of the app now carry the same conditions as in the books, and Tasha’s customised origin works with them too. Update the Aurora packs from the packs page.",
+        it: "Correzione: le sotto-razze di Aurora (le stirpi dei Tiefling e simili) non sommano più i loro aumenti a quelli della specie dell’app, anche quando la specie e le sue sotto-razze arrivano da indici diversi (Core e Supplements). Le specie dell’app ora hanno le stesse condizioni dei manuali e l’origine personalizzata di Tasha funziona anche con loro. Aggiorna i pacchetti di Aurora dalla pagina dei pacchetti.",
+        fr: "Correction : les sous-races d’Aurora (les lignées des Tieffelins et autres) n’ajoutent plus leurs augmentations à celles de l’espèce de l’app, même quand l’espèce et ses sous-races viennent d’index différents (Core et Supplements). Les espèces de l’app ont maintenant les mêmes conditions que dans les livres, et l’origine personnalisée de Tasha fonctionne aussi avec elles. Mets à jour les paquets d’Aurora depuis la page des paquets.",
+        de: "Korrektur: Die Unterarten aus Aurora (die Tiefling-Linien und ähnliche) addieren ihre Steigerungen nicht mehr zu denen der Art der App, auch wenn die Art und ihre Unterarten aus verschiedenen Indizes stammen (Core und Supplements). Die Arten der App haben jetzt dieselben Bedingungen wie in den Büchern, und Tashas angepasste Herkunft funktioniert auch mit ihnen. Aktualisiere die Aurora-Pakete auf der Paketseite.",
+        es: "Corrección: las subrazas de Aurora (los linajes de los tiefling y similares) ya no suman sus aumentos a los de la especie de la app, ni siquiera cuando la especie y sus subrazas vienen de índices distintos (Core y Supplements). Las especies de la app ahora tienen las mismas condiciones que en los libros, y el origen personalizado de Tasha también funciona con ellas. Actualiza los paquetes de Aurora desde la página de paquetes.",
+      },
+    ],
+  },
+  {
     version: "1.4 beta",
     date: "2026-10-25",
     notes: [
