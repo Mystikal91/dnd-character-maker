@@ -749,6 +749,8 @@
   "spells.createHint": "The spell is saved in your homebrew pack “My spells” and added to the list of this class. You can change it later in the homebrew editor.",
   "spells.myPack": "My spells",
   "bar.withPacks": "Character imported, with {packs} homebrew pack(s) that it uses.",
+  "packs.problems": "{n} reference(s) to content that is missing",
+  "packs.problemsHint": "The pack points at something that is not here, maybe in a pack that was removed. What depends on it is left out of the sheet.",
   "build.info.pickSpecies": "Pick a species to see what it gives.",
   "build.info.pickBackground": "Pick a background to see what it gives.",
   "build.info.pickClass": "Pick a class to see what it gives.",

@@ -749,6 +749,8 @@
   "spells.createHint": "Der Zauber wird in deinem Homebrew-Paket „Meine Zauber“ gespeichert und der Liste dieser Klasse hinzugefügt. Du kannst ihn später im Homebrew-Editor ändern.",
   "spells.myPack": "Meine Zauber",
   "bar.withPacks": "Charakter importiert, mit {packs} Homebrew-Paket(en), die er nutzt.",
+  "packs.problems": "{n} Verweis(e) auf fehlende Inhalte",
+  "packs.problemsHint": "Das Paket verweist auf etwas, das nicht da ist, vielleicht in einem entfernten Paket. Was davon abhängt, erscheint nicht auf dem Bogen.",
   "build.info.pickSpecies": "Wähle eine Spezies, um zu sehen, was sie gibt.",
   "build.info.pickBackground": "Wähle einen Hintergrund, um zu sehen, was er gibt.",
   "build.info.pickClass": "Wähle eine Klasse, um zu sehen, was sie gibt.",

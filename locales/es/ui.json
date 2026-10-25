@@ -749,6 +749,8 @@
   "spells.createHint": "El conjuro se guarda en tu paquete homebrew «Mis conjuros» y se añade a la lista de esta clase. Podrás cambiarlo después en el editor homebrew.",
   "spells.myPack": "Mis conjuros",
   "bar.withPacks": "Personaje importado, con {packs} paquete(s) homebrew que usa.",
+  "packs.problems": "{n} referencia(s) a contenido que falta",
+  "packs.problemsHint": "El paquete apunta a algo que no está, quizá en un paquete quitado. Lo que depende de ello no aparece en la hoja.",
   "build.info.pickSpecies": "Elige una especie para ver qué da.",
   "build.info.pickBackground": "Elige un trasfondo para ver qué da.",
   "build.info.pickClass": "Elige una clase para ver qué da.",

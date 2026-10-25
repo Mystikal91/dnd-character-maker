@@ -262,10 +262,15 @@ export function parsePack(input: unknown): Pack {
  * exist in the given packs. Returns human-readable problems (empty when all resolve).
  */
 export function findBrokenReferences(packs: Pack[]): string[] {
+  return brokenReferences(packs).map((p) => `${p.from} references missing ${p.ref}`);
+}
+
+/** The same check, with the entry that refers and the id it cannot find. */
+export function brokenReferences(packs: Pack[]): { from: string; ref: string }[] {
   const known = new Set(packs.flatMap((p) => p.entries.map((e) => e.id)));
-  const problems: string[] = [];
+  const problems: { from: string; ref: string }[] = [];
   const check = (from: string, ref: string) => {
-    if (!known.has(ref)) problems.push(`${from} references missing ${ref}`);
+    if (!known.has(ref)) problems.push({ from, ref });
   };
   for (const entry of packs.flatMap((p) => p.entries)) {
     if (entry.parent) check(entry.id, entry.parent);

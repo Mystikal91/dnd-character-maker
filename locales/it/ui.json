@@ -749,6 +749,8 @@
   "spells.createHint": "L’incantesimo viene salvato nel tuo pacchetto homebrew «Miei incantesimi» e aggiunto all’elenco di questa classe. Potrai modificarlo dopo nell’editor homebrew.",
   "spells.myPack": "Miei incantesimi",
   "bar.withPacks": "Personaggio importato, con {packs} pacchetto/i homebrew che usa.",
+  "packs.problems": "{n} rimando/i a contenuti che mancano",
+  "packs.problemsHint": "Il pacchetto rimanda a qualcosa che non c’è, forse in un pacchetto rimosso. Ciò che ne dipende non compare sulla scheda.",
   "build.info.pickSpecies": "Scegli una specie per vedere cosa dà.",
   "build.info.pickBackground": "Scegli un background per vedere cosa dà.",
   "build.info.pickClass": "Scegli una classe per vedere cosa dà.",

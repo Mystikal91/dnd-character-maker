@@ -749,6 +749,8 @@
   "spells.createHint": "Le sort est enregistré dans ton paquet homebrew « Mes sorts » et ajouté à la liste de cette classe. Tu pourras le modifier ensuite dans l’éditeur homebrew.",
   "spells.myPack": "Mes sorts",
   "bar.withPacks": "Personnage importé, avec {packs} paquet(s) homebrew qu’il utilise.",
+  "packs.problems": "{n} renvoi(s) vers du contenu manquant",
+  "packs.problemsHint": "Le paquet renvoie à quelque chose qui n’est pas là, peut-être dans un paquet retiré. Ce qui en dépend n’apparaît pas sur la fiche.",
   "build.info.pickSpecies": "Choisis une espèce pour voir ce qu'elle apporte.",
   "build.info.pickBackground": "Choisis un historique pour voir ce qu'il apporte.",
   "build.info.pickClass": "Choisis une classe pour voir ce qu'elle apporte.",

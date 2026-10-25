@@ -18,6 +18,7 @@ import {
   sameAddressPack,
   userPacks,
 } from "../app/userPacks";
+import { brokenReferences } from "../data/schema";
 import { type UiKey, ui } from "../i18n/ui";
 import { type UserPackRecord, shortAddress } from "../storage/packs";
 
@@ -52,6 +53,12 @@ export function PacksPage() {
   const builtIn = [...totals.entries()];
 
   const stale = packs.filter(isStale);
+  // References to content that is not here: a pack that needs another one that was removed.
+  const missing = new Map<string, { from: string; ref: string }[]>();
+  for (const problem of brokenReferences(content.value?.packs ?? [])) {
+    const pack = problem.from.split(":")[0] ?? "";
+    missing.set(pack, [...(missing.get(pack) ?? []), problem]);
+  }
   const targetPack = packs.find((p) => p.id === target);
   const chooseFiles = (id?: string) => {
     setTarget(id);
@@ -101,6 +108,21 @@ export function PacksPage() {
                   <span class="pack-tag stale" title={ui("packs.staleHint")}>
                     {ui("packs.stale")}
                   </span>
+                )}
+                {(missing.get(record.id)?.length ?? 0) > 0 && (
+                  <details class="pack-problems">
+                    <summary class="pack-tag stale">
+                      {ui("packs.problems", { n: missing.get(record.id)?.length ?? 0 })}
+                    </summary>
+                    <p class="muted">{ui("packs.problemsHint")}</p>
+                    <ul class="plain muted">
+                      {(missing.get(record.id) ?? []).slice(0, 20).map((p) => (
+                        <li key={`${p.from}>${p.ref}`}>
+                          {record.strings[`${p.from}.name`] ?? p.from} → {p.ref}
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
                 )}
                 <div class="muted">{summary(record)}</div>
                 {record.source?.url && (
