@@ -56,6 +56,18 @@ const CharacterSchema = v.object({
   ),
   /** The optional rules switched on for this character (ids of `option` entries). */
   options: v.optional(v.array(v.string())),
+  /** Features the person wrote for this character. */
+  custom: v.optional(
+    v.array(
+      v.object({
+        id: v.string(),
+        name: v.string(),
+        text: v.string(),
+        uses: v.optional(v.pipe(v.number(), v.integer(), v.minValue(1), v.maxValue(99))),
+        recharge: v.optional(v.picklist(["short", "long"])),
+      }),
+    ),
+  ),
   abilityBase: v.object({
     str: v.number(),
     dex: v.number(),

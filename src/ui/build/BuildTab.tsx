@@ -10,6 +10,7 @@ import { Choices } from "../Choices";
 import { SpellPicker } from "../SpellPicker";
 import { Welcome } from "../Welcome";
 import { ClassStep } from "./ClassStep";
+import { CustomFeatures } from "./CustomFeatures";
 import { FreeEditStep } from "./FreeEditStep";
 import { StoryStep } from "./StoryStep";
 import { EquipmentStep, OriginStep } from "./steps";
@@ -108,6 +109,14 @@ function buildSteps(): StepInfo[] {
     status: written > 0 ? `${written}/4` : "",
     done: written === 4,
     body: <StoryStep />,
+  });
+  const customCount = ch.custom?.length ?? 0;
+  steps.push({
+    id: "custom",
+    title: "build.custom",
+    status: customCount > 0 ? String(customCount) : "",
+    done: true,
+    body: <CustomFeatures />,
   });
   const forcedCount = countOverrides(ch.overrides);
   steps.push({

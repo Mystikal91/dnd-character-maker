@@ -330,6 +330,22 @@ export function FrontPage() {
             </section>
           ))}
 
+          {(ch.custom ?? []).some((f) => f.name.trim() !== "") && (
+            <section class="p-frame p-panel">
+              <h3 class="p-h">{ui("sheet.customFeatures")}</h3>
+              <ul class="p-names">
+                {(ch.custom ?? [])
+                  .filter((f) => f.name.trim() !== "")
+                  .map((f) => (
+                    <li key={f.id}>
+                      {f.name}
+                      {f.uses ? ` (${f.uses})` : ""}
+                    </li>
+                  ))}
+              </ul>
+            </section>
+          )}
+
           <section class="p-frame p-panel grow">
             <h3 class="p-h">{ui("print.notes")}</h3>
             <div class="p-ruled-area" />

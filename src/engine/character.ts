@@ -1,5 +1,6 @@
 import { ABILITIES, type Ability } from "../data/schema";
 import type { Coins } from "./coins";
+import type { CustomFeature } from "./custom";
 
 export const CHARACTER_SCHEMA_VERSION = 6;
 
@@ -142,6 +143,8 @@ export interface Character {
    * Tasha's customised origin). Other rules ask for them by id, and their own effects apply.
    */
   options?: string[];
+  /** Features the person wrote for this character, with the uses they have between rests. */
+  custom?: CustomFeature[];
   abilityBase: Record<Ability, number>;
   abilityMethod: AbilityMethod;
   /** The six rolled values, when `abilityMethod` is `roll`. */

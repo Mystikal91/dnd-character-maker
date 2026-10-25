@@ -20,6 +20,8 @@ export interface ClassResource {
   unlimited?: boolean;
   /** A level of spell or similar number the label needs. */
   level?: number;
+  /** The name to show, for what a person wrote (a custom feature): there is nothing to translate. */
+  name?: string;
 }
 
 /** A class number worth showing during play: a die, a bonus. */

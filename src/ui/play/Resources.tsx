@@ -110,7 +110,8 @@ export function ClassResources() {
   const facts = s?.facts.filter((f) => !EXTRA_FACTS.has(f.kind)) ?? [];
   if (!s || (s.resources.length === 0 && facts.length === 0)) return null;
 
-  const label = (r: ClassResource) => ui(`resource.${r.kind}` as UiKey, { level: r.level ?? 0 });
+  const label = (r: ClassResource) =>
+    r.name ?? ui(`resource.${r.kind}` as UiKey, { level: r.level ?? 0 });
   const spend = (r: ClassResource, change: number) =>
     changePlay((p) => setResourceUsed(p, r.id, (p.resourcesUsed?.[r.id] ?? 0) + change, r.max));
 

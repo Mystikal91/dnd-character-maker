@@ -9,6 +9,7 @@ export type StepId =
   | "spells"
   | "equipment"
   | "story"
+  | "custom"
   | "freeEdit";
 
 /** The build step that is open. Only one is open at a time, so the page stays short. */

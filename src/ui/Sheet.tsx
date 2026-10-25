@@ -3,6 +3,7 @@ import { SpellSheet } from "./SpellSheet";
 import { AbilityBlocks, Badges } from "./sheet/AbilityBlocks";
 import { ClassFeatures } from "./sheet/ClassFeatures";
 import { Attacks, CoreStats } from "./sheet/CoreStats";
+import { CustomFeaturesPanel } from "./sheet/CustomFeaturesPanel";
 import { Defenses, Feats, Inventory, Notes, Proficiencies, SpeciesTraits } from "./sheet/Details";
 import { SheetHeader } from "./sheet/SheetHeader";
 import { SpellcastingPanel } from "./sheet/SpellcastingPanel";
@@ -37,6 +38,7 @@ export function Sheet() {
           <SpeciesTraits />
           <Feats />
           <ClassFeatures />
+          <CustomFeaturesPanel />
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ import { abilityModifier } from "./abilities";
 import type { Character } from "./character";
 import { type ChecksResult, deriveChecks, halfBonus } from "./checks";
 import { type PendingChoice, collectEffects } from "./choices";
+import { customResources } from "./custom";
 import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
 import { type AppliedModifier, appliedModifiers, total } from "./modifiers";
 import { type CasterInput, casterKind, slotPools, unmetPrerequisites } from "./multiclass";
@@ -287,7 +288,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   const features: string[] = [];
   const casters: SpellcastingResult[] = [];
   const casterInputs: CasterInput[] = [];
-  const resources: ClassResource[] = [];
+  const resources: ClassResource[] = customResources(character.custom ?? []);
   const facts: ClassFact[] = [];
   const extraDamage: ExtraDamage[] = [];
   classEntries.forEach(({ cl, entry }, position) => {
