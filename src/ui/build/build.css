@@ -65,6 +65,8 @@
 
 .step {
   padding: 0;
+  /* Below the tabs that stay at the top of the screen. */
+  scroll-margin-top: 3.5rem;
 }
 
 .step .step-title {
@@ -128,8 +130,35 @@
   text-transform: uppercase;
 }
 
+/* A small arrow that says the title opens and closes the step. */
+.step-chevron {
+  flex: none;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-left: 0.2rem;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 0.15s;
+}
+
+.step-name + .step-chevron {
+  margin-left: auto;
+}
+
+.step.open .step-chevron {
+  transform: rotate(-135deg) translate(-2px, -2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step-chevron {
+    transition: none;
+  }
+}
+
 .step-status {
   margin-left: auto;
+  white-space: nowrap;
   color: var(--muted);
   font-size: 0.9rem;
   text-align: right;
@@ -591,4 +620,19 @@
 .levelup .btn-row > button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+
+/* Optional rules stay folded until one is on, so the species below is not pushed away. */
+.optional-rules {
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 6px);
+}
+
+.optional-rules > summary {
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }

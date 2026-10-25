@@ -12,8 +12,11 @@ export type StepId =
   | "custom"
   | "freeEdit";
 
-/** The build step that is open. Only one is open at a time, so the page stays short. */
-export const openStep = signal<StepId>("origin");
+/**
+ * The build step that is open, or none. Only one is open at a time, so the page stays short;
+ * tapping the title of the open one closes it, to see all the steps at once.
+ */
+export const openStep = signal<StepId | undefined>("origin");
 
 /** Where the level up flow is: closed, choosing the class, or showing what is left to do. */
 export const levelUpPhase = signal<"closed" | "choose" | "done">("closed");

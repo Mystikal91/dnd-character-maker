@@ -10,8 +10,11 @@ export function OptionalRules() {
   const c = content.value;
   const on = character.value.options ?? [];
   return (
-    <fieldset class="optional-rules">
-      <legend>{ui("build.options.title")}</legend>
+    <details class="optional-rules">
+      <summary>
+        {ui("build.options.title")}
+        {on.length > 0 && ` (${on.length})`}
+      </summary>
       <p class="muted">{ui("build.options.hint")}</p>
       {all.map((option) => (
         <div key={option.id}>
@@ -37,6 +40,6 @@ export function OptionalRules() {
           )}
         </div>
       ))}
-    </fieldset>
+    </details>
   );
 }

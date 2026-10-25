@@ -231,16 +231,31 @@ function SummaryStrip() {
   );
 }
 
+/** Brings the header of a step into view once it is open, as the steps above it have closed. */
+function showStep(id: StepId) {
+  requestAnimationFrame(() => {
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    document
+      .getElementById(`step-head-${id}`)
+      ?.scrollIntoView({ block: "start", behavior: reduced ? "auto" : "smooth" });
+  });
+}
+
 /** Guided building: a list of steps that open one at a time, with a live summary. */
 export function BuildTab() {
   const steps = buildSteps();
   const open = openStep.value;
   const index = steps.findIndex((step) => step.id === open);
-  const current = index === -1 ? 0 : index;
+  // A step that is not in the list (the spells of a class that does not cast) opens the first.
+  const current = open === undefined ? -1 : index === -1 ? 0 : index;
 
+  const choose = (id: StepId | undefined) => {
+    openStep.value = id;
+    if (id) showStep(id);
+  };
   const next = (from: number) => {
     const following = steps[from + 1];
-    if (following) openStep.value = following.id;
+    if (following) choose(following.id);
     else showView("sheet");
   };
 
@@ -253,21 +268,24 @@ export function BuildTab() {
           {steps.map((step, i) => {
             const isOpen = i === current;
             return (
-              <section class={`card step${isOpen ? " open" : ""}`} key={step.id}>
+              <section
+                class={`card step${isOpen ? " open" : ""}`}
+                key={step.id}
+                id={`step-head-${step.id}`}
+              >
                 <h3 class="step-title">
                   <button
                     type="button"
                     aria-expanded={isOpen}
                     aria-controls={`step-${step.id}`}
-                    onClick={() => {
-                      openStep.value = step.id;
-                    }}
+                    onClick={() => choose(isOpen ? undefined : step.id)}
                   >
                     <span class={`step-mark${step.done ? " done" : ""}`} aria-hidden="true">
                       {step.done ? "✓" : i + 1}
                     </span>
                     <span class="step-name">{ui(step.title)}</span>
                     {step.status && <span class="step-status">{step.status}</span>}
+                    <span class="step-chevron" aria-hidden="true" />
                   </button>
                 </h3>
                 {isOpen && (
