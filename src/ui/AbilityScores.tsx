@@ -139,12 +139,8 @@ export function AbilityScores() {
                 <p class="ac-total">
                   {ui("abilities.total", { score: derived.score, mod: signed(derived.modifier) })}
                   {bonus !== 0 && (
-                    <span
-                      class="bonus-hint"
-                      title={ui("abilities.bonus", { bonus: signed(bonus) })}
-                    >
-                      {" "}
-                      {signed(bonus)}
+                    <span class="bonus-hint">
+                      {ui("abilities.bonus", { bonus: signed(bonus) })}
                     </span>
                   )}
                 </p>

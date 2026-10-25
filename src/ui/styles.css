@@ -61,7 +61,8 @@ h4 {
   margin-bottom: 0.75rem;
 }
 
-.field > span {
+.field > span,
+.field > label > span {
   font-size: 0.85rem;
   color: var(--muted);
 }
@@ -285,6 +286,7 @@ button.secondary {
 }
 
 .bonus-hint {
+  display: block;
   color: var(--accent);
   font-weight: 700;
 }

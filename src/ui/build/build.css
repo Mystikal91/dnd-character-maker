@@ -124,6 +124,8 @@
 }
 
 .step-name {
+  flex: 1 1 auto;
+  min-width: 0;
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -216,6 +218,19 @@
 
 .entry-info .pairs {
   margin: 0.5rem 0;
+}
+
+/* On a narrow screen the labels sit above their values, so a long list is not squeezed in a thin column. */
+@container (max-width: 32rem) {
+  .entry-info .pairs {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .entry-info .pairs dt {
+    margin-top: 0.55rem;
+    font-size: 0.85rem;
+  }
 }
 
 .entry-info-list {
@@ -635,4 +650,45 @@
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: 0.04em;
+}
+
+/* On a phone the state of a step sits under its name, so neither is squeezed or cut off. */
+@media (max-width: 40rem) {
+  .step-title button {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "mark name arrow"
+      "mark status arrow";
+    column-gap: 0.8rem;
+    row-gap: 0.1rem;
+    align-items: center;
+  }
+
+  .step-mark {
+    grid-area: mark;
+  }
+
+  .step-name {
+    grid-area: name;
+  }
+
+  .step-status {
+    grid-area: status;
+    margin: 0;
+    text-align: left;
+    white-space: normal;
+    font-size: 0.8rem;
+  }
+
+  .step-chevron {
+    grid-area: arrow;
+    margin: 0;
+  }
+}
+
+/* A tick box between two fields keeps some air above and below it. */
+.step-body > .check,
+.step-body > label.check {
+  margin-block: 0.6rem;
 }
