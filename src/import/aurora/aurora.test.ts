@@ -6,6 +6,7 @@ import { type Entry, parsePack } from "../../data/schema";
 import { createCharacter } from "../../engine/character";
 import { collectEffects } from "../../engine/choices";
 import { deriveSheet, indexPacks } from "../../engine/derive";
+import { plainEffects } from "../../engine/requirements";
 import { SRD51_FILES, loadSrd51Strings, srd51Index, srd51Packs } from "../../test/srd51";
 import { AuroraParseError, type AuroraResult, parseAurora, slugify } from "./index";
 import { requirementsMet } from "./rules";
@@ -490,7 +491,7 @@ describe("classes and archetypes", () => {
   });
 
   it("gives the starting class its proficiencies and skill choice", () => {
-    expect(cls.effects).toEqual(
+    expect(plainEffects(cls.effects)).toEqual(
       expect.arrayContaining([
         { type: "proficiency", category: "armor", target: "light-armor" },
         { type: "proficiency", category: "save", target: "int" },
@@ -610,12 +611,10 @@ describe("classes and archetypes", () => {
       {
         type: "when",
         requires: "!ID_T_FLAG",
-        effects: [{ type: "abilityBonus", ability: "int", value: 1 }],
-      },
-      {
-        type: "when",
-        requires: "!ID_T_FLAG",
-        effects: [{ type: "abilityBonus", ability: "cha", value: 2 }],
+        effects: [
+          { type: "abilityBonus", ability: "int", value: 1 },
+          { type: "abilityBonus", ability: "cha", value: 2 },
+        ],
       },
     ]);
     const infernal = byId(made, "imp1:subspecies/fiendish-infernal");

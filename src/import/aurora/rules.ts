@@ -643,7 +643,12 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
     // The rule holds only while its requirement does, which is checked with the sheet.
     const requires = translateRequirement(ctx, rule.requirements);
     const inner = mapped.effects.splice(effectsFrom);
-    if (inner.length > 0) mapped.effects.push({ type: "when", requires, effects: inner });
+    const before = mapped.effects[effectsFrom - 1];
+    if (inner.length === 0) {
+      // nothing to wrap
+    } else if (before?.type === "when" && before.requires === requires) {
+      before.effects.push(...inner); // one `when` for the rules in a row that ask the same
+    } else mapped.effects.push({ type: "when", requires, effects: inner });
     for (const grant of mapped.grants.slice(grantsFrom)) grant.requires = requires;
   }
   // Aurora only describes these in words (or in a stat that feeds the text), so they are known by id.

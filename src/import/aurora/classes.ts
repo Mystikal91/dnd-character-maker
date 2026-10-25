@@ -120,7 +120,7 @@ export function claimFeatures(ctx: Context, owners: Map<Source, Owner>): void {
 /** A class feature or archetype feature. */
 export function importFeature(ctx: Context, source: Source, owners: Map<Source, Owner>): void {
   const owner = owners.get(source);
-  const mapped = mapRules(ctx, source, { idPrefix: "feature", skipLevelled: true });
+  const mapped = mapRules(ctx, source, { idPrefix: "feature", skipLevelled: true, live: true });
   emit(
     ctx,
     source,
@@ -240,6 +240,7 @@ export function importClass(ctx: Context, source: Source): void {
     idPrefix: `${slug}-proficiency`,
     skipLevelled: true,
     classSlug: slug,
+    live: true,
   });
 
   // Features by level, and the special ones: spellcasting and ability score improvements.

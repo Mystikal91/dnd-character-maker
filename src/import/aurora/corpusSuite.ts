@@ -100,7 +100,7 @@ export function corpusSuite(reverse: boolean) {
         expect(result.entries.length).toBeGreaterThan(4500);
         // Rules that depend on other rules stay in the pack and are checked with the sheet.
         const whens = JSON.stringify(result.entries).match(/"type":"when"/g) ?? [];
-        expect(whens.length).toBeGreaterThan(500);
+        expect(whens.length).toBeGreaterThan(300);
       });
 
       it("points only at entries that exist", () => {
