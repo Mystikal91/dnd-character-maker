@@ -1,4 +1,5 @@
 import { ABILITIES, type Ability, type Effect } from "../../data/schema";
+import { evaluateRequirements } from "../../engine/requirements";
 import { classIdByName } from "./emit";
 import { type Context, FEATURE_TYPES, type Source, elementTags, ofType } from "./registry";
 import { clean, number, setters, slugify, supportsOf } from "./xml";
@@ -53,56 +54,7 @@ export function requirementsMet(
   requirements: string,
   holds: ReadonlySet<string> = new Set(),
 ): boolean {
-  const text = requirements.trim();
-  if (!text) return true;
-  let at = 0;
-  const skip = () => {
-    while (text[at] === " ") at++;
-  };
-  const term = (): boolean => {
-    skip();
-    if (text[at] === "!") {
-      at++;
-      return !term();
-    }
-    if (text[at] === "(") {
-      at++;
-      const inside = or();
-      skip();
-      if (text[at] === ")") at++;
-      return inside;
-    }
-    const word = /^[^,()|!]+/.exec(text.slice(at));
-    if (!word) {
-      at++; // a stray character: skip it rather than loop
-      return true;
-    }
-    at += word[0].length;
-    return holds.has(word[0].trim());
-  };
-  const and = (): boolean => {
-    let value = term();
-    skip();
-    while (text[at] === ",") {
-      at++;
-      const next = term();
-      value = value && next;
-      skip();
-    }
-    return value;
-  };
-  const or = (): boolean => {
-    let value = and();
-    skip();
-    while (text[at] === "|") {
-      at += text.startsWith("||", at) ? 2 : 1;
-      const next = and();
-      value = value || next;
-      skip();
-    }
-    return value;
-  };
-  return or();
+  return evaluateRequirements(requirements, (word) => holds.has(word));
 }
 
 const ABILITY_BY_NAME: Record<string, Ability> = {
@@ -467,11 +419,11 @@ const WEAPON_ABILITIES: Record<string, Effect> = {
 export interface MappedRules {
   effects: Effect[];
   /** Granted elements, with the class level they come at (undefined: right away). */
-  grants: { source: Source; level: number | undefined }[];
+  grants: { source: Source; level: number | undefined; requires?: string }[];
   /** Selects that offer elements (features, traits, archetypes), with the options they offer. */
   offers: { rule: Rule; options: Source[] }[];
-  speed?: number;
-  size?: string;
+  speed?: number | undefined;
+  size?: string | undefined;
   /** Rules that were read but that the app cannot apply. */
   unsupported: number;
 }
@@ -485,7 +437,26 @@ interface MapOptions {
   classSlug?: string;
   /** The element is a magic item: its stats (armor class, saves...) are read as bonuses. */
   item?: boolean;
+  /**
+   * Keep the rules whose requirement is not met right now, wrapped in a `when` that the sheet
+   * checks each time (a rule that says "unless you have a sub-race"), and set the flags that
+   * `Grants` rules name. Without it a rule whose requirement fails is left out.
+   */
+  live?: boolean;
   idPrefix: string;
+}
+
+/**
+ * How an Aurora id is known to a `when`: an element is held by the id it has here, anything
+ * else (a flag only some `Grants` rule sets) by its own name.
+ */
+export const heldName = (ctx: Context, aid: string): string => ctx.byAid.get(aid)?.id ?? aid;
+
+/** A requirement with its words renamed to what the app holds. */
+export function translateRequirement(ctx: Context, requirements: string): string {
+  return requirements.replace(/[A-Za-z][A-Za-z0-9_]*/g, (word) =>
+    word.startsWith("ID_") ? heldName(ctx, word) : word,
+  );
 }
 
 /** Turns an element's rules into the app's effects, and lists what it grants or offers. */
@@ -495,15 +466,12 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
   const saves = new Map<string, number>();
   const nextChoiceId = () => `${options.idPrefix}-${++choiceCount}`;
 
-  for (const rule of readRules(source.el)) {
-    if (!requirementsMet(rule.requirements, options.holds)) continue;
-    if (options.skipLevelled && rule.level !== undefined) continue;
-
+  const mapRule = (rule: Rule): void => {
     if (rule.tag === "stat") {
       const ability = abilityFromWord(rule.name);
       const value = Number.parseInt(rule.value, 10);
       if (options.item && Number.isFinite(value) && itemStat(rule.name, value, mapped, saves))
-        continue;
+        return;
       if (ability && Number.isFinite(value) && !rule.attrs.hasAttribute("level")) {
         mapped.effects.push({ type: "abilityBonus", ability, value });
       } else if (rule.name === "innate speed" && Number.isFinite(value)) {
@@ -511,7 +479,7 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
       } else {
         mapped.unsupported += 1;
       }
-      continue;
+      return;
     }
 
     if (rule.tag === "grant") {
@@ -533,7 +501,12 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
         if (spell) mapped.effects.push({ type: "grantSpell", spell });
         else mapped.unsupported += 1;
       } else if (rule.type === "Dragonmark") {
-        // A mark only sets a flag; the variant that grants it holds the rules.
+        // A mark sets the flags that its own rules name, which the race tests for.
+        const mark = ctx.byAid.get(rule.id);
+        if (mark && options.live)
+          for (const flag of readRules(mark.el))
+            if (flag.tag === "grant" && flag.type === "Grants")
+              mapped.effects.push({ type: "flag", id: heldName(ctx, flag.id) });
       } else if (rule.type === "Condition") {
         const m = rule.id.match(
           /^ID_INTERNAL_CONDITION_DAMAGE_(RESISTANCE|IMMUNITY|VULNERABILITY|VULNERAILITY)_([A-Z_]+)$/,
@@ -558,10 +531,12 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
       } else if (FEATURE_TYPES.has(rule.type)) {
         const target = ctx.byAid.get(rule.id);
         if (target) mapped.grants.push({ source: target, level: rule.level });
-      } else if (rule.type !== "Grants") {
+      } else if (rule.type === "Grants") {
+        if (options.live) mapped.effects.push({ type: "flag", id: heldName(ctx, rule.id) });
+      } else {
         mapped.unsupported += 1;
       }
-      continue;
+      return;
     }
 
     // select
@@ -648,6 +623,28 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
     } else if (!rule.optional) {
       mapped.unsupported += 1;
     }
+  };
+
+  for (const rule of readRules(source.el)) {
+    const met = requirementsMet(rule.requirements, options.holds);
+    if (!met && !options.live) continue;
+    if (options.skipLevelled && rule.level !== undefined) continue;
+    const gated = options.live && rule.requirements.trim() !== "";
+    const effectsFrom = mapped.effects.length;
+    const grantsFrom = mapped.grants.length;
+    const [speed, size] = [mapped.speed, mapped.size];
+    mapRule(rule);
+    if (!gated) continue;
+    if (!met) {
+      // Speed and size are plain numbers of the entry: a rule that fails for now does not set them.
+      mapped.speed = speed;
+      mapped.size = size;
+    }
+    // The rule holds only while its requirement does, which is checked with the sheet.
+    const requires = translateRequirement(ctx, rule.requirements);
+    const inner = mapped.effects.splice(effectsFrom);
+    if (inner.length > 0) mapped.effects.push({ type: "when", requires, effects: inner });
+    for (const grant of mapped.grants.slice(grantsFrom)) grant.requires = requires;
   }
   // Aurora only describes these in words (or in a stat that feeds the text), so they are known by id.
   const weaponAbility = WEAPON_ABILITIES[source.aid];

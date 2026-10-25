@@ -189,6 +189,10 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   const { effects, sourced, choices } = collectEffects(
     [...contributing, ...wornWithEffects, ...(starting?.entry ? [starting.entry] : []), ...reached],
     { index, selections: character.selections, warnings },
+    [
+      ...character.classes.flatMap((cl) => [cl.classId, cl.subclassId ?? ""]),
+      ...Object.values(character.choices),
+    ].filter((id): id is string => Boolean(id)),
   );
   for (const { entry } of others) {
     if (!entry) continue;

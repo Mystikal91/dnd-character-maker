@@ -1,29 +1,46 @@
 import type { Effect } from "../../data/schema";
 import { emit } from "./emit";
 import { type Context, FEATURE_TYPES, type Source, ofType, sharesTag } from "./registry";
-import { mapRules, readRules, requirementsMet, selectMatches } from "./rules";
+import { mapRules, readRules, requirementsMet, selectMatches, translateRequirement } from "./rules";
 import { clean, description, setters, supportsOf } from "./xml";
 
 /** Effects from rules, plus the traits or features the element grants right away. */
 function baseEffects(ctx: Context, source: Source, prefix: string, holds?: ReadonlySet<string>) {
-  const mapped = mapRules(ctx, source, { idPrefix: prefix, ...(holds && { holds }) });
+  // With nothing assumed to be held, a rule with a requirement stays in, behind a `when` that is
+  // checked with the sheet; with `holds` the requirement is decided now and the rule is in or out.
+  const live = !holds;
+  const mapped = mapRules(ctx, source, { idPrefix: prefix, live, ...(holds && { holds }) });
   const effects: Effect[] = [...mapped.effects];
+  const gate = (requires: string | undefined, effect: Effect): Effect =>
+    requires ? { type: "when", requires, effects: [effect] } : effect;
   for (const grant of mapped.grants) {
     if (grant.source.id && grant.level === undefined)
-      effects.push({ type: "trait", id: grant.source.id as `${string}:${string}/${string}` });
+      effects.push(
+        gate(grant.requires, {
+          type: "trait",
+          id: grant.source.id as `${string}:${string}/${string}`,
+        }),
+      );
   }
   // "Choose two of these traits" (the half-elf's ability increases, a fighting style...).
   mapped.offers.forEach(({ rule, options }, i) => {
     if (rule.type === "Archetype" || rule.type === "Sub Race") return;
     const from = options.map((o) => o.id).filter((id): id is string => Boolean(id));
     if (from.length > 0)
-      effects.push({
-        type: "choice",
-        id: `${prefix}-offer-${i + 1}`,
-        choose: rule.number,
-        grants: "trait",
-        from,
-      });
+      effects.push(
+        gate(
+          live && rule.requirements.trim()
+            ? translateRequirement(ctx, rule.requirements)
+            : undefined,
+          {
+            type: "choice",
+            id: `${prefix}-offer-${i + 1}`,
+            choose: rule.number,
+            grants: "trait",
+            from,
+          },
+        ),
+      );
   });
   return { mapped, effects };
 }
@@ -117,11 +134,13 @@ export function importSubRace(ctx: Context, source: Source): void {
     return;
   }
   // A sub-race can set a flag that rules of the race test for ("unless you have a sub-race"):
-  // the Tiefling's ability increase and legacy give way to the ones of its sub-race. Then the
-  // sub-race stands in for the species, like a variant, instead of adding to it.
+  // the Tiefling's ability increase and legacy give way to the ones of its sub-race. A race of
+  // this pack keeps those rules behind a `when` and the sub-race just sets its flags. A race the
+  // app already has cannot be changed, so the sub-race stands in for the species, like a variant,
+  // instead of adding to it.
   const parentSource = ofType(ctx, "Race").find((s) => s.id === parent);
   const holds = flagsOf(ctx, source);
-  if (parentSource && takesAway(ctx, parentSource, holds)) {
+  if (parentSource?.existing && takesAway(ctx, parentSource, holds)) {
     const own = baseEffects(ctx, source, "subspecies", holds).effects;
     const appEntry = parentSource.existing ? ctx.options.index.get(parent) : undefined;
     const base = appEntry
@@ -216,13 +235,21 @@ function withoutRemoved(
 
 /**
  * A variant of a race (the half-elf of the Sword Coast, a dragonborn of Wildemount, a race with a
- * dragonmark) replaces some of the race's traits. It becomes a sub-species that carries the race's
- * effects without what the variant takes away, plus its own, and says it stands in for the species.
+ * dragonmark) replaces some of the race's traits. Of a race in this pack it is a sub-species that
+ * only adds, the race holding what the variant takes away behind a `when`. Of a race the app has
+ * already, it carries the race's effects without what the variant takes away, plus its own, and
+ * says it stands in for the species.
  */
 export function importRaceVariant(ctx: Context, source: Source): void {
   const parent = ofType(ctx, "Race").find((s) => s.id && offers(ctx, s, source, "Race Variant"));
   if (!parent?.id) {
     ctx.result.skipped["Race Variant"] = (ctx.result.skipped["Race Variant"] ?? 0) + 1;
+    return;
+  }
+  if (!parent.existing) {
+    // The race keeps what the variant takes away behind a `when`: the variant only adds.
+    const { effects } = baseEffects(ctx, source, "variant");
+    emit(ctx, source, {}, { desc: description(source.el) }, { effects, parent: parent.id });
     return;
   }
   const holds = flagsOf(ctx, source);

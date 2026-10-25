@@ -2,6 +2,7 @@ import { type ComponentChildren, Fragment } from "preact";
 import { character, content } from "../../app/store";
 import { classData, subclassData } from "../../data/progression";
 import type { Effect } from "../../data/schema";
+import { heldBy, plainEffects } from "../../engine/requirements";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { EditPencil } from "../QuickEdit";
@@ -106,9 +107,10 @@ export function SpeciesInfo() {
   const species = c?.index.get(ch.choices.species ?? "");
   if (!c || !species) return <Pick text="build.info.pickSpecies" />;
   const sub = c.index.get(ch.choices.subspecies ?? "");
-  const effects = sub?.data.replacesSpecies
+  const all = sub?.data.replacesSpecies
     ? sub.effects
     : [...species.effects, ...(sub?.effects ?? [])];
+  const effects = plainEffects(all, sub ? heldBy(sub.id, sub.effects) : undefined);
   const rs = ch.ruleset;
 
   const bonuses = effects
@@ -164,7 +166,7 @@ export function BackgroundInfo() {
   const ch = character.value;
   const background = c?.index.get(ch.choices.background ?? "");
   if (!c || !background) return <Pick text="build.info.pickBackground" />;
-  const effects = background.effects;
+  const effects = plainEffects(background.effects);
   const featureName = c.text(background.id, "featureName");
 
   return (
@@ -204,7 +206,7 @@ export function ClassInfo({
   const entry = c?.index.get(classId);
   if (!c || !entry) return null;
   const data = classData(entry);
-  const effects = entry.effects;
+  const effects = plainEffects(entry.effects);
   const rs = character.value.ruleset;
   const sub = subclassId ? c.index.get(subclassId) : undefined;
 

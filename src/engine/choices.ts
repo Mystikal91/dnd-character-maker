@@ -1,5 +1,6 @@
 import type { Ability, Effect, Entry, ProficiencyCategory } from "../data/schema";
 import type { PackIndex } from "./derive";
+import { evaluateRequirements } from "./requirements";
 import { type Warning, warn } from "./warnings";
 
 type ChoiceEffect = Extract<Effect, { type: "choice" }>;
@@ -75,18 +76,43 @@ function grantEffect(choice: ChoiceEffect, option: string): Effect {
  * once), and choices are resolved against the character's selections, so a picked option
  * contributes its effect exactly like a fixed one.
  */
-export function collectEffects(
+export function collectEffects(entries: Entry[], input: Input, alsoHeld: string[] = []): Collected {
+  // Effects behind a requirement (`when`) depend on what is held, and what is held depends on
+  // the effects that apply (a trait, a flag). Walk again with what the last walk found until it
+  // stops changing; a walk that met no requirement is final at once.
+  let held = new Set([...entries.map((e) => e.id), ...alsoHeld]);
+  for (let pass = 1; ; pass++) {
+    const warnings: Warning[] = [];
+    const walk = walkEffects(entries, { ...input, warnings }, held);
+    const next = new Set([...alsoHeld, ...walk.seen]);
+    const settled =
+      !walk.gated ||
+      pass >= 4 ||
+      (next.size === held.size && [...next].every((id) => held.has(id)));
+    if (settled) {
+      input.warnings.push(...warnings);
+      return walk;
+    }
+    held = next;
+  }
+}
+
+function walkEffects(
   entries: Entry[],
   { index, selections, warnings }: Input,
-): Collected {
+  held: ReadonlySet<string>,
+): Collected & { seen: Set<string>; gated: boolean } {
   const effects: Effect[] = [];
   const sourced: SourcedEffect[] = [];
   const choices: PendingChoice[] = [];
   const expanded = new Set<string>();
+  const seen = new Set<string>(entries.map((e) => e.id));
+  let gated = false;
 
   const expandTrait = (id: string) => {
     if (expanded.has(id)) return;
     expanded.add(id);
+    seen.add(id);
     const trait = index.get(id);
     if (!trait) {
       warn(warnings, "unknownEntry", { id });
@@ -120,11 +146,21 @@ export function collectEffects(
 
   const apply = (effect: Effect, source: string) => {
     if (effect.type === "choice") return resolve(effect, source);
+    if (effect.type === "flag") {
+      seen.add(effect.id);
+      return;
+    }
+    if (effect.type === "when") {
+      gated = true;
+      if (evaluateRequirements(effect.requires, (word) => held.has(word)))
+        for (const inner of effect.effects) apply(inner, source);
+      return;
+    }
     effects.push(effect);
     sourced.push({ effect, source });
     if (effect.type === "trait") expandTrait(effect.id);
   };
 
   for (const entry of entries) for (const effect of entry.effects) apply(effect, entry.id);
-  return { effects, sourced, choices };
+  return { effects, sourced, choices, seen, gated };
 }

@@ -4,6 +4,7 @@ import { itemData } from "../../data/items";
 import { classData, subclassData } from "../../data/progression";
 import { type Entry, parsePack } from "../../data/schema";
 import { createCharacter } from "../../engine/character";
+import { collectEffects } from "../../engine/choices";
 import { deriveSheet, indexPacks } from "../../engine/derive";
 import { SRD51_FILES, loadSrd51Strings, srd51Index, srd51Packs } from "../../test/srd51";
 import { AuroraParseError, type AuroraResult, parseAurora, slugify } from "./index";
@@ -603,17 +604,40 @@ describe("classes and archetypes", () => {
         <rules><stat name="wisdom" value="1" /></rules>
       </element>`);
     const made = parseAurora([set], options);
-    const bonuses = (id: string) =>
-      byId(made, id)
-        .effects.filter((e) => e.type === "abilityBonus")
-        .map((e) => (e.type === "abilityBonus" ? e.ability + e.value : ""));
-    expect(bonuses("imp1:species/fiendish").sort()).toEqual(["cha2", "int1"]);
+    // The race keeps its increases behind the requirement, and the sub-race sets the flag.
+    const fiendish = byId(made, "imp1:species/fiendish");
+    expect(fiendish.effects).toEqual([
+      {
+        type: "when",
+        requires: "!ID_T_FLAG",
+        effects: [{ type: "abilityBonus", ability: "int", value: 1 }],
+      },
+      {
+        type: "when",
+        requires: "!ID_T_FLAG",
+        effects: [{ type: "abilityBonus", ability: "cha", value: 2 }],
+      },
+    ]);
     const infernal = byId(made, "imp1:subspecies/fiendish-infernal");
-    expect(infernal.data.replacesSpecies).toBe(true);
-    expect(bonuses(infernal.id).sort()).toEqual(["cha2", "con1"]);
-    const plain = byId(made, "imp1:subspecies/fiendish-plain");
-    expect(plain.data.replacesSpecies).toBeUndefined();
-    expect(bonuses(plain.id)).toEqual(["wis1"]);
+    expect(infernal.data.replacesSpecies).toBeUndefined();
+    expect(infernal.effects).toContainEqual({ type: "flag", id: "ID_T_FLAG" });
+
+    // Chosen together, the sheet gets the ones that hold: the sub-race's, and not the race's.
+    const index = new Map(made.entries.map((e) => [e.id, e]));
+    const bonuses = (...ids: string[]) =>
+      collectEffects(
+        ids.flatMap((id) => index.get(id) ?? []),
+        { index, selections: {}, warnings: [] },
+      )
+        .effects.flatMap((e) => (e.type === "abilityBonus" ? [e.ability + e.value] : []))
+        .sort();
+    expect(bonuses("imp1:species/fiendish")).toEqual(["cha2", "int1"]);
+    expect(bonuses("imp1:species/fiendish", infernal.id)).toEqual(["cha2", "con1"]);
+    expect(bonuses("imp1:species/fiendish", "imp1:subspecies/fiendish-plain")).toEqual([
+      "cha2",
+      "int1",
+      "wis1",
+    ]);
   });
 
   it("gives a subclass of a class that does not cast its own spellcasting", () => {
@@ -1056,14 +1080,24 @@ describe("collections written for other readers", () => {
 
   it("reads Tasha's custom ability increase as a choice of any ability", () => {
     const race = byId(result, "imp1:species/custom-folk");
+    const choice = {
+      type: "choice",
+      choose: 1,
+      grants: "abilityBonus",
+      from: ["str", "dex", "con", "int", "wis", "cha"],
+    };
+    // Each is behind its requirement: the +2 unless a background gives the increases, the other
+    // only when something says so.
     expect(race.effects).toEqual([
       {
-        type: "choice",
-        id: "species-1",
-        choose: 1,
-        grants: "abilityBonus",
-        from: ["str", "dex", "con", "int", "wis", "cha"],
-        value: 2,
+        type: "when",
+        requires: "!ID_INTERNAL_GRANTS_BACKGROUND_ASI",
+        effects: [{ ...choice, id: "species-1", value: 2 }],
+      },
+      {
+        type: "when",
+        requires: "ID_OPTION_NEVER_HELD",
+        effects: [{ ...choice, id: "species-2", value: 1 }],
       },
     ]);
   });
@@ -1124,22 +1158,38 @@ describe("collections written for other readers", () => {
     expect(requirementsMet("")).toBe(true);
   });
 
-  it("makes a variant a sub-species that stands in for a race of the pack", () => {
+  it("makes a variant of a race of the pack a sub-species that sets the flag the race tests", () => {
     const sub = byId(result, "imp1:subspecies/dune-wanderer");
     expect(sub.parent).toBe("imp1:species/dune-race");
-    expect(sub.data.replacesSpecies).toBe(true);
-    // The race without what the variant replaces (the strength and the old trick), plus its own.
+    expect(sub.data.replacesSpecies).toBeUndefined();
     expect(sub.effects).toEqual([
-      { type: "abilityBonus", ability: "con", value: 1 },
+      { type: "flag", id: "ID_V_FLAG" },
       { type: "abilityBonus", ability: "dex", value: 2 },
       { type: "trait", id: "imp1:trait/new-trick" },
     ]);
-    // The race itself is unchanged.
+    // The race keeps what the variant replaces (the strength and the old trick) behind a `when`.
     expect(byId(result, "imp1:species/dune-race").effects).toEqual([
-      { type: "abilityBonus", ability: "str", value: 2 },
+      {
+        type: "when",
+        requires: "!(ID_V_FLAG||ID_V_OTHER)",
+        effects: [{ type: "abilityBonus", ability: "str", value: 2 }],
+      },
       { type: "abilityBonus", ability: "con", value: 1 },
-      { type: "trait", id: "imp1:trait/old-trick" },
+      {
+        type: "when",
+        requires: "!ID_V_FLAG",
+        effects: [{ type: "trait", id: "imp1:trait/old-trick" }],
+      },
     ]);
+    // Chosen together, the sheet has the race without those and the variant's own.
+    const index = new Map(result.entries.map((e) => [e.id, e]));
+    const traits = (...ids: string[]) =>
+      collectEffects(
+        ids.flatMap((id) => index.get(id) ?? []),
+        { index, selections: {}, warnings: [] },
+      ).effects.flatMap((e) => (e.type === "trait" ? [e.id] : []));
+    expect(traits("imp1:species/dune-race")).toEqual(["imp1:trait/old-trick"]);
+    expect(traits("imp1:species/dune-race", sub.id)).toEqual(["imp1:trait/new-trick"]);
   });
 
   it("takes from the app's own race what a variant replaces", () => {

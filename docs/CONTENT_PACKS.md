@@ -30,6 +30,18 @@ number comes from. The kinds are `abilityBonus`, `proficiency`, `trait`, `choice
   weapons use that ability for attack and damage instead of Strength or Dexterity (the best one
   that applies wins). `when` narrows the weapons: `oneHanded` (no two-handed property) or
   `magic` (an item with a `rarity`); `proficient` asks for a weapon the character is proficient with.
+- `{ "type": "when", "requires": "!LINE", "effects": [ ... ] }` holds its effects only while the
+  requirement does. It is checked every time the sheet is worked out, against what the character
+  has then. A requirement is written as Aurora writes it: names, `,` for "and", `||` for "or", `!`
+  for "not", brackets to group (`!(A||B)`). A name is held when it is the id of an entry the
+  character has (the species, a sub-species, a class, a feat, a trait that came with something)
+  or a flag set by a `flag` effect. A condition on the sheet, `[str:13]`, is understood as a
+  word that nothing holds yet.
+- `{ "type": "flag", "id": "LINE" }` sets a name that requirements can ask for, for a rule that
+  says "this is held" without being an entry. It counts only where the effect itself applies,
+  so a flag inside a `when` is set only while that holds. Together they let a species keep the
+  increases that a sub-species takes away: `when !LINE` on the species, `flag LINE` on the
+  sub-species.
 - Item data can hold `rarity` (a magic item), `enhancement` (+1 to +3 to attack and damage) and
   `enchants: true` (the item is put on a weapon of the inventory instead of being carried: the
   Aurora importer sets it for the magic weapons it reads). A weapon in the inventory can also

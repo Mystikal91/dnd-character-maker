@@ -64,7 +64,12 @@ export type ModifierCondition = (typeof MODIFIER_CONDITIONS)[number];
  * Features that need custom logic are expressed as `trait` (+ optional `resource`)
  * and are not automated.
  */
-export const EffectSchema = v.variant("type", [
+const PlainEffectSchema = v.variant("type", [
+  /**
+   * A name other rules can ask for (`when.requires`), for a rule that says "this is held" without
+   * being an entry of its own. Entries themselves are held by their id.
+   */
+  v.object({ type: v.literal("flag"), id: v.string() }),
   v.object({
     type: v.literal("abilityBonus"),
     ability: AbilitySchema,
@@ -167,7 +172,24 @@ export const EffectSchema = v.variant("type", [
     recharge: v.picklist(["short", "long", "dawn"]),
   }),
 ]);
-export type Effect = v.InferOutput<typeof EffectSchema>;
+
+/**
+ * Effects that hold only while a requirement does. `requires` is written as Aurora writes them:
+ * names of entries or flags, `,` for "and", `||` for "or", `!` for "not", brackets to group. It is
+ * checked every time the sheet is worked out, against what the character has then.
+ */
+export type Effect =
+  | v.InferOutput<typeof PlainEffectSchema>
+  | { type: "when"; requires: string; effects: Effect[] };
+
+export const EffectSchema: v.GenericSchema<Effect> = v.union([
+  PlainEffectSchema,
+  v.object({
+    type: v.literal("when"),
+    requires: v.string(),
+    effects: v.array(v.lazy(() => EffectSchema)),
+  }),
+]);
 
 export const ENTRY_KINDS = [
   "species",
@@ -246,12 +268,19 @@ export function findBrokenReferences(packs: Pack[]): string[] {
   };
   for (const entry of packs.flatMap((p) => p.entries)) {
     if (entry.parent) check(entry.id, entry.parent);
-    for (const effect of entry.effects) {
-      if (effect.type === "trait") check(entry.id, effect.id);
-      else if (effect.type === "grantSpell") check(entry.id, effect.spell);
-      else if (effect.type === "choice" && (effect.grants === "spell" || effect.grants === "trait"))
-        for (const ref of effect.from) check(entry.id, ref);
-    }
+    const visit = (effects: Effect[]) => {
+      for (const effect of effects) {
+        if (effect.type === "trait") check(entry.id, effect.id);
+        else if (effect.type === "grantSpell") check(entry.id, effect.spell);
+        else if (effect.type === "when") visit(effect.effects);
+        else if (
+          effect.type === "choice" &&
+          (effect.grants === "spell" || effect.grants === "trait")
+        )
+          for (const ref of effect.from) check(entry.id, ref);
+      }
+    };
+    visit(entry.effects);
   }
   return problems;
 }
