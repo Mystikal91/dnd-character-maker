@@ -116,8 +116,45 @@ export function importSubRace(ctx: Context, source: Source): void {
     ctx.result.skipped["Sub Race"] = (ctx.result.skipped["Sub Race"] ?? 0) + 1;
     return;
   }
+  // A sub-race can set a flag that rules of the race test for ("unless you have a sub-race"):
+  // the Tiefling's ability increase and legacy give way to the ones of its sub-race. Then the
+  // sub-race stands in for the species, like a variant, instead of adding to it.
+  const parentSource = ofType(ctx, "Race").find((s) => s.id === parent);
+  const holds = flagsOf(ctx, source);
+  if (parentSource && takesAway(ctx, parentSource, holds)) {
+    const own = baseEffects(ctx, source, "subspecies", holds).effects;
+    const appEntry = parentSource.existing ? ctx.options.index.get(parent) : undefined;
+    const base = appEntry
+      ? withoutRemoved(ctx, parentSource, holds, appEntry.effects)
+      : baseEffects(ctx, parentSource, "subspecies-base", holds).effects;
+    emit(
+      ctx,
+      source,
+      { replacesSpecies: true },
+      { desc: description(source.el) },
+      { effects: [...base, ...own], parent },
+    );
+    return;
+  }
   const { effects } = baseEffects(ctx, source, "subspecies");
   emit(ctx, source, {}, { desc: description(source.el) }, { effects, parent });
+}
+
+/** True when setting these flags takes away rules that the race has without them. */
+function takesAway(ctx: Context, race: Source, holds: ReadonlySet<string>): boolean {
+  const counted = ctx.result.unsupportedRules;
+  const before = mapRules(ctx, race, { idPrefix: "species" });
+  const after = mapRules(ctx, race, { idPrefix: "species", holds });
+  ctx.result.unsupportedRules = counted; // only looking, nothing to report twice
+  const kept = after.effects.map((e) => JSON.stringify(e));
+  const lostEffect = before.effects.some((e) => {
+    const at = kept.indexOf(JSON.stringify(e));
+    if (at < 0) return true;
+    kept.splice(at, 1);
+    return false;
+  });
+  const lostGrant = before.grants.some((g) => !after.grants.some((a) => a.source === g.source));
+  return lostEffect || lostGrant;
 }
 
 /**

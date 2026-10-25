@@ -577,6 +577,45 @@ describe("classes and archetypes", () => {
     });
   });
 
+  it("lets a sub-race that sets a flag replace what the race gives unless it is there", () => {
+    const set = wrap(`
+      <element name="Fiendish" type="Race" source="Test Book" id="ID_T_FIENDISH">
+        <description><p>A people.</p></description>
+        <rules>
+          <stat name="intelligence" value="1" requirements="!ID_T_FLAG" />
+          <stat name="charisma" value="2" requirements="!ID_T_FLAG" />
+          <select type="Sub Race" name="Line" supports="Fiendish" optional="true" />
+        </rules>
+      </element>
+      <element name="Line Flag" type="Grants" source="Test Book" id="ID_T_FLAG" />
+      <element name="Fiendish (Infernal)" type="Sub Race" source="Test Book" id="ID_T_INFERNAL">
+        <supports>Fiendish</supports>
+        <description><p>Its own increases.</p></description>
+        <rules>
+          <grant type="Grants" id="ID_T_FLAG" />
+          <stat name="charisma" value="2" />
+          <stat name="constitution" value="1" />
+        </rules>
+      </element>
+      <element name="Fiendish (Plain)" type="Sub Race" source="Test Book" id="ID_T_PLAIN">
+        <supports>Fiendish</supports>
+        <description><p>Adds to the race.</p></description>
+        <rules><stat name="wisdom" value="1" /></rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    const bonuses = (id: string) =>
+      byId(made, id)
+        .effects.filter((e) => e.type === "abilityBonus")
+        .map((e) => (e.type === "abilityBonus" ? e.ability + e.value : ""));
+    expect(bonuses("imp1:species/fiendish").sort()).toEqual(["cha2", "int1"]);
+    const infernal = byId(made, "imp1:subspecies/fiendish-infernal");
+    expect(infernal.data.replacesSpecies).toBe(true);
+    expect(bonuses(infernal.id).sort()).toEqual(["cha2", "con1"]);
+    const plain = byId(made, "imp1:subspecies/fiendish-plain");
+    expect(plain.data.replacesSpecies).toBeUndefined();
+    expect(bonuses(plain.id)).toEqual(["wis1"]);
+  });
+
   it("gives a subclass of a class that does not cast its own spellcasting", () => {
     const knight = wrap(`
       <element name="Spell Knight" type="Archetype" source="Test Book" id="ID_SK">
