@@ -755,6 +755,35 @@ describe("classes and archetypes", () => {
     ]);
   });
 
+  it("gives entries that share a name the same ids whatever the order or the rest of the files", () => {
+    const named = (aid: string, text: string) => `
+      <element name="Charisma" type="Racial Trait" source="Book" id="${aid}">
+        <description><p>${text}</p></description>
+      </element>`;
+    const race = (traits: string[]) => `
+      <element name="Folk" type="Race" source="Book" id="ID_T_FOLK">
+        <description><p>Folk.</p></description>
+        <rules>${traits.map((t) => `<grant type="Racial Trait" id="${t}" />`).join("")}</rules>
+      </element>`;
+    const a = named("ID_T_A_CHA", "First.");
+    const b = named("ID_T_B_CHA", "Second.");
+    const idsOf = (xml: string[]) => {
+      const made = parseAurora([wrap(xml.join(""))], options);
+      return Object.fromEntries(Object.entries(made.aids).filter(([aid]) => aid.endsWith("_CHA")));
+    };
+    const together = idsOf([race(["ID_T_B_CHA", "ID_T_A_CHA"]), b, a]);
+    expect(together).toEqual({
+      ID_T_A_CHA: "imp1:trait/charisma",
+      ID_T_B_CHA: "imp1:trait/charisma-2",
+    });
+    // Another order of the files, and one more element of the same name that nothing grants.
+    expect(idsOf([race(["ID_T_A_CHA", "ID_T_B_CHA"]), a, b])).toEqual(together);
+    const more = named("ID_T_0_CHA", "Zeroth.");
+    const withMore = idsOf([race(["ID_T_B_CHA", "ID_T_A_CHA"]), b, a, more]);
+    // The one that comes first by its Aurora id takes the plain name; the others keep their order.
+    expect(withMore.ID_T_B_CHA).toBe("imp1:trait/charisma-3");
+  });
+
   it("puts a space after a label written as a span, which the files leave out", () => {
     const set = wrap(`
       <element name="Labelled" type="Background" source="Test Book" id="ID_T_LABELLED">

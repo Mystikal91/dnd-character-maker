@@ -68,6 +68,11 @@ function drop(ctx: Context, replace: ReadonlyMap<string, string>): void {
   for (const source of [...ctx.needed]) {
     if (source.id && replace.has(source.id)) ctx.needed.delete(source);
   }
+  // What was made from a dropped element is now the entry that took its place.
+  for (const [aid, id] of Object.entries(result.aids)) {
+    const kept = replace.get(id);
+    if (kept) result.aids[aid] = kept;
+  }
 }
 
 /** The kinds people pick from a list: a re-edited feature or trait is not a second choice. */

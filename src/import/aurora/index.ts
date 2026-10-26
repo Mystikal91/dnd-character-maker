@@ -42,7 +42,7 @@ export { AuroraParseError, slugify } from "./xml";
  * the entries or texts it makes: packs imported with an older version are marked as needing an
  * update, and can be imported again with a click.
  */
-export const AURORA_IMPORT_VERSION = 9;
+export const AURORA_IMPORT_VERSION = 10;
 export type { AuroraOptions, AuroraResult } from "./registry";
 
 /**
@@ -156,6 +156,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     editions: 0,
     unsupportedRules: 0,
     title: "",
+    aids: {},
   };
   const ctx: Context = {
     options,
@@ -304,5 +305,8 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
   nameSameNames(ctx);
   nameVariantsBySpecies(ctx);
   result.sources = [...new Set(result.sources)].sort();
+  // Only what was made stays in the map (an element that became nothing is not in it).
+  const made = new Set(result.entries.map((e) => e.id));
+  for (const [aid, id] of Object.entries(result.aids)) if (!made.has(id)) delete result.aids[aid];
   return result;
 }

@@ -30,6 +30,8 @@ export interface AuroraResult {
   unsupportedRules: number;
   /** The name the files give themselves, if any. */
   title: string;
+  /** The entry each Aurora id became, by Aurora id: what a later import matches on. */
+  aids: Record<string, string>;
 }
 
 /** One `<element>` of an Aurora file. */
@@ -59,6 +61,8 @@ export interface Context {
   /** Elements that must be created, in file order. */
   needed: Set<Source>;
   usedSlugs: Set<string>;
+  /** The slug planned for each element that becomes an entry, the same whatever else is imported. */
+  slugs?: Map<Source, string>;
   /** Entries of the app by kind and lowercase name. */
   existingByName: Map<string, string>;
 }
@@ -149,19 +153,46 @@ export const sharesTag = (a: string[], b: string[]) => {
   return b.some((t) => lower.has(t.toLowerCase()));
 };
 
+/**
+ * The slug of every element that becomes an entry: its name as a slug, and when several elements
+ * share a name, a number in the order of their Aurora ids. Counting every element of the files,
+ * and not only the ones that end up as entries, keeps an id the same when the importer changes
+ * what it makes or the files list their elements in another order.
+ */
+function planSlugs(ctx: Context): Map<Source, string> {
+  const groups = new Map<string, Source[]>();
+  for (const source of ctx.all) {
+    const kind = KIND_OF[source.type];
+    const base = slugify(source.name);
+    if (!kind || !base || source.id) continue;
+    const key = `${kind}/${base}`;
+    groups.set(key, [...(groups.get(key) ?? []), source]);
+  }
+  const planned = new Map<Source, string>();
+  for (const [key, sources] of groups) {
+    const base = key.slice(key.indexOf("/") + 1);
+    sources
+      .sort((a, b) => (a.aid < b.aid ? -1 : a.aid > b.aid ? 1 : 0))
+      .forEach((source, i) => planned.set(source, i === 0 ? base : `${base}-${i + 1}`));
+  }
+  return planned;
+}
+
 /** Allocates the id of an element: its slug, made unique among the pack's entries. */
 export function allocate(ctx: Context, source: Source): void {
   const kind = KIND_OF[source.type];
   if (!kind || source.id) return;
-  const base = slugify(source.name);
+  ctx.slugs ??= planSlugs(ctx);
+  const base = ctx.slugs.get(source);
   if (!base) return;
   let slug = base;
-  for (let n = 2; ctx.usedSlugs.has(`${kind}/${slug}`); n++) slug = `${base}-${n}`;
+  // Only a name that already ends in a number can still meet another slug here.
+  for (let n = 2; ctx.usedSlugs.has(`${kind}/${slug}`); n++) slug = `${base}-x${n}`;
   ctx.usedSlugs.add(`${kind}/${slug}`);
   source.kind = kind;
   source.id = `${ctx.options.packId}:${kind}/${slug}`;
+  ctx.result.aids[source.aid] = source.id;
 }
-
 /** The elements of one type, in file order. */
 export const ofType = (ctx: Context, type: string): Source[] => ctx.byType.get(type) ?? [];
 

@@ -84,7 +84,7 @@ export function isForced(key: string): boolean {
 const SAVE_DELAY_MS = 400;
 let saveTimer: ReturnType<typeof setTimeout> | undefined;
 
-async function refreshList() {
+export async function refreshList() {
   characters.value = await listCharacters();
 }
 

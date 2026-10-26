@@ -1,6 +1,7 @@
 import { signal } from "@preact/signals";
 import { loadContent } from "../content/browser";
 import { AURORA_IMPORT_VERSION, AuroraParseError, parseAurora } from "../import/aurora";
+import { migrationMap } from "../import/aurora/migrate";
 import { gatherAurora, rawAddress } from "../import/aurora/remote";
 import {
   PackParseError,
@@ -12,6 +13,7 @@ import {
   saveUserPack,
   serializePack,
 } from "../storage/packs";
+import { migrateSavedCharacters } from "./migrate";
 import { content } from "./store";
 
 /** The packs the user added, once read from storage. */
@@ -206,6 +208,13 @@ async function importAuroraSources(
       truncated: gathered.truncated,
     };
     if (result.entries.length === 0) return;
+    // Importing again can number or name entries otherwise: the characters follow them.
+    const moved = old
+      ? migrationMap(
+          { entries: old.pack.entries, strings: old.strings, ...(old.aids && { aids: old.aids }) },
+          { entries: result.entries, strings: result.strings, aids: result.aids },
+        )
+      : new Map<string, string>();
     await addUserPack({
       id,
       name,
@@ -226,7 +235,9 @@ async function importAuroraSources(
       ...(source && { source }),
       importVersion: AURORA_IMPORT_VERSION,
       keepEditions: keep,
+      aids: result.aids,
     });
+    await migrateSavedCharacters(moved);
   } catch (error) {
     if (!(error instanceof AuroraParseError)) console.error("Importing files failed", error);
     packError.value = "invalid";
