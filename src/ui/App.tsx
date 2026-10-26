@@ -9,6 +9,7 @@ import { CharacterBar } from "./CharacterBar";
 import { Credits } from "./Credits";
 import "../app/translate";
 import { STAGE, VERSION } from "../app/version";
+import { startKeepingAwake } from "../app/wakeLock";
 import { AboutPage } from "./AboutPage";
 import { AppMenu } from "./AppMenu";
 import { AutoTranslatePage } from "./AutoTranslatePage";
@@ -55,6 +56,7 @@ export function App() {
   useEffect(() => {
     void initStorage();
     void loadUserPacks();
+    startKeepingAwake();
   }, []);
 
   // Rules texts follow the language; the old texts stay on screen until the new ones are loaded.

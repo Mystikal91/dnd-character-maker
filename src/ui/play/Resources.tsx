@@ -316,7 +316,10 @@ export function PlayNotes() {
   );
 }
 
-/** The conditions of the rules, each a button that applies or removes it. */
+/**
+ * The conditions of the rules: the ones in force first, each a button that removes it with its
+ * rules under it; the list of all of them stays folded until a new one is wanted.
+ */
 export function Conditions() {
   const c = content.value;
   const play = character.value.play;
@@ -325,29 +328,34 @@ export function Conditions() {
     .filter((e) => e.kind === "condition")
     .sort((a, b) => c.name(a.id).localeCompare(c.name(b.id)));
   const active = conditions.filter((e) => play.conditions.includes(e.id));
+  const chip = (e: (typeof conditions)[number]) => {
+    const on = play.conditions.includes(e.id);
+    return (
+      <button
+        type="button"
+        key={e.id}
+        class={`chip${on ? " on" : ""}`}
+        aria-pressed={on}
+        onClick={() => changePlay((p) => toggleCondition(p, e.id))}
+      >
+        {c.name(e.id)}
+      </button>
+    );
+  };
 
   return (
     <Panel title={ui("play.conditions")}>
-      <p class="muted">{ui("play.conditionsHint")}</p>
-      <div class="chips">
-        {conditions.map((e) => {
-          const on = play.conditions.includes(e.id);
-          return (
-            <button
-              type="button"
-              key={e.id}
-              class={`chip${on ? " on" : ""}`}
-              aria-pressed={on}
-              onClick={() => changePlay((p) => toggleCondition(p, e.id))}
-            >
-              {c.name(e.id)}
-            </button>
-          );
-        })}
-      </div>
+      {active.length > 0 && <div class="chips">{active.map(chip)}</div>}
       {active.map((e) => (
         <RulesText key={e.id} id={e.id} name={c.name(e.id)} text={c.text(e.id, "desc")} />
       ))}
+      <details class="add-condition" open={active.length === 0}>
+        <summary>{ui("play.addCondition")}</summary>
+        <p class="muted">{ui("play.conditionsHint")}</p>
+        <div class="chips">
+          {conditions.filter((e) => !play.conditions.includes(e.id)).map(chip)}
+        </div>
+      </details>
     </Panel>
   );
 }

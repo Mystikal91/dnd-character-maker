@@ -8,13 +8,51 @@ import {
   rollD20,
   rollExpression,
 } from "../engine/dice";
-import { sheet, updateCharacter } from "./store";
+import {
+  applyDamage,
+  concentrationDc,
+  currentHp,
+  deathStatus,
+  endConcentration,
+} from "../engine/play";
+import { character, sheet, updateCharacter } from "./store";
+
+/** The hit points before the last change, to take it back for a few seconds. */
+export const hpUndo = signal<{ before: PlayState; change: number } | undefined>(undefined);
+let undoTimer: ReturnType<typeof setTimeout> | undefined;
+const UNDO_MS = 10_000;
 
 /** Edits the play state of the open character and saves it like any other change. */
-export function changePlay(edit: (play: PlayState) => PlayState) {
+export function changePlay(edit: (play: PlayState) => PlayState, options: { undo?: boolean } = {}) {
+  let remembered: { before: PlayState; change: number } | undefined;
   updateCharacter((draft) => {
-    draft.play = edit(draft.play);
+    const before = draft.play;
+    const after = edit(before);
+    const max = vitals()?.max ?? 0;
+    const change = currentHp(after, max) - currentHp(before, max);
+    if (options.undo !== false && (change !== 0 || after.tempHp !== before.tempHp))
+      remembered = {
+        before: structuredClone(before),
+        change: change || after.tempHp - before.tempHp,
+      };
+    draft.play = after;
   });
+  if (options.undo === false) hpUndo.value = undefined;
+  else if (remembered) {
+    hpUndo.value = remembered;
+    clearTimeout(undoTimer);
+    undoTimer = setTimeout(() => {
+      hpUndo.value = undefined;
+    }, UNDO_MS);
+  }
+}
+
+/** Takes back the last change of hit points. */
+export function undoHp() {
+  const last = hpUndo.value;
+  if (!last) return;
+  clearTimeout(undoTimer);
+  changePlay(() => last.before, { undo: false });
 }
 
 export interface LogEntry {
@@ -48,6 +86,9 @@ export const raging = signal(false);
 export const rollMode = signal<D20Mode>("normal");
 
 export function addLog(entry: Omit<LogEntry, "id">) {
+  // A short buzz on phones that have one, longer for a natural 20.
+  if (typeof navigator !== "undefined" && typeof navigator.vibrate === "function")
+    navigator.vibrate(entry.tone === "critical" ? [20, 40, 20] : 12);
   rollLog.value = [{ id: nextId++, ...entry }, ...rollLog.value].slice(0, MAX_LOG);
 }
 
@@ -87,4 +128,22 @@ export function vitals() {
   return s
     ? { max: s.hitPoints.max, hitDice: s.hitPoints.hitDice, conMod: s.abilities.con.modifier }
     : undefined;
+}
+
+/**
+ * Damage to the open character, with what it does to concentration: the save to make, or the end
+ * of it when the character falls unconscious.
+ */
+export function damageCharacter(amount: number) {
+  const v = vitals();
+  if (!v || amount <= 0) return;
+  const play = character.value.play;
+  const concentrating = Boolean(play.concentration);
+  const after = applyDamage(play, v.max, amount);
+  if (concentrating && deathStatus(after, v.max) !== "alive") {
+    changePlay((p) => endConcentration(applyDamage(p, v.max, amount)));
+  } else {
+    changePlay((p) => applyDamage(p, v.max, amount));
+    if (concentrating) concentrationAlert.value = concentrationDc(amount);
+  }
 }

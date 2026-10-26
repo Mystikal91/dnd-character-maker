@@ -158,8 +158,8 @@ function ExtraRolls() {
   );
 }
 
-/** Checks, saves, skills and attacks that roll with one tap. */
-export function QuickRolls() {
+/** The checks (initiative, saves, skills) or the attacks that roll with one tap. */
+function RollsPanel({ part }: { part: "attacks" | "checks" }) {
   const c = content.value;
   const s = sheet.value;
   if (!c || !s) return null;
@@ -167,108 +167,110 @@ export function QuickRolls() {
   const skills = [...s.skills].sort((a, b) => c.name(a.id).localeCompare(c.name(b.id)));
 
   return (
-    <Panel title={ui("play.rolls")}>
+    <Panel title={ui(part === "attacks" ? "play.attacks" : "play.rolls")}>
       <ModePicker />
-      <h4>{ui("play.initiative")}</h4>
-      <div class="roll-grid">
-        <RollButton label={ui("play.initiative")} bonus={s.initiative} />
-      </div>
-      <h4>{ui("play.saves")}</h4>
-      <div class="roll-grid">
-        {ABILITIES.map((a) => (
-          <RollButton
-            key={a}
-            label={c.text(`${ruleset}:ability/${a}`, "abbreviation") ?? a}
-            name={`${c.name(`${ruleset}:ability/${a}`)} - ${ui("sheet.savingThrow")}`}
-            bonus={s.saves[a].bonus}
-          />
-        ))}
-      </div>
-      <h4>{ui("play.skills")}</h4>
-      <div class="roll-grid">
-        {skills.map((sk) => (
-          <RollButton key={sk.id} label={c.name(sk.id)} bonus={sk.bonus} />
-        ))}
-      </div>
-      {s.attacks.length > 0 && (
+      {part === "checks" && (
         <>
-          <h4>{ui("play.attacks")}</h4>
-          <ul class="plain">
-            {s.attacks.map((a) => {
-              const dmg = a.damage;
-              // A rage adds to melee weapon attacks.
-              const rage = s.extraDamage.find((e) => e.kind === "rage");
-              const rageBonus = raging.value && !a.ranged && rage?.kind === "rage" ? rage.bonus : 0;
-              const bonus = (dmg?.bonus ?? 0) + rageBonus;
-              const dice = dmg
-                ? `${dmg.dice}${bonus === 0 ? "" : bonus > 0 ? `+${bonus}` : bonus}`
-                : "";
-              return (
-                <li class="row-between" key={a.itemId}>
-                  <span>{c.name(a.itemId)}</span>
-                  <span class="btn-row">
+          <h4>{ui("play.initiative")}</h4>
+          <div class="roll-grid">
+            <RollButton label={ui("play.initiative")} bonus={s.initiative} />
+          </div>
+          <h4>{ui("play.saves")}</h4>
+          <div class="roll-grid">
+            {ABILITIES.map((a) => (
+              <RollButton
+                key={a}
+                label={c.text(`${ruleset}:ability/${a}`, "abbreviation") ?? a}
+                name={`${c.name(`${ruleset}:ability/${a}`)} - ${ui("sheet.savingThrow")}`}
+                bonus={s.saves[a].bonus}
+              />
+            ))}
+          </div>
+          <h4>{ui("play.skills")}</h4>
+          <div class="roll-grid">
+            {skills.map((sk) => (
+              <RollButton key={sk.id} label={c.name(sk.id)} bonus={sk.bonus} />
+            ))}
+          </div>
+        </>
+      )}
+      {part === "attacks" && s.attacks.length === 0 && <p class="muted">{ui("play.noAttacks")}</p>}
+      {part === "attacks" && s.attacks.length > 0 && (
+        <ul class="plain">
+          {s.attacks.map((a) => {
+            const dmg = a.damage;
+            // A rage adds to melee weapon attacks.
+            const rage = s.extraDamage.find((e) => e.kind === "rage");
+            const rageBonus = raging.value && !a.ranged && rage?.kind === "rage" ? rage.bonus : 0;
+            const bonus = (dmg?.bonus ?? 0) + rageBonus;
+            const dice = dmg
+              ? `${dmg.dice}${bonus === 0 ? "" : bonus > 0 ? `+${bonus}` : bonus}`
+              : "";
+            return (
+              <li class="row-between" key={a.itemId}>
+                <span>{c.name(a.itemId)}</span>
+                <span class="btn-row">
+                  <button
+                    type="button"
+                    class="roll-btn"
+                    onClick={() => {
+                      const roll = rollCheck(
+                        `${c.name(a.itemId)} - ${ui("play.attackRoll")}`,
+                        a.attackBonus,
+                      );
+                      criticalExtra.value = roll.critical;
+                      // A natural 20 arms the critical damage; any other attack clears it.
+                      if (roll.critical) criticalWeapon.value = a.itemId;
+                      else if (criticalWeapon.value === a.itemId) criticalWeapon.value = undefined;
+                    }}
+                  >
+                    <span>{ui("play.attackRoll")}</span>
+                    <b>{signed(a.attackBonus)}</b>
+                  </button>
+                  {dmg && (
                     <button
                       type="button"
                       class="roll-btn"
                       onClick={() => {
-                        const roll = rollCheck(
-                          `${c.name(a.itemId)} - ${ui("play.attackRoll")}`,
-                          a.attackBonus,
+                        const critical = criticalWeapon.value === a.itemId;
+                        const text = critical ? (doubleDice(dice) ?? dice) : dice;
+                        const name = `${c.name(a.itemId)} - ${ui("play.damageRoll")}`;
+                        rollDiceText(
+                          critical ? `${name} (${ui("play.criticalDamage")})` : name,
+                          text,
                         );
-                        criticalExtra.value = roll.critical;
-                        // A natural 20 arms the critical damage; any other attack clears it.
-                        if (roll.critical) criticalWeapon.value = a.itemId;
-                        else if (criticalWeapon.value === a.itemId)
-                          criticalWeapon.value = undefined;
+                        if (critical) criticalWeapon.value = undefined;
                       }}
                     >
-                      <span>{ui("play.attackRoll")}</span>
-                      <b>{signed(a.attackBonus)}</b>
+                      <span>{ui("play.damageRoll")}</span>
+                      <b>{criticalWeapon.value === a.itemId ? (doubleDice(dice) ?? dice) : dice}</b>
                     </button>
-                    {dmg && (
-                      <button
-                        type="button"
-                        class="roll-btn"
-                        onClick={() => {
-                          const critical = criticalWeapon.value === a.itemId;
-                          const text = critical ? (doubleDice(dice) ?? dice) : dice;
-                          const name = `${c.name(a.itemId)} - ${ui("play.damageRoll")}`;
-                          rollDiceText(
-                            critical ? `${name} (${ui("play.criticalDamage")})` : name,
-                            text,
-                          );
-                          if (critical) criticalWeapon.value = undefined;
+                  )}
+                  {dmg && (
+                    <label class="check-row crit-toggle">
+                      <input
+                        type="checkbox"
+                        checked={criticalWeapon.value === a.itemId}
+                        onChange={(e) => {
+                          criticalWeapon.value = e.currentTarget.checked ? a.itemId : undefined;
                         }}
-                      >
-                        <span>{ui("play.damageRoll")}</span>
-                        <b>
-                          {criticalWeapon.value === a.itemId ? (doubleDice(dice) ?? dice) : dice}
-                        </b>
-                      </button>
-                    )}
-                    {dmg && (
-                      <label class="check-row crit-toggle">
-                        <input
-                          type="checkbox"
-                          checked={criticalWeapon.value === a.itemId}
-                          onChange={(e) => {
-                            criticalWeapon.value = e.currentTarget.checked ? a.itemId : undefined;
-                          }}
-                        />
-                        {ui("play.criticalHit")}
-                      </label>
-                    )}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        </>
+                      />
+                      {ui("play.criticalHit")}
+                    </label>
+                  )}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
       )}
-      <ExtraRolls />
+      {part === "attacks" && <ExtraRolls />}
     </Panel>
   );
 }
+
+export const AttackRolls = () => <RollsPanel part="attacks" />;
+export const CheckRolls = () => <RollsPanel part="checks" />;
 
 /** Plain dice and a box for expressions like 2d6+3. */
 export function DiceTray() {

@@ -1,14 +1,12 @@
 import { useState } from "preact/hooks";
-import { addLog, changePlay, concentrationAlert, vitals } from "../../app/play";
+import { addLog, changePlay, damageCharacter, vitals } from "../../app/play";
 import { character, sheet } from "../../app/store";
+import { canKeepAwake, keepAwake, setKeepAwake } from "../../app/wakeLock";
 import { cryptoRandomInt } from "../../engine/dice";
 import {
-  applyDamage,
   applyHealing,
-  concentrationDc,
   currentHp,
   deathStatus,
-  endConcentration,
   gainTempHp,
   hitDiceLeft,
   longRest,
@@ -19,7 +17,7 @@ import {
 import { type UiKey, ui } from "../../i18n/ui";
 import { Panel } from "../sheet/parts";
 
-function HitPoints() {
+export function HitPoints() {
   const [amount, setAmount] = useState("");
   const v = vitals();
   const play = character.value.play;
@@ -33,19 +31,6 @@ function HitPoints() {
   };
   const percent = v.max > 0 ? Math.round((hp / v.max) * 100) : 0;
 
-  /** Damage, with what it does to concentration: the save to make, or the end of it. */
-  const takeDamage = (a: number) => {
-    const concentrating = Boolean(play.concentration);
-    const after = applyDamage(play, v.max, a);
-    // Unconscious or dead ends concentration; otherwise the player owes a save.
-    if (concentrating && deathStatus(after, v.max) !== "alive") {
-      changePlay((p) => endConcentration(applyDamage(p, v.max, a)));
-    } else {
-      changePlay((p) => applyDamage(p, v.max, a));
-      if (concentrating) concentrationAlert.value = concentrationDc(a);
-    }
-  };
-
   return (
     <Panel title={ui("play.hitPoints")}>
       <output class="hp-readout">
@@ -53,7 +38,12 @@ function HitPoints() {
         <span>{ui("play.of", { max: v.max })}</span>
         {play.tempHp > 0 && <em>{ui("play.temp", { n: play.tempHp })}</em>}
       </output>
-      <div class="hp-bar" role="img" aria-label={`${hp} ${ui("play.of", { max: v.max })}`}>
+      <div
+        class="hp-bar"
+        data-state={hp === 0 ? "down" : percent <= 25 ? "low" : percent <= 50 ? "hurt" : "well"}
+        role="img"
+        aria-label={`${hp} ${ui("play.of", { max: v.max })}`}
+      >
         <span style={{ width: `${percent}%` }} />
       </div>
       <div class="hp-quick">
@@ -63,7 +53,7 @@ function HitPoints() {
             key={`d${a}`}
             class="danger-btn"
             aria-label={ui("play.damageBy", { n: a })}
-            onClick={() => takeDamage(a)}
+            onClick={() => damageCharacter(a)}
           >
             {"\u2212"}
             {a}
@@ -96,7 +86,7 @@ function HitPoints() {
             type="button"
             class="danger-btn"
             disabled={n === 0}
-            onClick={() => apply(takeDamage)}
+            onClick={() => apply(damageCharacter)}
           >
             {ui("play.damage")}
           </button>
@@ -120,7 +110,7 @@ function HitPoints() {
   );
 }
 
-function DeathSaves() {
+export function DeathSaves() {
   const v = vitals();
   const play = character.value.play;
   if (!v) return null;
@@ -162,7 +152,7 @@ function DeathSaves() {
   );
 }
 
-function HitDice() {
+export function HitDice() {
   const v = vitals();
   const play = character.value.play;
   if (!v) return null;
@@ -203,7 +193,7 @@ function HitDice() {
   );
 }
 
-function Rests() {
+export function Rests() {
   const v = vitals();
   const s = sheet.value;
   const ch = character.value;
@@ -250,6 +240,16 @@ function Rests() {
         />
         {ui("play.inspiration")}
       </label>
+      {canKeepAwake && (
+        <label class="check-row">
+          <input
+            type="checkbox"
+            checked={keepAwake.value}
+            onChange={(e) => void setKeepAwake(e.currentTarget.checked)}
+          />
+          {ui("play.keepAwake")}
+        </label>
+      )}
     </Panel>
   );
 }
