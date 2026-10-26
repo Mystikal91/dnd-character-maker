@@ -9,7 +9,7 @@ import { CoinsPanel } from "../Coins";
 import { collectSpellRows } from "../spellRows";
 import { DiceButton, DiceDrawer } from "./DiceDrawer";
 import { ClassResources, Conditions, PlayNotes, PlaySpells, Slots } from "./Resources";
-import { AttackRolls, CheckRolls, DiceTray, RollHistory } from "./Rolls";
+import { AttackRolls, CheckRolls, DiceTray, ModePicker, RollHistory } from "./Rolls";
 import { GroupTabs, StatusBar } from "./StatusBar";
 import { DeathSaves, HitDice, HitPoints, Rests } from "./Vitals";
 
@@ -72,6 +72,11 @@ export function PlayTab() {
       <div class="play-head">
         <StatusBar />
         <GroupTabs groups={groups} />
+        {(open === "combat" || open === "checks") && (
+          <div class="head-mode">
+            <ModePicker />
+          </div>
+        )}
       </div>
       {canLevelUp && (
         <button

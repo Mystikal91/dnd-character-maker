@@ -232,24 +232,26 @@ export function Rests() {
           {ui("play.longRest")}
         </button>
       </div>
-      <label class="check-row">
-        <input
-          type="checkbox"
-          checked={ch.play.inspiration}
-          onChange={(e) => changePlay((p) => ({ ...p, inspiration: e.currentTarget.checked }))}
-        />
-        {ui("play.inspiration")}
-      </label>
-      {canKeepAwake && (
+      <div class="rest-opts">
         <label class="check-row">
           <input
             type="checkbox"
-            checked={keepAwake.value}
-            onChange={(e) => void setKeepAwake(e.currentTarget.checked)}
+            checked={ch.play.inspiration}
+            onChange={(e) => changePlay((p) => ({ ...p, inspiration: e.currentTarget.checked }))}
           />
-          {ui("play.keepAwake")}
+          {ui("play.inspiration")}
         </label>
-      )}
+        {canKeepAwake && (
+          <label class="check-row">
+            <input
+              type="checkbox"
+              checked={keepAwake.value}
+              onChange={(e) => void setKeepAwake(e.currentTarget.checked)}
+            />
+            {ui("play.keepAwake")}
+          </label>
+        )}
+      </div>
     </Panel>
   );
 }

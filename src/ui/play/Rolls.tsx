@@ -1,3 +1,4 @@
+import { signal } from "@preact/signals";
 import { useState } from "preact/hooks";
 import {
   type LogEntry,
@@ -40,8 +41,11 @@ function RollButton({
   );
 }
 
+/** The weapon whose attack was just rolled: its next tap rolls the damage. */
+const damageDue = signal<string | undefined>(undefined);
+
 /** Advantage, disadvantage or a normal roll for every d20 check below. */
-function ModePicker() {
+export function ModePicker() {
   const mode = rollMode.value;
   return (
     <fieldset class="segmented">
@@ -206,44 +210,50 @@ function RollsPanel({ part }: { part: "attacks" | "checks" }) {
             const dice = dmg
               ? `${dmg.dice}${bonus === 0 ? "" : bonus > 0 ? `+${bonus}` : bonus}`
               : "";
+            const attack = () => {
+              const roll = rollCheck(
+                `${c.name(a.itemId)} - ${ui("play.attackRoll")}`,
+                a.attackBonus,
+              );
+              criticalExtra.value = roll.critical;
+              // A natural 20 arms the critical damage; any other attack clears it.
+              if (roll.critical) criticalWeapon.value = a.itemId;
+              else if (criticalWeapon.value === a.itemId) criticalWeapon.value = undefined;
+              // The next tap on this weapon rolls its damage, unless the attack was a fumble.
+              damageDue.value = dmg && !roll.fumble ? a.itemId : undefined;
+            };
+            const damage = () => {
+              const critical = criticalWeapon.value === a.itemId;
+              const text = critical ? (doubleDice(dice) ?? dice) : dice;
+              const name = `${c.name(a.itemId)} - ${ui("play.damageRoll")}`;
+              rollDiceText(critical ? `${name} (${ui("play.criticalDamage")})` : name, text);
+              if (critical) criticalWeapon.value = undefined;
+              damageDue.value = undefined;
+            };
+            const armed = dmg !== undefined && damageDue.value === a.itemId;
+            const shownDice = criticalWeapon.value === a.itemId ? (doubleDice(dice) ?? dice) : dice;
             return (
-              <li class="row-between" key={a.itemId}>
+              <li class="row-between attack-row" key={a.itemId}>
                 <span>{c.name(a.itemId)}</span>
                 <span class="btn-row">
                   <button
                     type="button"
-                    class="roll-btn"
-                    onClick={() => {
-                      const roll = rollCheck(
-                        `${c.name(a.itemId)} - ${ui("play.attackRoll")}`,
-                        a.attackBonus,
-                      );
-                      criticalExtra.value = roll.critical;
-                      // A natural 20 arms the critical damage; any other attack clears it.
-                      if (roll.critical) criticalWeapon.value = a.itemId;
-                      else if (criticalWeapon.value === a.itemId) criticalWeapon.value = undefined;
-                    }}
+                    class={`roll-btn attack-main${armed ? " armed" : ""}`}
+                    onClick={armed ? damage : attack}
                   >
-                    <span>{ui("play.attackRoll")}</span>
-                    <b>{signed(a.attackBonus)}</b>
+                    <span>{ui(armed ? "play.damageRoll" : "play.attackRoll")}</span>
+                    <b>{armed ? shownDice : signed(a.attackBonus)}</b>
                   </button>
-                  {dmg && (
-                    <button
-                      type="button"
-                      class="roll-btn"
-                      onClick={() => {
-                        const critical = criticalWeapon.value === a.itemId;
-                        const text = critical ? (doubleDice(dice) ?? dice) : dice;
-                        const name = `${c.name(a.itemId)} - ${ui("play.damageRoll")}`;
-                        rollDiceText(
-                          critical ? `${name} (${ui("play.criticalDamage")})` : name,
-                          text,
-                        );
-                        if (critical) criticalWeapon.value = undefined;
-                      }}
-                    >
+                  {armed && (
+                    <button type="button" class="roll-btn attack-again" onClick={attack}>
+                      <span>{ui("play.attackRoll")}</span>
+                      <b>{signed(a.attackBonus)}</b>
+                    </button>
+                  )}
+                  {dmg && !armed && (
+                    <button type="button" class="roll-btn attack-again" onClick={damage}>
                       <span>{ui("play.damageRoll")}</span>
-                      <b>{criticalWeapon.value === a.itemId ? (doubleDice(dice) ?? dice) : dice}</b>
+                      <b>{shownDice}</b>
                     </button>
                   )}
                   {dmg && (
