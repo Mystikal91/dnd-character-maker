@@ -881,3 +881,9 @@ fieldset.segmented {
     transform: translateX(-1.5rem);
   }
 }
+
+/* The slide of a part would widen the page for a moment on a phone, which shows as a jolt. */
+.play,
+.sheet {
+  overflow-x: clip;
+}
