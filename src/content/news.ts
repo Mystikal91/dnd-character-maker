@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.7 beta",
+    date: "2026-10-27",
+    notes: [
+      {
+        en: "The character sheet is redone for the phone. A row under the tabs always shows armor class, initiative, speed, hit points and hit dice, and five tabs with a small picture each split the page: Profile, Combat, Magic, Pack and Features (the part you were in is remembered). The six abilities sit two to a row, the header is lighter, attacks are a line each with the bonus beside the name, the pack shows one line per item with the coins in a row, and the spell numbers and the sources of features fit the width. On a wide screen the sheet is as it was.",
+        it: "La scheda del personaggio è rifatta per il telefono. Una riga sotto le schede mostra sempre classe armatura, iniziativa, velocità, punti ferita e dadi vita, e cinque schede con una piccola immagine dividono la pagina: Profilo, Lotta, Magia, Zaino e Privilegi (la parte in cui eri viene ricordata). Le sei caratteristiche stanno due per riga, l’intestazione è più leggera, gli attacchi sono una riga ciascuno con il bonus accanto al nome, lo zaino mostra una riga per oggetto con le monete in fila, e i numeri degli incantesimi e le origini dei privilegi stanno nella larghezza. Su uno schermo largo la scheda è com’era.",
+        fr: "La fiche du personnage est refaite pour le téléphone. Une rangée sous les onglets montre toujours la classe d’armure, l’initiative, la vitesse, les points de vie et les dés de vie, et cinq onglets avec une petite image découpent la page : Profil, Combat, Magie, Sac et Aptitudes (la partie où tu étais est retenue). Les six caractéristiques sont deux par rangée, l’en-tête est plus léger, les attaques tiennent une ligne chacune avec le bonus à côté du nom, le sac montre une ligne par objet avec les pièces en rangée, et les chiffres des sorts et les sources des aptitudes tiennent dans la largeur. Sur un grand écran la fiche reste comme avant.",
+        de: "Der Charakterbogen ist für das Handy neu gemacht. Eine Zeile unter den Reitern zeigt immer Rüstungsklasse, Initiative, Bewegungsrate, Trefferpunkte und Trefferwürfel, und fünf Reiter mit je einem kleinen Bild teilen die Seite: Profil, Kampf, Magie, Rucksack und Merkmale (der zuletzt offene Teil wird gemerkt). Die sechs Attribute stehen zu zweit in einer Zeile, der Kopf ist leichter, Angriffe sind je eine Zeile mit dem Bonus neben dem Namen, der Rucksack zeigt eine Zeile pro Gegenstand mit den Münzen in einer Reihe, und die Zauberzahlen und die Herkunft der Merkmale passen in die Breite. Auf einem breiten Bildschirm bleibt der Bogen wie er war.",
+        es: "La hoja del personaje está rehecha para el teléfono. Una fila bajo las pestañas muestra siempre la clase de armadura, la iniciativa, la velocidad, los puntos de golpe y los dados de golpe, y cinco pestañas con una imagen pequeña dividen la página: Perfil, Combate, Magia, Mochila y Rasgos (se recuerda la parte en la que estabas). Las seis características van de dos en dos, la cabecera es más ligera, los ataques son una línea cada uno con el bonificador junto al nombre, la mochila muestra una línea por objeto con las monedas en fila, y los números de los conjuros y el origen de los rasgos caben en el ancho. En una pantalla ancha la hoja queda como antes.",
+      },
+    ],
+  },
+  {
     version: "1.6.1 beta",
     date: "2026-10-27",
     notes: [
