@@ -122,35 +122,28 @@ export function Attacks() {
           ))}
         </>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>{ui("print.name")}</th>
-              <th>{ui("sheet.attackBonus")}</th>
-              <th>{ui("sheet.damage")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {s.attacks.map((a) => (
-              <tr key={a.itemId}>
-                <td>
-                  {c.name(a.itemId)}
-                  {a.enhancement > 0 && ` +${a.enhancement}`}
-                  {a.enchantment && <div class="muted">{c.name(a.enchantment)}</div>}
-                </td>
-                <td>{signed(a.attackBonus)}</td>
-                <td>
-                  {a.damage && formatDamage(a.damage)}
-                  {a.twoHandedDamage && (
-                    <div class="muted">
-                      {formatDamage(a.twoHandedDamage)} ({ui("sheet.twoHanded")})
-                    </div>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <ul class="attack-list">
+          {s.attacks.map((a) => (
+            <li key={a.itemId}>
+              <div class="attack-name">
+                {c.name(a.itemId)}
+                {a.enhancement > 0 && ` +${a.enhancement}`}
+                {a.enchantment && <span class="muted"> · {c.name(a.enchantment)}</span>}
+              </div>
+              <b class="attack-bonus" title={ui("sheet.attackBonus")}>
+                {signed(a.attackBonus)}
+              </b>
+              <div class="attack-damage">
+                {a.damage && formatDamage(a.damage)}
+                {a.twoHandedDamage && (
+                  <div class="muted">
+                    {formatDamage(a.twoHandedDamage)} ({ui("sheet.twoHanded")})
+                  </div>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
       <ExtraDamageList />
     </Panel>

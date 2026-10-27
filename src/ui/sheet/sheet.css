@@ -677,3 +677,122 @@
     align-content: start;
   }
 }
+
+/* ---- A phone: the pack, the features and the spells fit the width ---- */
+
+@container sheet (max-width: 43.99rem) {
+  /* One line per item: what it is, how many; the pill is a mark that fills when it is worn. */
+  .sheet .inv-main {
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+  }
+
+  .sheet .inv-main .equip-row {
+    flex: 1 1 0;
+    align-items: flex-start;
+  }
+
+  .sheet .equip-tag {
+    display: none;
+  }
+
+  .sheet .equip-row input:checked ~ .inv-name {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .sheet .inv-name .item-tag {
+    display: block;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+
+  .sheet .inv-facts,
+  .sheet .inv-info {
+    margin-left: 0;
+  }
+
+  /* The coins in one row, to type: the amounts are rarely a step of one. */
+  .sheet .coin-row {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.35rem;
+  }
+
+  .sheet .coin-controls button {
+    display: none;
+  }
+
+  .sheet .coin-controls input {
+    padding: 0 0.2rem;
+  }
+
+  /* The source of a feature under its name instead of squeezed beside it. */
+  .sheet summary .source-tag {
+    display: block;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+}
+
+/* ---- Attacks: a line each, the bonus beside the name and the damage under it ---- */
+
+.attack-list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.attack-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.1rem 0.75rem;
+  align-items: baseline;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.attack-list li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.attack-name {
+  font-weight: 700;
+}
+
+.attack-bonus {
+  min-width: 3rem;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.attack-damage {
+  grid-column: 1 / -1;
+}
+
+/* Long labels (spell attack, saving throw DC) stay inside their box. */
+.stat-label {
+  overflow-wrap: anywhere;
+}
+
+@container sheet (max-width: 43.99rem) {
+  .stat-row-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container sheet (max-width: 43.99rem) {
+  /* A spell: its name, and under it the level and school. */
+  .sg[data-g="magic"] summary > .muted {
+    display: block;
+    font-size: 0.8rem;
+  }
+}
