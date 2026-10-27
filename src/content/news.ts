@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.6.1 beta",
+    date: "2026-10-27",
+    notes: [
+      {
+        en: "The cross that closes the dice sheet no longer has a line under it. A choice made on a pack that was imported again as another pack (the same size picked twice in a custom lineage) is found by its name, so the note about an invalid option no longer appears.",
+        it: "La croce che chiude il foglio dei dadi non ha più la sottolineatura. Una scelta fatta su un pacchetto reimportato come un altro pacchetto (la stessa taglia scelta due volte in un lignaggio personalizzato) viene ritrovata per nome, così la nota su un’opzione non valida non compare più.",
+        fr: "La croix qui ferme la feuille des dés n’est plus soulignée. Un choix fait sur un pack réimporté comme un autre pack (la même taille choisie deux fois dans une lignée personnalisée) est retrouvé par son nom, si bien que la note sur une option invalide n’apparaît plus.",
+        de: "Das Kreuz, das das Würfelblatt schließt, hat keine Unterstreichung mehr. Eine Wahl, die auf einem als anderes Paket neu importierten Paket getroffen wurde (dieselbe Größe doppelt in einer eigenen Abstammung), wird über den Namen wiedergefunden, sodass der Hinweis auf eine ungültige Option nicht mehr erscheint.",
+        es: "La cruz que cierra la hoja de los dados ya no está subrayada. Una elección hecha en un paquete reimportado como otro paquete (el mismo tamaño elegido dos veces en un linaje personalizado) se encuentra por su nombre, así que ya no aparece el aviso de opción no válida.",
+      },
+    ],
+  },
+  {
     version: "1.6 beta",
     date: "2026-10-27",
     notes: [
