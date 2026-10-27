@@ -47,9 +47,15 @@ interface Input {
 /** The id without the number that makes it unique within its pack. */
 export const withoutNumber = (id: string) => id.replace(/-\d+$/, "");
 
-/** The only option that has the id of `picked` apart from the number, if there is just one. */
+/** An id without the pack that holds it: the same content imported twice has two packs. */
+const withoutPack = (id: string) => withoutNumber(id.slice(id.indexOf(":") + 1));
+
+/**
+ * The only option that has the id of `picked` apart from the number and the pack, if there is
+ * just one: a choice made on a pack that was imported again is found in the new one.
+ */
 function renumbered(picked: string, options: string[]): string | undefined {
-  const same = options.filter((o) => withoutNumber(o) === withoutNumber(picked));
+  const same = options.filter((o) => withoutPack(o) === withoutPack(picked));
   return same.length === 1 ? same[0] : undefined;
 }
 

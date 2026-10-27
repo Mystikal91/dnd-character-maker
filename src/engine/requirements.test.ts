@@ -204,6 +204,26 @@ describe("effects behind a requirement", () => {
     expect(warnings).toEqual([]);
   });
 
+  it("find a choice made on the same content imported as another pack", () => {
+    const pick = (id: string): Entry => entry(id, "trait", []);
+    const lineage = entry("test:species/lineage", "species", [
+      {
+        type: "choice",
+        id: "offer",
+        choose: 1,
+        grants: "trait",
+        from: ["test:trait/medium", "test:trait/small"],
+      },
+    ]);
+    const known = new Map(index).set(lineage.id, lineage);
+    for (const e of [pick("test:trait/medium"), pick("test:trait/small")]) known.set(e.id, e);
+    const stale = { "test:species/lineage/offer": ["old:trait/medium", "test:trait/medium"] };
+    const warnings: never[] = [];
+    const found = collectEffects([lineage], { index: known, selections: stale, warnings });
+    expect(found.choices[0]?.selected).toEqual(["test:trait/medium"]);
+    expect(warnings).toEqual([]);
+  });
+
   it("are told apart by the entry that sets them", () => {
     expect([...heldBy(line.id, line.effects)].sort()).toEqual(["LINE", line.id].sort());
   });
