@@ -41,6 +41,22 @@ export const MagicIcon = () => (
   </Icon>
 );
 
+/** A head and shoulders. */
+export const ProfileIcon = () => (
+  <Icon>
+    <circle cx="12" cy="8" r="3.5" />
+    <path d="M5 20c0-4 3-6.500 7-6.500s7 2.500 7 6.500" />
+  </Icon>
+);
+
+/** An open book. */
+export const FeaturesIcon = () => (
+  <Icon>
+    <path d="M5 5.500C7.500 4.500 10 4.800 12 6.500c2-1.700 4.500-2 7-1v12c-2.500-1-5-.700-7 1-2-1.700-4.500-2-7-1z" />
+    <path d="M12 6.500v12" />
+  </Icon>
+);
+
 /** A pouch with a drawstring. */
 export const ResourcesIcon = () => (
   <Icon>

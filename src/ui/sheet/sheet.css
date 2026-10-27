@@ -465,3 +465,215 @@
 .stat.forced .stat-label::after {
   content: " *";
 }
+
+/* ---- On a phone: key numbers and tabs stay in view, and the sheet is split into parts ---- */
+
+/* On a wide screen the wrapper of a panel is not there, and the bar is not needed. */
+.sg {
+  display: contents;
+}
+
+.sheet-sticky {
+  display: none;
+}
+
+@container sheet (max-width: 43.99rem) {
+  .sheet-sticky {
+    position: sticky;
+    top: var(--tabs-height, 2.9rem);
+    z-index: 15;
+    display: block;
+    padding: 0.35rem 0 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .sheet-summary {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.3rem;
+    margin: 0;
+  }
+
+  .sheet-summary > div {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    min-width: 0;
+    padding: 0.2rem 0.1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    text-align: center;
+  }
+
+  .sheet-summary dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  .sheet-summary dt {
+    color: var(--muted);
+    font-size: 0.6rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .sheet-groups {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: 0.15rem;
+    margin-top: 0.3rem;
+  }
+
+  :root[data-style] .sheet .sheet-groups button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    min-width: 0;
+    min-height: 3.1rem;
+    padding: 0.2rem 0;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  :root[data-style] .sheet .sheet-groups button.on {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .sheet-col {
+    display: contents;
+  }
+
+  .sg {
+    display: none;
+    order: var(--o, 0);
+  }
+
+  .sheet[data-group="profile"] .sg[data-g="profile"],
+  .sheet[data-group="combat"] .sg[data-g="combat"],
+  .sheet[data-group="magic"] .sg[data-g="magic"],
+  .sheet[data-group="bag"] .sg[data-g="bag"],
+  .sheet[data-group="features"] .sg[data-g="features"],
+  .sg[data-g="all"] {
+    display: block;
+  }
+
+  .sg:empty {
+    display: none;
+  }
+
+  /* The key numbers are in the bar already. */
+  .sg[data-g="combat"] > .stat-row {
+    display: none;
+  }
+
+  /* The six abilities, two to a row. */
+  .ability-blocks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .ability-block {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.4rem;
+    padding: 0.5rem;
+  }
+
+  .ability-core {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 0.5rem;
+  }
+
+  .ability-name {
+    grid-column: 1 / -1;
+  }
+
+  .ability-oval {
+    width: 3.4rem;
+    height: 2.5rem;
+    font-size: 1.3rem;
+  }
+
+  .ability-block .checks li {
+    font-size: 0.8rem;
+  }
+}
+
+/* A phone: the header and the round badges take less height, so the content starts sooner. */
+@container sheet (max-width: 43.99rem) {
+  .sheet {
+    gap: 0.6rem;
+  }
+
+  .sheet-header {
+    gap: 0.4rem;
+  }
+
+  .banner {
+    padding: 0.35rem 1.4rem 0.45rem;
+  }
+
+  .banner h2 {
+    font-size: 1.15rem;
+  }
+
+  .banner-label {
+    margin-top: 0;
+    font-size: 0.65rem;
+  }
+
+  .sheet-info {
+    gap: 0.25rem 0.8rem;
+    padding: 0.4rem 0.7rem;
+  }
+
+  .sheet-info dd {
+    font-size: 0.9rem;
+  }
+
+  .sheet-info dt {
+    font-size: 0.65rem;
+  }
+
+  .badges {
+    gap: 0.4rem;
+  }
+
+  .badge {
+    aspect-ratio: auto;
+    min-height: 3.6rem;
+    border-radius: 999px;
+    padding: 0.3rem 0.4rem;
+  }
+
+  .badge b {
+    font-size: 1.2rem;
+  }
+
+  .badge span {
+    font-size: 0.62rem;
+  }
+}
+
+@container sheet (max-width: 43.99rem) {
+  .ability-block {
+    align-content: start;
+  }
+}
