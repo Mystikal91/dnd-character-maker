@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.7.2 beta",
+    date: "2026-10-27",
+    notes: [
+      {
+        en: "Swiping between the parts no longer makes the page jolt sideways for a moment on a phone.",
+        it: "Lo swipe tra le parti non fa più “sballare” per un attimo la pagina di lato sul telefono.",
+        fr: "Le glissement entre les parties ne fait plus tressauter la page de côté un instant sur un téléphone.",
+        de: "Das Wischen zwischen den Teilen lässt die Seite auf dem Handy nicht mehr kurz zur Seite ruckeln.",
+        es: "Deslizar entre las partes ya no hace que la página dé un tirón de lado por un momento en el teléfono.",
+      },
+    ],
+  },
+  {
     version: "1.7.1 beta",
     date: "2026-10-27",
     notes: [
