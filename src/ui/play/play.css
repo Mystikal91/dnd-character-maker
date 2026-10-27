@@ -854,3 +854,30 @@ fieldset.segmented {
     margin-top: 0.2rem;
   }
 }
+
+/* A swipe to another part: it slides in from the side it was swiped to. */
+@media (prefers-reduced-motion: no-preference) {
+  @container play (max-width: 41.99rem) {
+    .play[data-dir="next"] .pg {
+      animation: part-from-right 0.22s ease-out;
+    }
+
+    .play[data-dir="prev"] .pg {
+      animation: part-from-left 0.22s ease-out;
+    }
+  }
+}
+
+@keyframes part-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(1.5rem);
+  }
+}
+
+@keyframes part-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-1.5rem);
+  }
+}

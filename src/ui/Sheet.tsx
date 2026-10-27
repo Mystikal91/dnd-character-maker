@@ -1,5 +1,6 @@
 import type { ComponentChildren } from "preact";
-import { type SheetGroup, sheetGroup } from "../app/sheetView";
+import { useRef } from "preact/hooks";
+import { type SheetGroup, sheetGroup, showSheetGroup } from "../app/sheetView";
 import { character, content, sheet } from "../app/store";
 import { SpellSheet } from "./SpellSheet";
 import { AbilityBlocks, Badges } from "./sheet/AbilityBlocks";
@@ -12,6 +13,7 @@ import { SheetTabs } from "./sheet/SheetTabs";
 import { SpellcastingPanel } from "./sheet/SpellcastingPanel";
 import { StoryPanel } from "./sheet/Story";
 import { collectSpellRows } from "./spellRows";
+import { neighbour, useSwipe } from "./useSwipe";
 
 /**
  * A panel and the part of the sheet it belongs to. On a phone only the part that is open is
@@ -40,6 +42,23 @@ const Part = ({
 export function Sheet() {
   const c = content.value;
   const s = sheet.value;
+  const root = useRef<HTMLDivElement>(null);
+  const parts = useRef<{ groups: SheetGroup[]; open: SheetGroup }>({
+    groups: [],
+    open: "profile",
+  });
+  useSwipe(
+    root,
+    () => {
+      const bar = root.current?.querySelector(".sheet-sticky");
+      return bar ? getComputedStyle(bar).display !== "none" : false;
+    },
+    (delta) => {
+      const next = neighbour(parts.current.groups, parts.current.open, delta);
+      if (next) showSheetGroup(next);
+      return next !== undefined;
+    },
+  );
   if (!c || !s) return null;
   const hasMagic = s.spellcasters.length > 0 || collectSpellRows(c, s).length > 0;
   const groups: SheetGroup[] = hasMagic
@@ -47,11 +66,12 @@ export function Sheet() {
     : ["profile", "combat", "bag", "features"];
   // A part that is not there (no magic) opens the first one.
   const open = groups.includes(sheetGroup.value) ? sheetGroup.value : "profile";
+  parts.current = { groups, open };
   // The character is read here only so a change of the sheet is shown at once.
   void character.value;
 
   return (
-    <div class="sheet" data-group={open}>
+    <div class="sheet" data-group={open} ref={root}>
       <SheetHeader />
       <SheetTabs groups={groups} />
       <div class="sheet-grid">

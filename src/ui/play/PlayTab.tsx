@@ -1,12 +1,14 @@
 import type { ComponentChildren } from "preact";
+import { useRef } from "preact/hooks";
 import { levelUpPhase } from "../../app/buildState";
 import { rollLog } from "../../app/play";
-import { type PlayGroup, playGroup } from "../../app/playView";
+import { type PlayGroup, playGroup, showPlayGroup } from "../../app/playView";
 import { character, content, sheet } from "../../app/store";
 import { MAX_LEVEL } from "../../engine/levelUp";
 import { ui } from "../../i18n/ui";
 import { CoinsPanel } from "../Coins";
 import { collectSpellRows } from "../spellRows";
+import { neighbour, useSwipe } from "../useSwipe";
 import { DiceButton, DiceDrawer } from "./DiceDrawer";
 import { ClassResources, Conditions, PlayNotes, PlaySpells, Slots } from "./Resources";
 import { AttackRolls, CheckRolls, DiceTray, ModePicker, RollHistory } from "./Rolls";
@@ -58,6 +60,23 @@ const Part = ({
 export function PlayTab() {
   const c = content.value;
   const s = sheet.value;
+  const root = useRef<HTMLDivElement>(null);
+  const parts = useRef<{ groups: PlayGroup[]; open: PlayGroup }>({
+    groups: [],
+    open: "combat",
+  });
+  useSwipe(
+    root,
+    () => {
+      const head = root.current?.querySelector(".play-head");
+      return head ? getComputedStyle(head).display !== "none" : false;
+    },
+    (delta) => {
+      const next = neighbour(parts.current.groups, parts.current.open, delta);
+      if (next) showPlayGroup(next);
+      return next !== undefined;
+    },
+  );
   if (!c || !s) return null;
   const canLevelUp = character.value.classes.length > 0 && s.level < MAX_LEVEL;
   const hasMagic = s.spellcasters.length > 0 || collectSpellRows(c, s).length > 0;
@@ -66,9 +85,10 @@ export function PlayTab() {
     : ["combat", "checks", "resources"];
   // A part that is not there (no magic) opens the first one.
   const open = groups.includes(playGroup.value) ? playGroup.value : "combat";
+  parts.current = { groups, open };
 
   return (
-    <div class="play" data-group={open}>
+    <div class="play" data-group={open} ref={root}>
       <div class="play-head">
         <StatusBar />
         <GroupTabs groups={groups} />

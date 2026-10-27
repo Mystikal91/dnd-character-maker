@@ -796,3 +796,16 @@
     font-size: 0.8rem;
   }
 }
+
+/* A swipe to another part: it slides in from the side it was swiped to. */
+@media (prefers-reduced-motion: no-preference) {
+  @container sheet (max-width: 43.99rem) {
+    .sheet[data-dir="next"] .sg {
+      animation: part-from-right 0.22s ease-out;
+    }
+
+    .sheet[data-dir="prev"] .sg {
+      animation: part-from-left 0.22s ease-out;
+    }
+  }
+}

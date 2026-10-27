@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.7.1 beta",
+    date: "2026-10-27",
+    notes: [
+      {
+        en: "On a phone you can swipe sideways to move between the parts of the sheet and of the play screen: left for the next, right for the previous. The part slides in from the side (unless your phone asks for less motion). A swipe that starts on a field or on something that scrolls sideways does nothing.",
+        it: "Sul telefono puoi passare da una parte all’altra della scheda e della schermata di gioco con uno swipe orizzontale: a sinistra per la successiva, a destra per la precedente. La parte entra scorrendo dal lato (a meno che il telefono chieda meno movimento). Uno swipe che parte da un campo o da qualcosa che scorre in orizzontale non fa nulla.",
+        fr: "Sur un téléphone, tu peux passer d’une partie à l’autre de la fiche et de l’écran de jeu en glissant le doigt de côté : à gauche pour la suivante, à droite pour la précédente. La partie arrive en glissant depuis le côté (sauf si ton téléphone demande moins de mouvement). Un glissement qui commence sur un champ ou sur quelque chose qui défile de côté ne fait rien.",
+        de: "Auf dem Handy kannst du mit einer Wischgeste zur Seite zwischen den Teilen des Bogens und des Spielbildschirms wechseln: nach links zum nächsten, nach rechts zum vorherigen. Der Teil gleitet von der Seite herein (außer das Handy verlangt weniger Bewegung). Eine Geste, die auf einem Feld oder auf etwas Seitwärts-Scrollendem beginnt, bewirkt nichts.",
+        es: "En el teléfono puedes pasar de una parte a otra de la hoja y de la pantalla de juego deslizando de lado: a la izquierda para la siguiente, a la derecha para la anterior. La parte entra deslizándose desde el lado (salvo que el teléfono pida menos movimiento). Un deslizamiento que empieza en un campo o en algo que se desplaza de lado no hace nada.",
+      },
+    ],
+  },
+  {
     version: "1.7 beta",
     date: "2026-10-27",
     notes: [
