@@ -722,6 +722,11 @@ fieldset.segmented {
   justify-content: flex-end;
 }
 
+/* A cross is understood without a line under it, which makes it look like another sign. */
+.dice-drawer .drawer-close button.link {
+  text-decoration: none;
+}
+
 .hp-undo {
   display: flex;
   align-items: center;
