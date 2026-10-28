@@ -308,7 +308,7 @@
   "translate.upgradeHint": "A text translated by a weaker engine (when the better ones were not available) is translated again, by the best one you have, when you read it. Only what you read is translated again.",
   "translate.improvable": "{n} saved translations can be improved.",
   "translate.advanced": "Advanced: your own DeepL key and relay",
-  "translate.machine": "Automatic translation",
+  "translate.machine": "Automatic translation ({source})",
   "translate.showOriginal": "Show the original",
   "translate.showTranslation": "Show the translation",
   "translate.err.unreachable": "The relay could not be reached. Check its address and your connection.",

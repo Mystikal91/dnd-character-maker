@@ -308,7 +308,7 @@
   "translate.upgradeHint": "Un texto traducido por un motor más débil (cuando los mejores no estaban disponibles) se traduce de nuevo, con el mejor que tengas, cuando lo lees. Solo se rehace lo que lees.",
   "translate.improvable": "{n} traducciones guardadas se pueden mejorar.",
   "translate.advanced": "Avanzado: tu clave DeepL y el relé",
-  "translate.machine": "Traducción automática",
+  "translate.machine": "Traducción automática ({source})",
   "translate.showOriginal": "Ver el original",
   "translate.showTranslation": "Ver la traducción",
   "translate.err.unreachable": "No se puede contactar con el relé. Revisa su dirección y tu conexión.",

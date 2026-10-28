@@ -308,7 +308,7 @@
   "translate.upgradeHint": "Un texte traduit par un moteur plus faible (quand les meilleurs n’étaient pas disponibles) est traduit de nouveau, par le meilleur dont tu disposes, quand tu le lis. Seul ce que tu lis est refait.",
   "translate.improvable": "{n} traductions enregistrées peuvent être améliorées.",
   "translate.advanced": "Avancé : ta clé DeepL et le relais",
-  "translate.machine": "Traduction automatique",
+  "translate.machine": "Traduction automatique ({source})",
   "translate.showOriginal": "Voir l'original",
   "translate.showTranslation": "Voir la traduction",
   "translate.err.unreachable": "Le relais est injoignable. Vérifie son adresse et ta connexion.",

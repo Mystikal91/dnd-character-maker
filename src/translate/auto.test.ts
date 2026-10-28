@@ -108,7 +108,11 @@ describe("translating as texts are read", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1].body)).text).toEqual([text]);
     expect(autoText("b.desc", text)).toBe(`IT ${text}`);
-    expect(machineMode(`IT ${text}`)).toEqual({ key: "b.desc", mode: "translated" });
+    expect(machineMode(`IT ${text}`)).toEqual({
+      key: "b.desc",
+      mode: "translated",
+      engine: "deepl",
+    });
 
     // The name of the same entry is translated too, and swaps together with the description.
     expect(autoText("b.name", "Spell Name")).toBe("Spell Name");
@@ -118,7 +122,7 @@ describe("translating as texts are read", () => {
     toggleOriginal("b.desc");
     expect(autoText("b.desc", text)).toBe(text);
     expect(autoText("b.name", "Spell Name")).toBe("Spell Name");
-    expect(machineMode(text)).toEqual({ key: "b.desc", mode: "original" });
+    expect(machineMode(text)).toEqual({ key: "b.desc", mode: "original", engine: "deepl" });
     toggleOriginal("b.desc");
     expect(autoText("b.desc", text)).toBe(`IT ${text}`);
     expect(autoText("b.name", "Spell Name")).toBe("IT Spell Name");
@@ -227,6 +231,7 @@ describe("translating as texts are read", () => {
       expect(autoText("m.desc", text)).toBe(text);
       await vi.advanceTimersByTimeAsync(300);
       expect(autoText("m.desc", text)).toBe("MM text");
+      expect(machineMode("MM text")?.engine).toBe("memory");
       expect(improvableCount.value).toBe(1);
 
       // Reading it again does nothing while the relay still cannot translate...
@@ -263,6 +268,7 @@ describe("translating as texts are read", () => {
       expect(autoText("k.desc", text)).toBe(`FREE ${text}`);
       await vi.advanceTimersByTimeAsync(300);
       expect(autoText("k.desc", text)).toBe(`DL ${text}`);
+      expect(machineMode(`DL ${text}`)?.engine).toBe("deepl");
       expect(improvableCount.value).toBe(0);
     });
   });

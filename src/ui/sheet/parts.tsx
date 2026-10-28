@@ -1,6 +1,7 @@
 import type { ComponentChildren } from "preact";
 import { ui } from "../../i18n/ui";
 import { machineMode, toggleOriginal } from "../../translate/auto";
+import { ENGINE_NAMES } from "../../translate/engines";
 import { EditPencil } from "../QuickEdit";
 
 /** A framed panel with a titled heading. */
@@ -27,7 +28,7 @@ export function MachineNote({ text }: { text: string | undefined }) {
   if (!mode) return null;
   return (
     <p class="machine-note">
-      <span>{ui("translate.machine")}</span>{" "}
+      <span>{ui("translate.machine", { source: ENGINE_NAMES[mode.engine] })}</span>{" "}
       <button type="button" class="link" onClick={() => toggleOriginal(mode.key)}>
         {ui(mode.mode === "translated" ? "translate.showOriginal" : "translate.showTranslation")}
       </button>

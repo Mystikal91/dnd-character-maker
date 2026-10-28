@@ -75,6 +75,13 @@ export async function translateMyMemory(
 /** Who translated: DeepL with the person's key, the relay's free translation, or MyMemory. */
 export type Engine = "deepl" | "relay" | "memory";
 
+/** What the person is told: the engine is a service, its name is not translated. */
+export const ENGINE_NAMES: Record<Engine, string> = {
+  deepl: "DeepL",
+  relay: "Cloudflare",
+  memory: "MyMemory",
+};
+
 /** How good each is taken to be: a text is improved when a better one is at hand. */
 export const RANK: Record<Engine, number> = { memory: 1, relay: 2, deepl: 3 };
 

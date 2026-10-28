@@ -109,7 +109,7 @@ export function forgetEngines(keys: Iterable<string>): void {
 const pending = new Map<string, { text: string; target: string; upgrade?: boolean }>();
 const failed = new Set<string>();
 /** What each shown text came from: the English it replaces, or the translation it can swap to. */
-const shown = new Map<string, { key: string; mode: "translated" | "original" }>();
+const shown = new Map<string, { key: string; mode: "translated" | "original"; engine: Engine }>();
 
 const cacheKey = (target: string, text: string) => `${target}\n${text}`;
 
@@ -157,10 +157,10 @@ export function autoText(key: string, source: string): string {
   const hit = cache.get(ck);
   if (hit !== undefined) {
     if (asked.has(entryOf(key))) {
-      shown.set(source, { key, mode: "original" });
+      shown.set(source, { key, mode: "original", engine: engineOf(ck) });
       return source;
     }
-    shown.set(hit, { key, mode: "translated" });
+    shown.set(hit, { key, mode: "translated", engine: engineOf(ck) });
     // A text a weaker engine translated is done again, now that a better one can be had: only
     // the ones that are read, so nothing is spent on what nobody opens.
     if (
@@ -186,7 +186,7 @@ export function autoText(key: string, source: string): string {
 /** For a text on screen: whether it is a machine translation (or its English, to swap back). */
 export function machineMode(
   text: string,
-): { key: string; mode: "translated" | "original" } | undefined {
+): { key: string; mode: "translated" | "original"; engine: Engine } | undefined {
   translationTick.value;
   originals.value;
   return shown.get(text);
