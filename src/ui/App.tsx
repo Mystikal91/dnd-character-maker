@@ -14,6 +14,7 @@ import { AboutPage } from "./AboutPage";
 import { AppMenu } from "./AppMenu";
 import { AutoTranslatePage } from "./AutoTranslatePage";
 import { CustomSpellDialog } from "./CustomSpellDialog";
+import { ExplainDialog } from "./Explain";
 import { HomebrewPage } from "./HomebrewPage";
 import { PacksNotice } from "./PacksNotice";
 import { PacksPage } from "./PacksPage";
@@ -126,6 +127,7 @@ export function App() {
       <UpdateNotice />
       <SpellDialog />
       <QuickEditDialog />
+      <ExplainDialog />
       <TransferDialog />
       <CustomSpellDialog />
       <ShareDialog />

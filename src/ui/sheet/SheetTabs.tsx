@@ -1,7 +1,9 @@
 import { SHEET_GROUPS, type SheetGroup, sheetGroup, showSheetGroup } from "../../app/sheetView";
 import { sheet } from "../../app/store";
+import type { ExplainTarget } from "../../engine/explain";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
+import { ExplainButton } from "../Explain";
 import { CombatIcon, FeaturesIcon, MagicIcon, ProfileIcon, ResourcesIcon } from "../play/icons";
 
 const ICONS: Record<SheetGroup, () => preact.JSX.Element> = {
@@ -12,6 +14,14 @@ const ICONS: Record<SheetGroup, () => preact.JSX.Element> = {
   features: FeaturesIcon,
 };
 
+/** A number of the summary row and what it is. */
+const SumText = ({ label, value }: { label: string; value: string }) => (
+  <>
+    <b>{value}</b>
+    <small>{label}</small>
+  </>
+);
+
 /** The numbers needed most, in one row: armor class, initiative, speed, hit points, hit dice. */
 function Summary() {
   const s = sheet.value;
@@ -19,22 +29,27 @@ function Summary() {
   const hitDice = Object.entries(s.hitPoints.hitDice)
     .map(([die, n]) => `${n}${die}`)
     .join("+");
-  const items: [string, string][] = [
-    [ui("play.ac"), String(s.armorClass.value)],
-    [ui("play.init"), signed(s.initiative)],
+  const items: [string, string, ExplainTarget?][] = [
+    [ui("play.ac"), String(s.armorClass.value), { kind: "ac" }],
+    [ui("play.init"), signed(s.initiative), { kind: "initiative" }],
     [ui("sheet.speed"), s.speed === undefined ? "—" : distance(s.speed)],
     [ui("play.hpShort"), String(s.hitPoints.max)],
     [ui("sheet.hitDice"), hitDice || "—"],
   ];
   return (
-    <dl class="sheet-summary">
-      {items.map(([label, value]) => (
-        <div key={label}>
-          <dd>{value}</dd>
-          <dt>{label}</dt>
-        </div>
-      ))}
-    </dl>
+    <div class="sheet-summary">
+      {items.map(([label, value, target]) => {
+        return target ? (
+          <ExplainButton key={label} class="sum" target={target}>
+            <SumText label={label} value={value} />
+          </ExplainButton>
+        ) : (
+          <div key={label} class="sum">
+            <SumText label={label} value={value} />
+          </div>
+        );
+      })}
+    </div>
   );
 }
 

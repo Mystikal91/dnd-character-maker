@@ -21,6 +21,9 @@ import { character, sheet, updateCharacter } from "./store";
 export const hpUndo = signal<{ before: PlayState; change: number } | undefined>(undefined);
 let undoTimer: ReturnType<typeof setTimeout> | undefined;
 const UNDO_MS = 10_000;
+/** Changes this close together (a held button, quick taps) are taken back as one. */
+const BURST_MS = 1_500;
+let lastChangeAt = 0;
 
 /** Edits the play state of the open character and saves it like any other change. */
 export function changePlay(edit: (play: PlayState) => PlayState, options: { undo?: boolean } = {}) {
@@ -39,7 +42,13 @@ export function changePlay(edit: (play: PlayState) => PlayState, options: { undo
   });
   if (options.undo === false) hpUndo.value = undefined;
   else if (remembered) {
-    hpUndo.value = remembered;
+    const now = Date.now();
+    const earlier = hpUndo.value;
+    hpUndo.value =
+      earlier && now - lastChangeAt < BURST_MS
+        ? { before: earlier.before, change: earlier.change + remembered.change }
+        : remembered;
+    lastChangeAt = now;
     clearTimeout(undoTimer);
     undoTimer = setTimeout(() => {
       hpUndo.value = undefined;

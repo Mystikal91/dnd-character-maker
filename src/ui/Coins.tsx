@@ -3,9 +3,11 @@ import { COINS, type Coin, NO_COINS, goldValue, withCoin } from "../engine/coins
 import { type UiKey, ui } from "../i18n/ui";
 import { unitLocale } from "../i18n/units";
 import { Panel } from "./sheet/parts";
+import { useHoldRepeat } from "./useHoldRepeat";
 
 /** One counter per kind of coin: a number to type, and one up or down with the buttons. */
 export function Coins() {
+  const hold = useHoldRepeat();
   const coins = character.value.coins ?? NO_COINS;
   const set = (coin: Coin, amount: number) =>
     updateCharacter((d) => {
@@ -31,9 +33,10 @@ export function Coins() {
               <div class="coin-controls">
                 <button
                   type="button"
+                  class="hold"
                   aria-label={ui("coin.less", { coin: name })}
                   disabled={coins[coin] <= 0}
-                  onClick={() => step(coin, -1)}
+                  {...hold(() => step(coin, -1))}
                 >
                   −
                 </button>
@@ -47,8 +50,9 @@ export function Coins() {
                 />
                 <button
                   type="button"
+                  class="hold"
                   aria-label={ui("coin.more", { coin: name })}
-                  onClick={() => step(coin, 1)}
+                  {...hold(() => step(coin, 1))}
                 >
                   +
                 </button>

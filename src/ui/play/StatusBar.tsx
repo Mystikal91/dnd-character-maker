@@ -4,6 +4,8 @@ import { PLAY_GROUPS, type PlayGroup, playGroup, showPlayGroup } from "../../app
 import { character, content, sheet } from "../../app/store";
 import { applyHealing, currentHp } from "../../engine/play";
 import { type UiKey, signed, ui } from "../../i18n/ui";
+import { ExplainButton } from "../Explain";
+import { useHoldRepeat } from "../useHoldRepeat";
 import { ChecksIcon, CombatIcon, MagicIcon, ResourcesIcon } from "./icons";
 
 const ICONS: Record<PlayGroup, () => preact.JSX.Element> = {
@@ -18,6 +20,7 @@ const ICONS: Record<PlayGroup, () => preact.JSX.Element> = {
  * armor class, the roll for initiative, and flags for conditions and concentration.
  */
 export function StatusBar() {
+  const hold = useHoldRepeat();
   const s = sheet.value;
   const v = vitals();
   const play = character.value.play;
@@ -34,9 +37,9 @@ export function StatusBar() {
         <div class="ps-hp">
           <button
             type="button"
-            class="ps-step"
+            class="ps-step hold"
             aria-label={ui("play.damageBy", { n: 1 })}
-            onClick={() => damageCharacter(1)}
+            {...hold(() => damageCharacter(1))}
           >
             {"−"}
           </button>
@@ -47,17 +50,17 @@ export function StatusBar() {
           </button>
           <button
             type="button"
-            class="ps-step"
+            class="ps-step hold"
             aria-label={ui("play.healBy", { n: 1 })}
-            onClick={() => changePlay((p) => applyHealing(p, v.max, 1))}
+            {...hold(() => changePlay((p) => applyHealing(p, v.max, 1)))}
           >
             +
           </button>
         </div>
-        <div class="ps-stat">
+        <ExplainButton class="ps-stat" target={{ kind: "ac" }}>
           <small>{ui("play.ac")}</small>
           <b>{s.armorClass.value}</b>
-        </div>
+        </ExplainButton>
         <button
           type="button"
           class="ps-stat ps-roll"

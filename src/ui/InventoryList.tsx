@@ -8,6 +8,7 @@ import { ItemTag, itemFacts } from "./ItemTag";
 import { EditPencil } from "./QuickEdit";
 import { WeaponMagic } from "./WeaponMagic";
 import { Paragraphs } from "./sheet/parts";
+import { useHoldRepeat } from "./useHoldRepeat";
 
 const GROUP_ORDER = ["armor", "weapon", "gear", "tool", "mount", "magic", "custom"] as const;
 type Group = (typeof GROUP_ORDER)[number];
@@ -21,6 +22,7 @@ function groupOf(item: InventoryItem): Group {
 }
 
 function Row({ item, removable }: { item: InventoryItem; removable: boolean }) {
+  const hold = useHoldRepeat();
   const c = content.value;
   if (!c) return null;
   const entry = c.index.get(item.itemId);
@@ -65,25 +67,27 @@ function Row({ item, removable }: { item: InventoryItem; removable: boolean }) {
         <span class="qty">
           <button
             type="button"
+            class="hold"
             aria-label={ui("inv.fewer", { name })}
             disabled={item.quantity <= 1}
-            onClick={() =>
+            {...hold(() =>
               change((found) => {
                 found.quantity = Math.max(1, found.quantity - 1);
-              })
-            }
+              }),
+            )}
           >
             −
           </button>
           <output aria-label={ui("inv.quantity", { name })}>{item.quantity}</output>
           <button
             type="button"
+            class="hold"
             aria-label={ui("inv.more", { name })}
-            onClick={() =>
+            {...hold(() =>
               change((found) => {
                 found.quantity += 1;
-              })
-            }
+              }),
+            )}
           >
             +
           </button>

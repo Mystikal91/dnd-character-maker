@@ -26,6 +26,18 @@ describe("taking back a change of hit points", () => {
     expect(hpUndo.value).toBeUndefined();
   });
 
+  it("takes back a quick run of changes as one", () => {
+    const max = vitals()?.max ?? 0;
+    hpUndo.value = undefined;
+    damageCharacter(1);
+    damageCharacter(1);
+    damageCharacter(1);
+    expect(currentHp(character.value.play, max)).toBe(max - 3);
+    expect(hpUndo.value?.change).toBe(-3);
+    undoHp();
+    expect(currentHp(character.value.play, max)).toBe(max);
+  });
+
   it("does not offer anything for a change that is not about hit points", () => {
     hpUndo.value = undefined;
     changePlay((p) => ({ ...p, inspiration: true }));

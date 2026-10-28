@@ -564,7 +564,8 @@ fieldset.segmented {
   color: var(--accent);
 }
 
-.play .ps-stat {
+.play .ps-stat,
+:root[data-style] .play button.ps-stat:not(.ps-roll) {
   display: grid;
   flex: none;
   justify-items: center;

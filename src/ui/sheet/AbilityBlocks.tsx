@@ -1,6 +1,7 @@
 import { character, content, sheet } from "../../app/store";
 import { ABILITIES } from "../../data/schema";
 import { signed, ui } from "../../i18n/ui";
+import { ExplainButton } from "../Explain";
 import { Pip } from "./parts";
 
 /** Proficiency bonus and passive senses, as three round badges. */
@@ -52,15 +53,19 @@ export function AbilityBlocks() {
             </div>
             <ul class="checks">
               <li class={s.saves[a].proficient ? "proficient" : ""}>
-                <Pip on={s.saves[a].proficient} />
-                <b class="bonus">{signed(s.saves[a].bonus)}</b>
-                {ui("sheet.savingThrow")}
+                <ExplainButton target={{ kind: "save", ability: a }}>
+                  <Pip on={s.saves[a].proficient} />
+                  <b class="bonus">{signed(s.saves[a].bonus)}</b>
+                  {ui("sheet.savingThrow")}
+                </ExplainButton>
               </li>
               {skills.map((sk) => (
                 <li key={sk.id} class={sk.proficient ? "proficient" : ""}>
-                  <Pip on={sk.proficient} />
-                  <b class="bonus">{signed(sk.bonus)}</b>
-                  {c.name(sk.id)}
+                  <ExplainButton target={{ kind: "skill", id: sk.id }}>
+                    <Pip on={sk.proficient} />
+                    <b class="bonus">{signed(sk.bonus)}</b>
+                    {c.name(sk.id)}
+                  </ExplainButton>
                 </li>
               ))}
             </ul>

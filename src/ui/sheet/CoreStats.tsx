@@ -1,28 +1,38 @@
 import type { ComponentChildren } from "preact";
 import { character, content, isForced, sheet, updateCharacter } from "../../app/store";
 import type { DamageResult } from "../../engine/equipment";
+import type { ExplainTarget } from "../../engine/explain";
 import { OVERRIDE } from "../../engine/overrides";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
+import { ExplainButton } from "../Explain";
 import { ExtraDamageList } from "./ExtraDamage";
 import { Panel } from "./parts";
 
 export function Stat({
   label,
   forced = false,
+  explain,
   children,
 }: {
   label: string;
   forced?: boolean;
+  /** The number takes itself apart when tapped. */
+  explain?: ExplainTarget;
   children: ComponentChildren;
 }) {
+  const inside = (
+    <>
+      <span class="stat-value">{children}</span>
+      <span class="stat-label">{label}</span>
+    </>
+  );
   return (
     <div
       class={`stat${forced ? " forced" : ""}`}
       title={forced ? ui("freeEdit.forced") : undefined}
     >
-      <div class="stat-value">{children}</div>
-      <div class="stat-label">{label}</div>
+      {explain ? <ExplainButton target={explain}>{inside}</ExplainButton> : inside}
     </div>
   );
 }
@@ -66,10 +76,18 @@ export function CoreStats() {
   return (
     <>
       <div class="stat-row">
-        <Stat label={ui("sheet.armorClass")} forced={isForced(OVERRIDE.armorClass)}>
+        <Stat
+          label={ui("sheet.armorClass")}
+          forced={isForced(OVERRIDE.armorClass)}
+          explain={{ kind: "ac" }}
+        >
           {s.armorClass.value}
         </Stat>
-        <Stat label={ui("sheet.initiative")} forced={isForced(OVERRIDE.initiative)}>
+        <Stat
+          label={ui("sheet.initiative")}
+          forced={isForced(OVERRIDE.initiative)}
+          explain={{ kind: "initiative" }}
+        >
           {signed(s.initiative)}
         </Stat>
         <Stat label={ui("sheet.speed")} forced={isForced(OVERRIDE.speed)}>
@@ -130,9 +148,9 @@ export function Attacks() {
                 {a.enhancement > 0 && ` +${a.enhancement}`}
                 {a.enchantment && <span class="muted"> · {c.name(a.enchantment)}</span>}
               </div>
-              <b class="attack-bonus" title={ui("sheet.attackBonus")}>
-                {signed(a.attackBonus)}
-              </b>
+              <ExplainButton class="attack-bonus" target={{ kind: "attack", itemId: a.itemId }}>
+                <b>{signed(a.attackBonus)}</b>
+              </ExplainButton>
               <div class="attack-damage">
                 {a.damage && formatDamage(a.damage)}
                 {a.twoHandedDamage && (
