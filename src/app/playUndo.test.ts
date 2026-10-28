@@ -33,7 +33,7 @@ describe("taking back a change of hit points", () => {
     damageCharacter(1);
     damageCharacter(1);
     expect(currentHp(character.value.play, max)).toBe(max - 3);
-    expect(hpUndo.value?.change).toBe(-3);
+    expect(hpUndo.peek()?.change).toBe(-3);
     undoHp();
     expect(currentHp(character.value.play, max)).toBe(max);
   });

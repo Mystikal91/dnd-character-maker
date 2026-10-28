@@ -8,6 +8,7 @@ import { ui } from "../i18n/ui";
 import { CharacterBar } from "./CharacterBar";
 import { Credits } from "./Credits";
 import "../app/translate";
+import { startBackClose } from "../app/backClose";
 import { STAGE, VERSION } from "../app/version";
 import { startKeepingAwake } from "../app/wakeLock";
 import { AboutPage } from "./AboutPage";
@@ -58,6 +59,7 @@ export function App() {
     void initStorage();
     void loadUserPacks();
     startKeepingAwake();
+    startBackClose();
   }, []);
 
   // Rules texts follow the language; the old texts stay on screen until the new ones are loaded.
