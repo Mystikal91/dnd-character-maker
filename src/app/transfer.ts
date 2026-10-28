@@ -12,8 +12,13 @@ import {
 } from "../storage/bundle";
 import { dbEntries, dbPut } from "../storage/db";
 import { type UserPackRecord, parseUserPack } from "../storage/packs";
-import { loadTranslationCache } from "../translate/auto";
-import { autoSettings, cachedCount, saveAutoSettings } from "../translate/auto";
+import {
+  autoSettings,
+  cachedCount,
+  forgetEngines,
+  loadTranslationCache,
+  saveAutoSettings,
+} from "../translate/auto";
 import { LANGUAGES } from "./language";
 import { language } from "./language";
 import { printSettings } from "./printSettings";
@@ -184,6 +189,8 @@ export async function applyTransfer(
     for (const [key, text] of chosen.translations)
       if (typeof key === "string" && typeof text === "string")
         await dbPut("translations", text, key);
+    // Texts that come in a file are taken as DeepL's, whatever was kept here for the same key.
+    forgetEngines(chosen.translations.map(([key]) => key));
     await loadTranslationCache();
     report.translations = chosen.translations.length;
   }

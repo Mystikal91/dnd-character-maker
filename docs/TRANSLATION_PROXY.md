@@ -54,3 +54,34 @@ curl -s https://dnd-translate.<your-account>.workers.dev/v2/usage \
 ```
 
 The answer is a JSON object with `character_count` and `character_limit`.
+
+
+## Free translation for people without a DeepL key
+
+The relay also answers `POST /v1/translate`, which translates with Cloudflare Workers AI (the
+`m2m100` model) and asks for no key. It draws on the free allowance of the account that runs the
+relay (10,000 "neurons" a day, shared by everyone who uses it; check Cloudflare's pricing page for
+the present figure). When the allowance of the day is used up the relay answers 456, the same code
+DeepL uses, and the app goes on to its last resort, MyMemory, called straight from the browser
+(about 5,000 characters a day for each person, no account).
+
+To turn it on, add the AI binding to the relay:
+
+1. In the dashboard open **Workers & Pages**, then the `dnd-translate` worker.
+2. Paste the new [`worker.js`](../workers/translate-proxy/worker.js) in **Edit code** and deploy.
+3. Open **Settings**, **Bindings**, **Add**, choose **Workers AI** and name the binding `AI`
+   (exactly that). Deploy again.
+
+With Wrangler the binding is in `wrangler.toml` already (`[ai]`).
+
+A light brake limits how often one address may ask (30 requests a minute in each instance of the
+worker); it is not a guarantee, so keep an eye on the usage page of the account.
+
+### How the app chooses
+
+For each batch of texts the app tries, in order: DeepL with the person's key (if there is one), the
+free translation of the relay, MyMemory. It remembers which engine made each saved translation. When
+a better engine becomes available (a key is added, the relay is set up, the allowance renews) a
+text that a weaker engine translated is translated again the next time it is read, and replaced if
+the new translation came from a better engine. The option "Improve translations over time" turns
+this off. Translations that arrive in a transfer file carry no engine and count as DeepL's.

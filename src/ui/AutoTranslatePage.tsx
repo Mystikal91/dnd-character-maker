@@ -7,6 +7,7 @@ import {
   autoSettings,
   cachedCount,
   clearTranslationCache,
+  improvableCount,
   pendingCount,
   saveAutoSettings,
 } from "../translate/auto";
@@ -73,75 +74,92 @@ export function AutoTranslatePage() {
       </label>
       <p class="muted">{ui("translate.descOnlyHint")}</p>
 
-      <h3>{ui("translate.connection")}</h3>
-      <label class="field">
-        <span>{ui("translate.key")}</span>
+      <label class="check">
         <input
-          type="password"
-          autocomplete="off"
-          spellcheck={false}
-          value={key}
-          onInput={(e) => setKey(e.currentTarget.value)}
-          onBlur={() => save({})}
+          type="checkbox"
+          checked={settings.upgrade}
+          onChange={(e) => save({ upgrade: e.currentTarget.checked })}
         />
-      </label>
-      <p class="muted">{ui("translate.keyHint")}</p>
-      <details class="howto">
-        <summary>{ui("translate.howTo")}</summary>
-        <ol>
-          <li>
-            {ui("translate.howTo1")}{" "}
-            <a href="https://www.deepl.com/pro-api" target="_blank" rel="noopener noreferrer">
-              deepl.com/pro-api
-            </a>
-          </li>
-          <li>{ui("translate.howTo2")}</li>
-          <li>{ui("translate.howTo3")}</li>
-        </ol>
-        <p class="muted">{ui("translate.howToNote")}</p>
-      </details>
-      <label class="field">
-        <span>{ui("translate.relay")}</span>
-        <input
-          type="url"
-          value={relay}
-          onInput={(e) => setRelay(e.currentTarget.value)}
-          onBlur={() => save({})}
-        />
+        <span>{ui("translate.upgrade")}</span>
       </label>
       <p class="muted">
-        {ui("translate.relayHint")}{" "}
-        <a
-          href={`${REPO_URL}/blob/main/docs/TRANSLATION_PROXY.md`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          docs/TRANSLATION_PROXY.md
-        </a>
-        {relay !== DEFAULT_RELAY && (
-          <>
-            {" "}
-            <button type="button" class="link" onClick={() => setRelay(DEFAULT_RELAY)}>
-              {ui("translate.useDefault")}
-            </button>
-          </>
-        )}
+        {ui("translate.upgradeHint")}
+        {improvableCount.value > 0 &&
+          ` ${ui("translate.improvable", { n: improvableCount.value })}`}
       </p>
-      <div class="pack-actions">
-        <button type="button" disabled={!key.trim() || checking} onClick={() => void check()}>
-          {ui("translate.check")}
-        </button>
-      </div>
-      {typeof usage === "object" && (
-        <p class="note" aria-live="polite">
-          {ui("translate.usage", { used: usage.used, limit: usage.limit })}
+
+      <h3>{ui("translate.connection")}</h3>
+      <details class="howto" open={Boolean(settings.key)}>
+        <summary>{ui("translate.advanced")}</summary>
+        <label class="field">
+          <span>{ui("translate.key")}</span>
+          <input
+            type="password"
+            autocomplete="off"
+            spellcheck={false}
+            value={key}
+            onInput={(e) => setKey(e.currentTarget.value)}
+            onBlur={() => save({})}
+          />
+        </label>
+        <p class="muted">{ui("translate.keyHint")}</p>
+        <details class="howto">
+          <summary>{ui("translate.howTo")}</summary>
+          <ol>
+            <li>
+              {ui("translate.howTo1")}{" "}
+              <a href="https://www.deepl.com/pro-api" target="_blank" rel="noopener noreferrer">
+                deepl.com/pro-api
+              </a>
+            </li>
+            <li>{ui("translate.howTo2")}</li>
+            <li>{ui("translate.howTo3")}</li>
+          </ol>
+          <p class="muted">{ui("translate.howToNote")}</p>
+        </details>
+        <label class="field">
+          <span>{ui("translate.relay")}</span>
+          <input
+            type="url"
+            value={relay}
+            onInput={(e) => setRelay(e.currentTarget.value)}
+            onBlur={() => save({})}
+          />
+        </label>
+        <p class="muted">
+          {ui("translate.relayHint")}{" "}
+          <a
+            href={`${REPO_URL}/blob/main/docs/TRANSLATION_PROXY.md`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            docs/TRANSLATION_PROXY.md
+          </a>
+          {relay !== DEFAULT_RELAY && (
+            <>
+              {" "}
+              <button type="button" class="link" onClick={() => setRelay(DEFAULT_RELAY)}>
+                {ui("translate.useDefault")}
+              </button>
+            </>
+          )}
         </p>
-      )}
-      {typeof usage === "string" && (
-        <p class="note" role="alert">
-          {ui(usage)}
-        </p>
-      )}
+        <div class="pack-actions">
+          <button type="button" disabled={!key.trim() || checking} onClick={() => void check()}>
+            {ui("translate.check")}
+          </button>
+        </div>
+        {typeof usage === "object" && (
+          <p class="note" aria-live="polite">
+            {ui("translate.usage", { used: usage.used, limit: usage.limit })}
+          </p>
+        )}
+        {typeof usage === "string" && (
+          <p class="note" role="alert">
+            {ui(usage)}
+          </p>
+        )}
+      </details>
       {problem && (
         <p class="note" role="alert">
           {ui(`translate.err.${problem}` as UiKey)}

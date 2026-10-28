@@ -44,13 +44,13 @@ async function call(
   fetcher: Fetcher,
 ): Promise<unknown> {
   let response: Response;
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  // Without a key the relay translates for free, with what its own account is allowed.
+  if (connection.key.trim()) headers.Authorization = `DeepL-Auth-Key ${connection.key.trim()}`;
   try {
     response = await fetcher(`${clean(connection.relay)}${path}`, {
       method: init.method,
-      headers: {
-        Authorization: `DeepL-Auth-Key ${connection.key.trim()}`,
-        "Content-Type": "application/json",
-      },
+      headers,
       body: init.body === undefined ? undefined : JSON.stringify(init.body),
     });
   } catch {
@@ -62,6 +62,7 @@ async function call(
       403: "refused",
       429: "limit",
       456: "quota",
+      503: "unreachable",
     };
     throw new TranslateError(reason[response.status] ?? "failed", response.status);
   }
@@ -79,7 +80,7 @@ export async function translateTexts(
   if (!code) throw new TranslateError("language");
   const answer = (await call(
     connection,
-    "/v2/translate",
+    connection.key.trim() ? "/v2/translate" : "/v1/translate",
     {
       method: "POST",
       body: { text: texts, target_lang: code, source_lang: "EN", preserve_formatting: true },

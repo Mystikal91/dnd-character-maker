@@ -4,7 +4,9 @@ import {
   autoSettings,
   autoTarget,
   autoText,
+  clearTranslationCache,
   displayedText,
+  improvableCount,
   machineMode,
   saveAutoSettings,
   toggleOriginal,
@@ -77,6 +79,7 @@ describe("translating as texts are read", () => {
       relay: "https://relay.example",
       key: "",
       descriptionsOnly: true,
+      upgrade: false,
     });
   });
 
@@ -94,6 +97,7 @@ describe("translating as texts are read", () => {
       relay: "https://relay.example",
       key: "k:fx",
       descriptionsOnly: false,
+      upgrade: false,
     });
 
     const text = "Roll twice and take the better result";
@@ -131,6 +135,7 @@ describe("translating as texts are read", () => {
       relay: "https://relay.example",
       key: "k:fx",
       descriptionsOnly: true,
+      upgrade: false,
     });
 
     expect(autoText("d.name", "Fireball Storm")).toBe("Fireball Storm");
@@ -153,6 +158,7 @@ describe("translating as texts are read", () => {
       relay: "https://relay.example",
       key: "k:fx",
       descriptionsOnly: false,
+      upgrade: false,
     });
 
     const text = "Gain a bonus to your next roll";
@@ -170,7 +176,7 @@ describe("translating as texts are read", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
-  it("does not send what is not words, and stops when the key is refused", async () => {
+  it("does not send what is not words, and stops when every engine refuses", async () => {
     const fetchMock = vi.fn(async () => new Response("{}", { status: 403 }));
     vi.stubGlobal("fetch", fetchMock);
     saveAutoSettings({
@@ -178,18 +184,86 @@ describe("translating as texts are read", () => {
       relay: "https://relay.example",
       key: "bad",
       descriptionsOnly: false,
+      upgrade: false,
     });
 
     expect(autoText("d.desc", "1d8 + 2")).toBe("1d8 + 2");
     expect(autoText("e.desc", "A text that will be refused")).toBe("A text that will be refused");
     await vi.advanceTimersByTimeAsync(300);
-    expect(fetchMock).toHaveBeenCalledTimes(1);
+    // DeepL, then the free translation of the relay, then MyMemory: each tried once.
+    expect(fetchMock).toHaveBeenCalledTimes(3);
     expect(autoError.value).toBe("refused");
     expect(autoSettings.value.key).toBe("bad");
 
-    // Asking again does not hit the relay again until the settings change.
+    // Asking again does not hit anything again until the settings change.
     autoText("e.desc", "A text that will be refused");
     await vi.advanceTimersByTimeAsync(300);
-    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+  });
+
+  describe("with no key, and a better engine later", () => {
+    const text = "A text that is read again and again";
+    const settings = (key: string) => ({
+      enabled: true,
+      relay: "https://relay.example",
+      key,
+      descriptionsOnly: false,
+      upgrade: true,
+    });
+
+    it("falls back to MyMemory, then improves the text once the relay can translate", async () => {
+      let relayWorks = false;
+      const fetchMock = vi.fn(async (url: string, init?: RequestInit) => {
+        if (url.includes("mymemory"))
+          return new Response(
+            JSON.stringify({ responseStatus: 200, responseData: { translatedText: "MM text" } }),
+          );
+        if (!relayWorks) return new Response("{}", { status: 503 });
+        return answer(JSON.parse(String(init?.body)).text);
+      });
+      vi.stubGlobal("fetch", fetchMock);
+      saveAutoSettings(settings(""));
+
+      expect(autoText("m.desc", text)).toBe(text);
+      await vi.advanceTimersByTimeAsync(300);
+      expect(autoText("m.desc", text)).toBe("MM text");
+      expect(improvableCount.value).toBe(1);
+
+      // Reading it again does nothing while the relay still cannot translate...
+      relayWorks = true;
+      saveAutoSettings(settings(""));
+      expect(autoText("m.desc", text)).toBe("MM text");
+      await vi.advanceTimersByTimeAsync(300);
+      // ...and with it, the text is translated again and the better one is kept.
+      expect(autoText("m.desc", text)).toBe(`IT ${text}`);
+      expect(improvableCount.value).toBe(0);
+    });
+
+    it("improves a text again when a DeepL key is added", async () => {
+      await clearTranslationCache();
+      const text = "Another text, read after a key was added";
+      const fetchMock = vi.fn(async (url: string, init?: RequestInit) => {
+        const texts = JSON.parse(String(init?.body)).text as string[];
+        const deepl = url.endsWith("/v2/translate");
+        return new Response(
+          JSON.stringify({
+            translations: texts.map((t) => ({ text: `${deepl ? "DL" : "FREE"} ${t}` })),
+          }),
+        );
+      });
+      vi.stubGlobal("fetch", fetchMock);
+      saveAutoSettings(settings(""));
+      expect(autoText("k.desc", text)).toBe(text);
+      await vi.advanceTimersByTimeAsync(300);
+      expect(autoText("k.desc", text)).toBe(`FREE ${text}`);
+      expect(improvableCount.value).toBe(0);
+
+      saveAutoSettings(settings("good:fx"));
+      expect(improvableCount.value).toBe(1);
+      expect(autoText("k.desc", text)).toBe(`FREE ${text}`);
+      await vi.advanceTimersByTimeAsync(300);
+      expect(autoText("k.desc", text)).toBe(`DL ${text}`);
+      expect(improvableCount.value).toBe(0);
+    });
   });
 });

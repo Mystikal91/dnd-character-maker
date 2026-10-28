@@ -1,13 +1,13 @@
 import { signal } from "@preact/signals";
-import { dbClear, dbEntries, dbPut } from "../storage/db";
+import { dbClear, dbEntries, dbGet, dbPut } from "../storage/db";
 import {
   type Connection,
   DEEPL_TARGETS,
   DEFAULT_RELAY,
   TranslateError,
   type TranslateProblem,
-  translateTexts,
 } from "./deepl";
+import { type Engine, RANK, bestEngine, translateBatch } from "./engines";
 
 export interface AutoSettings {
   enabled: boolean;
@@ -15,12 +15,20 @@ export interface AutoSettings {
   key: string;
   /** Leave names alone: a few words without context come out worst. */
   descriptionsOnly: boolean;
+  /** Translate again, with a better engine, the texts a weaker one translated. */
+  upgrade: boolean;
 }
 
 const STORAGE_KEY = "autoTranslate";
 
 function readSettings(): AutoSettings {
-  const blank = { enabled: false, relay: DEFAULT_RELAY, key: "", descriptionsOnly: true };
+  const blank = {
+    enabled: false,
+    relay: DEFAULT_RELAY,
+    key: "",
+    descriptionsOnly: true,
+    upgrade: true,
+  };
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "null");
     if (saved && typeof saved === "object")
@@ -29,6 +37,7 @@ function readSettings(): AutoSettings {
         relay: typeof saved.relay === "string" && saved.relay ? saved.relay : DEFAULT_RELAY,
         key: typeof saved.key === "string" ? saved.key : "",
         descriptionsOnly: saved.descriptionsOnly !== false,
+        upgrade: saved.upgrade !== false,
       };
   } catch {
     // Storage may be refused or hold something else: start blank.
@@ -44,6 +53,7 @@ export function saveAutoSettings(next: AutoSettings): void {
   failed.clear();
   autoError.value = undefined;
   translationTick.value++;
+  refreshImprovable();
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   } catch {
@@ -65,10 +75,38 @@ const originals = signal<ReadonlySet<string>>(new Set());
 export const autoError = signal<TranslateProblem | undefined>(undefined);
 export const pendingCount = signal(0);
 export const cachedCount = signal(0);
+/** How many saved translations a better engine than the one that made them could redo. */
+export const improvableCount = signal(0);
 
 // A translation is looked up by the target language and the exact English text.
 const cache = new Map<string, string>();
-const pending = new Map<string, { text: string; target: string }>();
+/**
+ * Who made the translations that DeepL did not (the relay's free one, MyMemory), by the same key.
+ * A translation with no mark came from DeepL: they all did before there was a choice, and the
+ * files that move between devices carry only the texts.
+ */
+const engines = new Map<string, Engine>();
+const ENGINES_KEY = "translationEngines";
+const engineOf = (ck: string): Engine => engines.get(ck) ?? "deepl";
+
+/** How many of the saved translations could be made better with the engine the person has now. */
+function refreshImprovable(): void {
+  const best = RANK[bestEngine(autoSettings.value.key)];
+  let n = 0;
+  for (const ck of cache.keys()) if (RANK[engineOf(ck)] < best) n += 1;
+  improvableCount.value = n;
+}
+
+function saveEngines(): void {
+  void dbPut("meta", Object.fromEntries(engines), ENGINES_KEY).catch(() => undefined);
+}
+
+/** A text that arrived by another way (a file from another device) is taken as DeepL's. */
+export function forgetEngines(keys: Iterable<string>): void {
+  for (const key of keys) engines.delete(key);
+  saveEngines();
+}
+const pending = new Map<string, { text: string; target: string; upgrade?: boolean }>();
 const failed = new Set<string>();
 /** What each shown text came from: the English it replaces, or the translation it can swap to. */
 const shown = new Map<string, { key: string; mode: "translated" | "original" }>();
@@ -100,7 +138,7 @@ export function displayedText(key: string, source: string): string {
   const settings = autoSettings.value;
   const target = autoTarget.value;
   translationTick.value;
-  if (!settings.enabled || !settings.key || !target || !worthTranslating(source)) return source;
+  if (!settings.enabled || !target || !worthTranslating(source)) return source;
   if (settings.descriptionsOnly && SHORT_FIELDS.has(fieldOf(key))) return source;
   const hit = cache.get(cacheKey(target, source));
   return hit === undefined || originals.value.has(entryOf(key)) ? source : hit;
@@ -112,7 +150,7 @@ export function autoText(key: string, source: string): string {
   const target = autoTarget.value;
   translationTick.value;
   const asked = originals.value;
-  if (!settings.enabled || !settings.key || !target || !worthTranslating(source)) return source;
+  if (!settings.enabled || !target || !worthTranslating(source)) return source;
   if (settings.descriptionsOnly && SHORT_FIELDS.has(fieldOf(key))) return source;
 
   const ck = cacheKey(target, source);
@@ -123,6 +161,18 @@ export function autoText(key: string, source: string): string {
       return source;
     }
     shown.set(hit, { key, mode: "translated" });
+    // A text a weaker engine translated is done again, now that a better one can be had: only
+    // the ones that are read, so nothing is spent on what nobody opens.
+    if (
+      settings.upgrade &&
+      RANK[engineOf(ck)] < RANK[bestEngine(settings.key)] &&
+      !failed.has(ck) &&
+      !pending.has(ck)
+    ) {
+      pending.set(ck, { text: source, target, upgrade: true });
+      pendingCount.value = pending.size;
+      void flushSoon();
+    }
     return hit;
   }
   if (!failed.has(ck) && !pending.has(ck)) {
@@ -168,7 +218,7 @@ const MAX_CHARS = 20000;
 
 async function flush(): Promise<void> {
   const settings = autoSettings.value;
-  if (flushing || !settings.enabled || !settings.key || pending.size === 0) return;
+  if (flushing || !settings.enabled || pending.size === 0) return;
   flushing = true;
   const connection: Connection = { relay: settings.relay, key: settings.key };
   try {
@@ -185,12 +235,17 @@ async function flush(): Promise<void> {
         chars += item.text.length;
       }
       let result: string[];
+      let engine: Engine;
+      let skipped: TranslateProblem | undefined;
       try {
-        result = await translateTexts(
+        const translated = await translateBatch(
           connection,
           batch.map(([, text]) => text),
           target,
         );
+        result = translated.texts;
+        engine = translated.engine;
+        skipped = translated.skipped;
       } catch (error) {
         for (const [ck] of batch) {
           pending.delete(ck);
@@ -203,14 +258,25 @@ async function flush(): Promise<void> {
         translationTick.value++;
         return;
       }
-      autoError.value = undefined;
+      // A key that was refused, or used up, is worth telling even while the free engines help.
+      autoError.value = connection.key.trim() ? skipped : undefined;
       batch.forEach(([ck], i) => {
         const text = result[i] ?? "";
+        const upgrade = pending.get(ck)?.upgrade === true;
         pending.delete(ck);
         if (!text) return;
+        // An improvement that is no better than what is kept is not kept, nor asked for again.
+        if (upgrade && RANK[engine] <= RANK[engineOf(ck)]) {
+          failed.add(ck);
+          return;
+        }
         cache.set(ck, text);
+        if (engine === "deepl") engines.delete(ck);
+        else engines.set(ck, engine);
         void dbPut("translations", text, ck).catch(() => undefined);
       });
+      saveEngines();
+      refreshImprovable();
       cachedCount.value = cache.size;
       pendingCount.value = pending.size;
       translationTick.value++;
@@ -224,19 +290,27 @@ async function flush(): Promise<void> {
 export async function loadTranslationCache(): Promise<void> {
   try {
     for (const [key, value] of await dbEntries<string>("translations")) cache.set(key, value);
+    const marks = await dbGet<Record<string, Engine> | undefined>("meta", ENGINES_KEY);
+    engines.clear();
+    for (const [key, engine] of Object.entries(marks ?? {}))
+      if (cache.has(key) && engine in RANK) engines.set(key, engine);
   } catch {
     // Storage may be unavailable: translations then live only until the page closes.
   }
   cachedCount.value = cache.size;
+  refreshImprovable();
   translationTick.value++;
 }
 
 /** Forgets every saved translation. */
 export async function clearTranslationCache(): Promise<void> {
   cache.clear();
+  engines.clear();
+  saveEngines();
   failed.clear();
   shown.clear();
   cachedCount.value = 0;
+  improvableCount.value = 0;
   try {
     await dbClear("translations");
   } catch {
