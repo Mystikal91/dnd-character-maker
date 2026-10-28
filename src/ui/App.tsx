@@ -20,6 +20,7 @@ import { HomebrewPage } from "./HomebrewPage";
 import { PacksNotice } from "./PacksNotice";
 import { PacksPage } from "./PacksPage";
 import { QuickEditDialog } from "./QuickEdit";
+import { SearchButton, SearchDialog } from "./SearchDialog";
 import { ShareDialog } from "./ShareDialog";
 import { Sheet } from "./Sheet";
 import { Tabs } from "./Tabs";
@@ -108,7 +109,10 @@ export function App() {
             <span class="beta-badge">{STAGE}</span>
           </h1>
         </div>
-        <AppMenu />
+        <div class="app-actions">
+          <SearchButton />
+          <AppMenu />
+        </div>
       </header>
       {loadError.value ? (
         <p role="alert">{ui("app.loadError")}</p>
@@ -130,6 +134,7 @@ export function App() {
       <SpellDialog />
       <QuickEditDialog />
       <ExplainDialog />
+      <SearchDialog />
       <TransferDialog />
       <CustomSpellDialog />
       <ShareDialog />

@@ -17,7 +17,7 @@
 }
 
 :root[data-style="fantasy"] .shell > .app-header h1 {
-  font-size: clamp(1.2rem, 5.2vw, 2.1rem);
+  font-size: clamp(1rem, 4.4vw, 2.1rem);
   letter-spacing: 0.1em;
 }
 
@@ -999,4 +999,79 @@ input:checked + .equip-tag {
 
 .transfer .note {
   margin: 0.6rem 0;
+}
+
+/* ---- Search of the rules ---- */
+
+.app-actions {
+  display: flex;
+  flex: none;
+  gap: 0.5rem;
+}
+
+.search-button {
+  display: grid;
+  place-items: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.search-button:hover {
+  border-color: var(--accent);
+}
+
+.search-field {
+  width: 100%;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.search-results {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.search-results button {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.25rem;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: 0;
+  text-align: left;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.search-results button:hover {
+  color: var(--accent);
+}
+
+.search-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.search-results small {
+  flex: none;
+}
+
+.search-dialog {
+  height: min(40rem, calc(100vh - 3rem));
 }
