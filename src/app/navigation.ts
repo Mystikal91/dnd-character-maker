@@ -5,13 +5,14 @@ export type View =
   | "build"
   | "sheet"
   | "play"
+  | "rules"
   | "print"
   | "credits"
   | "packs"
   | "homebrew"
   | "translate"
   | "about";
-export type Tab = "build" | "sheet" | "play" | "print";
+export type Tab = "build" | "sheet" | "play" | "rules" | "print";
 
 const STORAGE_KEY = "tab";
 

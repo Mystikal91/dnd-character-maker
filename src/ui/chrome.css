@@ -1075,3 +1075,102 @@ input:checked + .equip-tag {
 .search-dialog {
   height: min(40rem, calc(100vh - 3rem));
 }
+
+/* ---- The rules page: a search, the kinds, a list and the text beside it ---- */
+
+.rules-page {
+  container: rules / inline-size;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.rules-kinds {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.rules-kinds .chip {
+  min-height: 2.25rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.rules-kinds .chip.on {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.rules-body {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+}
+
+.rules-list .search-results button.on {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.rules-detail {
+  min-width: 0;
+}
+
+.rules-back {
+  display: none;
+}
+
+.rule-properties {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.75rem 0 0;
+}
+
+.rule-properties dt {
+  font-weight: 700;
+}
+
+.rule-properties dd {
+  margin: 0;
+}
+
+/* Wide: the list and the text side by side. Narrow: the list, then the text instead of it. */
+@container rules (min-width: 44rem) {
+  .rules-body {
+    grid-template-columns: minmax(14rem, 1fr) minmax(0, 1.6fr);
+  }
+
+  .rules-list {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+}
+
+@container rules (max-width: 43.99rem) {
+  .rules-page.has-detail .rules-list,
+  .rules-page.has-detail .rules-top {
+    display: none;
+  }
+
+  .rules-back {
+    display: inline-flex;
+    margin-bottom: 0.5rem;
+  }
+
+  .rules-page:not(.has-detail) .rules-pick {
+    display: none;
+  }
+}

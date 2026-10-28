@@ -18,6 +18,7 @@ import { ABILITIES } from "../../data/schema";
 import { type D20Mode, doubleDice } from "../../engine/dice";
 import { castSpell, slotsLeft } from "../../engine/play";
 import { type UiKey, signed, ui } from "../../i18n/ui";
+import { RuleInfoButton } from "../rules/EntryDetail";
 import { ExtraDamageList, extraName } from "../sheet/ExtraDamage";
 import { Panel } from "../sheet/parts";
 
@@ -234,7 +235,9 @@ function RollsPanel({ part }: { part: "attacks" | "checks" }) {
             const shownDice = criticalWeapon.value === a.itemId ? (doubleDice(dice) ?? dice) : dice;
             return (
               <li class="row-between attack-row" key={a.itemId}>
-                <span>{c.name(a.itemId)}</span>
+                <span>
+                  {c.name(a.itemId)} <RuleInfoButton id={a.itemId} />
+                </span>
                 <span class="btn-row">
                   <button
                     type="button"

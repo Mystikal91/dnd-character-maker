@@ -5,6 +5,7 @@ const TABS: { id: Tab; label: UiKey }[] = [
   { id: "build", label: "tab.build" },
   { id: "sheet", label: "tab.sheet" },
   { id: "play", label: "tab.play" },
+  { id: "rules", label: "tab.rules" },
   { id: "print", label: "tab.print" },
 ];
 

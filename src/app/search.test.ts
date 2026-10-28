@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { type Searchable, fold, search } from "./search";
+import { type Searchable, browse, fold, kindsOf, search } from "./search";
 
 const entries = [
   ["srd51:spell/fireball", "spell", "Palla di fuoco", "Una sfera esplode in un fragore di fiamme."],
@@ -33,6 +33,16 @@ describe("searching the rules", () => {
 
   it("finds a word in the text when the name does not have it", () => {
     expect(search(content, "velocita").map((h) => h.id)).toEqual(["srd51:condition/grappled"]);
+  });
+
+  it("limits a search to one kind, and reads through a kind by name", () => {
+    expect(search(content, "fuoco", "condition")).toEqual([]);
+    expect(search(content, "fuoco", "spell")).toHaveLength(2);
+    expect(browse(content, "spell").map((h) => h.name)).toEqual([
+      "Dardo di fuoco",
+      "Palla di fuoco",
+    ]);
+    expect(kindsOf(content)).toEqual(["spell", "condition", "skill"]);
   });
 
   it("needs every word, and ignores what is not worth looking up", () => {

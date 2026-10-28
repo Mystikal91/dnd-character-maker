@@ -20,7 +20,7 @@ import { HomebrewPage } from "./HomebrewPage";
 import { PacksNotice } from "./PacksNotice";
 import { PacksPage } from "./PacksPage";
 import { QuickEditDialog } from "./QuickEdit";
-import { SearchButton, SearchDialog } from "./SearchDialog";
+import { SearchButton } from "./SearchButton";
 import { ShareDialog } from "./ShareDialog";
 import { Sheet } from "./Sheet";
 import { Tabs } from "./Tabs";
@@ -30,6 +30,8 @@ import { BuildTab } from "./build/BuildTab";
 import { LevelUp } from "./build/LevelUp";
 import { PlayTab } from "./play/PlayTab";
 import { PrintView } from "./print/PrintView";
+import { RuleDialog } from "./rules/EntryDetail";
+import { RulesPage } from "./rules/RulesPage";
 import { SpellDialog } from "./spells/SpellInfo";
 
 function Screen() {
@@ -50,6 +52,8 @@ function Screen() {
       return <Sheet />;
     case "play":
       return <PlayTab />;
+    case "rules":
+      return <RulesPage />;
     default:
       return <BuildTab />;
   }
@@ -134,7 +138,7 @@ export function App() {
       <SpellDialog />
       <QuickEditDialog />
       <ExplainDialog />
-      <SearchDialog />
+      <RuleDialog />
       <TransferDialog />
       <CustomSpellDialog />
       <ShareDialog />

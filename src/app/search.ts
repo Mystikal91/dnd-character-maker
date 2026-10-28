@@ -63,18 +63,38 @@ function namesOf(c: Searchable) {
 const MIN_LENGTH = 2;
 export const MAX_HITS = 60;
 
+/** The kinds that some entry of the content has, in the order of the list of kinds. */
+export function kindsOf(c: Searchable): SearchKind[] {
+  const present = new Set(namesOf(c).map((n) => n.kind));
+  return SEARCH_KINDS.filter((k) => present.has(k));
+}
+
+/** Every entry of a kind by name, to read through. */
+export function browse(c: Searchable, kind: SearchKind): SearchHit[] {
+  return namesOf(c)
+    .filter((n) => n.kind === kind)
+    .map(({ id, name }) => ({ id, kind, name }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
 /**
  * Entries whose name or text has every word of the query. A name that starts with the query
  * comes first, then a name that has it, then a text that has it. Nothing for a query shorter
  * than two letters.
  */
-export function search(c: Searchable, query: string): SearchHit[] {
+export function search(
+  c: Searchable,
+  query: string,
+  kind?: SearchKind,
+  limit = MAX_HITS,
+): SearchHit[] {
   const words = fold(query).split(/\s+/).filter(Boolean);
   const whole = words.join(" ");
   if (whole.length < MIN_LENGTH) return [];
 
   const scored: { hit: SearchHit; score: number }[] = [];
-  for (const { id, kind, name, folded } of namesOf(c)) {
+  for (const { id, kind: entryKind, name, folded } of namesOf(c)) {
+    if (kind && entryKind !== kind) continue;
     let score = 0;
     if (folded === whole) score = 100;
     else if (folded.startsWith(whole)) score = 80;
@@ -87,11 +107,11 @@ export function search(c: Searchable, query: string): SearchHit[] {
       const both = `${folded} ${text}`;
       if (words.every((w) => both.includes(w))) score = 20;
     }
-    if (score > 0) scored.push({ hit: { id, kind, name }, score });
+    if (score > 0) scored.push({ hit: { id, kind: entryKind, name }, score });
   }
   // The same name in a few books: one of each kind is enough to show first.
   return scored
     .sort((a, b) => b.score - a.score || a.hit.name.localeCompare(b.hit.name))
-    .slice(0, MAX_HITS)
+    .slice(0, limit)
     .map((s) => s.hit);
 }

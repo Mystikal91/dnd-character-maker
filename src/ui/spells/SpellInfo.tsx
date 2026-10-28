@@ -12,7 +12,7 @@ const TIP_WIDTH_REM = 22;
 const TIP_MAX_CHARS = 420;
 
 /** What the rules say about one spell: where it sits, how it is cast, and what it does. */
-function SpellInfoBody({ id, short = false }: { id: string; short?: boolean }) {
+export function SpellInfoBody({ id, short = false }: { id: string; short?: boolean }) {
   const c = content.value;
   if (!c) return null;
   const data = c.index.get(id)?.data ?? {};

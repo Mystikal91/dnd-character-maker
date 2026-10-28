@@ -10,6 +10,7 @@ import { CoinsPanel } from "../Coins";
 import { collectSpellRows } from "../spellRows";
 import { neighbour, useSwipe } from "../useSwipe";
 import { DiceButton, DiceDrawer } from "./DiceDrawer";
+import { PlayFeatures } from "./Features";
 import { ClassResources, Conditions, PlayNotes, PlaySpells, Slots } from "./Resources";
 import { AttackRolls, CheckRolls, DiceTray, ModePicker, RollHistory } from "./Rolls";
 import { GroupTabs, StatusBar } from "./StatusBar";
@@ -134,6 +135,9 @@ export function PlayTab() {
             <Conditions />
           </Part>
           <Part group="resources" order={5}>
+            <PlayFeatures />
+          </Part>
+          <Part group="resources" order={6}>
             <PlayNotes />
           </Part>
         </div>
