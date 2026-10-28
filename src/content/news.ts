@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.9.1 beta",
+    date: "2026-10-28",
+    notes: [
+      {
+        en: "Automatic translation no longer needs a DeepL account: texts still in English are translated for free while you read them, with a translation run by the relay and MyMemory as a last resort. With your own DeepL key (now under Advanced) the translations are better. The app remembers which engine made each saved translation and, when a better one is available (a key is added, the allowance renews), translates again the texts you read; this can be turned off. The note under a translated text now says which engine made it.",
+        it: "La traduzione automatica non richiede più un account DeepL: i testi ancora in inglese si traducono gratis mentre li leggi, con una traduzione fatta dal relay e MyMemory come ultima risorsa. Con una tua chiave DeepL (ora sotto Avanzate) le traduzioni sono migliori. L’app ricorda quale motore ha fatto ogni traduzione salvata e, quando ne è disponibile uno migliore (si aggiunge una chiave, la quota si rinnova), rifà i testi che leggi; si può disattivare. La nota sotto un testo tradotto ora dice quale motore l’ha fatto.",
+        fr: "La traduction automatique n’a plus besoin d’un compte DeepL : les textes encore en anglais sont traduits gratuitement pendant que tu les lis, par une traduction du relais et, en dernier recours, MyMemory. Avec ta propre clé DeepL (maintenant sous Avancé) les traductions sont meilleures. L’app retient quel moteur a fait chaque traduction enregistrée et, quand un meilleur est disponible (une clé est ajoutée, le quota se renouvelle), retraduit les textes que tu lis ; on peut le désactiver. La note sous un texte traduit dit maintenant quel moteur l’a fait.",
+        de: "Die automatische Übersetzung braucht kein DeepL-Konto mehr: Texte, die noch englisch sind, werden beim Lesen kostenlos übersetzt, mit einer Übersetzung des Relais und MyMemory als letzter Möglichkeit. Mit einem eigenen DeepL-Schlüssel (jetzt unter Erweitert) sind die Übersetzungen besser. Die App merkt sich, welcher Dienst jede gespeicherte Übersetzung gemacht hat, und übersetzt die Texte, die du liest, neu, wenn ein besserer verfügbar ist (ein Schlüssel kommt hinzu, das Kontingent erneuert sich); das lässt sich abschalten. Die Notiz unter einem übersetzten Text sagt jetzt, welcher Dienst ihn gemacht hat.",
+        es: "La traducción automática ya no necesita una cuenta de DeepL: los textos que siguen en inglés se traducen gratis mientras los lees, con una traducción del relé y MyMemory como último recurso. Con tu propia clave de DeepL (ahora en Avanzado) las traducciones son mejores. La app recuerda qué motor hizo cada traducción guardada y, cuando hay uno mejor disponible (se añade una clave, la cuota se renueva), vuelve a traducir los textos que lees; se puede desactivar. La nota bajo un texto traducido ahora dice qué motor lo hizo.",
+      },
+    ],
+  },
+  {
     version: "1.9 beta",
     date: "2026-10-28",
     notes: [
