@@ -42,7 +42,7 @@ export { AuroraParseError, slugify } from "./xml";
  * the entries or texts it makes: packs imported with an older version are marked as needing an
  * update, and can be imported again with a click.
  */
-export const AURORA_IMPORT_VERSION = 10;
+export const AURORA_IMPORT_VERSION = 11;
 export type { AuroraOptions, AuroraResult } from "./registry";
 
 /**
@@ -155,6 +155,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     merged: 0,
     editions: 0,
     unsupportedRules: 0,
+    unsupportedBy: {},
     title: "",
     aids: {},
   };

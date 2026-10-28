@@ -694,5 +694,8 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
     mapped.effects.push({ type: "modifier", target: "save", value: first });
   else mapped.unsupported += saves.size;
   ctx.result.unsupportedRules += mapped.unsupported;
+  if (mapped.unsupported > 0)
+    ctx.result.unsupportedBy[source.aid] =
+      (ctx.result.unsupportedBy[source.aid] ?? 0) + mapped.unsupported;
   return mapped;
 }

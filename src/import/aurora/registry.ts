@@ -28,6 +28,8 @@ export interface AuroraResult {
   editions: number;
   /** Rules (stat formulas, conditions...) that the app cannot apply by itself. */
   unsupportedRules: number;
+  /** The same, element by element (by Aurora id): only those with some. Checks use it, nothing stored. */
+  unsupportedBy: Record<string, number>;
   /** The name the files give themselves, if any. */
   title: string;
   /** The entry each Aurora id became, by Aurora id: what a later import matches on. */

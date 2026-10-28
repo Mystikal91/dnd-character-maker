@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Entry, type Pack, findBrokenReferences, parsePack } from "../../data/schema";
@@ -6,6 +6,7 @@ import { createCharacter } from "../../engine/character";
 import { deriveSheet, indexPacks } from "../../engine/derive";
 import { SRD51_FILES, loadSrd51Strings, srd51Index, srd51Packs } from "../../test/srd51";
 import { type AuroraResult, parseAurora } from "./index";
+import { type Outcomes, measure, toFile, worse } from "./ratchet";
 
 /**
  * The importer against the whole of Aurora's content, kept at a fixed commit (see the workflow).
@@ -101,6 +102,16 @@ export function corpusSuite(reverse: boolean) {
         // Rules that depend on other rules stay in the pack and are checked with the sheet.
         const whens = JSON.stringify(result.entries).match(/"type":"when"/g) ?? [];
         expect(whens.length).toBeGreaterThan(300);
+      });
+
+      it("turns no element into less than it did when the baseline was taken", () => {
+        const baselinePath = join(import.meta.dirname, "corpus.baseline.json");
+        const current = measure(result.entries, result.aids, result.unsupportedBy);
+        // AURORA_ACCEPT=1 takes the present result as the baseline (after a change that was meant).
+        if (process.env.AURORA_ACCEPT && !reverse) writeFileSync(baselinePath, toFile(current));
+        const baseline = JSON.parse(readFileSync(baselinePath, "utf8")) as Outcomes;
+        expect(Object.keys(baseline).length).toBeGreaterThan(3000);
+        expect(worse(baseline, current).slice(0, 40)).toEqual([]);
       });
 
       it("points only at entries that exist", () => {

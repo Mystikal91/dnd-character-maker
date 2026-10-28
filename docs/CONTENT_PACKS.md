@@ -148,3 +148,14 @@ use. They never change an entry's data or effects.
 ## Importing a pack again
 
 A pack imported from Aurora keeps where it came from (`source`: the address, or the names of the files), the version of the importer that made it (`importVersion`, compared with `AURORA_IMPORT_VERSION` in `src/import/aurora/index.ts`) and whether the 2024 versions were kept. When the importer is improved, raise the constant: older packs are marked "Needs updating" on the packs page and can be made again with one click. The pack keeps its id, so the characters that use its entries keep working. Raise the constant whenever a change alters what the importer produces.
+
+## Checking the importer against all of Aurora
+
+`npm run test:corpus` runs the importer over the whole of Aurora's content (a clone of
+`AuroraLegacy/elements` at the commit pinned in `.github/workflows/deploy.yml`, found through the
+`AURORA_CORPUS` variable) in both orders of reading. Besides the checks on species and references,
+it compares every element with `src/import/aurora/corpus.baseline.json`: for each Aurora id, how
+many effects the element ended with and how many of its rules the app could not apply. The test
+fails when something got worse (an element gone, fewer effects, more rules left out); better
+results and new elements pass. After a change that was meant, run the corpus with `AURORA_ACCEPT=1`
+(the first of the two readings writes the file) and commit the new baseline with the change.

@@ -100,7 +100,13 @@ const is2024 = (source: { source: string; aid: string }) =>
  */
 export function preferOlderEdition(ctx: Context): number {
   const modern = new Map<string, boolean>();
-  for (const source of ctx.needed) if (source.id) modern.set(source.id, is2024(source));
+  const aidOf = new Map<string, string>();
+  for (const source of ctx.needed) {
+    if (!source.id) continue;
+    modern.set(source.id, is2024(source));
+    aidOf.set(source.id, source.aid);
+  }
+  const byId = new Map(ctx.result.entries.map((e) => [e.id, e]));
   const groups = new Map<string, { old: string[]; fresh: string[] }>();
   for (const entry of ctx.result.entries) {
     if (!LISTED.has(entry.kind) || !modern.has(entry.id)) continue;
@@ -111,8 +117,16 @@ export function preferOlderEdition(ctx: Context): number {
   }
   const replace = new Map<string, string>();
   for (const { old, fresh } of groups.values()) {
-    const keep = old[0];
-    if (keep) for (const id of fresh) replace.set(id, keep);
+    // Two 2014 things can share a name (the Blessing of Protection of the DMG and the one of the
+    // Gift): the 2024 one is the one with the same effects, else the first by Aurora id, never
+    // the first that the files happened to list.
+    const sorted = [...old].sort((x, y) => (aidOf.get(x) ?? x).localeCompare(aidOf.get(y) ?? y));
+    for (const id of fresh) {
+      const effects = JSON.stringify(byId.get(id)?.effects);
+      const keep =
+        sorted.find((o) => JSON.stringify(byId.get(o)?.effects) === effects) ?? sorted[0];
+      if (keep) replace.set(id, keep);
+    }
   }
   if (replace.size > 0) drop(ctx, replace);
   return replace.size;
