@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.9 beta",
+    date: "2026-10-28",
+    notes: [
+      {
+        en: "There is a new Rules tab, between Play and Print. Search spells, items, feats, conditions, features and more by name or by a word of their text, or pick a kind and read through the whole list; on a wide screen the text sits beside the list. The magnifier in the header (or the slash key) goes straight to it. On the play screen each weapon has a small “i” that explains its properties, and a new folded panel, Features and traits, lists everything the character has from species, class and feats, to read when it comes up.",
+        it: "C’è una nuova scheda Regole, tra Gioca e Stampa. Cerca incantesimi, oggetti, talenti, condizioni, privilegi e altro per nome o per una parola del testo, oppure scegli un tipo e sfoglia tutto l’elenco; su uno schermo largo il testo sta accanto all’elenco. La lente nell’intestazione (o il tasto barra) porta subito lì. Nella schermata di gioco ogni arma ha una piccola “i” che ne spiega le proprietà, e un nuovo riquadro chiuso, Privilegi e tratti, elenca tutto ciò che il personaggio ha da specie, classe e talenti, da leggere quando serve.",
+        fr: "Un nouvel onglet Règles se trouve entre Jeu et Impression. Cherche sorts, objets, dons, conditions, aptitudes et plus par leur nom ou par un mot de leur texte, ou choisis un type et parcours toute la liste ; sur un grand écran le texte se place à côté de la liste. La loupe de l’en-tête (ou la touche barre oblique) y mène directement. Sur l’écran de jeu chaque arme a un petit « i » qui explique ses propriétés, et un nouveau panneau replié, Aptitudes et traits, liste tout ce que le personnage tient de l’espèce, de la classe et des dons, à lire quand le moment vient.",
+        de: "Es gibt einen neuen Reiter Regeln, zwischen Spielen und Drucken. Suche Zauber, Gegenstände, Talente, Zustände, Merkmale und mehr nach Name oder einem Wort des Textes, oder wähle eine Art und lies die ganze Liste durch; auf einem breiten Bildschirm steht der Text neben der Liste. Die Lupe in der Kopfzeile (oder die Schrägstrich-Taste) führt direkt dorthin. Im Spielbildschirm hat jede Waffe ein kleines „i“, das ihre Eigenschaften erklärt, und ein neues zugeklapptes Feld, Merkmale und Eigenschaften, listet alles auf, was der Charakter aus Spezies, Klasse und Talenten hat, zum Nachlesen, wenn es gebraucht wird.",
+        es: "Hay una nueva pestaña Reglas, entre Juego e Imprimir. Busca conjuros, objetos, dotes, condiciones, rasgos y más por su nombre o por una palabra de su texto, o elige un tipo y recorre toda la lista; en una pantalla ancha el texto queda junto a la lista. La lupa de la cabecera (o la tecla barra) lleva directamente. En la pantalla de juego cada arma tiene una pequeña «i» que explica sus propiedades, y un nuevo panel plegado, Rasgos y características, enumera todo lo que el personaje tiene por especie, clase y dotes, para leerlo cuando haga falta.",
+      },
+    ],
+  },
+  {
     version: "1.8 beta",
     date: "2026-10-28",
     notes: [
