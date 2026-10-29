@@ -973,5 +973,21 @@
   "warning.multipleShields": "Plus d'un bouclier est équipé.",
   "warning.attunementTooMany": "{count} objets équipés demandent une harmonisation ; un personnage peut s'harmoniser avec 3.",
   "warning.strengthMinimum": "{item} nécessite Force {minimum}.",
-  "warning.notProficient": "Pas de maîtrise de {item}."
+  "warning.notProficient": "Pas de maîtrise de {item}.",
+  "legacy.notice": "Cette app a un nouveau nom et une nouvelle adresse : Heroquill, sur heroquill.app. Emporte-y tes personnages.",
+  "legacy.noticeAction": "Comment faire",
+  "legacy.guide.intro": "Cette app s’appelle maintenant Heroquill et se trouve à une nouvelle adresse. Tes personnages sont enregistrés sur cet appareil et ne se déplacent pas tout seuls, mais ça prend quelques minutes.",
+  "legacy.guide.step1": "Tout enregistrer sur Google Drive",
+  "legacy.guide.step1Hint": "Personnages, packs, réglages et traductions enregistrées vont dans un seul fichier de ton Drive. L’app ne peut rien voir d’autre.",
+  "legacy.guide.noDrive": "Google Drive n’est pas disponible dans cette version.",
+  "legacy.guide.file": "Pas de compte Google ? Tu peux utiliser un fichier :",
+  "legacy.guide.step2": "Ouvrir Heroquill",
+  "legacy.guide.open": "Ouvrir Heroquill",
+  "legacy.guide.step3": "Le charger là-bas",
+  "legacy.guide.step3Hint": "Dans Heroquill, sur la première page choisis « Charger depuis Google Drive » (ou le menu ⋯, « Passer à un autre appareil »), puis choisis ce que tu veux apporter.",
+  "legacy.guide.step4": "Vérifier et changer",
+  "legacy.guide.step4Hint": "Vérifie que tous tes personnages sont là. Si tu avais installé cette app sur ton téléphone, installe aussi Heroquill puis retire l’ancienne de l’écran d’accueil. Cette adresse reste disponible quelque temps.",
+  "fromOld.title": "Tu viens de l’ancienne version ?",
+  "fromOld.body": "Heroquill se trouvait à une autre adresse. Si tu as enregistré tes personnages sur Google Drive (ou dans un fichier) depuis l’ancienne app, apporte-les ici.",
+  "fromOld.hide": "Pas maintenant"
 }

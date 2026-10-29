@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.11.0 beta",
+    date: "2026-10-29",
+    notes: [
+      {
+        en: "Moving from the old address is now a guided path: on the old site a notice and a step-by-step guide save everything (characters, packs, settings, saved translations) to Google Drive and point to Heroquill, and links to shared characters open straight in Heroquill. Heroquill shows a card on the first page for those who come from the old version, with Load from Google Drive or Open a file.",
+        it: "Il passaggio dal vecchio indirizzo ora è un percorso guidato: sul vecchio sito un avviso e una guida passo passo salvano tutto (personaggi, pacchetti, impostazioni, traduzioni salvate) su Google Drive e rimandano a Heroquill, e i link ai personaggi condivisi si aprono direttamente in Heroquill. Heroquill mostra nella prima pagina una scheda per chi viene dalla vecchia versione, con Carica da Google Drive o Apri un file.",
+        fr: "Le passage depuis l’ancienne adresse est maintenant un parcours guidé : sur l’ancien site un avis et un guide pas à pas enregistrent tout (personnages, packs, réglages, traductions enregistrées) sur Google Drive et renvoient vers Heroquill, et les liens de personnages partagés s’ouvrent directement dans Heroquill. Heroquill affiche sur la première page une carte pour ceux qui viennent de l’ancienne version, avec Charger depuis Google Drive ou Ouvrir un fichier.",
+        de: "Der Umzug von der alten Adresse ist jetzt ein geführter Weg: Auf der alten Seite speichern ein Hinweis und eine Schritt-für-Schritt-Anleitung alles (Charaktere, Pakete, Einstellungen, gespeicherte Übersetzungen) in Google Drive und führen zu Heroquill, und Links zu geteilten Charakteren öffnen sich direkt in Heroquill. Heroquill zeigt auf der ersten Seite eine Karte für alle, die von der alten Version kommen, mit „Aus Google Drive laden“ oder „Datei öffnen“.",
+        es: "Pasar desde la dirección antigua ahora es un camino guiado: en el sitio antiguo un aviso y una guía paso a paso guardan todo (personajes, paquetes, ajustes, traducciones guardadas) en Google Drive y envían a Heroquill, y los enlaces a personajes compartidos se abren directamente en Heroquill. Heroquill muestra en la primera página una tarjeta para quienes vienen de la versión anterior, con Cargar desde Google Drive o Abrir un archivo.",
+      },
+    ],
+  },
+  {
     version: "1.10.0 beta",
     date: "2026-10-29",
     notes: [

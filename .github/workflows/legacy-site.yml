@@ -1,0 +1,39 @@
+name: Old address (GitHub Pages)
+
+# The app used to live at https://mystikal91.github.io/dnd-character-maker/. That address is not
+# updated with the site any more; this workflow, run by hand, publishes a build of the current code
+# there that only helps people move to Heroquill (a notice, a guide to move their data, and shared
+# links sent on). Once the move is over, change it to a plain redirect.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: legacy-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:legacy
+        env:
+          VITE_GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v5

@@ -7,6 +7,7 @@ import {
   loadSignIn,
   saveToDrive,
 } from "../app/drive";
+import { LEGACY_SITE, NEW_APP_URL } from "../app/legacy";
 import {
   type TransferReport,
   applyTransfer,
@@ -27,6 +28,9 @@ import {
   openTransfer,
 } from "../storage/bundle";
 import { WrongPassphrase } from "../storage/crypto";
+
+/** What the old address moves: everything but the DeepL key, which should not travel unasked. */
+const MOVING = SECTIONS.filter((s) => s !== "deeplKey");
 
 const close = () => {
   transferDialog.value = undefined;
@@ -79,7 +83,7 @@ function Rows({
 }
 
 /** What the Drive buttons are doing or have done, under them. */
-function DriveMessage() {
+export function DriveMessage() {
   const state = driveState.value;
   if (!driveConfigured || state === "idle") return null;
   const text =
@@ -109,6 +113,83 @@ const Back = () => (
     ← {ui("transfer.back")}
   </button>
 );
+
+/** The first screen on the old address: the recommended way to move to Heroquill, step by step. */
+function MigrationGuide() {
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    driveState.value = "idle";
+    if (driveConfigured) void loadSignIn().catch(() => undefined);
+  }, []);
+  const saved = driveState.value === "saved";
+  const saveAll = async () => {
+    setBusy(true);
+    try {
+      const info = currentCounts();
+      const chosen = new Set(MOVING.filter((s) => info.counts[s] > 0 || s === "settings"));
+      const file = await exportTransfer(chosen, "");
+      await saveToDrive(file.text);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <>
+      <p>{ui("legacy.guide.intro")}</p>
+      <ol class="plain migration-steps">
+        <li>
+          <h4>{ui("legacy.guide.step1")}</h4>
+          {driveConfigured ? (
+            <>
+              <p class="muted">{ui("legacy.guide.step1Hint")}</p>
+              <button
+                type="button"
+                class={saved ? "" : "primary"}
+                disabled={busy || driveState.value === "working"}
+                onClick={() => void saveAll()}
+              >
+                {ui("transfer.drive.save")}
+              </button>
+              <DriveMessage />
+            </>
+          ) : (
+            <p class="muted">{ui("legacy.guide.noDrive")}</p>
+          )}
+          <p class="muted">
+            {ui("legacy.guide.file")}{" "}
+            <button
+              type="button"
+              class="link"
+              onClick={() => {
+                transferDialog.value = "export";
+              }}
+            >
+              {ui("transfer.export")}
+            </button>
+          </p>
+        </li>
+        <li>
+          <h4>{ui("legacy.guide.step2")}</h4>
+          <button
+            type="button"
+            class={saved ? "primary" : ""}
+            onClick={() => window.open(NEW_APP_URL, "_blank", "noopener")}
+          >
+            {ui("legacy.guide.open")}
+          </button>
+        </li>
+        <li>
+          <h4>{ui("legacy.guide.step3")}</h4>
+          <p class="muted">{ui("legacy.guide.step3Hint")}</p>
+        </li>
+        <li>
+          <h4>{ui("legacy.guide.step4")}</h4>
+          <p class="muted">{ui("legacy.guide.step4Hint")}</p>
+        </li>
+      </ol>
+    </>
+  );
+}
 
 /** The first screen: two things to do, each a big button that says what it does. */
 function Start() {
@@ -458,7 +539,17 @@ export function TransferDialog() {
           ✕
         </button>
       </header>
-      {mode === "start" ? <Start /> : mode === "export" ? <ExportPane /> : <ImportPane />}
+      {mode === "start" ? (
+        LEGACY_SITE ? (
+          <MigrationGuide />
+        ) : (
+          <Start />
+        )
+      ) : mode === "export" ? (
+        <ExportPane />
+      ) : (
+        <ImportPane />
+      )}
     </dialog>
   );
 }

@@ -973,5 +973,21 @@
   "warning.multipleShields": "Es ist mehr als ein Schild ausgerüstet.",
   "warning.attunementTooMany": "{count} ausgerüstete Gegenstände benötigen Einstimmung; ein Charakter kann sich auf 3 einstimmen.",
   "warning.strengthMinimum": "{item} erfordert Stärke {minimum}.",
-  "warning.notProficient": "Keine Übung mit {item}."
+  "warning.notProficient": "Keine Übung mit {item}.",
+  "legacy.notice": "Diese App hat einen neuen Namen und eine neue Adresse: Heroquill unter heroquill.app. Bring deine Charaktere dorthin.",
+  "legacy.noticeAction": "So geht’s",
+  "legacy.guide.intro": "Diese App heißt jetzt Heroquill und hat eine neue Adresse. Deine Charaktere sind auf diesem Gerät gespeichert und ziehen nicht von selbst um, aber es dauert nur wenige Minuten.",
+  "legacy.guide.step1": "Alles in Google Drive speichern",
+  "legacy.guide.step1Hint": "Charaktere, Pakete, Einstellungen und gespeicherte Übersetzungen kommen in eine einzige Datei in deinem Drive. Die App kann dort nichts anderes sehen.",
+  "legacy.guide.noDrive": "Google Drive ist in dieser Version nicht verfügbar.",
+  "legacy.guide.file": "Kein Google-Konto? Du kannst stattdessen eine Datei benutzen:",
+  "legacy.guide.step2": "Heroquill öffnen",
+  "legacy.guide.open": "Heroquill öffnen",
+  "legacy.guide.step3": "Dort laden",
+  "legacy.guide.step3Hint": "Wähle in Heroquill auf der ersten Seite „Aus Google Drive laden“ (oder im ⋯-Menü „Auf ein anderes Gerät wechseln“) und dann, was du mitbringen willst.",
+  "legacy.guide.step4": "Prüfen und wechseln",
+  "legacy.guide.step4Hint": "Prüfe, ob alle Charaktere da sind. Wenn du diese App auf dem Handy installiert hattest, installiere auch Heroquill und entferne dann die alte vom Startbildschirm. Diese Adresse bleibt noch eine Weile erreichbar.",
+  "fromOld.title": "Kommst du von der alten Version?",
+  "fromOld.body": "Heroquill lag früher unter einer anderen Adresse. Wenn du deine Charaktere aus der alten App in Google Drive (oder in eine Datei) gespeichert hast, hol sie hierher.",
+  "fromOld.hide": "Jetzt nicht"
 }

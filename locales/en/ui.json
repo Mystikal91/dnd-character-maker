@@ -973,5 +973,21 @@
   "warning.multipleShields": "More than one shield is equipped.",
   "warning.attunementTooMany": "{count} equipped items need attunement; a character can attune to 3.",
   "warning.strengthMinimum": "{item} needs Strength {minimum}.",
-  "warning.notProficient": "Not proficient with {item}."
+  "warning.notProficient": "Not proficient with {item}.",
+  "legacy.notice": "This app has a new name and a new home: Heroquill, at heroquill.app. Move your characters there.",
+  "legacy.noticeAction": "How to move",
+  "legacy.guide.intro": "This app is now called Heroquill and lives at a new address. Your characters are saved on this device and do not move by themselves, but it takes a few minutes.",
+  "legacy.guide.step1": "Save everything to Google Drive",
+  "legacy.guide.step1Hint": "Characters, packs, settings and saved translations go in one file in your own Drive. The app cannot see anything else there.",
+  "legacy.guide.noDrive": "Google Drive is not available in this version.",
+  "legacy.guide.file": "No Google account? You can use a file instead:",
+  "legacy.guide.step2": "Open Heroquill",
+  "legacy.guide.open": "Open Heroquill",
+  "legacy.guide.step3": "Load it there",
+  "legacy.guide.step3Hint": "In Heroquill, on the first page choose “Load from Google Drive” (or use the ⋯ menu, “Move to another device”), then choose what to bring in.",
+  "legacy.guide.step4": "Check and switch",
+  "legacy.guide.step4Hint": "Make sure all your characters are there. If you installed this app on your phone, install Heroquill too and then remove the old one from the home screen. This address stays available for a while.",
+  "fromOld.title": "Coming from the old version?",
+  "fromOld.body": "Heroquill used to be at another address. If you saved your characters to Google Drive (or to a file) from the old app, bring them here.",
+  "fromOld.hide": "Not now"
 }

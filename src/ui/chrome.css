@@ -1174,3 +1174,36 @@ input:checked + .equip-tag {
     display: none;
   }
 }
+
+/* ---- Moving from the old address ---- */
+
+.legacy-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--accent, currentColor);
+  border-radius: var(--radius-sm);
+}
+
+.migration-steps {
+  display: grid;
+  gap: 1rem;
+  margin: 1rem 0 0;
+  counter-reset: step;
+}
+
+.migration-steps li {
+  counter-increment: step;
+}
+
+.migration-steps h4 {
+  margin: 0 0 0.3rem;
+}
+
+.migration-steps h4::before {
+  content: counter(step) ". ";
+}

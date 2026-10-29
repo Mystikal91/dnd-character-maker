@@ -973,5 +973,21 @@
   "warning.multipleShields": "Hay más de un escudo equipado.",
   "warning.attunementTooMany": "{count} objetos equipados requieren sintonización; un personaje puede sintonizarse con 3.",
   "warning.strengthMinimum": "{item} requiere Fuerza {minimum}.",
-  "warning.notProficient": "Sin competencia con {item}."
+  "warning.notProficient": "Sin competencia con {item}.",
+  "legacy.notice": "Esta app tiene un nuevo nombre y una nueva dirección: Heroquill, en heroquill.app. Lleva allí tus personajes.",
+  "legacy.noticeAction": "Cómo hacerlo",
+  "legacy.guide.intro": "Esta app ahora se llama Heroquill y está en una dirección nueva. Tus personajes están guardados en este dispositivo y no se mueven solos, pero solo lleva unos minutos.",
+  "legacy.guide.step1": "Guarda todo en Google Drive",
+  "legacy.guide.step1Hint": "Personajes, paquetes, ajustes y traducciones guardadas van en un solo archivo de tu Drive. La app no puede ver nada más.",
+  "legacy.guide.noDrive": "Google Drive no está disponible en esta versión.",
+  "legacy.guide.file": "¿No tienes cuenta de Google? Puedes usar un archivo:",
+  "legacy.guide.step2": "Abre Heroquill",
+  "legacy.guide.open": "Abrir Heroquill",
+  "legacy.guide.step3": "Cárgalo allí",
+  "legacy.guide.step3Hint": "En Heroquill, en la primera página elige «Cargar desde Google Drive» (o el menú ⋯, «Pasar a otro dispositivo»), y luego elige qué traer.",
+  "legacy.guide.step4": "Comprueba y cambia",
+  "legacy.guide.step4Hint": "Comprueba que estén todos tus personajes. Si instalaste esta app en el teléfono, instala también Heroquill y luego quita la antigua de la pantalla de inicio. Esta dirección seguirá disponible un tiempo.",
+  "fromOld.title": "¿Vienes de la versión anterior?",
+  "fromOld.body": "Heroquill estaba en otra dirección. Si desde la app antigua guardaste tus personajes en Google Drive (o en un archivo), tráelos aquí.",
+  "fromOld.hide": "Ahora no"
 }

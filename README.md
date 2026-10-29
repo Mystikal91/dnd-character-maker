@@ -78,7 +78,8 @@ npm run build      # type-check and production build into dist/
 Node 20+ is required (the PWA build step fails on older versions); Node 22 is used in CI. The
 site is published to Cloudflare (Workers static assets, `wrangler.jsonc`) by the workflow in
 `.github/workflows/`: the welcome page and the legal pages are in `site/`, the app is built into
-`dist/app/`.
+`dist/app/`. The old address (github.io) gets a build that only helps people move to Heroquill,
+published by hand with the workflow `legacy-site.yml` (`npm run build:legacy`).
 
 | Command | What it does |
 |---------|--------------|
