@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.12.0 beta",
+    date: "2026-10-29",
+    notes: [
+      {
+        en: "Heroquill has a logo: an H whose crossbar is a golden quill, on midnight blue. It is the new app icon, the tab icon and the colour of the welcome page. On a phone where the app is already installed, the old icon may stay until the app is installed again.",
+        it: "Heroquill ha un logo: una H la cui traversa è una piuma dorata, su blu notte. È la nuova icona dell’app, quella della scheda e il colore della pagina di benvenuto. Su un telefono dove l’app è già installata la vecchia icona può restare finché non la si reinstalla.",
+        fr: "Heroquill a un logo : un H dont la barre est une plume dorée, sur bleu nuit. C’est la nouvelle icône de l’app, celle de l’onglet et la couleur de la page d’accueil. Sur un téléphone où l’app est déjà installée, l’ancienne icône peut rester jusqu’à la réinstallation.",
+        de: "Heroquill hat ein Logo: ein H, dessen Querbalken eine goldene Feder ist, auf Mitternachtsblau. Es ist das neue App-Symbol, das Tab-Symbol und die Farbe der Willkommensseite. Auf einem Handy, auf dem die App schon installiert ist, kann das alte Symbol bleiben, bis sie neu installiert wird.",
+        es: "Heroquill tiene logo: una H cuyo travesaño es una pluma dorada, sobre azul noche. Es el nuevo icono de la app, el de la pestaña y el color de la página de bienvenida. En un teléfono donde la app ya está instalada, el icono antiguo puede quedarse hasta reinstalarla.",
+      },
+    ],
+  },
+  {
     version: "1.11.0 beta",
     date: "2026-10-29",
     notes: [

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#17233b"/>
+  <defs><clipPath id="vane"><path d="M12 94C20 72 30 52 44 36C58 20 74 12 92 8C90 28 80 50 62 64C48 76 30 86 12 94Z"/></clipPath></defs>
+  <g transform="translate(256 256) scale(3.4) translate(-70 -70)">
+    <path d="M46 36V104M94 36V104" stroke="#e3b95a" stroke-width="9" stroke-linecap="round" fill="none"/>
+    <g transform="translate(70 70) rotate(20) scale(0.8) translate(-52 -51)">
+      <path d="M12 94C20 72 30 52 44 36C58 20 74 12 92 8C90 28 80 50 62 64C48 76 30 86 12 94Z" fill="#17233b" stroke="#17233b" stroke-width="10" stroke-linejoin="round"/>
+      <path d="M12 94C20 72 30 52 44 36C58 20 74 12 92 8C90 28 80 50 62 64C48 76 30 86 12 94Z" fill="#e3b95a"/>
+      <path d="M16 90L84 14" stroke="#17233b" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+      <path d="M76 40L84 46M66 52L74 60M56 62L62 70" stroke="#17233b" stroke-width="3" stroke-linecap="round" fill="none" clip-path="url(#vane)"/>
+    </g>
+  </g>
+</svg>

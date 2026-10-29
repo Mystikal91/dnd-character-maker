@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
       preact(),
       VitePWA({
         registerType: "prompt",
-        includeAssets: ["icon.svg"],
+        includeAssets: ["icon.svg", "apple-touch-icon.png"],
         manifest: {
           name: "Heroquill",
           short_name: "Heroquill",
@@ -24,15 +24,18 @@ export default defineConfig(({ mode }) => {
           start_url: base,
           scope: base,
           display: "standalone",
-          background_color: "#1b1b1f",
-          theme_color: "#7a1f1f",
+          background_color: "#17233b",
+          theme_color: "#17233b",
           icons: [
+            { src: "icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+            { src: "icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
             {
-              src: "icon.svg",
-              sizes: "any",
-              type: "image/svg+xml",
-              purpose: "any maskable",
+              src: "icon-maskable-512.png",
+              sizes: "512x512",
+              type: "image/png",
+              purpose: "maskable",
             },
+            { src: "icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
           ],
         },
         workbox: {
