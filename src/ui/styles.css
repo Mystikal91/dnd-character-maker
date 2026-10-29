@@ -74,6 +74,13 @@ button {
   color: inherit;
 }
 
+/* A button nothing else styles takes the colours of the set, not the browser's grey. */
+button {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background-color: var(--surface-2);
+}
+
 input[type="text"],
 input[type="number"],
 select {

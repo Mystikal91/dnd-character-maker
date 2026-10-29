@@ -1,6 +1,6 @@
 /*
  * Print layout. The preview on screen uses the same rules, drawn as a sheet of paper.
- * It follows the app's style (fantasy or modern) but is always ink on white, whatever the
+ * It follows the colour set of the app but is always ink on white, whatever the
  * on-screen mode is, and has a low-ink variant with no tints.
  */
 
@@ -10,8 +10,8 @@
   --p-ink: #1a1612;
   --p-muted: #5a5148;
   --p-line: #8a7f70;
-  --p-accent: #7a1f1f;
-  --p-tint: #f3ead4;
+  --p-accent: var(--print-accent, #7a1f1f);
+  --p-tint: var(--print-tint, #f3ead4);
   --p-font: "EB Garamond", Georgia, serif;
   --p-display: "Cinzel", "EB Garamond", Georgia, serif;
   --p-n: 3mm; /* corner cut of frames */
@@ -24,15 +24,6 @@
 
 .print-root.paper-letter {
   --p-page-h: 253.4mm;
-}
-
-:root[data-style="modern"] .print-root {
-  --p-font: "Inter Variable", system-ui, sans-serif;
-  --p-display: "Inter Variable", system-ui, sans-serif;
-  --p-accent: #3730a3;
-  --p-tint: #eef0f6;
-  --p-line: #9aa1ad;
-  --p-n: 0mm;
 }
 
 /* Black and white, no fills: for printing without colored ink. */
@@ -174,10 +165,6 @@
   min-height: 279.4mm;
 }
 
-:root[data-style="modern"] .paper {
-  font-size: 8pt;
-}
-
 .paper * {
   box-sizing: border-box;
 }
@@ -209,7 +196,7 @@
 
 /* ---- Primitives: frames, banners, headings, badges ---- */
 
-/* Frame with cut corners and a double line; plain rounded box in the modern style. */
+/* Frame with cut corners and a double line. */
 .p-frame {
   --stroke: calc(var(--p-n) * 0.7071);
   --corner: calc(var(--p-n) * 1.8);
@@ -261,14 +248,6 @@
   box-shadow: inset 0 0 0 0.7mm #fff, inset 0 0 0 0.9mm var(--p-line);
 }
 
-:root[data-style="modern"] .p-frame {
-  border: 0.3mm solid var(--p-line);
-  border-radius: 2mm;
-  background-image: none;
-  clip-path: none;
-  box-shadow: none;
-}
-
 .low-ink .p-frame {
   box-shadow: inset 0 0 0 0.7mm #fff, inset 0 0 0 0.9mm #000;
 }
@@ -295,10 +274,6 @@
   background: var(--p-line);
 }
 
-:root[data-style="modern"] .p-h::before {
-  display: none;
-}
-
 /* Banner with a swallowtail at each end. */
 .p-banner {
   padding: 2mm 5.5mm 2.5mm;
@@ -306,12 +281,6 @@
   border-block: 0.4mm solid var(--p-ink);
   text-align: center;
   clip-path: polygon(0 0, 100% 0, calc(100% - 4mm) 50%, 100% 100%, 0 100%, 4mm 50%);
-}
-
-:root[data-style="modern"] .p-banner {
-  border: 0.3mm solid var(--p-line);
-  border-radius: 2mm;
-  clip-path: none;
 }
 
 .p-banner h1,
@@ -526,10 +495,6 @@
   font-family: var(--p-display);
   font-size: 11pt;
   font-weight: 700;
-}
-
-:root[data-style="modern"] .p-oval {
-  border-radius: 2mm;
 }
 
 .p-ability-mod {

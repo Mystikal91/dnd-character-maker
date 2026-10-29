@@ -31,9 +31,9 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", matchTheme
 
 // Apply to the page and remember the choice. Storage is a convenience: it may be refused.
 effect(() => {
-  const { style, scheme } = themeAttributes(theme.value);
+  const { palette, scheme } = themeAttributes(theme.value);
   const root = document.documentElement;
-  root.dataset.style = style;
+  root.dataset.palette = palette;
   if (scheme) root.dataset.theme = scheme;
   else delete root.dataset.theme;
   matchThemeColor();

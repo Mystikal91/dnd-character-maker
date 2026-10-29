@@ -1,23 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-style="fantasy" data-palette="notte">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#7a1f1f" />
+    <meta name="theme-color" content="#121a2c" />
     <link rel="icon" type="image/svg+xml" href="/app/icon.svg" />
     <link rel="apple-touch-icon" href="/app/apple-touch-icon.png" />
     <title>Heroquill</title>
     <script>
-      // Apply the saved look before the first paint, so the page never flashes the wrong theme.
+      // Apply the saved look before the first paint, so the page never flashes the wrong colours.
+      // The same rules as parseTheme in src/app/theme.logic.ts.
       try {
-        var saved = JSON.parse(localStorage.getItem("theme") || "{}");
+        var saved = JSON.parse(localStorage.getItem("theme") || "{}") || {};
         var root = document.documentElement;
-        root.dataset.style = saved.style === "modern" ? "modern" : "fantasy";
+        var palettes = ["notte", "classico", "bordeaux", "foresta", "arcano", "ghiaccio", "rame", "ossidiana"];
+        var before = !("palette" in saved) && ("style" in saved || "scheme" in saved);
+        root.dataset.palette =
+          palettes.indexOf(saved.palette) >= 0 ? saved.palette : before ? "classico" : "notte";
         if (saved.scheme === "light" || saved.scheme === "dark") root.dataset.theme = saved.scheme;
-      } catch (e) {
-        document.documentElement.dataset.style = "fantasy";
-      }
+      } catch (e) {}
     </script>
   </head>
   <body>

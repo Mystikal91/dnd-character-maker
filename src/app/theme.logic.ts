@@ -1,25 +1,51 @@
-/** The look of the app: `fantasy` is parchment and ornate frames, `modern` is clean and flat. */
-export type StyleName = "fantasy" | "modern";
+/**
+ * The colour sets the person can choose from. Their colours are in `ui/theme/palettes.css`, each
+ * with a light and a dark look. The first is the one a new person starts with.
+ */
+export const PALETTES = [
+  "notte",
+  "classico",
+  "bordeaux",
+  "foresta",
+  "arcano",
+  "ghiaccio",
+  "rame",
+  "ossidiana",
+] as const;
+export type PaletteName = (typeof PALETTES)[number];
 /** `auto` follows the device's light or dark setting. */
 export type Scheme = "auto" | "light" | "dark";
 
 export interface ThemeSettings {
-  style: StyleName;
+  palette: PaletteName;
   scheme: Scheme;
 }
 
-export const DEFAULT_THEME: ThemeSettings = { style: "fantasy", scheme: "auto" };
+export const DEFAULT_THEME: ThemeSettings = { palette: "notte", scheme: "auto" };
+
+/** The look the app had before there were colour sets: whoever saved a choice then keeps it. */
+export const CLASSIC_PALETTE: PaletteName = "classico";
 
 export const THEME_STORAGE_KEY = "theme";
+
+const isPalette = (value: unknown): value is PaletteName => PALETTES.includes(value as PaletteName);
 
 /** Reads saved settings; anything missing or malformed falls back to the defaults. */
 export function parseTheme(raw: string | null): ThemeSettings {
   try {
-    const saved = JSON.parse(raw ?? "{}") as Partial<ThemeSettings>;
+    const saved = JSON.parse(raw ?? "{}") as Record<string, unknown> | null;
+    if (!saved || typeof saved !== "object") return DEFAULT_THEME;
+    const scheme =
+      saved.scheme === "light" || saved.scheme === "dark" ? saved.scheme : DEFAULT_THEME.scheme;
+    // A choice saved before the colour sets (it has a style, no set) keeps the look it had.
+    const before = !("palette" in saved) && ("style" in saved || "scheme" in saved);
     return {
-      style: saved.style === "modern" ? "modern" : DEFAULT_THEME.style,
-      scheme:
-        saved.scheme === "light" || saved.scheme === "dark" ? saved.scheme : DEFAULT_THEME.scheme,
+      palette: isPalette(saved.palette)
+        ? saved.palette
+        : before
+          ? CLASSIC_PALETTE
+          : DEFAULT_THEME.palette,
+      scheme,
     };
   } catch {
     return DEFAULT_THEME;
@@ -28,10 +54,10 @@ export function parseTheme(raw: string | null): ThemeSettings {
 
 /** The `data-` attributes the stylesheet keys on. `auto` sets no scheme: CSS follows the device. */
 export function themeAttributes(theme: ThemeSettings): {
-  style: StyleName;
+  palette: PaletteName;
   scheme?: "light" | "dark";
 } {
   return theme.scheme === "auto"
-    ? { style: theme.style }
-    : { style: theme.style, scheme: theme.scheme };
+    ? { palette: theme.palette }
+    : { palette: theme.palette, scheme: theme.scheme };
 }

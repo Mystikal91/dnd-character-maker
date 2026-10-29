@@ -1,0 +1,239 @@
+/*
+ * The colour sets. Each one gives a light and a dark look: `--l-*` and `--d-*` hold the colours,
+ * and tokens.css picks the light or the dark ones. A set is chosen with `data-palette` on <html>;
+ * the settings screen also puts it on its little previews, which read the same variables.
+ * Every pair of text and background here is at least 4.5:1 (7:1 for the main text).
+ */
+
+:root,
+[data-palette="classico"] {
+  --l-bg: #e9dcc0;
+  --l-glow: #f4eacf;
+  --l-shade: #d9c59c;
+  --l-surface: #fbf4e2;
+  --l-surface2: #f1e5c8;
+  --l-fg: #2a2016;
+  --l-muted: #6a5a43;
+  --l-border: #bda57a;
+  --l-ink: #2a2016;
+  --l-accent: #7a1f1f;
+  --l-soft: #ecd5c6;
+  --l-contrast: #fbf4e2;
+  --d-bg: #14100c;
+  --d-glow: #2c2016;
+  --d-shade: #14100c;
+  --d-surface: #211914;
+  --d-surface2: #2b2118;
+  --d-fg: #ebdfc6;
+  --d-muted: #a8977a;
+  --d-border: #54422f;
+  --d-ink: #c9a45a;
+  --d-accent: #d9a441;
+  --d-soft: #3a2c18;
+  --d-contrast: #1a130c;
+  --print-accent: #7a1f1f;
+  --print-tint: #f3ead4;
+}
+
+[data-palette="notte"] {
+  --l-bg: #e6e3d8;
+  --l-glow: #f3f1e8;
+  --l-shade: #d3cfc0;
+  --l-surface: #f8f6ee;
+  --l-surface2: #ecead9;
+  --l-fg: #1c2233;
+  --l-muted: #565c6b;
+  --l-border: #b3b0a0;
+  --l-ink: #17233b;
+  --l-accent: #17233b;
+  --l-soft: #dfe3ee;
+  --l-contrast: #f8f6ee;
+  --d-bg: #121a2c;
+  --d-glow: #1f2e4d;
+  --d-shade: #121a2c;
+  --d-surface: #1a2540;
+  --d-surface2: #223055;
+  --d-fg: #ece6d4;
+  --d-muted: #a9b0c2;
+  --d-border: #3a4a72;
+  --d-ink: #c6a257;
+  --d-accent: #e3b95a;
+  --d-soft: #2e3a5f;
+  --d-contrast: #121a2c;
+  --print-accent: #17233b;
+  --print-tint: #e9ecf3;
+}
+
+[data-palette="bordeaux"] {
+  --l-bg: #eadcd6;
+  --l-glow: #f6ece7;
+  --l-shade: #dcc7bf;
+  --l-surface: #fbf3ee;
+  --l-surface2: #f0e2db;
+  --l-fg: #2b1a1a;
+  --l-muted: #6e5654;
+  --l-border: #c2a39c;
+  --l-ink: #3a1c1c;
+  --l-accent: #8b1e2d;
+  --l-soft: #f1d6d6;
+  --l-contrast: #fbf3ee;
+  --d-bg: #1b1012;
+  --d-glow: #33191d;
+  --d-shade: #1b1012;
+  --d-surface: #26171a;
+  --d-surface2: #301e22;
+  --d-fg: #f0e0dc;
+  --d-muted: #b79a96;
+  --d-border: #5a3a3f;
+  --d-ink: #d98b8f;
+  --d-accent: #e5898f;
+  --d-soft: #3d2227;
+  --d-contrast: #1b1012;
+  --print-accent: #8b1e2d;
+  --print-tint: #f3e3df;
+}
+
+[data-palette="foresta"] {
+  --l-bg: #dfe6d3;
+  --l-glow: #eef2e3;
+  --l-shade: #c9d4b9;
+  --l-surface: #f6f8ee;
+  --l-surface2: #e8eddb;
+  --l-fg: #1c2a22;
+  --l-muted: #55655a;
+  --l-border: #a9b99c;
+  --l-ink: #1f3a2d;
+  --l-accent: #1f5a43;
+  --l-soft: #d7e6da;
+  --l-contrast: #f6f8ee;
+  --d-bg: #0f1a15;
+  --d-glow: #1a2c23;
+  --d-shade: #0f1a15;
+  --d-surface: #16241d;
+  --d-surface2: #1d2f26;
+  --d-fg: #e0ece2;
+  --d-muted: #9db3a4;
+  --d-border: #34503f;
+  --d-ink: #7fb590;
+  --d-accent: #86c79a;
+  --d-soft: #1f3a2b;
+  --d-contrast: #0f1a15;
+  --print-accent: #1f5a43;
+  --print-tint: #e6efdf;
+}
+
+[data-palette="arcano"] {
+  --l-bg: #e6e0ee;
+  --l-glow: #f3eff8;
+  --l-shade: #d3c9e0;
+  --l-surface: #f8f5fb;
+  --l-surface2: #ece6f3;
+  --l-fg: #231c33;
+  --l-muted: #5f5675;
+  --l-border: #b8aad0;
+  --l-ink: #2c2147;
+  --l-accent: #4b3380;
+  --l-soft: #e4dcf2;
+  --l-contrast: #f8f5fb;
+  --d-bg: #17112a;
+  --d-glow: #281d45;
+  --d-shade: #17112a;
+  --d-surface: #1f1738;
+  --d-surface2: #281e45;
+  --d-fg: #e8e1f6;
+  --d-muted: #a99bc8;
+  --d-border: #43366b;
+  --d-ink: #a78ee0;
+  --d-accent: #b79cf2;
+  --d-soft: #31245a;
+  --d-contrast: #17112a;
+  --print-accent: #4b3380;
+  --print-tint: #ece6f5;
+}
+
+[data-palette="ghiaccio"] {
+  --l-bg: #dce8ec;
+  --l-glow: #ecf4f6;
+  --l-shade: #c8d9e0;
+  --l-surface: #f4f9fb;
+  --l-surface2: #e5eff3;
+  --l-fg: #14262e;
+  --l-muted: #4f6670;
+  --l-border: #a4bdc8;
+  --l-ink: #1a3a48;
+  --l-accent: #1d5d7c;
+  --l-soft: #d4e6ee;
+  --l-contrast: #f4f9fb;
+  --d-bg: #0e1a23;
+  --d-glow: #16293a;
+  --d-shade: #0e1a23;
+  --d-surface: #142330;
+  --d-surface2: #1b2e3d;
+  --d-fg: #dcebf2;
+  --d-muted: #95aebb;
+  --d-border: #2d4a5e;
+  --d-ink: #7fb8d4;
+  --d-accent: #7cc6e6;
+  --d-soft: #1b3447;
+  --d-contrast: #0e1a23;
+  --print-accent: #1d5d7c;
+  --print-tint: #e3eff4;
+}
+
+[data-palette="rame"] {
+  --l-bg: #eadfd2;
+  --l-glow: #f6eee4;
+  --l-shade: #d9c8b4;
+  --l-surface: #faf5ee;
+  --l-surface2: #efe4d6;
+  --l-fg: #2b2018;
+  --l-muted: #6b5848;
+  --l-border: #c5ad94;
+  --l-ink: #4a2f1c;
+  --l-accent: #9a4a14;
+  --l-soft: #f0dcc9;
+  --l-contrast: #faf5ee;
+  --d-bg: #1c1714;
+  --d-glow: #2e231c;
+  --d-shade: #1c1714;
+  --d-surface: #26201b;
+  --d-surface2: #302822;
+  --d-fg: #efe2d4;
+  --d-muted: #b3a08e;
+  --d-border: #54443a;
+  --d-ink: #d9985c;
+  --d-accent: #e0a070;
+  --d-soft: #3d2c20;
+  --d-contrast: #1c1714;
+  --print-accent: #9a4a14;
+  --print-tint: #f5e8da;
+}
+
+[data-palette="ossidiana"] {
+  --l-bg: #e4e4e6;
+  --l-glow: #f1f1f3;
+  --l-shade: #d0d0d4;
+  --l-surface: #f7f7f8;
+  --l-surface2: #ebebed;
+  --l-fg: #1d1d22;
+  --l-muted: #5b5b64;
+  --l-border: #b5b5bd;
+  --l-ink: #2b2b33;
+  --l-accent: #3a3a46;
+  --l-soft: #e2e2e8;
+  --l-contrast: #f7f7f8;
+  --d-bg: #111114;
+  --d-glow: #1f1f26;
+  --d-shade: #111114;
+  --d-surface: #19191e;
+  --d-surface2: #212128;
+  --d-fg: #e8e8ec;
+  --d-muted: #a0a0ac;
+  --d-border: #3a3a45;
+  --d-ink: #b8b8c6;
+  --d-accent: #cfcfe0;
+  --d-soft: #2a2a33;
+  --d-contrast: #111114;
+  --print-accent: #3a3a46;
+  --print-tint: #ececef;
+}

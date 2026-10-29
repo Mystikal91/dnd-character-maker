@@ -1,13 +1,39 @@
 import { LANGUAGES, type LanguageCode, language } from "../app/language";
 import { theme, updateTheme } from "../app/theme";
-import type { Scheme, StyleName } from "../app/theme.logic";
+import { PALETTES, type Scheme } from "../app/theme.logic";
 import { UNIT_SETTINGS, type UnitSetting, unitSetting } from "../app/units";
 import { type UiKey, ui } from "../i18n/ui";
 
-const STYLES: StyleName[] = ["fantasy", "modern"];
 const SCHEMES: Scheme[] = ["auto", "light", "dark"];
 
-/** Choose the look of the app: a style (fantasy or modern) and a mode (auto, light, dark). */
+/** Choose the colour set of the app (shown as its dark and its light look) and the mode. */
+function PalettePicker() {
+  const current = theme.value.palette;
+  return (
+    <div class="field">
+      <span id="palette-label">{ui("theme.palette")}</span>
+      <div class="palette-picker" role="radiogroup" aria-labelledby="palette-label">
+        {PALETTES.map((name) => (
+          <label key={name} class="palette-swatch" data-palette={name}>
+            <input
+              type="radio"
+              name="palette"
+              checked={name === current}
+              onChange={() => updateTheme({ palette: name })}
+            />
+            <span class="palette-chip" aria-hidden="true">
+              <span class="dark" />
+              <span class="light" />
+            </span>
+            <span class="palette-name">{ui(`theme.palette.${name}` as UiKey)}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Choose the look of the app: language, colour set, units and mode (auto, light, dark). */
 export function ThemeControls() {
   const current = theme.value;
   return (
@@ -27,19 +53,7 @@ export function ThemeControls() {
           ))}
         </select>
       </label>
-      <label class="field">
-        <span>{ui("theme.style")}</span>
-        <select
-          value={current.style}
-          onChange={(e) => updateTheme({ style: e.currentTarget.value as StyleName })}
-        >
-          {STYLES.map((style) => (
-            <option key={style} value={style}>
-              {ui(`theme.${style}` as UiKey)}
-            </option>
-          ))}
-        </select>
-      </label>
+      <PalettePicker />
       <label class="field">
         <span>{ui("units.label")}</span>
         <select

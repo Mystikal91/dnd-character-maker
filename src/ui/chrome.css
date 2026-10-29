@@ -1207,3 +1207,86 @@ input:checked + .equip-tag {
 .migration-steps h4::before {
   content: counter(step) ". ";
 }
+
+/* ---- Colour sets ---- */
+
+.palette-picker {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+/* Each button carries data-palette, so the chip below can read that set's own colours. */
+.palette-swatch {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.3rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+}
+
+.palette-swatch {
+  position: relative;
+}
+
+/* The radio button is there for keyboards and screen readers; the chip is what shows. */
+.palette-swatch > input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.palette-swatch:hover {
+  border-color: var(--ink);
+}
+
+.palette-swatch:has(input:checked) {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.palette-swatch:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.palette-chip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 1.7rem;
+  overflow: hidden;
+}
+
+.palette-chip > span {
+  border-top: 0.5rem solid;
+}
+
+.palette-chip .dark {
+  border-color: var(--d-accent);
+  background: var(--d-bg);
+}
+
+.palette-chip .light {
+  border-color: var(--l-accent);
+  background: var(--l-bg);
+}
+
+.palette-name {
+  overflow: hidden;
+  font-size: 0.72rem;
+  line-height: 1.15;
+  text-align: center;
+  overflow-wrap: anywhere;
+}

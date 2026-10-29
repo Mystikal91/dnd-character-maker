@@ -17,7 +17,7 @@ import "./ui/build/build.css";
 import "./ui/play/play.css";
 import "./ui/print/print.css";
 import "./ui/theme/controls.css";
-import "./ui/theme/fonts.css";
+import "./ui/theme/palettes.css";
 import "./ui/theme/tokens.css";
 import "./ui/theme/fantasy.css";
 import "./ui/sheet/sheet.css";

@@ -61,7 +61,7 @@ your device, and the app works without a connection once it has been opened.
   button for the original. Translations are cached on your device. DeepL does not accept calls
   from web pages, so requests go through a small relay; see
   [docs/TRANSLATION_PROXY.md](docs/TRANSLATION_PROXY.md) to run your own.
-- Two styles (Fantasy and Modern), light and dark, and **feet or meters** (automatic by language).
+- Eight **colour sets** (Night and gold, Classic, Bordeaux, Forest, Arcane, Ice, Copper, Obsidian), each light and dark (or automatic), and **feet or meters** (automatic by language). The look is the Fantasy one: parchment, ink and framed panels.
 
 ## Development
 
