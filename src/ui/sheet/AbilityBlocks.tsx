@@ -2,6 +2,7 @@ import { character, content, sheet } from "../../app/store";
 import { ABILITIES } from "../../data/schema";
 import { signed, ui } from "../../i18n/ui";
 import { ExplainButton } from "../Explain";
+import { Roll } from "../Roll";
 import { Pip } from "./parts";
 
 /** Proficiency bonus and passive senses, as three round badges. */
@@ -48,8 +49,12 @@ export function AbilityBlocks() {
           <section class="card ability-block" key={a}>
             <div class="ability-core">
               <div class="ability-name">{c.name(`${ruleset}:ability/${a}`)}</div>
-              <div class="ability-oval">{s.abilities[a].score}</div>
-              <div class="ability-mod">{signed(s.abilities[a].modifier)}</div>
+              <Roll class="ability-oval" as="div">
+                {s.abilities[a].score}
+              </Roll>
+              <Roll class="ability-mod" as="div">
+                {signed(s.abilities[a].modifier)}
+              </Roll>
             </div>
             <ul class="checks">
               <li class={s.saves[a].proficient ? "proficient" : ""}>

@@ -19,6 +19,8 @@ import {
 } from "../storage/characters";
 import { decodeShare, isShareHash } from "../storage/share";
 import { backupFileName, parseBackup, parseImportFile, serializeBackup } from "../storage/transfer";
+import { buildExample } from "./example";
+import { showView } from "./navigation";
 import { transferDialog, transferInbox } from "./transferState";
 
 export type SaveStatus = "idle" | "saving" | "saved" | "failed";
@@ -192,6 +194,29 @@ export async function importFromLink(): Promise<void> {
 }
 
 export const newCharacter = () => switchTo(createNewCharacter());
+
+/** Opens Aria, the example character, in the sheet; a blank character that is open is dropped. */
+export async function openExample(): Promise<void> {
+  const loaded = content.value;
+  if (!loaded) return;
+  const example = buildExample(loaded.index, {
+    personalityTraits: ui("example.personality"),
+    ideals: ui("example.ideals"),
+    bonds: ui("example.bonds"),
+    flaws: ui("example.flaws"),
+    appearance: ui("example.appearance"),
+  });
+  const open = character.value;
+  const blank =
+    !open.name && open.classes.length === 0 && !open.choices.species && !open.choices.background;
+  if (blank) {
+    clearTimeout(saveTimer);
+    saveTimer = undefined;
+    await deleteCharacter(open.id).catch(() => undefined);
+  }
+  await switchTo(example);
+  showView("sheet");
+}
 
 export async function openCharacter(id: string) {
   if (id === character.value.id) return;

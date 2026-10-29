@@ -29,7 +29,9 @@ import { TransferDialog } from "./TransferDialog";
 import { UpdateNotice } from "./UpdateNotice";
 import { BuildTab } from "./build/BuildTab";
 import { LevelUp } from "./build/LevelUp";
+import { QuillIcon } from "./icons";
 import { PlayTab } from "./play/PlayTab";
+import { RollToast } from "./play/RollToast";
 import { PrintView } from "./print/PrintView";
 import { RuleDialog } from "./rules/EntryDetail";
 import { RulesPage } from "./rules/RulesPage";
@@ -114,6 +116,9 @@ export function App() {
             </button>{" "}
             <span class="beta-badge">{STAGE}</span>
           </h1>
+          <div class="title-ornament" aria-hidden="true">
+            <QuillIcon />
+          </div>
         </div>
         <div class="app-actions">
           <SearchButton />
@@ -133,9 +138,12 @@ export function App() {
               <Tabs />
             </>
           )}
-          <Screen />
+          <div class="screen" key={view.value}>
+            <Screen />
+          </div>
         </div>
       )}
+      <RollToast />
       <UpdateNotice />
       <SpellDialog />
       <QuickEditDialog />

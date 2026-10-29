@@ -35,8 +35,9 @@ function fromBase64Url(text: string): Uint8Array {
 
 /** The link fragment for a character, e.g. `#c=1.eJy...`. */
 export async function encodeShare(character: Character): Promise<string> {
-  // The id is dropped: an imported character always gets a new one.
-  const { id: _id, ...document } = character;
+  // The id is dropped: an imported character always gets a new one. So is the portrait: a link
+  // that carried a picture would be far too long.
+  const { id: _id, portrait: _portrait, ...document } = character;
   const bytes = new TextEncoder().encode(JSON.stringify(document));
   const packed = await transform(bytes, new CompressionStream("deflate-raw"));
   return `${PREFIX}${VERSION}.${toBase64Url(packed)}`;

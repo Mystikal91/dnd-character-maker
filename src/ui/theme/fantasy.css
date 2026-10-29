@@ -114,15 +114,30 @@
   text-align: center;
 }
 
-:root[data-style="fantasy"] .app-title::after {
-  content: "\25C6";
-  display: block;
-  margin: 0.15rem auto 0;
+/* Under the title: a rule on each side of a small quill. */
+:root[data-style="fantasy"] .title-ornament {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.1rem;
   color: var(--ink);
-  font-size: 0.7rem;
-  line-height: 1;
-  background: linear-gradient(90deg, transparent, var(--ink)) left center / 38% 1px no-repeat,
-    linear-gradient(270deg, transparent, var(--ink)) right center / 38% 1px no-repeat;
+}
+
+:root[data-style="fantasy"] .title-ornament::before,
+:root[data-style="fantasy"] .title-ornament::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ink));
+}
+
+:root[data-style="fantasy"] .title-ornament::after {
+  transform: scaleX(-1);
+}
+
+:root[data-style="fantasy"] .title-ornament .ui-icon {
+  width: 1.1rem;
+  height: 1.1rem;
 }
 
 /* Values sit in an oval, like a gem set in the frame. */

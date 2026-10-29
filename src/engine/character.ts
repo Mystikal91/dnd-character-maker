@@ -129,6 +129,11 @@ export interface Character {
   schemaVersion: typeof CHARACTER_SCHEMA_VERSION;
   ruleset: "srd51" | "srd52";
   name: string;
+  /**
+   * A picture of the character the person added: a small square image as a `data:` address.
+   * It stays on the device and in exported files, but is left out of share links (too big).
+   */
+  portrait?: string;
   choices: {
     species?: string;
     subspecies?: string;

@@ -1,7 +1,6 @@
 import type { ComponentChildren } from "preact";
 import { useRef } from "preact/hooks";
 import { levelUpPhase } from "../../app/buildState";
-import { rollLog } from "../../app/play";
 import { type PlayGroup, playGroup, showPlayGroup } from "../../app/playView";
 import { character, content, sheet } from "../../app/store";
 import { MAX_LEVEL } from "../../engine/levelUp";
@@ -15,22 +14,6 @@ import { ClassResources, Conditions, PlayNotes, PlaySpells, Slots } from "./Reso
 import { AttackRolls, CheckRolls, DiceTray, ModePicker, RollHistory } from "./Rolls";
 import { GroupTabs, StatusBar } from "./StatusBar";
 import { DeathSaves, HitDice, HitPoints, Rests } from "./Vitals";
-
-/** The last roll, pinned to the bottom of the screen so it is seen while tapping buttons. */
-function LatestRoll() {
-  const latest = rollLog.value[0];
-  if (!latest) return null;
-  return (
-    <output class={`latest-roll ${latest.tone ?? ""}`.trim()} key={latest.id}>
-      <span class="latest-label">{latest.label}</span>
-      {latest.detail && <span class="latest-detail">{latest.detail}</span>}
-      {latest.total !== undefined && <b class="latest-total">{latest.total}</b>}
-      {latest.tone && (
-        <em>{latest.tone === "critical" ? ui("play.critical") : ui("play.fumble")}</em>
-      )}
-    </output>
-  );
-}
 
 /**
  * A panel and the part of the screen it belongs to. On a phone only the part that is open is
@@ -166,7 +149,6 @@ export function PlayTab() {
       </div>
       <DiceButton />
       <DiceDrawer />
-      <LatestRoll />
     </div>
   );
 }

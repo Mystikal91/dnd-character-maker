@@ -2,7 +2,7 @@
 
 .play {
   container: play / inline-size;
-  padding-bottom: 5rem; /* room for the pinned latest roll */
+  padding-bottom: 5rem; /* room for the dice button */
 }
 
 .play-grid {
@@ -135,7 +135,7 @@
   display: block;
   height: 100%;
   background: var(--accent);
-  transition: width 0.2s;
+  transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.4s;
 }
 
 .play-notes {
@@ -363,48 +363,6 @@
   font-size: 0.8rem;
   font-style: normal;
   font-weight: 700;
-}
-
-/* The last roll stays at the bottom of the screen while buttons are tapped above it. */
-.latest-roll {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 20;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  gap: 0.2rem 0.9rem;
-  padding: 0.7rem 1rem;
-  border-top: 2px solid var(--ink);
-  background: var(--surface);
-  box-shadow: 0 -4px 18px rgb(0 0 0 / 0.25);
-}
-
-.latest-label {
-  font-weight: 700;
-}
-
-.latest-detail {
-  color: var(--muted);
-}
-
-.latest-total {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  color: var(--accent);
-}
-
-.latest-roll em {
-  color: var(--accent);
-  font-style: normal;
-  font-weight: 700;
-}
-
-.latest-roll.fumble .latest-total {
-  color: var(--muted);
 }
 
 .spell-names li {
@@ -931,4 +889,187 @@ fieldset.segmented {
 
 .extra-rolls .check-row {
   margin: 0;
+}
+
+/* ---- The latest roll, over the page ---- */
+
+.roll-toast {
+  position: fixed;
+  inset: auto 50% 1rem auto;
+  z-index: 60;
+  margin: 0;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  width: min(21rem, calc(100vw - 1.5rem));
+  padding: 0.8rem 1.2rem 0.8rem 1rem;
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.35);
+  color: var(--fg);
+  text-align: left;
+  cursor: pointer;
+  transform: translateX(50%);
+  animation: toast-in 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(50%) translateY(1.2rem) scale(0.96);
+  }
+}
+
+.toast-die {
+  flex: none;
+  width: 2.6rem;
+  height: 2.6rem;
+  color: var(--accent);
+}
+
+.roll-toast.rolling .toast-die {
+  animation: die-spin 0.56s cubic-bezier(0.3, 0.1, 0.2, 1);
+}
+
+@keyframes die-spin {
+  to {
+    transform: rotate(720deg);
+  }
+}
+
+.toast-number {
+  flex: none;
+  width: 4.8rem;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.roll-toast.settled .toast-number {
+  animation: number-land 0.35s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+@keyframes number-land {
+  from {
+    transform: scale(1.7);
+    opacity: 0.4;
+  }
+}
+
+.toast-text {
+  display: grid;
+  min-width: 0;
+  gap: 0.1rem;
+}
+
+.toast-text small {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.toast-tone {
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* A critical hit glows in the accent colour. */
+.roll-toast.critical {
+  box-shadow: 0 0 0 3px var(--accent), 0 0 34px color-mix(in srgb, var(--accent) 70%, transparent);
+  animation: critical-pulse 0.6s ease-out;
+}
+
+.roll-toast.critical .toast-tone {
+  color: var(--accent);
+}
+
+@keyframes critical-pulse {
+  from {
+    transform: translateX(50%) scale(0.92);
+  }
+  45% {
+    transform: translateX(50%) scale(1.07);
+  }
+}
+
+/* A natural one is dull and shakes. */
+.roll-toast.fumble {
+  border-color: #9a3b3b;
+  animation: fumble-shake 0.45s ease-out;
+}
+
+.roll-toast.fumble .toast-number,
+.roll-toast.fumble .toast-tone {
+  color: #c4605f;
+}
+
+@keyframes fumble-shake {
+  20% {
+    transform: translateX(calc(50% - 8px));
+  }
+  40% {
+    transform: translateX(calc(50% + 8px));
+  }
+  60% {
+    transform: translateX(calc(50% - 5px));
+  }
+  80% {
+    transform: translateX(calc(50% + 4px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roll-toast,
+  .roll-toast.rolling .toast-die,
+  .roll-toast.settled .toast-number {
+    animation: none;
+  }
+}
+
+.roll-toast {
+  --lv-gold: #e8b64a;
+}
+
+.toast-sparks .lv-spark {
+  animation-delay: var(--delay);
+}
+
+/* The text lines keep their room and are cut short rather than growing the box. */
+.toast-text b,
+.toast-text small,
+.toast-tone {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.roll-toast .pending {
+  visibility: hidden;
+}
+
+.toast-hint {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+/* A long skill name (Sopravvivenza, Intrattenere, Persuasione) shrinks a little and, if it still
+   does not fit, breaks, instead of running out of its button. */
+.play .roll-btn {
+  min-width: 0;
+}
+
+.play .roll-btn > span {
+  min-width: 0;
+  font-size: 0.82em;
+  letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }

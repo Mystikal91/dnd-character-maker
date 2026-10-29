@@ -995,5 +995,18 @@
   "legacy.guide.step4Hint": "Verifica che ci siano tutti i personaggi. Se avevi installato questa app sul telefono, installa anche Heroquill e poi togli la vecchia dalla schermata Home. Questo indirizzo resta disponibile ancora per un po’.",
   "fromOld.title": "Vieni dalla vecchia versione?",
   "fromOld.body": "Heroquill stava a un altro indirizzo. Se dalla vecchia app hai salvato i personaggi su Google Drive (o in un file), portali qui.",
-  "fromOld.hide": "Non ora"
+  "fromOld.hide": "Non ora",
+  "example.personality": "Curiosa fino all’eccesso: legge ogni insegna, etichetta e nota a margine.",
+  "example.ideals": "La conoscenza. Un segreto custodito è una porta lasciata chiusa.",
+  "example.bonds": "Deve tutto al maestro che le ha insegnato ad accendere la sua prima fiamma.",
+  "example.flaws": "Si fida più di un libro che di una persona.",
+  "example.appearance": "Slanciata, con occhi d’argento e capelli del colore di un cielo notturno.",
+  "welcome.tagline": "Il tuo eroe di D&D 5e, dalla prima idea al tavolo.",
+  "welcome.tryExample": "Prova un esempio",
+  "welcome.exampleHint": "Aria Nightbloom, maga elfa di livello 5, pronta da guardare e da giocare.",
+  "portrait.add": "Aggiungi un ritratto",
+  "portrait.change": "Cambia il ritratto",
+  "portrait.remove": "Togli il ritratto",
+  "portrait.failed": "Non si è riusciti a leggere quell’immagine.",
+  "play.tapToClose": "Tocca per chiudere"
 }

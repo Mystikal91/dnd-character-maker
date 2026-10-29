@@ -995,5 +995,18 @@
   "legacy.guide.step4Hint": "Make sure all your characters are there. If you installed this app on your phone, install Heroquill too and then remove the old one from the home screen. This address stays available for a while.",
   "fromOld.title": "Coming from the old version?",
   "fromOld.body": "Heroquill used to be at another address. If you saved your characters to Google Drive (or to a file) from the old app, bring them here.",
-  "fromOld.hide": "Not now"
+  "fromOld.hide": "Not now",
+  "example.personality": "Curious to a fault: she reads every sign, label and margin note.",
+  "example.ideals": "Knowledge. A secret kept is a door left shut.",
+  "example.bonds": "She owes everything to the mentor who taught her to light her first flame.",
+  "example.flaws": "She trusts a book more than a person.",
+  "example.appearance": "Slender, with silver eyes and hair the colour of a night sky.",
+  "welcome.tagline": "Your D&D 5e hero, from the first idea to the table.",
+  "welcome.tryExample": "Try an example",
+  "welcome.exampleHint": "Aria Nightbloom, a level 5 elf wizard, ready to look at and play.",
+  "portrait.add": "Add a portrait",
+  "portrait.change": "Change the portrait",
+  "portrait.remove": "Remove the portrait",
+  "portrait.failed": "That picture could not be read.",
+  "play.tapToClose": "Tap to close"
 }

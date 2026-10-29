@@ -6,6 +6,7 @@ import { OVERRIDE } from "../../engine/overrides";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { ExplainButton } from "../Explain";
+import { useRoll } from "../useRoll";
 import { ExtraDamageList } from "./ExtraDamage";
 import { Panel } from "./parts";
 
@@ -21,9 +22,12 @@ export function Stat({
   explain?: ExplainTarget;
   children: ComponentChildren;
 }) {
+  const value = useRoll<HTMLSpanElement>();
   const inside = (
     <>
-      <span class="stat-value">{children}</span>
+      <span class="stat-value" ref={value}>
+        {children}
+      </span>
       <span class="stat-label">{label}</span>
     </>
   );

@@ -3,6 +3,7 @@ import { type StepId, openStep } from "../../app/buildState";
 import { showView } from "../../app/navigation";
 import { character, content, updateCharacter } from "../../app/store";
 import { ui } from "../../i18n/ui";
+import { Portrait } from "./Portrait";
 
 /** Opens a step of the build screen, for changing what the sheet shows. */
 function goTo(step: StepId) {
@@ -86,7 +87,8 @@ export function SheetHeader() {
 
   return (
     <header class="sheet-header">
-      <div class="banner banner-name">
+      <div class="banner banner-name has-portrait">
+        <Portrait />
         <EditableName />
         <span class="banner-label">{ui("sheet.name")}</span>
       </div>

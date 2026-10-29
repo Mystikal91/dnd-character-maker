@@ -38,6 +38,7 @@ const CharacterSchema = v.object({
   schemaVersion: v.literal(CHARACTER_SCHEMA_VERSION),
   ruleset: v.picklist(["srd51", "srd52"]),
   name: v.string(),
+  portrait: v.optional(v.pipe(v.string(), v.startsWith("data:image/"), v.maxLength(200000))),
   choices: v.object({
     species: v.optional(v.string()),
     subspecies: v.optional(v.string()),

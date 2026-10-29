@@ -15,6 +15,7 @@ import {
   spendHitDie,
 } from "../../engine/play";
 import { type UiKey, ui } from "../../i18n/ui";
+import { Roll } from "../Roll";
 import { Panel } from "../sheet/parts";
 
 export function HitPoints() {
@@ -34,7 +35,9 @@ export function HitPoints() {
   return (
     <Panel title={ui("play.hitPoints")}>
       <output class="hp-readout">
-        <b class={hp === 0 ? "zero" : ""}>{hp}</b>
+        <Roll as="b" class={hp === 0 ? "zero" : ""}>
+          {hp}
+        </Roll>
         <span>{ui("play.of", { max: v.max })}</span>
         {play.tempHp > 0 && <em>{ui("play.temp", { n: play.tempHp })}</em>}
       </output>

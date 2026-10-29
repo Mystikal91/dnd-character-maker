@@ -1290,3 +1290,214 @@ input:checked + .equip-tag {
   text-align: center;
   overflow-wrap: anywhere;
 }
+
+/* ---- First visit: the mark, a night sky and a honeycomb behind it ---- */
+
+.welcome-hero {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+  padding: 2.2rem 1.25rem 1.8rem;
+  text-align: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-sky {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Hexagons, drawn as a mask so they take the accent of the colour set, fading towards the edges. */
+.hero-sky::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  opacity: 0.2;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='black' stroke-width='1.4'/%3E%3Cpath d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50L28 34' fill='none' stroke='black' stroke-width='1.4'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 35%, #000 0, transparent 72%);
+  -webkit-mask-composite: source-in;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='black' stroke-width='1.4'/%3E%3Cpath d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50L28 34' fill='none' stroke='black' stroke-width='1.4'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 35%, #000 0, transparent 72%);
+  mask-composite: intersect;
+}
+
+/* A scatter of stars that twinkle slowly. */
+.hero-sky::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(1.6px 1.6px at 9% 18%, var(--accent) 60%, transparent 62%),
+    radial-gradient(1.2px 1.2px at 22% 72%, var(--accent) 60%, transparent 62%),
+    radial-gradient(1.8px 1.8px at 34% 12%, var(--accent) 60%, transparent 62%),
+    radial-gradient(1.2px 1.2px at 47% 86%, var(--accent) 60%, transparent 62%),
+    radial-gradient(1.6px 1.6px at 61% 20%, var(--accent) 60%, transparent 62%),
+    radial-gradient(1.2px 1.2px at 74% 78%, var(--accent) 60%, transparent 62%),
+    radial-gradient(1.8px 1.8px at 88% 14%, var(--accent) 60%, transparent 62%),
+    radial-gradient(1.2px 1.2px at 94% 60%, var(--accent) 60%, transparent 62%);
+  opacity: 0.7;
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 0.85;
+  }
+}
+
+.hero-logo {
+  width: 6.5rem;
+  height: auto;
+  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--accent) 40%, transparent));
+}
+
+.welcome .hero-title {
+  margin: 0;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 7vw, 2.9rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.hero-tagline {
+  max-width: 30rem;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.hero-note {
+  max-width: 32rem;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.hero-actions {
+  justify-content: center;
+  margin-top: 0.4rem;
+}
+
+.hero-actions button:not(.link) {
+  min-height: 2.75rem;
+  padding: 0 1.3rem;
+}
+
+.hero-actions .primary {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-sky::after {
+    animation: none;
+  }
+}
+
+/* ---- Icons in the tabs and the menu ---- */
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.tab .ui-icon {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+@media (max-width: 40rem) {
+  .tab {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+}
+
+.popover-panel .menu-list button {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.popover-panel .menu-list button .ui-icon {
+  flex: none;
+  color: var(--accent);
+}
+
+/* ---- A fine grain over the page, so flat colours feel like paper ---- */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.2 -.1'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* On the dark looks the grain is light instead of dark, and fainter. */
+:root[data-theme="dark"] body::before {
+  opacity: 0.05;
+  filter: invert(1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body::before {
+    opacity: 0.05;
+    filter: invert(1);
+  }
+}
+
+@media print {
+  body::before {
+    display: none;
+  }
+}
+
+/* ---- Motion: a screen comes in, a button gives under the finger ---- */
+
+.screen {
+  animation: screen-in 0.3s ease-out backwards;
+}
+
+@keyframes screen-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+button {
+  transition: transform 0.1s ease, background-color 0.15s, border-color 0.15s, color 0.15s,
+    box-shadow 0.15s;
+}
+
+button:not(:disabled):not(.roll-toast):active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen {
+    animation: none;
+  }
+
+  button {
+    transition: none;
+  }
+
+  button:not(:disabled):not(.roll-toast):active {
+    transform: none;
+  }
+}

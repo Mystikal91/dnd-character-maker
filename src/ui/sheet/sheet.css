@@ -871,3 +871,82 @@ button.explain-trigger:hover {
   border-top: 2px solid var(--ink);
   font-size: 1.15rem;
 }
+
+/* ---- Portrait: a hexagonal medallion in the name banner ---- */
+
+.banner-name.has-portrait {
+  padding-left: 5.4rem;
+}
+
+.portrait {
+  position: absolute;
+  top: 50%;
+  left: 1.5rem;
+  width: 3.4rem;
+  transform: translateY(-50%);
+}
+
+/* The frame is a hexagon in the accent colour; the face is a slightly smaller one inside it. */
+.portrait-frame {
+  display: block;
+  width: 100%;
+  aspect-ratio: 0.866;
+  padding: 3px;
+  border: 0;
+  background: var(--accent);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  cursor: pointer;
+}
+
+.portrait-frame:hover,
+.portrait-frame:focus-visible {
+  background: var(--ink);
+}
+
+.portrait-face {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  overflow: hidden;
+  background: var(--surface);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+
+.portrait-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portrait-initial {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+}
+
+.portrait-remove {
+  position: absolute;
+  right: -0.45rem;
+  bottom: -0.1rem;
+  display: grid;
+  width: 1.4rem;
+  height: 1.4rem;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.portrait-error {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 9rem;
+  margin-top: 0.2rem;
+  color: var(--accent);
+  font-size: 0.75rem;
+  text-align: left;
+}
