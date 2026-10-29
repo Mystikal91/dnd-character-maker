@@ -1,10 +1,10 @@
-# DND Character Maker
+# Heroquill
 
 A free, offline-first web app to **build, play and print Dungeons & Dragons 5th edition
 characters** with the SRD 5.1 rules. No server, no account, no tracking: your characters stay on
 your device, and the app works without a connection once it has been opened.
 
-**Use it:** <https://mystikal91.github.io/dnd-character-maker/>
+**Use it:** <https://heroquill.app/> (the app is at <https://heroquill.app/app/>)
 
 > **Version 1.0 beta.** It works, but it needs more testing, so some numbers may be wrong in
 > places. If something looks off, please [open an issue](https://github.com/Mystikal91/dnd-character-maker/issues).
@@ -76,7 +76,9 @@ npm run build      # type-check and production build into dist/
 ```
 
 Node 20+ is required (the PWA build step fails on older versions); Node 22 is used in CI. The
-site is published to GitHub Pages by the workflow in `.github/workflows/`.
+site is published to Cloudflare (Workers static assets, `wrangler.jsonc`) by the workflow in
+`.github/workflows/`: the welcome page and the legal pages are in `site/`, the app is built into
+`dist/app/`.
 
 | Command | What it does |
 |---------|--------------|

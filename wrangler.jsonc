@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // The whole site: the welcome page at the root and the app under /app/.
+  "name": "heroquill",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "./dist" },
+  "routes": [{ "pattern": "heroquill.app", "custom_domain": true }]
+}

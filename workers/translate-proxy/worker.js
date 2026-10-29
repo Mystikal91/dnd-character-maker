@@ -1,5 +1,5 @@
 /**
- * A tiny relay between DND Character Maker and the DeepL API.
+ * A tiny relay between Heroquill and the DeepL API.
  *
  * DeepL does not let web pages call its API directly (it sends no CORS headers), so the app
  * sends its translation requests here and this worker passes them on. It keeps nothing: the
@@ -18,7 +18,11 @@
  *                     Default: the published app and the local dev server.
  */
 
-const DEFAULT_ORIGINS = ["https://mystikal91.github.io", "http://localhost:5173"];
+const DEFAULT_ORIGINS = [
+  "https://heroquill.app",
+  "https://mystikal91.github.io",
+  "http://localhost:5173",
+];
 const MAX_BODY_BYTES = 128 * 1024;
 const MAX_TEXTS = 50;
 const ROUTES = { "/v2/translate": "POST", "/v2/usage": "GET", "/v1/translate": "POST" };

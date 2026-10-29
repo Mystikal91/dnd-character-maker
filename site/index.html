@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#7a1f1f" />
+    <title>Heroquill – D&amp;D 5e character sheets, free and offline</title>
+    <meta
+      name="description"
+      content="Heroquill is a free web app to build, play and print Dungeons &amp; Dragons 5th edition characters. No account, no tracking, works offline."
+    />
+    <meta property="og:title" content="Heroquill" />
+    <meta
+      property="og:description"
+      content="Build, play and print D&amp;D 5e characters. Free, no account, works offline."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://heroquill.app/" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #fbf6ea;
+        --card: #fffaf0;
+        --fg: #2a2118;
+        --muted: #6b5d4a;
+        --accent: #7a1f1f;
+        --accent-fg: #fbf6ea;
+        --line: #e2d6bb;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1b1b1f;
+          --card: #24242a;
+          --fg: #eee6d6;
+          --muted: #b5a98f;
+          --accent: #e0a070;
+          --accent-fg: #1b1b1f;
+          --line: #3a3a42;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font: 1.05rem/1.6 Georgia, "Times New Roman", serif;
+      }
+      a { color: var(--accent); }
+      .wrap { margin: 0 auto; max-width: 60rem; padding: 0 1rem; }
+      header.top { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; }
+      .brand { display: flex; align-items: center; gap: 0.6rem; font-size: 1.3rem; font-weight: bold; letter-spacing: 0.04em; }
+      .brand img { width: 2rem; height: 2rem; border-radius: 0.4rem; }
+      .langs button {
+        font: inherit; font-size: 0.9rem; color: var(--muted); background: none;
+        border: 1px solid var(--line); border-radius: 0.4rem; padding: 0.15rem 0.6rem; cursor: pointer;
+      }
+      .langs button[aria-pressed="true"] { color: var(--accent-fg); background: var(--accent); border-color: var(--accent); }
+      .hero { padding: 3rem 0 2.5rem; text-align: center; }
+      .hero h1 { margin: 0 0 0.8rem; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.15; }
+      .hero p { margin: 0 auto 1.6rem; max-width: 38rem; font-size: 1.2rem; color: var(--muted); }
+      .button {
+        display: inline-block; padding: 0.8rem 1.8rem; border-radius: 0.5rem;
+        background: var(--accent); color: var(--accent-fg); font-weight: bold; text-decoration: none;
+      }
+      .button:hover { filter: brightness(1.1); }
+      .note { margin-top: 0.9rem; font-size: 0.9rem; color: var(--muted); }
+      .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); padding: 1rem 0 2rem; }
+      .card { background: var(--card); border: 1px solid var(--line); border-radius: 0.7rem; padding: 1.1rem 1.2rem; }
+      .card h2 { margin: 0 0 0.4rem; font-size: 1.15rem; color: var(--accent); }
+      .card p { margin: 0; font-size: 1rem; }
+      .values { padding: 1rem 0 2.5rem; text-align: center; }
+      .values h2 { font-size: 1.5rem; }
+      .values ul { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin: 1rem 0 0; padding: 0; list-style: none; }
+      .values li { border: 1px solid var(--line); border-radius: 2rem; padding: 0.3rem 1rem; background: var(--card); }
+      footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2.5rem; font-size: 0.92rem; color: var(--muted); }
+      footer p { margin: 0.4rem 0; }
+      [data-lang] { display: none; }
+      html[lang="en"] [data-lang="en"], html[lang="it"] [data-lang="it"] { display: block; }
+      html[lang="en"] span[data-lang="en"], html[lang="it"] span[data-lang="it"] { display: inline; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <div class="brand"><img src="/icon.svg" alt="" /> Heroquill</div>
+        <div class="langs" role="group" aria-label="Language">
+          <button type="button" data-set="en">EN</button>
+          <button type="button" data-set="it">IT</button>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div data-lang="en">
+          <h1>Your D&amp;D 5e hero, from first idea to the table.</h1>
+          <p>Build, play and print Dungeons &amp; Dragons 5th edition characters. Free, no account, and it keeps working without a connection.</p>
+          <a class="button" href="/app/">Open Heroquill</a>
+          <p class="note">Works in any modern browser. On a phone, add it to the home screen to use it like an app.</p>
+        </div>
+        <div data-lang="it">
+          <h1>Il tuo eroe di D&amp;D 5e, dalla prima idea al tavolo.</h1>
+          <p>Crea, gioca e stampa personaggi di Dungeons &amp; Dragons 5a edizione. Gratis, senza account, e funziona anche senza connessione.</p>
+          <a class="button" href="/app/">Apri Heroquill</a>
+          <p class="note">Funziona in qualsiasi browser moderno. Su telefono aggiungilo alla schermata Home per usarlo come un’app.</p>
+        </div>
+      </section>
+
+      <div data-lang="en">
+        <section class="grid">
+          <article class="card">
+            <h2>Build</h2>
+            <p>A guided flow for species, class, background, ability scores, skills, spells and equipment. Multiclassing, feats and levelling up, with every number the rules work out and the option to override it.</p>
+          </article>
+          <article class="card">
+            <h2>Play</h2>
+            <p>Hit points, death saves, spell slots, class resources and rests. Quick rolls with advantage and critical hits, a dice tray and the rules of conditions and features one tap away.</p>
+          </article>
+          <article class="card">
+            <h2>Print and share</h2>
+            <p>A character sheet, spell sheets and spell cards for paper or PDF. Share a character as a link, a QR code or a file.</p>
+          </article>
+          <article class="card">
+            <h2>Your content</h2>
+            <p>The whole SRD 5.1, official translations in five languages, a homebrew editor and an importer for Aurora files you already own.</p>
+          </article>
+        </section>
+        <section class="values">
+          <h2>Made to stay out of your way</h2>
+          <ul>
+            <li>Free</li>
+            <li>No account</li>
+            <li>No tracking</li>
+            <li>Works offline</li>
+            <li>Your characters stay on your device</li>
+            <li>Open source</li>
+          </ul>
+        </section>
+      </div>
+
+      <div data-lang="it">
+        <section class="grid">
+          <article class="card">
+            <h2>Crea</h2>
+            <p>Un percorso guidato per specie, classe, background, punteggi, abilità, incantesimi ed equipaggiamento. Multiclasse, talenti e avanzamento di livello, con ogni numero calcolato dalle regole e la possibilità di modificarlo a mano.</p>
+          </article>
+          <article class="card">
+            <h2>Gioca</h2>
+            <p>Punti ferita, tiri salvezza contro la morte, slot incantesimo, risorse di classe e riposi. Tiri rapidi con vantaggio e colpi critici, un vassoio dei dadi e le regole di condizioni e privilegi a un tocco.</p>
+          </article>
+          <article class="card">
+            <h2>Stampa e condividi</h2>
+            <p>Scheda del personaggio, schede e carte degli incantesimi, su carta o PDF. Condividi un personaggio con un link, un codice QR o un file.</p>
+          </article>
+          <article class="card">
+            <h2>I tuoi contenuti</h2>
+            <p>L’intero SRD 5.1, le traduzioni ufficiali in cinque lingue, un editor homebrew e un importatore per i file Aurora che già possiedi.</p>
+          </article>
+        </section>
+        <section class="values">
+          <h2>Pensato per non intralciarti</h2>
+          <ul>
+            <li>Gratis</li>
+            <li>Senza account</li>
+            <li>Senza tracciamento</li>
+            <li>Funziona offline</li>
+            <li>I personaggi restano sul tuo dispositivo</li>
+            <li>Open source</li>
+          </ul>
+        </section>
+      </div>
+
+      <footer>
+        <p data-lang="en">
+          Heroquill is an unofficial fan project, not affiliated with or endorsed by Wizards of the Coast. It uses the System Reference Document 5.1 under the CC-BY-4.0 licence.
+        </p>
+        <p data-lang="it">
+          Heroquill è un progetto di fan non ufficiale, non affiliato né approvato da Wizards of the Coast. Usa il System Reference Document 5.1 con licenza CC-BY-4.0.
+        </p>
+        <p>
+          <a href="/app/">App</a> ·
+          <a href="https://github.com/Mystikal91/dnd-character-maker">GitHub</a> ·
+          <a href="/privacy.html">Privacy</a> ·
+          <a href="/terms.html"><span data-lang="en">Terms</span><span data-lang="it">Termini</span></a>
+        </p>
+      </footer>
+    </div>
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var buttons = document.querySelectorAll("[data-set]");
+        function set(lang) {
+          root.lang = lang;
+          for (var i = 0; i < buttons.length; i++) {
+            buttons[i].setAttribute("aria-pressed", buttons[i].dataset.set === lang ? "true" : "false");
+          }
+          try { localStorage.setItem("site-lang", lang); } catch (e) {}
+        }
+        var saved = null;
+        try { saved = localStorage.getItem("site-lang"); } catch (e) {}
+        set(saved === "it" || saved === "en" ? saved : (navigator.language || "").slice(0, 2) === "it" ? "it" : "en");
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].addEventListener("click", function (e) { set(e.currentTarget.dataset.set); });
+        }
+      })();
+    </script>
+  </body>
+</html>

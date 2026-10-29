@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.10.0 beta",
+    date: "2026-10-29",
+    notes: [
+      {
+        en: "The app is now called Heroquill and has a home of its own, heroquill.app, with a welcome page that explains the project; the app itself lives at heroquill.app/app.",
+        it: "L’app ora si chiama Heroquill e ha una casa tutta sua, heroquill.app, con una pagina di benvenuto che spiega il progetto; l’app vera e propria sta in heroquill.app/app.",
+        fr: "L’app s’appelle maintenant Heroquill et a sa propre adresse, heroquill.app, avec une page d’accueil qui présente le projet ; l’app elle-même est à heroquill.app/app.",
+        de: "Die App heißt jetzt Heroquill und hat eine eigene Adresse, heroquill.app, mit einer Willkommensseite, die das Projekt erklärt; die App selbst liegt unter heroquill.app/app.",
+        es: "La app ahora se llama Heroquill y tiene su propia dirección, heroquill.app, con una página de bienvenida que explica el proyecto; la app en sí está en heroquill.app/app.",
+      },
+    ],
+  },
+  {
     version: "1.9.1 beta",
     date: "2026-10-28",
     notes: [

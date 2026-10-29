@@ -22,7 +22,7 @@ next time the page is opened. Google's sign-in script is fetched only when the w
    *Testing* (or publish it: `drive.file` does not need a Google review).
 4. **Credentials → Create credentials → OAuth client ID**, type **Web application**. Under
    **Authorized JavaScript origins** put the address the app is served from, for example
-   `https://<user>.github.io` (no path) and, for development, `http://localhost:5173`.
+   `https://heroquill.app` (no path) and, for development, `http://localhost:5173`.
 5. Copy the client id (`....apps.googleusercontent.com`). It is public.
 
 ## Giving the id to the app

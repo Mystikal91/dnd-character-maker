@@ -3,19 +3,20 @@ import preact from "@preact/preset-vite";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
-// Served from https://<user>.github.io/dnd-character-maker/
-const base = "/dnd-character-maker/";
+// The app lives under /app/ of heroquill.app; the welcome page and the legal pages are in site/.
+const base = "/app/";
 
 export default defineConfig({
   base,
+  build: { outDir: "dist/app", emptyOutDir: true },
   plugins: [
     preact(),
     VitePWA({
       registerType: "prompt",
       includeAssets: ["icon.svg"],
       manifest: {
-        name: "DND Character Maker",
-        short_name: "DND Maker",
+        name: "Heroquill",
+        short_name: "Heroquill",
         description: "Create, print and play D&D 5e characters, online or offline.",
         start_url: base,
         scope: base,
@@ -33,8 +34,6 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,svg,json,woff2}"],
-        // The privacy and terms pages are pages of their own, not the app.
-        navigateFallbackDenylist: [/\/(privacy|terms)\.html$/],
       },
     }),
   ],

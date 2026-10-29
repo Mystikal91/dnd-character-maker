@@ -26,9 +26,9 @@ by default; the address can be changed there, so anyone can run a relay of their
 3. Press **Edit code**, delete the sample code, paste the whole of
    [`workers/translate-proxy/worker.js`](../workers/translate-proxy/worker.js) and press
    **Deploy**.
-4. If the app is not served from `https://mystikal91.github.io` (a fork, another address), open
+4. If the app is not served from `https://heroquill.app` (a fork, another address), open
    **Settings**, **Variables and Secrets**, add a text variable `ALLOWED_ORIGINS` with the
-   address of your copy, e.g. `https://example.github.io`, and deploy again. The address has no
+   address of your copy, e.g. `https://example.com`, and deploy again. The address has no
    path and no trailing slash. Several addresses are separated by commas.
 5. The relay lives at `https://dnd-translate.<your-account>.workers.dev`. That address is what
    goes into the app, together with a DeepL key.

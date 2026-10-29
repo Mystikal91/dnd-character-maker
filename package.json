@@ -1,6 +1,6 @@
 {
   "name": "dnd-character-maker",
-  "version": "1.9.1-beta",
+  "version": "1.10.0-beta",
   "private": true,
   "description": "Offline-first D&D 5e character sheet maker (print and play).",
   "license": "MIT",
@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && node scripts/copy-site.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",

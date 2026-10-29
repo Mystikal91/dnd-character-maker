@@ -5,7 +5,7 @@ compatibility_date = "2024-09-01"
 # Sites allowed to use the relay (comma separated). Without it, the published app and the local
 # dev server are allowed. Replace the address with where your copy of the app lives.
 # [vars]
-# ALLOWED_ORIGINS = "https://mystikal91.github.io,http://localhost:5173"
+# ALLOWED_ORIGINS = "https://heroquill.app,http://localhost:5173"
 
 # Free translation for people without a DeepL key uses Cloudflare Workers AI (the free allowance
 # of the account). Without this binding the relay still passes DeepL requests on.
