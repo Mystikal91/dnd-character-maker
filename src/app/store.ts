@@ -19,7 +19,7 @@ import {
 } from "../storage/characters";
 import { decodeShare, isShareHash } from "../storage/share";
 import { backupFileName, parseBackup, parseImportFile, serializeBackup } from "../storage/transfer";
-import { buildExample } from "./example";
+import { EXAMPLE_ID, buildExample } from "./example";
 import { showView } from "./navigation";
 import { transferDialog, transferInbox } from "./transferState";
 
@@ -195,26 +195,35 @@ export async function importFromLink(): Promise<void> {
 
 export const newCharacter = () => switchTo(createNewCharacter());
 
-/** Opens Aria, the example character, in the sheet; a blank character that is open is dropped. */
+/**
+ * Opens Aria, the example character, in the sheet. If she is already among the characters (with
+ * whatever the person did to her) that one is opened, not another made; a blank character that
+ * is open is dropped.
+ */
 export async function openExample(): Promise<void> {
   const loaded = content.value;
   if (!loaded) return;
-  const example = buildExample(loaded.index, {
-    personalityTraits: ui("example.personality"),
-    ideals: ui("example.ideals"),
-    bonds: ui("example.bonds"),
-    flaws: ui("example.flaws"),
-    appearance: ui("example.appearance"),
-  });
   const open = character.value;
   const blank =
     !open.name && open.classes.length === 0 && !open.choices.species && !open.choices.background;
-  if (blank) {
+  const known = characters.value.some((c) => c.id === EXAMPLE_ID);
+  if (blank && open.id !== EXAMPLE_ID) {
     clearTimeout(saveTimer);
     saveTimer = undefined;
     await deleteCharacter(open.id).catch(() => undefined);
+    await refreshList();
   }
-  await switchTo(example);
+  if (known) await openCharacter(EXAMPLE_ID);
+  else
+    await switchTo(
+      buildExample(loaded.index, {
+        personalityTraits: ui("example.personality"),
+        ideals: ui("example.ideals"),
+        bonds: ui("example.bonds"),
+        flaws: ui("example.flaws"),
+        appearance: ui("example.appearance"),
+      }),
+    );
   showView("sheet");
 }
 

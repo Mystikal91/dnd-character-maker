@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Entry } from "../data/schema";
 import { createCharacter } from "./character";
-import { relinkCharacter } from "./relink";
+import { entryRelinker, relinkCharacter } from "./relink";
 
 const entry = (id: string, kind: Entry["kind"]): [string, Entry] => [
   id,
@@ -47,5 +47,23 @@ describe("finding again what a character used from a pack that changed its id", 
       prepared: [],
     };
     expect(relinkCharacter(c, index)).toBeUndefined();
+  });
+});
+
+describe("finding again one entry", () => {
+  const index = new Map<string, Entry>([
+    entry("srd51:species/dwarf", "species"),
+    entry("impnew:species/custom-lineage", "species"),
+  ]);
+  const relink = entryRelinker(index);
+
+  it("gives the entry of the same kind and name in another pack", () => {
+    expect(relink("impold:species/custom-lineage")).toBe("impnew:species/custom-lineage");
+  });
+
+  it("gives nothing for a known id, an SRD id, or one that matches nothing", () => {
+    expect(relink("impnew:species/custom-lineage")).toBeUndefined();
+    expect(relink("srd51:species/elf")).toBeUndefined();
+    expect(relink("impold:species/unknown")).toBeUndefined();
   });
 });

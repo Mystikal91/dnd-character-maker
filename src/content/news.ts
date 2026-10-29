@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.12.2 beta",
+    date: "2026-10-29",
+    notes: [
+      {
+        en: "Quick edits (your own texts and translations of an entry) no longer get lost when a content pack is imported or downloaded again. A pack that comes back under a new name used to leave the edits of its entries behind, so after moving a character to another device a species or a background could show its original text; now the edits find their entries again. The “Try it with Aria” button now opens the Aria already among your characters instead of making another one each time.",
+        it: "Le modifiche rapide (i tuoi testi e le tue traduzioni di una voce) non si perdono più quando un pacchetto di contenuti viene importato o scaricato di nuovo. Un pacchetto che torna con un nome nuovo lasciava indietro le modifiche delle sue voci, così dopo aver spostato un personaggio su un altro dispositivo una specie o un background potevano mostrare il testo originale; ora le modifiche ritrovano le loro voci. Il pulsante «Prova con Aria» ora apre l’Aria già presente tra i tuoi personaggi invece di crearne un’altra ogni volta.",
+        fr: "Les modifications rapides (tes textes et tes traductions d’une entrée) ne se perdent plus quand un pack de contenu est importé ou téléchargé de nouveau. Un pack qui revenait sous un nouveau nom laissait derrière lui les modifications de ses entrées, si bien qu’après avoir déplacé un personnage sur un autre appareil une espèce ou un historique pouvait montrer son texte d’origine ; maintenant les modifications retrouvent leurs entrées. Le bouton « Essayer avec Aria » ouvre désormais l’Aria déjà présente parmi tes personnages au lieu d’en créer une autre à chaque fois.",
+        de: "Schnellbearbeitungen (deine eigenen Texte und Übersetzungen eines Eintrags) gehen nicht mehr verloren, wenn ein Inhaltspaket erneut importiert oder heruntergeladen wird. Ein Paket, das unter neuem Namen zurückkam, ließ die Änderungen seiner Einträge zurück, sodass nach dem Umzug eines Charakters auf ein anderes Gerät ein Volk oder ein Hintergrund seinen Originaltext zeigen konnte; jetzt finden die Änderungen ihre Einträge wieder. Die Schaltfläche „Mit Aria ausprobieren“ öffnet nun die Aria, die schon unter deinen Charakteren ist, statt jedes Mal eine neue anzulegen.",
+        es: "Las ediciones rápidas (tus textos y traducciones de una entrada) ya no se pierden cuando un paquete de contenido se importa o se descarga de nuevo. Un paquete que volvía con otro nombre dejaba atrás las ediciones de sus entradas, así que al pasar un personaje a otro dispositivo una especie o un trasfondo podían mostrar su texto original; ahora las ediciones encuentran de nuevo sus entradas. El botón «Probar con Aria» ahora abre la Aria que ya está entre tus personajes en lugar de crear otra cada vez.",
+      },
+    ],
+  },
+  {
     version: "1.12.1 beta",
     date: "2026-10-29",
     notes: [

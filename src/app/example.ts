@@ -1,6 +1,9 @@
 import { type Character, createCharacter } from "../engine/character";
 import { type PackIndex, deriveSheet } from "../engine/derive";
 
+/** The id of the example character, so that the same one is found again and not made anew. */
+export const EXAMPLE_ID = "00000000-0000-4000-8000-00000a71a000";
+
 const spell = (id: string) => `srd51:spell/${id}`;
 const item = (id: string) => `srd51:item/${id}`;
 
@@ -52,6 +55,7 @@ export interface ExampleStory {
  */
 export function buildExample(index: PackIndex, story: ExampleStory): Character {
   const c = createCharacter("srd51");
+  c.id = EXAMPLE_ID;
   c.name = "Aria Nightbloom";
   c.choices = {
     species: "srd51:species/elf",

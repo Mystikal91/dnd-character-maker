@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { deriveSheet } from "../engine/derive";
 import { srd51Index as index } from "../test/srd51";
-import { buildExample } from "./example";
+import { EXAMPLE_ID, buildExample } from "./example";
 
 const story = {
   personalityTraits: "p",
@@ -20,6 +20,11 @@ describe("the example character", () => {
     expect(c.classes).toEqual([
       { classId: "srd51:class/wizard", level: 5, subclassId: "srd51:subclass/evocation" },
     ]);
+  });
+
+  it("always has the same id, so that it is found again and not made anew", () => {
+    expect(c.id).toBe(EXAMPLE_ID);
+    expect(buildExample(index, story).id).toBe(EXAMPLE_ID);
   });
 
   it("has nothing left to choose and no warnings", () => {

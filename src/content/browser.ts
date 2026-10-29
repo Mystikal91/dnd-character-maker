@@ -1,3 +1,4 @@
+import { relinkEdits } from "../app/quickEdit.logic";
 import { withOriginRules } from "../data/originRules";
 import { type Pack, parsePack } from "../data/schema";
 import { type PackIndex, indexPacks } from "../engine/derive";
@@ -78,6 +79,7 @@ export async function loadContent(
   // Packs the user added: their texts are keyed by full entry id and carry their own language.
   // They apply in order, so a quick edit (the last kind) wins over everything.
   const original = new Map<string, string | undefined>();
+  const edited = new Map<string, string>();
   for (const record of orderUserPacks(userPacks)) {
     // Quick edits are written in one language and only apply while it is in use.
     if (record.origin === "edits" && record.lang !== locales[0]) continue;
@@ -90,12 +92,23 @@ export async function loadContent(
         if (!original.has(key)) original.set(key, texts.get(key));
         texts.set(key, value);
         english.delete(key);
+        edited.set(key, value);
         continue;
       }
       texts.set(key, value);
       // Content read from other tools is English; what a person wrote is in their own language.
       if (record.origin === "personal" && record.lang !== locales[0]) english.add(key);
     }
+  }
+
+  // A quick edit made when the pack had another id (it was imported or downloaded again since)
+  // is put on the entry as it is called now, unless that entry has an edit of its own.
+  const index = indexPacks(...packs);
+  for (const [key, value] of Object.entries(relinkEdits(Object.fromEntries(edited), index))) {
+    if (edited.has(key)) continue;
+    if (!original.has(key)) original.set(key, texts.get(key));
+    texts.set(key, value);
+    english.delete(key);
   }
 
   // Distances and weights read in the units in use. The call reads the unit signal, so whatever
@@ -109,7 +122,7 @@ export async function loadContent(
   };
   return {
     packs,
-    index: indexPacks(...packs),
+    index,
     text,
     name: (id) => text(id, "name") ?? prettify(id.split("/")[1] ?? id),
     fields: (id) => {
