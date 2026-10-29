@@ -172,7 +172,7 @@
   font-weight: 700;
 }
 
-/* ---- Tabs: always in view, and all four fit on a phone ---- */
+/* ---- Tabs: always in view; below 56rem all five share the row, icon above the name ---- */
 
 .tabs {
   position: sticky;
@@ -182,7 +182,7 @@
   background: var(--bg);
 }
 
-@media (max-width: 40rem) {
+@media (max-width: 56rem) {
   .tab,
   :root[data-style] .tab {
     flex: 1 1 0;
@@ -1417,7 +1417,7 @@ input:checked + .equip-tag {
   height: 1.1rem;
 }
 
-@media (max-width: 40rem) {
+@media (max-width: 56rem) {
   .tab {
     flex-direction: column;
     gap: 0.2rem;

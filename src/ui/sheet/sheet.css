@@ -98,7 +98,7 @@
   }
 
   /* Two columns: name and class side by side, who-you-are underneath across both. */
-  .banner-name {
+  .banner-name-wrap {
     grid-column: 1;
     grid-row: 1;
   }
@@ -125,7 +125,7 @@
   }
 
   /* Three columns: name, who-you-are, class, each above its own column. */
-  .banner-name,
+  .banner-name-wrap,
   .banner-class,
   .sheet-info {
     grid-column: auto;
@@ -872,18 +872,24 @@ button.explain-trigger:hover {
   font-size: 1.15rem;
 }
 
-/* ---- Portrait: a hexagonal medallion in the name banner ---- */
+/* ---- Portrait: a hexagonal seal set on the left of the name banner, standing out of it ---- */
+
+.banner-name-wrap {
+  position: relative;
+}
 
 .banner-name.has-portrait {
-  padding-left: 5.4rem;
+  padding-left: 5.8rem;
 }
 
 .portrait {
   position: absolute;
   top: 50%;
-  left: 1.5rem;
-  width: 3.4rem;
+  left: 0.6rem;
+  z-index: 2;
+  width: 4.3rem;
   transform: translateY(-50%);
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.45));
 }
 
 /* The frame is a hexagon in the accent colour; the face is a slightly smaller one inside it. */

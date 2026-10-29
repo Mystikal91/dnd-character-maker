@@ -87,10 +87,12 @@ export function SheetHeader() {
 
   return (
     <header class="sheet-header">
-      <div class="banner banner-name has-portrait">
+      <div class="banner-name-wrap">
+        <div class="banner banner-name has-portrait">
+          <EditableName />
+          <span class="banner-label">{ui("sheet.name")}</span>
+        </div>
         <Portrait />
-        <EditableName />
-        <span class="banner-label">{ui("sheet.name")}</span>
       </div>
 
       <dl class="card sheet-info">
