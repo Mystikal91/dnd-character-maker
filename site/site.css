@@ -1398,3 +1398,88 @@ h3 {
     animation: none !important;
   }
 }
+
+/* ---- The guide: a page of reading ---- */
+
+.page-hero {
+  padding: 3.5rem 0 3rem;
+  background: radial-gradient(ellipse at 50% 0, var(--glow) 0, transparent 65%), var(--bg);
+  text-align: center;
+}
+
+.page-hero .crumb {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.page-hero .crumb a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.page-hero h1 {
+  color: var(--fg);
+  font-size: clamp(1.8rem, 4.6vw, 2.8rem);
+  line-height: 1.2;
+}
+
+.page-hero .lead {
+  margin: 1.1rem auto 0;
+  color: var(--muted);
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.prose {
+  counter-reset: step;
+}
+
+.prose section + section {
+  margin-top: 2.4rem;
+}
+
+.band .prose h2 {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.2rem, 2.6vw, 1.5rem);
+  letter-spacing: 0.03em;
+  text-align: left;
+}
+
+.prose h2::before {
+  counter-increment: step;
+  content: counter(step) ". ";
+  color: var(--ink);
+}
+
+.prose p {
+  margin: 0 0 0.9rem;
+  font-size: 1.15rem;
+  line-height: 1.65;
+}
+
+.prose ul {
+  margin: 0 0 1rem;
+  padding-left: 1.3rem;
+}
+
+.prose li {
+  margin: 0.3rem 0;
+  font-size: 1.15rem;
+  line-height: 1.55;
+}
+
+.prose li::marker {
+  color: var(--accent);
+}
+
+.cta .lead {
+  max-width: 34rem;
+  margin: 0 auto 1.4rem;
+  color: var(--fg);
+  font-size: 1.3rem;
+}
+
+.cta .actions {
+  justify-content: center;
+}

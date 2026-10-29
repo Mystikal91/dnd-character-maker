@@ -14,3 +14,10 @@ png("public/icon.svg", 512, ["public/icon-512.png"]);
 png("public/icon-maskable.svg", 512, ["public/icon-maskable-512.png"]);
 // iOS rounds the corners itself, so it gets the full square.
 png("public/icon-maskable.svg", 180, ["public/apple-touch-icon.png", "site/apple-touch-icon.png"]);
+
+// The picture shown when a link to the site is shared (the fonts it uses are the system's).
+const ogSvg = readFileSync("site/og-image.svg", "utf8");
+writeFileSync(
+  "site/og-image.png",
+  new Resvg(ogSvg, { fitTo: { mode: "width", value: 1200 } }).render().asPng(),
+);

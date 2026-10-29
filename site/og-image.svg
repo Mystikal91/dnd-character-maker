@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#121a2c"/>
+  <g fill="none" stroke="#e3b95a" stroke-width="2" opacity="0.16">
+    <polygon points="980,-40 1120,40 1120,200 980,280 840,200 840,40"/>
+    <polygon points="1100,260 1210,324 1210,452 1100,516 990,452 990,324"/>
+    <polygon points="900,330 1010,394 1010,522 900,586 790,522 790,394"/>
+    <polygon points="1040,500 1130,552 1130,656 1040,708 950,656 950,552"/>
+  </g>
+  <g fill="#e3b95a">
+    <circle cx="60" cy="70" r="2.5" opacity="0.7"/><circle cx="210" cy="40" r="2" opacity="0.5"/>
+    <circle cx="420" cy="90" r="2.5" opacity="0.6"/><circle cx="700" cy="50" r="2" opacity="0.5"/>
+    <circle cx="820" cy="120" r="2.5" opacity="0.6"/><circle cx="1150" cy="90" r="2" opacity="0.6"/>
+    <circle cx="90" cy="560" r="2" opacity="0.5"/><circle cx="560" cy="590" r="2.5" opacity="0.5"/>
+    <circle cx="740" cy="560" r="2" opacity="0.6"/>
+  </g>
+  <g transform="translate(90 175) scale(2.05)">
+    <rect width="140" height="140" rx="30" fill="#22335a"/>
+    <path d="M46 36V104M94 36V104" stroke="#e3b95a" stroke-width="9" stroke-linecap="round" fill="none"/>
+    <g transform="translate(70 70) rotate(20) scale(0.8) translate(-52 -51)">
+      <path d="M12 94C20 72 30 52 44 36C58 20 74 12 92 8C90 28 80 50 62 64C48 76 30 86 12 94Z" fill="#22335a" stroke="#22335a" stroke-width="10" stroke-linejoin="round"/>
+      <path d="M12 94C20 72 30 52 44 36C58 20 74 12 92 8C90 28 80 50 62 64C48 76 30 86 12 94Z" fill="#e3b95a"/>
+      <path d="M16 90L84 14" stroke="#22335a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+    </g>
+  </g>
+  <text x="410" y="285" font-family="Georgia, 'Times New Roman', serif" font-size="92" font-weight="700" letter-spacing="10" fill="#e3b95a">HEROQUILL</text>
+  <text x="414" y="352" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#f3e9d2">Free D&amp;D 5e character creator</text>
+  <text x="414" y="410" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="#b9b3a2">Build · Play · Print · Works offline</text>
+</svg>

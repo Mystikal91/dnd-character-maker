@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.12.3 beta",
+    date: "2026-10-29",
+    notes: [
+      {
+        en: "The welcome page is easier to find: each language now has a page of its own (heroquill.app, /it/, /fr/, /de/, /es/), written in plain text that search engines can read, with a preview picture for when a link is shared. The app itself is not listed in search results, only the welcome page is. A new guide, in the five languages, explains step by step how to create a D&D 5e character.",
+        it: "La pagina di benvenuto si trova più facilmente: ogni lingua ha ora una pagina tutta sua (heroquill.app, /it/, /fr/, /de/, /es/), scritta in testo semplice che i motori di ricerca possono leggere, con un’immagine di anteprima per quando si condivide un link. L’app in sé non compare nei risultati di ricerca, solo la pagina di benvenuto. Una nuova guida, nelle cinque lingue, spiega passo per passo come creare un personaggio di D&D 5e.",
+        fr: "La page d’accueil est plus facile à trouver : chaque langue a maintenant sa propre page (heroquill.app, /it/, /fr/, /de/, /es/), écrite en texte simple que les moteurs de recherche peuvent lire, avec une image d’aperçu quand un lien est partagé. L’app elle-même n’apparaît pas dans les résultats de recherche, seulement la page d’accueil. Un nouveau guide, dans les cinq langues, explique pas à pas comment créer un personnage de D&D 5e.",
+        de: "Die Willkommensseite ist leichter zu finden: Jede Sprache hat jetzt eine eigene Seite (heroquill.app, /it/, /fr/, /de/, /es/), in einfachem Text, den Suchmaschinen lesen können, mit einem Vorschaubild, wenn ein Link geteilt wird. Die App selbst taucht nicht in den Suchergebnissen auf, nur die Willkommensseite. Eine neue Anleitung in den fünf Sprachen erklärt Schritt für Schritt, wie man einen D&D-5e-Charakter erstellt.",
+        es: "La página de bienvenida es más fácil de encontrar: cada idioma tiene ahora su propia página (heroquill.app, /it/, /fr/, /de/, /es/), escrita en texto simple que los buscadores pueden leer, con una imagen de vista previa cuando se comparte un enlace. La app en sí no aparece en los resultados de búsqueda, solo la página de bienvenida. Una nueva guía, en los cinco idiomas, explica paso a paso cómo crear un personaje de D&D 5e.",
+      },
+    ],
+  },
+  {
     version: "1.12.2 beta",
     date: "2026-10-29",
     notes: [

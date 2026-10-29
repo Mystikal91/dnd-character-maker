@@ -1,10 +1,14 @@
 # Heroquill
 
-A free, offline-first web app to **build, play and print Dungeons & Dragons 5th edition
-characters** with the SRD 5.1 rules. No server, no account, no tracking: your characters stay on
-your device, and the app works without a connection once it has been opened.
+### A free D&D 5e character creator: build, play and print your character
 
-**Use it:** <https://heroquill.app/> (the app is at <https://heroquill.app/app/>)
+**[heroquill.app](https://heroquill.app/)** · [Open the app](https://heroquill.app/app/) · [Try it with a ready-made character](https://heroquill.app/app/#example) · [How to create a D&D 5e character (guide)](https://heroquill.app/guide/)
+
+Heroquill is a free, offline-first web app to **build, level up, play and print Dungeons & Dragons
+5th edition characters** with the SRD 5.1 rules. No server, no account, no tracking: your characters
+stay on your device, and the app works without a connection once it has been opened. It speaks
+English, Italian, French, German and Spanish, and it reads the content files made for Aurora Builder
+and Aurora Legacy that you already own.
 
 > **Version 1.0 beta.** It works, but it needs more testing, so some numbers may be wrong in
 > places. If something looks off, please [open an issue](https://github.com/Mystikal91/dnd-character-maker/issues).
@@ -78,7 +82,8 @@ npm run build      # type-check and production build into dist/
 Node 20+ is required (the PWA build step fails on older versions); Node 22 is used in CI. The
 site is published to Cloudflare (Workers static assets, `wrangler.jsonc`) by the workflow in
 `.github/workflows/`: the welcome page and the legal pages are in `site/`, the app is built into
-`dist/app/`. The old address (github.io) gets a build that only helps people move to Heroquill,
+`dist/app/`, and `npm run build` makes one plain page per language of the welcome page (`site/`, with the
+texts in `site/texts.mjs`) with a sitemap and the data for search engines. The old address (github.io) gets a build that only helps people move to Heroquill,
 published by hand with the workflow `legacy-site.yml` (`npm run build:legacy`).
 
 | Command | What it does |
