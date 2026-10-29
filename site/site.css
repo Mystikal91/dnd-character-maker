@@ -1,0 +1,1400 @@
+/*
+ * The welcome page. The colours come from palettes.css (the same colour sets as the app): a part of
+ * the page marked .on-dark uses the dark look of the chosen set, .on-light its light look, so the
+ * page is a night sky and parchment whatever the device is set to.
+ */
+
+@font-face {
+  font-family: "Cinzel";
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/cinzel-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Cinzel";
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/cinzel-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "EB Garamond";
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/eb-garamond-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "EB Garamond";
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/eb-garamond-600.woff2") format("woff2");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--d-bg);
+  color: var(--d-fg);
+  font: 1.125rem / 1.6 "EB Garamond", Georgia, "Times New Roman", serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+a {
+  color: var(--accent);
+}
+
+/* ---- The two looks ---- */
+
+.on-dark {
+  --bg: var(--d-bg);
+  --surface: var(--d-surface);
+  --surface2: var(--d-surface2);
+  --fg: var(--d-fg);
+  --muted: var(--d-muted);
+  --border: var(--d-border);
+  --ink: var(--d-ink);
+  --accent: var(--d-accent);
+  --contrast: var(--d-contrast);
+  --glow: var(--d-glow);
+}
+
+.on-light {
+  --bg: var(--l-bg);
+  --surface: var(--l-surface);
+  --surface2: var(--l-surface2);
+  --fg: var(--l-fg);
+  --muted: var(--l-muted);
+  --border: var(--l-border);
+  --ink: var(--l-ink);
+  --accent: var(--l-accent);
+  --contrast: var(--l-contrast);
+  --glow: var(--l-glow);
+}
+
+.on-dark,
+.on-light {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.wrap {
+  width: min(100% - 2.5rem, 64rem);
+  margin-inline: auto;
+}
+
+.wrap.narrow {
+  width: min(100% - 2.5rem, 44rem);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: "Cinzel", "EB Garamond", Georgia, serif;
+  font-weight: 600;
+}
+
+/* ---- Top bar ---- */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.65rem max(1.25rem, calc((100% - 64rem) / 2));
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--d-bg) 90%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--accent);
+  font-family: "Cinzel", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.brand-mark {
+  width: 2.1rem;
+  height: 2.1rem;
+}
+
+.mk-tile {
+  fill: var(--surface2);
+}
+
+.mk-stem {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+
+.mk-halo {
+  fill: var(--surface2);
+  stroke: var(--surface2);
+  stroke-width: 10;
+  stroke-linejoin: round;
+}
+
+.mk-quill {
+  fill: var(--accent);
+}
+
+.mk-shaft {
+  fill: none;
+  stroke: var(--surface2);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.4rem;
+  margin-left: auto;
+}
+
+.nav-links a {
+  color: var(--fg);
+  font-size: 1rem;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+  opacity: 1;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.lang select {
+  min-height: 2.2rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.3rem;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 42rem) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-actions {
+    margin-left: auto;
+  }
+}
+
+/* ---- Buttons ---- */
+
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--accent);
+  border-radius: 0.3rem;
+  background: var(--accent);
+  color: var(--contrast);
+  font-family: "Cinzel", serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.button:hover {
+  box-shadow: 0 6px 22px color-mix(in srgb, var(--accent) 40%, transparent);
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button.ghost {
+  background: transparent;
+  color: var(--accent);
+}
+
+.button.small {
+  padding: 0.45rem 0.95rem;
+  font-size: 0.82rem;
+}
+
+/* ---- First screen ---- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 4rem 0 4.5rem;
+  background: radial-gradient(ellipse at 50% 0, var(--glow) 0, transparent 65%), var(--bg);
+  isolation: isolate;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+
+.stars circle {
+  fill: var(--accent);
+  opacity: 0.7;
+  animation: twinkle 5s ease-in-out infinite alternate;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 0.9;
+  }
+}
+
+.hexes {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent);
+  opacity: 0.16;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='black' stroke-width='1.4'/%3E%3Cpath d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50L28 34' fill='none' stroke='black' stroke-width='1.4'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 70% 40%, #000 0, transparent 70%);
+  -webkit-mask-composite: source-in;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='black' stroke-width='1.4'/%3E%3Cpath d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50L28 34' fill='none' stroke='black' stroke-width='1.4'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 70% 40%, #000 0, transparent 70%);
+  mask-composite: intersect;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.hero h1 {
+  color: var(--fg);
+  font-size: clamp(2rem, 5.2vw, 3.3rem);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  animation: rise 0.8s ease-out both;
+}
+
+.lead {
+  max-width: 30rem;
+  margin: 1.1rem 0 1.8rem;
+  color: var(--muted);
+  font-size: 1.3rem;
+  line-height: 1.5;
+  animation: rise 0.8s ease-out 0.12s both;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  animation: rise 0.8s ease-out 0.24s both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+.sheet-stage {
+  display: flex;
+  justify-content: center;
+  perspective: 900px;
+  animation: float 7s ease-in-out infinite, rise 1s ease-out 0.2s both;
+}
+
+@keyframes float {
+  50% {
+    translate: 0 -10px;
+  }
+}
+
+.sheet-art {
+  width: min(100%, 22rem);
+  height: auto;
+  filter: drop-shadow(0 18px 30px rgb(0 0 0 / 0.45));
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.2s ease-out;
+}
+
+/* The sheet is drawn in the light look of the chosen set: paper with an accent. */
+.p-paper {
+  fill: var(--l-surface);
+  stroke: var(--l-border);
+  stroke-width: 2;
+}
+
+.p-head {
+  fill: var(--l-accent);
+}
+
+.p-name {
+  fill: var(--l-contrast);
+  font: 600 14px "Cinzel", serif;
+}
+
+.p-sub {
+  fill: var(--l-contrast);
+  font: 10px "EB Garamond", serif;
+  opacity: 0.85;
+}
+
+.p-hexes polygon {
+  fill: none;
+  stroke: var(--l-accent);
+  stroke-width: 1.6;
+}
+
+.p-nums text {
+  fill: var(--l-fg);
+  font: 600 14px "Cinzel", serif;
+  text-anchor: middle;
+}
+
+.p-bar {
+  fill: var(--l-border);
+}
+
+.p-fill {
+  fill: var(--l-accent);
+}
+
+.p-pips circle {
+  fill: none;
+  stroke: var(--l-accent);
+  stroke-width: 1.5;
+}
+
+.p-pips .on {
+  fill: var(--l-accent);
+}
+
+.p-card {
+  fill: var(--l-surface2);
+  stroke: var(--d-accent);
+  stroke-width: 2;
+}
+
+.p-card-band {
+  fill: var(--l-border);
+}
+
+.p-title {
+  fill: var(--l-fg);
+  font: 600 11px "Cinzel", serif;
+}
+
+.p-small {
+  fill: var(--l-muted);
+  font: 9px "EB Garamond", serif;
+}
+
+.p-line {
+  fill: var(--l-border);
+}
+
+@media (max-width: 52rem) {
+  .hero {
+    padding-top: 2.5rem;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .lead {
+    margin-inline: auto;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+}
+
+/* ---- Sections ---- */
+
+.band {
+  padding: 4.5rem 0;
+}
+
+.band h2 {
+  margin-bottom: 0.4rem;
+  color: var(--accent);
+  font-size: clamp(1.5rem, 3.6vw, 2.1rem);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.band .sub {
+  margin: 0 0 2.2rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.3rem;
+}
+
+@media (max-width: 62rem) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 34rem) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* A panel with cut corners, as on the sheet in the app. */
+.card {
+  padding: 1.3rem 1.3rem 1.4rem;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  clip-path: polygon(
+    12px 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 calc(100% - 12px),
+    0 12px
+  );
+  transition: transform 0.25s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin: 0.8rem 0 0.35rem;
+  color: var(--accent);
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.card-art {
+  display: block;
+  width: 100%;
+  height: 2.9rem;
+}
+
+.card-art .line * {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+.card-art .fill * {
+  fill: var(--accent);
+}
+
+.card-art .num text {
+  fill: var(--accent);
+  font: 600 12px "Cinzel", serif;
+  text-anchor: middle;
+}
+
+.card-art .num .big {
+  font-size: 22px;
+  text-anchor: start;
+}
+
+.card-art .note {
+  fill: var(--muted);
+  font: 10px "EB Garamond", serif;
+}
+
+/* ---- Colour sets ---- */
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+}
+
+@media (max-width: 30rem) {
+  .swatches {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.swatch {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.5rem;
+  border: 2px solid var(--border);
+  border-radius: 0.4rem;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.swatch:hover {
+  border-color: var(--ink);
+  transform: translateY(-3px);
+}
+
+.swatch[aria-pressed="true"] {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+/* Each button carries its own data-palette, so the chip reads that set's colours. */
+.chip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 2.4rem;
+  overflow: hidden;
+  border-radius: 0.25rem;
+}
+
+.chip i {
+  border-top: 0.55rem solid;
+}
+
+.chip .dk {
+  border-color: var(--d-accent);
+  background: var(--d-bg);
+}
+
+.chip .lt {
+  border-color: var(--l-accent);
+  background: var(--l-bg);
+}
+
+.hint {
+  margin: 1.4rem 0 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ---- Values and questions ---- */
+
+.values {
+  padding-bottom: 2rem;
+}
+
+.values h2 {
+  margin-bottom: 1.4rem;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pills li {
+  padding: 0.35rem 1.05rem;
+  border: 1px solid var(--ink);
+  border-radius: 2rem;
+  background: var(--surface);
+  font-size: 1.05rem;
+}
+
+.faq-band {
+  padding-top: 2.5rem;
+}
+
+.faq-band h2 {
+  margin-bottom: 1.2rem;
+}
+
+.faq details {
+  border-bottom: 1px solid var(--border);
+}
+
+.faq summary {
+  position: relative;
+  padding: 1rem 2rem 1rem 0;
+  color: var(--ink);
+  font-family: "Cinzel", serif;
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  list-style: none;
+  cursor: pointer;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::after {
+  content: "+";
+  position: absolute;
+  top: 0.8rem;
+  right: 0.2rem;
+  color: var(--accent);
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.faq details[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq p {
+  margin: 0 0 1.1rem;
+  animation: rise 0.35s ease-out both;
+}
+
+/* ---- Closing call and footer ---- */
+
+.cta {
+  padding: 4.5rem 0;
+  background: radial-gradient(ellipse at 50% 100%, var(--glow) 0, transparent 70%), var(--bg);
+  text-align: center;
+}
+
+.cta h2 {
+  margin-bottom: 1.4rem;
+  color: var(--fg);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+}
+
+.foot {
+  padding: 1.8rem 0 2.2rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.foot p {
+  max-width: 44rem;
+  margin: 0 0 0.8rem;
+}
+
+.foot .links {
+  display: flex;
+  gap: 1.2rem;
+  margin: 0;
+}
+
+/* ---- Scrolling in ---- */
+
+.js .reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.js .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+.js .cards .reveal:nth-child(2) {
+  transition-delay: 0.08s;
+}
+
+.js .cards .reveal:nth-child(3) {
+  transition-delay: 0.16s;
+}
+
+.js .cards .reveal:nth-child(4) {
+  transition-delay: 0.24s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .stars circle,
+  .sheet-stage,
+  .hero h1,
+  .lead,
+  .actions,
+  .faq p {
+    animation: none;
+  }
+
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .button,
+  .card,
+  .swatch,
+  .sheet-art {
+    transition: none;
+  }
+}
+
+/* On a phone the bar keeps everything on one line. */
+.button.small {
+  white-space: nowrap;
+}
+
+@media (max-width: 30rem) {
+  .nav {
+    gap: 0.5rem;
+  }
+
+  .brand {
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+  }
+
+  .brand-mark {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .nav-actions {
+    gap: 0.4rem;
+  }
+
+  .button.small {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.72rem;
+  }
+
+  .lang select {
+    padding: 0 0.3rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* ---- The pictures in the cards: centred, and moving ---- */
+
+.card {
+  text-align: center;
+}
+
+.card-art {
+  display: block;
+  width: 100%;
+  max-width: 15rem;
+  height: auto;
+  margin: 0 auto 0.4rem;
+  overflow: visible;
+}
+
+.card-art * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Create: three steps that fill in one after the other. */
+.art-create .seg {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-dasharray: 28;
+}
+
+.art-create .node circle {
+  fill: var(--accent);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.art-create .node .tick {
+  fill: none;
+  stroke: var(--contrast);
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art-create .bars rect {
+  fill: var(--border);
+}
+
+.art-create .s1 {
+  animation: seg1 6s ease-in-out infinite;
+}
+.art-create .s2 {
+  animation: seg2 6s ease-in-out infinite;
+}
+.art-create .n1 circle {
+  animation: fill1 6s ease-in-out infinite;
+}
+.art-create .n2 circle {
+  animation: fill2 6s ease-in-out infinite;
+}
+.art-create .n3 circle {
+  animation: fill3 6s ease-in-out infinite;
+}
+.art-create .n1 .tick {
+  animation: tick1 6s ease-in-out infinite;
+}
+.art-create .n2 .tick {
+  animation: tick2 6s ease-in-out infinite;
+}
+.art-create .n3 .tick {
+  animation: tick3 6s ease-in-out infinite;
+}
+
+@keyframes seg1 {
+  0%,
+  8% {
+    stroke-dashoffset: 28;
+  }
+  26%,
+  88% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 28;
+  }
+}
+@keyframes seg2 {
+  0%,
+  36% {
+    stroke-dashoffset: 28;
+  }
+  54%,
+  88% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 28;
+  }
+}
+@keyframes fill1 {
+  0% {
+    fill: var(--surface);
+  }
+  6%,
+  88% {
+    fill: var(--accent);
+  }
+  100% {
+    fill: var(--surface);
+  }
+}
+@keyframes fill2 {
+  0%,
+  26% {
+    fill: var(--surface);
+  }
+  32%,
+  88% {
+    fill: var(--accent);
+  }
+  100% {
+    fill: var(--surface);
+  }
+}
+@keyframes fill3 {
+  0%,
+  54% {
+    fill: var(--surface);
+  }
+  60%,
+  88% {
+    fill: var(--accent);
+  }
+  100% {
+    fill: var(--surface);
+  }
+}
+@keyframes tick1 {
+  0% {
+    opacity: 0;
+  }
+  6%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes tick2 {
+  0%,
+  26% {
+    opacity: 0;
+  }
+  32%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes tick3 {
+  0%,
+  54% {
+    opacity: 0;
+  }
+  60%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Play: the die spins, numbers run, and the roll lands. */
+.art-play .toast {
+  fill: var(--surface2);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.art-play .roll-die path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+
+.art-play .roll-die {
+  animation: die 5s cubic-bezier(0.3, 0.1, 0.2, 1) infinite;
+}
+
+.art-play .cyc text {
+  fill: var(--accent);
+  font: 700 30px "Cinzel", serif;
+  opacity: 0;
+}
+
+.art-play .cyc .cf {
+  opacity: 1;
+}
+
+.art-play .c1 {
+  animation: c1 5s steps(1) infinite;
+}
+.art-play .c2 {
+  animation: c2 5s steps(1) infinite;
+}
+.art-play .c3 {
+  animation: c3 5s steps(1) infinite;
+}
+.art-play .c4 {
+  animation: c4 5s steps(1) infinite;
+}
+.art-play .cf {
+  animation: cf 5s steps(1) infinite, pop 5s ease-out infinite;
+}
+
+.art-play .tag {
+  fill: var(--muted);
+  font: 600 11px "Cinzel", serif;
+}
+
+.art-play .track {
+  fill: var(--border);
+}
+
+.art-play .hp {
+  fill: var(--accent);
+  transform-origin: left center;
+  animation: hp 5s ease-in-out infinite;
+}
+
+@keyframes die {
+  0% {
+    transform: rotate(0deg);
+  }
+  30%,
+  100% {
+    transform: rotate(720deg);
+  }
+}
+@keyframes c1 {
+  0% {
+    opacity: 1;
+  }
+  6%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes c2 {
+  0% {
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  12%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes c3 {
+  0%,
+  12% {
+    opacity: 0;
+  }
+  12.1% {
+    opacity: 1;
+  }
+  18%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes c4 {
+  0%,
+  18% {
+    opacity: 0;
+  }
+  18.1% {
+    opacity: 1;
+  }
+  24%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes cf {
+  0%,
+  23.9% {
+    opacity: 0;
+  }
+  24%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes pop {
+  0%,
+  24% {
+    transform: scale(1.6);
+  }
+  34%,
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes hp {
+  0% {
+    transform: scaleX(0.4);
+  }
+  30%,
+  70% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0.4);
+  }
+}
+
+/* Print: a page comes out of the printer and fills with lines. */
+.art-print .paper {
+  fill: var(--surface);
+  stroke: var(--ink);
+  stroke-width: 1.6;
+}
+
+.art-print .hexline {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+.art-print .ln {
+  fill: var(--accent);
+  opacity: 0.8;
+  transform-origin: left center;
+}
+
+.art-print .body {
+  fill: var(--surface2);
+  stroke: var(--ink);
+  stroke-width: 1.8;
+}
+
+.art-print .slot {
+  fill: var(--ink);
+}
+
+.art-print .bars2 {
+  fill: var(--border);
+}
+
+.art-print .led {
+  fill: var(--accent);
+  animation: blink 6s steps(1) infinite;
+}
+
+.art-print .page {
+  animation: page 6s ease-in-out infinite;
+}
+
+.art-print .l1 {
+  animation: w1 6s ease-out infinite;
+}
+.art-print .l2 {
+  animation: w2 6s ease-out infinite;
+}
+.art-print .l3 {
+  animation: w3 6s ease-out infinite;
+}
+.art-print .l4 {
+  animation: w4 6s ease-out infinite;
+}
+.art-print .l5 {
+  animation: w5 6s ease-out infinite;
+}
+
+@keyframes page {
+  0% {
+    transform: translateY(70px);
+  }
+  20%,
+  86% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(70px);
+  }
+}
+@keyframes w1 {
+  0%,
+  18% {
+    transform: scaleX(0);
+  }
+  28%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes w2 {
+  0%,
+  24% {
+    transform: scaleX(0);
+  }
+  34%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes w3 {
+  0%,
+  30% {
+    transform: scaleX(0);
+  }
+  42%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes w4 {
+  0%,
+  38% {
+    transform: scaleX(0);
+  }
+  50%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes w5 {
+  0%,
+  46% {
+    transform: scaleX(0);
+  }
+  56%,
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes blink {
+  0%,
+  90% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0.2;
+  }
+}
+
+/* Share: a code being scanned, with a ring and waves going out. */
+.art-share .finder {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.6;
+}
+
+.art-share .dot {
+  fill: var(--accent);
+}
+
+.art-share .ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  animation: ring 2.6s ease-out infinite;
+}
+
+.art-share .scan {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 4px var(--accent));
+  animation: scan 2.4s ease-in-out infinite alternate;
+}
+
+.art-share .waves path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  animation: wave 2s ease-in-out infinite;
+}
+
+.art-share .w2 {
+  animation-delay: 0.25s;
+}
+.art-share .w3 {
+  animation-delay: 0.5s;
+}
+
+@keyframes scan {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(51px);
+  }
+}
+@keyframes ring {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.14);
+  }
+}
+@keyframes wave {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+/* The hit point bar on the sheet in the first screen breathes. */
+.p-fill {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: sheet-hp 6s ease-in-out infinite;
+}
+
+@keyframes sheet-hp {
+  0%,
+  100% {
+    transform: scaleX(0.72);
+  }
+  50% {
+    transform: scaleX(1);
+  }
+}
+
+/* ---- The top bar on a phone: short, and never squeezed ---- */
+
+.brand {
+  flex: none;
+  white-space: nowrap;
+}
+
+.button.small .short {
+  display: none;
+}
+
+.lang select {
+  width: auto;
+}
+
+@media (max-width: 36rem) {
+  .button.small .long {
+    display: none;
+  }
+
+  .button.small .short {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-art *,
+  .p-fill {
+    animation: none !important;
+  }
+}

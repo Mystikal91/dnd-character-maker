@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-palette="notte">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#17233b" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#121a2c" />
     <title>Heroquill – D&amp;D 5e character sheets, free and offline</title>
     <meta
       name="description"
@@ -13,197 +13,363 @@
     <meta property="og:title" content="Heroquill" />
     <meta
       property="og:description"
-      content="Build, play and print D&amp;D 5e characters. Free, no account, works offline."
+      content="Heroquill is a free web app to build, play and print Dungeons &amp; Dragons 5th edition characters. No account, no tracking, works offline."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://heroquill.app/" />
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <style>
-      :root {
-        color-scheme: light dark;
-        --bg: #fbf6ea;
-        --card: #fffaf0;
-        --fg: #2a2118;
-        --muted: #6b5d4a;
-        --accent: #17233b;
-        --accent-fg: #e3b95a;
-        --line: #e2d6bb;
-      }
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #1b1b1f;
-          --card: #24242a;
-          --fg: #eee6d6;
-          --muted: #b5a98f;
-          --accent: #e3b95a;
-          --accent-fg: #17233b;
-          --line: #3a3a42;
-        }
-      }
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--fg);
-        font: 1.05rem/1.6 Georgia, "Times New Roman", serif;
-      }
-      a { color: var(--accent); }
-      .wrap { margin: 0 auto; max-width: 60rem; padding: 0 1rem; }
-      header.top { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; }
-      .brand { display: flex; align-items: center; gap: 0.6rem; font-size: 1.3rem; font-weight: bold; letter-spacing: 0.04em; }
-      .brand img { width: 2rem; height: 2rem; border-radius: 0.4rem; }
-      .langs button {
-        font: inherit; font-size: 0.9rem; color: var(--muted); background: none;
-        border: 1px solid var(--line); border-radius: 0.4rem; padding: 0.15rem 0.6rem; cursor: pointer;
-      }
-      .langs button[aria-pressed="true"] { color: var(--accent-fg); background: var(--accent); border-color: var(--accent); }
-      .hero { padding: 3rem 0 2.5rem; text-align: center; }
-      .hero h1 { margin: 0 0 0.8rem; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.15; }
-      .hero p { margin: 0 auto 1.6rem; max-width: 38rem; font-size: 1.2rem; color: var(--muted); }
-      .button {
-        display: inline-block; padding: 0.8rem 1.8rem; border-radius: 0.5rem;
-        background: var(--accent); color: var(--accent-fg); font-weight: bold; text-decoration: none;
-      }
-      .button:hover { filter: brightness(1.1); }
-      .note { margin-top: 0.9rem; font-size: 0.9rem; color: var(--muted); }
-      .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); padding: 1rem 0 2rem; }
-      .card { background: var(--card); border: 1px solid var(--line); border-radius: 0.7rem; padding: 1.1rem 1.2rem; }
-      .card h2 { margin: 0 0 0.4rem; font-size: 1.15rem; color: var(--accent); }
-      .card p { margin: 0; font-size: 1rem; }
-      .values { padding: 1rem 0 2.5rem; text-align: center; }
-      .values h2 { font-size: 1.5rem; }
-      .values ul { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin: 1rem 0 0; padding: 0; list-style: none; }
-      .values li { border: 1px solid var(--line); border-radius: 2rem; padding: 0.3rem 1rem; background: var(--card); }
-      footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2.5rem; font-size: 0.92rem; color: var(--muted); }
-      footer p { margin: 0.4rem 0; }
-      [data-lang] { display: none; }
-      html[lang="en"] [data-lang="en"], html[lang="it"] [data-lang="it"] { display: block; }
-      html[lang="en"] span[data-lang="en"], html[lang="it"] span[data-lang="it"] { display: inline; }
-    </style>
+    <link rel="preload" href="/fonts/cinzel-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/palettes.css" />
+    <link rel="stylesheet" href="/site.css" />
+    <script>
+      // The colours the person chose (here or in the app) before the first paint.
+      document.documentElement.classList.add("js");
+      try {
+        var saved = JSON.parse(localStorage.getItem("theme") || "null") || {};
+        var palettes = ["notte", "classico", "bordeaux", "foresta", "arcano", "ghiaccio", "rame", "ossidiana"];
+        var before = !("palette" in saved) && ("style" in saved || "scheme" in saved);
+        document.documentElement.dataset.palette =
+          palettes.indexOf(saved.palette) >= 0 ? saved.palette : before ? "classico" : "notte";
+      } catch (e) {}
+    </script>
   </head>
   <body>
-    <div class="wrap">
-      <header class="top">
-        <div class="brand"><img src="/icon.svg" alt="" /> Heroquill</div>
-        <div class="langs" role="group" aria-label="Language">
-          <button type="button" data-set="en">EN</button>
-          <button type="button" data-set="it">IT</button>
-        </div>
-      </header>
+    <header class="nav on-dark">
+      <a class="brand" href="/" aria-label="Heroquill">
+        <svg viewBox="0 0 140 140" class="brand-mark" aria-hidden="true">
+          <rect width="140" height="140" rx="30" class="mk-tile" />
+          <path d="M46 36V104M94 36V104" class="mk-stem" />
+          <g transform="translate(70 70) rotate(20) scale(0.8) translate(-52 -51)">
+            <path d="M12 94C20 72 30 52 44 36C58 20 74 12 92 8C90 28 80 50 62 64C48 76 30 86 12 94Z" class="mk-halo" />
+            <path d="M12 94C20 72 30 52 44 36C58 20 74 12 92 8C90 28 80 50 62 64C48 76 30 86 12 94Z" class="mk-quill" />
+            <path d="M16 90L84 14" class="mk-shaft" />
+          </g>
+        </svg>
+        <span>Heroquill</span>
+      </a>
+      <nav class="nav-links" aria-label="Heroquill">
+        <a href="#features" data-i18n="nav.features">Features</a>
+        <a href="#colors" data-i18n="nav.colors">Colours</a>
+        <a href="#faq" data-i18n="nav.faq">Questions</a>
+      </nav>
+      <div class="nav-actions">
+        <label class="lang">
+          <span class="sr-only">Language</span>
+          <select id="lang" aria-label="Language">
+            <option value="en" title="English">EN</option>
+            <option value="it" title="Italiano">IT</option>
+            <option value="fr" title="Français">FR</option>
+            <option value="de" title="Deutsch">DE</option>
+            <option value="es" title="Español">ES</option>
+          </select>
+        </label>
+        <a class="button small" href="/app/">
+          <span class="long" data-i18n="nav.open">Open the app</span>
+          <span class="short" data-i18n="nav.openShort">Open</span>
+        </a>
+      </div>
+    </header>
 
-      <section class="hero">
-        <div data-lang="en">
-          <h1>Your D&amp;D 5e hero, from first idea to the table.</h1>
-          <p>Build, play and print Dungeons &amp; Dragons 5th edition characters. Free, no account, and it keeps working without a connection.</p>
-          <a class="button" href="/app/">Open Heroquill</a>
-          <p class="note">Works in any modern browser. On a phone, add it to the home screen to use it like an app.</p>
-        </div>
-        <div data-lang="it">
-          <h1>Il tuo eroe di D&amp;D 5e, dalla prima idea al tavolo.</h1>
-          <p>Crea, gioca e stampa personaggi di Dungeons &amp; Dragons 5a edizione. Gratis, senza account, e funziona anche senza connessione.</p>
-          <a class="button" href="/app/">Apri Heroquill</a>
-          <p class="note">Funziona in qualsiasi browser moderno. Su telefono aggiungilo alla schermata Home per usarlo come un’app.</p>
+    <main>
+      <section class="hero on-dark">
+        <svg class="sky" aria-hidden="true" focusable="false">
+          <g class="stars">
+            <circle cx="6%" cy="14%" r="1.6" style="--d: 0s" />
+            <circle cx="16%" cy="64%" r="1.2" style="--d: 1.4s" />
+            <circle cx="27%" cy="9%" r="1.8" style="--d: 0.6s" />
+            <circle cx="38%" cy="88%" r="1.2" style="--d: 2.2s" />
+            <circle cx="47%" cy="20%" r="1.4" style="--d: 3s" />
+            <circle cx="58%" cy="6%" r="1.2" style="--d: 1s" />
+            <circle cx="68%" cy="82%" r="1.6" style="--d: 2.6s" />
+            <circle cx="79%" cy="12%" r="1.8" style="--d: 0.3s" />
+            <circle cx="88%" cy="70%" r="1.2" style="--d: 1.8s" />
+            <circle cx="95%" cy="30%" r="1.4" style="--d: 3.4s" />
+            <circle cx="3%" cy="86%" r="1.2" style="--d: 2.9s" />
+            <circle cx="52%" cy="52%" r="1" style="--d: 0.9s" />
+          </g>
+        </svg>
+        <div class="hexes" aria-hidden="true"></div>
+        <div class="hero-grid wrap">
+          <div class="hero-text">
+            <h1 data-i18n="hero.title">Your D&amp;D 5e hero, from the first idea to the table.</h1>
+            <p class="lead" data-i18n="hero.sub">
+              Build, play and print your character. Free, no account, and it works without a connection.
+            </p>
+            <div class="actions">
+              <a class="button" href="/app/" data-i18n="hero.cta">Open Heroquill</a>
+              <a class="button ghost" href="/app/#example" data-i18n="hero.try">Try it with Aria</a>
+            </div>
+          </div>
+          <div class="sheet-stage" aria-hidden="true">
+            <svg viewBox="0 0 310 330" class="sheet-art" focusable="false">
+              <g class="spell" transform="translate(34 -2) rotate(8 170 150)">
+                <rect x="118" y="34" width="124" height="176" rx="6" class="p-card" />
+                <rect x="126" y="42" width="108" height="24" class="p-card-band" />
+                <text x="132" y="58" class="p-title" data-fit="94" data-i18n="art.spell">Magic missile</text>
+                <text x="132" y="86" class="p-small" data-fit="94" data-i18n="art.school">Evocation · 1st level</text>
+                <rect x="132" y="98" width="82" height="3" class="p-line" />
+                <rect x="132" y="108" width="96" height="3" class="p-line" />
+                <rect x="132" y="118" width="74" height="3" class="p-line" />
+                <rect x="132" y="128" width="90" height="3" class="p-line" />
+              </g>
+              <g class="sheet" transform="rotate(-5 120 168)">
+                <rect x="18" y="22" width="200" height="276" rx="5" class="p-paper" />
+                <rect x="18" y="22" width="200" height="46" rx="5" class="p-head" />
+                <text x="32" y="46" class="p-name">Aria Nightbloom</text>
+                <text x="32" y="60" class="p-sub" data-fit="160" data-i18n="art.race">Elf · Wizard 5</text>
+                <g class="p-hexes">
+                  <polygon points="58,82 77,93 77,115 58,126 39,115 39,93" />
+                  <polygon points="118,82 137,93 137,115 118,126 99,115 99,93" />
+                  <polygon points="178,82 197,93 197,115 178,126 159,115 159,93" />
+                  <polygon points="58,146 77,157 77,179 58,190 39,179 39,157" />
+                  <polygon points="118,146 137,157 137,179 118,190 99,179 99,157" />
+                  <polygon points="178,146 197,157 197,179 178,190 159,179 159,157" />
+                </g>
+                <g class="p-nums">
+                  <text x="58" y="109">8</text>
+                  <text x="118" y="109">16</text>
+                  <text x="178" y="109">14</text>
+                  <text x="58" y="173">18</text>
+                  <text x="118" y="173">12</text>
+                  <text x="178" y="173">10</text>
+                </g>
+                <rect x="34" y="214" width="168" height="11" rx="5.5" class="p-bar" />
+                <rect x="34" y="214" width="124" height="11" rx="5.5" class="p-fill" />
+                <g class="p-pips">
+                  <circle cx="42" cy="252" r="6.5" class="on" />
+                  <circle cx="62" cy="252" r="6.5" class="on" />
+                  <circle cx="82" cy="252" r="6.5" class="on" />
+                  <circle cx="102" cy="252" r="6.5" />
+                </g>
+              </g>
+            </svg>
+          </div>
         </div>
       </section>
 
-      <div data-lang="en">
-        <section class="grid">
-          <article class="card">
-            <h2>Build</h2>
-            <p>A guided flow for species, class, background, ability scores, skills, spells and equipment. Multiclassing, feats and levelling up, with every number the rules work out and the option to override it.</p>
-          </article>
-          <article class="card">
-            <h2>Play</h2>
-            <p>Hit points, death saves, spell slots, class resources and rests. Quick rolls with advantage and critical hits, a dice tray and the rules of conditions and features one tap away.</p>
-          </article>
-          <article class="card">
-            <h2>Print and share</h2>
-            <p>A character sheet, spell sheets and spell cards for paper or PDF. Share a character as a link, a QR code or a file.</p>
-          </article>
-          <article class="card">
-            <h2>Your content</h2>
-            <p>The whole SRD 5.1, official translations in five languages, a homebrew editor and an importer for Aurora files you already own.</p>
-          </article>
-        </section>
-        <section class="values">
-          <h2>Made to stay out of your way</h2>
-          <ul>
-            <li>Free</li>
-            <li>No account</li>
-            <li>No tracking</li>
-            <li>Works offline</li>
-            <li>Your characters stay on your device</li>
-            <li>Open source</li>
-          </ul>
-        </section>
-      </div>
+      <section id="features" class="band on-light">
+        <div class="wrap">
+          <h2 class="reveal" data-i18n="feat.title">Everything you need at the table</h2>
+          <p class="sub reveal" data-i18n="feat.sub">From the first step to the printed page, in one place.</p>
+          <div class="cards">
+            <article class="card reveal">
+              <svg viewBox="0 0 200 110" class="card-art art-create" aria-hidden="true" focusable="false">
+                <g class="segs">
+                  <path class="seg s1" d="M56 46H84" />
+                  <path class="seg s2" d="M116 46H144" />
+                </g>
+                <g class="node n1"><circle cx="40" cy="46" r="15" /><path class="tick" d="M33 46l5 5 9-10" /></g>
+                <g class="node n2"><circle cx="100" cy="46" r="15" /><path class="tick" d="M93 46l5 5 9-10" /></g>
+                <g class="node n3"><circle cx="160" cy="46" r="15" /><path class="tick" d="M153 46l5 5 9-10" /></g>
+                <g class="bars">
+                  <rect x="26" y="78" width="28" height="4" rx="2" />
+                  <rect x="86" y="78" width="28" height="4" rx="2" />
+                  <rect x="146" y="78" width="28" height="4" rx="2" />
+                  <rect x="31" y="88" width="18" height="4" rx="2" />
+                  <rect x="91" y="88" width="18" height="4" rx="2" />
+                  <rect x="151" y="88" width="18" height="4" rx="2" />
+                </g>
+              </svg>
+              <h3 data-i18n="feat.create.t">Create</h3>
+              <p data-i18n="feat.create.d">Species, class, background, ability scores, spells: one step at a time, with every number worked out from the rules.</p>
+            </article>
+            <article class="card reveal">
+              <svg viewBox="0 0 200 110" class="card-art art-play" aria-hidden="true" focusable="false">
+                <rect class="toast" x="20" y="14" width="160" height="62" rx="6" />
+                <g class="roll-die">
+                  <path d="M52 30l16 9v18l-16 9-16-9V39z" />
+                  <path d="M52 40l8 14H44z" />
+                </g>
+                <g class="cyc">
+                  <text class="c1" x="86" y="58">4</text>
+                  <text class="c2" x="86" y="58">13</text>
+                  <text class="c3" x="86" y="58">8</text>
+                  <text class="c4" x="86" y="58">19</text>
+                  <text class="cf" x="86" y="58">17</text>
+                </g>
+                <text class="tag" x="148" y="58">d20</text>
+                <rect class="track" x="30" y="92" width="140" height="7" rx="3.5" />
+                <rect class="hp" x="30" y="92" width="104" height="7" rx="3.5" />
+              </svg>
+              <h3 data-i18n="feat.play.t">Play</h3>
+              <p data-i18n="feat.play.d">Hit points, spell slots, resources, rests and rolls at a tap. Every roll shows big, with the die spinning.</p>
+            </article>
+            <article class="card reveal">
+              <svg viewBox="0 0 200 110" class="card-art art-print" aria-hidden="true" focusable="false">
+                <defs><clipPath id="print-clip"><rect x="0" y="0" width="200" height="74" /></clipPath></defs>
+                <g clip-path="url(#print-clip)"><g class="page">
+                  <rect class="paper" x="62" y="8" width="76" height="64" />
+                  <path class="hexline" d="M118 18l6 3.500v7L118 32l-6-3.500v-7z" />
+                  <rect class="ln l1" x="70" y="18" width="34" height="4" rx="2" />
+                  <rect class="ln l2" x="70" y="28" width="22" height="4" rx="2" />
+                  <rect class="ln l3" x="70" y="40" width="60" height="4" rx="2" />
+                  <rect class="ln l4" x="70" y="50" width="52" height="4" rx="2" />
+                  <rect class="ln l5" x="70" y="60" width="40" height="4" rx="2" />
+                </g></g>
+                <rect class="body" x="36" y="68" width="128" height="34" rx="7" />
+                <rect class="slot" x="48" y="72" width="104" height="5" rx="2.500" />
+                <circle class="led" cx="148" cy="90" r="3" />
+                <rect class="bars2" x="50" y="88" width="46" height="4" rx="2" />
+              </svg>
+              <h3 data-i18n="feat.print.t">Print</h3>
+              <p data-i18n="feat.print.d">Character sheet, story page, spell and feature cards: for paper or for a PDF.</p>
+            </article>
+            <article class="card reveal">
+              <svg viewBox="0 0 200 110" class="card-art art-share" aria-hidden="true" focusable="false">
+                <circle class="ring" cx="100" cy="55" r="42" />
+                <g class="qr" transform="translate(73 28)">
+                  <rect class="finder" x="1" y="1" width="16" height="16" />
+                  <rect class="dot" x="6" y="6" width="6" height="6" />
+                  <rect class="finder" x="37" y="1" width="16" height="16" />
+                  <rect class="dot" x="42" y="6" width="6" height="6" />
+                  <rect class="finder" x="1" y="37" width="16" height="16" />
+                  <rect class="dot" x="6" y="42" width="6" height="6" />
+                  <rect class="dot" x="24" y="0" width="5" height="5" />
+                  <rect class="dot" x="36" y="0" width="5" height="5" />
+                  <rect class="dot" x="30" y="6" width="5" height="5" />
+                  <rect class="dot" x="42" y="6" width="5" height="5" />
+                  <rect class="dot" x="24" y="12" width="5" height="5" />
+                  <rect class="dot" x="36" y="12" width="5" height="5" />
+                  <rect class="dot" x="48" y="12" width="5" height="5" />
+                  <rect class="dot" x="0" y="24" width="5" height="5" />
+                  <rect class="dot" x="12" y="24" width="5" height="5" />
+                  <rect class="dot" x="24" y="24" width="5" height="5" />
+                  <rect class="dot" x="36" y="24" width="5" height="5" />
+                  <rect class="dot" x="30" y="30" width="5" height="5" />
+                  <rect class="dot" x="48" y="24" width="5" height="5" />
+                  <rect class="dot" x="6" y="36" width="5" height="5" />
+                  <rect class="dot" x="18" y="30" width="5" height="5" />
+                  <rect class="dot" x="24" y="36" width="5" height="5" />
+                  <rect class="dot" x="42" y="36" width="5" height="5" />
+                  <rect class="dot" x="30" y="42" width="5" height="5" />
+                  <rect class="dot" x="36" y="48" width="5" height="5" />
+                  <rect class="dot" x="48" y="42" width="5" height="5" />
+                  <rect class="dot" x="24" y="48" width="5" height="5" />
+                  <rect class="dot" x="48" y="48" width="5" height="5" />
+                  <rect class="dot" x="0" y="30" width="5" height="5" />
+                </g>
+                <rect class="scan" x="66" y="28" width="68" height="3" rx="1.500" />
+                <g class="waves">
+                  <path class="w1" d="M150 46q9 9 0 18" />
+                  <path class="w2" d="M158 40q14 15 0 30" />
+                  <path class="w3" d="M166 34q19 21 0 42" />
+                </g>
+              </svg>
+              <h3 data-i18n="feat.share.t">Share</h3>
+              <p data-i18n="feat.share.d">A link, a QR code or a file. And a Google Drive backup to move to another device.</p>
+            </article>
+          </div>
+        </div>
+      </section>
 
-      <div data-lang="it">
-        <section class="grid">
-          <article class="card">
-            <h2>Crea</h2>
-            <p>Un percorso guidato per specie, classe, background, punteggi, abilità, incantesimi ed equipaggiamento. Multiclasse, talenti e avanzamento di livello, con ogni numero calcolato dalle regole e la possibilità di modificarlo a mano.</p>
-          </article>
-          <article class="card">
-            <h2>Gioca</h2>
-            <p>Punti ferita, tiri salvezza contro la morte, slot incantesimo, risorse di classe e riposi. Tiri rapidi con vantaggio e colpi critici, un vassoio dei dadi e le regole di condizioni e privilegi a un tocco.</p>
-          </article>
-          <article class="card">
-            <h2>Stampa e condividi</h2>
-            <p>Scheda del personaggio, schede e carte degli incantesimi, su carta o PDF. Condividi un personaggio con un link, un codice QR o un file.</p>
-          </article>
-          <article class="card">
-            <h2>I tuoi contenuti</h2>
-            <p>L’intero SRD 5.1, le traduzioni ufficiali in cinque lingue, un editor homebrew e un importatore per i file Aurora che già possiedi.</p>
-          </article>
-        </section>
-        <section class="values">
-          <h2>Pensato per non intralciarti</h2>
-          <ul>
-            <li>Gratis</li>
-            <li>Senza account</li>
-            <li>Senza tracciamento</li>
-            <li>Funziona offline</li>
-            <li>I personaggi restano sul tuo dispositivo</li>
-            <li>Open source</li>
-          </ul>
-        </section>
-      </div>
+      <section id="colors" class="band on-dark">
+        <div class="wrap">
+          <h2 class="reveal" data-i18n="col.title">Pick your colours</h2>
+          <p class="sub reveal" data-i18n="col.sub">Eight sets, each light and dark. Tap one and the page changes.</p>
+          <div class="swatches reveal">
+            <button type="button" class="swatch" data-palette="notte" aria-pressed="false">
+              <span class="chip" aria-hidden="true"><i class="dk"></i><i class="lt"></i></span>
+              <span class="name" data-i18n="pal.notte">Night and gold</span>
+            </button>
+            <button type="button" class="swatch" data-palette="classico" aria-pressed="false">
+              <span class="chip" aria-hidden="true"><i class="dk"></i><i class="lt"></i></span>
+              <span class="name" data-i18n="pal.classico">Classic</span>
+            </button>
+            <button type="button" class="swatch" data-palette="bordeaux" aria-pressed="false">
+              <span class="chip" aria-hidden="true"><i class="dk"></i><i class="lt"></i></span>
+              <span class="name" data-i18n="pal.bordeaux">Bordeaux</span>
+            </button>
+            <button type="button" class="swatch" data-palette="foresta" aria-pressed="false">
+              <span class="chip" aria-hidden="true"><i class="dk"></i><i class="lt"></i></span>
+              <span class="name" data-i18n="pal.foresta">Forest</span>
+            </button>
+            <button type="button" class="swatch" data-palette="arcano" aria-pressed="false">
+              <span class="chip" aria-hidden="true"><i class="dk"></i><i class="lt"></i></span>
+              <span class="name" data-i18n="pal.arcano">Arcane</span>
+            </button>
+            <button type="button" class="swatch" data-palette="ghiaccio" aria-pressed="false">
+              <span class="chip" aria-hidden="true"><i class="dk"></i><i class="lt"></i></span>
+              <span class="name" data-i18n="pal.ghiaccio">Ice</span>
+            </button>
+            <button type="button" class="swatch" data-palette="rame" aria-pressed="false">
+              <span class="chip" aria-hidden="true"><i class="dk"></i><i class="lt"></i></span>
+              <span class="name" data-i18n="pal.rame">Copper</span>
+            </button>
+            <button type="button" class="swatch" data-palette="ossidiana" aria-pressed="false">
+              <span class="chip" aria-hidden="true"><i class="dk"></i><i class="lt"></i></span>
+              <span class="name" data-i18n="pal.ossidiana">Obsidian</span>
+            </button>
+          </div>
+          <p class="hint reveal" data-i18n="col.hint">The app remembers your choice.</p>
+        </div>
+      </section>
 
-      <footer>
-        <p data-lang="en">
-          Heroquill is an unofficial fan project, not affiliated with or endorsed by Wizards of the Coast. It uses the System Reference Document 5.1 under the CC-BY-4.0 licence.
+      <section class="band on-light values">
+        <div class="wrap">
+          <h2 class="reveal" data-i18n="val.title">Made to stay out of your way</h2>
+          <ul class="pills reveal">
+            <li data-i18n="val.free">Free</li>
+            <li data-i18n="val.noaccount">No account</li>
+            <li data-i18n="val.notrack">No tracking</li>
+            <li data-i18n="val.offline">Works offline</li>
+            <li data-i18n="val.local">Your data stays on your device</li>
+            <li data-i18n="val.open">Open source</li>
+            <li data-i18n="val.langs">5 languages</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="faq" class="band on-light faq-band">
+        <div class="wrap narrow">
+          <h2 class="reveal" data-i18n="faq.title">Questions</h2>
+          <div class="faq reveal">
+            <details>
+              <summary data-i18n="faq.q1">Is it really free?</summary>
+              <p data-i18n="faq.a1">Yes: no subscription, no ads. It is a passion project, with open code.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q2">Where do my characters go?</summary>
+              <p data-i18n="faq.a2">On your own device. To move or save them you can use a file or your Google Drive.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q3">Does it work without internet?</summary>
+              <p data-i18n="faq.a3">Yes, once it has been opened. You can also install it on your phone like an app.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q4">Is it an official D&amp;D product?</summary>
+              <p data-i18n="faq.a4">No. It uses the SRD 5.1, under a free licence, and is not affiliated with Wizards of the Coast.</p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q5">Does it work with Aurora content?</summary>
+              <p data-i18n="faq.a5">Yes. You can import the content files (XML) made for Aurora Builder and Aurora Legacy, from a file, an index file or an address. Nothing from Aurora or from any publisher is included: you bring what you already own.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta on-dark">
+        <div class="wrap">
+          <h2 class="reveal" data-i18n="cta.title">Ready to write your story?</h2>
+          <a class="button reveal" href="/app/" data-i18n="cta.open">Open Heroquill</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot on-dark">
+      <div class="wrap">
+        <p data-i18n="foot.unofficial">
+          Heroquill is an unofficial fan project, not affiliated with or endorsed by Wizards of the Coast. It uses the
+          System Reference Document 5.1 under the CC-BY-4.0 licence.
         </p>
-        <p data-lang="it">
-          Heroquill è un progetto di fan non ufficiale, non affiliato né approvato da Wizards of the Coast. Usa il System Reference Document 5.1 con licenza CC-BY-4.0.
+        <p class="links">
+          <a href="https://github.com/Mystikal91/dnd-character-maker">GitHub</a>
+          <a href="/privacy.html" data-i18n="foot.privacy">Privacy</a>
+          <a href="/terms.html" data-i18n="foot.terms">Terms</a>
         </p>
-        <p>
-          <a href="/app/">App</a> ·
-          <a href="https://github.com/Mystikal91/dnd-character-maker">GitHub</a> ·
-          <a href="/privacy.html">Privacy</a> ·
-          <a href="/terms.html"><span data-lang="en">Terms</span><span data-lang="it">Termini</span></a>
-        </p>
-      </footer>
-    </div>
-    <script>
-      (function () {
-        var root = document.documentElement;
-        var buttons = document.querySelectorAll("[data-set]");
-        function set(lang) {
-          root.lang = lang;
-          for (var i = 0; i < buttons.length; i++) {
-            buttons[i].setAttribute("aria-pressed", buttons[i].dataset.set === lang ? "true" : "false");
-          }
-          try { localStorage.setItem("site-lang", lang); } catch (e) {}
-        }
-        var saved = null;
-        try { saved = localStorage.getItem("site-lang"); } catch (e) {}
-        set(saved === "it" || saved === "en" ? saved : (navigator.language || "").slice(0, 2) === "it" ? "it" : "en");
-        for (var i = 0; i < buttons.length; i++) {
-          buttons[i].addEventListener("click", function (e) { set(e.currentTarget.dataset.set); });
-        }
-      })();
-    </script>
+      </div>
+    </footer>
+    <script src="/site.js"></script>
   </body>
 </html>
+

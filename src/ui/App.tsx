@@ -1,7 +1,14 @@
 import { useEffect } from "preact/hooks";
 import { language, localeChain } from "../app/language";
 import { isPage, showView, view } from "../app/navigation";
-import { character, content, initStorage, loadError, storageReady } from "../app/store";
+import {
+  character,
+  content,
+  initStorage,
+  loadError,
+  openExample,
+  storageReady,
+} from "../app/store";
 import { loadUserPacks, userPacks, userPacksReady } from "../app/userPacks";
 import { loadContent } from "../content/browser";
 import { ui } from "../i18n/ui";
@@ -90,6 +97,21 @@ export function App() {
       current = false;
     };
   }, [lang, added, packsReady]);
+
+  // A link from the welcome page (/app/#example) opens the example character once all is ready,
+  // also when the app is already open and only the address changes.
+  const ready = Boolean(content.value) && storageReady.value;
+  useEffect(() => {
+    if (!ready) return;
+    const openFromLink = () => {
+      if (location.hash !== "#example") return;
+      history.replaceState(null, "", `${location.pathname}${location.search}`);
+      void openExample();
+    };
+    openFromLink();
+    addEventListener("hashchange", openFromLink);
+    return () => removeEventListener("hashchange", openFromLink);
+  }, [ready]);
 
   // The tab names the character, so several open tabs can be told apart.
   const heading = character.value.name.trim();

@@ -1,0 +1,512 @@
+// The welcome page: texts in five languages, the colour sets and the small animations.
+// It shares two things with the app, which lives on the same address: the language
+// ("dnd-maker.language") and the colours ("theme"), so what is chosen here carries into the app.
+(() => {
+  const LANGUAGES = ["en", "it", "fr", "de", "es"];
+  const PALETTES = [
+    "notte",
+    "classico",
+    "bordeaux",
+    "foresta",
+    "arcano",
+    "ghiaccio",
+    "rame",
+    "ossidiana",
+  ];
+
+  const T = {
+    en: {
+      "meta.title": "Heroquill – D&D 5e character sheets, free and offline",
+      "meta.desc":
+        "Heroquill is a free web app to build, play and print Dungeons & Dragons 5th edition characters. No account, no tracking, works offline.",
+      "nav.openShort": "Open",
+      "nav.features": "Features",
+      "nav.colors": "Colours",
+      "nav.faq": "Questions",
+      "nav.open": "Open the app",
+      "hero.title": "Your D&D 5e hero, from the first idea to the table.",
+      "hero.sub":
+        "Build, play and print your character. Free, no account, and it works without a connection.",
+      "hero.cta": "Open Heroquill",
+      "hero.try": "Try it with Aria",
+      "feat.title": "Everything you need at the table",
+      "feat.sub": "From the first step to the printed page, in one place.",
+      "feat.create.t": "Create",
+      "feat.create.d":
+        "Species, class, background, ability scores, spells: one step at a time, with every number worked out from the rules.",
+      "feat.play.t": "Play",
+      "feat.play.d":
+        "Hit points, spell slots, resources, rests and rolls at a tap. Every roll shows big, with the die spinning.",
+      "feat.print.t": "Print",
+      "feat.print.d":
+        "Character sheet, story page, spell and feature cards: for paper or for a PDF.",
+      "feat.share.t": "Share",
+      "feat.share.d":
+        "A link, a QR code or a file. And a Google Drive backup to move to another device.",
+      "col.title": "Pick your colours",
+      "col.sub": "Eight sets, each light and dark. Tap one and the page changes.",
+      "col.hint": "The app remembers your choice.",
+      "pal.notte": "Night and gold",
+      "pal.classico": "Classic",
+      "pal.bordeaux": "Bordeaux",
+      "pal.foresta": "Forest",
+      "pal.arcano": "Arcane",
+      "pal.ghiaccio": "Ice",
+      "pal.rame": "Copper",
+      "pal.ossidiana": "Obsidian",
+      "val.title": "Made to stay out of your way",
+      "val.free": "Free",
+      "val.noaccount": "No account",
+      "val.notrack": "No tracking",
+      "val.offline": "Works offline",
+      "val.local": "Your data stays on your device",
+      "val.open": "Open source",
+      "val.langs": "5 languages",
+      "faq.title": "Questions",
+      "faq.q1": "Is it really free?",
+      "faq.a1": "Yes: no subscription, no ads. It is a passion project, with open code.",
+      "faq.q2": "Where do my characters go?",
+      "faq.a2": "On your own device. To move or save them you can use a file or your Google Drive.",
+      "faq.q3": "Does it work without internet?",
+      "faq.a3": "Yes, once it has been opened. You can also install it on your phone like an app.",
+      "faq.q4": "Is it an official D&D product?",
+      "faq.a4":
+        "No. It uses the SRD 5.1, under a free licence, and is not affiliated with Wizards of the Coast.",
+      "faq.q5": "Does it work with Aurora content?",
+      "faq.a5":
+        "Yes. You can import the content files (XML) made for Aurora Builder and Aurora Legacy, from a file, an index file or an address. Nothing from Aurora or from any publisher is included: you bring what you already own.",
+      "art.race": "Elf · Wizard 5",
+      "art.spell": "Magic missile",
+      "art.school": "Evocation · 1st level",
+      "cta.title": "Ready to write your story?",
+      "cta.open": "Open Heroquill",
+      "foot.unofficial":
+        "Heroquill is an unofficial fan project, not affiliated with or endorsed by Wizards of the Coast. It uses the System Reference Document 5.1 under the CC-BY-4.0 licence.",
+      "foot.privacy": "Privacy",
+      "foot.terms": "Terms",
+    },
+    it: {
+      "meta.title": "Heroquill – Schede per D&D 5e, gratis e offline",
+      "meta.desc":
+        "Heroquill è un’app web gratuita per creare, giocare e stampare personaggi di Dungeons & Dragons 5a edizione. Senza account, senza tracciamento, funziona offline.",
+      "nav.openShort": "Apri",
+      "nav.features": "Funzioni",
+      "nav.colors": "Colori",
+      "nav.faq": "Domande",
+      "nav.open": "Apri l’app",
+      "hero.title": "Il tuo eroe di D&D 5e, dalla prima idea al tavolo.",
+      "hero.sub":
+        "Crea, gioca e stampa il tuo personaggio. Gratis, senza account, e funziona anche senza connessione.",
+      "hero.cta": "Apri Heroquill",
+      "hero.try": "Prova con Aria",
+      "feat.title": "Tutto quello che serve al tavolo",
+      "feat.sub": "Dal primo passo alla pagina stampata, in un posto solo.",
+      "feat.create.t": "Crea",
+      "feat.create.d":
+        "Specie, classe, background, punteggi, incantesimi: un passo alla volta, con ogni numero calcolato dalle regole.",
+      "feat.play.t": "Gioca",
+      "feat.play.d":
+        "Punti ferita, slot, risorse, riposi e tiri con un tocco. Ogni tiro compare grande, con il dado che gira.",
+      "feat.print.t": "Stampa",
+      "feat.print.d":
+        "Scheda, pagina della storia, carte degli incantesimi e dei privilegi: per la carta o per un PDF.",
+      "feat.share.t": "Condividi",
+      "feat.share.d":
+        "Un link, un codice QR o un file. E un backup su Google Drive per cambiare dispositivo.",
+      "col.title": "Scegli i tuoi colori",
+      "col.sub": "Otto set, ognuno chiaro e scuro. Toccane uno e la pagina cambia.",
+      "col.hint": "L’app ricorda la tua scelta.",
+      "pal.notte": "Notte e oro",
+      "pal.classico": "Classico",
+      "pal.bordeaux": "Bordeaux",
+      "pal.foresta": "Foresta",
+      "pal.arcano": "Arcano",
+      "pal.ghiaccio": "Ghiaccio",
+      "pal.rame": "Rame",
+      "pal.ossidiana": "Ossidiana",
+      "val.title": "Pensato per non intralciarti",
+      "val.free": "Gratis",
+      "val.noaccount": "Senza account",
+      "val.notrack": "Senza tracciamento",
+      "val.offline": "Funziona offline",
+      "val.local": "I dati restano sul tuo dispositivo",
+      "val.open": "Open source",
+      "val.langs": "5 lingue",
+      "faq.title": "Domande frequenti",
+      "faq.q1": "È davvero gratis?",
+      "faq.a1":
+        "Sì: nessun abbonamento, nessuna pubblicità. È un progetto di passione, con il codice aperto.",
+      "faq.q2": "Dove finiscono i miei personaggi?",
+      "faq.a2":
+        "Sul tuo dispositivo. Per spostarli o salvarli puoi usare un file o il tuo Google Drive.",
+      "faq.q3": "Funziona senza internet?",
+      "faq.a3": "Sì, dopo il primo accesso. Si può anche installare sul telefono come un’app.",
+      "faq.q4": "È un prodotto ufficiale di D&D?",
+      "faq.a4": "No. Usa l’SRD 5.1, con licenza libera, e non è affiliato a Wizards of the Coast.",
+      "faq.q5": "Funziona con i contenuti di Aurora?",
+      "faq.a5":
+        "Sì. Puoi importare i file di contenuto (XML) fatti per Aurora Builder e Aurora Legacy, da file, da un file indice o da un indirizzo. Non include nulla di Aurora né di alcun editore: porti quello che già possiedi.",
+      "art.race": "Elfa · Maga 5",
+      "art.spell": "Dardo incantato",
+      "art.school": "Evocazione · 1° livello",
+      "cta.title": "Pronto a scrivere la tua storia?",
+      "cta.open": "Apri Heroquill",
+      "foot.unofficial":
+        "Heroquill è un progetto di fan non ufficiale, non affiliato né approvato da Wizards of the Coast. Usa il System Reference Document 5.1 con licenza CC-BY-4.0.",
+      "foot.privacy": "Privacy",
+      "foot.terms": "Termini",
+    },
+    fr: {
+      "meta.title": "Heroquill – Fiches D&D 5e, gratuites et hors ligne",
+      "meta.desc":
+        "Heroquill est une app web gratuite pour créer, jouer et imprimer des personnages de Donjons & Dragons 5e édition. Sans compte, sans pistage, fonctionne hors ligne.",
+      "nav.openShort": "Ouvrir",
+      "nav.features": "Fonctions",
+      "nav.colors": "Couleurs",
+      "nav.faq": "Questions",
+      "nav.open": "Ouvrir l’app",
+      "hero.title": "Ton héros de D&D 5e, de la première idée à la table.",
+      "hero.sub":
+        "Crée, joue et imprime ton personnage. Gratuit, sans compte, et ça marche sans connexion.",
+      "hero.cta": "Ouvrir Heroquill",
+      "hero.try": "Essayer avec Aria",
+      "feat.title": "Tout ce qu’il faut à la table",
+      "feat.sub": "Du premier pas à la page imprimée, au même endroit.",
+      "feat.create.t": "Créer",
+      "feat.create.d":
+        "Espèce, classe, historique, caractéristiques, sorts : une étape à la fois, avec chaque nombre calculé d’après les règles.",
+      "feat.play.t": "Jouer",
+      "feat.play.d":
+        "Points de vie, emplacements, ressources, repos et jets d’un geste. Chaque jet s’affiche en grand, avec le dé qui tourne.",
+      "feat.print.t": "Imprimer",
+      "feat.print.d":
+        "Fiche, page d’histoire, cartes de sorts et d’aptitudes : pour le papier ou pour un PDF.",
+      "feat.share.t": "Partager",
+      "feat.share.d":
+        "Un lien, un code QR ou un fichier. Et une sauvegarde sur Google Drive pour changer d’appareil.",
+      "col.title": "Choisis tes couleurs",
+      "col.sub": "Huit jeux, chacun clair et sombre. Touches-en un et la page change.",
+      "col.hint": "L’app retient ton choix.",
+      "pal.notte": "Nuit et or",
+      "pal.classico": "Classique",
+      "pal.bordeaux": "Bordeaux",
+      "pal.foresta": "Forêt",
+      "pal.arcano": "Arcane",
+      "pal.ghiaccio": "Glace",
+      "pal.rame": "Cuivre",
+      "pal.ossidiana": "Obsidienne",
+      "val.title": "Conçu pour ne pas te gêner",
+      "val.free": "Gratuit",
+      "val.noaccount": "Sans compte",
+      "val.notrack": "Sans pistage",
+      "val.offline": "Fonctionne hors ligne",
+      "val.local": "Tes données restent sur ton appareil",
+      "val.open": "Open source",
+      "val.langs": "5 langues",
+      "faq.title": "Questions fréquentes",
+      "faq.q1": "C’est vraiment gratuit ?",
+      "faq.a1":
+        "Oui : pas d’abonnement, pas de publicité. C’est un projet de passion, au code ouvert.",
+      "faq.q2": "Où vont mes personnages ?",
+      "faq.a2":
+        "Sur ton appareil. Pour les déplacer ou les sauvegarder, tu peux utiliser un fichier ou ton Google Drive.",
+      "faq.q3": "Ça marche sans internet ?",
+      "faq.a3": "Oui, une fois ouvert. On peut aussi l’installer sur le téléphone comme une app.",
+      "faq.q4": "C’est un produit officiel de D&D ?",
+      "faq.a4":
+        "Non. Il utilise le SRD 5.1, sous licence libre, et n’est pas affilié à Wizards of the Coast.",
+      "faq.q5": "Ça marche avec le contenu d’Aurora ?",
+      "faq.a5":
+        "Oui. Tu peux importer les fichiers de contenu (XML) faits pour Aurora Builder et Aurora Legacy, par fichier, par fichier d’index ou par adresse. Rien d’Aurora ni d’aucun éditeur n’est inclus : tu apportes ce que tu possèdes déjà.",
+      "art.race": "Elfe · Magicienne 5",
+      "art.spell": "Projectile magique",
+      "art.school": "Évocation · niveau 1",
+      "cta.title": "Prêt à écrire ton histoire ?",
+      "cta.open": "Ouvrir Heroquill",
+      "foot.unofficial":
+        "Heroquill est un projet de fan non officiel, non affilié à Wizards of the Coast ni approuvé par elle. Il utilise le System Reference Document 5.1 sous licence CC-BY-4.0.",
+      "foot.privacy": "Confidentialité",
+      "foot.terms": "Conditions",
+    },
+    de: {
+      "meta.title": "Heroquill – Charakterbögen für D&D 5e, kostenlos und offline",
+      "meta.desc":
+        "Heroquill ist eine kostenlose Web-App, um Charaktere für Dungeons & Dragons 5. Edition zu erstellen, zu spielen und zu drucken. Ohne Konto, ohne Tracking, funktioniert offline.",
+      "nav.openShort": "Öffnen",
+      "nav.features": "Funktionen",
+      "nav.colors": "Farben",
+      "nav.faq": "Fragen",
+      "nav.open": "App öffnen",
+      "hero.title": "Dein D&D-5e-Held, von der ersten Idee bis zum Spieltisch.",
+      "hero.sub":
+        "Erstelle, spiele und drucke deinen Charakter. Kostenlos, ohne Konto, und es funktioniert ohne Verbindung.",
+      "hero.cta": "Heroquill öffnen",
+      "hero.try": "Mit Aria ausprobieren",
+      "feat.title": "Alles, was du am Spieltisch brauchst",
+      "feat.sub": "Vom ersten Schritt bis zur gedruckten Seite, an einem Ort.",
+      "feat.create.t": "Erstellen",
+      "feat.create.d":
+        "Volk, Klasse, Hintergrund, Attributswerte, Zauber: ein Schritt nach dem anderen, jede Zahl nach den Regeln berechnet.",
+      "feat.play.t": "Spielen",
+      "feat.play.d":
+        "Trefferpunkte, Zauberplätze, Ressourcen, Rasten und Würfe mit einem Tipp. Jeder Wurf erscheint groß, der Würfel dreht sich.",
+      "feat.print.t": "Drucken",
+      "feat.print.d":
+        "Charakterbogen, Geschichtsseite, Zauber- und Merkmalkarten: für Papier oder als PDF.",
+      "feat.share.t": "Teilen",
+      "feat.share.d":
+        "Ein Link, ein QR-Code oder eine Datei. Und eine Sicherung in Google Drive für den Wechsel des Geräts.",
+      "col.title": "Wähle deine Farben",
+      "col.sub": "Acht Sets, jedes hell und dunkel. Tippe auf eins, und die Seite ändert sich.",
+      "col.hint": "Die App merkt sich deine Wahl.",
+      "pal.notte": "Nacht und Gold",
+      "pal.classico": "Klassisch",
+      "pal.bordeaux": "Bordeaux",
+      "pal.foresta": "Wald",
+      "pal.arcano": "Arkan",
+      "pal.ghiaccio": "Eis",
+      "pal.rame": "Kupfer",
+      "pal.ossidiana": "Obsidian",
+      "val.title": "Gemacht, um dir nicht im Weg zu sein",
+      "val.free": "Kostenlos",
+      "val.noaccount": "Ohne Konto",
+      "val.notrack": "Ohne Tracking",
+      "val.offline": "Funktioniert offline",
+      "val.local": "Deine Daten bleiben auf deinem Gerät",
+      "val.open": "Open Source",
+      "val.langs": "5 Sprachen",
+      "faq.title": "Häufige Fragen",
+      "faq.q1": "Ist es wirklich kostenlos?",
+      "faq.a1": "Ja: kein Abo, keine Werbung. Es ist ein Herzensprojekt mit offenem Code.",
+      "faq.q2": "Wohin kommen meine Charaktere?",
+      "faq.a2":
+        "Auf dein eigenes Gerät. Zum Verschieben oder Sichern kannst du eine Datei oder dein Google Drive nutzen.",
+      "faq.q3": "Funktioniert es ohne Internet?",
+      "faq.a3":
+        "Ja, sobald es einmal geöffnet wurde. Du kannst es auch wie eine App auf dem Handy installieren.",
+      "faq.q4": "Ist es ein offizielles D&D-Produkt?",
+      "faq.a4":
+        "Nein. Es nutzt das SRD 5.1 unter freier Lizenz und ist nicht mit Wizards of the Coast verbunden.",
+      "faq.q5": "Funktioniert es mit Aurora-Inhalten?",
+      "faq.a5":
+        "Ja. Du kannst die Inhaltsdateien (XML) importieren, die für Aurora Builder und Aurora Legacy gemacht sind, per Datei, Indexdatei oder Adresse. Von Aurora oder einem Verlag ist nichts enthalten: Du bringst mit, was du schon besitzt.",
+      "art.race": "Elfe · Magierin 5",
+      "art.spell": "Magisches Geschoss",
+      "art.school": "Hervorrufung · 1. Grad",
+      "cta.title": "Bereit, deine Geschichte zu schreiben?",
+      "cta.open": "Heroquill öffnen",
+      "foot.unofficial":
+        "Heroquill ist ein inoffizielles Fanprojekt, nicht mit Wizards of the Coast verbunden und nicht von ihr gebilligt. Es nutzt das System Reference Document 5.1 unter der Lizenz CC-BY-4.0.",
+      "foot.privacy": "Datenschutz",
+      "foot.terms": "Bedingungen",
+    },
+    es: {
+      "meta.title": "Heroquill – Hojas de personaje de D&D 5e, gratis y sin conexión",
+      "meta.desc":
+        "Heroquill es una app web gratuita para crear, jugar e imprimir personajes de Dungeons & Dragons 5.ª edición. Sin cuenta, sin rastreo, funciona sin conexión.",
+      "nav.openShort": "Abrir",
+      "nav.features": "Funciones",
+      "nav.colors": "Colores",
+      "nav.faq": "Preguntas",
+      "nav.open": "Abrir la app",
+      "hero.title": "Tu héroe de D&D 5e, desde la primera idea hasta la mesa.",
+      "hero.sub":
+        "Crea, juega e imprime tu personaje. Gratis, sin cuenta, y funciona sin conexión.",
+      "hero.cta": "Abrir Heroquill",
+      "hero.try": "Probar con Aria",
+      "feat.title": "Todo lo que necesitas en la mesa",
+      "feat.sub": "Del primer paso a la página impresa, en un solo lugar.",
+      "feat.create.t": "Crear",
+      "feat.create.d":
+        "Especie, clase, trasfondo, puntuaciones, conjuros: un paso a la vez, con cada número calculado según las reglas.",
+      "feat.play.t": "Jugar",
+      "feat.play.d":
+        "Puntos de golpe, espacios, recursos, descansos y tiradas con un toque. Cada tirada se ve grande, con el dado girando.",
+      "feat.print.t": "Imprimir",
+      "feat.print.d":
+        "Hoja de personaje, página de historia, cartas de conjuros y de rasgos: para papel o para PDF.",
+      "feat.share.t": "Compartir",
+      "feat.share.d":
+        "Un enlace, un código QR o un archivo. Y una copia en Google Drive para cambiar de dispositivo.",
+      "col.title": "Elige tus colores",
+      "col.sub": "Ocho conjuntos, cada uno claro y oscuro. Toca uno y la página cambia.",
+      "col.hint": "La app recuerda tu elección.",
+      "pal.notte": "Noche y oro",
+      "pal.classico": "Clásico",
+      "pal.bordeaux": "Burdeos",
+      "pal.foresta": "Bosque",
+      "pal.arcano": "Arcano",
+      "pal.ghiaccio": "Hielo",
+      "pal.rame": "Cobre",
+      "pal.ossidiana": "Obsidiana",
+      "val.title": "Hecha para no estorbarte",
+      "val.free": "Gratis",
+      "val.noaccount": "Sin cuenta",
+      "val.notrack": "Sin rastreo",
+      "val.offline": "Funciona sin conexión",
+      "val.local": "Tus datos se quedan en tu dispositivo",
+      "val.open": "Código abierto",
+      "val.langs": "5 idiomas",
+      "faq.title": "Preguntas frecuentes",
+      "faq.q1": "¿Es realmente gratis?",
+      "faq.a1":
+        "Sí: sin suscripción, sin anuncios. Es un proyecto de pasión, con el código abierto.",
+      "faq.q2": "¿Dónde van mis personajes?",
+      "faq.a2":
+        "A tu propio dispositivo. Para moverlos o guardarlos puedes usar un archivo o tu Google Drive.",
+      "faq.q3": "¿Funciona sin internet?",
+      "faq.a3": "Sí, una vez abierta. También puedes instalarla en el teléfono como una app.",
+      "faq.q4": "¿Es un producto oficial de D&D?",
+      "faq.a4":
+        "No. Usa el SRD 5.1, con licencia libre, y no está afiliado a Wizards of the Coast.",
+      "faq.q5": "¿Funciona con el contenido de Aurora?",
+      "faq.a5":
+        "Sí. Puedes importar los archivos de contenido (XML) hechos para Aurora Builder y Aurora Legacy, por archivo, por archivo de índice o por dirección. No incluye nada de Aurora ni de ninguna editorial: traes lo que ya tienes.",
+      "art.race": "Elfa · Maga 5",
+      "art.spell": "Proyectil mágico",
+      "art.school": "Evocación · nivel 1",
+      "cta.title": "¿Listo para escribir tu historia?",
+      "cta.open": "Abrir Heroquill",
+      "foot.unofficial":
+        "Heroquill es un proyecto de fans no oficial, no afiliado ni respaldado por Wizards of the Coast. Usa el System Reference Document 5.1 con licencia CC-BY-4.0.",
+      "foot.privacy": "Privacidad",
+      "foot.terms": "Condiciones",
+    },
+  };
+
+  const root = document.documentElement;
+
+  const read = (key) => {
+    try {
+      return localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  };
+  const write = (key, value) => {
+    try {
+      localStorage.setItem(key, value);
+    } catch {
+      // Not remembered: the page still works.
+    }
+  };
+
+  // ---- Language ----
+  const pickLanguage = () => {
+    const saved = read("dnd-maker.language");
+    if (LANGUAGES.includes(saved)) return saved;
+    for (const tag of navigator.languages || [navigator.language || "en"]) {
+      const base = String(tag).toLowerCase().split("-")[0];
+      if (LANGUAGES.includes(base)) return base;
+    }
+    return "en";
+  };
+
+  const description = document.querySelector('meta[name="description"]');
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  const ogDescription = document.querySelector('meta[property="og:description"]');
+  const picker = document.getElementById("lang");
+
+  function setLanguage(code) {
+    const texts = T[code] || T.en;
+    root.lang = code;
+    for (const node of document.querySelectorAll("[data-i18n]")) {
+      const text = texts[node.dataset.i18n];
+      if (text !== undefined) node.textContent = text;
+    }
+    document.title = texts["meta.title"];
+    if (description) description.setAttribute("content", texts["meta.desc"]);
+    if (ogDescription) ogDescription.setAttribute("content", texts["meta.desc"]);
+    if (ogTitle) ogTitle.setAttribute("content", "Heroquill");
+    if (picker) picker.value = code;
+    write("dnd-maker.language", code);
+    fitTexts();
+  }
+
+  // A text drawn in the picture that is longer than its room in some language is squeezed to fit.
+  function fitTexts() {
+    for (const text of document.querySelectorAll("text[data-fit]")) {
+      text.removeAttribute("textLength");
+      const room = Number(text.dataset.fit);
+      if (text.getComputedTextLength && text.getComputedTextLength() > room) {
+        text.setAttribute("textLength", String(room));
+        text.setAttribute("lengthAdjust", "spacingAndGlyphs");
+      }
+    }
+  }
+
+  if (picker) picker.addEventListener("change", () => setLanguage(picker.value));
+  setLanguage(pickLanguage());
+  if (document.fonts?.ready) document.fonts.ready.then(fitTexts);
+
+  // ---- Colour sets: the same choice the app keeps ----
+  const savedTheme = () => {
+    try {
+      return JSON.parse(read("theme") || "null") || {};
+    } catch {
+      return {};
+    }
+  };
+  const startPalette = () => {
+    const saved = savedTheme();
+    if (PALETTES.includes(saved.palette)) return saved.palette;
+    // A choice saved before the colour sets keeps the look it had.
+    return !("palette" in saved) && ("style" in saved || "scheme" in saved) ? "classico" : "notte";
+  };
+
+  const swatches = document.querySelectorAll(".swatch");
+  function setPalette(name, remember) {
+    root.dataset.palette = name;
+    for (const swatch of swatches)
+      swatch.setAttribute("aria-pressed", String(swatch.dataset.palette === name));
+    if (remember) {
+      const saved = savedTheme();
+      write(
+        "theme",
+        JSON.stringify({
+          palette: name,
+          scheme: saved.scheme === "light" || saved.scheme === "dark" ? saved.scheme : "auto",
+        }),
+      );
+    }
+  }
+  for (const swatch of swatches)
+    swatch.addEventListener("click", () => setPalette(swatch.dataset.palette, true));
+  setPalette(startPalette(), false);
+
+  // ---- Small animations, all off for those who ask for less motion ----
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reveals = document.querySelectorAll(".reveal");
+  if (calm || !("IntersectionObserver" in window)) {
+    for (const node of reveals) node.classList.add("in");
+  } else {
+    const seen = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in");
+            seen.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.15 },
+    );
+    for (const node of reveals) seen.observe(node);
+  }
+
+  // The sheet in the first screen leans towards the pointer.
+  const stage = document.querySelector(".sheet-stage");
+  if (stage && !calm) {
+    stage.addEventListener("pointermove", (event) => {
+      const box = stage.getBoundingClientRect();
+      const x = (event.clientX - box.left) / box.width - 0.5;
+      const y = (event.clientY - box.top) / box.height - 0.5;
+      stage.style.setProperty("--ry", `${x * 10}deg`);
+      stage.style.setProperty("--rx", `${-y * 8}deg`);
+    });
+    stage.addEventListener("pointerleave", () => {
+      stage.style.setProperty("--ry", "0deg");
+      stage.style.setProperty("--rx", "0deg");
+    });
+  }
+})();

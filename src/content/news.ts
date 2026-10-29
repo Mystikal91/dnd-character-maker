@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.12.1 beta",
+    date: "2026-10-29",
+    notes: [
+      {
+        en: "The welcome page at heroquill.app is new: a night sky with the sheet of Aria, what the app does, the eight colour sets (try them on the page, and the app remembers your choice), a few questions and answers, all in five languages. Its “Try it with Aria” button opens the app with the example character already loaded.",
+        it: "La pagina di benvenuto su heroquill.app è nuova: un cielo notturno con la scheda di Aria, cosa fa l’app, gli otto set di colori (provali sulla pagina, e l’app ricorda la tua scelta), qualche domanda e risposta, il tutto in cinque lingue. Il pulsante «Prova con Aria» apre l’app con il personaggio di esempio già caricato.",
+        fr: "La page d’accueil de heroquill.app est nouvelle : un ciel nocturne avec la fiche d’Aria, ce que fait l’app, les huit jeux de couleurs (essaie-les sur la page, et l’app retient ton choix), quelques questions et réponses, le tout en cinq langues. Le bouton « Essayer avec Aria » ouvre l’app avec le personnage d’exemple déjà chargé.",
+        de: "Die Willkommensseite auf heroquill.app ist neu: ein Nachthimmel mit Arias Bogen, was die App kann, die acht Farbsets (probiere sie auf der Seite aus, die App merkt sich deine Wahl), ein paar Fragen und Antworten, alles in fünf Sprachen. Die Schaltfläche „Mit Aria ausprobieren“ öffnet die App mit dem Beispielcharakter schon geladen.",
+        es: "La página de bienvenida de heroquill.app es nueva: un cielo nocturno con la hoja de Aria, lo que hace la app, los ocho conjuntos de colores (pruébalos en la página, y la app recuerda tu elección), unas preguntas y respuestas, todo en cinco idiomas. El botón «Probar con Aria» abre la app con el personaje de ejemplo ya cargado.",
+      },
+    ],
+  },
+  {
     version: "1.12.0 beta",
     date: "2026-10-29",
     notes: [
