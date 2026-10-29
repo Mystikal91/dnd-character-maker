@@ -1,18 +1,25 @@
 import { useRef, useState } from "preact/hooks";
-import { portraitFromFile } from "../../app/portrait";
 import { character, updateCharacter } from "../../app/store";
 import { ui } from "../../i18n/ui";
+import { PortraitEditor } from "./PortraitEditor";
 
 /**
- * The portrait medallion beside the name: tap it to choose a picture (cut square from the middle
- * and kept small on the device), and a small cross takes it away. Without a picture it shows the
- * first letter of the name.
+ * The portrait medallion beside the name: tap it to choose a picture, then cut out the part to
+ * keep in a window (see `PortraitEditor`). The picture is kept small, on the device. A small
+ * cross takes it away. Without a picture the medallion shows the first letter of the name.
  */
 export function Portrait() {
   const ch = character.value;
   const picker = useRef<HTMLInputElement>(null);
   const [failed, setFailed] = useState(false);
+  const [editing, setEditing] = useState<ImageBitmap | undefined>(undefined);
   const initial = ch.name.trim().charAt(0).toUpperCase() || "?";
+
+  const close = () => {
+    editing?.close();
+    setEditing(undefined);
+  };
+
   return (
     <div class="portrait">
       <input
@@ -25,11 +32,10 @@ export function Portrait() {
           e.currentTarget.value = "";
           if (!file) return;
           try {
-            const picture = await portraitFromFile(file);
+            const bitmap = await createImageBitmap(file);
+            editing?.close();
             setFailed(false);
-            updateCharacter((d) => {
-              d.portrait = picture;
-            });
+            setEditing(bitmap);
           } catch {
             setFailed(true);
           }
@@ -71,6 +77,22 @@ export function Portrait() {
         <span class="portrait-error" role="alert">
           {ui("portrait.failed")}
         </span>
+      )}
+      {editing && (
+        <PortraitEditor
+          bitmap={editing}
+          onUse={(picture) => {
+            updateCharacter((d) => {
+              d.portrait = picture;
+            });
+            close();
+          }}
+          onCancel={close}
+          onOther={() => {
+            close();
+            picker.current?.click();
+          }}
+        />
       )}
     </div>
   );

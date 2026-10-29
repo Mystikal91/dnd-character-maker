@@ -1501,3 +1501,11 @@ button:not(:disabled):not(.roll-toast):active {
     transform: none;
   }
 }
+
+/* The main action of a window stands out in the accent colour. */
+.quick-edit-actions .primary {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+}

@@ -1008,5 +1008,11 @@
   "portrait.change": "Das Porträt ändern",
   "portrait.remove": "Das Porträt entfernen",
   "portrait.failed": "Dieses Bild konnte nicht gelesen werden.",
-  "play.tapToClose": "Tippen zum Schließen"
+  "play.tapToClose": "Tippen zum Schließen",
+  "portrait.editTitle": "Porträt zuschneiden",
+  "portrait.editHint": "Ziehe, um das Bild zu verschieben, und zoome mit dem Regler, dem Mausrad oder zwei Fingern. Das Sechseck zeigt, was das Medaillon zeigt.",
+  "portrait.zoom": "Zoom",
+  "portrait.use": "Dieses Bild verwenden",
+  "portrait.other": "Anderes wählen",
+  "portrait.cancel": "Abbrechen"
 }

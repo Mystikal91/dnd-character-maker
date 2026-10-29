@@ -1008,5 +1008,11 @@
   "portrait.change": "Changer le portrait",
   "portrait.remove": "Retirer le portrait",
   "portrait.failed": "Cette image n’a pas pu être lue.",
-  "play.tapToClose": "Touche pour fermer"
+  "play.tapToClose": "Touche pour fermer",
+  "portrait.editTitle": "Recadrer le portrait",
+  "portrait.editHint": "Glisse pour déplacer l’image, utilise le curseur, la molette ou deux doigts pour zoomer. L’hexagone est ce que montre le médaillon.",
+  "portrait.zoom": "Zoom",
+  "portrait.use": "Utiliser cette image",
+  "portrait.other": "En choisir une autre",
+  "portrait.cancel": "Annuler"
 }

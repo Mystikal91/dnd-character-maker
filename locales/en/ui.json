@@ -1008,5 +1008,11 @@
   "portrait.change": "Change the portrait",
   "portrait.remove": "Remove the portrait",
   "portrait.failed": "That picture could not be read.",
-  "play.tapToClose": "Tap to close"
+  "play.tapToClose": "Tap to close",
+  "portrait.editTitle": "Crop the portrait",
+  "portrait.editHint": "Drag to move the picture, use the slider, the wheel or two fingers to zoom. The hexagon is what the medallion shows.",
+  "portrait.zoom": "Zoom",
+  "portrait.use": "Use this picture",
+  "portrait.other": "Choose another",
+  "portrait.cancel": "Cancel"
 }

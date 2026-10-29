@@ -1008,5 +1008,11 @@
   "portrait.change": "Cambia il ritratto",
   "portrait.remove": "Togli il ritratto",
   "portrait.failed": "Non si è riusciti a leggere quell’immagine.",
-  "play.tapToClose": "Tocca per chiudere"
+  "play.tapToClose": "Tocca per chiudere",
+  "portrait.editTitle": "Ritaglia il ritratto",
+  "portrait.editHint": "Trascina per spostare l’immagine, usa il cursore, la rotella o due dita per ingrandire. L’esagono è ciò che mostra il medaglione.",
+  "portrait.zoom": "Ingrandimento",
+  "portrait.use": "Usa questa immagine",
+  "portrait.other": "Scegline un’altra",
+  "portrait.cancel": "Annulla"
 }

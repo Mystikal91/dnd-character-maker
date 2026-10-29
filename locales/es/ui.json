@@ -1008,5 +1008,11 @@
   "portrait.change": "Cambiar el retrato",
   "portrait.remove": "Quitar el retrato",
   "portrait.failed": "No se pudo leer esa imagen.",
-  "play.tapToClose": "Toca para cerrar"
+  "play.tapToClose": "Toca para cerrar",
+  "portrait.editTitle": "Recortar el retrato",
+  "portrait.editHint": "Arrastra para mover la imagen y usa el control, la rueda o dos dedos para ampliar. El hexágono es lo que muestra el medallón.",
+  "portrait.zoom": "Zoom",
+  "portrait.use": "Usar esta imagen",
+  "portrait.other": "Elegir otra",
+  "portrait.cancel": "Cancelar"
 }
