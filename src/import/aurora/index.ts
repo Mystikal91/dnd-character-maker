@@ -28,6 +28,8 @@ import {
   type Source,
   allocate,
   indexExisting,
+  isAsiOption,
+  kindOf,
   ofType,
   readSources,
 } from "./registry";
@@ -42,7 +44,7 @@ export { AuroraParseError, slugify } from "./xml";
  * the entries or texts it makes: packs imported with an older version are marked as needing an
  * update, and can be imported again with a click.
  */
-export const AURORA_IMPORT_VERSION = 11;
+export const AURORA_IMPORT_VERSION = 12;
 export type { AuroraOptions, AuroraResult } from "./registry";
 
 /**
@@ -216,9 +218,14 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     for (const rule of readRules(source.el)) {
       // A rule that does not hold now may hold with the next choice: what it grants is made too.
       if (rule.tag === "grant" && FEATURE_TYPES.has(rule.type)) mark(ctx.byAid.get(rule.id));
-      else if (rule.tag === "select" && FEATURE_TYPES.has(rule.type))
+      else if (rule.tag === "select" && FEATURE_TYPES.has(rule.type)) {
         for (const option of ofType(ctx, rule.type))
           if (selectMatches(rule.supports, option)) mark(option);
+      } else if (rule.tag === "select" && rule.type === "Ability Score Improvement") {
+        // The ways of taking the free ability increase of an origin are made when it offers them.
+        for (const option of ofType(ctx, rule.type))
+          if (isAsiOption(option) && selectMatches(rule.supports, option)) mark(option);
+      }
     }
   };
   for (const source of [...ctx.needed]) visit(source);
@@ -240,7 +247,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
 
   for (const source of ctx.all) {
     if (!ctx.needed.has(source)) {
-      if (!KIND_OF[source.type] && !SILENT_TYPES.has(source.type))
+      if (!kindOf(source) && !SILENT_TYPES.has(source.type))
         result.skipped[source.type] = (result.skipped[source.type] ?? 0) + 1;
       continue;
     }
@@ -280,6 +287,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
         break;
       case "Racial Trait":
       case "Feat Feature":
+      case "Ability Score Improvement":
         importTrait(ctx, source);
         break;
       case "Feat":

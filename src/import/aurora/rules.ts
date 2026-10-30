@@ -1,7 +1,14 @@
 import { ABILITIES, type Ability, type Effect } from "../../data/schema";
 import { evaluateRequirements } from "../../engine/requirements";
 import { classIdByName } from "./emit";
-import { type Context, FEATURE_TYPES, type Source, elementTags, ofType } from "./registry";
+import {
+  type Context,
+  FEATURE_TYPES,
+  type Source,
+  elementTags,
+  isAsiOption,
+  ofType,
+} from "./registry";
 import { clean, number, setters, slugify, supportsOf } from "./xml";
 
 /** The `<rules>` of an element, as plain data. */
@@ -629,6 +636,15 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
           from: listed,
         });
       else mapped.unsupported += 1;
+    } else if (
+      rule.type === "Ability Score Improvement" &&
+      /Custom Ability Score Improvement Option/i.test(rule.supports)
+    ) {
+      // "+2 and +1, or +1 three times": two entries to choose from, each with its own picks.
+      const list = ofType(ctx, rule.type).filter(
+        (s) => isAsiOption(s) && selectMatches(rule.supports, s),
+      );
+      mapped.offers.push({ rule, options: list });
     } else if (rule.type === "Ability Score Improvement") {
       const abilities = [...rule.supports.matchAll(/ASI_([A-Z]+)/g)]
         .map((m) => abilityFromWord(m[1] ?? ""))

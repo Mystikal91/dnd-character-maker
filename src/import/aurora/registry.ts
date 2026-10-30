@@ -111,6 +111,19 @@ export const ROOT_TYPES = new Set([
   "Archetype",
 ]);
 
+/**
+ * The two ways an origin's free ability increase can be taken (+2 and +1, or +1 three times):
+ * elements of the type "Ability Score Improvement" that a select of the race offers by their
+ * `supports`. The other elements of that type are single abilities, read by the select itself.
+ */
+export const isAsiOption = (source: Source): boolean =>
+  source.type === "Ability Score Improvement" &&
+  elementTags(source).includes("Custom Ability Score Improvement Option");
+
+/** The kind of entry an element becomes, if it becomes one. */
+export const kindOf = (source: Source): string | undefined =>
+  KIND_OF[source.type] ?? (isAsiOption(source) ? "trait" : undefined);
+
 /** Types that are granted or offered by other elements. */
 export const FEATURE_TYPES = new Set([
   "Racial Trait",
@@ -164,7 +177,7 @@ export const sharesTag = (a: string[], b: string[]) => {
 function planSlugs(ctx: Context): Map<Source, string> {
   const groups = new Map<string, Source[]>();
   for (const source of ctx.all) {
-    const kind = KIND_OF[source.type];
+    const kind = kindOf(source);
     const base = slugify(source.name);
     if (!kind || !base || source.id) continue;
     const key = `${kind}/${base}`;
@@ -182,7 +195,7 @@ function planSlugs(ctx: Context): Map<Source, string> {
 
 /** Allocates the id of an element: its slug, made unique among the pack's entries. */
 export function allocate(ctx: Context, source: Source): void {
-  const kind = KIND_OF[source.type];
+  const kind = kindOf(source);
   if (!kind || source.id) return;
   ctx.slugs ??= planSlugs(ctx);
   const base = ctx.slugs.get(source);

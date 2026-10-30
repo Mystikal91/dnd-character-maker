@@ -114,6 +114,42 @@ export function corpusSuite(reverse: boolean) {
         expect(worse(baseline, current).slice(0, 40)).toEqual([]);
       });
 
+      it("lets a species of Monsters of the Multiverse take its free increase as +2 and +1, or +1 three times", () => {
+        const species = result.aids.ID_WOTC_MOTM_RACE_FIRBOLG ?? "";
+        const plusTwo = result.aids.ID_WOTC_ASI_ABILITY_SCORE_IMPROVEMENT_OPTION_1 ?? "";
+        const plusOnes = result.aids.ID_WOTC_ASI_ABILITY_SCORE_IMPROVEMENT_OPTION_2 ?? "";
+        expect(index.has(species), `species ${species}`).toBe(true);
+        expect(index.has(plusTwo), `option 1 ${plusTwo}`).toBe(true);
+        expect(index.has(plusOnes), `option 2 ${plusOnes}`).toBe(true);
+        const sheetOf = (selections: Record<string, string[]>) => {
+          const c = createCharacter("srd51");
+          c.choices.species = species;
+          c.classes = [{ classId: "srd51:class/fighter", level: 1 }];
+          c.selections = selections;
+          return deriveSheet(c, index);
+        };
+        const bonuses = (s: ReturnType<typeof sheetOf>) =>
+          Object.fromEntries(Object.entries(s.abilities).map(([k, a]) => [k, a.bonus]));
+
+        const open = sheetOf({});
+        const offer = open.choices.find((p) => p.options.includes(plusTwo));
+        expect(offer?.options.sort()).toEqual([plusTwo, plusOnes].sort());
+        expect(Object.values(bonuses(open)).every((n) => n === 0)).toBe(true);
+
+        const split = sheetOf({
+          [`${species}/species-offer-1`]: [plusTwo],
+          [`${plusTwo}/trait-1`]: ["str"],
+          [`${plusTwo}/trait-2`]: ["dex"],
+        });
+        expect(bonuses(split)).toMatchObject({ str: 2, dex: 1, con: 0 });
+
+        const spread = sheetOf({
+          [`${species}/species-offer-1`]: [plusOnes],
+          [`${plusOnes}/trait-1`]: ["str", "dex", "con"],
+        });
+        expect(bonuses(spread)).toMatchObject({ str: 1, dex: 1, con: 1, wis: 0 });
+      });
+
       it("points only at entries that exist", () => {
         expect(findBrokenReferences([pack, ...srd51Packs])).toEqual([]);
       });
