@@ -1,0 +1,148 @@
+/* ---- The guided tour: a lit part of the app, the rest dimmed, and a card that explains it ---- */
+
+.tour {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  pointer-events: none;
+}
+
+/* Catches the taps, so nothing behind the tour is pressed by mistake. */
+.tour-block {
+  position: fixed;
+  inset: 0;
+  pointer-events: auto;
+}
+
+.tour-block.dim {
+  background: rgb(8 12 24 / 0.72);
+}
+
+.tour-spot {
+  position: fixed;
+  border-radius: 0.6rem;
+  box-shadow: 0 0 0 100vmax rgb(8 12 24 / 0.72), 0 0 0 2px var(--accent), 0 0 22px 4px
+    color-mix(in srgb, var(--accent) 55%, transparent);
+  transition: top 0.3s ease, left 0.3s ease, width 0.3s ease, height 0.3s ease;
+  animation: tour-glow 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes tour-glow {
+  50% {
+    box-shadow: 0 0 0 100vmax rgb(8 12 24 / 0.72), 0 0 0 3px var(--accent), 0 0 34px 8px
+      color-mix(in srgb, var(--accent) 70%, transparent);
+  }
+}
+
+.tour-card {
+  position: fixed;
+  margin: 0;
+  max-width: none;
+  z-index: 1;
+  box-sizing: border-box;
+  width: min(26rem, calc(100vw - 1.5rem));
+  max-height: calc(100vh - 1.5rem);
+  overflow: auto;
+  padding: 0.9rem 1rem 0.8rem;
+  border: 1px solid var(--accent);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  color: var(--fg);
+  box-shadow: 0 12px 36px rgb(0 0 0 / 0.5);
+  pointer-events: auto;
+  animation: tour-in 0.35s ease-out;
+}
+
+/* Under the lit part when that is in the upper half, over it otherwise; in the middle when
+   nothing is lit. Lined up with the lit part where the screen is wide enough. */
+.tour-below {
+  bottom: 0.75rem;
+  left: clamp(0.75rem, var(--tour-left, 0.75rem), calc(100vw - 26rem - 0.75rem));
+}
+
+.tour-above {
+  top: 0.75rem;
+  left: clamp(0.75rem, var(--tour-left, 0.75rem), calc(100vw - 26rem - 0.75rem));
+}
+
+.tour-middle {
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+
+@keyframes tour-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.tour-card h2 {
+  margin: 0.1rem 0 0.4rem;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
+}
+
+.tour-card p {
+  margin: 0 0 0.6rem;
+  line-height: 1.45;
+}
+
+.tour-card .tour-count {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tour-dots {
+  display: flex;
+  gap: 0.3rem;
+  margin: 0.2rem 0 0.7rem;
+}
+
+.tour-dots span {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.tour-dots .seen {
+  background: color-mix(in srgb, var(--accent) 55%, var(--border));
+}
+
+.tour-dots .on {
+  background: var(--accent);
+  transform: scale(1.35);
+}
+
+.tour-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tour-spacer {
+  flex: 1;
+}
+
+.tour-actions button:not(.link) {
+  min-height: 2.5rem;
+  padding: 0 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-spot,
+  .tour-card,
+  .tour-dots span {
+    animation: none;
+    transition: none;
+  }
+}

@@ -23,7 +23,7 @@ import { LANGUAGES } from "./language";
 import { language } from "./language";
 import { printSettings } from "./printSettings";
 import { parsePrintSettings } from "./printSettings.logic";
-import { allCharacters, characters, restoreCharacters } from "./store";
+import { type ConflictPolicy, allCharacters, characters, restoreCharacters } from "./store";
 import { theme } from "./theme";
 import { parseTheme } from "./theme.logic";
 import { UNIT_SETTINGS, type UnitSetting, unitSetting } from "./units";
@@ -38,8 +38,14 @@ import {
 /** What the app holds now, to put in a file. Reads every character, so it takes a moment. */
 export async function currentSources(): Promise<Sources> {
   const auto = autoSettings.value;
+  const all = await allCharacters();
   return {
-    characters: await allCharacters(),
+    characters: all,
+    characterTimes: Object.fromEntries(
+      characters.value
+        .filter((s) => all.some((c) => c.id === s.id))
+        .map((s) => [s.id, s.updatedAt]),
+    ),
     packs: userPacks.value,
     settings: {
       language: language.value,
@@ -84,7 +90,7 @@ export async function exportTransfer(
 }
 
 export interface TransferReport {
-  characters?: { added: number; skipped: number };
+  characters?: { added: number; skipped: number; replaced: number };
   packs?: number;
   edits?: number;
   settings?: boolean;
@@ -111,6 +117,8 @@ async function pack(
 export async function applyTransfer(
   bundle: Bundle,
   include: ReadonlySet<Section>,
+  /** What to do with a character that is here with other content. */
+  conflicts: ConflictPolicy = "copy",
 ): Promise<TransferReport> {
   const chosen = onlySections(bundle, include);
   const report: TransferReport = { links: [], unreadable: 0 };
@@ -124,7 +132,7 @@ export async function applyTransfer(
         return [];
       }
     });
-    report.characters = await restoreCharacters(list);
+    report.characters = await restoreCharacters(list, conflicts, chosen.characterTimes);
   }
 
   if (chosen.homebrew) {

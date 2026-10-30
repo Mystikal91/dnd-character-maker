@@ -1,9 +1,10 @@
 import type { JSX } from "preact";
 import { type View, showView } from "../app/navigation";
+import { startTour } from "../app/tour";
 import { type UiKey, ui } from "../i18n/ui";
 import { Popover } from "./Popover";
 import { ThemeControls } from "./ThemeControls";
-import { BoxIcon, FlaskIcon, GlobeIcon, HeartIcon, InfoIcon } from "./icons";
+import { BoxIcon, FlagIcon, FlaskIcon, GlobeIcon, HeartIcon, InfoIcon } from "./icons";
 
 const PAGES: { view: View; label: UiKey; icon: () => JSX.Element }[] = [
   { view: "about", label: "footer.about", icon: InfoIcon },
@@ -29,6 +30,12 @@ export function AppMenu() {
             </button>
           </li>
         ))}
+        <li>
+          <button type="button" onClick={startTour}>
+            <FlagIcon />
+            <span>{ui("tour.start")}</span>
+          </button>
+        </li>
       </ul>
     </Popover>
   );

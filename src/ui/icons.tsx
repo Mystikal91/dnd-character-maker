@@ -59,6 +59,13 @@ export const PrinterIcon = () => (
 );
 
 /** A circle with an i. */
+export const FlagIcon = () => (
+  <Icon>
+    <path d="M5 21V4" />
+    <path d="M5 4h11l-2 4 2 4H5" />
+  </Icon>
+);
+
 export const InfoIcon = () => (
   <Icon>
     <circle cx="12" cy="12" r="9" />

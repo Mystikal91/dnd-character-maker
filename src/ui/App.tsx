@@ -32,6 +32,7 @@ import { SearchButton } from "./SearchButton";
 import { ShareDialog } from "./ShareDialog";
 import { Sheet } from "./Sheet";
 import { Tabs } from "./Tabs";
+import { Tour } from "./Tour";
 import { TransferDialog } from "./TransferDialog";
 import { UpdateNotice } from "./UpdateNotice";
 import { BuildTab } from "./build/BuildTab";
@@ -175,6 +176,7 @@ export function App() {
       <CustomSpellDialog />
       <ShareDialog />
       <LevelUp />
+      <Tour />
       <footer class="site-footer no-print">
         <p>{ui("footer.unofficial")}</p>
         <p>

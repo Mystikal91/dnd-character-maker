@@ -19,7 +19,13 @@ export interface CharacterSummary {
 
 const CURRENT_KEY = "currentCharacterId";
 
+/**
+ * Stores a character. Saving one that has not changed (opening it saves it too) leaves its date as
+ * it was, so the date tells when it was last edited, not when it was last looked at.
+ */
 export async function saveCharacter(character: Character, now = Date.now()): Promise<void> {
+  const before = await dbGet<CharacterRecord>("characters", character.id);
+  if (before && JSON.stringify(before.character) === JSON.stringify(character)) return;
   const record: CharacterRecord = { id: character.id, updatedAt: now, character };
   await dbPut("characters", record);
 }

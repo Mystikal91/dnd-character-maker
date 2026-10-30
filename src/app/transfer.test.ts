@@ -2,11 +2,13 @@
 import "fake-indexeddb/auto";
 import { beforeAll, describe, expect, it } from "vitest";
 import { loadContent } from "../content/browser";
+import { createCharacter } from "../engine/character";
+import { parseCharacter } from "../engine/characterSchema";
 import { type Bundle, type Section, TRANSFER_FORMAT } from "../storage/bundle";
 import type { UserPackRecord } from "../storage/packs";
 import { autoSettings, saveAutoSettings } from "../translate/auto";
 import { language } from "./language";
-import { content } from "./store";
+import { character, characters, content, countConflicts, restoreCharacters } from "./store";
 import { applyTransfer, currentCounts, exportTransfer } from "./transfer";
 import { userPacks } from "./userPacks";
 
@@ -96,6 +98,41 @@ describe("moving data between devices", () => {
     };
     const report = await applyTransfer(bundle, new Set<Section>(["links"]));
     expect(report.links.map((l) => l.name)).toEqual(["New"]);
+  });
+
+  it("decides what to do with a character that is here with other content", async () => {
+    const mine = parseCharacter({ ...createCharacter("srd51"), id: "same-id", name: "Mine" });
+    await restoreCharacters([mine]);
+    expect(characters.value.some((c) => c.id === "same-id")).toBe(true);
+    const theirs = { ...mine, name: "Theirs" };
+
+    // The same one is left alone; one with other content is counted.
+    expect(await countConflicts([mine])).toBe(0);
+    expect(await countConflicts([theirs])).toBe(1);
+
+    const keep = await restoreCharacters([theirs], "keep");
+    expect(keep).toEqual({ added: 0, skipped: 1, replaced: 0 });
+    expect(characters.value.find((c) => c.id === "same-id")?.name).toBe("Mine");
+
+    const older = await restoreCharacters([theirs], "newest", { "same-id": 1 });
+    expect(older).toEqual({ added: 0, skipped: 1, replaced: 0 });
+    expect(characters.value.find((c) => c.id === "same-id")?.name).toBe("Mine");
+
+    const newer = await restoreCharacters([theirs], "newest", { "same-id": Date.now() + 60_000 });
+    expect(newer).toEqual({ added: 0, skipped: 0, replaced: 1 });
+    expect(characters.value.filter((c) => c.id === "same-id")).toHaveLength(1);
+    expect(characters.value.find((c) => c.id === "same-id")?.name).toBe("Theirs");
+    expect(character.value.id).toBe("same-id");
+    expect(character.value.name).toBe("Theirs");
+
+    // With no date on the incoming one, both are kept.
+    const before = characters.value.length;
+    const undated = await restoreCharacters([{ ...theirs, name: "Third" }], "newest");
+    expect(undated.added).toBe(1);
+    expect(characters.value.length).toBe(before + 1);
+    const copy = await restoreCharacters([{ ...theirs, name: "Fourth" }], "copy");
+    expect(copy.added).toBe(1);
+    expect(characters.value.length).toBe(before + 2);
   });
 
   it("reads what to offer for export, and makes a file with what was chosen", async () => {

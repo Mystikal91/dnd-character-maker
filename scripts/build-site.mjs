@@ -5,8 +5,20 @@
 // share with the app, and the fonts they need (served from here, so the pages ask no one else for
 // anything).
 import { cpSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { COMMUNITY, CONTRIBUTE } from "../site/contribute.mjs";
 import { GUIDE } from "../site/guide.mjs";
+import { GUIDES, MORE } from "../site/guides.mjs";
+import { NEWS } from "../site/news.mjs";
 import { TEXTS } from "../site/texts.mjs";
+import {
+  CHANGELOG,
+  GUIDE_TOPICS,
+  ROADMAP,
+  contributePath,
+  guidePath,
+  newsPath,
+  pick,
+} from "../src/content/news.ts";
 
 const ORIGIN = "https://heroquill.app";
 const LANGUAGES = ["en", "it", "fr", "de", "es"];
@@ -14,7 +26,8 @@ const LOCALES = { en: "en_US", it: "it_IT", fr: "fr_FR", de: "de_DE", es: "es_ES
 const FAQ = [1, 2, 3, 4, 5];
 
 const homePath = (lang) => (lang === "en" ? "/" : `/${lang}/`);
-const guidePath = (lang) => `${homePath(lang)}${GUIDE[lang].slug}/`;
+const newsPagePath = (lang) => newsPath(lang);
+const contributePagePath = (lang) => contributePath(lang);
 const escapeHtml = (text) =>
   text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const escapeAttr = (text) => escapeHtml(text).replace(/"/g, "&quot;");
@@ -115,12 +128,34 @@ function homePage(lang) {
     .replaceAll("{{url}}", `${ORIGIN}${homePath(lang)}`)
     .replaceAll("{{ogLocale}}", LOCALES[lang])
     .replaceAll("{{guideUrl}}", guidePath(lang))
+    .replaceAll("{{newsUrl}}", newsPagePath(lang))
+    .replaceAll("{{contributeUrl}}", contributePagePath(lang))
     .replace("{{alternates}}", alternatesOf(homePath))
     .replace("{{jsonld}}", homeJsonLd(lang, t));
   return withLanguageLinks(translate(html, lang), lang, homePath);
 }
 
-// ---- the guide: the head, bar and foot of the welcome page around an article ----
+// The bar and the foot of the welcome page, for the pages that go around an article: the links
+// that point inside the welcome page keep pointing there, and each language of the list leads to
+// the same page in that language (`pathOf`).
+function shell(lang, pathOf) {
+  const homeHtml = homePage(lang);
+  const bar = /<header class="nav on-dark">[\s\S]*?<\/header>/.exec(homeHtml)?.[0];
+  const foot = /<footer class="foot on-dark">[\s\S]*?<\/footer>/.exec(homeHtml)?.[0];
+  if (!bar || !foot) throw new Error("the bar or the foot of the welcome page was not found");
+  const home = homePath(lang);
+  const barHere = LANGUAGES.reduce(
+    (html, l) =>
+      html.replace(
+        new RegExp(`(<option value="${l}"[^>]*?)data-href="[^"]*"`),
+        `$1data-href="${pathOf(l)}"`,
+      ),
+    bar.replace(/href="#/g, `href="${home}#`),
+  );
+  return { bar: barHere, foot };
+}
+
+// ---- the guide: sections of paragraphs and lists ----
 function guideBlocks(sections) {
   return sections
     .map(([heading, blocks]) => {
@@ -136,45 +171,22 @@ function guideBlocks(sections) {
     .join("\n");
 }
 
-function guidePage(lang) {
-  const g = GUIDE[lang];
+// A page that goes around an article: the head, the bar and the foot of the welcome page, a
+// first screen with the title, the article, and a call to open the app.
+function articleDocument(lang, pathOf, a) {
   const t = TEXTS[lang];
   const home = homePath(lang);
-  const homeHtml = homePage(lang);
-  const bar = /<header class="nav on-dark">[\s\S]*?<\/header>/.exec(homeHtml)?.[0];
-  const foot = /<footer class="foot on-dark">[\s\S]*?<\/footer>/.exec(homeHtml)?.[0];
-  if (!bar || !foot) throw new Error("the bar or the foot of the welcome page was not found");
-  // The links of the bar that point inside the welcome page keep pointing there from here, and
-  // each language of the list leads to the guide in that language.
-  const barHere = LANGUAGES.reduce(
-    (html, l) =>
-      html.replace(
-        new RegExp(`(<option value="${l}"[^>]*?)data-href="[^"]*"`),
-        `$1data-href="${guidePath(l)}"`,
-      ),
-    bar.replace(/href="#/g, `href="${home}#`),
-  );
-  const url = `${ORIGIN}${guidePath(lang)}`;
+  const url = `${ORIGIN}${pathOf(lang)}`;
+  const { bar, foot } = shell(lang, pathOf);
   const jsonld = JSON.stringify({
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "Article",
-        headline: g.h1,
-        description: g.desc,
-        inLanguage: lang,
-        mainEntityOfPage: url,
-        datePublished: today,
-        dateModified: today,
-        image: `${ORIGIN}/og-image.png`,
-        author: { "@type": "Organization", name: "Heroquill", url: `${ORIGIN}/` },
-        publisher: { "@type": "Organization", name: "Heroquill", url: `${ORIGIN}/` },
-      },
+      a.main(url),
       {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Heroquill", item: `${ORIGIN}${home}` },
-          { "@type": "ListItem", position: 2, name: t["nav.guide"], item: url },
+          { "@type": "ListItem", position: 2, name: a.crumb, item: url },
         ],
       },
     ],
@@ -187,23 +199,23 @@ function guidePage(lang) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#121a2c" />
-    <title>${escapeHtml(g.title)}</title>
-    <meta name="description" content="${escapeAttr(g.desc)}" />
+    <title>${escapeHtml(a.title)}</title>
+    <meta name="description" content="${escapeAttr(a.desc)}" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="${url}" />
-${alternatesOf(guidePath)}
-    <meta property="og:type" content="article" />
+${alternatesOf(pathOf)}
+    <meta property="og:type" content="${a.ogType}" />
     <meta property="og:site_name" content="Heroquill" />
-    <meta property="og:title" content="${escapeAttr(g.title)}" />
-    <meta property="og:description" content="${escapeAttr(g.desc)}" />
+    <meta property="og:title" content="${escapeAttr(a.title)}" />
+    <meta property="og:description" content="${escapeAttr(a.desc)}" />
     <meta property="og:url" content="${url}" />
     <meta property="og:locale" content="${LOCALES[lang]}" />
     <meta property="og:image" content="${ORIGIN}/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${escapeAttr(g.title)}" />
-    <meta name="twitter:description" content="${escapeAttr(g.desc)}" />
+    <meta name="twitter:title" content="${escapeAttr(a.title)}" />
+    <meta name="twitter:description" content="${escapeAttr(a.desc)}" />
     <meta name="twitter:image" content="${ORIGIN}/og-image.png" />
     <script type="application/ld+json">${jsonld}</script>
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
@@ -223,26 +235,26 @@ ${alternatesOf(guidePath)}
     </script>
   </head>
   <body>
-    ${barHere}
+    ${bar}
 
     <main>
       <section class="page-hero on-dark">
         <div class="wrap narrow">
-          <p class="crumb"><a href="${home}">Heroquill</a> › ${escapeHtml(t["nav.guide"])}</p>
-          <h1>${escapeHtml(g.h1)}</h1>
-          <p class="lead">${escapeHtml(g.intro)}</p>
+          <p class="crumb"><a href="${home}">Heroquill</a> › ${escapeHtml(a.crumb)}</p>
+          <h1>${escapeHtml(a.h1)}</h1>
+          <p class="lead">${escapeHtml(a.intro)}</p>
         </div>
       </section>
 
       <article class="band on-light">
-        <div class="wrap narrow prose">
-${guideBlocks(g.sections)}
+        <div class="wrap narrow prose${a.plain ? " plain" : ""}">
+${a.body}
         </div>
       </article>
 
       <section class="cta on-dark">
         <div class="wrap">
-          <p class="lead">${escapeHtml(g.cta)}</p>
+          <p class="lead">${escapeHtml(a.cta)}</p>
           <div class="actions">
             <a class="button" href="/app/#example">${escapeHtml(t["hero.try"])}</a>
             <a class="button ghost" href="/app/">${escapeHtml(t["hero.cta"])}</a>
@@ -258,6 +270,189 @@ ${guideBlocks(g.sections)}
 `;
 }
 
+// The other guides, as a list of links under an article: the main guide first, then the guides
+// that go deeper (the one being read is left out).
+function moreGuides(lang, topic) {
+  const items = [
+    topic && [guidePath(lang), GUIDE[lang].h1],
+    ...GUIDE_TOPICS.filter((other) => other !== topic).map((other) => [
+      guidePath(lang, other),
+      GUIDES[other][lang].h1,
+    ]),
+  ]
+    .filter(Boolean)
+    .map(([href, label]) => `            <li><a href="${href}">${escapeHtml(label)}</a></li>`)
+    .join("\n");
+  return `        <section>
+          <h2>${escapeHtml(MORE[lang])}</h2>
+          <ul>
+${items}
+          </ul>
+        </section>`;
+}
+
+// The guide to creating a character (no topic) and the guides on one part of the app.
+function guidePage(lang, topic) {
+  const g = topic ? GUIDES[topic][lang] : GUIDE[lang];
+  return articleDocument(lang, (l) => guidePath(l, topic), {
+    title: g.title,
+    desc: g.desc,
+    h1: g.h1,
+    intro: g.intro,
+    crumb: topic ? g.label : TEXTS[lang]["nav.guide"],
+    cta: g.cta,
+    ogType: "article",
+    body: `${guideBlocks(g.sections)}\n${moreGuides(lang, topic)}`,
+    main: (url) => ({
+      "@type": "Article",
+      headline: g.h1,
+      description: g.desc,
+      inLanguage: lang,
+      mainEntityOfPage: url,
+      datePublished: today,
+      dateModified: today,
+      image: `${ORIGIN}/og-image.png`,
+      author: { "@type": "Organization", name: "Heroquill", url: `${ORIGIN}/` },
+      publisher: { "@type": "Organization", name: "Heroquill", url: `${ORIGIN}/` },
+    }),
+  });
+}
+
+// ---- the news: the changelog and the roadmap of the app, as a page of reading ----
+const UI = Object.fromEntries(
+  LANGUAGES.map((l) => [l, JSON.parse(readFileSync(`locales/${l}/ui.json`, "utf8"))]),
+);
+
+function newsBody(lang) {
+  const n = NEWS[lang];
+  const label = (version) =>
+    (UI[lang]["about.changelog.version"] ?? "Version {version}").replace("{version}", version);
+  const history = CHANGELOG.map((entry) => {
+    const notes = entry.notes
+      .map((note) => `            <li>${escapeHtml(pick(note, lang))}</li>`)
+      .join("\n");
+    return `        <section>
+          <h3>${escapeHtml(label(entry.version))} <small>${entry.date}</small></h3>
+          <ul>
+${notes}
+          </ul>
+        </section>`;
+  }).join("\n");
+  const roadmap = ROADMAP.map(
+    (item) => `            <li>${escapeHtml(pick(item.text, lang))}</li>`,
+  ).join("\n");
+  return `        <section>
+          <h2>${escapeHtml(n.history)}</h2>
+${history}
+        </section>
+        <section>
+          <h2>${escapeHtml(n.roadmap)}</h2>
+          <p>${escapeHtml(UI[lang]["about.roadmap.intro"] ?? "")}</p>
+          <ul>
+${roadmap}
+          </ul>
+        </section>`;
+}
+
+function newsPage(lang) {
+  const n = NEWS[lang];
+  return articleDocument(lang, newsPagePath, {
+    title: n.title,
+    desc: n.desc,
+    h1: n.h1,
+    intro: n.intro,
+    crumb: TEXTS[lang]["nav.news"],
+    cta: TEXTS[lang]["cta.title"],
+    ogType: "website",
+    plain: true,
+    body: newsBody(lang),
+    main: (url) => ({
+      "@type": "WebPage",
+      name: n.h1,
+      description: n.desc,
+      inLanguage: lang,
+      url,
+      dateModified: CHANGELOG[0]?.date ?? today,
+      isPartOf: { "@id": `${ORIGIN}/#website` },
+    }),
+  });
+}
+
+// ---- contribute: the ways of helping, each shown only while its address is set ----
+// A small drawn icon for each way; site.css moves it when its section scrolls into view.
+const ICONS = {
+  like: '<path class="heart" d="M12 20.5C5 15.6 3 12.2 3 9.1 3 6.6 4.9 4.8 7.2 4.8c1.8 0 3.4 1 4.8 3 1.4-2 3-3 4.8-3C19.1 4.8 21 6.6 21 9.1c0 3.1-2 6.5-9 11.4z"/>',
+  translate:
+    '<path d="M3 5.5h10M8 3.5v2M5 5.5c.6 3 2.6 5.2 5.5 6.5M11 5.5c-.7 3-3 5.6-6.5 7.2"/><path class="word" d="M12.5 20.5l4-10 4 10M14 17h5"/>',
+  report:
+    '<g class="bug"><ellipse cx="12" cy="14" rx="4.2" ry="5.5"/><path d="M9.5 8.5c.5-2.2 4.5-2.2 5 0M3.5 12.5l4.5 1M3.5 19l4.5-2M20.5 12.5l-4.5 1M20.5 19l-4.5-2M12 8.5v11"/></g>',
+  code: '<path class="brace" d="M8 6l-6 6 6 6M16 6l6 6-6 6"/><path class="slash" d="M14 4.5l-4 15"/>',
+};
+
+function contributeBody(lang) {
+  const c = CONTRIBUTE[lang];
+  const link = (href, label, extra = "") =>
+    `<a${extra} href="${escapeAttr(href)}" rel="noopener">${escapeHtml(label)}</a>`;
+  const mail = `mailto:${COMMUNITY.email}`;
+  // The other way to reach out goes on a line of its own, so it never wraps beside the button.
+  const other = (html) => `<span class="other">${html}</span>`;
+  const section = (icon, heading, body, actions) =>
+    `        <section class="reveal">
+          <h2><svg class="icon icon-${icon}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[icon]}</svg>${escapeHtml(heading)}</h2>
+          <p>${escapeHtml(body)}</p>
+          <p class="actions">${actions.filter(Boolean).join("\n            ")}</p>
+        </section>`;
+  return [
+    (COMMUNITY.discussions || COMMUNITY.email) &&
+      section("like", c.like.heading, c.like.body, [
+        COMMUNITY.discussions && link(COMMUNITY.discussions, c.like.discussions, ' class="button"'),
+        COMMUNITY.email && other(link(mail, `${c.like.email}: ${COMMUNITY.email}`)),
+      ]),
+    COMMUNITY.weblate &&
+      section("translate", c.translate.heading, c.translate.body, [
+        link(COMMUNITY.weblate, c.translate.link, ' class="button"'),
+        other(link(guidePath(lang, "weblate"), c.translate.guide)),
+      ]),
+    (COMMUNITY.issues || COMMUNITY.email) &&
+      section("report", c.report.heading, c.report.body, [
+        COMMUNITY.issues && link(COMMUNITY.issues, c.report.issues, ' class="button"'),
+        COMMUNITY.email && other(`${escapeHtml(c.report.email)} ${link(mail, COMMUNITY.email)}`),
+      ]),
+    COMMUNITY.repo &&
+      section("code", c.code.heading, c.code.body, [
+        link(COMMUNITY.repo, c.code.link, ' class="button"'),
+      ]),
+    COMMUNITY.email &&
+      `        <section class="reveal">\n          <p class="muted">${escapeHtml(c.privacy)}</p>\n        </section>`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+function contributePage(lang) {
+  const c = CONTRIBUTE[lang];
+  return articleDocument(lang, contributePagePath, {
+    title: c.title,
+    desc: c.desc,
+    h1: c.h1,
+    intro: c.intro,
+    crumb: TEXTS[lang]["nav.contribute"],
+    cta: c.cta,
+    ogType: "website",
+    plain: true,
+    body: contributeBody(lang),
+    main: (url) => ({
+      "@type": "WebPage",
+      name: c.h1,
+      description: c.desc,
+      inLanguage: lang,
+      url,
+      dateModified: today,
+      isPartOf: { "@id": `${ORIGIN}/#website` },
+    }),
+  });
+}
+
 // ---- the pages ----
 mkdirSync("dist", { recursive: true });
 for (const lang of LANGUAGES) {
@@ -267,7 +462,21 @@ for (const lang of LANGUAGES) {
   const guideDirectory = `dist${guidePath(lang).slice(0, -1)}`;
   mkdirSync(guideDirectory, { recursive: true });
   writeFileSync(`${guideDirectory}/index.html`, guidePage(lang));
+  for (const topic of GUIDE_TOPICS) {
+    const topicDirectory = `dist${guidePath(lang, topic).slice(0, -1)}`;
+    mkdirSync(topicDirectory, { recursive: true });
+    writeFileSync(`${topicDirectory}/index.html`, guidePage(lang, topic));
+  }
+  const newsDirectory = `dist${newsPagePath(lang).slice(0, -1)}`;
+  mkdirSync(newsDirectory, { recursive: true });
+  writeFileSync(`${newsDirectory}/index.html`, newsPage(lang));
+  const contributeDirectory = `dist${contributePagePath(lang).slice(0, -1)}`;
+  mkdirSync(contributeDirectory, { recursive: true });
+  writeFileSync(`${contributeDirectory}/index.html`, contributePage(lang));
 }
+
+// What the app reads, to tell what changes before it updates: the latest versions.
+writeFileSync("dist/changelog.json", JSON.stringify({ entries: CHANGELOG.slice(0, 12) }));
 
 // ---- what the pages share, and the files that are copied as they are ----
 for (const file of [
@@ -312,6 +521,11 @@ const entryOf = (pathOf, lang) => {
 const entries = [
   ...LANGUAGES.map((lang) => entryOf(homePath, lang)),
   ...LANGUAGES.map((lang) => entryOf(guidePath, lang)),
+  ...GUIDE_TOPICS.flatMap((topic) =>
+    LANGUAGES.map((lang) => entryOf((l) => guidePath(l, topic), lang)),
+  ),
+  ...LANGUAGES.map((lang) => entryOf(newsPagePath, lang)),
+  ...LANGUAGES.map((lang) => entryOf(contributePagePath, lang)),
 ].join("\n");
 writeFileSync(
   "dist/sitemap.xml",

@@ -3,7 +3,6 @@
 // of blocks: a string is a paragraph, an array is a list of items.
 export const GUIDE = {
   en: {
-    slug: "guide",
     title: "How to Create a D&D 5e Character, Step by Step",
     desc: "A step-by-step guide to creating a Dungeons & Dragons 5th edition character: species, class, ability scores, background, equipment and spells.",
     h1: "How to create a D&D 5e character",
@@ -81,7 +80,6 @@ export const GUIDE = {
     cta: "Want to see a finished character? Open Aria, a level 5 elf wizard, or start your own.",
   },
   it: {
-    slug: "guida",
     title: "Come creare un personaggio di D&D 5e, passo per passo",
     desc: "Una guida passo per passo per creare un personaggio di Dungeons & Dragons 5a edizione: specie, classe, punteggi, background, equipaggiamento e incantesimi.",
     h1: "Come creare un personaggio di D&D 5e",
@@ -159,7 +157,6 @@ export const GUIDE = {
     cta: "Vuoi vedere un personaggio finito? Apri Aria, una maga elfa di livello 5, oppure inizia il tuo.",
   },
   fr: {
-    slug: "guide",
     title: "Comment créer un personnage de D&D 5e, pas à pas",
     desc: "Un guide pas à pas pour créer un personnage de Donjons & Dragons 5e édition : espèce, classe, caractéristiques, historique, équipement et sorts.",
     h1: "Comment créer un personnage de D&D 5e",
@@ -237,7 +234,6 @@ export const GUIDE = {
     cta: "Envie de voir un personnage terminé ? Ouvre Aria, une magicienne elfe de niveau 5, ou crée le tien.",
   },
   de: {
-    slug: "anleitung",
     title: "D&D-5e-Charakter erstellen: Anleitung Schritt für Schritt",
     desc: "Eine Schritt-für-Schritt-Anleitung, um einen Dungeons-&-Dragons-Charakter der 5. Edition zu erstellen: Volk, Klasse, Attributswerte, Hintergrund, Ausrüstung und Zauber.",
     h1: "So erstellst du einen D&D-5e-Charakter",
@@ -315,7 +311,6 @@ export const GUIDE = {
     cta: "Willst du einen fertigen Charakter sehen? Öffne Aria, eine Elfenmagierin der Stufe 5, oder beginne deinen eigenen.",
   },
   es: {
-    slug: "guia",
     title: "Cómo crear un personaje de D&D 5e, paso a paso",
     desc: "Una guía paso a paso para crear un personaje de Dungeons & Dragons 5.ª edición: especie, clase, puntuaciones, trasfondo, equipo y conjuros.",
     h1: "Cómo crear un personaje de D&D 5e",

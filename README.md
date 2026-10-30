@@ -83,7 +83,9 @@ Node 20+ is required (the PWA build step fails on older versions); Node 22 is us
 site is published to Cloudflare (Workers static assets, `wrangler.jsonc`) by the workflow in
 `.github/workflows/`: the welcome page and the legal pages are in `site/`, the app is built into
 `dist/app/`, and `npm run build` makes one plain page per language of the welcome page (`site/`, with the
-texts in `site/texts.mjs`) with a sitemap and the data for search engines. The old address (github.io) gets a build that only helps people move to Heroquill,
+texts in `site/texts.mjs`), the guide (`site/guide.mjs`) and the news page, made from the changelog and the
+roadmap of `src/content/news.ts`, with a sitemap, the data for search engines and `changelog.json`, which the
+app reads to tell what an update brings. The old address (github.io) gets a build that only helps people move to Heroquill,
 published by hand with the workflow `legacy-site.yml` (`npm run build:legacy`).
 
 | Command | What it does |
@@ -112,6 +114,12 @@ translations from their PDFs into `locales/`; see [docs/TRANSLATING.md](docs/TRA
 
 The stack is Vite, Preact with signals, strict TypeScript, valibot, Biome, Vitest and
 vite-plugin-pwa.
+
+## Contributing
+
+Code, translations ([Weblate](https://weblate.mystikal.it/projects/heroquill/)), bug reports and
+a hello are all welcome: see [CONTRIBUTING.md](CONTRIBUTING.md). Questions and ideas go in
+[Discussions](https://github.com/Mystikal91/dnd-character-maker/discussions).
 
 ## Versions and changelog
 

@@ -260,10 +260,8 @@
   bottom: 0.75rem;
   left: 0.75rem;
   z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  display: grid;
+  gap: 0.4rem;
   max-width: 28rem;
   margin: 0 auto;
   padding: 0.6rem 0.75rem;
@@ -1508,4 +1506,31 @@ button:not(:disabled):not(.roll-toast):active {
   background-color: var(--accent);
   color: var(--accent-contrast);
   font-weight: 600;
+}
+
+/* The update notice: the strip, and under it what changes. */
+.update-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.update-news {
+  font-size: 0.9rem;
+}
+
+.update-news summary {
+  min-height: 2rem;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.update-news ul {
+  display: grid;
+  gap: 0.4rem;
+  max-height: 10rem;
+  margin: 0.3rem 0;
+  padding-left: 1.1rem;
+  overflow-y: auto;
 }

@@ -18,6 +18,47 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.13.0 beta",
+    date: "2026-10-30",
+    notes: [
+      {
+        en: "When a new version is ready, the update notice now tells what changes: tap “What changes” to read the newest versions in a few words before you update. The changelog and the roadmap are also on the website, in the five languages, where they can be shared and found (the link is in the About page).",
+        it: "Quando è pronta una nuova versione, l’avviso di aggiornamento ora dice cosa cambia: tocca «Cosa cambia» per leggere in poche parole le versioni più recenti prima di aggiornare. Le novità e la roadmap sono anche sul sito, nelle cinque lingue, dove si possono condividere e trovare (il link è nella pagina Info).",
+        fr: "Quand une nouvelle version est prête, l’avis de mise à jour dit maintenant ce qui change : touche « Ce qui change » pour lire en quelques mots les versions les plus récentes avant de mettre à jour. Les nouveautés et la feuille de route sont aussi sur le site, dans les cinq langues, où on peut les partager et les trouver (le lien est dans la page Infos).",
+        de: "Wenn eine neue Version bereit ist, sagt der Update-Hinweis jetzt, was sich ändert: Tippe auf „Was sich ändert“, um die neuesten Versionen vor dem Update in wenigen Worten zu lesen. Neuigkeiten und Roadmap stehen auch auf der Website, in den fünf Sprachen, wo man sie teilen und finden kann (der Link steht auf der Info-Seite).",
+        es: "Cuando una versión nueva está lista, el aviso de actualización ahora dice qué cambia: toca «Qué cambia» para leer en pocas palabras las versiones más recientes antes de actualizar. Las novedades y la hoja de ruta también están en el sitio web, en los cinco idiomas, donde se pueden compartir y encontrar (el enlace está en la página Info).",
+      },
+      {
+        en: "A new Contribute page on the website, in the five languages, explains how to help: translating in the browser on Weblate, reporting a problem, writing to say you like it, or working on the code, which is free under the MIT licence.",
+        it: "Una nuova pagina «Contribuisci» sul sito, nelle cinque lingue, spiega come dare una mano: tradurre dal browser su Weblate, segnalare un problema, scrivere per dire che ti piace o lavorare sul codice, libero con licenza MIT.",
+        fr: "Une nouvelle page « Contribuer » sur le site, dans les cinq langues, explique comment aider : traduire depuis le navigateur sur Weblate, signaler un problème, écrire pour dire que ça te plaît ou travailler sur le code, libre sous licence MIT.",
+        de: "Eine neue Seite „Mitmachen“ auf der Website, in den fünf Sprachen, erklärt, wie man helfen kann: im Browser auf Weblate übersetzen, ein Problem melden, schreiben, dass es gefällt, oder am Code mitarbeiten, der frei unter der MIT-Lizenz steht.",
+        es: "Una nueva página «Colabora» en el sitio, en los cinco idiomas, explica cómo ayudar: traducir desde el navegador en Weblate, avisar de un problema, escribir para decir que te gusta o trabajar en el código, libre con licencia MIT.",
+      },
+      {
+        en: "A guided tour for new users: a short walk through the app that lights up each part (characters, build steps, sheet, play, rules, print, menu) with a card that says what it is for. It is offered on the welcome screen and is always in the ☰ menu. The website also has three new guides, in the five languages: how to import Aurora content, how to turn on automatic translation and get a DeepL key, and how to translate Heroquill on Weblate. The Content packs and Automatic translation pages link to them.",
+        it: "Un giro guidato per chi arriva per la prima volta: una breve passeggiata nell’app che illumina ogni parte (personaggi, passi di creazione, scheda, gioco, regole, stampa, menu) con una scheda che dice a cosa serve. Viene proposto nella schermata di benvenuto ed è sempre nel menu ☰. Il sito ha anche tre nuove guide, nelle cinque lingue: come importare i contenuti di Aurora, come attivare la traduzione automatica e ottenere una chiave DeepL, e come tradurre Heroquill su Weblate. Le pagine Pacchetti di contenuti e Traduzione automatica le richiamano.",
+        fr: "Une visite guidée pour les nouveaux : une courte balade dans l’app qui éclaire chaque partie (personnages, étapes de création, fiche, jeu, règles, impression, menu) avec une carte qui dit à quoi elle sert. Elle est proposée sur l’écran d’accueil et se trouve toujours dans le menu ☰. Le site a aussi trois nouveaux guides, dans les cinq langues : comment importer le contenu d’Aurora, comment activer la traduction automatique et obtenir une clé DeepL, et comment traduire Heroquill sur Weblate. Les pages Paquets de contenu et Traduction automatique y renvoient.",
+        de: "Ein geführter Rundgang für Neue: ein kurzer Gang durch die App, der jeden Teil hervorhebt (Charaktere, Erstellungsschritte, Bogen, Spielen, Regeln, Drucken, Menü), mit einer Karte, die sagt, wofür er da ist. Er wird auf dem Willkommensbildschirm angeboten und steht immer im Menü ☰. Die Website hat außerdem drei neue Anleitungen in den fünf Sprachen: wie man Aurora-Inhalte importiert, wie man die automatische Übersetzung aktiviert und einen DeepL-Schlüssel bekommt, und wie man Heroquill auf Weblate übersetzt. Die Seiten Inhaltspakete und Automatische Übersetzung verweisen darauf.",
+        es: "Un recorrido guiado para quien llega por primera vez: un breve paseo por la app que ilumina cada parte (personajes, pasos de creación, hoja, jugar, reglas, imprimir, menú) con una tarjeta que dice para qué sirve. Se ofrece en la pantalla de bienvenida y está siempre en el menú ☰. El sitio web tiene además tres guías nuevas, en los cinco idiomas: cómo importar contenido de Aurora, cómo activar la traducción automática y conseguir una clave de DeepL, y cómo traducir Heroquill en Weblate. Las páginas Paquetes de contenido y Traducción automática enlazan con ellas.",
+      },
+      {
+        en: "Bringing in a backup (from Google Drive or a file) no longer piles up duplicates: when a character is already here with other content, you choose to use the most recent (backups made from now on carry the date each character last changed), keep the one on the device, or keep both. The guided tour also stops at Content packs and at Automatic translation, to show where an Aurora address and a DeepL key go.",
+        it: "Portare dentro un backup (da Google Drive o da un file) non accumula più duplicati: quando un personaggio è già qui con un contenuto diverso, scegli se usare il più recente (i backup fatti da ora in poi portano la data dell’ultima modifica di ogni personaggio), mantenere quello presente sul dispositivo o mantenerli entrambi. Il giro guidato fa inoltre tappa in Pacchetti di contenuti e in Traduzione automatica, per mostrare dove vanno un indirizzo di Aurora e una chiave DeepL.",
+        fr: "Importer une sauvegarde (depuis Google Drive ou un fichier) n’accumule plus de doublons : quand un personnage est déjà ici avec un contenu différent, tu choisis d’utiliser le plus récent (les sauvegardes faites à partir de maintenant portent la date de la dernière modification de chaque personnage), de garder celui de l’appareil ou de garder les deux. La visite guidée s’arrête aussi sur Paquets de contenu et sur Traduction automatique, pour montrer où vont une adresse Aurora et une clé DeepL.",
+        de: "Eine Sicherung einzuspielen (aus Google Drive oder einer Datei) häuft keine Duplikate mehr an: Ist ein Charakter schon mit anderem Inhalt hier, wählst du, ob der neueste verwendet wird (ab jetzt erstellte Sicherungen tragen das Datum der letzten Änderung jedes Charakters), der auf dem Gerät bleibt oder beide behalten werden. Der geführte Rundgang hält außerdem bei Inhaltspakete und bei Automatische Übersetzung, um zu zeigen, wohin eine Aurora-Adresse und ein DeepL-Schlüssel gehören.",
+        es: "Traer una copia de seguridad (desde Google Drive o un archivo) ya no acumula duplicados: cuando un personaje ya está aquí con otro contenido, eliges usar el más reciente (las copias hechas de ahora en adelante llevan la fecha del último cambio de cada personaje), conservar el del dispositivo o conservar ambos. El recorrido guiado también se detiene en Paquetes de contenido y en Traducción automática, para mostrar dónde van una dirección de Aurora y una clave de DeepL.",
+      },
+      {
+        en: "Printing from iPhones and iPads with Safari is fixed: the sheet no longer comes out with a black border when background graphics are printed, and the double line of the frames prints sharp.",
+        it: "Sistemata la stampa da iPhone e iPad con Safari: la scheda non esce più con un bordo nero quando si stampano gli sfondi, e la doppia linea delle cornici si stampa nitida.",
+        fr: "L’impression depuis iPhone et iPad avec Safari est corrigée : la fiche ne sort plus avec une bordure noire quand les arrière-plans sont imprimés, et la double ligne des cadres s’imprime nette.",
+        de: "Das Drucken von iPhone und iPad mit Safari ist behoben: Der Bogen kommt nicht mehr mit schwarzem Rand heraus, wenn Hintergrundgrafiken gedruckt werden, und die Doppellinie der Rahmen druckt scharf.",
+        es: "Arreglada la impresión desde iPhone y iPad con Safari: la hoja ya no sale con un borde negro al imprimir los gráficos de fondo, y la doble línea de los marcos se imprime nítida.",
+      },
+    ],
+  },
+  {
     version: "1.12.3 beta",
     date: "2026-10-29",
     notes: [
@@ -818,3 +859,81 @@ export const ROADMAP: RoadmapItem[] = [
 export function pick(text: Translated, language: string): string {
   return (text as Record<string, string | undefined>)[language] ?? text.en;
 }
+
+/** The address of the news page of the website, for each language (the changelog and the roadmap). */
+export const NEWS_SLUGS: Record<LanguageCode, string> = {
+  en: "changelog",
+  it: "novita",
+  fr: "nouveautes",
+  de: "neuigkeiten",
+  es: "novedades",
+};
+
+/** `/changelog/` for English, `/it/novita/` for Italian, and so on. */
+export const newsPath = (language: string): string => {
+  const slug = (NEWS_SLUGS as Record<string, string | undefined>)[language] ?? NEWS_SLUGS.en;
+  return language === "en" || !(language in NEWS_SLUGS) ? `/${slug}/` : `/${language}/${slug}/`;
+};
+
+/** The address of the page of the website about helping out, for each language. */
+export const CONTRIBUTE_SLUGS: Record<LanguageCode, string> = {
+  en: "contribute",
+  it: "contribuisci",
+  fr: "contribuer",
+  de: "mitmachen",
+  es: "colaborar",
+};
+
+/** `/contribute/` for English, `/it/contribuisci/` for Italian, and so on. */
+export const contributePath = (language: string): string => {
+  const slug =
+    (CONTRIBUTE_SLUGS as Record<string, string | undefined>)[language] ?? CONTRIBUTE_SLUGS.en;
+  return language === "en" || !(language in CONTRIBUTE_SLUGS)
+    ? `/${slug}/`
+    : `/${language}/${slug}/`;
+};
+
+/** The address of the guide of the website (how to create a character), for each language. */
+export const GUIDE_SLUGS: Record<LanguageCode, string> = {
+  en: "guide",
+  it: "guida",
+  fr: "guide",
+  de: "anleitung",
+  es: "guia",
+};
+
+/** The guides that go deeper into one part of the app, each under the guide. */
+export const GUIDE_TOPICS = ["aurora", "autotranslate", "weblate"] as const;
+export type GuideTopic = (typeof GUIDE_TOPICS)[number];
+
+const TOPIC_SLUGS: Record<GuideTopic, Record<LanguageCode, string>> = {
+  aurora: {
+    en: "import-aurora",
+    it: "importare-aurora",
+    fr: "importer-aurora",
+    de: "aurora-importieren",
+    es: "importar-aurora",
+  },
+  autotranslate: {
+    en: "auto-translation",
+    it: "traduzione-automatica",
+    fr: "traduction-automatique",
+    de: "automatische-uebersetzung",
+    es: "traduccion-automatica",
+  },
+  weblate: {
+    en: "translate-heroquill",
+    it: "traduci-heroquill",
+    fr: "traduire-heroquill",
+    de: "heroquill-uebersetzen",
+    es: "traducir-heroquill",
+  },
+};
+
+/** `/guide/` for English, `/it/guida/` for Italian; with a topic, `/guide/import-aurora/` and so on. */
+export const guidePath = (language: string, topic?: GuideTopic): string => {
+  const known = language in GUIDE_SLUGS;
+  const code = (known ? language : "en") as LanguageCode;
+  const base = code === "en" ? `/${GUIDE_SLUGS.en}/` : `/${code}/${GUIDE_SLUGS[code]}/`;
+  return topic ? `${base}${TOPIC_SLUGS[topic][code]}/` : base;
+};

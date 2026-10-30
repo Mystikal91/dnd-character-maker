@@ -76,6 +76,10 @@ export const TEXTS = {
     "val.pdf": "Print and PDF",
     "nav.guide": "Guide",
     "foot.guide": "Guide",
+    "nav.news": "News",
+    "foot.news": "News",
+    "foot.contribute": "Contribute",
+    "nav.contribute": "Contribute",
   },
   it: {
     "meta.title": "Heroquill – Creatore di personaggi D&D 5e gratis",
@@ -154,6 +158,10 @@ export const TEXTS = {
     "val.pdf": "Stampa e PDF",
     "nav.guide": "Guida",
     "foot.guide": "Guida",
+    "nav.news": "Novità",
+    "foot.news": "Novità",
+    "foot.contribute": "Contribuisci",
+    "nav.contribute": "Contribuisci",
   },
   fr: {
     "meta.title": "Heroquill – Créateur de personnages D&D 5e gratuit",
@@ -233,6 +241,10 @@ export const TEXTS = {
     "val.pdf": "Impression et PDF",
     "nav.guide": "Guide",
     "foot.guide": "Guide",
+    "nav.news": "Nouveautés",
+    "foot.news": "Nouveautés",
+    "foot.contribute": "Contribuer",
+    "nav.contribute": "Contribuer",
   },
   de: {
     "meta.title": "Heroquill – Kostenloser D&D-5e-Charaktergenerator",
@@ -312,6 +324,10 @@ export const TEXTS = {
     "val.pdf": "Druck und PDF",
     "nav.guide": "Anleitung",
     "foot.guide": "Anleitung",
+    "nav.news": "Neuigkeiten",
+    "foot.news": "Neuigkeiten",
+    "foot.contribute": "Mitmachen",
+    "nav.contribute": "Mitmachen",
   },
   es: {
     "meta.title": "Heroquill – Creador de personajes D&D 5e gratis",
@@ -389,5 +405,9 @@ export const TEXTS = {
     "val.pdf": "Impresión y PDF",
     "nav.guide": "Guía",
     "foot.guide": "Guía",
+    "nav.news": "Novedades",
+    "foot.news": "Novedades",
+    "foot.contribute": "Colabora",
+    "nav.contribute": "Colabora",
   },
 };

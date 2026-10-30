@@ -26,6 +26,16 @@ function named(name: string) {
 }
 
 describe("character storage", () => {
+  it("keeps the date of a character that was saved again without a change", async () => {
+    const c = named("Dated");
+    await saveCharacter(c, 1000);
+    await saveCharacter(c, 5000);
+    const date = async () => (await listCharacters()).find((s) => s.id === c.id)?.updatedAt;
+    expect(await date()).toBe(1000);
+    await saveCharacter({ ...c, name: "Dated again" }, 7000);
+    expect(await date()).toBe(7000);
+  });
+
   it("saves and loads a character", async () => {
     const c = named("Aria");
     c.classes = [{ classId: "srd51:class/rogue", level: 2 }];

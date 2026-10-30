@@ -1,6 +1,7 @@
 import { signal } from "@preact/signals";
 import { showView } from "../app/navigation";
 import { character, characters, openExample } from "../app/store";
+import { startTour } from "../app/tour";
 import { ui } from "../i18n/ui";
 import { Logo } from "./Logo";
 
@@ -50,6 +51,15 @@ export function Welcome() {
           title={ui("welcome.exampleHint")}
         >
           {ui("welcome.tryExample")}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            dismiss();
+            startTour();
+          }}
+        >
+          {ui("tour.start")}
         </button>
         <button
           type="button"

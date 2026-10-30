@@ -42,6 +42,8 @@ export interface Bundle {
   version: 1;
   exportedAt: string;
   characters?: unknown[];
+  /** When each character last changed (by id, in milliseconds), to tell which copy is newer. */
+  characterTimes?: Record<string, number>;
   /** Homebrew packs, whole. */
   homebrew?: unknown[];
   /** The quick edits of each language, whole. */
@@ -58,6 +60,7 @@ export interface Bundle {
 /** What the app has now, to take from. */
 export interface Sources {
   characters: Character[];
+  characterTimes?: Record<string, number>;
   packs: UserPackRecord[];
   settings: TransferSettings;
   deeplKey: string;
@@ -94,6 +97,7 @@ export function buildBundle(
     version: 1,
     exportedAt: now.toISOString(),
     ...(has("characters") && { characters: sources.characters }),
+    ...(has("characters") && sources.characterTimes && { characterTimes: sources.characterTimes }),
     ...(has("homebrew") && { homebrew: sources.packs.filter((p) => p.origin === "homebrew") }),
     ...(has("edits") && { edits: sources.packs.filter((p) => p.origin === "edits") }),
     ...(has("links") && { links, files }),
@@ -119,7 +123,10 @@ export function describeBundle(bundle: Bundle): Record<Section, number> {
 /** The same file with only the chosen sections left. */
 export function onlySections(bundle: Bundle, include: ReadonlySet<Section>): Bundle {
   const out: Bundle = { ...bundle };
-  if (!include.has("characters")) out.characters = undefined;
+  if (!include.has("characters")) {
+    out.characters = undefined;
+    out.characterTimes = undefined;
+  }
   if (!include.has("homebrew")) out.homebrew = undefined;
   if (!include.has("edits")) out.edits = undefined;
   if (!include.has("links")) {

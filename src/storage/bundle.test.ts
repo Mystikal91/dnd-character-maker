@@ -71,6 +71,15 @@ describe("a transfer file", () => {
     expect(JSON.stringify(bundle)).not.toContain("secret:fx");
   });
 
+  it("says when each character last changed, only along with the characters", () => {
+    const withTimes = { ...sources, characterTimes: { a: 10, b: 20 } };
+    expect(buildBundle(withTimes, new Set<Section>(["characters"])).characterTimes).toEqual({
+      a: 10,
+      b: 20,
+    });
+    expect(buildBundle(withTimes, new Set<Section>(["settings"])).characterTimes).toBeUndefined();
+  });
+
   it("carries the key only when it is chosen", () => {
     expect(buildBundle(sources, all).deeplKey).toBe("secret:fx");
   });

@@ -1,6 +1,7 @@
 import { useState } from "preact/hooks";
 import { language } from "../app/language";
 import { leavePage } from "../app/navigation";
+import { guidePath } from "../content/news";
 import { type UiKey, ui } from "../i18n/ui";
 import {
   autoError,
@@ -89,7 +90,7 @@ export function AutoTranslatePage() {
       </p>
 
       <h3>{ui("translate.connection")}</h3>
-      <details class="howto" open={Boolean(settings.key)}>
+      <details class="howto" data-tour="deepl" open={Boolean(settings.key)}>
         <summary>{ui("translate.advanced")}</summary>
         <label class="field">
           <span>{ui("translate.key")}</span>
@@ -116,6 +117,15 @@ export function AutoTranslatePage() {
             <li>{ui("translate.howTo3")}</li>
           </ol>
           <p class="muted">{ui("translate.howToNote")}</p>
+          <p>
+            <a
+              href={guidePath(language.value, "autotranslate")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {ui("guide.readMore")}
+            </a>
+          </p>
         </details>
         <label class="field">
           <span>{ui("translate.relay")}</span>

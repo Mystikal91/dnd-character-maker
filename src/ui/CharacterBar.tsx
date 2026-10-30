@@ -23,8 +23,8 @@ import { ui } from "../i18n/ui";
 import { Popover } from "./Popover";
 import { shareOpen } from "./ShareDialog";
 
+// Nothing is said while idle, so that state has no text to translate.
 const STATUS_KEYS = {
-  idle: "bar.idle",
   saving: "bar.saving",
   saved: "bar.saved",
   failed: "bar.notSaved",
@@ -53,7 +53,7 @@ export function CharacterBar() {
       <div class="bar-head">
         <label for="character-select">{ui("bar.character")}</label>
         <output class={`bar-status status-${saveStatus.value}`}>
-          {ui(STATUS_KEYS[saveStatus.value])}
+          {saveStatus.value === "idle" ? "" : ui(STATUS_KEYS[saveStatus.value])}
         </output>
       </div>
       <div class="bar-row">

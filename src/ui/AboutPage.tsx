@@ -2,7 +2,7 @@ import { aboutTab } from "../app/about";
 import { language } from "../app/language";
 import { leavePage, showView } from "../app/navigation";
 import { STAGE, VERSION } from "../app/version";
-import { CHANGELOG, ROADMAP, pick } from "../content/news";
+import { CHANGELOG, ROADMAP, contributePath, newsPath, pick } from "../content/news";
 import { type UiKey, ui } from "../i18n/ui";
 
 const REPO_URL = "https://github.com/Mystikal91/dnd-character-maker";
@@ -43,6 +43,10 @@ function Home() {
             {ui("about.home.beta.report")}
           </a>
           {" · "}
+          <a href={contributePath(language.value)} target="_blank" rel="noopener noreferrer">
+            {ui("about.contribute")}
+          </a>
+          {" · "}
           <button type="button" class="link" onClick={() => showView("credits")}>
             {ui("footer.credits")}
           </button>
@@ -51,6 +55,15 @@ function Home() {
     </>
   );
 }
+
+/** The changelog and the roadmap are on the website too, where they can be linked and found. */
+const OnTheWeb = () => (
+  <p>
+    <a href={newsPath(language.value)} target="_blank" rel="noopener noreferrer">
+      {ui("about.onTheWeb")}
+    </a>
+  </p>
+);
 
 function Roadmap() {
   return (
@@ -61,6 +74,7 @@ function Roadmap() {
           <li key={item.id}>{pick(item.text, language.value)}</li>
         ))}
       </ul>
+      <OnTheWeb />
     </>
   );
 }
@@ -69,6 +83,7 @@ function Changelog() {
   return (
     <>
       <p>{ui("about.changelog.intro")}</p>
+      <OnTheWeb />
       {CHANGELOG.map((entry) => (
         <section key={entry.version}>
           <h3>

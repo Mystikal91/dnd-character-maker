@@ -324,21 +324,63 @@ export async function exportAllCharacters() {
 }
 
 /**
- * Puts the characters of a backup back. One that is already here and the same is left alone; one
- * with the same id that differs becomes a copy, so nothing is overwritten.
+ * What to do with a character of a backup that is already here with other content: take the one
+ * that changed last, keep the one here, or keep both.
+ */
+export type ConflictPolicy = "newest" | "keep" | "copy";
+
+const sameCharacter = (a: Character, b: Character) => JSON.stringify(a) === JSON.stringify(b);
+
+/** How many of these characters are already here with other content (the same id, not the same text). */
+export async function countConflicts(incomingList: Character[]): Promise<number> {
+  let n = 0;
+  for (const incoming of incomingList) {
+    if (!characters.value.some((s) => s.id === incoming.id)) continue;
+    const here = await loadCharacter(incoming.id);
+    if (here && !sameCharacter(here, incoming)) n += 1;
+  }
+  return n;
+}
+
+/**
+ * Puts the characters of a backup back. One that is already here and the same is left alone. One
+ * with the same id that differs is, as chosen: replaced by the one of the backup, left as it is, or
+ * kept beside it as a copy, so that nothing is lost unless the person says so.
  */
 export async function restoreCharacters(
   incomingList: Character[],
-): Promise<{ added: number; skipped: number }> {
+  policy: ConflictPolicy = "copy",
+  /** When each incoming character last changed, if the backup says. */
+  times: Record<string, number> = {},
+): Promise<{ added: number; skipped: number; replaced: number }> {
   let added = 0;
   let skipped = 0;
+  let replaced = 0;
   let last: Character | undefined;
+  // Edits not yet saved belong to what is here: they must not land on top of what comes in.
+  if (saveTimer !== undefined) await saveNow();
   for (const incoming of incomingList) {
     const here = characters.value.some((s) => s.id === incoming.id)
       ? await loadCharacter(incoming.id)
       : undefined;
-    if (here && JSON.stringify(here) === JSON.stringify(incoming)) {
+    if (here && sameCharacter(here, incoming)) {
       skipped += 1;
+      continue;
+    }
+    // With no date on the incoming one, nobody can tell which is newer: both are kept.
+    const theirs = times[incoming.id];
+    const mine = characters.value.find((s) => s.id === incoming.id)?.updatedAt ?? 0;
+    const dated = policy === "newest" && typeof theirs === "number";
+    if (here && (policy === "keep" || (dated && theirs <= mine))) {
+      skipped += 1;
+      continue;
+    }
+    if (here && dated) {
+      await saveCharacter(incoming, theirs);
+      // The open character is shown as it is now.
+      if (character.peek().id === incoming.id) character.value = incoming;
+      replaced += 1;
+      last = incoming;
       continue;
     }
     const kept = here
@@ -348,13 +390,13 @@ export async function restoreCharacters(
           name: ui("bar.copyName", { name: incoming.name || ui("sheet.unnamed") }),
         }
       : incoming;
-    await saveCharacter(kept);
+    await saveCharacter(kept, here ? undefined : times[incoming.id]);
     last = kept;
     added += 1;
   }
   await refreshList();
   if (last) await switchTo(last);
-  return { added, skipped };
+  return { added, skipped, replaced };
 }
 
 async function restoreBackup(backup: { characters: Character[]; unreadable: number }) {

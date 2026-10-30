@@ -8,6 +8,7 @@ import {
   saveToDrive,
 } from "../app/drive";
 import { LEGACY_SITE, NEW_APP_URL } from "../app/legacy";
+import { type ConflictPolicy, countConflicts } from "../app/store";
 import {
   type TransferReport,
   applyTransfer,
@@ -17,6 +18,7 @@ import {
 } from "../app/transfer";
 import { transferDialog, transferInbox } from "../app/transferState";
 import { importProgress } from "../app/userPacks";
+import { parseCharacter } from "../engine/characterSchema";
 import { type UiKey, ui } from "../i18n/ui";
 import {
   type Bundle,
@@ -378,6 +380,8 @@ function Report({ report }: { report: TransferReport }) {
               added: report.characters.added,
               skipped: report.characters.skipped,
             })}
+            {report.characters.replaced > 0 &&
+              ` ${ui("transfer.report.replaced", { n: report.characters.replaced })}`}
           </li>
         )}
         {report.packs !== undefined && <li>{ui("transfer.report.packs", { n: report.packs })}</li>}
@@ -429,11 +433,22 @@ function ImportPane() {
   const [chosen, setChosen] = useState<Set<Section>>(new Set());
   const [report, setReport] = useState<TransferReport | undefined>(undefined);
   const [busy, setBusy] = useState(false);
+  const [conflicts, setConflicts] = useState(0);
+  const [policy, setPolicy] = useState<ConflictPolicy>("newest");
 
   const take = useCallback((found: Bundle) => {
     const counts = describeBundle(found);
     setBundle(found);
     setChosen(new Set(SECTIONS.filter((s) => counts[s] > 0)));
+    // Characters that are here already, with other content, need a word from the person.
+    const list = (found.characters ?? []).flatMap((raw) => {
+      try {
+        return [parseCharacter(raw)];
+      } catch {
+        return [];
+      }
+    });
+    void countConflicts(list).then(setConflicts);
   }, []);
 
   useEffect(() => {
@@ -494,6 +509,31 @@ function ImportPane() {
             {ui("transfer.madeOn", { date: new Date(bundle.exportedAt).toLocaleDateString() })}
           </p>
           <Rows counts={describeBundle(bundle)} chosen={chosen} onChange={setChosen} only />
+          {conflicts > 0 && chosen.has("characters") && (
+            <fieldset class="conflicts">
+              <legend>{ui("transfer.conflict.title", { n: conflicts })}</legend>
+              {(
+                [
+                  ["newest", "transfer.conflict.newest"],
+                  ["keep", "transfer.conflict.keep"],
+                  ["copy", "transfer.conflict.copy"],
+                ] as const
+              ).map(([value, label]) => (
+                <label key={value} class="check">
+                  <input
+                    type="radio"
+                    name="conflict-policy"
+                    checked={policy === value}
+                    onChange={() => setPolicy(value)}
+                  />
+                  <span>{ui(label)}</span>
+                </label>
+              ))}
+              {policy === "newest" && !bundle.characterTimes && (
+                <p class="muted">{ui("transfer.conflict.undated")}</p>
+              )}
+            </fieldset>
+          )}
           {bundle.files && bundle.files.length > 0 && (
             <p class="muted">{ui("transfer.filesNote", { names: bundle.files.join(", ") })}</p>
           )}
@@ -505,7 +545,7 @@ function ImportPane() {
               onClick={async () => {
                 setBusy(true);
                 try {
-                  setReport(await applyTransfer(bundle, chosen));
+                  setReport(await applyTransfer(bundle, chosen, policy));
                 } finally {
                   setBusy(false);
                 }

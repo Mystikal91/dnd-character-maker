@@ -11,10 +11,11 @@ import "@fontsource/eb-garamond/latin-ext-600.css";
 import { render } from "preact";
 import { sendSharedLinkOn } from "./app/legacy";
 import { matchThemeColor } from "./app/theme";
-import { applyUpdate } from "./app/updates";
+import { applyUpdate, loadUpdateNews } from "./app/updates";
 import { App } from "./ui/App";
 import "./ui/build/build.css";
 import "./ui/play/play.css";
+import "./ui/tour.css";
 import "./ui/print/print.css";
 import "./ui/theme/controls.css";
 import "./ui/theme/palettes.css";
@@ -33,6 +34,7 @@ if (!leaving && "serviceWorker" in navigator && import.meta.env.PROD) {
     const update = registerSW({
       onNeedRefresh() {
         applyUpdate.value = () => void update(true);
+        void loadUpdateNews();
       },
       onRegisteredSW(_url, registration) {
         // A long-open app looks for a new version now and then.

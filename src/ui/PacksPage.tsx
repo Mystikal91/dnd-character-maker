@@ -1,5 +1,6 @@
 import { useRef, useState } from "preact/hooks";
 import { createHomebrewPack, openHomebrewPack } from "../app/homebrew";
+import { language } from "../app/language";
 import { leavePage } from "../app/navigation";
 import { content } from "../app/store";
 import {
@@ -18,6 +19,7 @@ import {
   sameAddressPack,
   userPacks,
 } from "../app/userPacks";
+import { guidePath } from "../content/news";
 import { brokenReferences } from "../data/schema";
 import { type UiKey, ui } from "../i18n/ui";
 import { type UserPackRecord, shortAddress } from "../storage/packs";
@@ -241,57 +243,64 @@ export function PacksPage() {
       </form>
 
       <h3>{ui("packs.add")}</h3>
-      <div class="pack-actions">
-        <button type="button" onClick={() => fileInput.current?.click()}>
-          {ui("packs.import")}
-        </button>
-        <button type="button" class="primary" onClick={() => chooseFiles()}>
-          {ui("packs.importAurora")}
-        </button>
-        <input
-          ref={auroraInput}
-          type="file"
-          accept=".xml,.index,.txt,text/xml,application/xml,text/plain"
-          multiple
-          hidden
-          onChange={(e) => {
-            const files = Array.from(e.currentTarget.files ?? []);
-            e.currentTarget.value = "";
-            if (files.length > 0) void importAuroraFiles(files, target);
-            setTarget(undefined);
+      <div data-tour="aurora">
+        <div class="pack-actions">
+          <button type="button" onClick={() => fileInput.current?.click()}>
+            {ui("packs.import")}
+          </button>
+          <button type="button" class="primary" onClick={() => chooseFiles()}>
+            {ui("packs.importAurora")}
+          </button>
+          <input
+            ref={auroraInput}
+            type="file"
+            accept=".xml,.index,.txt,text/xml,application/xml,text/plain"
+            multiple
+            hidden
+            onChange={(e) => {
+              const files = Array.from(e.currentTarget.files ?? []);
+              e.currentTarget.value = "";
+              if (files.length > 0) void importAuroraFiles(files, target);
+              setTarget(undefined);
+            }}
+          />
+          <input
+            ref={fileInput}
+            type="file"
+            accept=".json,application/json"
+            hidden
+            onChange={(e) => {
+              const file = e.currentTarget.files?.[0];
+              e.currentTarget.value = "";
+              if (file) void importPackFile(file);
+            }}
+          />
+        </div>
+        <form
+          class="pack-address"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (address.trim() && !progress) void importAuroraUrl(address);
           }}
-        />
-        <input
-          ref={fileInput}
-          type="file"
-          accept=".json,application/json"
-          hidden
-          onChange={(e) => {
-            const file = e.currentTarget.files?.[0];
-            e.currentTarget.value = "";
-            if (file) void importPackFile(file);
-          }}
-        />
+        >
+          <input
+            type="url"
+            value={address}
+            placeholder="https://"
+            aria-label={ui("packs.addressLabel")}
+            onInput={(e) => setAddress(e.currentTarget.value)}
+          />
+          <button type="submit" class="primary" disabled={!address.trim() || Boolean(progress)}>
+            {ui("packs.addressGo")}
+          </button>
+        </form>
       </div>
-      <form
-        class="pack-address"
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (address.trim() && !progress) void importAuroraUrl(address);
-        }}
-      >
-        <input
-          type="url"
-          value={address}
-          placeholder="https://"
-          aria-label={ui("packs.addressLabel")}
-          onInput={(e) => setAddress(e.currentTarget.value)}
-        />
-        <button type="submit" class="primary" disabled={!address.trim() || Boolean(progress)}>
-          {ui("packs.addressGo")}
-        </button>
-      </form>
-      <p class="muted">{ui("packs.auroraHint")}</p>
+      <p class="muted">
+        {ui("packs.auroraHint")}{" "}
+        <a href={guidePath(language.value, "aurora")} target="_blank" rel="noopener noreferrer">
+          {ui("guide.readMore")}
+        </a>
+      </p>
       {progress && (
         <p class="note" aria-live="polite">
           {ui("packs.progress", { done: progress.done, total: progress.total })}
