@@ -1,7 +1,16 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "files": {
-    "ignore": ["dist", "node_modules", "dev-dist", ".cache", "SPEC.md", "data", "locales"]
+    "ignore": [
+      "dist",
+      "node_modules",
+      "dev-dist",
+      ".cache",
+      "SPEC.md",
+      "data",
+      "locales",
+      "src/import/aurora/corpus.baseline.json"
+    ]
   },
   "formatter": {
     "indentStyle": "space",

@@ -135,15 +135,18 @@ function deriveArmorClass(ctx: Context, state: ArmorState): ArmorClassResult {
   } else {
     // Without armor: 10 + Dexterity, or the better of the formulas that features give (a
     // barbarian's Constitution, a monk's Wisdom, a draconic sorcerer's scales).
-    let formula: { base: number; bonus: number; feature: string } | undefined;
+    type Formula = { base: number; bonus: number; feature: string; noDex: boolean };
+    const total = (f: Formula) => f.base + f.bonus + (f.noDex ? 0 : dex);
+    let formula: Formula | undefined;
     for (const { effect, source } of ctx.sourced) {
       if (effect.type !== "unarmoredDefense" || (shields.length > 0 && !effect.shield)) continue;
       const bonus = effect.add.reduce((sum, a) => sum + abilities[a].modifier, 0);
-      const better = !formula || effect.base + bonus > formula.base + formula.bonus;
-      if (better) formula = { base: effect.base, bonus, feature: source };
+      const candidate = { base: effect.base, bonus, feature: source, noDex: effect.noDex === true };
+      if (!formula || total(candidate) > total(formula)) formula = candidate;
     }
-    if (formula && formula.base + formula.bonus > 10) {
-      parts.push({ source: "base", value: formula.base }, { source: "dex", value: dex });
+    if (formula && total(formula) > 10 + dex) {
+      parts.push({ source: "base", value: formula.base });
+      if (!formula.noDex) parts.push({ source: "dex", value: dex });
       if (formula.bonus !== 0)
         parts.push({ source: "feature", value: formula.bonus, feature: formula.feature });
     } else {

@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.13.1 beta",
+    date: "2026-10-30",
+    notes: [
+      {
+        en: "The species of Monsters of the Multiverse, and of the other books that work the same way, now offer the free ability increase that the book gives: +2 to one score and +1 to another, or +1 to three. The +1 cannot go to the ability that took the +2, and the same holds for the customised origin of Tasha's. The natural armor of the lizardfolk (13 and Dexterity) and of the tortle (17 whatever the Dexterity) now sets armor class. Content imported before shows “Needs updating”: import it again with one click to get these.",
+        it: "Le specie di Monsters of the Multiverse, e degli altri libri che funzionano allo stesso modo, ora offrono l’aumento libero delle caratteristiche che il libro dà: +2 a un punteggio e +1 a un altro, oppure +1 a tre. Il +1 non può andare alla caratteristica che ha preso il +2, e lo stesso vale per l’origine personalizzata di Tasha. L’armatura naturale dei lucertoloidi (13 e Destrezza) e dei tortle (17 qualunque sia la Destrezza) ora imposta la classe armatura. I contenuti importati prima risultano “Da aggiornare”: importali di nuovo con un clic per averle.",
+        fr: "Les espèces de Monsters of the Multiverse, et des autres livres qui fonctionnent de la même façon, proposent maintenant l’augmentation libre de caractéristiques que donne le livre : +2 à un score et +1 à un autre, ou +1 à trois. Le +1 ne peut pas aller à la caractéristique qui a pris le +2, et c’est pareil pour l’origine personnalisée de Tasha. L’armure naturelle des hommes-lézards (13 et Dextérité) et des tortues (17 quelle que soit la Dextérité) fixe maintenant la classe d’armure. Le contenu importé avant indique « À mettre à jour » : réimporte-le d’un clic pour en profiter.",
+        de: "Die Spezies aus Monsters of the Multiverse und aus den anderen Büchern, die genauso funktionieren, bieten jetzt die freie Attributserhöhung des Buches an: +2 auf einen Wert und +1 auf einen anderen, oder +1 auf drei. Das +1 darf nicht auf das Attribut gehen, das das +2 bekommen hat, und dasselbe gilt für den angepassten Ursprung aus Tasha. Die natürliche Rüstung der Echsenvölker (13 und Geschicklichkeit) und der Tortle (17, egal wie hoch die Geschicklichkeit ist) setzt jetzt die Rüstungsklasse. Früher importierte Inhalte zeigen „Aktualisieren“: importiere sie mit einem Klick neu, um das zu bekommen.",
+        es: "Las especies de Monsters of the Multiverse, y de los otros libros que funcionan igual, ahora ofrecen el aumento libre de características que da el libro: +2 a una puntuación y +1 a otra, o +1 a tres. El +1 no puede ir a la característica que tomó el +2, y lo mismo vale para el origen personalizado de Tasha. La armadura natural de los lagartos (13 y Destreza) y de las tortugas (17 sea cual sea la Destreza) ahora fija la clase de armadura. El contenido importado antes muestra «Por actualizar»: impórtalo de nuevo con un clic para tenerlas.",
+      },
+    ],
+  },
+  {
     version: "1.13.0 beta",
     date: "2026-10-30",
     notes: [

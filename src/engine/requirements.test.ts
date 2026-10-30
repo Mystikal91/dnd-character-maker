@@ -181,6 +181,68 @@ describe("effects behind a requirement", () => {
     expect(on.warnings).toEqual([]);
   });
 
+  it("works out natural armor with or without Dexterity", () => {
+    const species = (id: string, base: number, noDex: boolean) =>
+      entry(`test:species/${id}`, "species", [
+        { type: "unarmoredDefense", base, add: [], shield: true, ...(noDex && { noDex: true }) },
+      ]);
+    const scales = species("scales", 13, false);
+    const shell = species("shell", 17, true);
+    const known = new Map(index).set(scales.id, scales).set(shell.id, shell);
+    const armorClass = (who: Entry, dex: number) => {
+      const c = createCharacter("srd51");
+      c.choices.species = who.id;
+      c.classes = [{ classId: "srd51:class/fighter", level: 1 }];
+      c.abilityBase = { ...c.abilityBase, dex };
+      return deriveSheet(c, known).armorClass;
+    };
+    // 13 and Dexterity (+2); a shell of 17 whatever the Dexterity is; neither if the plain 10 and Dexterity is better.
+    expect(armorClass(scales, 14).value).toBe(15);
+    expect(armorClass(shell, 14).value).toBe(17);
+    expect(armorClass(shell, 20).value).toBe(17);
+    expect(armorClass(scales, 20).value).toBe(18);
+    expect(armorClass(shell, 20).parts.some((p) => p.source === "dex")).toBe(false);
+  });
+
+  it("lets +2 and +1 of one entry go to different abilities", () => {
+    const origin = entry("test:species/free", "species", [
+      {
+        type: "choice",
+        id: "two",
+        choose: 1,
+        grants: "abilityBonus",
+        from: ["str", "dex", "con"],
+        value: 2,
+      },
+      {
+        type: "choice",
+        id: "one",
+        choose: 1,
+        grants: "abilityBonus",
+        from: ["str", "dex", "con"],
+        value: 1,
+      },
+    ]);
+    const known = new Map(index).set(origin.id, origin);
+    const run = (selections: Record<string, string[]>) => {
+      const warnings: never[] = [];
+      const found = collectEffects([origin], { index: known, selections, warnings });
+      return { found, warnings };
+    };
+
+    const same = run({ "test:species/free/two": ["str"], "test:species/free/one": ["str"] });
+    const [two, one] = same.found.choices;
+    expect(two?.selected).toEqual(["str"]);
+    // The +1 cannot take Strength: it is not offered, and the pick is left open without a warning.
+    expect(one?.options).toEqual(["dex", "con"]);
+    expect(one?.selected).toEqual([]);
+    expect(one?.remaining).toBe(1);
+    expect(same.warnings).toEqual([]);
+
+    const apart = run({ "test:species/free/two": ["str"], "test:species/free/one": ["dex"] });
+    expect(apart.found.choices.map((p) => p.selected)).toEqual([["str"], ["dex"]]);
+  });
+
   it("find a choice made before an option was numbered anew", () => {
     const pick = (id: string): Entry => entry(id, "trait", []);
     const feat = entry("test:feat/touched", "feat", [

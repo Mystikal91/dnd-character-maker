@@ -136,14 +136,22 @@ function walkEffects(
     for (const effect of trait.effects) apply(effect, trait.id);
   };
 
+  // The abilities that the ability increases of an entry have taken: "+2 to one and +1 to
+  // another" means another, so a later increase of the same entry cannot pick the same one.
+  const taken = new Map<string, Set<string>>();
+
   const resolve = (choice: ChoiceEffect, source: string) => {
     const key = `${source}/${choice.id}`;
     const selected: string[] = [];
-    const options = optionsOf(index, choice);
+    const used = choice.grants === "abilityBonus" ? taken.get(source) : undefined;
+    const options = optionsOf(index, choice).filter((o) => !used?.has(o));
     for (const picked of selections[key] ?? []) {
       // An entry that was numbered differently when the pack was imported again (`charisma-2`
       // became `charisma-11`) is the one option of the choice with the same name.
       const option = options.includes(picked) ? picked : renumbered(picked, options);
+      // An ability that an earlier increase took is left unpicked, without a warning: the
+      // earlier one was changed to it after this one was made.
+      if (!option && used?.has(picked)) continue;
       if (!option) warn(warnings, "invalidChoice", { source, option: picked });
       else if (selected.includes(option)) continue;
       else if (selected.length >= choice.choose) warn(warnings, "tooManyChoices", { source });
@@ -160,6 +168,8 @@ function walkEffects(
       selected,
       remaining: choice.choose - selected.length,
     });
+    if (choice.grants === "abilityBonus")
+      taken.set(source, new Set([...(used ?? []), ...selected]));
     for (const option of selected) apply(grantEffect(choice, option), source);
   };
 

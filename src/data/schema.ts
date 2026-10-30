@@ -164,6 +164,8 @@ const PlainEffectSchema = v.variant("type", [
     base: v.number(),
     add: v.array(AbilitySchema),
     shield: v.boolean(),
+    /** Leaves Dexterity out: a tortle's shell is 17 whatever the Dexterity is. */
+    noDex: v.optional(v.boolean()),
   }),
   v.object({
     type: v.literal("resource"),

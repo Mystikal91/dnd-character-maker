@@ -500,6 +500,46 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
   let choiceCount = 0;
   const saves = new Map<string, number>();
   const nextChoiceId = () => `${options.idPrefix}-${++choiceCount}`;
+  // The parts of a way of working out armor class that an element describes (a lizardfolk's scales:
+  // a base of 13 plus Dexterity), put together when the element says to use it.
+  const armorParts = new Map<string, { base?: number; add: Ability[] }>();
+
+  /** A rule of `ac:...`: the base or the ability of a formula, or the order to use it. */
+  const armorStat = (rule: Rule): boolean => {
+    const name = rule.name.toLowerCase();
+    if (!name.startsWith("ac:")) return false;
+    const label = name.slice(3);
+    const bonus = rule.attrs.getAttribute("bonus");
+    if (label === "calculation") {
+      const part = armorParts.get(rule.value.toLowerCase().replace(/^ac:/, ""));
+      if (!part || part.base === undefined) return false;
+      const equipped = rule.attrs.getAttribute("equipped") ?? "";
+      // The sheet adds Dexterity by itself, so it is left out of the list; a formula without it
+      // (a tortle's 17) says so.
+      mapped.effects.push({
+        type: "unarmoredDefense",
+        base: part.base,
+        add: part.add.filter((a) => a !== "dex"),
+        shield: !/\[shield:none\]/.test(equipped),
+        ...(!part.add.includes("dex") && { noDex: true }),
+      });
+      return true;
+    }
+    const part = armorParts.get(label) ?? { add: [] };
+    armorParts.set(label, part);
+    const base = Number(rule.value);
+    if (bonus === "base" && Number.isFinite(base)) {
+      part.base = base;
+      return true;
+    }
+    const ability =
+      bonus === "ability" ? abilityFromWord(rule.value.split(":")[0] ?? "") : undefined;
+    if (ability && /:modifier$/i.test(rule.value)) {
+      part.add.push(ability);
+      return true;
+    }
+    return false;
+  };
 
   const mapRule = (rule: Rule): void => {
     if (rule.tag === "stat") {
@@ -511,6 +551,8 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
         mapped.effects.push({ type: "abilityBonus", ability, value });
       } else if (rule.name === "innate speed" && Number.isFinite(value)) {
         mapped.speed = value;
+      } else if (armorStat(rule)) {
+        // Armor class from natural armor: told to the effect that works it out.
       } else {
         mapped.unsupported += 1;
       }

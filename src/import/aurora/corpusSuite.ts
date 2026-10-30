@@ -150,6 +150,20 @@ export function corpusSuite(reverse: boolean) {
         expect(bonuses(spread)).toMatchObject({ str: 1, dex: 1, con: 1, wis: 0 });
       });
 
+      it("works out the armor class of the natural armor of Monsters of the Multiverse", () => {
+        const armorClass = (aid: string) => {
+          const c = createCharacter("srd51");
+          c.choices.species = result.aids[aid] ?? "";
+          c.classes = [{ classId: "srd51:class/fighter", level: 1 }];
+          c.abilityBase = { str: 10, dex: 14, con: 10, int: 10, wis: 10, cha: 10 };
+          return deriveSheet(c, index).armorClass.value;
+        };
+        // 13 and Dexterity (+2), and 17 whatever the Dexterity is.
+        expect(armorClass("ID_WOTC_MOTM_RACE_LIZARDFOLK")).toBe(15);
+        expect(armorClass("ID_WOTC_MOTM_RACE_TORTLE")).toBe(17);
+        expect(armorClass("ID_WOTC_MOTM_RACE_FIRBOLG")).toBe(12);
+      });
+
       it("points only at entries that exist", () => {
         expect(findBrokenReferences([pack, ...srd51Packs])).toEqual([]);
       });
