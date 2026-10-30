@@ -245,11 +245,32 @@
     0 calc(100% - var(--p-n)),
     0 var(--p-n)
   );
-  box-shadow: inset 0 0 0 0.7mm #fff, inset 0 0 0 0.9mm var(--p-line);
 }
 
-.low-ink .p-frame {
-  box-shadow: inset 0 0 0 0.7mm #fff, inset 0 0 0 0.9mm #000;
+/* The inner line of the double border. Drawn as borders, not as inset shadows: Safari prints a
+   shadow on a clipped box as a 72 dpi picture, which comes out blurred. The first pseudo-element
+   is the white band that hides the corner strokes near the edge, the second the line itself. */
+.p-frame::before,
+.p-frame::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.p-frame::before {
+  inset: 0;
+  border: 0.7mm solid #fff;
+}
+
+.p-frame::after {
+  inset: 0.7mm;
+  border: 0.2mm solid var(--p-line);
+}
+
+.low-ink .p-frame::after {
+  border-color: #000;
 }
 
 /* Heading of a frame: centered, with a rule on each side. */
