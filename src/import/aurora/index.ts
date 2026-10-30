@@ -1,4 +1,5 @@
 import { requirementWords } from "../../engine/requirements";
+import { ASI_OPTIONS_XML } from "./asiOptions";
 import { type Owner, claimFeatures, importArchetype, importClass, importFeature } from "./classes";
 import {
   importArmor,
@@ -44,7 +45,7 @@ export { AuroraParseError, slugify } from "./xml";
  * the entries or texts it makes: packs imported with an older version are marked as needing an
  * update, and can be imported again with a click.
  */
-export const AURORA_IMPORT_VERSION = 12;
+export const AURORA_IMPORT_VERSION = 13;
 export type { AuroraOptions, AuroraResult } from "./registry";
 
 /**
@@ -172,6 +173,17 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     existingByName: indexExisting(options),
   };
 
+  const register = (sources: Source[]) => {
+    for (const source of sources) {
+      if (ctx.byAid.has(source.aid)) continue;
+      ctx.byAid.set(source.aid, source);
+      ctx.all.push(source);
+      const same = ctx.byType.get(source.type);
+      if (same) same.push(source);
+      else ctx.byType.set(source.type, [source]);
+    }
+  };
+
   for (const text of files) {
     const doc = new DOMParser().parseFromString(text.replace(/^﻿/, ""), "application/xml");
     if (doc.getElementsByTagName("parsererror").length > 0)
@@ -180,15 +192,12 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     if (!root || root.tagName !== "elements")
       throw new AuroraParseError("Not an Aurora elements file");
     result.title ||= clean(root.querySelector("info > name")?.textContent);
-    for (const source of readSources(doc)) {
-      if (ctx.byAid.has(source.aid)) continue;
-      ctx.byAid.set(source.aid, source);
-      ctx.all.push(source);
-      const same = ctx.byType.get(source.type);
-      if (same) same.push(source);
-      else ctx.byType.set(source.type, [source]);
-    }
+    register(readSources(doc));
   }
+  // The ways of taking an origin's free ability increase are in Aurora's internal file; the files
+  // of a book imported on its own lack it, and its species ask for it all the same.
+  if (!ofType(ctx, "Ability Score Improvement").some(isAsiOption))
+    register(readSources(new DOMParser().parseFromString(ASI_OPTIONS_XML, "application/xml")));
 
   // What the app already has stays as it is; other roots are what the files are about.
   for (const source of ctx.all) {

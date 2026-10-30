@@ -247,6 +247,7 @@ export function corpusSuite(reverse: boolean) {
 export function splitSuite() {
   describe.skipIf(!available)("Aurora's core and supplements imported apart", () => {
     let index = new Map<string, Entry>();
+    let aids: Record<string, string> = {};
     beforeAll(() => {
       const names = nameOf();
       const core = parseAurora(readElements(DIR, ["core"]), {
@@ -265,9 +266,11 @@ export function splitSuite() {
           entries,
         });
       index = indexPacks(...srd51Packs, make("imp1", core.entries), make("imp2", more.entries));
+      aids = more.aids;
     }, 120_000);
     afterAll(() => {
       index = new Map();
+      aids = {};
     });
 
     const sheet = (species: string, sub?: string, options: string[] = [], level = 1) => {
@@ -289,6 +292,29 @@ export function splitSuite() {
       expect(line("fierna")).toMatchObject({ wis: 1, int: 0, cha: 2 });
       expect(line("zariel")).toMatchObject({ str: 1, int: 0, cha: 2 });
       expect(bonus(sheet("srd51:species/tiefling"))).toMatchObject({ int: 1, cha: 2 });
+    });
+
+    it("offers the free ability increase to a species of a book imported on its own", () => {
+      // The ways of taking it are in the core files, which this import does not have.
+      const shifter = aids.ID_WOTC_MOTM_RACE_SHIFTER ?? "";
+      expect(index.has(shifter)).toBe(true);
+      const offer = sheet(shifter).choices.find((p) => p.key === `${shifter}/species-offer-1`);
+      expect(offer?.options).toHaveLength(2);
+      const way = offer?.options[0] ?? "";
+      const taken = sheet(shifter, undefined, []);
+      expect(taken.choices.some((p) => p.remaining > 0 && p.grants === "trait")).toBe(true);
+      const c = createCharacter("srd51");
+      c.choices.species = shifter;
+      c.classes = [{ classId: "srd51:class/fighter", level: 1 }];
+      c.selections = {
+        [`${shifter}/species-offer-1`]: [way],
+        [`${way}/trait-1`]: ["str"],
+        [`${way}/trait-2`]: ["dex"],
+      };
+      const bonuses = Object.fromEntries(
+        Object.entries(deriveSheet(c, index).abilities).map(([k, a]) => [k, a.bonus]),
+      );
+      expect(bonuses).toMatchObject({ str: 2, dex: 1 });
     });
 
     it("keeps the legacy of the Tiefling only for the Tiefling without a bloodline", () => {

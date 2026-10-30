@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.13.2 beta",
+    date: "2026-10-30",
+    notes: [
+      {
+        en: "The free ability increase of the species (+2 and +1, or +1 three times) is now offered also when the supplements are imported on their own, after the core, which is how the app imports them. Before, the choice was missing and the species gave no bonus at all. Content imported before shows “Needs updating”: import it again with one click, then pick the increase on the species.",
+        it: "L’aumento libero delle caratteristiche delle specie (+2 e +1, oppure +1 a tre) ora viene offerto anche quando i supplementi si importano da soli, dopo il core, che è il modo in cui li importa l’app. Prima la scelta mancava e la specie non dava nessun bonus. I contenuti importati prima risultano “Da aggiornare”: importali di nuovo con un clic, poi scegli l’aumento sulla specie.",
+        fr: "L’augmentation libre de caractéristiques des espèces (+2 et +1, ou +1 à trois) est maintenant proposée aussi quand les suppléments sont importés seuls, après le cœur, ce qui est la façon dont l’app les importe. Avant, le choix manquait et l’espèce ne donnait aucun bonus. Le contenu importé avant indique « À mettre à jour » : réimporte-le d’un clic, puis choisis l’augmentation sur l’espèce.",
+        de: "Die freie Attributserhöhung der Spezies (+2 und +1, oder +1 auf drei) wird jetzt auch angeboten, wenn die Ergänzungen allein nach dem Kern importiert werden, so wie es die App tut. Vorher fehlte die Wahl und die Spezies gab überhaupt keinen Bonus. Früher importierte Inhalte zeigen „Aktualisieren“: importiere sie mit einem Klick neu und wähle dann die Erhöhung bei der Spezies.",
+        es: "El aumento libre de características de las especies (+2 y +1, o +1 a tres) ahora se ofrece también cuando los suplementos se importan solos, después del núcleo, que es como los importa la app. Antes faltaba la elección y la especie no daba ninguna bonificación. El contenido importado antes muestra «Por actualizar»: impórtalo de nuevo con un clic y luego elige el aumento en la especie.",
+      },
+    ],
+  },
+  {
     version: "1.13.1 beta",
     date: "2026-10-30",
     notes: [
