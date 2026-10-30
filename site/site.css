@@ -212,13 +212,212 @@ h3 {
   font-size: 0.95rem;
 }
 
+/* The guides, in a list under the bar. */
+.nav-menu {
+  position: relative;
+}
+
+.nav-menu-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  font: inherit;
+  font-size: 1rem;
+  opacity: 0.85;
+  cursor: pointer;
+}
+
+.nav-menu-button:hover,
+.nav-menu-button[aria-expanded="true"] {
+  color: var(--accent);
+  opacity: 1;
+}
+
+.nav-menu-button svg {
+  transition: transform 0.2s;
+}
+
+.nav-menu-button[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.nav-menu-list {
+  position: absolute;
+  top: calc(100% + 0.7rem);
+  left: -0.8rem;
+  z-index: 30;
+  width: max-content;
+  min-width: 17rem;
+  max-width: min(26rem, 90vw);
+  margin: 0;
+  padding: 0.35rem;
+  border: 1px solid var(--accent);
+  border-radius: 0.4rem;
+  background: var(--surface);
+  box-shadow: 0 12px 30px rgb(0 0 0 / 0.4);
+  list-style: none;
+  animation: rise 0.2s ease-out both;
+}
+
+.nav-menu-list[hidden] {
+  display: none;
+}
+
+.nav-links .nav-menu-list a {
+  display: block;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  opacity: 1;
+}
+
+.nav-links .nav-menu-list a:hover {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.nav-burger,
+.side {
+  display: none;
+}
+
 @media (max-width: 42rem) {
+  /* On a phone the links move into a menu at the side, opened by the burger. */
   .nav-links {
     display: none;
   }
 
   .nav-actions {
     margin-left: auto;
+  }
+
+  .nav-burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 0.3rem;
+    background: var(--surface);
+    color: var(--fg);
+    cursor: pointer;
+  }
+
+  .nav-burger:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .side:not([hidden]) {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: block;
+  }
+
+  .side-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgb(8 12 24 / 0.6);
+    animation: fade 0.25s ease-out both;
+  }
+
+  .side-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    width: min(20rem, 86vw);
+    padding: 3.6rem 1rem 1.5rem;
+    overflow-y: auto;
+    border-left: 1px solid var(--accent);
+    background: var(--surface);
+    box-shadow: -12px 0 30px rgb(0 0 0 / 0.4);
+    animation: slide-left 0.28s ease-out both;
+  }
+
+  .side-panel a {
+    display: block;
+    padding: 0.65rem 0.5rem;
+    border-radius: 0.3rem;
+    color: var(--fg);
+    font-size: 1.1rem;
+    text-decoration: none;
+  }
+
+  .side-panel a:hover {
+    background: color-mix(in srgb, var(--accent) 16%, transparent);
+    color: var(--accent);
+  }
+
+  .side-heading {
+    margin: 0.6rem 0 0.1rem;
+    padding: 0 0.5rem;
+    color: var(--accent);
+    font-family: "Cinzel", serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .side-guides {
+    margin: 0 0 0.4rem;
+    padding: 0 0 0 0.6rem;
+    border-left: 1px solid var(--border);
+    list-style: none;
+  }
+
+  .side-guides a {
+    font-size: 1rem;
+  }
+
+  .side-close {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 0.3rem;
+    background: none;
+    color: var(--fg);
+    cursor: pointer;
+  }
+
+  html.side-open {
+    overflow: hidden;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-left {
+  from {
+    opacity: 0.4;
+    transform: translateX(2rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .side-backdrop,
+  .side-panel {
+    animation: none;
   }
 }
 

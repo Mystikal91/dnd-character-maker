@@ -60,7 +60,15 @@
         <a class="anchor" href="#features" data-i18n="nav.features">Features</a>
         <a class="anchor" href="#colors" data-i18n="nav.colors">Colours</a>
         <a class="anchor" href="#faq" data-i18n="nav.faq">Questions</a>
-        <a href="{{guideUrl}}" data-i18n="nav.guide">Guide</a>
+        <div class="nav-menu">
+          <button type="button" class="nav-menu-button" aria-expanded="false" aria-controls="guide-menu">
+            <span data-i18n="nav.guide">Guide</span>
+            <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </button>
+          <ul id="guide-menu" class="nav-menu-list" hidden>
+{{guideMenu}}
+          </ul>
+        </div>
         <a href="{{newsUrl}}" data-i18n="nav.news">News</a>
       </nav>
       <div class="nav-actions">
@@ -78,8 +86,28 @@
           <span class="long" data-i18n="nav.open">Open the app</span>
           <span class="short" data-i18n="nav.openShort">Open</span>
         </a>
+        <button type="button" class="nav-burger" aria-expanded="false" aria-controls="side-menu" data-i18n-label="nav.menu">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+        </button>
       </div>
     </header>
+    <aside class="side on-dark" id="side-menu" hidden>
+      <div class="side-backdrop" data-close></div>
+      <nav class="side-panel" aria-label="Heroquill">
+        <button type="button" class="side-close" data-close aria-label="Close">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+        </button>
+        <a class="anchor" href="#features" data-i18n="nav.features">Features</a>
+        <a class="anchor" href="#colors" data-i18n="nav.colors">Colours</a>
+        <a class="anchor" href="#faq" data-i18n="nav.faq">Questions</a>
+        <p class="side-heading" data-i18n="nav.guide">Guide</p>
+        <ul class="side-guides">
+{{guideMenu}}
+        </ul>
+        <a href="{{newsUrl}}" data-i18n="nav.news">News</a>
+        <a href="{{contributeUrl}}" data-i18n="nav.contribute">Contribute</a>
+      </nav>
+    </aside>
 
     <main>
       <section class="hero on-dark">
@@ -358,6 +386,12 @@
             <details>
               <summary data-i18n="faq.q5">Does it work with Aurora content?</summary>
               <p data-i18n="faq.a5">Yes. You can import the content files (XML) made for Aurora Builder and Aurora Legacy, from a file, an index file or an address. Nothing from Aurora or from any publisher is included: you bring what you already own.</p>
+              <p class="faq-more"><a href="{{auroraGuideUrl}}" data-i18n="faq.guideLink">Read the step-by-step guide</a></p>
+            </details>
+            <details>
+              <summary data-i18n="faq.q6">How can I contribute?</summary>
+              <p data-i18n="faq.a6">In many ways, from a minute to a weekend: say you like it, translate it in your browser, report a problem, or work on the code, which is open under the MIT licence.</p>
+              <p class="faq-more"><a href="{{contributeUrl}}" data-i18n="faq.contributeLink">See how to help</a></p>
             </details>
           </div>
         </div>

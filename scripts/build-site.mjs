@@ -23,7 +23,7 @@ import {
 const ORIGIN = "https://heroquill.app";
 const LANGUAGES = ["en", "it", "fr", "de", "es"];
 const LOCALES = { en: "en_US", it: "it_IT", fr: "fr_FR", de: "de_DE", es: "es_ES" };
-const FAQ = [1, 2, 3, 4, 5];
+const FAQ = [1, 2, 3, 4, 5, 6];
 
 const homePath = (lang) => (lang === "en" ? "/" : `/${lang}/`);
 const newsPagePath = (lang) => newsPath(lang);
@@ -56,7 +56,14 @@ const withLanguageLinks = (html, lang, pathOf) => {
 function translate(html, lang) {
   const t = TEXTS[lang];
   const missing = new Set();
-  const out = html.replace(
+  const labelled = html
+    .replace(/ data-i18n-label="([^"]+)"/g, (whole, key) =>
+      t[key] === undefined ? whole : ` aria-label="${escapeAttr(t[key])}"`,
+    )
+    .replace(/(<button[^>]*\bdata-close\b[^>]*?) aria-label="Close"/g, (whole, head) =>
+      t["nav.close"] === undefined ? whole : `${head} aria-label="${escapeAttr(t["nav.close"])}"`,
+    );
+  const out = labelled.replace(
     /(<([a-zA-Z][\w-]*)\b[^>]*\bdata-i18n="([^"]+)"[^>]*>)([\s\S]*?)(<\/\2>)/g,
     (whole, open, _tag, key, _old, close) => {
       const text = t[key];
@@ -119,6 +126,17 @@ function homeJsonLd(lang, t) {
   }).replace(/</g, "\\u003c");
 }
 
+// The list under the Guide link of the bar: the guide to creating a character, then the others.
+function guideMenu(lang) {
+  const items = [
+    [guidePath(lang), GUIDE[lang].h1],
+    ...GUIDE_TOPICS.map((topic) => [guidePath(lang, topic), GUIDES[topic][lang].label]),
+  ];
+  return items
+    .map(([href, label]) => `            <li><a href="${href}">${escapeHtml(label)}</a></li>`)
+    .join("\n");
+}
+
 function homePage(lang) {
   const t = TEXTS[lang];
   const html = template
@@ -130,6 +148,8 @@ function homePage(lang) {
     .replaceAll("{{guideUrl}}", guidePath(lang))
     .replaceAll("{{newsUrl}}", newsPagePath(lang))
     .replaceAll("{{contributeUrl}}", contributePagePath(lang))
+    .replaceAll("{{auroraGuideUrl}}", guidePath(lang, "aurora"))
+    .replaceAll("{{guideMenu}}", guideMenu(lang))
     .replace("{{alternates}}", alternatesOf(homePath))
     .replace("{{jsonld}}", homeJsonLd(lang, t));
   return withLanguageLinks(translate(html, lang), lang, homePath);
@@ -142,7 +162,9 @@ function shell(lang, pathOf) {
   const homeHtml = homePage(lang);
   const bar = /<header class="nav on-dark">[\s\S]*?<\/header>/.exec(homeHtml)?.[0];
   const foot = /<footer class="foot on-dark">[\s\S]*?<\/footer>/.exec(homeHtml)?.[0];
-  if (!bar || !foot) throw new Error("the bar or the foot of the welcome page was not found");
+  const side = /<aside class="side on-dark"[\s\S]*?<\/aside>/.exec(homeHtml)?.[0];
+  if (!bar || !foot || !side)
+    throw new Error("the bar, the side menu or the foot of the welcome page was not found");
   const home = homePath(lang);
   const barHere = LANGUAGES.reduce(
     (html, l) =>
@@ -150,7 +172,7 @@ function shell(lang, pathOf) {
         new RegExp(`(<option value="${l}"[^>]*?)data-href="[^"]*"`),
         `$1data-href="${pathOf(l)}"`,
       ),
-    bar.replace(/href="#/g, `href="${home}#`),
+    `${bar}\n    ${side}`.replace(/href="#/g, `href="${home}#`),
   );
   return { bar: barHere, foot };
 }

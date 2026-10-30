@@ -33,6 +33,50 @@
     }
   };
 
+  // ---- The Guide menu of the bar: opens on a tap, closes on a tap outside, on Escape or on a link ----
+  const menu = document.querySelector(".nav-menu");
+  const menuButton = menu?.querySelector(".nav-menu-button");
+  const menuList = menu?.querySelector(".nav-menu-list");
+  if (menu && menuButton && menuList) {
+    const setOpen = (open) => {
+      menuButton.setAttribute("aria-expanded", String(open));
+      menuList.hidden = !open;
+    };
+    menuButton.addEventListener("click", () => setOpen(menuList.hidden));
+    document.addEventListener("click", (e) => {
+      if (!menu.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !menuList.hidden) {
+        setOpen(false);
+        menuButton.focus();
+      }
+    });
+  }
+
+  // ---- The side menu of a phone: opens from the burger, closes on the backdrop, on Escape, on a link ----
+  const burger = document.querySelector(".nav-burger");
+  const side = document.getElementById("side-menu");
+  if (burger && side) {
+    const setSide = (open) => {
+      side.hidden = !open;
+      burger.setAttribute("aria-expanded", String(open));
+      document.documentElement.classList.toggle("side-open", open);
+      if (open) side.querySelector(".side-close")?.focus();
+      else if (document.activeElement && side.contains(document.activeElement)) burger.focus();
+    };
+    burger.addEventListener("click", () => setSide(side.hidden));
+    side.addEventListener("click", (e) => {
+      if (e.target.closest("[data-close], a")) setSide(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !side.hidden) setSide(false);
+    });
+    matchMedia("(min-width: 42.01rem)").addEventListener("change", (e) => {
+      if (e.matches && !side.hidden) setSide(false);
+    });
+  }
+
   // ---- Language: one page for each, reached by a link (each option knows its page) ----
   const picker = document.getElementById("lang");
   const pageOf = (code) => {
