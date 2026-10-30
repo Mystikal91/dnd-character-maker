@@ -1127,8 +1127,14 @@
 /* ---- Printing for real ---- */
 
 @media print {
-  body {
-    background: #fff;
+  /* The theme paints the page, and the canvas takes its colour from there: left alone, a dark
+     theme fills the sheet's margins too, and shows as a black border once background graphics
+     are on. The theme's rules are more specific and come later, so this has to insist. */
+  html,
+  body,
+  :root[data-style] body {
+    background: #fff !important;
+    background-image: none !important;
   }
 
   /* The page's own padding would push the first sheet down and spill it onto a blank page; the
