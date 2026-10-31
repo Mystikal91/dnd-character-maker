@@ -1,4 +1,5 @@
 import type { JSX } from "preact";
+import { useEffect, useRef } from "preact/hooks";
 import { type Tab, showView, view } from "../app/navigation";
 import { type UiKey, ui } from "../i18n/ui";
 import { BookIcon, DieIcon, PrinterIcon, QuillIcon, SheetIcon } from "./icons";
@@ -14,8 +15,24 @@ const TABS: { id: Tab; label: UiKey; icon: () => JSX.Element }[] = [
 /** Switch between building the character, reading the sheet and printing it. */
 export function Tabs() {
   const current = view.value;
+  const nav = useRef<HTMLElement>(null);
+  // The bars that stick below the tabs (sheet, play) start where the tabs end, whatever height
+  // the tabs have in this width and style.
+  useEffect(() => {
+    const el = nav.current;
+    if (!el) return;
+    const root = document.documentElement.style;
+    const set = () => root.setProperty("--tabs-height", `${el.offsetHeight}px`);
+    set();
+    const observer = new ResizeObserver(set);
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      root.removeProperty("--tabs-height");
+    };
+  }, []);
   return (
-    <nav class="tabs no-print" aria-label={ui("tab.label")}>
+    <nav class="tabs no-print" aria-label={ui("tab.label")} ref={nav}>
       {TABS.map((tab) => (
         <button
           type="button"
