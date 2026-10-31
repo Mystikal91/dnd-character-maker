@@ -9,14 +9,17 @@ import {
   rollD20,
   rollExpression,
 } from "../engine/dice";
+import { healingOf, useOne } from "../engine/gear";
 import {
   applyDamage,
+  applyHealing,
   concentrationDc,
   currentHp,
   deathStatus,
   endConcentration,
 } from "../engine/play";
-import { character, sheet, updateCharacter } from "./store";
+import { ui } from "../i18n/ui";
+import { character, content, sheet, updateCharacter } from "./store";
 
 /** The hit points before the last change, to take it back for a few seconds. */
 export const hpUndo = signal<{ before: PlayState; change: number } | undefined>(undefined);
@@ -143,6 +146,28 @@ export function vitals() {
   return s
     ? { max: s.hitPoints.max, hitDice: s.hitPoints.hitDice, conMod: s.abilities.con.modifier }
     : undefined;
+}
+
+/**
+ * Uses up one of an item. A potion that says what it heals is rolled and the hit points are
+ * restored; any other item only goes down by one and the log says it was used.
+ */
+export function useItem(itemId: string) {
+  const c = content.value;
+  const found = character.value.inventory.find((i) => i.itemId === itemId);
+  if (!c || !found) return;
+  const name = found.custom?.name ?? c.name(itemId);
+  const heal = healingOf(c.index.get(itemId));
+  updateCharacter((draft) => {
+    useOne(draft.inventory, itemId);
+  });
+  const v = vitals();
+  const roll = heal && v ? rollDiceText(name, heal) : undefined;
+  if (roll && v) {
+    changePlay((p) => applyHealing(p, v.max, roll.total));
+    return;
+  }
+  addLog({ label: ui("play.used", { name }), detail: "" });
 }
 
 /**

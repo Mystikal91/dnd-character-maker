@@ -9,6 +9,7 @@ import { deriveSheet, indexPacks } from "../../engine/derive";
 import { plainEffects } from "../../engine/requirements";
 import { SRD51_FILES, loadSrd51Strings, srd51Index, srd51Packs } from "../../test/srd51";
 import { AuroraParseError, type AuroraResult, parseAurora, slugify } from "./index";
+import { healingDice } from "./items";
 import { requirementsMet } from "./rules";
 
 // Invented content in the shape of an Aurora file; nothing here comes from a real book.
@@ -996,6 +997,29 @@ describe("classes and archetypes", () => {
     );
   });
 
+  it("keeps the schools a subclass caster is limited to", () => {
+    const knight = wrap(`
+      <element name="School Knight" type="Archetype" source="Test Book" id="ID_SCK">
+        <supports>Martial Archetype</supports>
+        <description><p>A fighter who casts.</p></description>
+        <rules><grant type="Archetype Feature" id="ID_SCK_CAST" level="3" /></rules>
+      </element>
+      <element name="Spellcasting" type="Archetype Feature" source="Test Book" id="ID_SCK_CAST">
+        <supports>Fighter</supports>
+        <description><p>You cast.</p></description>
+        <spellcasting name="School Knight" ability="Intelligence"><list>Wizard,(Abjuration||Evocation)</list></spellcasting>
+        <rules>
+          <stat name="school knight:spellcasting:slots:1" value="2" level="3" />
+          <select type="Spell" name="Spell (School Knight)" supports="Wizard" level="3" number="3" spellcasting="School Knight" />
+        </rules>
+      </element>`);
+    const made = parseAurora([knight], options);
+    expect(subclassData(byId(made, "imp1:subclass/school-knight")).spellcasting).toMatchObject({
+      list: "srd51:class/wizard",
+      schools: ["abjuration", "evocation"],
+    });
+  });
+
   it("gives a subclass of a class that does not cast its own spellcasting", () => {
     const knight = wrap(`
       <element name="Spell Knight" type="Archetype" source="Test Book" id="ID_SK">
@@ -1189,6 +1213,14 @@ const LEGACY = wrap(`
       <set name="rarity">Very Rare</set>
       <set name="attunement">true</set>
       <set name="cost" currency="gp">0</set>
+    </setters>
+  </element>
+  <element name="Potion of Testing" type="Magic Item" source="Test Book" id="ID_L_MAGIC_POTION">
+    <description><p>You regain 4d4 + 4 hit points when you drink this potion.</p></description>
+    <setters>
+      <set name="category">Potions</set>
+      <set name="type">Potion</set>
+      <set name="rarity">Uncommon</set>
     </setters>
   </element>
   <element name="Auril" type="Deity" source="Test Book" id="ID_L_DEITY_AURIL">
@@ -1413,6 +1445,15 @@ describe("collections written for other readers", () => {
     expect(result.strings["imp1:item/ring-of-testing.desc"]).toBe(
       "Ring, very rare (requires attunement)\n\nIt glows when you pass a test.",
     );
+  });
+
+  it("reads the dice a potion heals with, and only for a potion", () => {
+    expect(byId(result, "imp1:item/potion-of-testing").data).toMatchObject({
+      use: { heal: "4d4+4" },
+    });
+    expect(byId(result, "imp1:item/ring-of-testing").data.use).toBeUndefined();
+    expect(healingDice("You regain 2d4 + 2 hit points.")).toBe("2d4+2");
+    expect(healingDice("The target regains 10 hit points.")).toBeUndefined();
   });
 
   it("imports a magic weapon as an enchantment that gives a bonus", () => {

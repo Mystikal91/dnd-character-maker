@@ -128,6 +128,12 @@ describe("load", () => {
     expect(sheet.load).toEqual({ carried: 12, capacity: 150 });
   });
 
+  it("counts 50 coins to the pound", () => {
+    const c = withItems("rogue", { str: 10 }, [["leather-armor"]]);
+    c.coins = { cp: 10, sp: 10, ep: 0, gp: 70, pp: 10 };
+    expect(deriveSheet(c, index).load.carried).toBe(10 + 2);
+  });
+
   it("warns about unknown items", () => {
     const c = withItems("fighter", {}, []);
     c.inventory.push({ itemId: "custom:item/mystery", quantity: 1, equipped: false });

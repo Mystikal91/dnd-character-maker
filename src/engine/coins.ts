@@ -19,6 +19,13 @@ const IN_GOLD: Record<Coin, number> = { cp: 0.01, sp: 0.1, ep: 0.5, gp: 1, pp: 1
 export const goldValue = (coins: Coins | undefined): number =>
   COINS.reduce((sum, coin) => sum + (coins?.[coin] ?? 0) * IN_GOLD[coin], 0);
 
+/** How many coins make a pound. */
+export const COINS_PER_POUND = 50;
+
+/** The weight of all the coins, in pounds. */
+export const coinWeight = (coins: Coins | undefined): number =>
+  COINS.reduce((sum, coin) => sum + (coins?.[coin] ?? 0), 0) / COINS_PER_POUND;
+
 /** The coins with one kind set to a whole number of at least zero. */
 export function withCoin(coins: Coins | undefined, coin: Coin, amount: number): Coins {
   const whole = Number.isFinite(amount) ? Math.max(0, Math.floor(amount)) : 0;

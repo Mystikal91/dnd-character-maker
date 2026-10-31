@@ -18,6 +18,40 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.16.0 beta",
+    date: "2026-10-31",
+    notes: [
+      {
+        en: "The spells of the Eldritch Knight and Arcane Trickster follow the rules: most spells known must be of two schools (abjuration and evocation, or enchantment and illusion), and only one pick at 3rd level and one at 8th, 14th and 20th may be of any school. The spell picker says how many free picks are left and greys out the rest. Aurora files give the schools, and the homebrew editor has a field for them.",
+        it: "Gli incantesimi del Cavaliere Mistico e del Mistificatore Arcano seguono le regole: la maggior parte di quelli conosciuti deve essere di due scuole (abiurazione ed evocazione, oppure ammaliamento e illusione), e solo una scelta al 3° livello e una all’8°, al 14° e al 20° può essere di qualsiasi scuola. La scelta degli incantesimi dice quante scelte libere restano e disattiva le altre. I file Aurora indicano le scuole e l’editor homebrew ha un campo per indicarle.",
+        fr: "Les sorts du Chevalier occulte et de l’Escroc arcanique suivent les règles : la plupart des sorts connus doivent être de deux écoles (abjuration et évocation, ou enchantement et illusion), et seul un choix au niveau 3 et un aux niveaux 8, 14 et 20 peut être d’une école quelconque. Le choix des sorts indique combien de choix libres restent et grise les autres. Les fichiers Aurora donnent les écoles, et l’éditeur homebrew a un champ pour elles.",
+        de: "Die Zauber des Mystischen Ritters und des Arkanen Betrügers folgen den Regeln: Die meisten bekannten Zauber müssen aus zwei Schulen stammen (Abjuration und Evokation, oder Verzauberung und Illusion), und nur eine Wahl auf Stufe 3 und je eine auf Stufe 8, 14 und 20 darf aus einer beliebigen Schule sein. Die Zauberauswahl zeigt, wie viele freie Wahlen übrig sind, und graut den Rest aus. Aurora-Dateien nennen die Schulen, und der Homebrew-Editor hat ein Feld dafür.",
+        es: "Los conjuros del Caballero sobrenatural y del Embaucador arcano siguen las reglas: la mayoría de los conocidos deben ser de dos escuelas (abjuración y evocación, o encantamiento e ilusión), y solo una elección en el nivel 3 y una en los niveles 8, 14 y 20 puede ser de cualquier escuela. La selección de conjuros dice cuántas elecciones libres quedan y atenúa el resto. Los archivos de Aurora indican las escuelas, y el editor homebrew tiene un campo para ellas.",
+      },
+      {
+        en: "Play has an Inventory panel (in the Resources part): every item you carry, with a “Use” button that uses one up (the line goes with the last one: arrows, rations, torches, potions), and a tick to switch weapons, armor and magic items on and off. Healing potions imported from Aurora roll their dice and heal you, and the roll is in the history; packs imported before show “Needs updating” to get it.",
+        it: "Gioca ha un pannello Inventario (nella parte Risorse): ogni oggetto che porti, con un pulsante “Usa” che ne consuma uno (la riga sparisce con l’ultimo: frecce, razioni, torce, pozioni) e una spunta per accendere e spegnere armi, armature e oggetti magici. Le pozioni di cura importate da Aurora tirano i loro dadi e ti curano, e il tiro compare nella cronologia; i pacchetti importati prima risultano “Da aggiornare” per averlo.",
+        fr: "Jouer a un panneau Inventaire (dans la partie Ressources) : chaque objet que tu portes, avec un bouton « Utiliser » qui en consomme un (la ligne disparaît avec le dernier : flèches, rations, torches, potions) et une case pour activer et désactiver armes, armures et objets magiques. Les potions de soin importées d’Aurora lancent leurs dés et te soignent, et le jet apparaît dans l’historique ; les paquets importés avant indiquent « À mettre à jour » pour l’avoir.",
+        de: "Der Spielmodus hat ein Inventar-Feld (im Teil Ressourcen): jeder Gegenstand, den du trägst, mit einem Knopf „Benutzen“, der einen verbraucht (die Zeile verschwindet mit dem letzten: Pfeile, Rationen, Fackeln, Tränke), und einem Häkchen zum An- und Ausschalten von Waffen, Rüstungen und magischen Gegenständen. Aus Aurora importierte Heiltränke würfeln ihre Würfel und heilen dich, der Wurf steht im Verlauf; früher importierte Pakete zeigen dafür „Aktualisieren“.",
+        es: "Jugar tiene un panel de Inventario (en la parte Recursos): cada objeto que llevas, con un botón «Usar» que gasta uno (la línea desaparece con el último: flechas, raciones, antorchas, pociones) y una casilla para activar y desactivar armas, armaduras y objetos mágicos. Las pociones de curación importadas de Aurora tiran sus dados y te curan, y la tirada queda en el historial; los paquetes importados antes muestran «Por actualizar» para tenerlo.",
+      },
+      {
+        en: "A new “Copy as new” button in Quick edit opens a copy of a species, class, subclass, background, spell, item or feat of the rules in the homebrew editor (with its traits and features), to change as you like and save as an entry of your own. The original stays as it is; a homebrew pack is made if you have none.",
+        it: "Un nuovo pulsante “Copia come nuovo” nella Modifica rapida apre nell’editor homebrew una copia di una specie, classe, sottoclasse, background, incantesimo, oggetto o talento delle regole (con i suoi tratti e privilegi), da cambiare come vuoi e salvare come voce tua. L’originale resta com’è; se non hai un pacchetto homebrew ne viene creato uno.",
+        fr: "Un nouveau bouton « Copier comme nouveau » dans la modification rapide ouvre dans l’éditeur homebrew une copie d’une espèce, classe, sous-classe, background, sort, objet ou don des règles (avec ses traits et aptitudes), à modifier comme tu veux et à enregistrer comme entrée à toi. L’original reste tel quel ; un paquet homebrew est créé si tu n’en as pas.",
+        de: "Ein neuer Knopf „Als neu kopieren“ in der Schnellbearbeitung öffnet im Homebrew-Editor eine Kopie einer Art, Klasse, Unterklasse, eines Hintergrunds, Zaubers, Gegenstands oder Talents der Regeln (mit ihren Merkmalen), die du nach Belieben ändern und als eigenen Eintrag speichern kannst. Das Original bleibt unverändert; ohne Homebrew-Paket wird eines angelegt.",
+        es: "Un nuevo botón «Copiar como nuevo» en la edición rápida abre en el editor homebrew una copia de una especie, clase, subclase, trasfondo, conjuro, objeto o dote de las reglas (con sus rasgos), para cambiarla como quieras y guardarla como entrada tuya. El original se queda como está; si no tienes un paquete homebrew se crea uno.",
+      },
+      {
+        en: "In the Equipment step, a button adds what your class and background give without a choice (a pack adds everything it holds), and turns off once it has. Coins now weigh: 50 to a pound, counted in the carried weight.",
+        it: "Nel passo Equipaggiamento un pulsante aggiunge ciò che classe e background danno senza scelta (uno zaino aggiunge tutto quello che contiene). Le monete ora pesano: 50 per libbra, contate nel peso trasportato.",
+        fr: "Dans l’étape Équipement, un bouton ajoute ce que ta classe et ton background donnent sans choix (un paquetage ajoute tout son contenu). Les pièces pèsent maintenant : 50 pour une livre, comptées dans le poids porté.",
+        de: "Im Schritt Ausrüstung fügt ein Knopf hinzu, was Klasse und Hintergrund ohne Wahl geben (ein Paket fügt seinen ganzen Inhalt hinzu). Münzen haben jetzt Gewicht: 50 auf ein Pfund, in der Traglast mitgezählt.",
+        es: "En el paso Equipo, un botón añade lo que tu clase y tu trasfondo dan sin elegir (un paquete añade todo lo que contiene). Las monedas ahora pesan: 50 por libra, contadas en el peso transportado.",
+      },
+    ],
+  },
+  {
     version: "1.15.0 beta",
     date: "2026-10-31",
     notes: [
@@ -799,41 +833,21 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "money",
     text: {
-      en: "Money that does something: buying items takes their cost from the coins, the gold a class starts with, and coins that weigh (50 to a pound).",
-      it: "Soldi che fanno qualcosa: comprare gli oggetti toglie il loro costo dalle monete, l'oro con cui parte una classe e le monete che pesano (50 per libbra).",
-      fr: "Un argent qui sert à quelque chose : acheter un objet retire son coût des pièces, l'or de départ d'une classe, et des pièces qui pèsent (50 pour une livre).",
-      de: "Geld, das etwas tut: Der Kauf von Gegenständen zieht die Kosten von den Münzen ab, dazu das Startgold einer Klasse und Münzen, die Gewicht haben (50 auf ein Pfund).",
-      es: "Dinero que hace algo: comprar objetos descuenta su coste de las monedas, el oro con el que empieza una clase y monedas que pesan (50 por libra).",
-    },
-  },
-  {
-    id: "playInventory",
-    text: {
-      en: "The inventory in Play: counters to use up potions, arrows and rations at the table, and the equipment to switch on and off.",
-      it: "L'inventario in Gioca: contatori per consumare pozioni, frecce e razioni al tavolo, e l'equipaggiamento da accendere e spegnere.",
-      fr: "L'inventaire dans Jouer : des compteurs pour consommer potions, flèches et rations à table, et l'équipement à activer et désactiver.",
-      de: "Das Inventar im Spielmodus: Zähler, um Tränke, Pfeile und Rationen am Tisch zu verbrauchen, und die Ausrüstung zum An- und Ausschalten.",
-      es: "El inventario en Jugar: contadores para gastar pociones, flechas y raciones en la mesa, y el equipo para activar y desactivar.",
-    },
-  },
-  {
-    id: "startingEquipment",
-    text: {
-      en: "Starting equipment: a button that adds what you get without choosing, and the choices as steps to follow.",
-      it: "Equipaggiamento iniziale: un pulsante che aggiunge ciò che ricevi senza scegliere, e le scelte come passi da seguire.",
-      fr: "Équipement de départ : un bouton qui ajoute ce que tu reçois sans choisir, et les choix sous forme d'étapes à suivre.",
-      de: "Startausrüstung: ein Knopf, der hinzufügt, was du ohne Wahl bekommst, und die Wahlmöglichkeiten als Schritte zum Folgen.",
-      es: "Equipo inicial: un botón que añade lo que recibes sin elegir, y las opciones como pasos que seguir.",
+      en: "Money that does something: buying items takes their cost from the coins, and the gold a class starts with.",
+      it: "Soldi che fanno qualcosa: comprare gli oggetti toglie il loro costo dalle monete, e l'oro con cui parte una classe.",
+      fr: "Un argent qui sert à quelque chose : acheter un objet retire son coût des pièces, et l'or de départ d'une classe.",
+      de: "Geld, das etwas tut: Der Kauf von Gegenständen zieht die Kosten von den Münzen ab, dazu das Startgold einer Klasse.",
+      es: "Dinero que hace algo: comprar objetos descuenta su coste de las monedas, y el oro con el que empieza una clase.",
     },
   },
   {
     id: "quickEditMore",
     text: {
-      en: "Quick edit everywhere (the lists of items and more), and Edit everything: copy an entry as a new one in your homebrew, or replace the original, rules included.",
-      it: "Modifica rapida ovunque (gli elenchi di oggetti e altro), e Modifica tutto: copiare una voce come nuova nel tuo homebrew, o sostituire l'originale, regole comprese.",
-      fr: "Modification rapide partout (les listes d'objets et plus), et Tout modifier : copier une entrée comme nouvelle dans ton homebrew, ou remplacer l'original, règles comprises.",
-      de: "Schnellbearbeitung überall (die Listen der Gegenstände und mehr) und Alles bearbeiten: einen Eintrag als neuen in deinem Homebrew kopieren oder das Original ersetzen, Regeln eingeschlossen.",
-      es: "Edición rápida en todas partes (las listas de objetos y más), y Editar todo: copiar una entrada como nueva en tu homebrew, o sustituir el original, reglas incluidas.",
+      en: "Quick edit everywhere (the lists of items and more), and Edit everything: replace the original entry, rules included (copying it as a new one in your homebrew already works).",
+      it: "Modifica rapida ovunque (gli elenchi di oggetti e altro), e Modifica tutto: sostituire la voce originale, regole comprese (copiarla come nuova nel tuo homebrew già funziona).",
+      fr: "Modification rapide partout (les listes d'objets et plus), et Tout modifier : remplacer l'entrée d'origine, règles comprises (la copier comme nouvelle dans ton homebrew fonctionne déjà).",
+      de: "Schnellbearbeitung überall (die Listen der Gegenstände und mehr) und Alles bearbeiten: den ursprünglichen Eintrag ersetzen, Regeln eingeschlossen (ihn als neuen in deinem Homebrew zu kopieren geht schon).",
+      es: "Edición rápida en todas partes (las listas de objetos y más), y Editar todo: sustituir la entrada original, reglas incluidas (copiarla como nueva en tu homebrew ya funciona).",
     },
   },
   {
@@ -857,16 +871,6 @@ export const ROADMAP: RoadmapItem[] = [
     },
   },
   {
-    id: "casters",
-    text: {
-      en: "The Eldritch Knight and Arcane Trickster are not in the SRD: they come from Aurora files or the homebrew editor. Their spell lists are not limited to the schools the rules ask for.",
-      it: "Il Cavaliere Mistico e il Mistificatore Arcano non sono nell'SRD: arrivano da file Aurora o dall'editor homebrew. Le loro liste di incantesimi non sono limitate alle scuole che le regole richiedono.",
-      fr: "Le Chevalier occulte et l'Escroc arcanique ne sont pas dans le SRD : ils viennent de fichiers Aurora ou de l'éditeur homebrew. Leurs listes de sorts ne sont pas limitées aux écoles que demandent les règles.",
-      de: "Der Mystische Ritter und der Arkane Betrüger stehen nicht im SRD: Sie kommen aus Aurora-Dateien oder dem Homebrew-Editor. Ihre Zauberlisten sind nicht auf die Schulen beschränkt, die die Regeln verlangen.",
-      es: "El Caballero sobrenatural y el Embaucador arcano no están en el SRD: llegan de archivos de Aurora o del editor homebrew. Sus listas de conjuros no se limitan a las escuelas que piden las reglas.",
-    },
-  },
-  {
     id: "aurora",
     text: {
       en: "More of Aurora: companions and background variants are not read yet, and rules that need custom logic keep only their text.",
@@ -879,11 +883,11 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "items",
     text: {
-      en: "More of what magic items do on the sheet (weapon bonuses, charges, attunement slots), coins and carried weight.",
-      it: "Altro di ciò che fanno gli oggetti magici sulla scheda (bonus alle armi, cariche, posti di sintonia), monete e peso trasportato.",
-      fr: "Plus de ce que font les objets magiques sur la fiche (bonus d'armes, charges, places d'harmonisation), pièces et poids porté.",
-      de: "Mehr davon, was magische Gegenstände auf dem Bogen bewirken (Waffenboni, Ladungen, Einstimmungsplätze), Münzen und Traglast.",
-      es: "Más de lo que hacen los objetos mágicos en la hoja (bonos de armas, cargas, ranuras de sintonización), monedas y peso transportado.",
+      en: "More of what items do on the sheet and in Play: using an item only counts it down for now, except the healing potions of Aurora, which heal; also weapon bonuses, charges, attunement slots.",
+      it: "Altro di ciò che fanno gli oggetti sulla scheda e in Gioca: usare un oggetto per ora lo scala soltanto, tranne le pozioni di cura di Aurora, che curano; e poi bonus alle armi, cariche, posti di sintonia.",
+      fr: "Plus de ce que font les objets sur la fiche et dans Jouer : utiliser un objet ne fait que le décompter pour l'instant, sauf les potions de soin d'Aurora, qui soignent ; et aussi bonus d'armes, charges, places d'harmonisation.",
+      de: "Mehr davon, was Gegenstände auf dem Bogen und im Spielmodus bewirken: Ein Gegenstand wird beim Benutzen vorerst nur abgezählt, außer den Heiltränken aus Aurora, die heilen; dazu Waffenboni, Ladungen, Einstimmungsplätze.",
+      es: "Más de lo que hacen los objetos en la hoja y en Jugar: usar un objeto por ahora solo lo descuenta, salvo las pociones de curación de Aurora, que curan; y también bonos de armas, cargas, ranuras de sintonización.",
     },
   },
   {

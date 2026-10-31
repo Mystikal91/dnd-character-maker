@@ -74,6 +74,11 @@ export const SubclassDataSchema = v.object({
     v.object({
       ability: AbilitySchema,
       list: EntryIdSchema,
+      /**
+       * School slugs the spells known come from (abjuration and evocation for the Eldritch Knight),
+       * except for the few picks the rules leave free. Empty or absent: any school.
+       */
+      schools: v.optional(v.array(v.string())),
       startsAtLevel: v.number(),
       kind: v.picklist(["full", "half", "third", "pact"]),
     }),

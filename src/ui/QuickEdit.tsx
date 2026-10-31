@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "preact/hooks";
+import { copyAsNewHomebrew } from "../app/homebrew";
 import {
   closeQuickEdit,
   openQuickEdit,
@@ -7,6 +8,7 @@ import {
   saveQuickEdit,
 } from "../app/quickEdit";
 import { content } from "../app/store";
+import { editableKind } from "../homebrew/model";
 import { type UiKey, ui } from "../i18n/ui";
 
 /** The pencil next to a name or a text: opens Quick edit for that entry. */
@@ -94,6 +96,8 @@ function Editor({ id }: { id: string }) {
 
   if (!c) return null;
   const anyEdited = fields.some((f) => c.isEdited(id, f));
+  const entry = c.index.get(id);
+  const canCopy = entry !== undefined && editableKind(entry) !== undefined;
 
   const finish = async (action: () => Promise<void>) => {
     setBusy(true);
@@ -154,6 +158,20 @@ function Editor({ id }: { id: string }) {
           <button type="button" onClick={closeQuickEdit} disabled={busy}>
             {ui("quickEdit.cancel")}
           </button>
+          {canCopy && (
+            <button
+              type="button"
+              disabled={busy}
+              title={ui("quickEdit.copyHint")}
+              onClick={() =>
+                void finish(async () => {
+                  await copyAsNewHomebrew(id);
+                })
+              }
+            >
+              {ui("quickEdit.copy")}
+            </button>
+          )}
           {anyEdited && (
             <button
               type="button"

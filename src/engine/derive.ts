@@ -373,6 +373,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
           picks: character.spells[cl.classId],
           index,
           subclass: subEntry,
+          ...(subCasting && cast !== data && subCasting.schools && { schools: subCasting.schools }),
           warnings,
         }),
       });

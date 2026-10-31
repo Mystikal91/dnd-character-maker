@@ -2,6 +2,7 @@ import { itemData } from "../data/items";
 import type { Ability, ProficiencyCategory } from "../data/schema";
 import type { Character } from "./character";
 import type { SourcedEffect } from "./choices";
+import { coinWeight } from "./coins";
 import type { AbilityResult, PackIndex } from "./derive";
 import { type AppliedModifier, type ArmorState, appliedModifiers, total } from "./modifiers";
 import { type Warning, warn } from "./warnings";
@@ -304,6 +305,7 @@ function deriveLoad(ctx: Context): LoadResult {
     }
     carried += (itemData(entry).weight ?? 0) * item.quantity;
   }
+  carried += coinWeight(ctx.character.coins);
   return { carried, capacity: ctx.abilities.str.score * 15 };
 }
 

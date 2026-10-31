@@ -36,6 +36,8 @@ export const ItemDataSchema = v.object({
   rarity: v.optional(v.string()),
   /** A bonus to attack and damage rolls (+1, +2, +3) that a magic weapon gives. */
   enhancement: v.optional(v.number()),
+  /** What using the item does when it can be worked out: the dice of the hit points it restores. */
+  use: v.optional(v.object({ heal: v.optional(v.string()) })),
   /** The item is not carried by itself: it is an enchantment put on a weapon in the inventory. */
   enchants: v.optional(v.boolean()),
   weapon: v.optional(WeaponSchema),

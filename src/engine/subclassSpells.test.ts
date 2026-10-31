@@ -138,6 +138,63 @@ describe("a subclass that gives spellcasting", () => {
     expect(deriveSheet(make("fighter", 2, sub), index).spellcasters).toEqual([]);
   });
 
+  it("limits the spells to the schools of the subclass, with a few picks left free", () => {
+    const base = knight();
+    const limited: Entry = {
+      ...base,
+      id: "test:subclass/school-knight",
+      data: {
+        ...base.data,
+        spellcasting: {
+          ...(base.data.spellcasting as object),
+          schools: ["abjuration", "evocation"],
+        },
+      },
+    };
+    const schoolIndex = new Map([...index, [limited.id, limited]]);
+    const knownAt = (level: number, known: string[]) => {
+      const c = make("fighter", level, limited.id);
+      c.spells["srd51:class/fighter"] = { cantrips: [], known, prepared: [] };
+      return deriveSheet(c, schoolIndex);
+    };
+    const inSchool = ["srd51:spell/shield", "srd51:spell/magic-missile"];
+
+    // At 3rd level one of the three spells may be of another school.
+    const ok = knownAt(3, [...inSchool, "srd51:spell/sleep"]);
+    expect(ok.spellcasters[0]?.lists.known?.chosen).toHaveLength(3);
+    expect(ok.spellcasters[0]?.lists.known?.restriction).toEqual({
+      schools: ["abjuration", "evocation"],
+      free: 1,
+    });
+    expect(ok.warnings.map((w) => w.code)).not.toContain("spellSchool");
+
+    // A second one of another school is not allowed yet...
+    const over = knownAt(3, [
+      "srd51:spell/sleep",
+      "srd51:spell/charm-person",
+      inSchool[0] as string,
+    ]);
+    expect(over.spellcasters[0]?.lists.known?.chosen).toEqual([
+      "srd51:spell/sleep",
+      "srd51:spell/shield",
+    ]);
+    expect(over.warnings.map((w) => w.code)).toContain("spellSchool");
+
+    // ...but at 8th level there are two free picks.
+    const later = knownAt(8, [
+      "srd51:spell/sleep",
+      "srd51:spell/charm-person",
+      inSchool[0] as string,
+    ]);
+    expect(later.spellcasters[0]?.lists.known?.chosen).toHaveLength(3);
+    expect(later.warnings.map((w) => w.code)).not.toContain("spellSchool");
+
+    // A subclass with no schools is not limited.
+    expect(
+      deriveSheet(make("fighter", 3, sub), index).spellcasters[0]?.lists.known?.restriction,
+    ).toBeUndefined();
+  });
+
   it("counts a third of the levels when multiclassed with a full caster", () => {
     const c = make("fighter", 6, sub);
     c.classes.push({ classId: "srd51:class/wizard", level: 3 });

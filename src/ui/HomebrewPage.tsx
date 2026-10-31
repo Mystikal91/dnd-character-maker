@@ -4,6 +4,7 @@ import {
   editingPack,
   renameHomebrewPack,
   saveHomebrewEntry,
+  takeWaitingDraft,
 } from "../app/homebrew";
 import { showView } from "../app/navigation";
 import { content } from "../app/store";
@@ -425,6 +426,12 @@ function Fields({ api }: { api: FormApi }) {
               <Num api={api} name="cantrips" min={0} text={label("cantripsThird")} />
             </div>
           )}
+          {api.draft.values.casting === "third" && (
+            <>
+              <p class="muted">{ui("hb.castSchoolsHint")}</p>
+              <Many api={api} name="castSchools" options={slugs("school")} />
+            </>
+          )}
           <Text api={api} name="desc" area />
           <Features api={api} />
         </>
@@ -605,7 +612,11 @@ function EntryForm({
 
 /** The editor for one homebrew pack: its entries, and a form to make or change them. */
 export function HomebrewPage() {
-  const [open, setOpen] = useState<{ draft: Draft; editing?: string } | undefined>(undefined);
+  // A copy of a rules entry waits here, to be saved as a new one.
+  const [open, setOpen] = useState<{ draft: Draft; editing?: string } | undefined>(() => {
+    const draft = takeWaitingDraft();
+    return draft && { draft };
+  });
   const [kind, setKind] = useState<HomebrewKind>("spell");
   const record = editingPack();
   if (!record) {

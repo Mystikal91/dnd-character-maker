@@ -22,7 +22,8 @@ export type WarningCode =
   | "asiInvalid"
   | "asiTooMany"
   | "invalidSpell"
-  | "tooManySpells";
+  | "tooManySpells"
+  | "spellSchool";
 
 export interface Warning {
   code: WarningCode;

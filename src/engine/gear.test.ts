@@ -1,7 +1,20 @@
 import { describe, expect, it } from "vitest";
 import { srd51Index } from "../test/srd51";
 import type { InventoryItem } from "./character";
-import { addToInventory, packContents } from "./gear";
+import {
+  addStartingItems,
+  addToInventory,
+  healingOf,
+  isUsable,
+  packContents,
+  useOne,
+} from "./gear";
+
+const entry = (id: string) => {
+  const found = srd51Index.get(id);
+  if (!found) throw new Error(id);
+  return found;
+};
 
 describe("equipment packs", () => {
   const packs = [...srd51Index.values()].filter((e) => packContents(e).length > 0);
@@ -40,5 +53,37 @@ describe("adding to the inventory", () => {
       { itemId: "srd51:item/rope-hempen-50-feet", quantity: 3, equipped: false },
       { itemId: "srd51:item/backpack", quantity: 1, equipped: false },
     ]);
+  });
+
+  it("uses up one at a time, and the line goes with the last one", () => {
+    const inventory: InventoryItem[] = [
+      { itemId: "srd51:item/arrow", quantity: 2, equipped: false },
+    ];
+    expect(useOne(inventory, "srd51:item/arrow")).toBe(true);
+    expect(inventory[0]?.quantity).toBe(1);
+    expect(useOne(inventory, "srd51:item/arrow")).toBe(true);
+    expect(inventory).toEqual([]);
+    expect(useOne(inventory, "srd51:item/arrow")).toBe(false);
+  });
+
+  it("tells what can be used and what a potion heals", () => {
+    expect(isUsable("gear")).toBe(true);
+    expect(isUsable("magic")).toBe(true);
+    expect(isUsable("weapon")).toBe(false);
+    expect(isUsable("armor")).toBe(false);
+    const potion = { ...entry("srd51:item/arrow"), data: { use: { heal: "2d4+2" } } };
+    expect(healingOf(potion)).toBe("2d4+2");
+    expect(healingOf(entry("srd51:item/arrow"))).toBeUndefined();
+  });
+
+  it("opens a pack when adding what a class or background hands out", () => {
+    const inventory: InventoryItem[] = [];
+    addStartingItems(inventory, srd51Index, [
+      { item: "srd51:item/explorers-pack", quantity: 1 },
+      { item: "srd51:item/javelin", quantity: 4 },
+    ]);
+    expect(inventory.some((i) => i.itemId === "srd51:item/explorers-pack")).toBe(false);
+    expect(inventory.some((i) => i.itemId === "srd51:item/backpack")).toBe(true);
+    expect(inventory.find((i) => i.itemId === "srd51:item/javelin")?.quantity).toBe(4);
   });
 });

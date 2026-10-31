@@ -452,6 +452,7 @@ export function buildDraft(draft: Draft, id: Id, context: BuildContext): Built {
       const byLevel = featureEntries(draft.traits, id, parent, strings, extra);
       // A subclass can give its class spellcasting, as the Eldritch Knight does.
       const casts = values.casting === "third";
+      const schools = (values.castSchools ?? "").split(",").filter(Boolean);
       const cantrips = Math.min(9, Math.max(0, whole(values.cantrips, 2)));
       const levels = new Map<number, Record<string, unknown>>();
       for (const [level, features] of byLevel) levels.set(level, { level, features });
@@ -478,6 +479,7 @@ export function buildDraft(draft: Draft, id: Id, context: BuildContext): Built {
             spellcasting: {
               ability: ABILITY_IDS.find((a) => a === values.castAbility) ?? "int",
               list: text(values.castList) || "srd51:class/wizard",
+              ...(schools.length > 0 && { schools }),
               startsAtLevel: 3,
               kind: "third",
             },
@@ -675,6 +677,7 @@ export function draftFromEntry(
         values.casting = "third";
         values.castAbility = String(d.spellcasting.ability ?? "int");
         values.castList = String(d.spellcasting.list ?? "");
+        values.castSchools = ((d.spellcasting.schools as string[] | undefined) ?? []).join(",");
         const rows = (d.levels ?? []) as { cantripsKnown?: number }[];
         values.cantrips = String(
           rows.find((r) => r.cantripsKnown !== undefined)?.cantripsKnown ?? 0,

@@ -2,6 +2,7 @@ import type { Effect } from "../../data/schema";
 import { classIdByName, emit } from "./emit";
 import { type Context, FEATURE_TYPES, type Source, ofType } from "./registry";
 import {
+  SCHOOLS,
   abilityFromWord,
   mapRules,
   proficiencyOf,
@@ -368,6 +369,14 @@ export function importArchetype(ctx: Context, source: Source): void {
   const listClass = casting
     ? classIdByName(ctx, casting.list.split(",")[0]?.trim() ?? "")
     : undefined;
+  // The list can name schools after the class ("Wizard,(Abjuration||Evocation)").
+  const schools = (casting?.list ?? "")
+    .split(",")
+    .slice(1)
+    .join(",")
+    .toLowerCase()
+    .split(/[^a-z]+/)
+    .filter((word) => SCHOOLS.has(word));
   const classCasts = classCasting(ctx, parent.classId);
   const casts = casting && listClass && !classCasts ? casting : undefined;
 
@@ -414,6 +423,7 @@ export function importArchetype(ctx: Context, source: Source): void {
           spellcasting: {
             ability: casts.ability,
             list: listClass,
+            ...(schools.length > 0 && { schools }),
             startsAtLevel: casts.startsAt,
             kind,
           },

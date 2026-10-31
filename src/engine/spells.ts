@@ -10,7 +10,15 @@ export interface SpellPick {
   /** Valid picks only, at most `allowed`. */
   chosen: string[];
   pool: string[];
+  /**
+   * Only on a subclass caster limited to some schools (Eldritch Knight, Arcane Trickster): the
+   * spells of other schools may be at most `free` of the picks.
+   */
+  restriction?: { schools: string[]; free: number };
 }
+
+/** The class levels at which a third caster may learn a spell of any school. */
+export const FREE_SCHOOL_LEVELS = [3, 8, 14, 20];
 
 export interface SpellLists {
   preparation: "known" | "prepared" | "spellbook";
@@ -34,6 +42,8 @@ interface Input {
   picks: ClassSpells | undefined;
   index: PackIndex;
   subclass: Entry | undefined;
+  /** Schools the spells known are limited to (see `SpellPick.restriction`). */
+  schools?: string[];
   warnings: Warning[];
 }
 
@@ -68,14 +78,24 @@ function resolvePick(
   pool: string[],
   classId: string,
   warnings: Warning[],
+  limit?: { restriction: { schools: string[]; free: number }; schoolOf: (spell: string) => string },
 ): SpellPick {
   const chosen: string[] = [];
+  let outside = 0;
   for (const spell of requested) {
     if (!pool.includes(spell)) warn(warnings, "invalidSpell", { spell, class: classId });
     else if (chosen.length >= allowed) warn(warnings, "tooManySpells", { class: classId });
-    else if (!chosen.includes(spell)) chosen.push(spell);
+    else if (chosen.includes(spell)) continue;
+    else if (limit && !limit.restriction.schools.includes(limit.schoolOf(spell))) {
+      if (outside >= limit.restriction.free)
+        warn(warnings, "spellSchool", { spell, class: classId });
+      else {
+        outside++;
+        chosen.push(spell);
+      }
+    } else chosen.push(spell);
   }
-  return { allowed, chosen, pool };
+  return { allowed, chosen, pool, ...(limit && { restriction: limit.restriction }) };
 }
 
 /** The spell lists of one casting class at its current level (call only once it can cast). */
@@ -116,12 +136,19 @@ export function deriveSpellLists(input: Input): SpellLists {
   ];
   const preparation = casting.preparation;
   if (preparation.type === "known") {
+    const schools = input.schools ?? [];
     lists.known = resolvePick(
       picks?.known ?? [],
       row?.spellsKnown ?? 0,
       leveled,
       classId,
       warnings,
+      schools.length > 0
+        ? {
+            restriction: { schools, free: FREE_SCHOOL_LEVELS.filter((l) => l <= level).length },
+            schoolOf: (spell) => String(index.get(spell)?.data.school ?? ""),
+          }
+        : undefined,
     );
   } else if (preparation.type === "prepared") {
     const count = Math.max(1, abilityModifier + Math.floor(level / preparation.levelDivisor));

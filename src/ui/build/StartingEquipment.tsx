@@ -1,6 +1,8 @@
-import { character, content } from "../../app/store";
+import { character, content, updateCharacter } from "../../app/store";
 import type { Content } from "../../content/browser";
 import type { Entry } from "../../data/schema";
+import type { InventoryItem } from "../../engine/character";
+import { addStartingItems } from "../../engine/gear";
 import { ui } from "../../i18n/ui";
 
 const MAX_LINES = 12;
@@ -16,10 +18,14 @@ function classLines(c: Content, classId: string): string[] {
   return lines;
 }
 
+/** What an entry hands out without a choice. */
+function givenItems(entry: Entry): { item: string; quantity: number }[] {
+  return (entry.data.startingEquipment ?? []) as { item: string; quantity: number }[];
+}
+
 /** What an entry hands out without a choice, as a short list ("Explorer's Pack, Javelin ×4"). */
 function fixedItems(c: Content, entry: Entry): string {
-  const items = (entry.data.startingEquipment ?? []) as { item: string; quantity: number }[];
-  return items
+  return givenItems(entry)
     .map((i) => (i.quantity > 1 ? `${c.name(i.item)} ×${i.quantity}` : c.name(i.item)))
     .join(", ");
 }
@@ -46,6 +52,13 @@ export function StartingEquipment() {
     Boolean(s && (s.lines.length > 0 || s.also)),
   );
   if (sections.length === 0) return null;
+  const given = [cls, background].flatMap((e) => (e ? givenItems(e) : []));
+  // Already added once: everything it would put in the inventory is there in full.
+  const wanted: InventoryItem[] = [];
+  addStartingItems(wanted, c.index, given);
+  const added = wanted.every(
+    (w) => (ch.inventory.find((i) => i.itemId === w.itemId)?.quantity ?? 0) >= w.quantity,
+  );
 
   return (
     <details class="starting-equipment" open>
@@ -62,6 +75,16 @@ export function StartingEquipment() {
           </ul>
         </section>
       ))}
+      {given.length > 0 && (
+        <button
+          type="button"
+          class="secondary"
+          disabled={added}
+          onClick={() => updateCharacter((d) => addStartingItems(d.inventory, c.index, given))}
+        >
+          {ui("equipment.startingAdd")}
+        </button>
+      )}
     </details>
   );
 }

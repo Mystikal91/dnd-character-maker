@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 import { customSpellFor } from "../app/customSpell";
-import { content, sheet, updateCharacter } from "../app/store";
+import { character, content, sheet, updateCharacter } from "../app/store";
 import type { Content } from "../content/browser";
 import type { ClassSpells } from "../engine/character";
 import type { SpellcastingResult } from "../engine/derive";
@@ -26,6 +26,14 @@ function SpellList({ classId, list, title, pick, filter, c }: ListProps) {
   const matches = pick.pool.filter((id) => !query || c.name(id).toLowerCase().includes(query));
   const levels = [...new Set(matches.map((id) => levelOf(c, id)))];
   const full = pick.chosen.length >= pick.allowed;
+  // Limited to some schools: only a few picks may come from the others.
+  const limit = pick.restriction;
+  const schoolOf = (id: string) => String(c.index.get(id)?.data.school ?? "");
+  const outsideLeft = limit
+    ? limit.free - pick.chosen.filter((id) => !limit.schools.includes(schoolOf(id))).length
+    : 0;
+  const barred = (id: string) =>
+    Boolean(limit && outsideLeft <= 0 && !limit.schools.includes(schoolOf(id)));
 
   const toggle = (spell: string, on: boolean) => {
     updateCharacter((d) => {
@@ -43,6 +51,16 @@ function SpellList({ classId, list, title, pick, filter, c }: ListProps) {
       <p class={pick.chosen.length < pick.allowed ? "note" : "muted"}>
         {ui("spells.count", { n: pick.chosen.length, allowed: pick.allowed })}
       </p>
+      {limit && (
+        <p class="muted">
+          {ui("spells.schoolLimit", {
+            schools: limit.schools
+              .map((s) => c.name(`${character.value.ruleset}:school/${s}`))
+              .join(", "),
+            free: Math.max(0, outsideLeft),
+          })}
+        </p>
+      )}
       {matches.length === 0 && <p class="muted">{ui("spells.noMatches")}</p>}
       {levels.map((level) => (
         <details key={level} open={Boolean(query) || level <= 1}>
@@ -52,13 +70,14 @@ function SpellList({ classId, list, title, pick, filter, c }: ListProps) {
               .filter((id) => levelOf(c, id) === level)
               .map((id) => {
                 const checked = pick.chosen.includes(id);
+                const blocked = !checked && (full || barred(id));
                 return (
                   <li key={id}>
-                    <label class={!checked && full ? "disabled" : ""}>
+                    <label class={blocked ? "disabled" : ""}>
                       <input
                         type="checkbox"
                         checked={checked}
-                        disabled={!checked && full}
+                        disabled={blocked}
                         onChange={(e) => toggle(id, e.currentTarget.checked)}
                       />
                       {c.name(id)}

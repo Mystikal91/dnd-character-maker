@@ -175,6 +175,12 @@ function magicLine(set: ReturnType<typeof setters>): string {
   return [type, rarity].filter(Boolean).join(", ") + (attune ? " (requires attunement)" : "");
 }
 
+/** The dice of the hit points a potion restores ("You regain 2d4 + 2 hit points"), as `2d4+2`. */
+export function healingDice(text: string): string | undefined {
+  const found = /\bregains?\s+(\d+d\d+(?:\s*[+-]\s*\d+)?)\s+hit points/i.exec(text);
+  return found?.[1]?.replace(/\s+/g, "");
+}
+
 /**
  * A magic item becomes a plain item: its text carries the rules, since what it does (a bonus to
  * attacks, charges, a spell) is not something the sheet applies by itself yet.
@@ -193,6 +199,9 @@ export function importMagicItem(ctx: Context, source: Source): void {
   // (`enhancement`): it is put on a weapon the character has, not carried as a thing of its own.
   const enhancement = number(set.get("enhancement")?.text ?? "");
   const enchants = set.get("weapon") !== undefined;
+  const heal = /potion/i.test(set.get("type")?.text ?? "")
+    ? healingDice(description(source.el))
+    : undefined;
   emit(
     ctx,
     source,
@@ -201,6 +210,7 @@ export function importMagicItem(ctx: Context, source: Source): void {
       cost: parseCost(set.get("cost")),
       ...(weight !== undefined && { weight }),
       ...(rarity && { rarity }),
+      ...(heal && { use: { heal } }),
       ...(enchants && { enchants: true }),
       ...(enchants && enhancement !== undefined && enhancement > 0 && { enhancement }),
       attunement: /^\s*true/i.test(set.get("attunement")?.text ?? ""),

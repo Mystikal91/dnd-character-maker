@@ -277,7 +277,7 @@ const ALL_SKILLS = [
   "survival",
 ];
 
-const SCHOOLS = new Set([
+export const SCHOOLS = new Set([
   "abjuration",
   "conjuration",
   "divination",
