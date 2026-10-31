@@ -224,6 +224,23 @@ TOOL_GROUPS.tool = [
 ];
 
 /** "Artisan tools", "Skill||Tool"...: the options when every word names a group of skills or tools. */
+/**
+ * The proficiencies a select offers by the tags they carry (`Simple||Tool`, `Weapon,Martial`):
+ * the Proficiency elements whose tags match, as far as the app has what they name.
+ */
+function taggedProficiencies(ctx: Context, supports: string): string[] {
+  return [
+    ...new Set(
+      ofType(ctx, "Proficiency")
+        .filter((s) => selectMatches(supports, s))
+        .flatMap((s) => {
+          const p = proficiencyOf(ctx, s.aid);
+          return p ? [`${p.category}:${p.target}`] : [];
+        }),
+    ),
+  ];
+}
+
 function groupedProficiencies(supports: string): string[] | undefined {
   const words = supports.split("||").map((w) => w.trim().toLowerCase());
   if (words.length === 0 || words.some((w) => w !== "skill" && !TOOL_GROUPS[w])) return undefined;
@@ -705,7 +722,13 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
     if (rule.tag === "grant") {
       if (rule.type === "Proficiency") {
         const p = proficiencyOf(ctx, rule.id);
+        const expertise = rule.id.match(/^ID_INTERNAL_PROFICIENCY_SKILL_EXPERTISE_(.+)$/);
         if (p) mapped.effects.push({ type: "proficiency", ...p });
+        else if (expertise?.[1])
+          mapped.effects.push({
+            type: "expertise",
+            skill: slugify(expertise[1].replace(/_/g, " ")),
+          });
         else mapped.unsupported += 1;
       } else if (rule.type === "Language") {
         const slug = tail(rule.id, "ID_LANGUAGE_");
@@ -714,8 +737,14 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
         mapped.size = tail(rule.id, "ID_SIZE_");
       } else if (rule.type === "Vision") {
         const trait = `srd51:trait/${tail(rule.id, "ID_VISION_")}`;
+        // A vision the rules of the app do not have (lesser darkvision, blindsight) is a sense
+        // with a range, which the `...:range` stat of the same element gives.
+        const sense = tail(rule.id, "ID_VISION_")?.replace(/^(?:lesser|superior)-?/, "");
+        const ranged = readRules(source.el).some(
+          (r) => r.tag === "stat" && r.name.toLowerCase() === `${sense}:range`,
+        );
         if (ctx.options.index.has(trait)) mapped.effects.push({ type: "trait", id: trait });
-        else mapped.unsupported += 1;
+        else if (!ranged) mapped.unsupported += 1;
       } else if (rule.type === "Spell") {
         const spell = spellIdOf(ctx, rule.id);
         // A spell that comes at a level (the legacy of a tiefling) counts from that level.
@@ -783,7 +812,9 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
               .filter((p): p is NonNullable<typeof p> => Boolean(p))
               .map((p) => `${p.category}:${p.target}`)
           : (groupedProficiencies(rule.supports) ??
-            (/skill/i.test(rule.supports) ? ALL_SKILLS.map((s) => `skill:${s}`) : []));
+            (/skill/i.test(rule.supports)
+              ? ALL_SKILLS.map((s) => `skill:${s}`)
+              : taggedProficiencies(ctx, rule.supports)));
       if (from.length > 0)
         mapped.effects.push({
           type: "choice",

@@ -697,6 +697,47 @@ describe("classes and archetypes", () => {
     expect(made.unsupportedBy.ID_T_LUCKY).toBe(2);
   });
 
+  it("offers the proficiencies a select asks for by their tags, and reads expertise and the senses of a vision", () => {
+    const set = wrap(`
+      <element name="Tool Proficiency (Thieves' tools)" type="Proficiency" source="Test Book" id="ID_PROFICIENCY_TOOL_PROFICIENCY_THIEVES_TOOLS">
+        <supports>Tool, Thieves tools</supports>
+        <description><p>Locks.</p></description>
+      </element>
+      <element name="Weapon Proficiency (Dagger)" type="Proficiency" source="Test Book" id="ID_PROFICIENCY_WEAPON_PROFICIENCY_DAGGER">
+        <supports>Weapon, Simple</supports>
+        <description><p>Stabs.</p></description>
+      </element>
+      <element name="Weapon Proficiency (Longsword)" type="Proficiency" source="Test Book" id="ID_PROFICIENCY_WEAPON_PROFICIENCY_LONGSWORD">
+        <supports>Weapon, Martial</supports>
+        <description><p>Slashes.</p></description>
+      </element>
+      <element name="Sharp Trait" type="Racial Trait" source="Test Book" id="ID_T_SHARP">
+        <description><p>Sharp.</p></description>
+        <rules>
+          <select type="Proficiency" name="Training" supports="Simple||Tool" number="1" />
+          <grant type="Proficiency" id="ID_INTERNAL_PROFICIENCY_SKILL_EXPERTISE_STEALTH" />
+          <grant type="Vision" id="ID_VISION_SUPERIORDARKVISION" />
+          <stat name="darkvision:range" value="120" bonus="base" />
+          <grant type="Vision" id="ID_VISION_BLINDSIGHT" />
+        </rules>
+      </element>
+      <element name="Sharpfolk" type="Race" source="Test Book" id="ID_T_SHARPFOLK">
+        <description><p>Sharp.</p></description>
+        <rules><grant type="Racial Trait" id="ID_T_SHARP" /></rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    const effects = byId(made, "imp1:trait/sharp-trait").effects;
+    expect(effects).toContainEqual({ type: "expertise", skill: "stealth" });
+    expect(effects).toContainEqual({ type: "sense", sense: "darkvision", range: 120 });
+    const training = effects.find((e) => e.type === "choice" && e.grants === "proficiency");
+    expect(training?.type === "choice" && [...training.from].sort()).toEqual([
+      "tool:thieves-tools",
+      "weapon:daggers",
+    ]);
+    // A vision without a range stat of its own (the blindsight here) cannot be applied.
+    expect(made.unsupportedBy.ID_T_SHARP).toBe(1);
+  });
+
   it("takes the race that offers a sub-race as its parent when two races are the same one of the app", () => {
     const set = wrap(`
       <element name="Dwarf" type="Race" source="New Rules" id="ID_T_DWARF_NEW">
