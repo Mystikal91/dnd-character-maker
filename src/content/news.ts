@@ -18,6 +18,33 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.14.0 beta",
+    date: "2026-10-31",
+    notes: [
+      {
+        en: "The sheet knows the speeds other than walking and the senses. Everyone climbs and swims at half the walking speed; a better speed given by a species, an item or a feature (swimming 40, flying 60, burrowing) replaces it, and a bonus to the speed, like the one of the Mobile feat, moves all of them. Darkvision, blindsight, tremorsense and truesight come with their range. Tap the speed on the sheet to see them, and the print sheet writes the ones that are given.",
+        it: "La scheda conosce le velocità diverse dal camminare e i sensi. Tutti scalano e nuotano a metà della velocità a piedi; una velocità migliore data da una specie, da un oggetto o da un privilegio (nuoto 12 m, volo 18 m, scavo) la sostituisce, e un bonus alla velocità, come quello del talento Mobile, le sposta tutte. Scurovisione, vista cieca, percezione tellurica e visione del vero hanno il loro raggio. Tocca la velocità sulla scheda per vederle, e la scheda da stampare scrive quelle concesse.",
+        fr: "La fiche connaît les vitesses autres que la marche et les sens. Tout le monde grimpe et nage à la moitié de la vitesse de marche ; une meilleure vitesse donnée par une espèce, un objet ou un privilège (nage 12 m, vol 18 m, creusement) la remplace, et un bonus à la vitesse, comme celui du don Mobile, les déplace toutes. Vision dans le noir, vision aveugle, perception des vibrations et vision lucide ont leur portée. Touche la vitesse sur la fiche pour les voir ; la fiche à imprimer écrit celles qui sont données.",
+        de: "Das Blatt kennt jetzt andere Bewegungsraten als Gehen und die Sinne. Alle klettern und schwimmen mit der halben Bewegungsrate; eine bessere Rate durch Spezies, Gegenstand oder Merkmal (Schwimmen 12 m, Fliegen 18 m, Graben) ersetzt sie, und ein Bonus auf die Bewegungsrate, wie der des Talents Mobil, verschiebt alle. Dunkelsicht, Blindsicht, Erschütterungssinn und Wahrer Blick haben ihre Reichweite. Tippe auf dem Blatt auf die Bewegungsrate, um sie zu sehen; das Druckblatt schreibt die vergebenen auf.",
+        es: "La hoja conoce las velocidades distintas de caminar y los sentidos. Todos trepan y nadan a la mitad de la velocidad al caminar; una velocidad mejor dada por una especie, un objeto o un rasgo (nadar 12 m, volar 18 m, excavar) la sustituye, y una bonificación a la velocidad, como la de la dote Móvil, las mueve todas. Visión en la oscuridad, visión ciega, sentido de la vibración y visión verdadera tienen su alcance. Toca la velocidad en la hoja para verlas, y la hoja para imprimir escribe las que se dan.",
+      },
+      {
+        en: "The importer of Aurora reads more rules: bonuses to the spell attack and the save DC of items, to hit points, to initiative (the Alert feat), to armor class and to the skills (the Stone of Good Luck); armor class formulas like the robe of the archmagi or the draconic resilience; the proficiencies and instruments a rule lets you pick; expertise; the visions with a range; and the attunements of the Artificer. A character can now attune to more items when a feature says so. Content imported before shows “Needs updating”: import it again with one click to get these.",
+        it: "L’importatore di Aurora legge più regole: bonus all’attacco e alla CD degli incantesimi degli oggetti, ai punti ferita, all’iniziativa (il talento Allerta), alla classe armatura e alle abilità (la Pietra della buona fortuna); formule di classe armatura come la robe dell’arcimago o la resistenza draconica; le competenze e gli strumenti che una regola lascia scegliere; la maestria; le visioni con un raggio; e le sintonie dell’Artefice. Un personaggio ora può sintonizzarsi con più oggetti quando un privilegio lo dice. I contenuti importati prima risultano “Da aggiornare”: importali di nuovo con un clic per averle.",
+        fr: "L’importateur d’Aurora lit plus de règles : bonus à l’attaque et au DD des sorts des objets, aux points de vie, à l’initiative (le don Alerte), à la classe d’armure et aux compétences (la Pierre de bonne fortune) ; formules de classe d’armure comme la robe de l’archimage ou la résistance draconique ; les maîtrises et instruments qu’une règle laisse choisir ; l’expertise ; les visions avec une portée ; et les harmonisations de l’Artificier. Un personnage peut maintenant s’harmoniser avec plus d’objets quand un privilège le dit. Le contenu importé avant indique « À mettre à jour » : réimporte-le d’un clic pour en profiter.",
+        de: "Der Aurora-Import liest mehr Regeln: Boni auf Zauberangriff und Zauber-SG von Gegenständen, auf Trefferpunkte, auf Initiative (das Talent Wachsam), auf Rüstungsklasse und auf Fertigkeiten (der Glücksstein); Rüstungsklassen-Formeln wie das Gewand des Erzmagiers oder die Drachenresistenz; die Übungen und Instrumente, die eine Regel zur Wahl stellt; Expertise; Sichtweiten mit Reichweite; und die Einstimmungen des Artificers. Ein Charakter kann sich jetzt auf mehr Gegenstände einstimmen, wenn ein Merkmal es sagt. Früher importierte Inhalte zeigen „Aktualisieren“: importiere sie mit einem Klick neu, um sie zu bekommen.",
+        es: "El importador de Aurora lee más reglas: bonificaciones al ataque y a la CD de conjuros de los objetos, a los puntos de golpe, a la iniciativa (la dote Alerta), a la clase de armadura y a las habilidades (la Piedra de la buena suerte); fórmulas de clase de armadura como la túnica del archimago o la resistencia dracónica; las competencias e instrumentos que una regla deja elegir; la pericia; las visiones con alcance; y las sintonizaciones del Artífice. Un personaje ahora puede sintonizarse con más objetos cuando un rasgo lo dice. El contenido importado antes muestra «Por actualizar»: impórtalo de nuevo con un clic para tenerlas.",
+      },
+      {
+        en: "On a phone, the bar with the numbers of the sheet and of play no longer slips under the tabs.",
+        it: "Sul telefono, la barra con i numeri della scheda e di Gioca non scivola più sotto le schede.",
+        fr: "Sur téléphone, la barre avec les chiffres de la fiche et du jeu ne glisse plus sous les onglets.",
+        de: "Auf dem Handy rutscht die Leiste mit den Zahlen von Blatt und Spiel nicht mehr unter die Tabs.",
+        es: "En el teléfono, la barra con los números de la hoja y del juego ya no se desliza bajo las pestañas.",
+      },
+    ],
+  },
+  {
     version: "1.13.2 beta",
     date: "2026-10-30",
     notes: [
