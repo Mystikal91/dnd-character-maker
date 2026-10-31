@@ -89,11 +89,29 @@ ability names a text mentions, and its length; pairs that were checked by hand a
 are in `OVERRIDES`. `import_variants.py` gives the numbered variants ("Action Surge (2 uses)")
 the title of their section plus a translated suffix.
 
+The monsters are read from the stat blocks of the same PDFs (`locales/<language>/srd51/monsters.json`),
+after `npm run data:srd51` has written the English ones:
+
+```bash
+python scripts/srd-translations/import_monsters.py it path/to/SRD_CC_v5.1_IT.pdf
+python scripts/srd-translations/import_monsters.py it path/to/SRD_CC_v5.1_IT.pdf --show goblin
+```
+
+`--show` prints what was read for one monster. The labels of a stat block differ per language, so
+a block is paired with its English monster by armor class, hit points, XP and the six ability
+scores (with fallbacks where the database and the book disagree). The translations sort the
+traits and actions alphabetically, so inside a block they are paired by their numbers and by the
+game words they use (abilities, skills, conditions and damage types, translated through the files
+imported above), and an entry that two others could replace almost as well stays English. The SRD
+prints one block where the database has several (the forms of a werewolf, the swarms of insects):
+those share the block's texts and keep their own names.
+
 Imported so far, in Italian, French, German and Spanish: spells, abilities, skills, conditions,
 alignments (names and descriptions), species, subspecies, the traits that belong to one species,
 the background with its personality tables, the twelve classes with their starting equipment and
 spellcasting text, the subclasses, about 90% of the class features (366 of 407), the languages,
-and 40-45% of the item names (all armor, nearly all weapons, and the gear whose cost and weight
+about 91% of the monster texts (the missing ones are the descriptions, which the PDFs do not have,
+and a few entries that could not be paired with certainty), and 40-45% of the item names (all armor, nearly all weapons, and the gear whose cost and weight
 are unique). Tables are read by baseline from the Calibri 9 cells (`pdf_tables.py`); armor is
 paired by position and everything else by cost, weight and damage dice, keeping only unique
 matches. An item or feature stays in English when it cannot be paired with certainty. School

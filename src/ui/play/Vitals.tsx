@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import { addLog, changePlay, damageCharacter, vitals } from "../../app/play";
+import { addLog, changePlay, damageCharacter, damageResisted, vitals } from "../../app/play";
 import { character, sheet } from "../../app/store";
 import { canKeepAwake, keepAwake, setKeepAwake } from "../../app/wakeLock";
 import { cryptoRandomInt } from "../../engine/dice";
@@ -41,6 +41,8 @@ export function HitPoints() {
         <span>{ui("play.of", { max: v.max })}</span>
         {play.tempHp > 0 && <em>{ui("play.temp", { n: play.tempHp })}</em>}
       </output>
+      {play.wildShape && <p class="muted">{ui("play.wildShape.note")}</p>}
+      {play.raging && <p class="muted">{ui("play.rage.note")}</p>}
       <div
         class="hp-bar"
         data-state={hp === 0 ? "down" : percent <= 25 ? "low" : percent <= 50 ? "hurt" : "well"}
@@ -93,6 +95,16 @@ export function HitPoints() {
           >
             {ui("play.damage")}
           </button>
+          {play.raging && (
+            <button
+              type="button"
+              class="danger-btn"
+              disabled={n === 0}
+              onClick={() => apply(damageResisted)}
+            >
+              {ui("play.damageHalved")}
+            </button>
+          )}
           <button
             type="button"
             disabled={n === 0}

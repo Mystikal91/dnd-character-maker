@@ -30,7 +30,10 @@ export function RulesPage() {
   }, [focus]);
 
   if (!c) return null;
-  const kinds = kindsOf(c);
+  const present = kindsOf(c);
+  // The monsters are a large pack: their button is there before they are loaded, and loads them.
+  const kinds = present.includes("monster") ? present : [...present, "monster" as const];
+  const loading = rulesKind.value === "monster" && !c.monsters;
   const { hits, searching } = listed(query);
   const visible = hits.slice(0, shown);
 
@@ -82,7 +85,9 @@ export function RulesPage() {
 
       <div class="rules-body">
         <div class="rules-list">
-          {!searching && !rulesKind.value ? (
+          {loading ? (
+            <p class="muted">{ui("rules.loading")}</p>
+          ) : !searching && !rulesKind.value ? (
             <p class="muted">{ui("rules.hint")}</p>
           ) : hits.length === 0 ? (
             <p class="muted">{ui("search.none")}</p>

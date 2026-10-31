@@ -188,6 +188,7 @@ async function importAuroraSources(
     const english = await loadContent(
       ["en"],
       userPacks.value.filter((p) => p.id !== id),
+      { monsters: true },
     );
     const result = parseAurora(gathered.texts, {
       packId: id,

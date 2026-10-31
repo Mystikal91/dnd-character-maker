@@ -1,5 +1,5 @@
 import type { ComponentChildren } from "preact";
-import { sheet } from "../../app/store";
+import { shownSheet } from "../../app/store";
 import type { FeatureValue } from "../../engine/featureValues";
 import { ui } from "../../i18n/ui";
 import { machineMode, toggleOriginal } from "../../translate/auto";
@@ -106,7 +106,7 @@ export function RulesText({
         {tag && <span class="source-tag"> [{tag}]</span>}
       </summary>
       <Paragraphs text={text} />
-      <FeatureValues values={id ? sheet.value?.featureValues[id] : undefined} />
+      <FeatureValues values={id ? shownSheet.value?.featureValues[id] : undefined} />
     </details>
   );
 }

@@ -93,6 +93,8 @@ export const KIND_OF: Record<string, string> = {
   Item: "item",
   "Magic Item": "item",
   Deity: "deity",
+  // A creature a character has: a familiar, a beast, a defender. Its traits and actions are read with it.
+  Companion: "monster",
   // A rule a table may switch on (Tasha's customised origin); only the ones other rules ask for.
   Option: "option",
   Language: "language",
@@ -117,6 +119,7 @@ export const ROOT_TYPES = new Set([
   "Item",
   "Magic Item",
   "Deity",
+  "Companion",
   "Language",
   "Background",
   "Race",

@@ -1,4 +1,4 @@
-import { sheet } from "../../app/store";
+import { shownSheet } from "../../app/store";
 import type { ExtraDamage } from "../../engine/resources";
 import { type UiKey, ui } from "../../i18n/ui";
 
@@ -23,7 +23,7 @@ export const extraNote = (extra: ExtraDamage) => ui(`extra.${extra.kind}.note` a
 
 /** What the classes add to attacks, with when it applies. Nothing for a character without any. */
 export function ExtraDamageList() {
-  const extras = sheet.value?.extraDamage ?? [];
+  const extras = shownSheet.value?.extraDamage ?? [];
   if (extras.length === 0) return null;
   return (
     <div class="extra-damage">

@@ -1,4 +1,4 @@
-import { content, sheet } from "../../app/store";
+import { content, printSheet } from "../../app/store";
 import { ui } from "../../i18n/ui";
 import { SourceTag } from "../SourceTag";
 import { featureValueLabel } from "../sheet/parts";
@@ -6,7 +6,7 @@ import { featureValueLabel } from "../sheet/parts";
 /** The full text of species traits and class features, flowing over as many pages as needed. */
 export function FeatureText() {
   const c = content.value;
-  const s = sheet.value;
+  const s = printSheet.value;
   if (!c || !s || s.traits.length + s.features.length === 0) return null;
   return (
     <section class="p-page">

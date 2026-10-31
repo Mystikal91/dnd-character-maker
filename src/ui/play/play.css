@@ -1073,3 +1073,416 @@ fieldset.segmented {
   overflow-wrap: anywhere;
   hyphens: auto;
 }
+
+.companion {
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--line, currentColor);
+}
+
+.companion:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.companion-head {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.companion-head input {
+  flex: 1;
+  min-width: 0;
+}
+
+.companion-kind {
+  margin: 0.25rem 0 0.5rem;
+}
+
+.hp-quick.companion-hp {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.companion-block summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* ---- A form the character is in (a beast's shape, a rage): the frames take its colour and glow ---- */
+
+.play[data-form="beast"] {
+  --form: #2f6b3c;
+  --form-glow: rgba(47, 107, 60, 0.32);
+  --form-soft: rgba(47, 107, 60, 0.14);
+  --form-speed: 5s;
+  --ink: var(--form);
+  --border: rgba(47, 107, 60, 0.5);
+}
+
+/* A rage: a red that burns, and a glow that beats faster than a beast's breathing. */
+.play[data-rage="on"] {
+  --form: #c1121f;
+  --form-glow: rgba(214, 28, 40, 0.5);
+  --form-soft: rgba(214, 28, 40, 0.16);
+  --form-speed: 1.7s;
+  --ink: var(--form);
+  --border: rgba(193, 18, 31, 0.6);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .play[data-form="beast"] {
+    --form: #8fcf8a;
+    --form-glow: rgba(143, 207, 138, 0.3);
+    --form-soft: rgba(143, 207, 138, 0.12);
+    --border: rgba(143, 207, 138, 0.45);
+  }
+
+  :root:not([data-theme="light"]) .play[data-rage="on"] {
+    --form: #ff4d57;
+    --form-glow: rgba(255, 77, 87, 0.5);
+    --form-soft: rgba(255, 77, 87, 0.16);
+    --border: rgba(255, 77, 87, 0.55);
+  }
+}
+
+:root[data-theme="dark"] .play[data-form="beast"] {
+  --form: #8fcf8a;
+  --form-glow: rgba(143, 207, 138, 0.3);
+  --form-soft: rgba(143, 207, 138, 0.12);
+  --border: rgba(143, 207, 138, 0.45);
+}
+
+:root[data-theme="dark"] .play[data-rage="on"] {
+  --form: #ff4d57;
+  --form-glow: rgba(255, 77, 87, 0.5);
+  --form-soft: rgba(255, 77, 87, 0.16);
+  --border: rgba(255, 77, 87, 0.55);
+}
+
+@keyframes form-breath-fantasy {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 3px var(--surface), inset 0 0 0 4px var(--border), inset 0 0 0 0
+      var(--form-glow);
+  }
+  50% {
+    box-shadow: inset 0 0 0 3px var(--surface), inset 0 0 0 4px var(--border), inset 0 0 22px 2px
+      var(--form-glow);
+  }
+}
+
+@keyframes form-breath-modern {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 0 var(--form-glow);
+  }
+  50% {
+    box-shadow: inset 0 0 22px 2px var(--form-glow);
+  }
+}
+
+/* Each panel beats a little out of step with the next (`--o` is its place on the screen). */
+:root[data-style="fantasy"] .play:is([data-form="beast"], [data-rage="on"]) :is(.card, .stat) {
+  animation: form-breath-fantasy var(--form-speed) ease-in-out infinite;
+  animation-delay: calc(var(--o, 0) * -0.9s);
+}
+
+:root[data-style="modern"] .play:is([data-form="beast"], [data-rage="on"]) :is(.card, .stat) {
+  border-color: var(--form);
+  animation: form-breath-modern var(--form-speed) ease-in-out infinite;
+  animation-delay: calc(var(--o, 0) * -0.9s);
+}
+
+.form-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  padding: 0.35rem 0.75rem;
+  border: 2px solid var(--form);
+  background: var(--form-soft);
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+}
+
+.play-head .form-strip {
+  margin: 0 0 0.35rem;
+}
+
+.form-strip .play-icon {
+  flex: none;
+  color: var(--form);
+  animation: form-step 2.4s ease-in-out infinite;
+}
+
+.form-strip.rage .play-icon {
+  animation: form-flicker 0.9s ease-in-out infinite;
+}
+
+@keyframes form-step {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-10deg);
+  }
+  50% {
+    transform: translateY(-2px) rotate(10deg);
+  }
+}
+
+@keyframes form-flicker {
+  0%,
+  100% {
+    transform: scale(1) rotate(-3deg);
+  }
+  50% {
+    transform: scale(1.18) rotate(3deg);
+  }
+}
+
+/* The button that starts a rage is as red as the rage. */
+.play button.rage-btn:not(.pip-btn):not(.info-btn):not(.link) {
+  width: 100%;
+  border-color: #c1121f;
+  background: #c1121f;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.play button.rage-btn:not(.pip-btn):not(.info-btn):not(.link):hover:not(:disabled) {
+  background: #e01e2b;
+}
+
+/* On a phone the strip is in the bar that stays in view; the second one is for wide screens. */
+@container play (max-width: 41.99rem) {
+  .form-strip.wide {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-style] .play:is([data-form="beast"], [data-rage="on"]) :is(.card, .stat),
+  .form-strip .play-icon {
+    animation: none;
+  }
+}
+
+/* ---- How the character is: an aura at the edges of the screen, and a wash over the cards ---- */
+
+/*
+ * The aura is a layer of its own over the viewport; it never takes a tap. It is above the tabs
+ * and the bar that stays in view (20 and 15), so that its colour runs over them and does not stop
+ * at their edge, and below the toasts (50 and 60).
+ */
+.play-aura {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.play-aura::before,
+.play-aura::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* The edges take the colour of the strongest thing going on: the later rules win. */
+.play-aura::after {
+  box-shadow: inset 0 0 110px 22px var(--aura, transparent);
+}
+
+.play-aura:is([data-focus], [data-dying], [data-conditions])::after {
+  animation: aura-breathe var(--aura-speed, 5s) ease-in-out infinite;
+}
+
+/* Concentration: a calm violet. */
+.play-aura[data-focus] {
+  --aura: rgba(124, 92, 214, 0.5);
+  --aura-speed: 6s;
+}
+
+.play-aura[data-conditions~="charmed"] {
+  --aura: rgba(232, 106, 163, 0.5);
+  --aura-speed: 5s;
+}
+
+.play-aura:is([data-conditions~="paralyzed"], [data-conditions~="stunned"]) {
+  --aura: rgba(110, 170, 225, 0.55);
+  --aura-speed: 8s;
+}
+
+/* Frightened: a pale, nervous flicker. */
+.play-aura[data-conditions~="frightened"] {
+  --aura: rgba(190, 205, 235, 0.6);
+  --aura-speed: 1.3s;
+}
+
+.play-aura[data-conditions~="poisoned"] {
+  --aura: rgba(92, 160, 40, 0.55);
+  --aura-speed: 4s;
+}
+
+/* Blinded: the dark closes in from the edges. */
+.play-aura[data-conditions~="blinded"] {
+  --aura: rgba(0, 0, 0, 0.8);
+  --aura-speed: 7s;
+}
+
+.play-aura[data-conditions~="blinded"]::after {
+  box-shadow: inset 0 0 170px 70px var(--aura);
+}
+
+/* At 0 hit points: stable is pale and quiet, dying is dark red with a heartbeat, dead is black. */
+.play-aura[data-dying]::after {
+  box-shadow: inset 0 0 110px 22px var(--aura, transparent);
+}
+
+.play-aura[data-dying="stable"] {
+  --aura: rgba(140, 140, 165, 0.5);
+  --aura-speed: 8s;
+}
+
+.play-aura[data-dying="dying"] {
+  --aura: rgba(165, 0, 20, 0.8);
+}
+
+.play-aura[data-dying="dying"]::after {
+  animation: aura-heartbeat 1.4s ease-in-out infinite;
+}
+
+.play-aura[data-dying="dead"] {
+  --aura: rgba(0, 0, 0, 0.85);
+}
+
+.play-aura[data-dying="dead"]::after {
+  animation: none;
+}
+
+/* Inspiration: a golden light from the top. */
+.play-aura[data-inspired]::before {
+  inset: 0 0 auto 0;
+  height: 9rem;
+  background: radial-gradient(ellipse at 50% 0, rgba(255, 200, 60, 0.45), transparent 70%);
+  animation: aura-shimmer 3.6s ease-in-out infinite;
+}
+
+@keyframes aura-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes aura-heartbeat {
+  0%,
+  60%,
+  100% {
+    opacity: 0.4;
+  }
+  12%,
+  36% {
+    opacity: 1;
+  }
+  24% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes aura-shimmer {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/*
+ * The wash over the screen: the colours go out of what is wrong. It is on the content only: a
+ * filter on the whole screen would carry the dice button and the drawer away from the viewport.
+ */
+.play[data-conditions~="exhaustion"] :is(.play-head, .play-grid) {
+  filter: saturate(0.6) sepia(0.15);
+}
+
+.play:is(
+    [data-conditions~="incapacitated"],
+    [data-conditions~="unconscious"],
+    [data-conditions~="paralyzed"],
+    [data-conditions~="stunned"]
+  )
+  :is(.play-head, .play-grid) {
+  filter: saturate(0.55) brightness(0.97);
+}
+
+.play[data-conditions~="petrified"] :is(.play-head, .play-grid) {
+  filter: grayscale(0.92) contrast(1.05);
+}
+
+.play[data-dying="dying"] :is(.play-head, .play-grid) {
+  filter: saturate(0.7);
+}
+
+.play[data-dying="dead"] :is(.play-head, .play-grid) {
+  filter: grayscale(1) brightness(0.85);
+}
+
+/* Invisible: the panels are half there. */
+.play[data-conditions~="invisible"] :is(.card, .stat) {
+  opacity: 0.7;
+}
+
+/* Temporary hit points: a shield of light around the bar and the number. */
+.play[data-temp] .hp-bar {
+  box-shadow: 0 0 0 2px rgba(70, 170, 230, 0.5), 0 0 10px rgba(70, 170, 230, 0.55);
+  animation: temp-glint 3s ease-in-out infinite;
+}
+
+.play[data-temp] :is(.hp-readout em, .ps-value em) {
+  color: #3b9fe0;
+  text-shadow: 0 0 8px rgba(70, 170, 230, 0.7);
+  animation: temp-glint 3s ease-in-out infinite;
+}
+
+@keyframes temp-glint {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .play-aura::before,
+  .play-aura::after,
+  .play[data-temp] .hp-bar,
+  .play[data-temp] :is(.hp-readout em, .ps-value em) {
+    animation: none;
+  }
+}
+
+/* On paper there is no aura, no wash and no glow, whichever screen the page is printed from. */
+@media print {
+  .play-aura {
+    display: none !important;
+  }
+
+  .play :is(.play-head, .play-grid) {
+    filter: none !important;
+  }
+
+  .play :is(.card, .stat) {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}

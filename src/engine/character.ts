@@ -86,6 +86,10 @@ export interface PlayState {
   resourcesUsed?: Record<string, number>;
   /** The spell the character is concentrating on, if any. */
   concentration?: string;
+  /** The barbarian is raging: resistance to physical damage, and the rage bonus to melee damage. */
+  raging?: boolean;
+  /** The beast the druid has turned into (Wild Shape), with the hit points of that shape. */
+  wildShape?: { monster: string; hp: number; max: number };
   /** Pact Magic slots spent, when they are kept apart from the shared slots (multiclass warlock). */
   pactUsed?: number;
   deathSaves: { successes: number; failures: number };
@@ -122,6 +126,20 @@ export interface InventoryItem {
   enchantment?: string;
 }
 
+/** A creature the character has, by the monster it is. Its hit points are kept here. */
+export interface Companion {
+  /** Stable identity: a character can have two of one kind. */
+  id: string;
+  /** The monster entry whose stat block it uses. */
+  monster: string;
+  /** What the character calls it, when not the name of the monster. */
+  name?: string;
+  /** Current hit points. Undefined means full, so no fix-up is needed when the maximum changes. */
+  hp?: number;
+  /** The maximum, when the monster has none to give (a stat block that depends on the level). */
+  maxHp?: number;
+}
+
 /** What gets saved. Everything on the sheet is derived from this by the engine. */
 export interface Character {
   /** Stable identity of this character across saves, exports and imports. */
@@ -143,6 +161,8 @@ export interface Character {
   inventory: InventoryItem[];
   /** The money carried. Absent in characters saved before coins were kept. */
   coins?: Coins;
+  /** Creatures the character has: a familiar, a beast, a defender. Absent when there are none. */
+  companions?: Companion[];
   /**
    * The optional rules switched on for this character (ids of `option` entries, such as
    * Tasha's customised origin). Other rules ask for them by id, and their own effects apply.

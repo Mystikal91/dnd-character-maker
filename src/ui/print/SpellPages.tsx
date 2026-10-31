@@ -1,5 +1,5 @@
 import { printSettings } from "../../app/printSettings";
-import { character, content, sheet } from "../../app/store";
+import { character, content, printSheet } from "../../app/store";
 import type { Content } from "../../content/browser";
 import type { DerivedSheet, SpellcastingResult } from "../../engine/derive";
 import { signed, ui } from "../../i18n/ui";
@@ -182,7 +182,7 @@ function CasterAvailable({
 
 export function SpellPages() {
   const c = content.value;
-  const s = sheet.value;
+  const s = printSheet.value;
   const ch = character.value;
   const settings = printSettings.value;
   if (!c || !s) return null;

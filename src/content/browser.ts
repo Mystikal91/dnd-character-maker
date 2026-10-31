@@ -10,6 +10,8 @@ import { autoText, displayedText } from "../translate/auto";
 export interface Content {
   packs: Pack[];
   index: PackIndex;
+  /** The monsters of the rules are in `packs` (they load only when asked for). */
+  monsters: boolean;
   /** A text field of an entry (`name`, `desc`, ...), falling back through the locale chain. */
   text(id: string, field: string): string | undefined;
   /** An entry's display name; falls back to a readable form of its id. */
@@ -26,7 +28,11 @@ export interface Content {
   isEdited(id: string, field: string): boolean;
 }
 
-const packFiles = import.meta.glob<Pack>("/data/*/*.json", { import: "default" });
+// The monsters are a large pack that only the creature views need; they load on demand.
+const packFiles = import.meta.glob<Pack>(["/data/*/*.json", "!/data/*/monsters.json"], {
+  import: "default",
+});
+const monsterFiles = import.meta.glob<Pack>("/data/*/monsters.json", { import: "default" });
 const stringFiles = import.meta.glob<Record<string, string>>("/locales/*/*/*.json", {
   import: "default",
 });
@@ -42,11 +48,13 @@ export const prettify = (slug: string) => {
 
 /**
  * Loads every content pack and the texts for `locales`, in priority order
- * (e.g. `["it", "en"]`: Italian where translated, English otherwise).
+ * (e.g. `["it", "en"]`: Italian where translated, English otherwise). The monsters come only
+ * when asked for.
  */
 export async function loadContent(
   locales: string[],
   userPacks: UserPackRecord[] = [],
+  { monsters = false }: { monsters?: boolean } = {},
 ): Promise<Content> {
   const texts = new Map<string, string>();
   // Texts that are in English although another language is wanted: machine translation may help.
@@ -54,26 +62,28 @@ export async function loadContent(
   const packs: Pack[] = [];
 
   await Promise.all(
-    Object.entries(packFiles).map(async ([path, load]) => {
-      const pack = withOriginRules(parsePack(await load()));
-      packs.push(pack);
-      const idBySlug = new Map(pack.entries.map((e) => [e.id.split("/")[1] ?? "", e.id]));
+    Object.entries(monsters ? { ...packFiles, ...monsterFiles } : packFiles).map(
+      async ([path, load]) => {
+        const pack = withOriginRules(parsePack(await load()));
+        packs.push(pack);
+        const idBySlug = new Map(pack.entries.map((e) => [e.id.split("/")[1] ?? "", e.id]));
 
-      // Lowest priority first, so higher-priority locales overwrite.
-      for (const locale of [...locales].reverse()) {
-        const loadStrings = stringFiles[localePath(locale, path)];
-        if (!loadStrings) continue;
-        for (const [key, value] of Object.entries(await loadStrings())) {
-          const dot = key.indexOf(".");
-          const id = idBySlug.get(key.slice(0, dot));
-          if (!id || !value) continue;
-          const full = `${id}.${key.slice(dot + 1)}`;
-          texts.set(full, value);
-          if (locale === "en" && locales[0] !== "en") english.add(full);
-          else english.delete(full);
+        // Lowest priority first, so higher-priority locales overwrite.
+        for (const locale of [...locales].reverse()) {
+          const loadStrings = stringFiles[localePath(locale, path)];
+          if (!loadStrings) continue;
+          for (const [key, value] of Object.entries(await loadStrings())) {
+            const dot = key.indexOf(".");
+            const id = idBySlug.get(key.slice(0, dot));
+            if (!id || !value) continue;
+            const full = `${id}.${key.slice(dot + 1)}`;
+            texts.set(full, value);
+            if (locale === "en" && locales[0] !== "en") english.add(full);
+            else english.delete(full);
+          }
         }
-      }
-    }),
+      },
+    ),
   );
 
   // Packs the user added: their texts are keyed by full entry id and carry their own language.
@@ -123,6 +133,7 @@ export async function loadContent(
   return {
     packs,
     index,
+    monsters,
     text,
     name: (id) => text(id, "name") ?? prettify(id.split("/")[1] ?? id),
     fields: (id) => {

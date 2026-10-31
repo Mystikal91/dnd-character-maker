@@ -104,6 +104,37 @@ export function corpusSuite(reverse: boolean) {
         expect(whens.length).toBeGreaterThan(300);
       });
 
+      it("reads the companions of the books as creatures with their traits and actions", () => {
+        const monsters = result.entries.filter((e) => e.kind === "monster");
+        // 164 companions in the files: the app has many of them already (the SRD beasts), and the
+        // 2024 books repeat 2014 ones, which stay.
+        expect(monsters.length).toBeGreaterThan(30);
+        for (const m of monsters) {
+          expect(result.strings[`${m.id}.name`], m.id).toBeTruthy();
+          expect(m.data.abilities, m.id).toBeDefined();
+        }
+        // Every action that a companion lists is read: a companion with actions has their texts.
+        const withActions = monsters.filter((m) => Array.isArray(m.data.actions));
+        expect(withActions.length).toBeGreaterThan(20);
+        for (const m of withActions)
+          expect(result.strings[`${m.id}.actions.1.name`], m.id).toBeTruthy();
+        // A companion that scales with the proficiency bonus keeps its formula as written.
+        const scaling = monsters.filter((m) => result.strings[`${m.id}.armorClass`]);
+        expect(scaling.length).toBeGreaterThan(5);
+        // ...and the numbers of its formulas are kept, for the one who has it.
+        const worked = monsters.filter(
+          (m) => (m.data.scaling as { hitPoints?: unknown })?.hitPoints,
+        );
+        expect(worked.length).toBeGreaterThan(5);
+        const rangersBeast = monsters.find(
+          (m) => result.strings[`${m.id}.name`] === "Beast of the Land",
+        );
+        expect(rangersBeast?.data.scaling).toMatchObject({
+          hitPoints: { class: "ranger", perLevel: 5 },
+        });
+        expect(result.skipped.Companion).toBeUndefined();
+      });
+
       it("turns no element into less than it did when the baseline was taken", () => {
         // AURORA_REPORT=<file> also writes what became of the rules, by kind (see `ruleReport`).
         if (process.env.AURORA_REPORT && !reverse)

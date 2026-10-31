@@ -20,7 +20,7 @@ import {
 import { decodeShare, isShareHash } from "../storage/share";
 import { backupFileName, parseBackup, parseImportFile, serializeBackup } from "../storage/transfer";
 import { EXAMPLE_ID, buildExample } from "./example";
-import { showView } from "./navigation";
+import { showView, view } from "./navigation";
 import { transferDialog, transferInbox } from "./transferState";
 
 export type SaveStatus = "idle" | "saving" | "saved" | "failed";
@@ -66,6 +66,27 @@ export const storageReady = signal(false);
 /** The sheet is always derived: it recomputes whenever the character or content changes. */
 export const sheet = computed<DerivedSheet | undefined>(() =>
   content.value ? deriveSheet(character.value, content.value.index) : undefined,
+);
+
+/**
+ * The sheet to print: always the character's own, never the shape of the beast they are in at the
+ * moment. The paper is the character, not the Wild Shape.
+ */
+export const printSheet = computed<DerivedSheet | undefined>(() => {
+  const c = character.value;
+  if (!c.play.wildShape || !content.value) return sheet.value;
+  return deriveSheet({ ...c, play: { ...c.play, wildShape: undefined } }, content.value.index);
+});
+
+/** In the shape of a beast, the Sheet tab can show the beast or the character's own form. */
+export const sheetForm = signal<"beast" | "own">("beast");
+
+/**
+ * The sheet the Sheet tab shows: the beast's while the druid is in its shape, unless the person
+ * asked for their own form. Other screens (Play) always count the shape.
+ */
+export const shownSheet = computed<DerivedSheet | undefined>(() =>
+  view.value === "sheet" && sheetForm.value === "own" ? printSheet.value : sheet.value,
 );
 
 /**

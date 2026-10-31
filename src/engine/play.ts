@@ -158,7 +158,8 @@ export function shortRest(
   /** Ids of the class resources that come back on a short rest. */
   resources: string[] = [],
 ): PlayState {
-  let next = play;
+  // A rage lasts a minute: a short rest has ended it.
+  let next = endRage(play);
   if (recovers === "all") next = { ...next, slotsUsed: next.slotsUsed.map(() => 0), pactUsed: 0 };
   else if (recovers === "pact") next = { ...next, pactUsed: 0 };
   if (resources.length > 0 && next.resourcesUsed) {
@@ -226,3 +227,25 @@ export function toggleCondition(play: PlayState, id: string): PlayState {
       : [...play.conditions, id],
   };
 }
+
+/** Enters a rage, spending one of its uses (unless they are unlimited, `max` of 0). */
+export function enterRage(play: PlayState, resource?: { id: string; max: number }): PlayState {
+  const spent = resource
+    ? setResourceUsed(play, resource.id, (play.resourcesUsed?.[resource.id] ?? 0) + 1, resource.max)
+    : play;
+  return { ...spent, raging: true };
+}
+
+export function endRage(play: PlayState): PlayState {
+  if (!play.raging) return play;
+  const { raging: _over, ...rest } = play;
+  return rest;
+}
+
+/** A rage ends when the barbarian is knocked unconscious. */
+export function endRageIfDown(play: PlayState, max: number): PlayState {
+  return play.raging && currentHp(play, max) === 0 ? endRage(play) : play;
+}
+
+/** Resistance halves the damage, rounding down. */
+export const halveDamage = (amount: number): number => Math.floor(Math.max(0, amount) / 2);

@@ -1,4 +1,4 @@
-import { character, content, isForced, sheet } from "../../app/store";
+import { character, content, isForced, shownSheet } from "../../app/store";
 import { OVERRIDE } from "../../engine/overrides";
 import { signed, ui } from "../../i18n/ui";
 import { Stat } from "./CoreStats";
@@ -7,7 +7,7 @@ import { Panel, Pips } from "./parts";
 /** Spell attack, save DC, how many spells are known, and the slots to tick off. */
 export function SpellcastingPanel() {
   const c = content.value;
-  const s = sheet.value;
+  const s = shownSheet.value;
   const ch = character.value;
   const casters = s?.spellcasters ?? [];
   if (!c || !s || casters.length === 0) return null;

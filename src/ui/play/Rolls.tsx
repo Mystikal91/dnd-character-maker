@@ -7,7 +7,6 @@ import {
   clearLog,
   criticalExtra,
   criticalWeapon,
-  raging,
   rollCheck,
   rollDiceText,
   rollLog,
@@ -89,7 +88,6 @@ function ExtraRolls() {
   if (!s || s.extraDamage.length === 0) return null;
   const play = character.value.play;
   const sneak = s.extraDamage.find((e) => e.kind === "sneakAttack");
-  const hasRage = s.extraDamage.some((e) => e.kind === "rage");
   const smite = s.extraDamage.find((e) => e.kind === "divineSmite");
   const levels = s.spellSlots
     .map((total, i) => ({ level: i + 1, left: slotsLeft(play, i + 1, total), total }))
@@ -110,18 +108,6 @@ function ExtraRolls() {
           />
           {ui("play.criticalHit")}
         </label>
-        {hasRage && (
-          <label class="check-row">
-            <input
-              type="checkbox"
-              checked={raging.value}
-              onChange={(e) => {
-                raging.value = e.currentTarget.checked;
-              }}
-            />
-            {ui("extra.raging")}
-          </label>
-        )}
         {sneak?.kind === "sneakAttack" && (
           <button
             type="button"
@@ -211,6 +197,9 @@ function RollsPanel({ part }: { part: "attacks" | "checks" }) {
           </div>
         </>
       )}
+      {part === "attacks" && character.value.play.wildShape && (
+        <p class="muted">{ui("play.wildShape.attacks")}</p>
+      )}
       {part === "attacks" && s.attacks.length === 0 && <p class="muted">{ui("play.noAttacks")}</p>}
       {part === "attacks" && s.attacks.length > 0 && (
         <ul class="plain">
@@ -218,7 +207,8 @@ function RollsPanel({ part }: { part: "attacks" | "checks" }) {
             const dmg = a.damage;
             // A rage adds to melee weapon attacks.
             const rage = s.extraDamage.find((e) => e.kind === "rage");
-            const rageBonus = raging.value && !a.ranged && rage?.kind === "rage" ? rage.bonus : 0;
+            const rageBonus =
+              character.value.play.raging && !a.ranged && rage?.kind === "rage" ? rage.bonus : 0;
             const bonus = (dmg?.bonus ?? 0) + rageBonus;
             const dice = dmg
               ? `${dmg.dice}${bonus === 0 ? "" : bonus > 0 ? `+${bonus}` : bonus}`

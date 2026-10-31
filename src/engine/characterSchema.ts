@@ -55,6 +55,18 @@ const CharacterSchema = v.object({
       pp: CoinCount,
     }),
   ),
+  /** Creatures the character has: a familiar, a beast, a defender. */
+  companions: v.optional(
+    v.array(
+      v.object({
+        id: v.string(),
+        monster: v.string(),
+        name: v.optional(v.string()),
+        hp: v.optional(v.pipe(v.number(), v.integer(), v.minValue(0))),
+        maxHp: v.optional(v.pipe(v.number(), v.integer(), v.minValue(1))),
+      }),
+    ),
+  ),
   /** The optional rules switched on for this character (ids of `option` entries). */
   options: v.optional(v.array(v.string())),
   /** Features the person wrote for this character. */
@@ -114,6 +126,14 @@ const CharacterSchema = v.object({
     slotsUsed: v.pipe(v.array(v.pipe(v.number(), v.integer(), v.minValue(0))), v.length(9)),
     resourcesUsed: v.optional(v.record(v.string(), v.pipe(v.number(), v.integer(), v.minValue(0)))),
     concentration: v.optional(v.string()),
+    raging: v.optional(v.boolean()),
+    wildShape: v.optional(
+      v.object({
+        monster: v.string(),
+        hp: v.pipe(v.number(), v.integer(), v.minValue(0)),
+        max: v.pipe(v.number(), v.integer(), v.minValue(1)),
+      }),
+    ),
     pactUsed: v.optional(v.pipe(v.number(), v.integer(), v.minValue(0))),
     deathSaves: v.object({
       successes: v.pipe(v.number(), v.integer(), v.minValue(0), v.maxValue(3)),

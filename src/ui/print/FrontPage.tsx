@@ -1,4 +1,4 @@
-import { character, content, sheet } from "../../app/store";
+import { character, content, printSheet } from "../../app/store";
 import type { Content } from "../../content/browser";
 import { classData, subclassData } from "../../data/progression";
 import { ABILITIES } from "../../data/schema";
@@ -39,7 +39,7 @@ function featureRows(c: Content, cl: ClassLevel): [number, string[]][] {
 /** The main sheet: everything needed at the table, laid out like the on-screen sheet. */
 export function FrontPage() {
   const c = content.value;
-  const s = sheet.value;
+  const s = printSheet.value;
   const ch = character.value;
   if (!c || !s) return null;
   const ruleset = ch.ruleset;

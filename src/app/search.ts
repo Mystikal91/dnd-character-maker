@@ -24,6 +24,7 @@ export const SEARCH_KINDS = [
   "language",
   "property",
   "deity",
+  "monster",
 ] as const;
 export type SearchKind = (typeof SEARCH_KINDS)[number];
 

@@ -1,4 +1,4 @@
-import { character, content, sheet } from "../../app/store";
+import { character, content, shownSheet } from "../../app/store";
 import { ABILITIES } from "../../data/schema";
 import { signed, ui } from "../../i18n/ui";
 import { ExplainButton } from "../Explain";
@@ -8,7 +8,7 @@ import { Pip } from "./parts";
 /** Proficiency bonus and passive senses, as three round badges. */
 export function Badges() {
   const c = content.value;
-  const s = sheet.value;
+  const s = shownSheet.value;
   const ch = character.value;
   if (!c || !s) return null;
   const insight = s.skills.find((sk) => sk.id === `${ch.ruleset}:skill/insight`);
@@ -34,7 +34,7 @@ export function Badges() {
 /** Each ability with its score, modifier, saving throw and the skills that use it. */
 export function AbilityBlocks() {
   const c = content.value;
-  const s = sheet.value;
+  const s = shownSheet.value;
   const ch = character.value;
   if (!c || !s) return null;
   const ruleset = ch.ruleset;

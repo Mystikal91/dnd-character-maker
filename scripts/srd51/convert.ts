@@ -34,6 +34,7 @@ export interface RawSource {
   magicSchools: Raw[];
   conditions: Raw[];
   alignments: Raw[];
+  monsters: Raw[];
 }
 export type ConvertedPack = Record<
   | "species"
@@ -52,7 +53,8 @@ export type ConvertedPack = Record<
   | "proficiency"
   | "school"
   | "condition"
-  | "alignment",
+  | "alignment"
+  | "monster",
   Converted
 >;
 
@@ -802,6 +804,136 @@ function convertSchools(raw: RawSource): Converted {
   return { entries, strings };
 }
 
+const feetOf = (value: string) => Number.parseInt(value, 10);
+
+/**
+ * One ability, action, reaction or legendary action: the text goes to strings, the numbers stay.
+ * Alternatives that the source spells out as option sets (breath weapons, rolled-up attacks) are
+ * left to the text; `names` turns the actions a multiattack names into positions in the list.
+ */
+function monsterAction(strings: Strings, prefix: string, a: Raw, names: Map<string, number>): Raw {
+  const { name, desc, ...rest } = a;
+  strings[`${prefix}.name`] = name;
+  strings[`${prefix}.desc`] = desc ?? "";
+  const data: Raw = {};
+  if (rest.attack_bonus !== undefined) data.attackBonus = rest.attack_bonus;
+  if (Array.isArray(rest.damage))
+    data.damage = (rest.damage as Raw[])
+      .filter((d) => d.damage_dice)
+      .map((d) => ({ type: d.damage_type.index, dice: d.damage_dice }));
+  if (rest.dc)
+    data.dc = {
+      ability: rest.dc.dc_type.index,
+      value: rest.dc.dc_value,
+      onSave: rest.dc.success_type,
+    };
+  if (rest.usage) data.usage = cleanData(rest.usage);
+  if (rest.multiattack_type === "actions")
+    data.multiattack = (rest.actions as Raw[]).map((x) => {
+      const action = names.get(x.action_name);
+      return { ...(action ? { action } : { name: x.action_name }), count: x.count };
+    });
+  if (rest.spellcasting)
+    data.spellcasting = {
+      ...cleanData(rest.spellcasting),
+      ability: rest.spellcasting.ability?.index,
+      spells: (rest.spellcasting.spells as Raw[]).map((sp) => ({
+        spell: id("spell", lastSegment(sp.url)),
+        level: sp.level,
+        ...(sp.usage && { usage: cleanData(sp.usage) }),
+      })),
+    };
+  return Object.fromEntries(Object.entries(data).filter(([, v]) => v !== undefined));
+}
+
+function convertMonsters(raw: RawSource): Converted {
+  const entries: Entry[] = [];
+  const strings: Strings = {};
+  for (const m of raw.monsters) {
+    const swarm = /^swarm of (\w+) (\w+?)s?$/i.exec(m.type);
+    const type = swarm ? (swarm[2] as string).toLowerCase() : m.type;
+    const lists: Record<string, Raw[]> = {
+      special: m.special_abilities ?? [],
+      actions: m.actions ?? [],
+      reactions: m.reactions ?? [],
+      legendary: m.legendary_actions ?? [],
+    };
+    const abilities = {
+      str: m.strength,
+      dex: m.dexterity,
+      con: m.constitution,
+      int: m.intelligence,
+      wis: m.wisdom,
+      cha: m.charisma,
+    };
+    const saves: Record<string, number> = {};
+    const skills: Record<string, number> = {};
+    for (const p of m.proficiencies as Raw[]) {
+      const key = p.proficiency.index as string;
+      if (key.startsWith("saving-throw-")) saves[key.slice(13)] = p.value;
+      else if (key.startsWith("skill-")) skills[key.slice(6)] = p.value;
+    }
+    const speed: Record<string, number | true> = {};
+    for (const [mode, value] of Object.entries(m.speed as Record<string, string | boolean>))
+      speed[mode] = typeof value === "string" ? feetOf(value) : true;
+    const { passive_perception: passivePerception, ...senseList } = m.senses;
+    const senses: Record<string, number> = {};
+    const blindBeyond: string[] = [];
+    for (const [sense, value] of Object.entries(senseList as Record<string, string>)) {
+      senses[sense] = feetOf(value);
+      if (value.includes("blind beyond")) blindBeyond.push(sense);
+    }
+    const data: Record<string, unknown> = {
+      size: (m.size as string).toLowerCase(),
+      type,
+      ...(swarm && { swarm: (swarm[1] as string).toLowerCase() }),
+      ...(m.subtype && { subtype: (m.subtype as string).replace(/ +/g, "-") }),
+      armorClass: (m.armor_class as Raw[]).map((a) => ({
+        type: a.type,
+        value: a.value,
+        ...(a.armor && { armor: (a.armor as Raw[]).map((i) => id("item", i.index)) }),
+        ...(a.spell && { spell: id("spell", a.spell.index) }),
+        ...(a.condition && { condition: a.condition.index }),
+      })),
+      hitPoints: m.hit_points,
+      hitDice: m.hit_dice,
+      hitPointsRoll: m.hit_points_roll,
+      speed,
+      abilities,
+      ...(Object.keys(saves).length && { saves }),
+      ...(Object.keys(skills).length && { skills }),
+      conditionImmunities: (m.condition_immunities as Raw[]).map((c) => c.index),
+      senses,
+      ...(blindBeyond.length && { blindBeyond }),
+      passivePerception,
+      challenge: m.challenge_rating,
+      xp: m.xp,
+      proficiencyBonus: m.proficiency_bonus,
+      ...(m.forms && { forms: (m.forms as Raw[]).map((f) => id("monster", f.index)) }),
+    };
+    const actionNames = new Map<string, number>(
+      (lists.actions ?? []).map((a, i) => [a.name as string, i + 1]),
+    );
+    for (const [key, list] of Object.entries(lists))
+      if (list.length)
+        data[key] = list.map((a, i) =>
+          monsterAction(strings, `${m.index}.${key}.${i + 1}`, a, actionNames),
+        );
+    entries.push({ id: id("monster", m.index), kind: "monster", effects: [], data });
+    strings[`${m.index}.name`] = m.name;
+    if (m.desc) strings[`${m.index}.desc`] = m.desc;
+    strings[`${m.index}.alignment`] = m.alignment;
+    strings[`${m.index}.languages`] = m.languages;
+    for (const [field, key] of [
+      ["vulnerabilities", "damage_vulnerabilities"],
+      ["resistances", "damage_resistances"],
+      ["immunities", "damage_immunities"],
+    ] as const)
+      if (m[key].length) strings[`${m.index}.${field}`] = (m[key] as string[]).join("; ");
+  }
+  return { entries, strings };
+}
+
 export function convertAll(raw: RawSource): ConvertedPack {
   const ctx = buildContext(raw);
   return {
@@ -822,5 +954,6 @@ export function convertAll(raw: RawSource): ConvertedPack {
     school: convertSchools(raw),
     condition: convertConditions(raw),
     alignment: convertAlignments(raw),
+    monster: convertMonsters(raw),
   };
 }

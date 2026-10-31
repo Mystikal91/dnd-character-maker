@@ -1,13 +1,14 @@
 import type { ComponentChildren } from "preact";
 import { useRef } from "preact/hooks";
 import { type SheetGroup, sheetGroup, showSheetGroup } from "../app/sheetView";
-import { character, content, sheet } from "../app/store";
+import { character, content, shownSheet } from "../app/store";
 import { SpellSheet } from "./SpellSheet";
 import { AbilityBlocks, Badges } from "./sheet/AbilityBlocks";
 import { ClassFeatures } from "./sheet/ClassFeatures";
 import { Attacks, CoreStats } from "./sheet/CoreStats";
 import { CustomFeaturesPanel } from "./sheet/CustomFeaturesPanel";
 import { Defenses, Feats, Inventory, Notes, Proficiencies, SpeciesTraits } from "./sheet/Details";
+import { FormToggle } from "./sheet/FormToggle";
 import { SheetHeader } from "./sheet/SheetHeader";
 import { SheetTabs } from "./sheet/SheetTabs";
 import { SpellcastingPanel } from "./sheet/SpellcastingPanel";
@@ -41,7 +42,7 @@ const Part = ({
  */
 export function Sheet() {
   const c = content.value;
-  const s = sheet.value;
+  const s = shownSheet.value;
   const root = useRef<HTMLDivElement>(null);
   const parts = useRef<{ groups: SheetGroup[]; open: SheetGroup }>({
     groups: [],
@@ -73,6 +74,7 @@ export function Sheet() {
   return (
     <div class="sheet" data-group={open} ref={root}>
       <SheetHeader />
+      <FormToggle />
       <SheetTabs groups={groups} />
       <div class="sheet-grid">
         <div class="sheet-col col-left">

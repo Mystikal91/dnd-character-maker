@@ -1,4 +1,4 @@
-import { character, content, sheet } from "../app/store";
+import { character, content, shownSheet } from "../app/store";
 import type { Content } from "../content/browser";
 import { ui } from "../i18n/ui";
 import { EditPencil } from "./QuickEdit";
@@ -58,7 +58,7 @@ function SpellDetails({ c, ruleset, row }: { c: Content; ruleset: string; row: S
 /** Every spell the character has: picked cantrips, known or prepared spells, and granted ones. */
 export function SpellSheet() {
   const c = content.value;
-  const s = sheet.value;
+  const s = shownSheet.value;
   if (!c || !s) return null;
   const ruleset = character.value.ruleset;
   const rows = collectSpellRows(c, s);

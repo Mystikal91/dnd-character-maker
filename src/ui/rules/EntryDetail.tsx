@@ -7,6 +7,7 @@ import { type UiKey, ui } from "../../i18n/ui";
 import { ItemTag, itemFacts } from "../ItemTag";
 import { Paragraphs } from "../sheet/parts";
 import { SpellInfoBody } from "../spells/SpellInfo";
+import { MonsterBlock } from "./MonsterBlock";
 
 /** The entry whose rules are open in the dialog, if any. */
 export const ruleDetail = signal<string | undefined>(undefined);
@@ -42,6 +43,7 @@ export function EntryDetail({ id }: { id: string }) {
   const entry = c?.index.get(id);
   if (!c || !entry) return null;
   if (entry.kind === "spell") return <SpellInfoBody id={id} />;
+  if (entry.kind === "monster") return <MonsterBlock id={id} />;
   const facts = entry.kind === "item" ? itemFacts(id) : undefined;
   return (
     <div class="rule-detail">

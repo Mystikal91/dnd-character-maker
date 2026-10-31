@@ -1,5 +1,5 @@
 import type { ComponentChildren } from "preact";
-import { character, content, isForced, sheet, updateCharacter } from "../../app/store";
+import { character, content, isForced, shownSheet, updateCharacter } from "../../app/store";
 import type { DamageResult } from "../../engine/equipment";
 import type { ExplainTarget } from "../../engine/explain";
 import { OVERRIDE } from "../../engine/overrides";
@@ -46,7 +46,7 @@ const formatDamage = (d: DamageResult) =>
 
 /** Where the bonuses of features and choices come from, so a number can be trusted. */
 function Bonuses() {
-  const s = sheet.value;
+  const s = shownSheet.value;
   const c = content.value;
   if (!s || !c || s.bonuses.length === 0) return null;
   return (
@@ -71,7 +71,7 @@ function Bonuses() {
 
 /** Armor class, initiative, speed, hit points and hit dice. */
 export function CoreStats() {
-  const s = sheet.value;
+  const s = shownSheet.value;
   if (!s) return null;
   const hitDice = Object.entries(s.hitPoints.hitDice)
     .map(([die, n]) => `${n}${die}`)
@@ -117,7 +117,7 @@ export function CoreStats() {
 /** Equipped weapons with their attack bonus and damage. */
 export function Attacks() {
   const c = content.value;
-  const s = sheet.value;
+  const s = shownSheet.value;
   if (!c || !s) return null;
   // Weapons in the inventory that are not equipped yet: the sheet offers to equip them.
   const carried = character.value.inventory

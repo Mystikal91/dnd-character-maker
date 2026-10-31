@@ -17,7 +17,13 @@ import {
   currentHp,
   deathStatus,
   endConcentration,
+  endRage,
+  endRageIfDown,
+  enterRage,
+  halveDamage,
+  resourceLeft,
 } from "../engine/play";
+import { damageBeast } from "../engine/wildShape";
 import { ui } from "../i18n/ui";
 import { character, content, sheet, updateCharacter } from "./store";
 
@@ -91,9 +97,6 @@ export const criticalWeapon = signal<string | undefined>(undefined);
 
 /** The last attack was a critical hit, so the extra damage rolls double their dice. */
 export const criticalExtra = signal(false);
-
-/** The barbarian is raging: the rage bonus is added to melee damage rolls. */
-export const raging = signal(false);
 
 /** How d20 checks are rolled until the player changes it. */
 export const rollMode = signal<D20Mode>("normal");
@@ -178,12 +181,41 @@ export function damageCharacter(amount: number) {
   const v = vitals();
   if (!v || amount <= 0) return;
   const play = character.value.play;
+  // In the shape of a beast the beast takes the damage first; what is left over, once the shape
+  // is gone, falls on the druid's own hit points.
+  if (play.wildShape) {
+    const { overflow } = damageBeast(play, amount);
+    changePlay((p) => damageBeast(p, amount).play, { undo: false });
+    if (play.concentration) concentrationAlert.value = concentrationDc(amount);
+    if (overflow > 0) damageCharacter(overflow);
+    return;
+  }
   const concentrating = Boolean(play.concentration);
   const after = applyDamage(play, v.max, amount);
+  // A rage ends when the barbarian falls unconscious.
+  const hit = (p: PlayState) => endRageIfDown(applyDamage(p, v.max, amount), v.max);
   if (concentrating && deathStatus(after, v.max) !== "alive") {
-    changePlay((p) => endConcentration(applyDamage(p, v.max, amount)));
+    changePlay((p) => endConcentration(hit(p)));
   } else {
-    changePlay((p) => applyDamage(p, v.max, amount));
+    changePlay(hit);
     if (concentrating) concentrationAlert.value = concentrationDc(amount);
   }
+}
+
+/** Damage the barbarian resists in a rage (bludgeoning, piercing, slashing): half of it, rounded down. */
+export function damageResisted(amount: number) {
+  damageCharacter(halveDamage(amount));
+}
+
+/** Enters a rage, using up one of its uses; it does nothing when none is left. */
+export function startRage() {
+  const resource = sheet.value?.resources.find((r) => r.kind === "rage");
+  const play = character.value.play;
+  if (!resource || play.raging) return;
+  if (!resource.unlimited && resourceLeft(play, resource.id, resource.max) === 0) return;
+  changePlay((p) => enterRage(p, resource.unlimited ? undefined : resource), { undo: false });
+}
+
+export function stopRage() {
+  changePlay((p) => endRage(p), { undo: false });
 }

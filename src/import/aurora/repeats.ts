@@ -87,10 +87,11 @@ const LISTED = new Set([
   "subclass",
   "language",
   "deity",
+  "monster",
 ]);
 
 export const is2024 = (source: { source: string; aid: string }) =>
-  /\(2024\)/.test(source.source) || /^ID_[A-Z]+_[A-Z0-9]*24_/.test(source.aid);
+  /\(202[45]\)/.test(source.source) || /^ID_[A-Z]+_[A-Z0-9]*2[45]_/.test(source.aid);
 
 /**
  * The books of 2024 repeat much of the 2014 ones with new words. This app follows the 2014

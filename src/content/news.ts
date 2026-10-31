@@ -18,6 +18,54 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.17.0 beta",
+    date: "2026-10-31",
+    notes: [
+      {
+        en: "Monsters: the 334 monsters of the SRD are in the Rules page (kind “Monster”), with the full stat block, translated into Italian, French, German and Spanish. Every attack and damage has its button: it rolls like a character’s (advantage and disadvantage included), a natural 20 doubles the damage dice, and a multiattack rolls all its attacks at once.",
+        it: "Mostri: i 334 mostri dell’SRD sono nella pagina Regole (tipo “Mostro”), con la scheda completa, tradotta in italiano, francese, tedesco e spagnolo. Ogni attacco e ogni danno ha il suo pulsante: tira come quello di un personaggio (vantaggio e svantaggio compresi), un 20 naturale raddoppia i dadi del danno e un attacco multiplo tira tutti i suoi attacchi insieme.",
+        fr: "Monstres : les 334 monstres du SRD sont dans la page Règles (type « Monstre »), avec le profil complet, traduit en italien, français, allemand et espagnol. Chaque attaque et chaque dégât a son bouton : il lance comme celui d’un personnage (avantage et désavantage compris), un 20 naturel double les dés de dégâts et une attaque multiple lance toutes ses attaques d’un coup.",
+        de: "Monster: Die 334 Monster des SRD stehen auf der Regelseite (Art „Monster“), mit vollständigem Werteblock, übersetzt ins Italienische, Französische, Deutsche und Spanische. Jeder Angriff und jeder Schaden hat seinen Knopf: Er würfelt wie der eines Charakters (Vor- und Nachteil eingeschlossen), eine natürliche 20 verdoppelt die Schadenswürfel, und ein Mehrfachangriff würfelt alle seine Angriffe auf einmal.",
+        es: "Monstruos: los 334 monstruos del SRD están en la página de Reglas (tipo «Monstruo»), con la ficha completa, traducida al italiano, francés, alemán y español. Cada ataque y cada daño tiene su botón: tira como el de un personaje (ventaja y desventaja incluidas), un 20 natural duplica los dados de daño y un ataque múltiple tira todos sus ataques a la vez.",
+      },
+      {
+        en: "Companions: Play has a Companions panel for a familiar or any creature that travels with the character, with a name, hit points and the stat block with its roll buttons. A creature that grows with its owner (a ranger’s beast, a steel defender) has its hit points, armor class, saves, skills and attack worked out from your level and proficiency bonus.",
+        it: "Compagni: Gioca ha un pannello Compagni per un famiglio o qualsiasi creatura che accompagna il personaggio, con nome, punti ferita e scheda con i suoi pulsanti di tiro. Una creatura che cresce con il suo padrone (la bestia del ranger, un difensore d’acciaio) ha punti ferita, classe armatura, tiri salvezza, abilità e attacco calcolati dal tuo livello e dal bonus di competenza.",
+        fr: "Compagnons : Jouer a un panneau Compagnons pour un familier ou toute créature qui accompagne le personnage, avec un nom, des points de vie et le profil avec ses boutons de jet. Une créature qui grandit avec son maître (la bête du rôdeur, un défenseur d’acier) a ses points de vie, sa classe d’armure, ses sauvegardes, ses compétences et son attaque calculés d’après ton niveau et ton bonus de maîtrise.",
+        de: "Gefährten: Der Spielmodus hat ein Gefährten-Feld für einen Vertrauten oder jedes Wesen, das den Charakter begleitet, mit Name, Trefferpunkten und dem Werteblock samt Wurfknöpfen. Ein Wesen, das mit seinem Besitzer wächst (das Tier des Waldläufers, ein Stahlverteidiger), hat Trefferpunkte, Rüstungsklasse, Rettungswürfe, Fertigkeiten und Angriff nach deiner Stufe und deinem Übungsbonus berechnet.",
+        es: "Compañeros: Jugar tiene un panel de Compañeros para un familiar o cualquier criatura que acompaña al personaje, con nombre, puntos de golpe y la ficha con sus botones de tirada. Una criatura que crece con su dueño (la bestia del explorador, un defensor de acero) tiene puntos de golpe, clase de armadura, salvaciones, habilidades y ataque calculados con tu nivel y tu bonificador de competencia.",
+      },
+      {
+        en: "Wild Shape: druids from level 2 have a Wild Shape panel in Play. It offers only the beasts the level allows, spends a use, and while the shape lasts the damage hits the beast first (what is left falls on the druid when the shape ends). The sheet takes the beast’s Strength, Dexterity, Constitution, armor class and speed, and its skills and saves where they are better. Two buttons on the Sheet tab choose which form it shows, and the printed sheet is always the normal one. A Circle of the Moon druid can spend a spell slot to heal the beast. The screen turns green with a slow glow, and a line says which beast you are.",
+        it: "Forma Selvatica: i druidi dal livello 2 hanno in Gioca un pannello Forma Selvatica. Offre solo le bestie che il livello permette, consuma un uso e, finché la forma dura, il danno colpisce prima la bestia (quello che resta ricade sul druido quando la forma finisce). La scheda prende Forza, Destrezza, Costituzione, classe armatura e velocità della bestia, e le sue abilità e tiri salvezza dove sono migliori. Due tasti nella scheda scelgono quale forma mostrare, e la scheda stampata è sempre quella normale. Un druido del Circolo della Luna può spendere uno slot per curare la bestia. La schermata diventa verde con un lento bagliore, e una riga dice quale bestia sei.",
+        fr: "Forme sauvage : les druides dès le niveau 2 ont un panneau Forme sauvage dans Jouer. Il ne propose que les bêtes que le niveau permet, consomme une utilisation et, tant que la forme dure, les dégâts touchent d’abord la bête (le reste retombe sur le druide quand la forme prend fin). La feuille prend la Force, la Dextérité, la Constitution, la classe d’armure et la vitesse de la bête, et ses compétences et sauvegardes quand elles sont meilleures. Deux boutons de la feuille choisissent la forme affichée, et la feuille imprimée est toujours la normale. Un druide du Cercle de la Lune peut dépenser un emplacement de sort pour soigner la bête. L’écran devient vert avec une lueur lente, et une ligne dit quelle bête tu es.",
+        de: "Tiergestalt: Druiden ab Stufe 2 haben im Spielmodus ein Feld Tiergestalt. Es bietet nur die Bestien an, die die Stufe erlaubt, verbraucht eine Anwendung, und solange die Gestalt dauert, trifft der Schaden zuerst die Bestie (der Rest fällt auf den Druiden, wenn die Gestalt endet). Der Bogen übernimmt Stärke, Geschicklichkeit, Konstitution, Rüstungsklasse und Bewegungsrate der Bestie, dazu ihre Fertigkeiten und Rettungswürfe, wo sie besser sind. Zwei Knöpfe im Bogen wählen, welche Gestalt er zeigt, und der gedruckte Bogen zeigt immer die normale. Ein Druide des Zirkels des Mondes kann einen Zauberplatz ausgeben, um die Bestie zu heilen. Der Bildschirm wird grün und glimmt langsam, und eine Zeile sagt, welche Bestie du bist.",
+        es: "Forma Salvaje: los druidas desde el nivel 2 tienen en Jugar un panel de Forma Salvaje. Ofrece solo las bestias que el nivel permite, gasta un uso y, mientras dura la forma, el daño golpea primero a la bestia (lo que sobra recae en el druida cuando la forma termina). La hoja toma la Fuerza, Destreza, Constitución, clase de armadura y velocidad de la bestia, y sus habilidades y salvaciones donde son mejores. Dos botones de la hoja eligen qué forma muestra, y la hoja impresa es siempre la normal. Un druida del Círculo de la Luna puede gastar un espacio de conjuro para curar a la bestia. La pantalla se vuelve verde con un brillo lento, y una línea dice qué bestia eres.",
+      },
+      {
+        en: "Rage: the tick “Raging” is now a button, “Enter rage”, which spends a use and turns the Play screen a bright red that beats, with a line saying you are raging. While raging, a second damage button, “Halved”, applies half the damage (rounded down) for bludgeoning, piercing and slashing; the rage ends at 0 hit points and with any rest.",
+        it: "Ira: la spunta “In ira” ora è un pulsante, “Entra in ira”, che consuma un uso e rende la schermata Gioca di un rosso acceso che pulsa, con una riga che dice che sei in ira. Finché sei in ira un secondo pulsante di danno, “Dimezzato”, applica metà del danno (arrotondato per difetto) per i danni contundenti, perforanti e taglienti; l’ira finisce a 0 punti ferita e con ogni riposo.",
+        fr: "Rage : la case « En rage » est maintenant un bouton, « Entrer en rage », qui consomme une utilisation et rend l’écran Jouer d’un rouge vif qui pulse, avec une ligne qui dit que tu es en rage. Pendant la rage, un second bouton de dégâts, « Moitié », applique la moitié des dégâts (arrondie à l’inférieur) pour les dégâts contondants, perforants et tranchants ; la rage s’arrête à 0 point de vie et avec tout repos.",
+        de: "Raserei: Das Häkchen „In Raserei“ ist jetzt ein Knopf, „In Raserei geraten“, der eine Anwendung verbraucht und den Spielbildschirm in ein leuchtendes, pulsierendes Rot färbt, mit einer Zeile, die sagt, dass du rast. Während der Raserei wendet ein zweiter Schadensknopf, „Halbiert“, den halben Schaden (abgerundet) für Wucht-, Stich- und Hiebschaden an; die Raserei endet bei 0 Trefferpunkten und mit jeder Rast.",
+        es: "Ira: la casilla «En ira» ahora es un botón, «Entrar en ira», que gasta un uso y pone la pantalla de Jugar de un rojo vivo que late, con una línea que dice que estás en ira. Mientras dura, un segundo botón de daño, «Mitad», aplica la mitad del daño (redondeada hacia abajo) para el daño contundente, perforante y cortante; la ira termina a 0 puntos de golpe y con cualquier descanso.",
+      },
+      {
+        en: "The Play screen shows how the character is: a violet glow at the edges while concentrating, a dark-red heartbeat at 0 hit points (pale when stable, black when dead), a golden light with inspiration, a shield of light on temporary hit points, and a colour for poisoned, frightened, charmed, blinded, paralyzed and stunned. Petrified turns it grey, exhaustion washes the colours out, and invisible makes the panels half transparent.",
+        it: "La schermata Gioca mostra come sta il personaggio: un bagliore viola ai bordi mentre si concentra, un battito rosso scuro a 0 punti ferita (pallido se stabile, nero se morto), una luce dorata con l’ispirazione, uno scudo di luce sui punti ferita temporanei, e un colore per avvelenato, spaventato, affascinato, accecato, paralizzato e stordito. Pietrificato la rende grigia, l’esaurimento toglie colore, e invisibile rende i pannelli semitrasparenti.",
+        fr: "L’écran Jouer montre l’état du personnage : une lueur violette aux bords pendant la concentration, un battement rouge sombre à 0 point de vie (pâle si stable, noir si mort), une lumière dorée avec l’inspiration, un bouclier de lumière sur les points de vie temporaires, et une couleur pour empoisonné, effrayé, charmé, aveuglé, paralysé et étourdi. Pétrifié le rend gris, l’épuisement ternit les couleurs, et invisible rend les panneaux à moitié transparents.",
+        de: "Der Spielbildschirm zeigt, wie es dem Charakter geht: ein violettes Leuchten an den Rändern bei Konzentration, ein dunkelroter Herzschlag bei 0 Trefferpunkten (blass, wenn stabil, schwarz, wenn tot), goldenes Licht bei Inspiration, ein Lichtschild um temporäre Trefferpunkte und eine Farbe für vergiftet, verängstigt, bezaubert, geblendet, gelähmt und betäubt. Versteinert färbt ihn grau, Erschöpfung nimmt die Farben, und unsichtbar macht die Felder halb durchsichtig.",
+        es: "La pantalla de Jugar muestra cómo está el personaje: un brillo violeta en los bordes mientras se concentra, un latido rojo oscuro a 0 puntos de golpe (pálido si está estable, negro si está muerto), una luz dorada con la inspiración, un escudo de luz sobre los puntos de golpe temporales, y un color para envenenado, asustado, hechizado, cegado, paralizado y aturdido. Petrificado la vuelve gris, el agotamiento le quita color, e invisible deja los paneles semitransparentes.",
+      },
+      {
+        en: "Aurora: companions (familiars, beasts, defenders) are read as monsters, with their traits and actions. Packs imported before show “Needs updating” to get them.",
+        it: "Aurora: i compagni (famigli, bestie, difensori) vengono letti come mostri, con i loro tratti e le loro azioni. I pacchetti importati prima risultano “Da aggiornare” per averli.",
+        fr: "Aurora : les compagnons (familiers, bêtes, défenseurs) sont lus comme des monstres, avec leurs traits et leurs actions. Les paquets importés avant indiquent « À mettre à jour » pour les avoir.",
+        de: "Aurora: Gefährten (Vertraute, Bestien, Verteidiger) werden als Monster gelesen, mit ihren Merkmalen und Aktionen. Früher importierte Pakete zeigen dafür „Aktualisieren“.",
+        es: "Aurora: los compañeros (familiares, bestias, defensores) se leen como monstruos, con sus rasgos y acciones. Los paquetes importados antes muestran «Por actualizar» para tenerlos.",
+      },
+    ],
+  },
+  {
     version: "1.16.0 beta",
     date: "2026-10-31",
     notes: [
@@ -873,11 +921,11 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "aurora",
     text: {
-      en: "More of Aurora: companions and background variants are not read yet, and rules that need custom logic keep only their text.",
-      it: "Più Aurora: compagni e varianti di background non vengono ancora letti, e le regole che richiedono logica propria restano solo testo.",
-      fr: "Plus d'Aurora : compagnons et variantes d'historiques ne sont pas encore lus, et les règles qui demandent une logique propre restent du texte.",
-      de: "Mehr Aurora: Gefährten und Varianten von Hintergründen werden noch nicht gelesen, und Regeln mit eigener Logik bleiben nur Text.",
-      es: "Más Aurora: los compañeros y variantes de trasfondos aún no se leen, y las reglas que necesitan lógica propia solo conservan su texto.",
+      en: "More of Aurora: background variants are not read yet, and rules that need custom logic keep only their text.",
+      it: "Più Aurora: le varianti di background non vengono ancora lette, e le regole che richiedono logica propria restano solo testo.",
+      fr: "Plus d'Aurora : les variantes d'historiques ne sont pas encore lues, et les règles qui demandent une logique propre restent du texte.",
+      de: "Mehr Aurora: Varianten von Hintergründen werden noch nicht gelesen, und Regeln mit eigener Logik bleiben nur Text.",
+      es: "Más Aurora: las variantes de trasfondos aún no se leen, y las reglas que necesitan lógica propia solo conservan su texto.",
     },
   },
   {
@@ -923,11 +971,11 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "dm",
     text: {
-      en: "Tools for the Game Master: a bestiary with the SRD monsters, an initiative tracker, animal companions and wild shapes.",
-      it: "Strumenti per il Master: un bestiario con i mostri dell'SRD, un tracciatore di iniziativa, compagni animali e forme selvatiche.",
-      fr: "Des outils pour le MJ : un bestiaire avec les monstres du SRD, un suivi d'initiative, des compagnons animaux et des formes sauvages.",
-      de: "Werkzeuge für den Spielleiter: ein Bestiarium mit den SRD-Monstern, ein Initiative-Tracker, Tiergefährten und Tiergestalten.",
-      es: "Herramientas para el Director de Juego: un bestiario con los monstruos del SRD, un registro de iniciativa, compañeros animales y formas salvajes.",
+      en: "Tools for the Game Master: an initiative tracker, and filters in the bestiary (by challenge, type and size). The monsters, companions and wild shapes are made for players for now.",
+      it: "Strumenti per il Master: un tracciatore di iniziativa e i filtri del bestiario (per grado di sfida, tipo e taglia). Per ora i mostri, i compagni e le forme selvatiche sono pensati per i giocatori.",
+      fr: "Des outils pour le MJ : un suivi d'initiative et des filtres dans le bestiaire (par FP, type et taille). Pour l'instant, les monstres, les compagnons et les formes sauvages sont pensés pour les joueurs.",
+      de: "Werkzeuge für den Spielleiter: ein Initiative-Tracker und Filter im Bestiarium (nach Herausforderungsgrad, Typ und Größe). Die Monster, Gefährten und Tiergestalten sind vorerst für Spieler gedacht.",
+      es: "Herramientas para el Director de Juego: un registro de iniciativa y filtros en el bestiario (por desafío, tipo y tamaño). Por ahora los monstruos, compañeros y formas salvajes están pensados para los jugadores.",
     },
   },
 ];

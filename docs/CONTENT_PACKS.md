@@ -98,10 +98,14 @@ Pact Magic, ability score improvements, multiclassing), archetypes and their fea
 items (as items: rarity and attunement are kept; bonuses to armor class, saving throws,
 initiative and speed, ability scores, resistances, languages and proficiencies are applied while
 the item is equipped, and the rest stays in the text) and deities
-(picked in the Story step of a character). Definitions the reader uses by itself (sources,
-proficiencies, visions, flags) are not reported. Race variants and dragonmarks become sub-species of their race. Companions, background variants
-and statblocks are reported as not supported yet. Rules the app cannot apply
-automatically keep their text, and the report counts them.
+(picked in the Story step of a character) and companions (familiars, beasts, defenders), which
+become monsters with their traits, actions and reactions: the numbers of the stat block are
+read where they are plain (`13 (natural armor)`, `40 ft., fly 60 ft.`), and what depends on the
+level or the proficiency bonus (`14 + PB`) is kept as it was written. They are in the
+*Monster* list of the rules page. Definitions the reader uses by itself (sources,
+proficiencies, visions, flags) are not reported. Race variants and dragonmarks become sub-species
+of their race. Background variants and statblocks are reported as not supported yet. Rules the
+app cannot apply automatically keep their text, and the report counts them.
 
 The same thing often comes from several books. Entries with one name that say exactly the same
 (text, effects and data, ignoring spacing and curly quotes) are merged into one, and whatever

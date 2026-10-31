@@ -6,7 +6,7 @@ import {
   updatePrintSettings,
 } from "../../app/printSettings";
 import { printsNothing } from "../../app/printSettings.logic";
-import { content, sheet } from "../../app/store";
+import { content, printSheet } from "../../app/store";
 import { type UiKey, ui } from "../../i18n/ui";
 import { collectSpellRows } from "../spellRows";
 import { Cards } from "./CardsGroup";
@@ -46,7 +46,7 @@ function Check({ toggle, settings }: { toggle: Toggle; settings: PrintSettings }
 export function PrintView() {
   const settings = printSettings.value;
   const c = content.value;
-  const s = sheet.value;
+  const s = printSheet.value;
   const isCaster = Boolean(s?.spellcasting);
   const hasSpells = Boolean(c && s && collectSpellRows(c, s).length > 0);
   const nothing = printsNothing(settings, isCaster);

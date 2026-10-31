@@ -1,5 +1,5 @@
 import { SHEET_GROUPS, type SheetGroup, sheetGroup, showSheetGroup } from "../../app/sheetView";
-import { sheet } from "../../app/store";
+import { shownSheet } from "../../app/store";
 import type { ExplainTarget } from "../../engine/explain";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
@@ -24,7 +24,7 @@ const SumText = ({ label, value }: { label: string; value: string }) => (
 
 /** The numbers needed most, in one row: armor class, initiative, speed, hit points, hit dice. */
 function Summary() {
-  const s = sheet.value;
+  const s = shownSheet.value;
   if (!s) return null;
   const hitDice = Object.entries(s.hitPoints.hitDice)
     .map(([die, n]) => `${n}${die}`)

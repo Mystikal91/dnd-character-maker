@@ -1,6 +1,7 @@
 import { requirementWords } from "../../engine/requirements";
 import { ASI_OPTIONS_XML } from "./asiOptions";
 import { type Owner, claimFeatures, importArchetype, importClass, importFeature } from "./classes";
+import { importCompanion } from "./companions";
 import {
   importArmor,
   importGear,
@@ -45,7 +46,7 @@ export { AuroraParseError, slugify } from "./xml";
  * the entries or texts it makes: packs imported with an older version are marked as needing an
  * update, and can be imported again with a click.
  */
-export const AURORA_IMPORT_VERSION = 19;
+export const AURORA_IMPORT_VERSION = 21;
 export type { AuroraOptions, AuroraResult } from "./registry";
 
 /**
@@ -53,12 +54,16 @@ export type { AuroraOptions, AuroraResult } from "./registry";
  * content they already have. Nothing here knows any book's content: it only translates structure.
  *
  * Supported: spells, weapons, armor, gear, languages, backgrounds, races and sub-races with their
- * traits, feats, classes and archetypes with their features. Other types (deities, companions,
- * magic items...) are counted and reported as skipped.
+ * traits, feats, classes and archetypes with their features, and companions with their traits
+ * and actions. Other types are counted and reported as skipped.
  */
 /** Elements that only exist to be picked by another one: nothing to report when not imported. */
 const SILENT_TYPES = new Set([
   "Background Feature",
+  // Read with the companion that lists them.
+  "Companion Trait",
+  "Companion Action",
+  "Companion Reaction",
   "Multiclass",
   "Ability Score Improvement",
   // Definitions the reader uses by itself, or that only describe the program's own settings:
@@ -89,6 +94,7 @@ const LISTED_KINDS = new Set([
   "subclass",
   "language",
   "deity",
+  "monster",
 ]);
 
 /**
@@ -279,6 +285,9 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
         break;
       case "Deity":
         importDeity(ctx, source);
+        break;
+      case "Companion":
+        importCompanion(ctx, source);
         break;
       case "Language":
         importLanguage(ctx, source);

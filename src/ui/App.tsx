@@ -16,6 +16,7 @@ import { CharacterBar } from "./CharacterBar";
 import { Credits } from "./Credits";
 import "../app/translate";
 import { startBackClose } from "../app/backClose";
+import { monstersWanted } from "../app/rulesView";
 import { STAGE, VERSION } from "../app/version";
 import { startKeepingAwake } from "../app/wakeLock";
 import { AboutPage } from "./AboutPage";
@@ -82,10 +83,12 @@ export function App() {
   const lang = language.value;
   const added = userPacks.value;
   const packsReady = userPacksReady.value;
+  // A druid in a beast's shape needs the beast on every screen, for the numbers of the sheet.
+  const monsters = monstersWanted.value || Boolean(character.value.play.wildShape);
   useEffect(() => {
     if (!packsReady) return;
     let current = true;
-    loadContent(localeChain(lang), added).then(
+    loadContent(localeChain(lang), added, { monsters }).then(
       (loaded) => {
         if (current) content.value = loaded;
       },
@@ -97,7 +100,7 @@ export function App() {
     return () => {
       current = false;
     };
-  }, [lang, added, packsReady]);
+  }, [lang, added, packsReady, monsters]);
 
   // A link from the welcome page (/app/#example) opens the example character once all is ready,
   // also when the app is already open and only the address changes.

@@ -42,7 +42,7 @@ const SPELLS = wrap(`
     <description><p>Another one with the same name.</p></description>
     <setters><set name="level">0</set><set name="school">Divination</set></setters>
   </element>
-  <element name="Mystery" type="Companion" source="Test Book" id="ID_TEST_COMPANION">
+  <element name="Mystery" type="Vehicle" source="Test Book" id="ID_TEST_VEHICLE">
     <description><p>Not supported.</p></description>
   </element>
   <element name="Test Book" type="Source" source="Internal" id="ID_TEST_SOURCE" />
@@ -301,8 +301,8 @@ describe("spells", () => {
 
   it("gives equal names their own ids, and reports what it cannot import", () => {
     expect(result.entries.map((e) => e.id)).toEqual(["imp1:spell/glimmer", "imp1:spell/glimmer-2"]);
-    // Companions are not read; books and flags are definitions, nothing to report.
-    expect(result.skipped).toEqual({ Companion: 1 });
+    // A type the reader does not know is reported; books and flags are definitions, nothing to report.
+    expect(result.skipped).toEqual({ Vehicle: 1 });
     expect(result.sources).toEqual(["Test Book"]);
     expect(result.title).toBe("Test Set");
   });

@@ -287,6 +287,7 @@ export const ENTRY_KINDS = [
   "school",
   "condition",
   "alignment",
+  "monster",
   "deity",
   "option",
 ] as const;

@@ -10,6 +10,7 @@ import {
   type Sense,
 } from "../data/schema";
 import { abilityModifier } from "./abilities";
+import { inBeastShape, withBeastChecks } from "./beastForm";
 import type { Character } from "./character";
 import { type ChecksResult, deriveChecks, halfBonus } from "./checks";
 import { type PendingChoice, collectEffects } from "./choices";
@@ -151,7 +152,18 @@ function overrideNumber(character: Character, key: string): number | undefined {
   return typeof value === "number" ? value : undefined;
 }
 
+/**
+ * The sheet of a character. In the shape of a beast (Wild Shape), once the beast is known, the
+ * game statistics are the beast's and its skills and saves count where they are better.
+ */
 export function deriveSheet(character: Character, index: PackIndex): DerivedSheet {
+  const shape = character.play.wildShape;
+  const beast = shape ? index.get(shape.monster) : undefined;
+  if (!beast) return deriveForm(character, index);
+  return withBeastChecks(deriveForm(inBeastShape(character, beast), index), beast);
+}
+
+function deriveForm(character: Character, index: PackIndex): DerivedSheet {
   const warnings: Warning[] = [];
 
   // Species, subspecies, background and the starting class contribute their effects;

@@ -1,5 +1,5 @@
 import { Fragment } from "preact";
-import { character, content, sheet } from "../../app/store";
+import { character, content, shownSheet } from "../../app/store";
 import type { Warning } from "../../engine/warnings";
 import { type UiKey, ui } from "../../i18n/ui";
 import { Coins } from "../Coins";
@@ -17,7 +17,7 @@ const PROFICIENCY_LABELS = {
 /** Armor, weapon, tool and language proficiencies. */
 export function Proficiencies() {
   const c = content.value;
-  const s = sheet.value;
+  const s = shownSheet.value;
   const ch = character.value;
   if (!c || !s) return null;
   const list = (category: (typeof PROFICIENCY_CATEGORIES)[number]) =>
@@ -51,7 +51,7 @@ const DEFENSE_LABELS = {
 
 /** Resistances, immunities and vulnerabilities to damage. Hidden when there are none. */
 export function Defenses() {
-  const s = sheet.value;
+  const s = shownSheet.value;
   const c = content.value;
   if (!s) return null;
   const kinds = (["resistance", "immunity", "vulnerability"] as const).filter(
@@ -87,7 +87,7 @@ export function Defenses() {
 /** Traits from the species and subspecies. */
 export function SpeciesTraits() {
   const c = content.value;
-  const s = sheet.value;
+  const s = shownSheet.value;
   if (!c || !s || s.traits.length === 0) return null;
   return (
     <Panel title={ui("sheet.speciesTraits")}>
@@ -101,7 +101,7 @@ export function SpeciesTraits() {
 /** Feats the character took, each with its text one tap away. */
 export function Feats() {
   const c = content.value;
-  const s = sheet.value;
+  const s = shownSheet.value;
   if (!c || !s || s.feats.length === 0) return null;
   return (
     <Panel title={ui("sheet.feats")}>
@@ -115,7 +115,7 @@ export function Feats() {
 /** Items carried, how heavy they are, and the coins. */
 export function Inventory() {
   const c = content.value;
-  const s = sheet.value;
+  const s = shownSheet.value;
   const ch = character.value;
   if (!c || !s) return null;
   return (
@@ -132,7 +132,7 @@ export function Inventory() {
 /** Problems the engine noticed, in plain words. */
 export function Notes() {
   const c = content.value;
-  const s = sheet.value;
+  const s = shownSheet.value;
   const ch = character.value;
   if (!c || !s || s.warnings.length === 0) return null;
 

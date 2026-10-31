@@ -13,6 +13,9 @@ function remembered(): SearchKind | undefined {
   return undefined;
 }
 
+/** Raised once the monsters are wanted: they are a large pack, loaded only then. */
+export const monstersWanted = signal(false);
+
 /** What is typed in the search of the rules page. */
 export const rulesQuery = signal("");
 /** The kind the page is limited to; the last one is remembered. */
@@ -20,8 +23,11 @@ export const rulesKind = signal<SearchKind | undefined>(remembered());
 /** Raised to put the cursor in the search field (the button in the header, the slash key). */
 export const rulesFocus = signal(0);
 
+monstersWanted.value = rulesKind.value === "monster";
+
 export function showRulesKind(kind: SearchKind | undefined) {
   rulesKind.value = kind;
+  if (kind === "monster") monstersWanted.value = true;
   try {
     if (kind) localStorage.setItem(KEY, kind);
     else localStorage.removeItem(KEY);

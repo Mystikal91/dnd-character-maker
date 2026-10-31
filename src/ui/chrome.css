@@ -1151,6 +1151,61 @@ input:checked + .equip-tag {
   margin: 0;
 }
 
+.monster-kind {
+  font-style: italic;
+  margin: 0 0 0.5rem;
+}
+
+.monster-facts {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0.5rem 0;
+}
+
+.monster-facts div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+}
+
+.monster-facts dt {
+  font-weight: 700;
+}
+
+.monster-facts dd {
+  margin: 0;
+}
+
+.monster-abilities {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0.75rem 0;
+  padding: 0.5rem 0;
+  border-block: 1px solid var(--line, currentColor);
+  text-align: center;
+}
+
+.monster-abilities li {
+  display: grid;
+}
+
+@media (max-width: 30rem) {
+  .monster-abilities {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.monster-section h4 {
+  margin: 1rem 0 0.25rem;
+  border-bottom: 1px solid var(--line, currentColor);
+}
+
+.monster-action p {
+  margin: 0.5rem 0 0;
+}
+
 /* Wide: the list and the text side by side. Narrow: the list, then the text instead of it. */
 @container rules (min-width: 44rem) {
   .rules-body {
@@ -1539,4 +1594,29 @@ button:not(:disabled):not(.roll-toast):active {
   margin: 0.3rem 0;
   padding-left: 1.1rem;
   overflow-y: auto;
+}
+
+.monster-rolls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.35rem 0 0;
+}
+
+.monster-rolls button {
+  padding: 0.2rem 0.7rem;
+  font-size: 0.95rem;
+}
+
+.monster-rolls .crit {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.monster-rolls em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 700;
 }

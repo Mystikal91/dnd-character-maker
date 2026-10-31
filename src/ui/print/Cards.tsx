@@ -1,4 +1,4 @@
-import { character, content, sheet } from "../../app/store";
+import { character, content, printSheet } from "../../app/store";
 import type { Content } from "../../content/browser";
 import { classData, subclassData } from "../../data/progression";
 import { ui } from "../../i18n/ui";
@@ -26,7 +26,7 @@ function Mark({ on, label }: { on: boolean; label: string }) {
 /** Spell cards, twelve to a page: the spell's numbers on top and its text below. */
 export function SpellCards() {
   const c = content.value;
-  const s = sheet.value;
+  const s = printSheet.value;
   const ch = character.value;
   if (!c || !s) return null;
   const rows = collectSpellRows(c, s);
@@ -109,7 +109,7 @@ interface FeatureCard {
   source: string;
 }
 
-function featureCards(c: Content, s: NonNullable<typeof sheet.value>): FeatureCard[] {
+function featureCards(c: Content, s: NonNullable<typeof printSheet.value>): FeatureCard[] {
   const ch = character.value;
   const cards: FeatureCard[] = s.traits.map((id) => ({ id, source: ui("print.cardSpecies") }));
   for (const cl of ch.classes) {
@@ -131,7 +131,7 @@ function featureCards(c: Content, s: NonNullable<typeof sheet.value>): FeatureCa
 /** Feature cards, fifteen to a page, for class features and species traits. */
 export function FeatureCards() {
   const c = content.value;
-  const s = sheet.value;
+  const s = printSheet.value;
   if (!c || !s) return null;
   const cards = featureCards(c, s);
   if (cards.length === 0) return null;

@@ -3,6 +3,7 @@ import { changePlay, hpUndo, undoHp } from "../../app/play";
 import { PLAY_GROUPS, type PlayGroup, playGroup, showPlayGroup } from "../../app/playView";
 import { character, content, sheet } from "../../app/store";
 import { applyHealing, currentHp } from "../../engine/play";
+import { healBeast } from "../../engine/wildShape";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { ExplainButton } from "../Explain";
 import { useHoldRepeat } from "../useHoldRepeat";
@@ -26,8 +27,14 @@ export function StatusBar() {
   const play = character.value.play;
   const c = content.value;
   if (!s || !v || !c) return null;
-  const hp = currentHp(play, v.max);
-  const percent = v.max > 0 ? hp / v.max : 0;
+  // In the shape of a beast the bar shows the beast: its hit points and its armor class.
+  const shape = play.wildShape;
+  const beastAc = shape
+    ? (c.index.get(shape.monster)?.data.armorClass as { value: number }[] | undefined)?.[0]?.value
+    : undefined;
+  const max = shape ? shape.max : v.max;
+  const hp = shape ? shape.hp : currentHp(play, v.max);
+  const percent = max > 0 ? hp / max : 0;
   const state = hp === 0 ? "down" : percent <= 0.25 ? "low" : percent <= 0.5 ? "hurt" : "well";
 
   const undo = hpUndo.value;
@@ -45,22 +52,33 @@ export function StatusBar() {
           </button>
           <button type="button" class="ps-value" onClick={() => showPlayGroup("combat")}>
             <b>{hp}</b>
-            <span>/{v.max}</span>
-            {play.tempHp > 0 && <em>+{play.tempHp}</em>}
+            <span>/{max}</span>
+            {!shape && play.tempHp > 0 && <em>+{play.tempHp}</em>}
           </button>
           <button
             type="button"
             class="ps-step hold"
             aria-label={ui("play.healBy", { n: 1 })}
-            {...hold(() => changePlay((p) => applyHealing(p, v.max, 1)))}
+            {...hold(() =>
+              shape
+                ? changePlay((p) => healBeast(p, 1), { undo: false })
+                : changePlay((p) => applyHealing(p, v.max, 1)),
+            )}
           >
             +
           </button>
         </div>
-        <ExplainButton class="ps-stat" target={{ kind: "ac" }}>
-          <small>{ui("play.ac")}</small>
-          <b>{s.armorClass.value}</b>
-        </ExplainButton>
+        {beastAc !== undefined ? (
+          <span class="ps-stat">
+            <small>{ui("play.ac")}</small>
+            <b>{beastAc}</b>
+          </span>
+        ) : (
+          <ExplainButton class="ps-stat" target={{ kind: "ac" }}>
+            <small>{ui("play.ac")}</small>
+            <b>{s.armorClass.value}</b>
+          </ExplainButton>
+        )}
         <button
           type="button"
           class="ps-stat ps-roll"
