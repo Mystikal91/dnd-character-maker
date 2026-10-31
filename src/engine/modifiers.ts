@@ -1,4 +1,4 @@
-import type { ModifierCondition, ModifierTarget } from "../data/schema";
+import type { Ability, ModifierCondition, ModifierTarget } from "../data/schema";
 import type { SourcedEffect } from "./choices";
 
 /** What the character wears: the conditions of armor, shield and unarmored features read this. */
@@ -30,6 +30,9 @@ export interface ModifierState {
   weapon?: WeaponState;
   /** The level that counts for what an entry gives: its class's, or the whole character's. */
   levelOf?: (source: string) => number;
+  /** What a bonus that adds an ability or the proficiency bonus needs (without it they add nothing). */
+  abilityModifier?: (ability: Ability) => number;
+  proficiencyBonus?: number;
 }
 
 export function holds(
@@ -68,7 +71,13 @@ export function appliedModifiers(
   for (const { effect, source } of sourced) {
     if (effect.type !== "modifier" || effect.target !== target) continue;
     if (effect.minLevel !== undefined && (state.levelOf?.(source) ?? 0) < effect.minLevel) continue;
-    if (holds(effect.when, state)) applied.push({ target, value: effect.value, source });
+    const plus =
+      effect.plus === undefined
+        ? 0
+        : effect.plus === "proficiency"
+          ? (state.proficiencyBonus ?? 0)
+          : (state.abilityModifier?.(effect.plus) ?? 0);
+    if (holds(effect.when, state)) applied.push({ target, value: effect.value + plus, source });
   }
   return applied;
 }

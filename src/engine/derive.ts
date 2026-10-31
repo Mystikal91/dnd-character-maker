@@ -462,10 +462,25 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     saveBonus: total(appliedModifiers(sourced, "save", { armor: equipment.armor, levelOf })),
   });
   const baseSpeed = chosen.find((e) => e.kind === "species")?.data.speed;
-  const state = { armor: equipment.armor, levelOf };
+  const state = {
+    armor: equipment.armor,
+    levelOf,
+    abilityModifier: (a: Ability) => abilities[a].modifier,
+    proficiencyBonus,
+  };
   const speedMods = appliedModifiers(sourced, "speed", state);
   const initiativeMods = appliedModifiers(sourced, "initiative", state);
   const hpMods = appliedModifiers(sourced, "hpPerLevel", state);
+  const hpFlat = appliedModifiers(sourced, "hp", state);
+  // A bonus to the spell attack and the save DC of items and features, unless forced in Free edit.
+  const spellAttackMods = appliedModifiers(sourced, "spellAttack", state);
+  const spellDcMods = appliedModifiers(sourced, "spellDc", state);
+  for (const caster of casters) {
+    if (numberOverride(character.overrides, OVERRIDE.spellAttack) === undefined)
+      caster.attackBonus += total(spellAttackMods);
+    if (numberOverride(character.overrides, OVERRIDE.spellSaveDc) === undefined)
+      caster.saveDc += total(spellDcMods);
+  }
   const speed =
     overrideNumber(character, "speed") ??
     (typeof baseSpeed === "number" ? baseSpeed + total(speedMods) : undefined);
@@ -493,7 +508,15 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   for (const part of equipment.armorClass.parts)
     if (part.source === "feature" && part.feature)
       note({ target: "ac", value: part.value, source: part.feature });
-  for (const m of [...speedMods, ...initiativeMods, ...hpMods]) note(m);
+  for (const m of [
+    ...speedMods,
+    ...initiativeMods,
+    ...hpMods,
+    ...hpFlat,
+    ...spellAttackMods,
+    ...spellDcMods,
+  ])
+    note(m);
   for (const attack of equipment.attacks) for (const m of attack.modifiers ?? []) note(m);
 
   return {
@@ -509,7 +532,11 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     level,
     proficiencyBonus,
     abilities,
-    hitPoints: { max: hpOverride ?? hp + hpBonus, overridden: hpOverride !== undefined, hitDice },
+    hitPoints: {
+      max: hpOverride ?? hp + hpBonus + total(hpFlat),
+      overridden: hpOverride !== undefined,
+      hitDice,
+    },
     proficiencies,
     traits,
     defenses: defensesOf(effects),

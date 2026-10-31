@@ -665,6 +665,38 @@ describe("classes and archetypes", () => {
     expect(made.unsupportedBy.ID_T_SKY).toBe(2);
   });
 
+  it("reads bonuses to initiative, armor class, hit points and the spell attack and save DC", () => {
+    const set = wrap(`
+      <element name="Lucky Trait" type="Racial Trait" source="Test Book" id="ID_T_LUCKY">
+        <description><p>Alert.</p></description>
+        <rules>
+          <stat name="initiative" value="5" />
+          <stat name="initiative" value="proficiency" />
+          <stat name="ac:misc" value="charisma:modifier" equipped="[armor:none]" />
+          <stat name="ac:misc" value="1" equipped="[shield:none]" />
+          <stat name="hp" value="level:sorcerer" />
+          <stat name="hp" value="40" />
+          <stat name="spellcasting:attack" value="2" />
+          <stat name="spellcasting:dc" value="2" alt="Other Form" />
+        </rules>
+      </element>
+      <element name="Luckfolk" type="Race" source="Test Book" id="ID_T_LUCKFOLK">
+        <description><p>Lucky.</p></description>
+        <rules><grant type="Racial Trait" id="ID_T_LUCKY" /></rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    expect(byId(made, "imp1:trait/lucky-trait").effects).toEqual([
+      { type: "modifier", target: "initiative", value: 5 },
+      { type: "modifier", target: "initiative", value: 0, plus: "proficiency" },
+      { type: "modifier", target: "ac", value: 0, plus: "cha", when: "unarmored" },
+      { type: "modifier", target: "hpPerLevel", value: 1 },
+      { type: "modifier", target: "hp", value: 40 },
+      { type: "modifier", target: "spellAttack", value: 2 },
+    ]);
+    // What depends on a shield, and a variant of an item, are left out.
+    expect(made.unsupportedBy.ID_T_LUCKY).toBe(2);
+  });
+
   it("takes the race that offers a sub-race as its parent when two races are the same one of the app", () => {
     const set = wrap(`
       <element name="Dwarf" type="Race" source="New Rules" id="ID_T_DWARF_NEW">
@@ -1394,6 +1426,7 @@ describe("collections written for other readers", () => {
     expect(byId(result, "imp1:item/ring-of-warding").effects).toEqual([
       { type: "modifier", target: "ac", value: 1 },
       { type: "defense", kind: "resistance", damage: "fire" },
+      { type: "modifier", target: "spellAttack", value: 2 },
       { type: "modifier", target: "save", value: 1 },
     ]);
     expect(byId(result, "imp1:item/belt-of-might").effects).toEqual([

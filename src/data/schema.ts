@@ -36,7 +36,10 @@ export const MODIFIER_TARGETS = [
   "attack",
   "damage",
   "hpPerLevel",
+  "hp",
   "save",
+  "spellAttack",
+  "spellDc",
 ] as const;
 export type ModifierTarget = (typeof MODIFIER_TARGETS)[number];
 
@@ -128,6 +131,8 @@ const PlainEffectSchema = v.variant("type", [
     type: v.literal("modifier"),
     target: v.picklist(MODIFIER_TARGETS),
     value: v.number(),
+    /** Adds the proficiency bonus or the modifier of an ability to `value` (initiative with Dexterity... a charisma bonus to armor class). */
+    plus: v.optional(v.union([AbilitySchema, v.literal("proficiency")])),
     when: v.optional(v.picklist(MODIFIER_CONDITIONS)),
     /** Applies from this level of the class that gives it (of the whole character, for a species). */
     minLevel: v.optional(v.number()),

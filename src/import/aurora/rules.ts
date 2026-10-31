@@ -2,6 +2,8 @@ import {
   ABILITIES,
   type Ability,
   type Effect,
+  type ModifierCondition,
+  type ModifierTarget,
   type MovementMode,
   type Sense,
 } from "../../data/schema";
@@ -566,10 +568,54 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
   };
 
   /** What `equipped` asks for, if the sheet can check it: nothing, or no heavy armor. */
-  const equippedWhen = (rule: Rule): { when?: "noHeavyArmor" } | undefined => {
+  const equippedWhen = (rule: Rule): { when?: ModifierCondition } | undefined => {
     const equipped = (rule.attrs.getAttribute("equipped") ?? "").replace(/\s/g, "");
     if (equipped === "") return {};
-    return equipped === "![armor:heavy]" ? { when: "noHeavyArmor" } : undefined;
+    const when: Record<string, ModifierCondition> = {
+      "![armor:heavy]": "noHeavyArmor",
+      "[armor:none]": "unarmored",
+      "[armor:none],[shield:none]": "unarmoredNoShield",
+    };
+    const found = when[equipped];
+    return found ? { when: found } : undefined;
+  };
+
+  const BONUS_TARGETS: Record<string, ModifierTarget> = {
+    initiative: "initiative",
+    "ac:misc": "ac",
+    hp: "hp",
+    "spellcasting:attack": "spellAttack",
+    "spellcasting:dc": "spellDc",
+  };
+
+  /**
+   * A bonus to initiative, armor class, hit points or the spell attack and save DC: a number, the
+   * proficiency bonus or the modifier of an ability (`charisma:modifier`), and for hit points
+   * `level` (one for each level). A variant of an item (`alt`) is left out: its siblings would add up.
+   */
+  const bonusStat = (rule: Rule): boolean => {
+    const target = BONUS_TARGETS[rule.name.toLowerCase()];
+    const needs = equippedWhen(rule);
+    if (!target || !needs || rule.attrs.hasAttribute("alt")) return false;
+    const value = rule.value.trim().toLowerCase();
+    if (target === "hp" && /^level(:[a-z ]+)?$/.test(value)) {
+      mapped.effects.push({ type: "modifier", target: "hpPerLevel", value: 1, ...needs });
+      return true;
+    }
+    const number = Number(value);
+    const ability = value.endsWith(":modifier")
+      ? abilityFromWord(value.split(":")[0] ?? "")
+      : undefined;
+    const plus = value === "proficiency" ? "proficiency" : ability;
+    if (!Number.isFinite(number) && !plus) return false;
+    mapped.effects.push({
+      type: "modifier",
+      target,
+      value: plus ? 0 : number,
+      ...(plus && { plus }),
+      ...needs,
+    });
+    return true;
   };
 
   /** A bonus to the speed (`innate speed:misc`) by a plain number, with what it needs. */
@@ -637,6 +683,8 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
         mapped.speed = value;
       } else if (armorStat(rule)) {
         // Armor class from natural armor: told to the effect that works it out.
+      } else if (bonusStat(rule)) {
+        // A bonus to a number of the sheet: pushed as a modifier.
       } else if (movementStat(rule)) {
         // Another speed or a sense: pushed as an effect.
       } else if (/^innate speed:misc$/i.test(rule.name) && speedBonusOf(rule)) {

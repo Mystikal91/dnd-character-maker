@@ -155,7 +155,12 @@ function deriveArmorClass(ctx: Context, state: ArmorState): ArmorClassResult {
   }
   const shield = shields[0];
   if (shield) parts.push({ source: "shield", value: shield.armor.base });
-  for (const m of appliedModifiers(ctx.sourced, "ac", { armor: state, levelOf: ctx.levelOf }))
+  for (const m of appliedModifiers(ctx.sourced, "ac", {
+    armor: state,
+    levelOf: ctx.levelOf,
+    abilityModifier: (a) => abilities[a].modifier,
+    proficiencyBonus: ctx.proficiencyBonus,
+  }))
     parts.push({ source: "feature", value: m.value, feature: m.source });
 
   for (const { itemId, armor } of armors) {
