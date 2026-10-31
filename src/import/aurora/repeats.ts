@@ -89,7 +89,7 @@ const LISTED = new Set([
   "deity",
 ]);
 
-const is2024 = (source: { source: string; aid: string }) =>
+export const is2024 = (source: { source: string; aid: string }) =>
   /\(2024\)/.test(source.source) || /^ID_[A-Z]+_[A-Z0-9]*24_/.test(source.aid);
 
 /**

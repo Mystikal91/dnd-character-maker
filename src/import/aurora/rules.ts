@@ -16,6 +16,7 @@ import {
   isAsiOption,
   ofType,
 } from "./registry";
+import { is2024 } from "./repeats";
 import { clean, number, setters, slugify, supportsOf } from "./xml";
 
 /** The `<rules>` of an element, as plain data. */
@@ -501,9 +502,14 @@ function spellIdOf(ctx: Context, aid: string): string | undefined {
   return bySlug.get(slug);
 }
 
-/** The tally of one kind of rule: `stat/<name>` for a stat, `grant/<type>` or `select/<type>` otherwise. */
-function ruleKindOf(ctx: Context, rule: Rule): RuleKind {
-  const key = rule.tag === "stat" ? `stat/${rule.name}` : `${rule.tag}/${rule.type}`;
+/**
+ * The tally of one kind of rule: `stat/<name>` for a stat, `grant/<type>` or `select/<type>`
+ * otherwise, and the same with `[2024] ` before it for the books of 2024, which the app does not
+ * follow yet, so that they do not count among what is left to do.
+ */
+function ruleKindOf(ctx: Context, source: Source, rule: Rule): RuleKind {
+  const name = rule.tag === "stat" ? `stat/${rule.name}` : `${rule.tag}/${rule.type}`;
+  const key = is2024(source) ? `[2024] ${name}` : name;
   let kind = ctx.result.ruleKinds[key];
   if (!kind) {
     kind = { applied: 0, silent: 0, unsupported: 0, unmet: 0, examples: [], details: {} };
@@ -811,7 +817,7 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
     outcome: "applied" | "silent" | "unsupported" | "unmet",
     detail = "",
   ) => {
-    const kind = ruleKindOf(ctx, rule);
+    const kind = ruleKindOf(ctx, source, rule);
     kind[outcome] += 1;
     if (kind.examples.length < 3 && !kind.examples.includes(source.aid))
       kind.examples.push(source.aid);

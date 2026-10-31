@@ -59,12 +59,21 @@ export function toFile(outcomes: Outcomes): string {
  * have something to learn. The corpus run writes it when `AURORA_REPORT` names a file.
  */
 export function ruleReport(kinds: Record<string, RuleKind>): string {
+  // The books of 2024 come after the rest: the app follows the 2014 rules, so they are not to do.
+  const modern = (key: string) => key.startsWith("[2024] ");
   const rows = Object.entries(kinds).sort(
-    (a, b) => b[1].unsupported - a[1].unsupported || b[1].silent - a[1].silent,
+    (a, b) =>
+      Number(modern(a[0])) - Number(modern(b[0])) ||
+      b[1].unsupported - a[1].unsupported ||
+      b[1].silent - a[1].silent,
   );
-  const total = (pick: (k: RuleKind) => number) => rows.reduce((n, [, k]) => n + pick(k), 0);
+  const total = (pick: (k: RuleKind) => number, of: boolean) =>
+    rows.reduce((n, [key, k]) => (modern(key) === of ? n + pick(k) : n), 0);
+  const summary = (of: boolean) =>
+    `applied ${total((k) => k.applied, of)}, silent ${total((k) => k.silent, of)}, unsupported ${total((k) => k.unsupported, of)}, unmet in the plain case ${total((k) => k.unmet, of)}`;
   const lines = [
-    `applied ${total((k) => k.applied)}, silent ${total((k) => k.silent)}, unsupported ${total((k) => k.unsupported)}, unmet in the plain case ${total((k) => k.unmet)}`,
+    `2014 and the rest: ${summary(false)}`,
+    `books of 2024 ([2024] rows, last): ${summary(true)}`,
     "",
     "kind | applied | silent | unsupported | unmet | examples",
   ];
