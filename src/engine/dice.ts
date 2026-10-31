@@ -91,8 +91,10 @@ export type D20Mode = "normal" | "advantage" | "disadvantage";
 export interface D20Roll {
   /** Both dice for advantage and disadvantage, one otherwise. */
   dice: number[];
-  /** The die that counts. */
+  /** The die that counts, after a minimum (Reliable Talent) has raised it. */
   used: number;
+  /** The die before a minimum raised it: the best or worst of the dice rolled. */
+  natural: number;
   bonus: number;
   total: number;
   critical: boolean;
@@ -100,23 +102,33 @@ export interface D20Roll {
   mode: D20Mode;
 }
 
+export interface D20Options {
+  /** The lowest die that is a critical hit (19 with Improved Critical). */
+  critMin?: number;
+  /** A die lower than this counts as this (Reliable Talent: 10). */
+  floor?: number;
+}
+
 /** A d20 check with a flat bonus, rolling twice and keeping one for advantage or disadvantage. */
 export function rollD20(
   bonus: number,
   mode: D20Mode = "normal",
   random: RandomInt = cryptoRandomInt,
+  { critMin = 20, floor = 0 }: D20Options = {},
 ): D20Roll {
   const first = 1 + random(20);
   const dice = mode === "normal" ? [first] : [first, 1 + random(20)];
-  const used =
+  const natural =
     mode === "advantage" ? Math.max(...dice) : mode === "disadvantage" ? Math.min(...dice) : first;
+  const used = Math.max(natural, floor);
   return {
     dice,
     used,
+    natural,
     bonus,
     total: used + bonus,
-    critical: used === 20,
-    fumble: used === 1,
+    critical: used >= critMin,
+    fumble: natural === 1 && floor <= 1,
     mode,
   };
 }

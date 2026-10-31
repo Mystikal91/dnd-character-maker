@@ -2,6 +2,7 @@ import { signal } from "@preact/signals";
 import type { PlayState } from "../engine/character";
 import {
   type D20Mode,
+  type D20Options,
   type D20Roll,
   type DiceRoll,
   parseDice,
@@ -108,9 +109,14 @@ export function clearLog() {
 const signedBonus = (n: number) => (n === 0 ? "" : n > 0 ? ` +${n}` : ` ${n}`);
 
 /** Rolls a d20 with a bonus in the current mode and records it. */
-export function rollCheck(label: string, bonus: number): D20Roll {
-  const roll = rollD20(bonus, rollMode.value);
-  const faces = roll.dice.length > 1 ? `[${roll.dice.join(", ")}] → ${roll.used}` : `${roll.used}`;
+export function rollCheck(label: string, bonus: number, options?: D20Options): D20Roll {
+  const roll = rollD20(bonus, rollMode.value, undefined, options);
+  const faces =
+    roll.dice.length > 1
+      ? `[${roll.dice.join(", ")}] → ${roll.used}`
+      : roll.used !== roll.natural
+        ? `${roll.natural} → ${roll.used}`
+        : `${roll.used}`;
   addLog({
     label,
     detail: `d20 ${faces}${signedBonus(bonus)}`,

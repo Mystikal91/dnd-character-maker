@@ -98,6 +98,23 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
     modifier("speed", 5, "unarmoredNoShield", 18),
   ],
 
+  // Immunities that hold all the time. Disease is not tracked, and what holds only against some
+  // creatures (the charm and fear of Nature's Ward) or while raging stays text.
+  "feature/purity-of-body": [
+    { type: "defense", kind: "immunity", damage: "poison" },
+    { type: "conditionImmunity", condition: "poisoned" },
+  ],
+  "feature/natures-ward": [
+    { type: "defense", kind: "immunity", damage: "poison" },
+    { type: "conditionImmunity", condition: "poisoned" },
+  ],
+  "feature/aura-of-courage": [{ type: "conditionImmunity", condition: "frightened" }],
+
+  // Rolls.
+  "feature/improved-critical": [{ type: "critRange", min: 19 }],
+  "feature/superior-critical": [{ type: "critRange", min: 18 }],
+  "feature/reliable-talent": [{ type: "d20Floor", value: 10, on: "proficientSkills" }],
+
   // Skills.
   "feature/jack-of-all-trades": [{ type: "halfProficiency", round: "down" }],
   "feature/remarkable-athlete": [

@@ -1749,7 +1749,17 @@
     {
       "id": "srd51:feature/natures-ward",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "immunity",
+          "damage": "poison"
+        },
+        {
+          "type": "conditionImmunity",
+          "condition": "poisoned"
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
         "level": 10,
@@ -2011,7 +2021,12 @@
     {
       "id": "srd51:feature/improved-critical",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "critRange",
+          "min": 19
+        }
+      ],
       "data": {
         "class": "srd51:class/fighter",
         "level": 3,
@@ -2212,7 +2227,12 @@
     {
       "id": "srd51:feature/superior-critical",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "critRange",
+          "min": 18
+        }
+      ],
       "data": {
         "class": "srd51:class/fighter",
         "level": 15,
@@ -2531,7 +2551,17 @@
     {
       "id": "srd51:feature/purity-of-body",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "defense",
+          "kind": "immunity",
+          "damage": "poison"
+        },
+        {
+          "type": "conditionImmunity",
+          "condition": "poisoned"
+        }
+      ],
       "data": {
         "class": "srd51:class/monk",
         "level": 10
@@ -2908,7 +2938,12 @@
     {
       "id": "srd51:feature/aura-of-courage",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "conditionImmunity",
+          "condition": "frightened"
+        }
+      ],
       "data": {
         "class": "srd51:class/paladin",
         "level": 10
@@ -4368,7 +4403,13 @@
     {
       "id": "srd51:feature/reliable-talent",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "d20Floor",
+          "value": 10,
+          "on": "proficientSkills"
+        }
+      ],
       "data": {
         "class": "srd51:class/rogue",
         "level": 11

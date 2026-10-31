@@ -52,9 +52,11 @@ const DEFENSE_LABELS = {
 /** Resistances, immunities and vulnerabilities to damage. Hidden when there are none. */
 export function Defenses() {
   const s = sheet.value;
+  const c = content.value;
   if (!s) return null;
   const kinds = (["resistance", "immunity", "vulnerability"] as const).filter(
-    (kind) => s.defenses[kind].length > 0,
+    (kind) =>
+      s.defenses[kind].length > 0 || (kind === "immunity" && s.conditionImmunities.length > 0),
   );
   if (kinds.length === 0) return null;
   const damage = (type: string) => {
@@ -67,7 +69,14 @@ export function Defenses() {
         {kinds.map((kind) => (
           <Fragment key={kind}>
             <dt>{ui(DEFENSE_LABELS[kind])}</dt>
-            <dd>{s.defenses[kind].map(damage).join(", ")}</dd>
+            <dd>
+              {[
+                ...s.defenses[kind].map(damage),
+                ...(kind === "immunity"
+                  ? s.conditionImmunities.map((id) => c?.name(id) ?? id)
+                  : []),
+              ].join(", ")}
+            </dd>
           </Fragment>
         ))}
       </dl>

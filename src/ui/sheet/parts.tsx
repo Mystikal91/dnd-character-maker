@@ -1,4 +1,6 @@
 import type { ComponentChildren } from "preact";
+import { sheet } from "../../app/store";
+import type { FeatureValue } from "../../engine/featureValues";
 import { ui } from "../../i18n/ui";
 import { machineMode, toggleOriginal } from "../../translate/auto";
 import { ENGINE_NAMES } from "../../translate/engines";
@@ -68,6 +70,21 @@ export function Pips({ count }: { count: number }) {
   );
 }
 
+/** `breath weapon:dc` and its value as a line: "Breath weapon DC: 14". */
+export function featureValueLabel({ name, value }: FeatureValue): string {
+  const words = name
+    .replace(/:/g, " ")
+    .replace(/\b(dc|hp)\b/g, (w) => w.toUpperCase())
+    .trim();
+  return `${words.charAt(0).toUpperCase()}${words.slice(1)}: ${value}`;
+}
+
+/** The numbers a feature shows (a save DC, dice, a range), worked out for the character. */
+export function FeatureValues({ values }: { values: FeatureValue[] | undefined }) {
+  if (!values || values.length === 0) return null;
+  return <p class="feature-values">{values.map(featureValueLabel).join(" · ")}</p>;
+}
+
 /** A collapsible rules text: the name is the summary, the text is revealed on demand. */
 export function RulesText({
   name,
@@ -89,6 +106,7 @@ export function RulesText({
         {tag && <span class="source-tag"> [{tag}]</span>}
       </summary>
       <Paragraphs text={text} />
+      <FeatureValues values={id ? sheet.value?.featureValues[id] : undefined} />
     </details>
   );
 }

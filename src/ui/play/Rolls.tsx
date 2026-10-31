@@ -29,13 +29,20 @@ function RollButton({
   label,
   bonus,
   name = label,
+  floor,
 }: {
   label: string;
   bonus: number;
   name?: string;
+  /** A die lower than this counts as this (Reliable Talent). */
+  floor?: number | undefined;
 }) {
   return (
-    <button type="button" class="roll-btn" onClick={() => rollCheck(name, bonus)}>
+    <button
+      type="button"
+      class="roll-btn"
+      onClick={() => rollCheck(name, bonus, floor ? { floor } : undefined)}
+    >
       <span>{label}</span>
       <b>{signed(bonus)}</b>
     </button>
@@ -194,7 +201,12 @@ function RollsPanel({ part }: { part: "attacks" | "checks" }) {
           <h4>{ui("play.skills")}</h4>
           <div class="roll-grid">
             {skills.map((sk) => (
-              <RollButton key={sk.id} label={c.name(sk.id)} bonus={sk.bonus} />
+              <RollButton
+                key={sk.id}
+                label={c.name(sk.id)}
+                bonus={sk.bonus}
+                floor={sk.proficient ? s.proficientSkillFloor : undefined}
+              />
             ))}
           </div>
         </>
@@ -215,6 +227,7 @@ function RollsPanel({ part }: { part: "attacks" | "checks" }) {
               const roll = rollCheck(
                 `${c.name(a.itemId)} - ${ui("play.attackRoll")}`,
                 a.attackBonus,
+                { critMin: s.critRange },
               );
               criticalExtra.value = roll.critical;
               // A natural 20 arms the critical damage; any other attack clears it.

@@ -18,6 +18,26 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.15.0 beta",
+    date: "2026-10-31",
+    notes: [
+      {
+        en: "The numbers a feature shows are on the sheet: the save DC of a breath weapon, its dice, the range of a power, a damage type. They are worked out for your character (8 + proficiency + Constitution modifier, dice that grow with the level) and sit under the text of the feature, on the sheet, in Play and in print. The importer of Aurora reads them, so a lot of rules it used to leave out are now kept; packs imported before show “Needs updating”.",
+        it: "I numeri che un privilegio mostra sono sulla scheda: la CD del soffio, i suoi dadi, la portata di un potere, un tipo di danno. Sono calcolati per il tuo personaggio (8 + competenza + modificatore di Costituzione, dadi che crescono con il livello) e stanno sotto il testo del privilegio, sulla scheda, in Gioca e in stampa. L’importatore di Aurora li legge, quindi molte regole che prima lasciava fuori ora restano; i pacchetti importati prima risultano “Da aggiornare”.",
+        fr: "Les nombres qu’un privilège affiche sont sur la fiche : le DD du souffle, ses dés, la portée d’un pouvoir, un type de dégâts. Ils sont calculés pour ton personnage (8 + maîtrise + modificateur de Constitution, dés qui grandissent avec le niveau) et se trouvent sous le texte du privilège, sur la fiche, en jeu et à l’impression. L’importateur d’Aurora les lit, donc beaucoup de règles qu’il laissait de côté sont gardées ; les paquets importés avant indiquent « À mettre à jour ».",
+        de: "Die Zahlen, die ein Merkmal zeigt, stehen auf dem Blatt: der Rettungswurf-SG eines Odems, seine Würfel, die Reichweite einer Kraft, eine Schadensart. Sie werden für deine Figur berechnet (8 + Übung + Konstitutionsmodifikator, Würfel, die mit der Stufe wachsen) und stehen unter dem Text des Merkmals, auf dem Blatt, im Spiel und im Druck. Der Aurora-Import liest sie, so bleiben viele Regeln erhalten, die er früher ausließ; früher importierte Pakete zeigen „Aktualisieren“.",
+        es: "Los números que muestra un rasgo están en la hoja: la CD del aliento, sus dados, el alcance de un poder, un tipo de daño. Se calculan para tu personaje (8 + competencia + modificador de Constitución, dados que crecen con el nivel) y están bajo el texto del rasgo, en la hoja, en el juego y en la impresión. El importador de Aurora los lee, así que se conservan muchas reglas que antes dejaba fuera; los paquetes importados antes muestran «Por actualizar».",
+      },
+      {
+        en: "Three rules of the SRD work now. The Champion’s Improved and Superior Critical lower the critical hit range of weapon attacks to 19 and then 18, and the attack roll in Play follows it. The Rogue’s Reliable Talent treats a die lower than 10 as a 10 on the skills the Rogue is proficient in (the log shows “4 → 10”). Purity of Body, Nature’s Ward and Aura of Courage make the character immune to poison, or to being frightened, which the sheet and Play show.",
+        it: "Tre regole dell’SRD ora funzionano. Il Critico migliorato e superiore del Campione abbassano l’intervallo del colpo critico degli attacchi con arma a 19 e poi a 18, e il tiro per colpire in Gioca lo segue. Il Talento affidabile del Ladro tratta un dado inferiore a 10 come un 10 nelle abilità in cui il Ladro ha competenza (il registro mostra “4 → 10”). Purezza del corpo, Protezione della natura e Aura di coraggio rendono il personaggio immune al veleno, o alla paura, e la scheda e Gioca lo mostrano.",
+        fr: "Trois règles du SRD fonctionnent maintenant. Le Critique amélioré et supérieur du Champion abaissent la plage de coup critique des attaques avec arme à 19 puis 18, et le jet d’attaque en jeu la suit. Le Talent fiable du Roublard traite un dé inférieur à 10 comme un 10 dans les compétences où le Roublard est formé (le journal montre « 4 → 10 »). Pureté du corps, Protection de la nature et Aura de courage rendent le personnage immunisé au poison, ou à la peur, ce que la fiche et le jeu affichent.",
+        de: "Drei Regeln des SRD funktionieren jetzt. Verbesserter und Überlegener Kritischer Treffer des Champions senken den Bereich für kritische Treffer bei Waffenangriffen auf 19 und dann 18, und der Angriffswurf im Spiel folgt ihm. Das Verlässliche Talent des Schurken behandelt einen Würfel unter 10 als 10 bei den Fertigkeiten, in denen der Schurke geübt ist (das Protokoll zeigt „4 → 10“). Reinheit des Körpers, Schutz der Natur und Aura des Mutes machen die Figur immun gegen Gift oder gegen Furcht, was Blatt und Spiel anzeigen.",
+        es: "Tres reglas del SRD funcionan ahora. El Crítico mejorado y superior del Campeón reducen el rango de golpe crítico de los ataques con arma a 19 y luego a 18, y la tirada de ataque en el juego lo sigue. El Talento fiable del Pícaro trata un dado inferior a 10 como un 10 en las habilidades en las que el Pícaro es competente (el registro muestra «4 → 10»). Pureza del cuerpo, Protección de la naturaleza y Aura de coraje hacen al personaje inmune al veneno, o al miedo, y la hoja y el juego lo muestran.",
+      },
+    ],
+  },
+  {
     version: "1.14.0 beta",
     date: "2026-10-31",
     notes: [

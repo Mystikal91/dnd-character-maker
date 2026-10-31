@@ -665,6 +665,39 @@ describe("classes and archetypes", () => {
     expect(made.unsupportedBy.ID_T_SKY).toBe(2);
   });
 
+  it("keeps the numbers a feature shows: a save DC, dice that grow with the level, a damage type", () => {
+    const set = wrap(`
+      <element name="Breath" type="Racial Trait" source="Test Book" id="ID_T_BREATH">
+        <description><p>Exhale.</p></description>
+        <rules>
+          <stat name="breath weapon:dc" value="8" />
+          <stat name="breath weapon:dc" value="constitution:modifier" />
+          <stat name="breath weapon:dc" value="proficiency" />
+          <stat name="breath weapon:dice count" value="1" level="1" bonus="base" />
+          <stat name="breath weapon:dice count" value="2" level="5" bonus="base" />
+          <stat name="mind link:range" value="level:warlock" />
+          <stat name="dragon ancestor damage type" value="Fire" />
+          <stat name="harness divine power:usage" value="strange:thing" />
+        </rules>
+      </element>
+      <element name="Drakefolk" type="Race" source="Test Book" id="ID_T_DRAKEFOLK">
+        <description><p>Drakes.</p></description>
+        <rules><grant type="Racial Trait" id="ID_T_BREATH" /></rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    expect(byId(made, "imp1:trait/breath").effects).toEqual([
+      { type: "featureValue", name: "breath weapon:dc", term: 8 },
+      { type: "featureValue", name: "breath weapon:dc", term: { mod: "con" } },
+      { type: "featureValue", name: "breath weapon:dc", term: { of: "proficiency" } },
+      { type: "featureValue", name: "breath weapon:dice count", term: 1, minLevel: 1 },
+      { type: "featureValue", name: "breath weapon:dice count", term: 2, minLevel: 5 },
+      { type: "featureValue", name: "mind link:range", term: { classLevel: "warlock" } },
+      { type: "featureValue", name: "dragon ancestor damage type", term: { text: "Fire" } },
+    ]);
+    // A value the sheet cannot work out stays left out.
+    expect(made.unsupportedBy.ID_T_BREATH).toBe(1);
+  });
+
   it("reads bonuses to initiative, armor class, hit points and the spell attack and save DC", () => {
     const set = wrap(`
       <element name="Lucky Trait" type="Racial Trait" source="Test Book" id="ID_T_LUCKY">

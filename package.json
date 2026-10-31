@@ -1,6 +1,6 @@
 {
   "name": "dnd-character-maker",
-  "version": "1.14.0-beta",
+  "version": "1.15.0-beta",
   "private": true,
   "description": "Offline-first D&D 5e character sheet maker (print and play).",
   "license": "MIT",

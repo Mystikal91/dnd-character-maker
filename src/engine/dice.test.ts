@@ -61,6 +61,22 @@ describe("rollD20", () => {
     expect(rollD20(0, "normal", sequence([0]))).toMatchObject({ critical: false, fumble: true });
   });
 
+  it("counts a lower die as the minimum, and a lower die as a critical hit", () => {
+    // Reliable Talent: a 4 is treated as a 10, and a natural 1 is no fumble.
+    expect(rollD20(7, "normal", sequence([3]), { floor: 10 })).toMatchObject({
+      natural: 4,
+      used: 10,
+      total: 17,
+      fumble: false,
+    });
+    expect(rollD20(7, "normal", sequence([13]), { floor: 10 })).toMatchObject({ used: 14 });
+    // Improved Critical: 19 is a critical hit, 18 is not.
+    expect(rollD20(0, "normal", sequence([18]), { critMin: 19 })).toMatchObject({ critical: true });
+    expect(rollD20(0, "normal", sequence([17]), { critMin: 19 })).toMatchObject({
+      critical: false,
+    });
+  });
+
   it("keeps the higher die with advantage and the lower with disadvantage", () => {
     expect(rollD20(2, "advantage", sequence([4, 16]))).toMatchObject({
       dice: [5, 17],

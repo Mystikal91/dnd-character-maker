@@ -1,6 +1,7 @@
 import { content, sheet } from "../../app/store";
 import { ui } from "../../i18n/ui";
 import { SourceTag } from "../SourceTag";
+import { featureValueLabel } from "../sheet/parts";
 
 /** The full text of species traits and class features, flowing over as many pages as needed. */
 export function FeatureText() {
@@ -23,6 +24,9 @@ export function FeatureText() {
               .map((p) => (
                 <p key={p}>{p}</p>
               ))}
+            {s.featureValues[id] && (
+              <p class="feature-values">{s.featureValues[id].map(featureValueLabel).join(" · ")}</p>
+            )}
           </article>
         ))}
       </div>

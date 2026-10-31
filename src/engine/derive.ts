@@ -15,6 +15,7 @@ import { type ChecksResult, deriveChecks, halfBonus } from "./checks";
 import { type PendingChoice, collectEffects } from "./choices";
 import { customResources } from "./custom";
 import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
+import { type FeatureValue, deriveFeatureValues } from "./featureValues";
 import { type AppliedModifier, appliedModifiers, total } from "./modifiers";
 import { type Movement, deriveMovement, deriveSenses } from "./movement";
 import { type CasterInput, casterKind, slotPools, unmetPrerequisites } from "./multiclass";
@@ -82,6 +83,14 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   features: string[];
   /** Where each feature and trait comes from, to name it next to the text. */
   featureSources: Record<string, FeatureSource>;
+  /** The numbers features show (a save DC, dice, a range), by the entry that gives them. */
+  featureValues: Record<string, FeatureValue[]>;
+  /** Conditions the character cannot suffer (ids of the condition entries). */
+  conditionImmunities: string[];
+  /** The lowest die that is a critical hit with weapon attacks (20, or less with Improved Critical). */
+  critRange: number;
+  /** A die lower than this counts as this on checks with a skill the character is proficient in (0: none). */
+  proficientSkillFloor: number;
   /** The first spellcasting class: the one whose numbers the sheet headlines. */
   spellcasting?: SpellcastingResult;
   /** Every spellcasting class, in the order the character took them. */
@@ -556,6 +565,28 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     defenses: defensesOf(effects),
     features: [...new Set(features)],
     featureSources: featureSources(index, character, sourced),
+    conditionImmunities: [
+      ...new Set(
+        effects.flatMap((e) =>
+          e.type === "conditionImmunity" ? [`${character.ruleset}:condition/${e.condition}`] : [],
+        ),
+      ),
+    ],
+    critRange: Math.min(20, ...effects.flatMap((e) => (e.type === "critRange" ? [e.min] : []))),
+    proficientSkillFloor: Math.max(
+      0,
+      ...effects.flatMap((e) => (e.type === "d20Floor" ? [e.value] : [])),
+    ),
+    featureValues: deriveFeatureValues(sourced, {
+      levelOf,
+      level: character.classes.reduce((sum, cl) => sum + cl.level, 0),
+      proficiencyBonus,
+      ability: (a) => abilities[a],
+      classLevel: (slug) =>
+        character.classes
+          .filter((cl) => cl.classId.split("/")[1] === slug)
+          .reduce((sum, cl) => sum + cl.level, 0),
+    }),
     ...(spellcasting && { spellcasting }),
     spellcasters: casters,
     resources,

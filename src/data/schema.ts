@@ -76,6 +76,18 @@ export type Sense = (typeof SENSES)[number];
  * Features that need custom logic are expressed as `trait` (+ optional `resource`)
  * and are not automated.
  */
+/** What a number of a feature is made of: a number, text, or a value of the character. */
+export const FeatureTermSchema = v.union([
+  v.number(),
+  v.object({ text: v.string() }),
+  v.object({ of: v.picklist(["proficiency", "level"]) }),
+  v.object({ mod: AbilitySchema }),
+  v.object({ score: AbilitySchema }),
+  /** The level in one class, by the slug of the class. */
+  v.object({ classLevel: v.string() }),
+]);
+export type FeatureTerm = v.InferOutput<typeof FeatureTermSchema>;
+
 const PlainEffectSchema = v.variant("type", [
   /**
    * A name other rules can ask for (`when.requires`), for a rule that says "this is held" without
@@ -201,6 +213,34 @@ const PlainEffectSchema = v.variant("type", [
     shield: v.boolean(),
     /** Leaves Dexterity out: a tortle's shell is 17 whatever the Dexterity is. */
     noDex: v.optional(v.boolean()),
+  }),
+  /**
+   * A number that a feature shows on the sheet: the save DC of a breath weapon, its dice, the
+   * range of a power. The terms of one `name` (of one entry) add up; those with a `minLevel` do
+   * not add: the latest one the level has reached counts (1, 2, 3 and 4 dice at 1, 5, 11 and 17).
+   * A text term (a damage type) is shown as it is.
+   */
+  v.object({
+    type: v.literal("featureValue"),
+    name: v.string(),
+    term: FeatureTermSchema,
+    minLevel: v.optional(v.number()),
+  }),
+  /** The character cannot be affected by this condition (by its slug: `poisoned`, `frightened`). */
+  v.object({ type: v.literal("conditionImmunity"), condition: v.string() }),
+  /** The lowest die that is a critical hit with weapon attacks (Champion: 19, then 18). The lowest counts. */
+  v.object({
+    type: v.literal("critRange"),
+    min: v.pipe(v.number(), v.integer(), v.minValue(2), v.maxValue(20)),
+  }),
+  /**
+   * A die lower than `value` counts as `value` on a check: Reliable Talent does it on the ability
+   * checks that use a skill the character is proficient in. The highest counts.
+   */
+  v.object({
+    type: v.literal("d20Floor"),
+    value: v.pipe(v.number(), v.integer(), v.minValue(2), v.maxValue(20)),
+    on: v.picklist(["proficientSkills"]),
   }),
   v.object({
     type: v.literal("resource"),

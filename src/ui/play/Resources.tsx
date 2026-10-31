@@ -345,6 +345,12 @@ export function Conditions() {
 
   return (
     <Panel title={ui("play.conditions")}>
+      {sheet.value && sheet.value.conditionImmunities.length > 0 && (
+        <p class="muted">
+          {ui("sheet.immunities")}:{" "}
+          {sheet.value.conditionImmunities.map((id) => c.name(id)).join(", ")}
+        </p>
+      )}
       {active.length > 0 && <div class="chips">{active.map(chip)}</div>}
       {active.map((e) => (
         <RulesText key={e.id} id={e.id} name={c.name(e.id)} text={c.text(e.id, "desc")} />

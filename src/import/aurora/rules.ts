@@ -2,6 +2,7 @@ import {
   ABILITIES,
   type Ability,
   type Effect,
+  type FeatureTerm,
   type ModifierCondition,
   type ModifierTarget,
   type MovementMode,
@@ -450,6 +451,38 @@ const WEAPON_ABILITIES: Record<string, Effect> = {
   },
 };
 
+/** The last words of a stat that is a number (or text) a feature shows: `breath weapon:dc`. */
+const FEATURE_VALUE_NAME =
+  /(?::|^.+ )(?:dc|usages?|hp|temp hp|temporary hp|damage|damage type|range|distance|value|amount|creatures|creature-count|count|dice count|dice|num die|lift|plane|cantrip|objects|charges|attack)$/;
+
+/** Names whose value is a word (a damage type, a plane), not a number. */
+const TEXT_VALUE_NAME = /(?:damage type|plane|cantrip)$/;
+
+/**
+ * What a stat that a feature shows is made of: a number, the proficiency bonus, the level (in a
+ * class), the modifier or score of an ability, or text for a damage type. Nothing for a stat
+ * that the sheet works out by itself or that depends on more than that.
+ */
+export function featureValueOf(rule: Rule): FeatureTerm | undefined {
+  const name = rule.name.toLowerCase();
+  if (rule.tag !== "stat" || !FEATURE_VALUE_NAME.test(name) || name.startsWith("spellcasting:"))
+    return undefined;
+  // A value that depends on what is worn or on a variant of an item is not one number.
+  if (rule.attrs.hasAttribute("equipped") || rule.attrs.hasAttribute("alt")) return undefined;
+  const value = rule.value.trim();
+  if (/^-?\d+$/.test(value)) return Number(value);
+  const word = value.toLowerCase();
+  if (word === "proficiency") return { of: "proficiency" };
+  if (word === "level") return { of: "level" };
+  const level = word.match(/^level:([a-z ]+)$/);
+  if (level?.[1]) return { classLevel: slugify(level[1]) };
+  const ability = word.match(/^([a-z]+):(modifier|score)$/);
+  const which = abilityFromWord(ability?.[1] ?? "");
+  if (ability && which) return ability[2] === "score" ? { score: which } : { mod: which };
+  if (TEXT_VALUE_NAME.test(name) && /^[A-Za-z ]+$/.test(value)) return { text: value };
+  return undefined;
+}
+
 export interface MappedRules {
   effects: Effect[];
   /** Granted elements, with the class level they come at (undefined: right away). */
@@ -744,6 +777,15 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
             value: bonus.value,
             ...(bonus.when && { when: bonus.when }),
           });
+      } else if (featureValueOf(rule) !== undefined) {
+        const term = featureValueOf(rule);
+        if (term !== undefined)
+          mapped.effects.push({
+            type: "featureValue",
+            name: rule.name.toLowerCase(),
+            term,
+            ...(rule.level !== undefined && { minLevel: rule.level }),
+          });
       } else {
         mapped.unsupported += 1;
       }
@@ -942,7 +984,8 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
       note(rule, "unmet");
       continue;
     }
-    if (options.skipLevelled && rule.level !== undefined) continue;
+    if (options.skipLevelled && rule.level !== undefined && featureValueOf(rule) === undefined)
+      continue;
     const gated = options.live && rule.requirements.trim() !== "";
     const effectsFrom = mapped.effects.length;
     const grantsFrom = mapped.grants.length;
