@@ -16,6 +16,7 @@ describe("explaining a number", () => {
         const targets: ExplainTarget[] = [
           { kind: "ac" },
           { kind: "initiative" },
+          { kind: "speed" },
           ...ABILITIES.map((ability) => ({ kind: "save" as const, ability })),
           ...sheet.skills.map((s) => ({ kind: "skill" as const, id: s.id })),
           ...sheet.attacks.map((a) => ({ kind: "attack" as const, itemId: a.itemId })),
@@ -57,5 +58,17 @@ describe("explaining a number", () => {
     const explained = explain({ kind: "ac" }, sheet, character, index);
     expect(explained?.total).toBe(25);
     expect(explained?.forced).toBe(true);
+  });
+});
+
+describe("explaining the speed", () => {
+  it("shows the walking speed of the species, and the others with the senses", () => {
+    const character = build("fighter", 1, "dwarf");
+    const sheet = deriveSheet(character, index);
+    const explained = explain({ kind: "speed" }, sheet, character, index);
+    expect(explained?.lines).toEqual([{ part: "base", value: 25 }]);
+    expect(explained?.total).toBe(25);
+    expect(explained?.also?.movement.swim).toEqual({ feet: 12, half: true });
+    expect(explained?.also?.movement.fly).toBeUndefined();
   });
 });

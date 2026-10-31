@@ -1,13 +1,15 @@
 import { itemData } from "../data/items";
-import type { Ability } from "../data/schema";
+import type { Ability, Sense } from "../data/schema";
 import type { Character } from "./character";
 import type { DerivedSheet, PackIndex } from "./derive";
+import type { Movement } from "./movement";
 import { OVERRIDE } from "./overrides";
 
 /** A number of the sheet that can be taken apart into what it is made of. */
 export type ExplainTarget =
   | { kind: "ac" }
   | { kind: "initiative" }
+  | { kind: "speed" }
   | { kind: "save"; ability: Ability }
   | { kind: "skill"; id: string }
   | { kind: "attack"; itemId: string };
@@ -38,6 +40,8 @@ export interface Explained {
   /** A value forced in Free edit: the lines say what it would have been. */
   forced: boolean;
   lines: ExplainLine[];
+  /** The speeds other than walking and the senses, for the number that has them (speed). */
+  also?: { movement: Movement; senses: Partial<Record<Sense, number>> };
 }
 
 /** Whatever the lines do not account for, so they always add up to the number shown. */
@@ -87,6 +91,23 @@ export function explain(
         total: sheet.initiative,
         forced,
         lines: forced ? lines : withRest(sheet.initiative, lines, "halfProficiency"),
+      };
+    }
+
+    case "speed": {
+      const base = index.get(character.choices.species ?? "")?.data.speed;
+      const bonuses = sheet.bonuses.filter((b) => b.target === "speed");
+      const lines: ExplainLine[] = [
+        { part: "base", value: typeof base === "number" ? base : 0 },
+        ...bonuses.map((b) => ({ part: "feature" as const, value: b.value, ref: b.source })),
+      ];
+      const forced = typeof character.overrides[OVERRIDE.speed] === "number";
+      const total = sheet.speed ?? 0;
+      return {
+        total,
+        forced,
+        lines: forced ? lines : withRest(total, lines),
+        also: { movement: sheet.movement, senses: sheet.senses },
       };
     }
 

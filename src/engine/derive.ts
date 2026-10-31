@@ -7,6 +7,7 @@ import {
   PROFICIENCY_CATEGORIES,
   type Pack,
   type ProficiencyCategory,
+  type Sense,
 } from "../data/schema";
 import { abilityModifier } from "./abilities";
 import type { Character } from "./character";
@@ -15,6 +16,7 @@ import { type PendingChoice, collectEffects } from "./choices";
 import { customResources } from "./custom";
 import { type EquipmentResult, deriveEquipment, proficiencyKeys } from "./equipment";
 import { type AppliedModifier, appliedModifiers, total } from "./modifiers";
+import { type Movement, deriveMovement, deriveSenses } from "./movement";
 import { type CasterInput, casterKind, slotPools, unmetPrerequisites } from "./multiclass";
 import { OVERRIDE, numberOverride } from "./overrides";
 import { type ClassFact, type ClassResource, type ExtraDamage, classResources } from "./resources";
@@ -66,6 +68,10 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   bonuses: AppliedModifier[];
   /** Walking speed in feet; undefined while no species is chosen. */
   speed?: number;
+  /** Climbing, swimming, flying and burrowing speeds; none while no species is chosen. */
+  movement: Movement;
+  /** Senses with their range in feet (darkvision, blindsight...). */
+  senses: Partial<Record<Sense, number>>;
   abilities: Record<Ability, AbilityResult>;
   hitPoints: { max: number; overridden: boolean; hitDice: Record<string, number> };
   proficiencies: Record<ProficiencyCategory, string[]>;
@@ -463,6 +469,9 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   const speed =
     overrideNumber(character, "speed") ??
     (typeof baseSpeed === "number" ? baseSpeed + total(speedMods) : undefined);
+  const movement =
+    speed === undefined ? {} : deriveMovement(sourced, state, speed, total(speedMods));
+  const senses = deriveSenses(sourced, state);
   // A feature of a class counts that class's levels; a trait of the species counts all of them.
   const hpBonus = hpMods.reduce((sum, m) => {
     const owner = index.get(m.source)?.data.class;
@@ -495,6 +504,8 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
       abilities.dex.modifier + halfBonus(halves, "dex", proficiencyBonus) + total(initiativeMods),
     bonuses,
     ...(speed !== undefined && { speed }),
+    movement,
+    senses,
     level,
     proficiencyBonus,
     abilities,

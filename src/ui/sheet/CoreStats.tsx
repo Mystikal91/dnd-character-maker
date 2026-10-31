@@ -94,7 +94,11 @@ export function CoreStats() {
         >
           {signed(s.initiative)}
         </Stat>
-        <Stat label={ui("sheet.speed")} forced={isForced(OVERRIDE.speed)}>
+        <Stat
+          label={ui("sheet.speed")}
+          forced={isForced(OVERRIDE.speed)}
+          explain={{ kind: "speed" }}
+        >
           {s.speed === undefined ? "—" : distance(s.speed)}
         </Stat>
       </div>

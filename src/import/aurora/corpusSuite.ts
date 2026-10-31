@@ -6,7 +6,7 @@ import { createCharacter } from "../../engine/character";
 import { deriveSheet, indexPacks } from "../../engine/derive";
 import { SRD51_FILES, loadSrd51Strings, srd51Index, srd51Packs } from "../../test/srd51";
 import { type AuroraResult, parseAurora } from "./index";
-import { type Outcomes, measure, toFile, worse } from "./ratchet";
+import { type Outcomes, measure, ruleReport, toFile, worse } from "./ratchet";
 
 /**
  * The importer against the whole of Aurora's content, kept at a fixed commit (see the workflow).
@@ -105,6 +105,9 @@ export function corpusSuite(reverse: boolean) {
       });
 
       it("turns no element into less than it did when the baseline was taken", () => {
+        // AURORA_REPORT=<file> also writes what became of the rules, by kind (see `ruleReport`).
+        if (process.env.AURORA_REPORT && !reverse)
+          writeFileSync(process.env.AURORA_REPORT, ruleReport(result.ruleKinds));
         const baselinePath = join(import.meta.dirname, "corpus.baseline.json");
         const current = measure(result.entries, result.aids, result.unsupportedBy);
         // AURORA_ACCEPT=1 takes the present result as the baseline (after a change that was meant).

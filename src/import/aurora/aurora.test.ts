@@ -639,6 +639,32 @@ describe("classes and archetypes", () => {
     ]);
   });
 
+  it("reads other speeds and senses, and a bonus to the speed that moves all of them", () => {
+    const set = wrap(`
+      <element name="Skyfolk" type="Race" source="Test Book" id="ID_T_SKY">
+        <description><p>Winged.</p></description>
+        <rules>
+          <stat name="innate speed" value="30" bonus="base" />
+          <stat name="innate speed:fly" value="innate speed" bonus="base" equipped="![armor:heavy]" />
+          <stat name="innate speed:swim" value="40" bonus="base" />
+          <stat name="innate speed:burrow" value="monk:level" bonus="base" />
+          <stat name="darkvision:range" value="60" bonus="base" />
+          <stat name="innate speed:misc" value="10" equipped="![armor:heavy]" />
+          <stat name="innate speed:swim:misc" value="10" equipped="![armor:heavy]" requirements="[innate speed:swim:1]" />
+          <stat name="innate speed:climb:misc" value="5" requirements="[innate speed:climb:1]" />
+        </rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    expect(byId(made, "imp1:species/skyfolk").effects).toEqual([
+      { type: "movement", mode: "fly", feet: "walk", when: "noHeavyArmor" },
+      { type: "movement", mode: "swim", feet: 40 },
+      { type: "sense", sense: "darkvision", range: 60 },
+      { type: "modifier", target: "speed", value: 10, when: "noHeavyArmor" },
+    ]);
+    // The speed that depends on a number the app cannot work out, and a bonus nothing else gives, are left out.
+    expect(made.unsupportedBy.ID_T_SKY).toBe(2);
+  });
+
   it("takes the race that offers a sub-race as its parent when two races are the same one of the app", () => {
     const set = wrap(`
       <element name="Dwarf" type="Race" source="New Rules" id="ID_T_DWARF_NEW">

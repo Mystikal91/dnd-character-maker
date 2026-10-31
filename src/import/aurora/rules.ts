@@ -1,9 +1,16 @@
-import { ABILITIES, type Ability, type Effect } from "../../data/schema";
+import {
+  ABILITIES,
+  type Ability,
+  type Effect,
+  type MovementMode,
+  type Sense,
+} from "../../data/schema";
 import { evaluateRequirements } from "../../engine/requirements";
 import { classIdByName } from "./emit";
 import {
   type Context,
   FEATURE_TYPES,
+  type RuleKind,
   type Source,
   elementTags,
   isAsiOption,
@@ -494,6 +501,17 @@ function spellIdOf(ctx: Context, aid: string): string | undefined {
   return bySlug.get(slug);
 }
 
+/** The tally of one kind of rule: `stat/<name>` for a stat, `grant/<type>` or `select/<type>` otherwise. */
+function ruleKindOf(ctx: Context, rule: Rule): RuleKind {
+  const key = rule.tag === "stat" ? `stat/${rule.name}` : `${rule.tag}/${rule.type}`;
+  let kind = ctx.result.ruleKinds[key];
+  if (!kind) {
+    kind = { applied: 0, silent: 0, unsupported: 0, unmet: 0, examples: [], details: {} };
+    ctx.result.ruleKinds[key] = kind;
+  }
+  return kind;
+}
+
 /** Turns an element's rules into the app's effects, and lists what it grants or offers. */
 export function mapRules(ctx: Context, source: Source, options: MapOptions): MappedRules {
   const mapped: MappedRules = { effects: [], grants: [], offers: [], unsupported: 0 };
@@ -541,6 +559,66 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
     return false;
   };
 
+  /** What `equipped` asks for, if the sheet can check it: nothing, or no heavy armor. */
+  const equippedWhen = (rule: Rule): { when?: "noHeavyArmor" } | undefined => {
+    const equipped = (rule.attrs.getAttribute("equipped") ?? "").replace(/\s/g, "");
+    if (equipped === "") return {};
+    return equipped === "![armor:heavy]" ? { when: "noHeavyArmor" } : undefined;
+  };
+
+  /** A bonus to the speed (`innate speed:misc`) by a plain number, with what it needs. */
+  const speedBonusOf = (rule: Rule) => {
+    const value = Number(rule.value);
+    const needs = equippedWhen(rule);
+    if (!/^(?:innate )?speed:misc$/i.test(rule.name) || !Number.isFinite(value) || !needs)
+      return undefined;
+    return { value, ...needs };
+  };
+
+  /**
+   * A speed of climbing, swimming, flying or burrowing, or a sense with a range. The bonuses to
+   * these speeds (`innate speed:climb:misc`) say what a bonus to the speed already does to all of
+   * them, so they count as read when the same element gives that bonus to the speed.
+   */
+  const movementStat = (rule: Rule): boolean => {
+    const name = rule.name.toLowerCase();
+    const sense = name.match(/^(darkvision|blindsight|tremorsense|truesight):range$/);
+    const mode = name.match(/^(?:innate )?speed:(climb|swim|fly|burrow)(:misc)?$/);
+    const needs = equippedWhen(rule);
+    if (!needs) return false;
+    const number = Number(rule.value);
+    const bonus = rule.attrs.getAttribute("bonus");
+    if (sense?.[1]) {
+      if (!Number.isFinite(number) || (bonus !== null && bonus !== "base" && bonus !== ""))
+        return false;
+      if (number > 0)
+        mapped.effects.push({
+          type: "sense",
+          sense: sense[1] as Sense,
+          range: number,
+          ...needs,
+        });
+      return true;
+    }
+    if (!mode?.[1]) return false;
+    if (mode[2]) {
+      const siblings = readRules(source.el).map(speedBonusOf);
+      const mine = speedBonusOf({ ...rule, name: "speed:misc" });
+      return Boolean(mine && siblings.some((s) => s?.value === mine.value && s.when === mine.when));
+    }
+    if (bonus !== null && bonus !== "base" && bonus !== "") return false;
+    const equalsWalk = /^(?:innate )?speed$/i.test(rule.value.trim());
+    if (!equalsWalk && !Number.isFinite(number)) return false;
+    if (equalsWalk || number > 0)
+      mapped.effects.push({
+        type: "movement",
+        mode: mode[1] as MovementMode,
+        feet: equalsWalk ? "walk" : number,
+        ...needs,
+      });
+    return true;
+  };
+
   const mapRule = (rule: Rule): void => {
     if (rule.tag === "stat") {
       const ability = abilityFromWord(rule.name);
@@ -553,6 +631,17 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
         mapped.speed = value;
       } else if (armorStat(rule)) {
         // Armor class from natural armor: told to the effect that works it out.
+      } else if (movementStat(rule)) {
+        // Another speed or a sense: pushed as an effect.
+      } else if (/^innate speed:misc$/i.test(rule.name) && speedBonusOf(rule)) {
+        const bonus = speedBonusOf(rule);
+        if (bonus)
+          mapped.effects.push({
+            type: "modifier",
+            target: "speed",
+            value: bonus.value,
+            ...(bonus.when && { when: bonus.when }),
+          });
       } else {
         mapped.unsupported += 1;
       }
@@ -717,15 +806,43 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
     }
   };
 
+  const note = (
+    rule: Rule,
+    outcome: "applied" | "silent" | "unsupported" | "unmet",
+    detail = "",
+  ) => {
+    const kind = ruleKindOf(ctx, rule);
+    kind[outcome] += 1;
+    if (kind.examples.length < 3 && !kind.examples.includes(source.aid))
+      kind.examples.push(source.aid);
+    if (outcome === "unsupported" && detail) kind.details[detail] = (kind.details[detail] ?? 0) + 1;
+  };
+
   for (const rule of readRules(source.el)) {
     const met = requirementsMet(rule.requirements, options.holds);
-    if (!met && !options.live) continue;
+    if (!met && !options.live) {
+      note(rule, "unmet");
+      continue;
+    }
     if (options.skipLevelled && rule.level !== undefined) continue;
     const gated = options.live && rule.requirements.trim() !== "";
     const effectsFrom = mapped.effects.length;
     const grantsFrom = mapped.grants.length;
+    const offersFrom = mapped.offers.length;
+    const unsupportedFrom = mapped.unsupported;
     const [speed, size] = [mapped.speed, mapped.size];
     mapRule(rule);
+    if (mapped.unsupported > unsupportedFrom)
+      note(rule, "unsupported", rule.tag === "select" ? rule.supports : rule.id || rule.value);
+    else if (
+      mapped.effects.length > effectsFrom ||
+      mapped.grants.length > grantsFrom ||
+      mapped.offers.length > offersFrom ||
+      mapped.speed !== speed ||
+      mapped.size !== size
+    )
+      note(rule, "applied");
+    else note(rule, "silent");
     if (!gated) continue;
     if (!met) {
       // Speed and size are plain numbers of the entry: a rule that fails for now does not set them.

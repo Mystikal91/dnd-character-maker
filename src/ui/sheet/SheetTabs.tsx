@@ -32,7 +32,7 @@ function Summary() {
   const items: [string, string, ExplainTarget?][] = [
     [ui("play.ac"), String(s.armorClass.value), { kind: "ac" }],
     [ui("play.init"), signed(s.initiative), { kind: "initiative" }],
-    [ui("sheet.speed"), s.speed === undefined ? "—" : distance(s.speed)],
+    [ui("sheet.speed"), s.speed === undefined ? "—" : distance(s.speed), { kind: "speed" }],
     [ui("play.hpShort"), String(s.hitPoints.max)],
     [ui("sheet.hitDice"), hitDice || "—"],
   ];

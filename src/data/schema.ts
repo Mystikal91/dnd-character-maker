@@ -59,6 +59,14 @@ export const MODIFIER_CONDITIONS = [
 ] as const;
 export type ModifierCondition = (typeof MODIFIER_CONDITIONS)[number];
 
+/** Ways of moving besides walking. Swimming and climbing are always possible at half speed. */
+export const MOVEMENT_MODES = ["climb", "swim", "fly", "burrow"] as const;
+export type MovementMode = (typeof MOVEMENT_MODES)[number];
+
+/** Senses with a range in feet. */
+export const SENSES = ["darkvision", "blindsight", "tremorsense", "truesight"] as const;
+export type Sense = (typeof SENSES)[number];
+
 /**
  * Closed set of declarative effects. Extend deliberately, one type at a time.
  * Features that need custom logic are expressed as `trait` (+ optional `resource`)
@@ -123,6 +131,23 @@ const PlainEffectSchema = v.variant("type", [
     when: v.optional(v.picklist(MODIFIER_CONDITIONS)),
     /** Applies from this level of the class that gives it (of the whole character, for a species). */
     minLevel: v.optional(v.number()),
+  }),
+  /**
+   * A speed of climbing, swimming, flying or burrowing, in feet, or `"walk"` for one equal to the
+   * walking speed. The best of them counts, and bonuses to speed add to it as they do to walking.
+   */
+  v.object({
+    type: v.literal("movement"),
+    mode: v.picklist(MOVEMENT_MODES),
+    feet: v.union([v.pipe(v.number(), v.minValue(0)), v.literal("walk")]),
+    when: v.optional(v.picklist(MODIFIER_CONDITIONS)),
+  }),
+  /** A sense with a range in feet (darkvision 60); the longest one counts. */
+  v.object({
+    type: v.literal("sense"),
+    sense: v.picklist(SENSES),
+    range: v.pipe(v.number(), v.minValue(0)),
+    when: v.optional(v.picklist(MODIFIER_CONDITIONS)),
   }),
   /** Double proficiency bonus on a skill the character is proficient in. */
   v.object({ type: v.literal("expertise"), skill: v.string() }),

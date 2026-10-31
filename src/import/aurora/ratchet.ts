@@ -1,4 +1,5 @@
 import type { Effect, Entry } from "../../data/schema";
+import type { RuleKind } from "./registry";
 
 /** How well one Aurora element was turned into an entry: the effects it ended with, the rules left out. */
 export type Outcome = [effects: number, unsupported: number];
@@ -51,4 +52,34 @@ export function toFile(outcomes: Outcomes): string {
     ([aid, o]) => `  ${JSON.stringify(aid)}: [${o[0]}, ${o[1]}]`,
   );
   return `{\n${lines.join(",\n")}\n}\n`;
+}
+
+/**
+ * The rules of the whole corpus by kind, the most left out first: where the importer may still
+ * have something to learn. The corpus run writes it when `AURORA_REPORT` names a file.
+ */
+export function ruleReport(kinds: Record<string, RuleKind>): string {
+  const rows = Object.entries(kinds).sort(
+    (a, b) => b[1].unsupported - a[1].unsupported || b[1].silent - a[1].silent,
+  );
+  const total = (pick: (k: RuleKind) => number) => rows.reduce((n, [, k]) => n + pick(k), 0);
+  const lines = [
+    `applied ${total((k) => k.applied)}, silent ${total((k) => k.silent)}, unsupported ${total((k) => k.unsupported)}, unmet in the plain case ${total((k) => k.unmet)}`,
+    "",
+    "kind | applied | silent | unsupported | unmet | examples",
+  ];
+  for (const [key, k] of rows)
+    lines.push(
+      `${key} | ${k.applied} | ${k.silent} | ${k.unsupported} | ${k.unmet} | ${k.examples.join(" ")}`,
+    );
+  lines.push("", "What the unsupported rules asked for (the 15 most common of each kind):");
+  for (const [key, k] of rows) {
+    if (k.unsupported === 0) continue;
+    lines.push("", key);
+    for (const [what, n] of Object.entries(k.details)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 15))
+      lines.push(`  ${n} x ${what.slice(0, 140)}`);
+  }
+  return `${lines.join("\n")}\n`;
 }

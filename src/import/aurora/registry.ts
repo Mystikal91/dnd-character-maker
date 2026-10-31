@@ -30,10 +30,26 @@ export interface AuroraResult {
   unsupportedRules: number;
   /** The same, element by element (by Aurora id): only those with some. Checks use it, nothing stored. */
   unsupportedBy: Record<string, number>;
+  /** What became of the rules, by kind (`grant/Spell`, `stat/hp:level`...): for the report of the corpus run only. */
+  ruleKinds: Record<string, RuleKind>;
   /** The name the files give themselves, if any. */
   title: string;
   /** The entry each Aurora id became, by Aurora id: what a later import matches on. */
   aids: Record<string, string>;
+}
+
+/** How the rules of one kind fared: counts, a few examples, and what the unsupported ones asked for. */
+export interface RuleKind {
+  applied: number;
+  /** Read but turned into nothing, on purpose or not (a flag with nothing to set, a table read elsewhere). */
+  silent: number;
+  /** Not applied: the app cannot. */
+  unsupported: number;
+  /** Left out because the requirement does not hold in the plain case. */
+  unmet: number;
+  examples: string[];
+  /** The id or `supports` text of the unsupported rules, with how many asked for it. */
+  details: Record<string, number>;
 }
 
 /** One `<element>` of an Aurora file. */

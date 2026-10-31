@@ -32,7 +32,10 @@ export interface ModifierState {
   levelOf?: (source: string) => number;
 }
 
-function holds(when: ModifierCondition | undefined, { armor, weapon }: ModifierState): boolean {
+export function holds(
+  when: ModifierCondition | undefined,
+  { armor, weapon }: ModifierState,
+): boolean {
   switch (when) {
     case undefined:
       return true;

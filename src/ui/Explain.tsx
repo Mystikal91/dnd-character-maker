@@ -2,8 +2,9 @@ import { signal } from "@preact/signals";
 import type { ComponentChildren } from "preact";
 import { useEffect, useRef } from "preact/hooks";
 import { character, content, sheet } from "../app/store";
-import { type ExplainLine, type ExplainTarget, explain } from "../engine/explain";
+import { type ExplainLine, type ExplainTarget, type Explained, explain } from "../engine/explain";
 import { type UiKey, signed, ui } from "../i18n/ui";
+import { distance } from "../i18n/units";
 
 /** The number whose parts are open in the dialog, if any. */
 const explaining = signal<ExplainTarget | undefined>(undefined);
@@ -18,6 +19,8 @@ function nameOf(target: ExplainTarget): string {
       return ui("sheet.armorClass");
     case "initiative":
       return ui("sheet.initiative");
+    case "speed":
+      return ui("sheet.speed");
     case "save":
       return `${c.name(`${ruleset}:ability/${target.ability}`)} · ${ui("sheet.savingThrow")}`;
     case "skill":
@@ -60,6 +63,33 @@ function lineLabel(line: ExplainLine): string {
   if ((line.part === "armor" || line.part === "shield" || line.part === "feature") && line.ref)
     return c.name(line.ref);
   return ui(`explain.part.${line.part}` as UiKey);
+}
+
+/** The speeds other than walking and the senses, under the speed. */
+function OtherSpeeds({ also }: { also: NonNullable<Explained["also"]> }) {
+  const speeds = (["climb", "swim", "fly", "burrow"] as const).flatMap((mode) => {
+    const speed = also.movement[mode];
+    if (!speed) return [];
+    const half = speed.half ? ` (${ui("sheet.move.half")})` : "";
+    return [[ui(`sheet.move.${mode}`), `${distance(speed.feet)}${half}`] as const];
+  });
+  const senses = (["darkvision", "blindsight", "tremorsense", "truesight"] as const).flatMap(
+    (sense) => {
+      const range = also.senses[sense];
+      return range ? [[ui(`sheet.sense.${sense}`), distance(range)] as const] : [];
+    },
+  );
+  if (speeds.length + senses.length === 0) return null;
+  return (
+    <ul class="explain-lines explain-also">
+      {[...speeds, ...senses].map(([label, value]) => (
+        <li key={label}>
+          <span>{label}</span>
+          <b>{value}</b>
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 /** The dialog that takes a number apart. Mount it once, near the root. */
@@ -122,6 +152,7 @@ export function ExplainDialog() {
               <b>{shown}</b>
             </li>
           </ul>
+          {explained.also && <OtherSpeeds also={explained.also} />}
         </div>
       )}
     </dialog>
