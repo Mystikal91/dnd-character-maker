@@ -6,6 +6,7 @@ import type { ClassLevel } from "../../engine/character";
 import type { DamageResult } from "../../engine/equipment";
 import { signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
+import { movementLines } from "../movementLines";
 import { extraAmount, extraName } from "../sheet/ExtraDamage";
 import { collectSpellRows } from "../spellRows";
 
@@ -60,6 +61,8 @@ export function FrontPage() {
   const hitDice = Object.entries(s.hitPoints.hitDice)
     .map(([die, n]) => `${n}${die}`)
     .join(" + ");
+  // Climbing and swimming at half speed are not written on the sheet; what is given is.
+  const otherSpeeds = movementLines(s.movement, s.senses, true);
   const list = (category: (typeof PROFICIENCY_CATEGORIES)[number]) =>
     s.proficiencies[category]
       .map((t) =>
@@ -167,6 +170,11 @@ export function FrontPage() {
             </div>
           </div>
 
+          {otherSpeeds.length > 0 && (
+            <p class="p-extra">
+              {otherSpeeds.map(([label, value]) => `${label} ${value}`).join(" · ")}
+            </p>
+          )}
           <div class="p-frame p-hp">
             <div class="p-hp-max">
               <span class="p-caption">{ui("print.maxHp")}</span>

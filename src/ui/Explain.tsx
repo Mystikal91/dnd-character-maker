@@ -4,7 +4,7 @@ import { useEffect, useRef } from "preact/hooks";
 import { character, content, sheet } from "../app/store";
 import { type ExplainLine, type ExplainTarget, type Explained, explain } from "../engine/explain";
 import { type UiKey, signed, ui } from "../i18n/ui";
-import { distance } from "../i18n/units";
+import { movementLines } from "./movementLines";
 
 /** The number whose parts are open in the dialog, if any. */
 const explaining = signal<ExplainTarget | undefined>(undefined);
@@ -67,22 +67,11 @@ function lineLabel(line: ExplainLine): string {
 
 /** The speeds other than walking and the senses, under the speed. */
 function OtherSpeeds({ also }: { also: NonNullable<Explained["also"]> }) {
-  const speeds = (["climb", "swim", "fly", "burrow"] as const).flatMap((mode) => {
-    const speed = also.movement[mode];
-    if (!speed) return [];
-    const half = speed.half ? ` (${ui("sheet.move.half")})` : "";
-    return [[ui(`sheet.move.${mode}`), `${distance(speed.feet)}${half}`] as const];
-  });
-  const senses = (["darkvision", "blindsight", "tremorsense", "truesight"] as const).flatMap(
-    (sense) => {
-      const range = also.senses[sense];
-      return range ? [[ui(`sheet.sense.${sense}`), distance(range)] as const] : [];
-    },
-  );
-  if (speeds.length + senses.length === 0) return null;
+  const lines = movementLines(also.movement, also.senses);
+  if (lines.length === 0) return null;
   return (
     <ul class="explain-lines explain-also">
-      {[...speeds, ...senses].map(([label, value]) => (
+      {lines.map(([label, value]) => (
         <li key={label}>
           <span>{label}</span>
           <b>{value}</b>
