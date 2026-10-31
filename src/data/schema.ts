@@ -38,6 +38,7 @@ export const MODIFIER_TARGETS = [
   "hpPerLevel",
   "hp",
   "save",
+  "skill",
   "spellAttack",
   "spellDc",
 ] as const;
@@ -133,6 +134,8 @@ const PlainEffectSchema = v.variant("type", [
     value: v.number(),
     /** Adds the proficiency bonus or the modifier of an ability to `value` (initiative with Dexterity... a charisma bonus to armor class). */
     plus: v.optional(v.union([AbilitySchema, v.literal("proficiency")])),
+    /** For a bonus to skills: the one skill it is for (its slug), or every skill when absent. */
+    skill: v.optional(v.string()),
     when: v.optional(v.picklist(MODIFIER_CONDITIONS)),
     /** Applies from this level of the class that gives it (of the whole character, for a species). */
     minLevel: v.optional(v.number()),
@@ -154,6 +157,8 @@ const PlainEffectSchema = v.variant("type", [
     range: v.pipe(v.number(), v.minValue(0)),
     when: v.optional(v.picklist(MODIFIER_CONDITIONS)),
   }),
+  /** The number of items a character can be attuned to at once, when it is more than three (Artificer). */
+  v.object({ type: v.literal("attunementMax"), value: v.pipe(v.number(), v.integer(), v.minValue(3)) }),
   /** Double proficiency bonus on a skill the character is proficient in. */
   v.object({ type: v.literal("expertise"), skill: v.string() }),
   /** The ability score is at least this high (Gauntlets of Ogre Power): it never lowers it. */

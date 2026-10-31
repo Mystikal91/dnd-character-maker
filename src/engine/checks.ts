@@ -55,6 +55,8 @@ interface ChecksInput {
   overrides: Overrides;
   /** A bonus to every saving throw (a Ring of Protection). */
   saveBonus?: number;
+  /** A bonus to a skill (by slug): items and features that add to skill checks. */
+  skillBonus?: (slug: string) => number;
 }
 
 export function deriveChecks({
@@ -67,6 +69,7 @@ export function deriveChecks({
   halves,
   overrides,
   saveBonus = 0,
+  skillBonus = () => 0,
 }: ChecksInput): ChecksResult {
   const saves = {} as Record<Ability, CheckResult>;
   for (const ability of ABILITIES) {
@@ -93,7 +96,8 @@ export function deriveChecks({
         abilities[ability].modifier +
           (proficient
             ? proficiencyBonus * (expertise.has(slug) ? 2 : 1)
-            : halfBonus(halves, ability, proficiencyBonus)),
+            : halfBonus(halves, ability, proficiencyBonus)) +
+          skillBonus(slug),
       proficient,
     });
   }

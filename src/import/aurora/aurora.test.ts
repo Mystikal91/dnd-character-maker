@@ -738,6 +738,70 @@ describe("classes and archetypes", () => {
     expect(made.unsupportedBy.ID_T_SHARP).toBe(1);
   });
 
+  it("reads armor class formulas written without base and ability, attunement and bonuses to skills", () => {
+    const set = wrap(`
+      <element name="Plated Robe" type="Magic Item" source="Test Book" id="ID_T_ROBE">
+        <description><p>Armor.</p></description>
+        <setters><set name="category">Wondrous Items</set><set name="rarity">Rare</set></setters>
+        <rules>
+          <stat name="ac:plated robe" value="15" />
+          <stat name="ac:plated robe" value="dexterity:modifier" />
+          <stat name="ac:calculation" value="ac:plated robe" bonus="calculation" equipped="[armor:none]" />
+          <stat name="sleight of hand:misc" value="5" />
+          <stat name="stealth:misc" value="2" equipped="[shield:none]" />
+        </rules>
+      </element>
+      <element name="Lucky Gem" type="Magic Item" source="Test Book" id="ID_T_GEM">
+        <description><p>Luck.</p></description>
+        <setters><set name="category">Wondrous Items</set><set name="rarity">Rare</set></setters>
+        <rules>
+          <stat name="acrobatics:misc" value="1" />
+          <stat name="animal handling:misc" value="1" />
+          <stat name="arcana:misc" value="1" />
+          <stat name="athletics:misc" value="1" />
+          <stat name="deception:misc" value="1" />
+          <stat name="history:misc" value="1" />
+          <stat name="insight:misc" value="1" />
+          <stat name="intimidation:misc" value="1" />
+          <stat name="investigation:misc" value="1" />
+          <stat name="medicine:misc" value="1" />
+          <stat name="nature:misc" value="1" />
+          <stat name="perception:misc" value="1" />
+          <stat name="performance:misc" value="1" />
+          <stat name="persuasion:misc" value="1" />
+          <stat name="religion:misc" value="1" />
+          <stat name="sleight of hand:misc" value="1" />
+          <stat name="stealth:misc" value="1" />
+          <stat name="survival:misc" value="1" />
+        </rules>
+      </element>
+      <element name="Mind Gift" type="Racial Trait" source="Test Book" id="ID_T_GIFT">
+        <description><p>Attune.</p></description>
+        <rules>
+          <stat name="attunement:max" value="4" bonus="base" />
+          <select type="Ability Score Improvement" name="Improvement" supports="Ability Score Improvement,Class" />
+        </rules>
+      </element>
+      <element name="Mindfolk" type="Race" source="Test Book" id="ID_T_MINDFOLK">
+        <description><p>Minds.</p></description>
+        <rules><grant type="Racial Trait" id="ID_T_GIFT" /></rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    expect(byId(made, "imp1:item/plated-robe").effects).toEqual([
+      { type: "unarmoredDefense", base: 15, add: [], shield: true },
+      { type: "modifier", target: "skill", value: 5, skill: "sleight-of-hand" },
+    ]);
+    // The skill bonus that needs a shield not to be carried is left out.
+    expect(made.unsupportedBy.ID_T_ROBE).toBe(1);
+    expect(byId(made, "imp1:item/lucky-gem").effects).toEqual([
+      { type: "modifier", target: "skill", value: 1 },
+    ]);
+    expect(byId(made, "imp1:trait/mind-gift").effects).toEqual([
+      { type: "attunementMax", value: 4 },
+    ]);
+    expect(made.unsupportedBy.ID_T_GIFT).toBeUndefined();
+  });
+
   it("takes the race that offers a sub-race as its parent when two races are the same one of the app", () => {
     const set = wrap(`
       <element name="Dwarf" type="Race" source="New Rules" id="ID_T_DWARF_NEW">

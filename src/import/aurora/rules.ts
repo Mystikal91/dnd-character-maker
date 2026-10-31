@@ -542,17 +542,31 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
   const mapped: MappedRules = { effects: [], grants: [], offers: [], unsupported: 0 };
   let choiceCount = 0;
   const saves = new Map<string, number>();
+  // Bonuses to skills, by skill: all of them at the same value make one bonus to every skill.
+  const skillBonuses = new Map<string, number>();
   const nextChoiceId = () => `${options.idPrefix}-${++choiceCount}`;
   // The parts of a way of working out armor class that an element describes (a lizardfolk's scales:
   // a base of 13 plus Dexterity), put together when the element says to use it.
   const armorParts = new Map<string, { base?: number; add: Ability[] }>();
 
-  /** A rule of `ac:...`: the base or the ability of a formula, or the order to use it. */
+  /**
+   * The names of the formulas that the element says to use (`ac:calculation` with the name as its
+   * value): the rules of that name are the parts of the formula, whether they say `base` and
+   * `ability` or not, and whether the name starts with `ac:` or not.
+   */
+  const formulas = new Set(
+    readRules(source.el)
+      .filter((r) => r.tag === "stat" && r.name.toLowerCase() === "ac:calculation")
+      .map((r) => r.value.toLowerCase().replace(/^ac:/, "")),
+  );
+
+  /** A rule of `ac:...` or of a formula: the base or the ability of it, or the order to use it. */
   const armorStat = (rule: Rule): boolean => {
     const name = rule.name.toLowerCase();
-    if (!name.startsWith("ac:")) return false;
-    const label = name.slice(3);
+    const label = name.replace(/^ac:/, "");
+    if (!name.startsWith("ac:") && !formulas.has(label)) return false;
     const bonus = rule.attrs.getAttribute("bonus");
+    const named = formulas.has(label);
     if (label === "calculation") {
       const part = armorParts.get(rule.value.toLowerCase().replace(/^ac:/, ""));
       if (!part || part.base === undefined) return false;
@@ -571,12 +585,14 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
     const part = armorParts.get(label) ?? { add: [] };
     armorParts.set(label, part);
     const base = Number(rule.value);
-    if (bonus === "base" && Number.isFinite(base)) {
+    if ((bonus === "base" || (named && bonus === null)) && Number.isFinite(base)) {
       part.base = base;
       return true;
     }
     const ability =
-      bonus === "ability" ? abilityFromWord(rule.value.split(":")[0] ?? "") : undefined;
+      bonus === "ability" || (named && bonus === null)
+        ? abilityFromWord(rule.value.split(":")[0] ?? "")
+        : undefined;
     if (ability && /:modifier$/i.test(rule.value)) {
       part.add.push(ability);
       return true;
@@ -595,6 +611,17 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
     };
     const found = when[equipped];
     return found ? { when: found } : undefined;
+  };
+
+  /** `persuasion:misc` with a number, and nothing that depends on how it is worn. */
+  const skillStat = (rule: Rule): boolean => {
+    const m = rule.name.toLowerCase().match(/^([a-z ]+):misc$/);
+    const slug = m?.[1] ? slugify(m[1]) : "";
+    const value = Number(rule.value);
+    if (!ALL_SKILLS.includes(slug) || !Number.isFinite(value)) return false;
+    if (rule.attrs.hasAttribute("equipped") || rule.attrs.hasAttribute("alt")) return false;
+    skillBonuses.set(slug, (skillBonuses.get(slug) ?? 0) + value);
+    return true;
   };
 
   const BONUS_TARGETS: Record<string, ModifierTarget> = {
@@ -700,6 +727,10 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
         mapped.speed = value;
       } else if (armorStat(rule)) {
         // Armor class from natural armor: told to the effect that works it out.
+      } else if (/^attunement:max$/i.test(rule.name) && Number.isInteger(value) && value > 3) {
+        mapped.effects.push({ type: "attunementMax", value });
+      } else if (skillStat(rule)) {
+        // A bonus to a skill: put together when the rules are all read.
       } else if (bonusStat(rule)) {
         // A bonus to a number of the sheet: pushed as a modifier.
       } else if (movementStat(rule)) {
@@ -876,7 +907,9 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
           from: abilities.length > 0 ? abilities : [...ABILITIES],
           value: custom ? Number(custom[1]) : 1,
         });
-      else mapped.unsupported += 1;
+      else if (/^(?:Ability Score Improvement\s*,\s*Class|Feat)$/i.test(rule.supports.trim())) {
+        // The increase of a class at its levels, or a feat in its place: the app offers them itself.
+      } else mapped.unsupported += 1;
     } else if (
       FEATURE_TYPES.has(rule.type) ||
       rule.type === "Archetype" ||
@@ -953,6 +986,16 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
   if (saves.size === 6 && [...saves.values()].every((v) => v === first) && first !== undefined)
     mapped.effects.push({ type: "modifier", target: "save", value: first });
   else mapped.unsupported += saves.size;
+  const firstSkill = [...skillBonuses.values()][0];
+  if (
+    skillBonuses.size === ALL_SKILLS.length &&
+    [...skillBonuses.values()].every((v) => v === firstSkill) &&
+    firstSkill !== undefined
+  )
+    mapped.effects.push({ type: "modifier", target: "skill", value: firstSkill });
+  else
+    for (const [skill, value] of skillBonuses)
+      mapped.effects.push({ type: "modifier", target: "skill", value, skill });
   ctx.result.unsupportedRules += mapped.unsupported;
   if (mapped.unsupported > 0)
     ctx.result.unsupportedBy[source.aid] =

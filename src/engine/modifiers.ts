@@ -23,6 +23,8 @@ export interface AppliedModifier {
   target: ModifierTarget;
   value: number;
   source: string;
+  /** The skill a bonus to skills is for; every skill when absent. */
+  skill?: string;
 }
 
 export interface ModifierState {
@@ -77,7 +79,13 @@ export function appliedModifiers(
         : effect.plus === "proficiency"
           ? (state.proficiencyBonus ?? 0)
           : (state.abilityModifier?.(effect.plus) ?? 0);
-    if (holds(effect.when, state)) applied.push({ target, value: effect.value + plus, source });
+    if (holds(effect.when, state))
+      applied.push({
+        target,
+        value: effect.value + plus,
+        source,
+        ...(effect.skill && { skill: effect.skill }),
+      });
   }
   return applied;
 }

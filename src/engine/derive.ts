@@ -278,14 +278,19 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     }
   }
 
-  // A character can attune to three items at once.
+  // A character can attune to three items at once, more with some features.
+  const attunementMax = Math.max(
+    3,
+    ...effects.flatMap((e) => (e.type === "attunementMax" ? [e.value] : [])),
+  );
   const attuned = character.inventory.filter(
     (i) =>
       i.equipped &&
       (index.get(i.itemId)?.data.attunement === true ||
         (i.enchantment !== undefined && index.get(i.enchantment)?.data.attunement === true)),
   ).length;
-  if (attuned > 3) warn(warnings, "attunementTooMany", { count: attuned });
+  if (attuned > attunementMax)
+    warn(warnings, "attunementTooMany", { count: attuned, max: attunementMax });
 
   // Hit points, features, spellcasting
   const conMod = abilities.con.modifier;
@@ -460,6 +465,12 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     halves,
     overrides: character.overrides,
     saveBonus: total(appliedModifiers(sourced, "save", { armor: equipment.armor, levelOf })),
+    skillBonus: (slug) =>
+      total(
+        appliedModifiers(sourced, "skill", { armor: equipment.armor, levelOf }).filter(
+          (m) => !m.skill || m.skill === slug,
+        ),
+      ),
   });
   const baseSpeed = chosen.find((e) => e.kind === "species")?.data.speed;
   const state = {
@@ -475,6 +486,8 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   // A bonus to the spell attack and the save DC of items and features, unless forced in Free edit.
   const spellAttackMods = appliedModifiers(sourced, "spellAttack", state);
   const spellDcMods = appliedModifiers(sourced, "spellDc", state);
+  // A bonus to every skill is told on the sheet; one for a single skill is only in its number.
+  const skillMods = appliedModifiers(sourced, "skill", state).filter((m) => !m.skill);
   for (const caster of casters) {
     if (numberOverride(character.overrides, OVERRIDE.spellAttack) === undefined)
       caster.attackBonus += total(spellAttackMods);
@@ -515,6 +528,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
     ...hpFlat,
     ...spellAttackMods,
     ...spellDcMods,
+    ...skillMods,
   ])
     note(m);
   for (const attack of equipment.attacks) for (const m of attack.modifiers ?? []) note(m);
