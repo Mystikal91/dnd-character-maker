@@ -168,6 +168,8 @@ export function indexExisting(options: AuroraOptions): Map<string, string> {
   const found = new Map<string, string>();
   for (const entry of options.index.values()) {
     if (!/^srd\d+:/.test(entry.id)) continue; // only content that ships with the app
+    // A magic item of the app has only its text; the one of Aurora also gives what it does.
+    if (entry.kind === "item" && entry.data.rarity) continue;
     found.set(`${entry.kind}|${options.nameOf(entry.id).toLowerCase()}`, entry.id);
   }
   return found;

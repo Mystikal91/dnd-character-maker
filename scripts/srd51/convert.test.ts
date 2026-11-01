@@ -71,6 +71,7 @@ const raw: RawSource = {
   levels: [],
   features: [],
   equipment: [],
+  magicItems: [],
   weaponProperties: [],
   abilityScores: [],
   skills: [],

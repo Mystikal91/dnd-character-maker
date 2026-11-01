@@ -18,6 +18,26 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.19.0 beta",
+    date: "2026-11-01",
+    notes: [
+      {
+        en: "Spells show what they do: the attack, the damage (and how it grows with the slot or the level), the healing, the saving throw and the area, from the data of the System Reference Document.",
+        it: "Le magie mostrano cosa fanno: l’attacco, i danni (e come crescono con lo slot o il livello), la guarigione, il tiro salvezza e l’area, dai dati del System Reference Document.",
+        fr: "Les sorts montrent ce qu’ils font : l’attaque, les dégâts (et leur progression avec l’emplacement ou le niveau), les soins, le jet de sauvegarde et la zone, d’après les données du System Reference Document.",
+        de: "Zauber zeigen, was sie tun: den Angriff, den Schaden (und wie er mit Zauberplatz oder Stufe wächst), die Heilung, den Rettungswurf und den Bereich, aus den Daten des System Reference Document.",
+        es: "Los conjuros muestran lo que hacen: el ataque, el daño (y cómo crece con el espacio o el nivel), la curación, la tirada de salvación y el área, a partir de los datos del System Reference Document.",
+      },
+      {
+        en: "The 341 magic items of the System Reference Document are in the app (text, rarity and attunement; what they do is in the text). The ones of Aurora with the same name stay apart, since they also give their bonuses. Content imported from Aurora shows “Needs updating”: import it again to see whether a feature is an action, a bonus action or a reaction.",
+        it: "I 341 oggetti magici del System Reference Document sono nell’app (testo, rarità e sintonia; cosa fanno è nel testo). Quelli di Aurora con lo stesso nome restano a parte, perché danno anche i loro bonus. I contenuti importati da Aurora risultano “Da aggiornare”: importali di nuovo per vedere se un privilegio è un’azione, un’azione bonus o una reazione.",
+        fr: "Les 341 objets magiques du System Reference Document sont dans l’appli (texte, rareté et harmonisation ; ce qu’ils font est dans le texte). Ceux d’Aurora du même nom restent à part, car ils donnent aussi leurs bonus. Les contenus importés d’Aurora affichent « À mettre à jour » : réimporte-les pour voir si une aptitude est une action, une action bonus ou une réaction.",
+        de: "Die 341 magischen Gegenstände des System Reference Document sind in der App (Text, Seltenheit und Einstimmung; was sie bewirken, steht im Text). Die von Aurora mit gleichem Namen bleiben getrennt, da sie auch ihre Boni geben. Aus Aurora importierte Inhalte zeigen „Veraltet“: Importiere sie erneut, um zu sehen, ob ein Merkmal eine Aktion, Bonusaktion oder Reaktion ist.",
+        es: "Los 341 objetos mágicos del System Reference Document están en la app (texto, rareza y sintonización; lo que hacen está en el texto). Los de Aurora con el mismo nombre quedan aparte, pues también dan sus bonificaciones. Los contenidos importados de Aurora muestran «Por actualizar»: impórtalos de nuevo para ver si un rasgo es una acción, una acción adicional o una reacción.",
+      },
+    ],
+  },
+  {
     version: "1.18.0 beta",
     date: "2026-11-01",
     notes: [

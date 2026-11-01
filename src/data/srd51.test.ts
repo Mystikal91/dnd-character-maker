@@ -137,7 +137,9 @@ describe("SRD 5.1 equipment", () => {
   it("has structured weapons, armor and a property entry for every weapon property", () => {
     const weapons = items.filter((i) => itemData(i).weapon);
     const armors = items.filter((i) => itemData(i).armor);
-    expect(items).toHaveLength(237);
+    // The equipment of the book and, after it, the magic items (the ones with variants are not listed).
+    expect(items.filter((i) => !itemData(i).rarity)).toHaveLength(237);
+    expect(items.filter((i) => itemData(i).rarity)).toHaveLength(341);
     expect(weapons).toHaveLength(37);
     expect(armors).toHaveLength(13);
     for (const w of weapons)

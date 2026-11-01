@@ -1,5 +1,5 @@
 import type { ComponentChildren } from "preact";
-import { shownSheet } from "../../app/store";
+import { content, shownSheet } from "../../app/store";
 import type { FeatureValue } from "../../engine/featureValues";
 import { ui } from "../../i18n/ui";
 import { machineMode, toggleOriginal } from "../../translate/auto";
@@ -98,12 +98,16 @@ export function RulesText({
   /** Where it comes from, shown after the name. */
   tag?: string | undefined;
 }) {
+  const activation = id ? content.value?.index.get(id)?.data.activation : undefined;
   return (
     <details>
       <summary>
         {name}
         {id && <EditPencil id={id} />}
         {tag && <span class="source-tag"> [{tag}]</span>}
+        {(activation === "action" || activation === "bonus" || activation === "reaction") && (
+          <span class="source-tag"> [{ui(`feature.activation.${activation}`)}]</span>
+        )}
       </summary>
       <Paragraphs text={text} />
       <FeatureValues values={id ? shownSheet.value?.featureValues[id] : undefined} />

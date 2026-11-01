@@ -4,6 +4,7 @@ import { character, content } from "../../app/store";
 import { ui } from "../../i18n/ui";
 import { EditPencil } from "../QuickEdit";
 import { MachineNote } from "../sheet/parts";
+import { spellFacts } from "./spellFacts";
 
 /** The spell whose full details are open in the dialog, if any. */
 export const spellDetail = signal<string | undefined>(undefined);
@@ -25,6 +26,7 @@ export function SpellInfoBody({ id, short = false }: { id: string; short?: boole
     [ui("spells.range"), c.text(id, "range")],
     [ui("spells.components"), components && material ? `${components} (${material})` : components],
     [ui("spells.duration"), c.text(id, "duration")],
+    ...spellFacts(data, (index) => c.name(`${character.value.ruleset}:ability/${index}`)),
   ];
   const tags = [
     data.concentration ? ui("spells.concentration") : undefined,
@@ -51,7 +53,7 @@ export function SpellInfoBody({ id, short = false }: { id: string; short?: boole
         {rows
           .filter(([, value]) => value)
           .map(([label, value]) => (
-            <div key={label}>
+            <div key={`${label}:${value}`}>
               <dt>{label}</dt>
               <dd>{value}</dd>
             </div>

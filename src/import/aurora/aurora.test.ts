@@ -840,6 +840,36 @@ describe("classes and archetypes", () => {
     for (const slug of ["pooled", "turny", "stepped", "unknown"]) expect(uses(slug)).toEqual([]);
   });
 
+  it("keeps the kind of action a feature takes from its sheet", () => {
+    const trait = (id: string, sheet: string) => `
+      <element name="${id}" type="Racial Trait" source="Test Book" id="ID_T_${id.toUpperCase()}">
+        <description><p>Text.</p></description>
+        ${sheet}
+      </element>`;
+    const set = wrap(`
+      ${trait("Quick", '<sheet action="Bonus Action" />')}
+      ${trait("Reply", '<sheet action="Reaction" />')}
+      ${trait("Plain", '<sheet action="Action" />')}
+      ${trait("Odd", '<sheet action="Attack" />')}
+      ${trait("Quiet", "<sheet />")}
+      <element name="Folk" type="Race" source="Test Book" id="ID_T_FOLK">
+        <description><p>Folk.</p></description>
+        <rules>
+          <grant type="Racial Trait" id="ID_T_QUICK" /><grant type="Racial Trait" id="ID_T_REPLY" />
+          <grant type="Racial Trait" id="ID_T_PLAIN" /><grant type="Racial Trait" id="ID_T_ODD" />
+          <grant type="Racial Trait" id="ID_T_QUIET" />
+        </rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    const activation = (slug: string) => byId(made, `imp1:trait/${slug}`).data.activation;
+    expect(activation("quick")).toBe("bonus");
+    expect(activation("reply")).toBe("reaction");
+    expect(activation("plain")).toBe("action");
+    // Only the three kinds of action are kept; "Attack" and no mention at all say nothing.
+    expect(activation("odd")).toBeUndefined();
+    expect(activation("quiet")).toBeUndefined();
+  });
+
   it("reads bonuses to initiative, armor class, hit points and the spell attack and save DC", () => {
     const set = wrap(`
       <element name="Lucky Trait" type="Racial Trait" source="Test Book" id="ID_T_LUCKY">
@@ -911,6 +941,19 @@ describe("classes and archetypes", () => {
     ]);
     // A vision without a range stat of its own (the blindsight here) cannot be applied.
     expect(made.unsupportedBy.ID_T_SHARP).toBe(1);
+  });
+
+  it("imports a magic item the app already lists by name, since only the book gives what it does", () => {
+    const set = wrap(`
+      <element name="Ring of Protection" type="Magic Item" source="Test Book" id="ID_T_RING">
+        <description><p>A ring.</p></description>
+        <setters><set name="category">Wondrous Items</set><set name="rarity">Rare</set></setters>
+        <rules><stat name="ac:misc" value="1" /></rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    expect(options.index.has("srd51:item/ring-of-protection")).toBe(true);
+    expect(byId(made, "imp1:item/ring-of-protection").effects).not.toEqual([]);
+    expect(made.duplicates).toBe(0);
   });
 
   it("reads armor class formulas written without base and ability, attunement and bonuses to skills", () => {

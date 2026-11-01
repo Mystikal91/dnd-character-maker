@@ -28,6 +28,7 @@ export interface RawSource {
   levels: Raw[];
   features: Raw[];
   equipment: Raw[];
+  magicItems: Raw[];
   weaponProperties: Raw[];
   abilityScores: Raw[];
   skills: Raw[];
@@ -693,6 +694,25 @@ function convertItems(raw: RawSource): Converted {
     strings[`${e.index}.name`] = e.name;
     if (e.desc) strings[`${e.index}.desc`] = text(e.desc) ?? "";
     if (e.special) strings[`${e.index}.special`] = text(e.special) ?? "";
+  }
+  // Magic items are plain items: the text carries what they do. The ones that only point to
+  // their variants ("Ammunition, +1, +2, or +3") are left out, the variants are listed.
+  for (const m of raw.magicItems) {
+    if (((m.variants as Raw[]) ?? []).length > 0) continue;
+    const description = m.desc as string[];
+    entries.push({
+      id: id("item", m.index),
+      kind: "item",
+      effects: [],
+      data: {
+        category: "magic-items",
+        cost: { amount: 0, unit: "gp" },
+        rarity: slugify(m.rarity.name),
+        attunement: /requires attunement/i.test(description[0] ?? ""),
+      },
+    });
+    strings[`${m.index}.name`] = m.name;
+    strings[`${m.index}.desc`] = text(description) ?? "";
   }
   return { entries, strings };
 }

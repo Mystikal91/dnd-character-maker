@@ -53,6 +53,7 @@ const raw: RawSource = {
   levels: await readJson("5e-SRD-Levels"),
   features: await readJson("5e-SRD-Features"),
   equipment: await readJson("5e-SRD-Equipment"),
+  magicItems: await readJson("5e-SRD-Magic-Items"),
   weaponProperties: await readJson("5e-SRD-Weapon-Properties"),
   abilityScores: await readJson("5e-SRD-Ability-Scores"),
   skills: await readJson("5e-SRD-Skills"),

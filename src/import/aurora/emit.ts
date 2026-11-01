@@ -1,6 +1,14 @@
 import type { Effect, Entry } from "../../data/schema";
 import { type Context, type Source, ofType } from "./registry";
 
+/** How a feature, trait or feat is used in play, as its sheet says (`action="Bonus Action"`). */
+const ACTIVATIONS: Record<string, string> = {
+  action: "action",
+  "bonus action": "bonus",
+  reaction: "reaction",
+};
+const ACTIVE_KINDS = new Set(["feature", "trait", "feat"]);
+
 /** Adds an entry for an element, with its name and any other texts. */
 export function emit(
   ctx: Context,
@@ -10,12 +18,19 @@ export function emit(
   extra: { effects?: Effect[]; parent?: string } = {},
 ): void {
   if (!source.id || !source.kind) return;
+  const activation = ACTIVE_KINDS.has(source.kind)
+    ? ACTIVATIONS[
+        (source.el.querySelector(":scope > sheet")?.getAttribute("action") ?? "")
+          .trim()
+          .toLowerCase()
+      ]
+    : undefined;
   ctx.result.entries.push({
     id: source.id,
     kind: source.kind,
     ...(extra.parent && { parent: extra.parent }),
     effects: extra.effects ?? [],
-    data,
+    data: activation && data.activation === undefined ? { ...data, activation } : data,
   } as Entry);
   ctx.result.strings[`${source.id}.name`] = source.name;
   for (const [field, value] of Object.entries(texts)) {
