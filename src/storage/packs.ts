@@ -21,7 +21,7 @@ export interface UserPackRecord {
   /** Language the texts are written in, e.g. `en`. */
   lang: string;
   /** Where an imported pack came from: the address, or the names of the files. */
-  source?: { url?: string; files?: string[] };
+  source?: { url?: string; urls?: string[]; files?: string[] };
   /** The version of the importer that made it (see `AURORA_IMPORT_VERSION`); absent in old packs. */
   importVersion?: number;
   /** Whether the 2024 versions were kept when it was imported, so importing again does the same. */
@@ -30,7 +30,16 @@ export interface UserPackRecord {
   aids?: Record<string, string>;
   /** The book each listed entry comes from, by entry id (see `AuroraResult.books`). */
   books?: Record<string, string>;
+  /** The Aurora ids that entries refer to and the files did not define, by entry id. */
+  unresolved?: Record<string, string[]>;
 }
+
+/**
+ * Every address a pack was imported from: one, or several when the indexes of a set were read
+ * together as one pack (`urls`; `url` is the first of them).
+ */
+export const addressesOf = (record: UserPackRecord): string[] =>
+  record.source?.urls ?? (record.source?.url ? [record.source.url] : []);
 
 const RecordSchema = v.object({
   id: v.string(),
@@ -41,12 +50,17 @@ const RecordSchema = v.object({
   strings: v.record(v.string(), v.string()),
   lang: v.string(),
   source: v.optional(
-    v.object({ url: v.optional(v.string()), files: v.optional(v.array(v.string())) }),
+    v.object({
+      url: v.optional(v.string()),
+      urls: v.optional(v.array(v.string())),
+      files: v.optional(v.array(v.string())),
+    }),
   ),
   importVersion: v.optional(v.number()),
   keepEditions: v.optional(v.boolean()),
   aids: v.optional(v.record(v.string(), v.string())),
   books: v.optional(v.record(v.string(), v.string())),
+  unresolved: v.optional(v.record(v.string(), v.array(v.string()))),
 });
 
 /** Ids of the packs that ship with the app: a user pack may not take their place. */

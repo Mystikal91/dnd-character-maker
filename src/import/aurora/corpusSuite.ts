@@ -380,3 +380,43 @@ export function splitSuite() {
     });
   });
 }
+
+/**
+ * What the entries refer to that the files do not define. Reading all of Aurora's content leaves
+ * nothing beyond the ids of `UNDEFINED_IDS` (which not even the whole defines), so what a smaller
+ * set leaves is a dependency on books that were not read with it. If a new book of Aurora adds an
+ * id of its own that nothing defines, the list grows here.
+ */
+export function unresolvedSuite() {
+  describe.skipIf(!available)(
+    "what the content of Aurora refers to that it does not define",
+    () => {
+      const parse = (folders: string[]) =>
+        parseAurora(readElements(DIR, folders), {
+          packId: "imp1",
+          index: srd51Index,
+          nameOf: nameOf(),
+        });
+
+      // Reading all of it takes more memory than the default of Node: run it with AURORA_FULL=1 and
+      // NODE_OPTIONS=--max-old-space-size=12000 when the books of Aurora change.
+      it.skipIf(!process.env.AURORA_FULL)(
+        "leaves nothing unresolved when all of it is read, beyond the known ids",
+        () => {
+          const result = parse(["core", "supplements", "unearthed-arcana", "collaborations"]);
+          const left = Object.entries(result.unresolved).map(
+            ([id, aids]) => `${result.strings[`${id}.name`] ?? id}: ${aids.join(" ")}`,
+          );
+          expect(left).toEqual([]);
+        },
+        300_000,
+      );
+
+      it("finds what the core refers to in the supplements when it is read alone", () => {
+        const result = parse(["core"]);
+        const missing = new Set(Object.values(result.unresolved).flat());
+        expect(missing.has("ID_WOTC_TCOE_OPTION_CUSTOMIZED_ASI")).toBe(true);
+      }, 300_000);
+    },
+  );
+}

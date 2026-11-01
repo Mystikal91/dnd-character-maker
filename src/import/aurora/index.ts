@@ -37,6 +37,7 @@ import {
 } from "./registry";
 import { mergeRepeats, preferOlderEdition } from "./repeats";
 import { readRules, selectMatches } from "./rules";
+import { findUnresolved } from "./unresolved";
 import { AuroraParseError, clean } from "./xml";
 
 export { AuroraParseError, slugify } from "./xml";
@@ -46,7 +47,7 @@ export { AuroraParseError, slugify } from "./xml";
  * the entries or texts it makes: packs imported with an older version are marked as needing an
  * update, and can be imported again with a click.
  */
-export const AURORA_IMPORT_VERSION = 24;
+export const AURORA_IMPORT_VERSION = 26;
 export type { AuroraOptions, AuroraResult } from "./registry";
 
 /**
@@ -169,6 +170,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     title: "",
     aids: {},
     books: {},
+    unresolved: {},
   };
   const ctx: Context = {
     options,
@@ -337,6 +339,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
   // Only what was made stays in the map (an element that became nothing is not in it).
   const made = new Set(result.entries.map((e) => e.id));
   for (const [aid, id] of Object.entries(result.aids)) if (!made.has(id)) delete result.aids[aid];
+  result.unresolved = findUnresolved(ctx, made);
   for (const source of ctx.needed)
     if (
       source.id &&

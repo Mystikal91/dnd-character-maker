@@ -9,6 +9,7 @@ import {
   userPacksReady,
 } from "../app/userPacks";
 import { ui } from "../i18n/ui";
+import { addressesOf } from "../storage/packs";
 
 /**
  * A strip at the top when packs imported from Aurora were made by an older importer. It offers
@@ -18,7 +19,7 @@ export function PacksNotice() {
   const stale = userPacks.value.filter(isStale);
   if (!userPacksReady.value || !showsPacksNotice(stale.length, dismissedVersion.value)) return null;
   const progress = importProgress.value;
-  const canUpdateHere = stale.every((r) => r.source?.url) && !packError.value;
+  const canUpdateHere = stale.every((r) => addressesOf(r).length > 0) && !packError.value;
 
   return (
     <output class="packs-notice no-print" aria-live="polite">

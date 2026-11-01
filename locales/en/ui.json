@@ -504,6 +504,8 @@
   "packs.removeConfirm": "Remove the pack {name}? Characters that use it will show its entries as unknown.",
   "packs.import": "Add a pack file",
   "packs.exists": "A personal pack with that id is already here. Remove it first.",
+  "packs.unresolved": "{n} entries depend on content that is missing",
+  "packs.unresolvedHint": "These need content that was not imported with them, usually other books of the same collection (Core, Supplements). Import those too and they are completed; until then the rules that name them do not apply.",
   "packs.sameAddress": "That address is already imported as {name}. Use Import again on that pack to update it.",
   "transfer.title": "Move to another device",
   "transfer.export": "Prepare a file",

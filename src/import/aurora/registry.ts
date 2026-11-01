@@ -42,6 +42,11 @@ export interface AuroraResult {
    * told apart by it in a list.
    */
   books: Record<string, string>;
+  /**
+   * What entries refer to that the files do not define, by entry id: the Aurora ids they miss. It
+   * says which entries are incomplete because a book they depend on was not read with them.
+   */
+  unresolved: Record<string, string[]>;
 }
 
 /** How the rules of one kind fared: counts, a few examples, and what the unsupported ones asked for. */

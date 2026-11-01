@@ -1,6 +1,6 @@
 import type { Character } from "../engine/character";
 import { type Sealed, isSealed, seal, unseal } from "./crypto";
-import type { UserPackRecord } from "./packs";
+import { type UserPackRecord, addressesOf } from "./packs";
 
 export const TRANSFER_FORMAT = "dnd-character-maker-transfer";
 
@@ -34,6 +34,8 @@ export interface PackLink {
   id?: string;
   name: string;
   url: string;
+  /** All the addresses of a pack that was made from several indexes read together. */
+  urls?: string[];
   keepEditions?: boolean;
 }
 
@@ -77,6 +79,7 @@ export function linksOf(packs: UserPackRecord[]): { links: PackLink[]; files: st
         id: record.id,
         name: record.name,
         url: record.source.url,
+        ...(addressesOf(record).length > 1 && { urls: addressesOf(record) }),
         ...(record.keepEditions !== undefined && { keepEditions: record.keepEditions }),
       });
     else files.push(record.name);

@@ -22,7 +22,7 @@ import {
 import { guidePath } from "../content/news";
 import { brokenReferences } from "../data/schema";
 import { type UiKey, ui } from "../i18n/ui";
-import { type UserPackRecord, shortAddress } from "../storage/packs";
+import { type UserPackRecord, addressesOf, shortAddress } from "../storage/packs";
 
 /** How many entries of each kind a pack has, e.g. `3 spell, 2 item`. */
 function summary(record: UserPackRecord): string {
@@ -32,6 +32,19 @@ function summary(record: UserPackRecord): string {
   for (const entry of record.pack.entries)
     counts.set(entry.kind, (counts.get(entry.kind) ?? 0) + 1);
   return [...counts.entries()].map(([kind, n]) => `${n} ${kind}`).join(", ");
+}
+
+/** The entries of a pack that depend on content it does not have, by kind, with their names. */
+function incompleteByKind(record: UserPackRecord): [string, string[]][] {
+  const kinds = new Map(record.pack.entries.map((e) => [e.id, e.kind]));
+  const found = new Map<string, string[]>();
+  for (const id of Object.keys(record.unresolved ?? {})) {
+    const kind = kinds.get(id) ?? "other";
+    found.set(kind, [...(found.get(kind) ?? []), record.strings[`${id}.name`] ?? id]);
+  }
+  return [...found.entries()]
+    .map(([kind, names]) => [kind, names.sort((a, b) => a.localeCompare(b))] as [string, string[]])
+    .sort(([a], [b]) => a.localeCompare(b));
 }
 
 /** The content packs the user added: what they hold, where they came from, and how to remove them. */
@@ -126,12 +139,25 @@ export function PacksPage() {
                     </ul>
                   </details>
                 )}
-                <div class="muted">{summary(record)}</div>
-                {record.source?.url && (
-                  <div class="muted" title={record.source.url}>
-                    {shortAddress(record.source.url)}
-                  </div>
+                {Object.keys(record.unresolved ?? {}).length > 0 && (
+                  <details class="pack-problems">
+                    <summary class="pack-tag stale">
+                      {ui("packs.unresolved", { n: Object.keys(record.unresolved ?? {}).length })}
+                    </summary>
+                    <p class="muted">{ui("packs.unresolvedHint")}</p>
+                    {incompleteByKind(record).map(([kind, names]) => (
+                      <p class="muted" key={kind}>
+                        <b>{kind}</b>: {names.join(", ")}
+                      </p>
+                    ))}
+                  </details>
                 )}
+                <div class="muted">{summary(record)}</div>
+                {addressesOf(record).map((address) => (
+                  <div class="muted" title={address} key={address}>
+                    {shortAddress(address)}
+                  </div>
+                ))}
                 {record.source?.files && <div class="muted">{record.source.files.join(", ")}</div>}
               </div>
               <div class="pack-actions">

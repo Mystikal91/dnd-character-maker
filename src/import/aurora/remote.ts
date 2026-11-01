@@ -27,6 +27,37 @@ interface Item {
   depth: number;
 }
 
+/** Whether an address is one of the indexes of Aurora Legacy (the core, the supplements, all of them...). */
+export const isLegacyIndex = (address: string) =>
+  /^https:\/\/(?:raw\.githubusercontent\.com\/auroralegacy\/elements\/[^/]+|github\.com\/auroralegacy\/elements\/blob\/[^/]+)\/(?:auroralegacy|core|supplements|unearthed-arcana|collaborations)\.index$/i.test(
+    address.trim().replace(/\/+$/, ""),
+  );
+
+/**
+ * The addresses of a set in the order the indexes of Aurora Legacy list themselves: the one that
+ * lists all of them, then the core, the supplements, Unearthed Arcana and the collaborations;
+ * any other address keeps its place after them. What the importer makes depends on the order the
+ * files are read in (which of two repeats it keeps), so a set read in this order gives what the
+ * index that lists them all gives, whatever order its addresses were added in.
+ */
+export function inReadingOrder(addresses: string[]): string[] {
+  const rank = (address: string) => {
+    const name = address.trim().replace(/\/+$/, "").split("/").pop()?.toLowerCase() ?? "";
+    const at = [
+      "auroralegacy.index",
+      "core.index",
+      "supplements.index",
+      "unearthed-arcana.index",
+      "collaborations.index",
+    ].indexOf(name);
+    return isLegacyIndex(address) && at >= 0 ? at : 99;
+  };
+  return addresses
+    .map((address, i) => ({ address, i }))
+    .sort((a, b) => rank(a.address) - rank(b.address) || a.i - b.i)
+    .map(({ address }) => address);
+}
+
 /** Turns a GitHub page address into the address of the raw file; other addresses stay as they are. */
 export function rawAddress(input: string): string {
   const url = input.trim();
@@ -104,26 +135,33 @@ export async function gatherAurora(
   while (level.length > 0) {
     const next: Item[] = [];
     for (let i = 0; i < level.length; i += PARALLEL) {
-      await Promise.all(
+      // The files arrive in any order, but are taken in the order they are listed: what the
+      // importer makes depends on the order of the files, so it must not depend on the network.
+      const arrived = await Promise.all(
         level.slice(i, i + PARALLEL).map(async (item) => {
           let text = item.text;
+          let failedFetch = false;
           try {
             text ??= await fetcher(item.url ?? "");
           } catch {
-            failed.push(item.url ?? "");
+            failedFetch = true;
           }
           done++;
           options.onProgress?.(done, total);
-          if (text === undefined) return;
-          const { root, listed, name } = inspect(text, item.url);
-          if (root === "elements") texts.push(text);
-          else if (root === "index") {
-            if (name) title ??= name;
-            if (item.depth >= MAX_DEPTH) truncated = true;
-            else for (const url of listed) enqueue({ url, depth: item.depth + 1 }, next);
-          } else failed.push(item.url ?? "file");
+          return { item, text, failedFetch };
         }),
       );
+      for (const { item, text, failedFetch } of arrived) {
+        if (failedFetch) failed.push(item.url ?? "");
+        if (text === undefined) continue;
+        const { root, listed, name } = inspect(text, item.url);
+        if (root === "elements") texts.push(text);
+        else if (root === "index") {
+          if (name) title ??= name;
+          if (item.depth >= MAX_DEPTH) truncated = true;
+          else for (const url of listed) enqueue({ url, depth: item.depth + 1 }, next);
+        } else failed.push(item.url ?? "file");
+      }
     }
     level = next;
   }

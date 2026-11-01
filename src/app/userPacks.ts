@@ -2,10 +2,11 @@ import { signal } from "@preact/signals";
 import { loadContent } from "../content/browser";
 import { AURORA_IMPORT_VERSION, AuroraParseError, parseAurora } from "../import/aurora";
 import { migrationMap } from "../import/aurora/migrate";
-import { gatherAurora, rawAddress } from "../import/aurora/remote";
+import { gatherAurora, inReadingOrder, isLegacyIndex, rawAddress } from "../import/aurora/remote";
 import {
   PackParseError,
   type UserPackRecord,
+  addressesOf,
   deleteUserPack,
   listUserPacks,
   packFileName,
@@ -32,7 +33,7 @@ const normalAddress = (url: string) => rawAddress(url).replace(/\/+$/, "").toLow
 
 /** The pack that was imported from this address, however it is written. */
 export const packFromAddress = (url: string) =>
-  userPacks.value.find((p) => p.source?.url && normalAddress(p.source.url) === normalAddress(url));
+  userPacks.value.find((p) => addressesOf(p).some((a) => normalAddress(a) === normalAddress(url)));
 
 export async function loadUserPacks(): Promise<void> {
   try {
@@ -140,13 +141,51 @@ export async function importAuroraUrl(
     packError.value = "sameAddress";
     return;
   }
+  // An index of Aurora Legacy joins the pack that already holds the others, and they are read
+  // again together: reading the indexes apart does not give the same result, because a rule that
+  // names an element of another index cannot find it. Packs made earlier, one for each index,
+  // are folded into it.
+  if (!replaceId && isLegacyIndex(url)) {
+    const parts = userPacks.value.filter(
+      (p) =>
+        p.origin === "personal" &&
+        addressesOf(p).length > 0 &&
+        addressesOf(p).every((a) => isLegacyIndex(a)),
+    );
+    const addresses = inReadingOrder([...new Set([...parts.flatMap(addressesOf), url])]);
+    await importAuroraSources(
+      addresses.map((address) => ({ url: address })),
+      parts[0]?.id,
+      { url: addresses[0] ?? url, urls: addresses },
+      wantedId,
+      parts.slice(1),
+    );
+    return;
+  }
   await importAuroraSources([{ url }], replaceId, { url }, wantedId);
+}
+
+/** Imports exactly these addresses as one pack, as another device or an earlier import had it. */
+export async function importAuroraAddresses(
+  addresses: string[],
+  replaceId?: string,
+  wantedId?: string,
+): Promise<void> {
+  const ordered = inReadingOrder(addresses);
+  const [first] = ordered;
+  if (!first) return;
+  await importAuroraSources(
+    ordered.map((url) => ({ url })),
+    replaceId,
+    ordered.length > 1 ? { url: first, urls: ordered } : { url: first },
+    wantedId,
+  );
 }
 
 /** Makes a pack again from the address it came from, with one click. */
 export async function reimportPack(record: UserPackRecord): Promise<void> {
-  const url = record.source?.url;
-  if (url) await importAuroraUrl(url, record.id);
+  const addresses = addressesOf(record);
+  if (addresses.length > 0) await importAuroraAddresses(addresses, record.id);
 }
 
 /** Makes again every outdated pack that remembers its address, one after the other. */
@@ -164,6 +203,8 @@ async function importAuroraSources(
   replaceId?: string,
   source?: UserPackRecord["source"],
   wantedId?: string,
+  /** Packs that this one takes the place of: their entries move to it and they are removed. */
+  absorbed: UserPackRecord[] = [],
 ): Promise<void> {
   const loaded = content.value;
   packError.value = undefined;
@@ -187,7 +228,7 @@ async function importAuroraSources(
     // language of the app is.
     const english = await loadContent(
       ["en"],
-      userPacks.value.filter((p) => p.id !== id),
+      userPacks.value.filter((p) => p.id !== id && !absorbed.some((a) => a.id === p.id)),
       { monsters: true },
     );
     const result = parseAurora(gathered.texts, {
@@ -196,7 +237,10 @@ async function importAuroraSources(
       nameOf: (entryId) => english.name(entryId),
       keepEditions: keep,
     });
-    const name = `${gathered.title || result.title || "Imported content"} (Aurora)`;
+    const name =
+      source?.urls && source.urls.length > 1
+        ? "Aurora Legacy"
+        : `${gathered.title || result.title || "Imported content"} (Aurora)`;
     importReport.value = {
       added: result.entries.length,
       duplicates: result.duplicates,
@@ -216,6 +260,17 @@ async function importAuroraSources(
           { entries: result.entries, strings: result.strings, aids: result.aids },
         )
       : new Map<string, string>();
+    // What the packs that are folded in had keeps its place for the characters that use it.
+    for (const part of absorbed)
+      for (const [from, to] of migrationMap(
+        {
+          entries: part.pack.entries,
+          strings: part.strings,
+          ...(part.aids && { aids: part.aids }),
+        },
+        { entries: result.entries, strings: result.strings, aids: result.aids },
+      ))
+        if (!moved.has(from)) moved.set(from, to);
     await addUserPack({
       id,
       name,
@@ -238,8 +293,10 @@ async function importAuroraSources(
       keepEditions: keep,
       aids: result.aids,
       books: result.books,
+      unresolved: result.unresolved,
     });
     await migrateSavedCharacters(moved);
+    for (const part of absorbed) await removeUserPack(part.id);
   } catch (error) {
     if (!(error instanceof AuroraParseError)) console.error("Importing files failed", error);
     packError.value = "invalid";

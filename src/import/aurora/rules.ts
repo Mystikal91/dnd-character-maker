@@ -608,7 +608,7 @@ function freeCast(source: Source, rule: Rule, level: number | undefined): boolea
   );
 }
 
-function spellIdOf(ctx: Context, aid: string): string | undefined {
+export function spellIdOf(ctx: Context, aid: string): string | undefined {
   const known = ctx.byAid.get(aid)?.id;
   if (known) return known;
   const slug = aid

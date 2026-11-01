@@ -35,6 +35,22 @@ describe("following Aurora indexes", () => {
     expect(log).not.toContain("https://x.test/old.xml");
   });
 
+  it("returns the files in the order they are listed, whichever arrives first", async () => {
+    const names = ["A", "B", "C", "D", "E", "F", "G"];
+    const files: Record<string, string> = {
+      "https://x.test/all.index": index(...names.map((n) => `https://x.test/${n}.xml`)),
+    };
+    for (const n of names) files[`https://x.test/${n}.xml`] = elements(n);
+    // The first files are the slowest to arrive.
+    const fetcher = async (url: string) => {
+      const at = names.findIndex((n) => url.endsWith(`/${n}.xml`));
+      await new Promise((resolve) => setTimeout(resolve, at < 0 ? 0 : (names.length - at) * 5));
+      return served(files)(url);
+    };
+    const result = await gatherAurora([{ url: "https://x.test/all.index" }], { fetcher });
+    expect(result.texts.map((t) => t.match(/<name>(\w+)<\/name>/)?.[1])).toEqual(names);
+  });
+
   it("reports the name the first index gives its content", async () => {
     const result = await gatherAurora([{ text: index("https://x.test/b.xml") }], {
       fetcher: served({ "https://x.test/b.xml": elements("B") }),

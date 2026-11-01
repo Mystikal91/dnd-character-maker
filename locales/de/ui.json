@@ -504,6 +504,8 @@
   "packs.removeConfirm": "Das Paket {name} entfernen? Charaktere, die es nutzen, zeigen seine Einträge als unbekannt an.",
   "packs.import": "Paketdatei hinzufügen",
   "packs.exists": "Ein persönliches Paket mit dieser ID gibt es schon. Entferne es zuerst.",
+  "packs.unresolved": "{n} Einträge hängen von fehlenden Inhalten ab",
+  "packs.unresolvedHint": "Diese brauchen Inhalte, die nicht mit ihnen importiert wurden, meist andere Bücher derselben Sammlung (Core, Supplements). Importiere sie ebenfalls, dann sind sie vollständig; bis dahin gelten die Regeln, die sie nennen, nicht.",
   "packs.sameAddress": "Diese Adresse ist schon als {name} importiert. Nutze Erneut importieren bei diesem Paket, um es zu aktualisieren.",
   "transfer.title": "Auf ein anderes Gerät übertragen",
   "transfer.export": "Datei vorbereiten",

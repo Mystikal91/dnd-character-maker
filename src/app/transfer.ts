@@ -29,7 +29,7 @@ import { parseTheme } from "./theme.logic";
 import { UNIT_SETTINGS, type UnitSetting, unitSetting } from "./units";
 import {
   addUserPack,
-  importAuroraUrl,
+  importAuroraAddresses,
   keepEditions,
   packFromAddress,
   userPacks,
@@ -215,7 +215,7 @@ export async function downloadLinks(links: PackLink[]): Promise<void> {
     for (const link of links) {
       keepEditions.value = link.keepEditions ?? false;
       // The pack keeps the id it had, so the characters that use it find their entries.
-      await importAuroraUrl(link.url, undefined, link.id);
+      await importAuroraAddresses(link.urls ?? [link.url], undefined, link.id);
     }
   } finally {
     keepEditions.value = before;

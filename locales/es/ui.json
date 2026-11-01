@@ -504,6 +504,8 @@
   "packs.removeConfirm": "¿Quitar el paquete {name}? Los personajes que lo usen mostrarán sus entradas como desconocidas.",
   "packs.import": "Añadir un archivo de paquete",
   "packs.exists": "Ya hay un paquete personal con ese id. Quítalo primero.",
+  "packs.unresolved": "{n} entradas dependen de contenido que falta",
+  "packs.unresolvedHint": "Estas necesitan contenido que no se importó con ellas, normalmente otros libros de la misma colección (Core, Supplements). Impórtalos también y quedarán completas; hasta entonces, las reglas que los nombran no se aplican.",
   "packs.sameAddress": "Esa dirección ya está importada como {name}. Usa Importar de nuevo en ese paquete para actualizarlo.",
   "transfer.title": "Pasar a otro dispositivo",
   "transfer.export": "Preparar un archivo",

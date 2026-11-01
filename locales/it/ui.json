@@ -504,6 +504,8 @@
   "packs.removeConfirm": "Rimuovere il pacchetto {name}? I personaggi che lo usano mostreranno le sue voci come sconosciute.",
   "packs.import": "Aggiungi un file di pacchetto",
   "packs.exists": "C'è già un pacchetto personale con quell'id. Rimuovilo prima.",
+  "packs.unresolved": "{n} voci dipendono da contenuti che mancano",
+  "packs.unresolvedHint": "Queste richiedono contenuti che non sono stati importati con loro, di solito altri libri della stessa raccolta (Core, Supplements). Importa anche quelli e si completano; fino ad allora le regole che li nominano non si applicano.",
   "packs.sameAddress": "Quell'indirizzo è già importato come {name}. Usa Reimporta su quel pacchetto per aggiornarlo.",
   "transfer.title": "Passa a un altro dispositivo",
   "transfer.export": "Prepara un file",
