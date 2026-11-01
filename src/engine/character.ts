@@ -1,6 +1,7 @@
 import { ABILITIES, type Ability } from "../data/schema";
 import type { Coins } from "./coins";
 import type { CustomFeature } from "./custom";
+import type { FeatureSetting } from "./uses";
 
 export const CHARACTER_SCHEMA_VERSION = 6;
 
@@ -170,6 +171,11 @@ export interface Character {
   options?: string[];
   /** Features the person wrote for this character, with the uses they have between rests. */
   custom?: CustomFeature[];
+  /**
+   * What the person decided about the features, traits and feats the character has, by entry id:
+   * how many uses they have (where the data does not say), and whether the sheet hides them.
+   */
+  featureSettings?: Record<string, FeatureSetting> | undefined;
   abilityBase: Record<Ability, number>;
   abilityMethod: AbilityMethod;
   /** The six rolled values, when `abilityMethod` is `roll`. */

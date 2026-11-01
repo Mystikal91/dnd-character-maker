@@ -17,6 +17,12 @@ export interface FeatureValueState {
   classLevel: (slug: string) => number;
 }
 
+/** A term that has to be a number: text counts as nothing. */
+export function termNumber(term: FeatureTerm, state: FeatureValueState): number {
+  const value = termValue(term, state);
+  return typeof value === "number" ? value : 0;
+}
+
 function termValue(term: FeatureTerm, state: FeatureValueState): number | string {
   if (typeof term === "number") return term;
   if ("text" in term) return term.text;

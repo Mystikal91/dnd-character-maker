@@ -88,10 +88,11 @@ export function Defenses() {
 export function SpeciesTraits() {
   const c = content.value;
   const s = shownSheet.value;
-  if (!c || !s || s.traits.length === 0) return null;
+  const traits = s?.traits.filter((id) => !s.hiddenFeatures.includes(id)) ?? [];
+  if (!c || !s || traits.length === 0) return null;
   return (
     <Panel title={ui("sheet.speciesTraits")}>
-      {s.traits.map((id) => (
+      {traits.map((id) => (
         <RulesText key={id} id={id} name={c.name(id)} text={c.text(id, "desc")} />
       ))}
     </Panel>
@@ -102,10 +103,11 @@ export function SpeciesTraits() {
 export function Feats() {
   const c = content.value;
   const s = shownSheet.value;
-  if (!c || !s || s.feats.length === 0) return null;
+  const feats = s?.feats.filter((id) => !s.hiddenFeatures.includes(id)) ?? [];
+  if (!c || !s || feats.length === 0) return null;
   return (
     <Panel title={ui("sheet.feats")}>
-      {s.feats.map((id) => (
+      {feats.map((id) => (
         <RulesText key={id} id={id} name={c.name(id)} text={c.text(id, "desc")} />
       ))}
     </Panel>

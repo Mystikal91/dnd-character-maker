@@ -77,7 +77,7 @@ function grantEffect(choice: ChoiceEffect, option: string): Effect {
     case "abilityBonus":
       return { type: "abilityBonus", ability: option as Ability, value: choice.value ?? 1 };
     case "spell":
-      return { type: "grantSpell", spell: option };
+      return { type: "grantSpell", spell: option, ...(choice.free && { free: true }) };
     case "trait":
     case "feat":
       return { type: "trait", id: option };

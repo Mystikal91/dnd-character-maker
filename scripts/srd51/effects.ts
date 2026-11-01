@@ -5,7 +5,17 @@
  * Add a line here (and regenerate with `npm run data:srd51`) to make a feature work on the
  * sheet. What cannot be expressed stays text.
  */
-import type { Effect, ModifierCondition, ModifierTarget } from "../../src/data/schema";
+import type { Effect, FeatureTerm, ModifierCondition, ModifierTarget } from "../../src/data/schema";
+
+/** A limited number of uses between rests (`n` fixed, or the terms given), ticked off in play. */
+const uses = (recharge: "short" | "long", ...terms: FeatureTerm[]): Effect[] =>
+  terms.map((term) => ({ type: "uses", term, recharge }));
+const usesAtLeast = (min: number, recharge: "short" | "long", term: FeatureTerm): Effect => ({
+  type: "uses",
+  term,
+  recharge,
+  min,
+});
 
 const resists = (damage: string): Effect => ({ type: "defense", kind: "resistance", damage });
 
@@ -60,6 +70,28 @@ const defense = [modifier("ac", 1, "wearingArmor")];
 const dueling = [modifier("damage", 2, "dueling")];
 
 export const FEATURE_EFFECTS: Record<string, Effect[]> = {
+  // Limited uses, ticked off in play. Bardic Inspiration, Channel Divinity, Action Surge and the
+  // like depend on the class table and are worked out in `engine/resources.ts`.
+  "feature/divine-sense": uses("long", 1, { mod: "cha" }),
+  "feature/cleansing-touch": [usesAtLeast(1, "long", { mod: "cha" })],
+  "feature/second-wind": uses("short", 1),
+  "feature/arcane-recovery": uses("long", 1),
+  "feature/natural-recovery": uses("long", 1),
+  "feature/wholeness-of-body": uses("long", 1),
+  "feature/stroke-of-luck": uses("short", 1),
+  "feature/sorcerous-restoration": uses("long", 1),
+  "feature/divine-intervention": uses("long", 1),
+  "feature/dark-ones-own-luck": [usesAtLeast(1, "short", { mod: "cha" })],
+  "feature/hurl-through-hell": uses("long", 1),
+  "feature/signature-spell": uses("short", 2),
+  "trait/breath-weapon": uses("short", 1),
+  "trait/relentless-endurance": uses("long", 1),
+  // A tiefling casts each of these once between long rests, without a slot.
+  "trait/infernal-legacy": [
+    spell("thaumaturgy"),
+    { type: "grantSpell", spell: "srd51:spell/hellish-rebuke", minLevel: 3, free: true },
+    { type: "grantSpell", spell: "srd51:spell/darkness", minLevel: 5, free: true },
+  ],
   // Armor class without armor.
   "feature/barbarian-unarmored-defense": [
     { type: "unarmoredDefense", base: 10, add: ["con"], shield: true },
@@ -137,14 +169,14 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
   "feature/eldritch-invocation-otherworldly-leap": [spell("jump")],
   "feature/eldritch-invocation-master-of-myriad-forms": [spell("alter-self")],
   "feature/eldritch-invocation-visions-of-distant-realms": [spell("arcane-eye")],
-  "feature/eldritch-invocation-chains-of-carceri": [spell("hold-monster")],
-  "feature/eldritch-invocation-thief-of-five-fates": [spell("bane")],
-  "feature/eldritch-invocation-sign-of-ill-omen": [spell("bestow-curse")],
-  "feature/eldritch-invocation-bewitching-whispers": [spell("compulsion")],
-  "feature/eldritch-invocation-dreadful-word": [spell("confusion")],
-  "feature/eldritch-invocation-minions-of-chaos": [spell("conjure-elemental")],
-  "feature/eldritch-invocation-sculptor-of-flesh": [spell("polymorph")],
-  "feature/eldritch-invocation-mire-the-mind": [spell("slow")],
+  "feature/eldritch-invocation-chains-of-carceri": [spell("hold-monster"), ...uses("long", 1)],
+  "feature/eldritch-invocation-thief-of-five-fates": [spell("bane"), ...uses("long", 1)],
+  "feature/eldritch-invocation-sign-of-ill-omen": [spell("bestow-curse"), ...uses("long", 1)],
+  "feature/eldritch-invocation-bewitching-whispers": [spell("compulsion"), ...uses("long", 1)],
+  "feature/eldritch-invocation-dreadful-word": [spell("confusion"), ...uses("long", 1)],
+  "feature/eldritch-invocation-minions-of-chaos": [spell("conjure-elemental"), ...uses("long", 1)],
+  "feature/eldritch-invocation-sculptor-of-flesh": [spell("polymorph"), ...uses("long", 1)],
+  "feature/eldritch-invocation-mire-the-mind": [spell("slow"), ...uses("long", 1)],
   "feature/eldritch-invocation-beguiling-influence": [skill("deception"), skill("persuasion")],
   "feature/pact-of-the-chain": [spell("find-familiar")],
 

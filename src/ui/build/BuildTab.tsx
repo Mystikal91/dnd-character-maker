@@ -11,7 +11,7 @@ import { FromOldVersion } from "../FromOldVersion";
 import { SpellPicker } from "../SpellPicker";
 import { Welcome } from "../Welcome";
 import { ClassStep } from "./ClassStep";
-import { CustomFeatures } from "./CustomFeatures";
+import { FeaturesStep } from "./FeaturesStep";
 import { FreeEditStep } from "./FreeEditStep";
 import { StoryStep } from "./StoryStep";
 import { EquipmentStep, OriginStep } from "./steps";
@@ -113,11 +113,11 @@ function buildSteps(): StepInfo[] {
   });
   const customCount = ch.custom?.length ?? 0;
   steps.push({
-    id: "custom",
-    title: "build.custom",
+    id: "features",
+    title: "build.features",
     status: customCount > 0 ? String(customCount) : "",
     done: true,
-    body: <CustomFeatures />,
+    body: <FeaturesStep />,
   });
   const forcedCount = countOverrides(ch.overrides);
   steps.push({

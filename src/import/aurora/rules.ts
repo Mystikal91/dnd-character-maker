@@ -470,6 +470,14 @@ export function featureValueOf(rule: Rule): FeatureTerm | undefined {
   // A value that depends on what is worn or on a variant of an item is not one number.
   if (rule.attrs.hasAttribute("equipped") || rule.attrs.hasAttribute("alt")) return undefined;
   const value = rule.value.trim();
+  return (
+    termOfWord(value) ??
+    (TEXT_VALUE_NAME.test(name) && /^[A-Za-z ]+$/.test(value) ? { text: value } : undefined)
+  );
+}
+
+/** A number, the proficiency bonus, a level, or the modifier or score of an ability. */
+function termOfWord(value: string): FeatureTerm | undefined {
   if (/^-?\d+$/.test(value)) return Number(value);
   const word = value.toLowerCase();
   if (word === "proficiency") return { of: "proficiency" };
@@ -479,8 +487,41 @@ export function featureValueOf(rule: Rule): FeatureTerm | undefined {
   const ability = word.match(/^([a-z]+):(modifier|score)$/);
   const which = abilityFromWord(ability?.[1] ?? "");
   if (ability && which) return ability[2] === "score" ? { score: which } : { mod: which };
-  if (TEXT_VALUE_NAME.test(name) && /^[A-Za-z ]+$/.test(value)) return { text: value };
   return undefined;
+}
+
+/** What the `usage` of a sheet says: how many times (a number or a stat's name) and the rest. */
+const USAGE_TEXT =
+  /^(\d+|\{\{\s*([^{}]+?)\s*\}\})\s*\/\s*(long rest|short rest|long or short rest|short or long rest)\.?$/i;
+
+/**
+ * The limited uses a feature says it has between rests: `1/Long Rest`, or a count that a stat of
+ * the element gives (`{{divine sense:count}}/Long Rest`: 1 plus the Charisma modifier). The name of
+ * a shared pool (`Ki`), a kind of action or a use per turn is not a count of the feature and gives
+ * nothing, and neither does a count that changes with the level (the stats add up there, and the
+ * sheet cannot tell a step from a total): the person sets those in the sheet.
+ */
+export function usesOf(el: Element): Effect[] {
+  const sheet = el.querySelector(":scope > sheet");
+  const text = [sheet, ...(sheet?.querySelectorAll("[usage]") ?? [])]
+    .map((node) => node?.getAttribute("usage"))
+    .find(Boolean);
+  const found = text?.trim().match(USAGE_TEXT);
+  if (!found) return [];
+  // "Long or short rest" comes back on the short one.
+  const rest = /short|\bor\b/i.test(found[3] ?? "") ? "short" : "long";
+  const effect = (term: FeatureTerm): Effect => ({ type: "uses", term, recharge: rest });
+  if (found[2] === undefined) return [effect(Number(found[1]))];
+  const name = found[2].toLowerCase();
+  const stats = readRules(el).filter((r) => r.tag === "stat" && r.name.toLowerCase() === name);
+  if (stats.length > 0) {
+    if (stats.some((r) => r.level !== undefined || r.attrs.hasAttribute("alt"))) return [];
+    const terms = stats.map((r) => termOfWord(r.value.trim()));
+    return terms.every((t) => t !== undefined) ? terms.map((t) => effect(t as FeatureTerm)) : [];
+  }
+  // `{{proficiency}}` and `{{wisdom:modifier}}` name the value itself.
+  const term = termOfWord(name);
+  return term === undefined ? [] : [effect(term)];
 }
 
 export interface MappedRules {
@@ -533,6 +574,40 @@ const spellSlugs = new WeakMap<Context, Map<string, string>>();
  * ones being imported (the spells are in Core and the race in Supplements), the spell of the app
  * with that name (`ID_PHB_SPELL_DISGUISE_SELF` is `disguise-self`), the ones of the app first.
  */
+/** The level of a spell that a rule grants, from its element or from the spell the app has. */
+function spellLevelOf(ctx: Context, aid: string, id: string): number | undefined {
+  const el = ctx.byAid.get(aid)?.el;
+  const written = el ? Number.parseInt(setters(el).get("level")?.text ?? "", 10) : Number.NaN;
+  if (Number.isFinite(written)) return written;
+  const known = ctx.options.index.get(id)?.data.level;
+  return typeof known === "number" ? known : undefined;
+}
+
+/** The level a select of spells asks for: `1,(Divination||Enchantment)` is of the 1st level. */
+function selectLevel(supports: string): number | undefined {
+  const level = supports.match(/^\s*(\d+)\s*,/);
+  return level?.[1] ? Number(level[1]) : undefined;
+}
+
+/** Feats and species traits that give a spell say it can be cast once between rests without a slot. */
+const FREE_CAST_OWNERS = new Set(["Feat", "Feat Feature", "Racial Trait"]);
+
+/**
+ * Whether a spell that a feat or a species trait gives is cast once between rests without a slot:
+ * a spell of the 1st level or higher, not one that is only prepared and not one that can only be
+ * cast as a ritual. Aurora says it in words only, so this is a reading of what such grants are,
+ * and the person can change the uses in the sheet.
+ */
+function freeCast(source: Source, rule: Rule, level: number | undefined): boolean {
+  return (
+    FREE_CAST_OWNERS.has(source.type) &&
+    !rule.attrs.hasAttribute("prepared") &&
+    !/ritual/i.test(rule.supports) &&
+    level !== undefined &&
+    level >= 1
+  );
+}
+
 function spellIdOf(ctx: Context, aid: string): string | undefined {
   const known = ctx.byAid.get(aid)?.id;
   if (known) return known;
@@ -826,6 +901,7 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
             type: "grantSpell",
             spell,
             ...(rule.level !== undefined && { minLevel: rule.level }),
+            ...(freeCast(source, rule, spellLevelOf(ctx, rule.id, spell)) && { free: true }),
           });
         else mapped.unsupported += 1;
       } else if (rule.type === "Dragonmark") {
@@ -907,6 +983,7 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
           choose: rule.number,
           grants: "spell",
           from,
+          ...(freeCast(source, rule, selectLevel(rule.supports)) && { free: true }),
         });
       else if (rule.level === undefined) mapped.unsupported += 1;
     } else if (rule.type === "Feat" && !rule.optional) {
@@ -1039,6 +1116,7 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
   else
     for (const [skill, value] of skillBonuses)
       mapped.effects.push({ type: "modifier", target: "skill", value, skill });
+  if (!options.item) mapped.effects.push(...usesOf(source.el));
   ctx.result.unsupportedRules += mapped.unsupported;
   if (mapped.unsupported > 0)
     ctx.result.unsupportedBy[source.aid] =

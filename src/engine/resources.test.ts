@@ -20,14 +20,17 @@ function hero(classes: { id: string; level: number }[], scores = {}) {
 }
 
 const kinds = (sheet: ReturnType<typeof hero>) =>
-  Object.fromEntries(sheet.resources.map((r) => [r.kind, r.max]));
+  Object.fromEntries(sheet.resources.map((r) => [r.entry?.split("/")[1] ?? r.kind, r.max]));
 
 describe("class resources", () => {
   it("gives a fighter Second Wind and Action Surge, and Indomitable later", () => {
-    expect(kinds(hero([{ id: "fighter", level: 1 }]))).toEqual({ secondWind: 1 });
-    expect(kinds(hero([{ id: "fighter", level: 2 }]))).toEqual({ secondWind: 1, actionSurge: 1 });
+    expect(kinds(hero([{ id: "fighter", level: 1 }]))).toEqual({ "second-wind": 1 });
+    expect(kinds(hero([{ id: "fighter", level: 2 }]))).toEqual({
+      "second-wind": 1,
+      actionSurge: 1,
+    });
     expect(kinds(hero([{ id: "fighter", level: 9 }]))).toEqual({
-      secondWind: 1,
+      "second-wind": 1,
       actionSurge: 1,
       indomitable: 1,
     });
@@ -61,7 +64,7 @@ describe("class resources", () => {
     expect(hero([{ id: "bard", level: 5 }]).resources[0]?.recovery).toBe("short");
     expect(kinds(hero([{ id: "paladin", level: 3 }]))).toEqual({
       layOnHands: 15,
-      divineSense: 4,
+      "divine-sense": 4,
       channelDivinity: 1,
     });
   });
@@ -72,7 +75,7 @@ describe("class resources", () => {
       params: { dice: "3d6" },
     });
     expect(kinds(hero([{ id: "druid", level: 2 }]))).toEqual({ wildShape: 2 });
-    expect(kinds(hero([{ id: "wizard", level: 1 }]))).toEqual({ arcaneRecovery: 1 });
+    expect(kinds(hero([{ id: "wizard", level: 1 }]))).toEqual({ "arcane-recovery": 1 });
     expect(kinds(hero([{ id: "sorcerer", level: 3 }]))).toEqual({ sorceryPoints: 3 });
   });
 
@@ -91,7 +94,7 @@ describe("class resources", () => {
     expect(sheet.resources.map((r) => r.id).sort()).toEqual([
       "actionSurge:fighter",
       "rage:barbarian",
-      "secondWind:fighter",
+      "uses:srd51:feature/second-wind",
     ]);
   });
 });
@@ -141,5 +144,127 @@ describe("critical hits", () => {
     expect(doubleDice("2d6")).toBe("4d6");
     expect(doubleDice("1d6+1d4-1")).toBe("2d6+2d4-1");
     expect(doubleDice("sword")).toBeUndefined();
+  });
+});
+
+describe("uses written as data", () => {
+  it("adds up the terms and keeps the floor of a bonus that cannot go below one", () => {
+    // Charisma 16 is +3, Charisma 6 is -2.
+    expect(kinds(hero([{ id: "paladin", level: 14 }]))).toMatchObject({
+      "divine-sense": 4,
+      "cleansing-touch": 3,
+    });
+    const weak = kinds(hero([{ id: "paladin", level: 14 }], { cha: 6 }));
+    expect(weak["cleansing-touch"]).toBe(1);
+    expect(weak["divine-sense"]).toBeUndefined();
+  });
+
+  it("names the entry that gives them and lets them be ticked off", () => {
+    const sheet = hero([{ id: "paladin", level: 1 }]);
+    const sense = sheet.resources.find((r) => r.entry === "srd51:feature/divine-sense");
+    expect(sense).toMatchObject({
+      id: "uses:srd51:feature/divine-sense",
+      max: 4,
+      recovery: "long",
+    });
+  });
+
+  it("gives species traits and invocations their uses", () => {
+    const c = createCharacter("srd51");
+    c.classes = [{ classId: "srd51:class/warlock", level: 1 }];
+    c.choices.species = "srd51:species/half-orc";
+    const sheet = deriveSheet(c, index);
+    expect(sheet.resources.map((r) => r.entry)).toContain("srd51:trait/relentless-endurance");
+  });
+});
+
+describe("what the person decides about a feature", () => {
+  const paladin = (settings: Parameters<typeof withSettings>[0]) => withSettings(settings);
+  function withSettings(
+    settings: NonNullable<ReturnType<typeof createCharacter>["featureSettings"]>,
+  ) {
+    const c = createCharacter("srd51");
+    c.classes = [{ classId: "srd51:class/paladin", level: 1 }];
+    c.abilityBase = { str: 14, dex: 14, con: 14, int: 14, wis: 14, cha: 16 };
+    c.featureSettings = settings;
+    return deriveSheet(c, index);
+  }
+  const sense = "srd51:feature/divine-sense";
+  const left = (sheet: ReturnType<typeof deriveSheet>) =>
+    sheet.resources.find((r) => r.entry === sense);
+
+  it("replaces the uses the data gives, or takes them away", () => {
+    expect(left(paladin({ [sense]: { uses: 2 } }))).toMatchObject({ max: 2, recovery: "long" });
+    expect(left(paladin({ [sense]: { uses: 0 } }))).toBeUndefined();
+    expect(left(paladin({ [sense]: { recharge: "short" } }))).toMatchObject({
+      max: 4,
+      recovery: "short",
+    });
+  });
+
+  it("gives uses to a feature the data says nothing about", () => {
+    const smite = "srd51:feature/divine-smite";
+    const sheet = paladin({ [smite]: { uses: 3 } });
+    expect(sheet.resources.find((r) => r.entry === smite)).toBeUndefined();
+  });
+
+  it("changes the resource of the class table instead of making a second one", () => {
+    const sheet = withSettings({ "srd51:feature/lay-on-hands": { uses: 3 } });
+    const hands = sheet.resources.filter((r) => r.kind === "layOnHands");
+    expect(hands).toHaveLength(1);
+    // The id stays, so the points already spent are still counted.
+    expect(hands[0]).toMatchObject({ id: "layOnHands:paladin", max: 3 });
+    expect(sheet.resources.some((r) => r.id === "uses:srd51:feature/lay-on-hands")).toBe(false);
+  });
+
+  it("lists what is hidden, and ignores what the character does not have", () => {
+    const sheet = paladin({
+      [sense]: { hidden: true },
+      "srd51:feature/rage": { hidden: true, uses: 5 },
+    });
+    expect(sheet.hiddenFeatures).toEqual([sense]);
+    expect(sheet.resources.some((r) => r.entry === "srd51:feature/rage")).toBe(false);
+    // Hiding it leaves its uses alone.
+    expect(left(sheet)).toMatchObject({ max: 4 });
+  });
+});
+
+describe("spells cast without a slot", () => {
+  const free = (effects: { spell: string; minLevel?: number }[]) => {
+    const pack = {
+      manifest: { id: "t", ruleset: "custom", version: "1", license: "x", attribution: "x" },
+      entries: [
+        {
+          id: "t:feat/gift",
+          kind: "feat",
+          effects: effects.map((e) => ({ type: "grantSpell", free: true, ...e })),
+          data: {},
+        },
+      ],
+    };
+    return pack;
+  };
+
+  it("gives a resource for each spell a feat lets the character cast once", async () => {
+    const { indexPacks } = await import("./derive");
+    const { srd51Packs } = await import("../test/srd51");
+    const idx = indexPacks(...srd51Packs, free([{ spell: "srd51:spell/misty-step" }]) as never);
+    const c = createCharacter("srd51");
+    c.classes = [{ classId: "srd51:class/fighter", level: 1 }];
+    c.feats = ["t:feat/gift"];
+    const sheet = deriveSheet(c, idx);
+    const spell = sheet.resources.find((r) => r.spell === "srd51:spell/misty-step");
+    expect(spell).toMatchObject({
+      kind: "freeSpell",
+      max: 1,
+      recovery: "long",
+      entry: "t:feat/gift",
+    });
+
+    // The person can change the uses of it or take it away, by the id of the resource.
+    c.featureSettings = { [spell?.id ?? ""]: { uses: 2 } };
+    expect(deriveSheet(c, idx).resources.find((r) => r.spell)?.max).toBe(2);
+    c.featureSettings = { [spell?.id ?? ""]: { uses: 0 } };
+    expect(deriveSheet(c, idx).resources.some((r) => r.spell)).toBe(false);
   });
 });

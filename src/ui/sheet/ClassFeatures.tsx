@@ -1,4 +1,4 @@
-import { character, content } from "../../app/store";
+import { character, content, sheet } from "../../app/store";
 import type { Content } from "../../content/browser";
 import { classData, subclassData } from "../../data/progression";
 import type { ClassLevel } from "../../engine/character";
@@ -7,10 +7,15 @@ import { sourceLabel } from "../SourceTag";
 import { RulesText } from "./parts";
 
 /** Features of one class (and its subclass) grouped by the level that grants them. */
-function featuresByLevel(c: Content, cl: ClassLevel): Map<number, string[]> {
+function featuresByLevel(
+  c: Content,
+  cl: ClassLevel,
+  hidden: readonly string[],
+): Map<number, string[]> {
   const byLevel = new Map<number, string[]>();
   const add = (level: number, ids: string[]) => {
-    if (ids.length > 0) byLevel.set(level, [...(byLevel.get(level) ?? []), ...ids]);
+    const shown = ids.filter((id) => !hidden.includes(id));
+    if (shown.length > 0) byLevel.set(level, [...(byLevel.get(level) ?? []), ...shown]);
   };
   const entry = c.index.get(cl.classId);
   if (entry) for (const row of classData(entry).levels) add(row.level, row.features);
@@ -58,7 +63,8 @@ export function ClassFeatures() {
   return (
     <div class="class-features">
       {ch.classes.map((cl) => {
-        const levels = [...featuresByLevel(c, cl).entries()].sort(([a], [b]) => a - b);
+        const hidden = sheet.value?.hiddenFeatures ?? [];
+        const levels = [...featuresByLevel(c, cl, hidden).entries()].sort(([a], [b]) => a - b);
         const reached = levels.filter(([level]) => level <= cl.level);
         const ahead = levels.filter(([level]) => level > cl.level);
         return (

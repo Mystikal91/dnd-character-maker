@@ -9,7 +9,7 @@ export type StepId =
   | "spells"
   | "equipment"
   | "story"
-  | "custom"
+  | "features"
   | "freeEdit";
 
 /**

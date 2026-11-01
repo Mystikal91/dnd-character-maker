@@ -25,6 +25,7 @@ import { type ClassFact, type ClassResource, type ExtraDamage, classResources } 
 import { type FeatureSource, featureSources } from "./sources";
 import { type SpellLists, deriveSpellLists } from "./spells";
 import { withSubclassCasting } from "./subclassCasting";
+import { deriveFreeSpells, deriveUses, withFeatureSettings } from "./uses";
 import { type Warning, warn } from "./warnings";
 
 export type PackIndex = Map<string, Entry>;
@@ -100,6 +101,8 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   spellSlots: number[];
   /** Limited-use class features (rages, ki, channel divinity...) and their recovery. */
   resources: ClassResource[];
+  /** Features, traits and feats the person hid from the sheet (their effects still apply). */
+  hiddenFeatures: string[];
   /** Class numbers worth showing during play: sneak attack dice, rage damage and the like. */
   facts: ClassFact[];
   /** Damage the classes add to attacks: sneak attack, rage, smite... */
@@ -159,8 +162,10 @@ function overrideNumber(character: Character, key: string): number | undefined {
 export function deriveSheet(character: Character, index: PackIndex): DerivedSheet {
   const shape = character.play.wildShape;
   const beast = shape ? index.get(shape.monster) : undefined;
-  if (!beast) return deriveForm(character, index);
-  return withBeastChecks(deriveForm(inBeastShape(character, beast), index), beast);
+  const sheet = beast
+    ? withBeastChecks(deriveForm(inBeastShape(character, beast), index), beast)
+    : deriveForm(character, index);
+  return withFeatureSettings(sheet, character.featureSettings);
 }
 
 function deriveForm(character: Character, index: PackIndex): DerivedSheet {
@@ -555,6 +560,19 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
     note(m);
   for (const attack of equipment.attacks) for (const m of attack.modifiers ?? []) note(m);
 
+  const valueState = {
+    levelOf,
+    level: character.classes.reduce((sum, cl) => sum + cl.level, 0),
+    proficiencyBonus,
+    ability: (a: Ability) => abilities[a],
+    classLevel: (slug: string) =>
+      character.classes
+        .filter((cl) => cl.classId.split("/")[1] === slug)
+        .reduce((sum, cl) => sum + cl.level, 0),
+  };
+  // What features and traits say about how often they can be used.
+  resources.push(...deriveUses(sourced, valueState), ...deriveFreeSpells(sourced, levelOf));
+
   return {
     ...equipment,
     ...checks,
@@ -590,19 +608,11 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
       0,
       ...effects.flatMap((e) => (e.type === "d20Floor" ? [e.value] : [])),
     ),
-    featureValues: deriveFeatureValues(sourced, {
-      levelOf,
-      level: character.classes.reduce((sum, cl) => sum + cl.level, 0),
-      proficiencyBonus,
-      ability: (a) => abilities[a],
-      classLevel: (slug) =>
-        character.classes
-          .filter((cl) => cl.classId.split("/")[1] === slug)
-          .reduce((sum, cl) => sum + cl.level, 0),
-    }),
+    featureValues: deriveFeatureValues(sourced, valueState),
     ...(spellcasting && { spellcasting }),
     spellcasters: casters,
     resources,
+    hiddenFeatures: [],
     facts,
     extraDamage,
     spellSlots: pools.slots,

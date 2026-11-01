@@ -127,6 +127,8 @@ const PlainEffectSchema = v.variant("type", [
     from: v.array(v.string()),
     /** Bonus applied per pick when `grants` is `abilityBonus`. */
     value: v.optional(v.number()),
+    /** For a `spell` choice: what is picked can be cast once between rests without a slot. */
+    free: v.optional(v.boolean()),
     /**
      * A key of the class table (`classSpecific`): the number of picks is that value at the
      * class level, and `choose` is only a placeholder. Invocations and metamagic grow this way.
@@ -138,6 +140,8 @@ const PlainEffectSchema = v.variant("type", [
     spell: EntryIdSchema,
     /** The spell comes with this level of the class that gives it (always prepared). */
     minLevel: v.optional(v.number()),
+    /** The spell can be cast once between rests without a slot (a feat or a species trait gives it so). */
+    free: v.optional(v.boolean()),
   }),
   /** A flat bonus to a number of the sheet, with an optional condition. */
   v.object({
@@ -241,6 +245,21 @@ const PlainEffectSchema = v.variant("type", [
     type: v.literal("d20Floor"),
     value: v.pipe(v.number(), v.integer(), v.minValue(2), v.maxValue(20)),
     on: v.picklist(["proficientSkills"]),
+  }),
+  /**
+   * How many times a feature can be used between rests, to be ticked off in play. The terms of an
+   * entry add up as those of `featureValue` do (1 + the Charisma modifier); those with a
+   * `minLevel` replace one another. `pool` counts it as a number (ki, hit points to heal)
+   * rather than a few marks.
+   */
+  v.object({
+    type: v.literal("uses"),
+    term: FeatureTermSchema,
+    recharge: v.picklist(["short", "long"]),
+    minLevel: v.optional(v.number()),
+    pool: v.optional(v.boolean()),
+    /** The total is at least this many (a bonus of Charisma that cannot go below 1). */
+    min: v.optional(v.number()),
   }),
   v.object({
     type: v.literal("resource"),

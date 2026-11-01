@@ -22,6 +22,16 @@ export interface ClassResource {
   level?: number;
   /** The name to show, for what a person wrote (a custom feature): there is nothing to translate. */
   name?: string;
+  /** The entry (feature, trait, feat) that gives these uses: its name is the label. */
+  entry?: string;
+  /** A spell that can be cast once between rests without a slot: its name is part of the label. */
+  spell?: string;
+  /**
+   * For a resource worked out from the class table: a pattern for the slugs of the features it
+   * stands for (all the `channel-divinity-*` ones), so that what a person sets for one of them
+   * changes this resource instead of making a second one.
+   */
+  covers?: string;
 }
 
 /** A class number worth showing during play: a die, a bonus. */
@@ -79,7 +89,7 @@ export function classResources(input: Input): {
     case "barbarian": {
       const rages = num("rageCount");
       // The data writes "unlimited" as a huge number.
-      add("rage", Math.min(rages, 99), "long", { unlimited: rages >= 99 });
+      add("rage", Math.min(rages, 99), "long", { unlimited: rages >= 99, covers: "^rage$" });
       if (num("rageDamageBonus") > 0) {
         facts.push({ kind: "rageDamage", params: { n: num("rageDamageBonus") } });
         extras.push({ kind: "rage", bonus: num("rageDamageBonus") });
@@ -89,25 +99,28 @@ export function classResources(input: Input): {
       break;
     }
     case "bard":
-      add("bardicInspiration", Math.max(1, modifier("cha")), level >= 5 ? "short" : "long");
+      add("bardicInspiration", Math.max(1, modifier("cha")), level >= 5 ? "short" : "long", {
+        covers: "^(bardic-inspiration|font-of-inspiration)",
+      });
       if (num("bardicInspirationDie") > 0)
         facts.push({ kind: "bardicDie", params: { die: num("bardicInspirationDie") } });
       break;
     case "cleric":
-      add("channelDivinity", num("channelDivinityCharges"), "short");
+      add("channelDivinity", num("channelDivinityCharges"), "short", {
+        covers: "^channel-divinity",
+      });
       break;
     case "druid":
-      if (level >= 2) add("wildShape", 2, "short");
+      if (level >= 2) add("wildShape", 2, "short", { covers: "^wild-shape" });
       if (num("wildShapeMaxCr") > 0)
         facts.push({ kind: "wildShape", params: { cr: fraction(num("wildShapeMaxCr")) } });
       break;
     case "fighter":
-      add("secondWind", 1, "short");
-      add("actionSurge", num("actionSurges"), "short");
-      add("indomitable", num("indomitableUses"), "long");
+      add("actionSurge", num("actionSurges"), "short", { covers: "^action-surge" });
+      add("indomitable", num("indomitableUses"), "long", { covers: "^indomitable" });
       break;
     case "monk": {
-      add("ki", num("kiPoints"), "short", { pool: true });
+      add("ki", num("kiPoints"), "short", { pool: true, covers: "^ki$" });
       const art = row.martialArts as { diceCount?: number; diceValue?: number } | undefined;
       if (art?.diceValue) {
         const dice = `${art.diceCount ?? 1}d${art.diceValue}`;
@@ -117,11 +130,9 @@ export function classResources(input: Input): {
       break;
     }
     case "paladin":
-      add("layOnHands", 5 * level, "long", { pool: true });
-      add("divineSense", 1 + modifier("cha"), "long");
+      add("layOnHands", 5 * level, "long", { pool: true, covers: "^lay-on-hands$" });
       if (level >= 2) extras.push({ kind: "divineSmite" });
-      if (level >= 3) add("channelDivinity", 1, "short");
-      if (level >= 14) add("cleansingTouch", Math.max(1, modifier("cha")), "long");
+      if (level >= 3) add("channelDivinity", 1, "short", { covers: "^channel-divinity" });
       break;
     case "rogue": {
       const sneak = row.sneakAttack as { diceCount?: number; diceValue?: number } | undefined;
@@ -133,7 +144,7 @@ export function classResources(input: Input): {
       break;
     }
     case "sorcerer":
-      add("sorceryPoints", num("sorceryPoints"), "long", { pool: true });
+      add("sorceryPoints", num("sorceryPoints"), "long", { pool: true, covers: "^font-of-magic$" });
       break;
     case "warlock":
       for (const spellLevel of [6, 7, 8, 9]) {
@@ -145,12 +156,12 @@ export function classResources(input: Input): {
             max: 1,
             recovery: "long",
             level: spellLevel,
+            covers: `^mystic-arcanum-${spellLevel}th-level$`,
           });
         }
       }
       break;
     case "wizard":
-      add("arcaneRecovery", 1, "long");
       if (num("arcaneRecoveryLevels") > 0)
         facts.push({ kind: "arcaneRecovery", params: { levels: num("arcaneRecoveryLevels") } });
       break;

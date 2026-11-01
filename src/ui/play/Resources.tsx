@@ -111,7 +111,10 @@ export function ClassResources() {
   if (!s || (s.resources.length === 0 && facts.length === 0)) return null;
 
   const label = (r: ClassResource) =>
-    r.name ?? ui(`resource.${r.kind}` as UiKey, { level: r.level ?? 0 });
+    r.name ??
+    (r.spell && ui("resource.freeSpell", { name: content.value?.name(r.spell) ?? "" })) ??
+    (r.entry && content.value?.name(r.entry)) ??
+    ui(`resource.${r.kind}` as UiKey, { level: r.level ?? 0 });
   const spend = (r: ClassResource, change: number) =>
     changePlay((p) => setResourceUsed(p, r.id, (p.resourcesUsed?.[r.id] ?? 0) + change, r.max));
 

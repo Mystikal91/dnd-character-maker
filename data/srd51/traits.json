@@ -749,7 +749,13 @@
     {
       "id": "srd51:trait/breath-weapon",
       "kind": "trait",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "short"
+        }
+      ],
       "data": {}
     },
     {
@@ -830,7 +836,13 @@
     {
       "id": "srd51:trait/relentless-endurance",
       "kind": "trait",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
+        }
+      ],
       "data": {}
     },
     {
@@ -854,7 +866,24 @@
     {
       "id": "srd51:trait/infernal-legacy",
       "kind": "trait",
-      "effects": [],
+      "effects": [
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/thaumaturgy"
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/hellish-rebuke",
+          "minLevel": 3,
+          "free": true
+        },
+        {
+          "type": "grantSpell",
+          "spell": "srd51:spell/darkness",
+          "minLevel": 5,
+          "free": true
+        }
+      ],
       "data": {}
     }
   ]

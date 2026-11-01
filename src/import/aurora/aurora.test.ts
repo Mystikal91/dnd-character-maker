@@ -699,6 +699,81 @@ describe("classes and archetypes", () => {
     expect(made.unsupportedBy.ID_T_BREATH).toBe(1);
   });
 
+  it("marks the spells that a feat or a trait gives as cast once without a slot", () => {
+    const spell = (name: string, level: number) => `
+      <element name="${name}" type="Spell" source="Test Book" id="ID_T_SPELL_${name.toUpperCase()}">
+        <description><p>Text.</p></description>
+        <setters><set name="level">${level}</set><set name="school">Conjuration</set></setters>
+      </element>`;
+    const set = wrap(`
+      ${spell("Hop", 2)}${spell("Spark", 0)}
+      <element name="Gift" type="Feat" source="Test Book" id="ID_T_FEAT_GIFT">
+        <description><p>Text.</p></description>
+        <rules>
+          <grant type="Spell" id="ID_T_SPELL_HOP" />
+          <grant type="Spell" id="ID_T_SPELL_SPARK" />
+          <select type="Spell" name="Pick" supports="1,(Divination||Enchantment)" />
+        </rules>
+      </element>
+      <element name="Kept" type="Feat" source="Test Book" id="ID_T_FEAT_KEPT">
+        <description><p>Text.</p></description>
+        <rules><grant type="Spell" id="ID_T_SPELL_HOP" prepared="true" /></rules>
+      </element>
+      <element name="Order" type="Class Feature" source="Test Book" id="ID_T_CF_ORDER">
+        <description><p>Text.</p></description>
+        <rules><grant type="Spell" id="ID_T_SPELL_HOP" /></rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    const effects = (id: string) => byId(made, id).effects;
+    expect(effects("imp1:feat/gift")).toEqual(
+      expect.arrayContaining([
+        { type: "grantSpell", spell: "imp1:spell/hop", free: true },
+        { type: "grantSpell", spell: "imp1:spell/spark" },
+      ]),
+    );
+    // A spell that is only prepared, or that a class gives, uses slots like any other.
+    expect(effects("imp1:feat/kept")).toEqual([{ type: "grantSpell", spell: "imp1:spell/hop" }]);
+  });
+
+  it("reads how many times a feature can be used between rests from its sheet", () => {
+    const trait = (id: string, usage: string, rules = "") => `
+      <element name="${id}" type="Racial Trait" source="Test Book" id="ID_T_${id.toUpperCase()}">
+        <description><p>Text.</p></description>
+        <sheet usage="${usage}" />
+        <rules>${rules}</rules>
+      </element>`;
+    const set = wrap(`
+      ${trait("Sense", "{{sense:count}}/Long Rest", `<stat name="sense:count" value="1" /><stat name="sense:count" value="charisma:modifier" />`)}
+      ${trait("Flare", "1/Short Rest")}
+      ${trait("Gift", "{{proficiency}}/Long Rest")}
+      ${trait("Either", "1/Long or Short Rest")}
+      ${trait("Pooled", "Ki")}
+      ${trait("Turny", "1/Turn")}
+      ${trait("Stepped", "{{luck:usage}}/Long Rest", `<stat name="luck:usage" value="1" level="9" /><stat name="luck:usage" value="1" level="13" />`)}
+      ${trait("Unknown", "{{elsewhere:count}}/Long Rest")}
+      <element name="Folk" type="Race" source="Test Book" id="ID_T_FOLK">
+        <description><p>Folk.</p></description>
+        <rules>
+          <grant type="Racial Trait" id="ID_T_SENSE" /><grant type="Racial Trait" id="ID_T_FLARE" />
+          <grant type="Racial Trait" id="ID_T_GIFT" /><grant type="Racial Trait" id="ID_T_EITHER" />
+          <grant type="Racial Trait" id="ID_T_POOLED" /><grant type="Racial Trait" id="ID_T_TURNY" />
+          <grant type="Racial Trait" id="ID_T_STEPPED" /><grant type="Racial Trait" id="ID_T_UNKNOWN" />
+        </rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    const uses = (slug: string) =>
+      byId(made, `imp1:trait/${slug}`).effects.filter((e) => e.type === "uses");
+    expect(uses("sense")).toEqual([
+      { type: "uses", term: 1, recharge: "long" },
+      { type: "uses", term: { mod: "cha" }, recharge: "long" },
+    ]);
+    expect(uses("flare")).toEqual([{ type: "uses", term: 1, recharge: "short" }]);
+    expect(uses("gift")).toEqual([{ type: "uses", term: { of: "proficiency" }, recharge: "long" }]);
+    expect(uses("either")).toEqual([{ type: "uses", term: 1, recharge: "short" }]);
+    // A shared pool, a use per turn, a count that grows with the level or one the element does not give: left to the person.
+    for (const slug of ["pooled", "turny", "stepped", "unknown"]) expect(uses(slug)).toEqual([]);
+  });
+
   it("reads bonuses to initiative, armor class, hit points and the spell attack and save DC", () => {
     const set = wrap(`
       <element name="Lucky Trait" type="Racial Trait" source="Test Book" id="ID_T_LUCKY">
@@ -948,7 +1023,8 @@ describe("classes and archetypes", () => {
     const made = parseAurora([set], options);
     expect(byId(made, "imp1:trait/legacy-of-dis").effects).toEqual([
       { type: "grantSpell", spell: "srd51:spell/thaumaturgy" },
-      { type: "grantSpell", spell: "srd51:spell/disguise-self", minLevel: 3 },
+      // The cantrip is cast at will; the spell of the 1st level that comes later, once between rests.
+      { type: "grantSpell", spell: "srd51:spell/disguise-self", minLevel: 3, free: true },
     ]);
   });
 

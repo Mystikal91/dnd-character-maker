@@ -81,6 +81,17 @@ const CharacterSchema = v.object({
       }),
     ),
   ),
+  /** What the person decided about features, traits and feats, by entry id. */
+  featureSettings: v.optional(
+    v.record(
+      v.string(),
+      v.object({
+        uses: v.optional(v.pipe(v.number(), v.integer(), v.minValue(0), v.maxValue(99))),
+        recharge: v.optional(v.picklist(["short", "long"])),
+        hidden: v.optional(v.boolean()),
+      }),
+    ),
+  ),
   abilityBase: v.object({
     str: v.number(),
     dex: v.number(),

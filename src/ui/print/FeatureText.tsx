@@ -7,12 +7,13 @@ import { featureValueLabel } from "../sheet/parts";
 export function FeatureText() {
   const c = content.value;
   const s = printSheet.value;
-  if (!c || !s || s.traits.length + s.features.length === 0) return null;
+  const ids = s ? [...s.traits, ...s.features].filter((id) => !s.hiddenFeatures.includes(id)) : [];
+  if (!c || !s || ids.length === 0) return null;
   return (
     <section class="p-page">
       <h2 class="p-title">{ui("print.page.features")}</h2>
       <div class="p-flow">
-        {[...s.traits, ...s.features].map((id) => (
+        {ids.map((id) => (
           <article key={id}>
             <h3>
               {c.name(id)}

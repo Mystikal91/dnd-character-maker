@@ -1047,7 +1047,13 @@
     {
       "id": "srd51:feature/divine-intervention",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
+        }
+      ],
       "data": {
         "class": "srd51:class/cleric",
         "level": 10
@@ -1635,7 +1641,13 @@
     {
       "id": "srd51:feature/natural-recovery",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
         "level": 2,
@@ -1994,7 +2006,13 @@
     {
       "id": "srd51:feature/second-wind",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "short"
+        }
+      ],
       "data": {
         "class": "srd51:class/fighter",
         "level": 1
@@ -2505,7 +2523,13 @@
     {
       "id": "srd51:feature/wholeness-of-body",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
+        }
+      ],
       "data": {
         "class": "srd51:class/monk",
         "level": 6,
@@ -2680,7 +2704,20 @@
     {
       "id": "srd51:feature/divine-sense",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
+        },
+        {
+          "type": "uses",
+          "term": {
+            "mod": "cha"
+          },
+          "recharge": "long"
+        }
+      ],
       "data": {
         "class": "srd51:class/paladin",
         "level": 1
@@ -2970,7 +3007,16 @@
     {
       "id": "srd51:feature/cleansing-touch",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": {
+            "mod": "cha"
+          },
+          "recharge": "long",
+          "min": 1
+        }
+      ],
       "data": {
         "class": "srd51:class/paladin",
         "level": 14
@@ -4510,7 +4556,13 @@
     {
       "id": "srd51:feature/stroke-of-luck",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "short"
+        }
+      ],
       "data": {
         "class": "srd51:class/rogue",
         "level": 20
@@ -5180,7 +5232,13 @@
     {
       "id": "srd51:feature/sorcerous-restoration",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 20
@@ -5578,6 +5636,11 @@
         {
           "type": "grantSpell",
           "spell": "srd51:spell/bane"
+        },
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
         }
       ],
       "data": {
@@ -5609,6 +5672,11 @@
         {
           "type": "grantSpell",
           "spell": "srd51:spell/slow"
+        },
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
         }
       ],
       "data": {
@@ -5646,6 +5714,11 @@
         {
           "type": "grantSpell",
           "spell": "srd51:spell/bestow-curse"
+        },
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
         }
       ],
       "data": {
@@ -5696,6 +5769,11 @@
         {
           "type": "grantSpell",
           "spell": "srd51:spell/compulsion"
+        },
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
         }
       ],
       "data": {
@@ -5717,6 +5795,11 @@
         {
           "type": "grantSpell",
           "spell": "srd51:spell/confusion"
+        },
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
         }
       ],
       "data": {
@@ -5738,6 +5821,11 @@
         {
           "type": "grantSpell",
           "spell": "srd51:spell/polymorph"
+        },
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
         }
       ],
       "data": {
@@ -5780,6 +5868,11 @@
         {
           "type": "grantSpell",
           "spell": "srd51:spell/conjure-elemental"
+        },
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
         }
       ],
       "data": {
@@ -5881,6 +5974,11 @@
         {
           "type": "grantSpell",
           "spell": "srd51:spell/hold-monster"
+        },
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
         }
       ],
       "data": {
@@ -6053,7 +6151,16 @@
     {
       "id": "srd51:feature/dark-ones-own-luck",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": {
+            "mod": "cha"
+          },
+          "recharge": "short",
+          "min": 1
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 6,
@@ -6109,7 +6216,13 @@
     {
       "id": "srd51:feature/hurl-through-hell",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 14,
@@ -6173,7 +6286,13 @@
     {
       "id": "srd51:feature/arcane-recovery",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": 1,
+          "recharge": "long"
+        }
+      ],
       "data": {
         "class": "srd51:class/wizard",
         "level": 1
@@ -6322,7 +6441,13 @@
     {
       "id": "srd51:feature/signature-spell",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "uses",
+          "term": 2,
+          "recharge": "short"
+        }
+      ],
       "data": {
         "class": "srd51:class/wizard",
         "level": 20

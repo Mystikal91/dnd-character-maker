@@ -8,12 +8,12 @@ export function PlayFeatures() {
   const s = sheet.value;
   if (!c || !s) return null;
   const ids = [...new Set([...s.traits, ...s.feats, ...s.features])]
-    .filter((id) => c.text(id, "desc"))
+    .filter((id) => c.text(id, "desc") && !s.hiddenFeatures.includes(id))
     .sort((a, b) => c.name(a).localeCompare(c.name(b)));
   if (ids.length === 0) return null;
   return (
     <Panel title={ui("play.features")}>
-      <details class="play-features">
+      <details class="play-features" open>
         <summary>{ids.length}</summary>
         {ids.map((id) => (
           <RulesText key={id} id={id} name={c.name(id)} text={c.text(id, "desc")} />
