@@ -4,7 +4,13 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vites
 import { loadContent } from "../content/browser";
 import type { UserPackRecord } from "../storage/packs";
 import { content } from "./store";
-import { importAuroraUrl, packError, reimportPack, userPacks } from "./userPacks";
+import {
+  importAuroraUrl,
+  packError,
+  reimportPack,
+  reimportStalePacks,
+  userPacks,
+} from "./userPacks";
 
 const BASE = "https://raw.githubusercontent.com/AuroraLegacy/elements/master/";
 const spell = (name: string, id: string) => `
@@ -141,6 +147,37 @@ describe("the indexes of Aurora Legacy imported one after the other", () => {
       `${BASE}unearthed-arcana.index`,
     ]);
     expect(spells(one)).toBe(3);
+  });
+
+  it("folds packs made apart into one when one of them is imported again, or all that are outdated", async () => {
+    await importAuroraUrl(`${BASE}core.index`);
+    const core = userPacks.value[0] as UserPackRecord;
+    const apart = (): UserPackRecord => ({
+      ...core,
+      id: "impother",
+      name: "Supplements (Aurora)",
+      source: { url: `${BASE}supplements.index` },
+      pack: { ...core.pack, manifest: { ...core.pack.manifest, id: "impother" }, entries: [] },
+      strings: {},
+    });
+    // Made by an older importer, as separate packs, each with its own address.
+    const old = { ...core, source: { url: `${BASE}core.index` }, importVersion: 1 };
+
+    userPacks.value = [old, { ...apart(), importVersion: 1 }];
+    await reimportPack(old);
+    expect(userPacks.value).toHaveLength(1);
+    expect(userPacks.value[0]?.id).toBe(core.id);
+    expect(userPacks.value[0]?.source?.urls).toEqual([
+      `${BASE}core.index`,
+      `${BASE}supplements.index`,
+    ]);
+    expect(spells(userPacks.value[0])).toBe(2);
+
+    // The same when the person updates them all at once: the one folded in is not brought back.
+    userPacks.value = [old, { ...apart(), importVersion: 1 }];
+    await reimportStalePacks();
+    expect(userPacks.value).toHaveLength(1);
+    expect(spells(userPacks.value[0])).toBe(2);
   });
 
   it("leaves an address that is not one of the indexes of Aurora Legacy as a pack of its own", async () => {

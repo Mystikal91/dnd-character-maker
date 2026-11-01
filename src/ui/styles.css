@@ -606,6 +606,18 @@ textarea {
   white-space: nowrap;
 }
 
+/* The tag that opens a list (problems, entries that depend on missing content) is a line of its
+   own that wraps, so its border always holds the whole text. */
+.pack-problems > summary.pack-tag {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0.4rem 0 0.3rem;
+  border-radius: var(--radius-sm);
+  white-space: normal;
+  cursor: pointer;
+}
+
 .packs .pack-actions,
 .packs .pack-address {
   display: flex;

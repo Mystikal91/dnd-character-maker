@@ -699,6 +699,30 @@ describe("classes and archetypes", () => {
     expect(made.unsupportedBy.ID_T_BREATH).toBe(1);
   });
 
+  it("counts what an entry needs but the files lack, and not what it only stands in for", () => {
+    const set = wrap(`
+      <element name="Needy" type="Feat" source="Test Book" id="ID_T_FEAT_NEEDY">
+        <description><p>Needs.</p></description>
+        <rules><grant type="Feat Feature" id="ID_T_FEATURE_ELSEWHERE" /></rules>
+      </element>
+      <element name="Stand In" type="Feat" source="Test Book" id="ID_T_FEAT_STANDIN">
+        <requirements>!(ID_T_FEAT_OLD||ID_T_FEAT_OLDER)</requirements>
+        <description><p>Replaces the old ones when they exist.</p></description>
+      </element>
+      <element name="Both" type="Feat" source="Test Book" id="ID_T_FEAT_BOTH">
+        <requirements>ID_T_OPTION_ELSEWHERE,!ID_T_FEAT_OLD</requirements>
+        <description><p>Needs an option.</p></description>
+      </element>`);
+    const made = parseAurora([set], options);
+    const left = Object.fromEntries(
+      Object.entries(made.unresolved).map(([id, aids]) => [made.strings[`${id}.name`], aids]),
+    );
+    expect(left).toEqual({
+      Needy: ["ID_T_FEATURE_ELSEWHERE"],
+      Both: ["ID_T_OPTION_ELSEWHERE"],
+    });
+  });
+
   it("remembers the book of each listed entry, so same names imported apart can be told apart", () => {
     const set = wrap(`
       <element name="Moonfolk" type="Race" source="Test Book" id="ID_T_MOONFOLK2">

@@ -412,6 +412,18 @@ export function unresolvedSuite() {
         300_000,
       );
 
+      it.skipIf(!process.env.AURORA_FULL)(
+        "is complete with the core and the supplements together, without Unearthed Arcana",
+        () => {
+          const result = parse(["core", "supplements"]);
+          const left = Object.entries(result.unresolved).map(
+            ([id, aids]) => `${result.strings[`${id}.name`] ?? id}: ${aids.join(" ")}`,
+          );
+          expect(left).toEqual([]);
+        },
+        300_000,
+      );
+
       it("finds what the core refers to in the supplements when it is read alone", () => {
         const result = parse(["core"]);
         const missing = new Set(Object.values(result.unresolved).flat());

@@ -141,28 +141,44 @@ export async function importAuroraUrl(
     packError.value = "sameAddress";
     return;
   }
-  // An index of Aurora Legacy joins the pack that already holds the others, and they are read
-  // again together: reading the indexes apart does not give the same result, because a rule that
-  // names an element of another index cannot find it. Packs made earlier, one for each index,
-  // are folded into it.
+  // An index of Aurora Legacy joins the pack that already holds the others (see `joinLegacyPacks`).
   if (!replaceId && isLegacyIndex(url)) {
-    const parts = userPacks.value.filter(
-      (p) =>
-        p.origin === "personal" &&
-        addressesOf(p).length > 0 &&
-        addressesOf(p).every((a) => isLegacyIndex(a)),
-    );
-    const addresses = inReadingOrder([...new Set([...parts.flatMap(addressesOf), url])]);
-    await importAuroraSources(
-      addresses.map((address) => ({ url: address })),
-      parts[0]?.id,
-      { url: addresses[0] ?? url, urls: addresses },
-      wantedId,
-      parts.slice(1),
-    );
+    await joinLegacyPacks(url, wantedId);
     return;
   }
   await importAuroraSources([{ url }], replaceId, { url }, wantedId);
+}
+
+/** The packs that came from indexes of Aurora Legacy only. */
+const legacyPacks = () =>
+  userPacks.value.filter(
+    (p) =>
+      p.origin === "personal" &&
+      addressesOf(p).length > 0 &&
+      addressesOf(p).every((a) => isLegacyIndex(a)),
+  );
+
+/**
+ * Reads the indexes of Aurora Legacy together, as one pack: the ones the packs made so far came
+ * from, and `extra` when there is one. They are read again as a whole because reading them apart
+ * does not give the same result (a rule that names an element of another index cannot find it).
+ * The first pack keeps its id and takes the rest in: their entries move to it, so the characters
+ * that use them follow, and they are removed.
+ */
+async function joinLegacyPacks(extra?: string, wantedId?: string): Promise<void> {
+  const parts = legacyPacks();
+  const addresses = inReadingOrder([
+    ...new Set([...parts.flatMap(addressesOf), ...(extra ? [extra] : [])]),
+  ]);
+  const [first] = addresses;
+  if (!first) return;
+  await importAuroraSources(
+    addresses.map((address) => ({ url: address })),
+    parts[0]?.id,
+    { url: first, urls: addresses },
+    wantedId,
+    parts.slice(1),
+  );
 }
 
 /** Imports exactly these addresses as one pack, as another device or an earlier import had it. */
@@ -185,13 +201,18 @@ export async function importAuroraAddresses(
 /** Makes a pack again from the address it came from, with one click. */
 export async function reimportPack(record: UserPackRecord): Promise<void> {
   const addresses = addressesOf(record);
-  if (addresses.length > 0) await importAuroraAddresses(addresses, record.id);
+  if (addresses.length === 0) return;
+  // A pack of Aurora Legacy is made again together with the others there are, in one pack.
+  if (legacyPacks().some((p) => p.id === record.id)) await joinLegacyPacks();
+  else await importAuroraAddresses(addresses, record.id);
 }
 
 /** Makes again every outdated pack that remembers its address, one after the other. */
 export async function reimportStalePacks(): Promise<void> {
-  for (const record of userPacks.value.filter((r) => isStale(r) && r.source?.url))
-    await reimportPack(record);
+  for (const record of userPacks.value.filter((r) => isStale(r) && r.source?.url)) {
+    // One that was folded into another by an earlier turn of this loop is gone.
+    if (userPacks.value.some((p) => p.id === record.id)) await reimportPack(record);
+  }
 }
 
 /**
