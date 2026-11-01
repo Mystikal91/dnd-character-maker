@@ -908,11 +908,11 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "translations",
     text: {
-      en: "The remaining translations: about 170 items, the proficiencies and a few class options. Automatic translation fills them meanwhile.",
-      it: "Le traduzioni che mancano: circa 170 oggetti, le competenze e alcune opzioni di classe. Nel frattempo la traduzione automatica le riempie.",
-      fr: "Les traductions manquantes : environ 170 objets, les maîtrises et quelques options de classe. La traduction automatique les comble en attendant.",
-      de: "Die fehlenden Übersetzungen: etwa 170 Gegenstände, die Übungen und einige Klassenoptionen. Die automatische Übersetzung füllt sie in der Zwischenzeit.",
-      es: "Las traducciones que faltan: unos 170 objetos, las competencias y algunas opciones de clase. La traducción automática las cubre mientras tanto.",
+      en: "The remaining translations: about 140 pieces of equipment, the variants of the magic items (+1 weapons, potions of giant strength...), the proficiencies and a few class options. Automatic translation fills them meanwhile.",
+      it: "Le traduzioni che mancano: circa 140 pezzi di equipaggiamento, le varianti degli oggetti magici (armi +1, pozioni della forza dei giganti...), le competenze e alcune opzioni di classe. Nel frattempo la traduzione automatica le riempie.",
+      fr: "Les traductions manquantes : environ 140 pièces d'équipement, les variantes des objets magiques (armes +1, potions de force de géant...), les maîtrises et quelques options de classe. La traduction automatique les comble en attendant.",
+      de: "Die fehlenden Übersetzungen: etwa 140 Ausrüstungsgegenstände, die Varianten der magischen Gegenstände (Waffen +1, Tränke der Riesenstärke ...), die Übungen und einige Klassenoptionen. Die automatische Übersetzung füllt sie in der Zwischenzeit.",
+      es: "Las traducciones que faltan: unos 140 objetos de equipo, las variantes de los objetos mágicos (armas +1, pociones de fuerza de gigante...), las competencias y algunas opciones de clase. La traducción automática las cubre mientras tanto.",
     },
   },
   {
