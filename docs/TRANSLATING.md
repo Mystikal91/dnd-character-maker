@@ -98,8 +98,8 @@ python scripts/srd-translations/import_magic_items.py it path/to/SRD_CC_v5.1_IT.
 
 Each section is paired with an English item by the rarity, the attunement, the kind of item, the
 numbers and the words learned from the other translations; a pair that disagrees on any of the first
-three is dropped. Only the Italian words are written down so far (`CONFIG` in the script; add the
-rarity and item words of another language to use it). The items with variants (the +1, +2 and +3
+three is dropped. The rarity and item words of Italian, German, Spanish and French are in `CONFIG` (add the
+words of another language to use it). `MANUAL` holds the pairs checked by hand. The items with variants (the +1, +2 and +3
 weapons, the potions of giant strength...) stay in English.
 
 The monsters are read from the stat blocks of the same PDFs (`locales/<language>/srd51/monsters.json`),

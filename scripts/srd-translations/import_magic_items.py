@@ -21,23 +21,23 @@ from import_options import load_target, save_target
 from import_spells import hungarian, tokens
 from pdf_sections import read_sections
 
-# Rarity words of each translation, longest first, and the English slug each stands for.
+# What each translation calls the rarities and the kinds of item, to read the line under a title
+# ("Wondrous item, rare (requires attunement)"). Kinds are written without accents.
 CONFIG = {
     "it": {
-        "rarities": [
-            ("rarità variabile", "varies"),
-            ("molto raro", "very-rare"),
-            ("molto rara", "very-rare"),
-            ("non comune", "uncommon"),
-            ("leggendario", "legendary"),
-            ("leggendaria", "legendary"),
-            ("artefatto", "artifact"),
-            ("comune", "common"),
-            ("raro", "rare"),
-            ("rara", "rare"),
-        ],
+        "rarities": {
+            "rarità variabile": "varies",
+            "molto raro": "very-rare",
+            "molto rara": "very-rare",
+            "non comune": "uncommon",
+            "leggendario": "legendary",
+            "leggendaria": "legendary",
+            "artefatto": "artifact",
+            "comune": "common",
+            "raro": "rare",
+            "rara": "rare",
+        },
         "attunement": "richiede sintonia",
-        # The first word of the type line, and the category of the English data it stands for.
         "kinds": {
             "arma": "weapon",
             "armatura": "armor",
@@ -52,7 +52,93 @@ CONFIG = {
         },
         "chapter": "Oggetti magici A–Z",
         "end": "Oggetti magici senzienti",
-    }
+    },
+    "de": {
+        "rarities": {
+            "seltenheit variiert": "varies",
+            "variiert": "varies",
+            "unterschiedliche seltenheit": "varies",
+            "sehr selten": "very-rare",
+            "ungewöhnlich": "uncommon",
+            "legendär": "legendary",
+            "artefakt": "artifact",
+            "gewöhnlich": "common",
+            "selten": "rare",
+        },
+        "attunement": "erfordert einstimmung",
+        "kinds": {
+            "waffe": "weapon",
+            "rustung": "armor",
+            "ring": "ring",
+            "zauberstab": "wand",
+            "stab": "staff",
+            "zepter": "rod",
+            "trank": "potion",
+            "schriftrolle": "scroll",
+            "wundersamer gegenstand": "wondrous-items",
+            "munition": "ammunition",
+        },
+        "chapter": "Das A bis Z magischer",
+        "end": "Intelligente magische",
+    },
+    "es": {
+        "rarities": {
+            "rareza variable": "varies",
+            "muy rara": "very-rare",
+            "muy raro": "very-rare",
+            "infrecuente": "uncommon",
+            "legendaria": "legendary",
+            "legendario": "legendary",
+            "artefacto": "artifact",
+            "común": "common",
+            "rara": "rare",
+            "raro": "rare",
+        },
+        "attunement": "requiere sintonización",
+        "kinds": {
+            "arma": "weapon",
+            "armadura": "armor",
+            "anillo": "ring",
+            "varita": "wand",
+            "baston": "staff",
+            "vara": "rod",
+            "pocion": "potion",
+            "pergamino": "scroll",
+            "objeto maravilloso": "wondrous-items",
+            "municion": "ammunition",
+        },
+        "chapter": "Objetos mágicos de la A a la Z",
+        "end": "Artefactos",
+    },
+    "fr": {
+        "rarities": {
+            "rareté variable": "varies",
+            "variable": "varies",
+            "peu courante": "uncommon",
+            "courante": "common",
+            "très rare": "very-rare",
+            "peu courant": "uncommon",
+            "légendaire": "legendary",
+            "artefact": "artifact",
+            "courant": "common",
+            "rare": "rare",
+        },
+        "attunement": "harmonisation requise",
+        "kinds": {
+            "arme": "weapon",
+            "armure": "armor",
+            "anneau": "ring",
+            "baguette": "wand",
+            "baton": "staff",
+            "sceptre": "rod",
+            "potion": "potion",
+            "parchemin": "scroll",
+            "objet merveilleux": "wondrous-items",
+            "munition": "ammunition",
+        },
+        "chapter": "Les objets magiques de A à Z",
+        "end": "Les objets magiques",
+    },
 }
 
 
@@ -62,20 +148,26 @@ def slugify(value: str) -> str:
 
 def parse(lang: str, pdf: Path) -> list[dict]:
     cfg = CONFIG[lang]
-    sections = read_sections(pdf)
+    sections = read_sections(pdf, dehyphenate=lang == "de")
     start = next(i for i, s in enumerate(sections) if s.level == 2 and s.title == cfg["chapter"])
     end = next(i for i, s in enumerate(sections) if i > start and s.title == cfg["end"])
-    words = "|".join(re.escape(w) for w, _ in cfg["rarities"])
-    head = re.compile(rf"^(?P<kind>.*?), (?P<rarity>{words})\b(?P<extra>(?: \([^)]*\))?)\s*(?P<rest>.*)$", re.S)
+    words = "|".join(re.escape(w) for w in sorted(cfg["rarities"], key=len, reverse=True))
+    head = re.compile(rf"^(?P<kind>.*?), (?P<rarity>{words})\b(?P<extra>(?: \([^)]*\))?)\s*(?P<rest>.*)$", re.S | re.I)
     items = []
-    for section in sections[start + 1 : end]:
-        # A title that starts in lowercase is a line of the section above it ("dell'acqua").
-        if section.level != 4 or not section.body or section.title[:1].islower():
+    # A title that does not fit on a line comes as a section with no text and the rest of the
+    # title in the next one ("Amulett des Schutzes gegen Ortung" / "und Ausspähung").
+    chapter = [s for s in sections[start + 1 : end] if s.level == 4]
+    for i, section in enumerate(chapter):
+        if not section.body and i + 1 < len(chapter):
+            following = chapter[i + 1]
+            following.title = f"{section.title} {following.title}"
+    for section in chapter:
+        if not section.body:
             continue
         m = head.match(section.body[0])
         if not m:
             continue
-        rarity = dict(cfg["rarities"])[m["rarity"]]
+        rarity = cfg["rarities"][m["rarity"].lower()]
         kind = plain(m["kind"].lower())
         category = next(
             (c for w, c in sorted(cfg["kinds"].items(), key=lambda kv: -len(kv[0])) if re.match(w + r"\b\b", kind)),
@@ -88,7 +180,7 @@ def parse(lang: str, pdf: Path) -> list[dict]:
                 "name": section.title,
                 "type": first,
                 "rarity": rarity,
-                "attunement": cfg["attunement"] in m["extra"],
+                "attunement": cfg["attunement"] in m["extra"].lower(),
                 "category": category,
                 "text": [p for p in text if p],
             }
@@ -159,6 +251,34 @@ def dice(a: set[str], b: set[str]) -> float:
     return 2 * len(a & b) / ((len(a) + len(b)) or 1)
 
 
+# Pairs the script cannot make (the rarity or attunement it reads differs from the English one, or
+# the title is too unlike): the item, and the title of its section in the PDF. The SRD does not
+# change, so this is checked by hand once.
+MANUAL = {
+    "it": {
+        "arrow-of-slaying": "Freccia assassina",
+        "staff-of-swarming-insects": "Bastone dello sciame di insetti",
+        "staff-of-the-python": "Bastone del pitone",
+    },
+    "de": {
+        "arrow-of-slaying": "Pfeil des Tötens",
+        "ring-of-shooting-stars": "Ring der Sternschnuppen",
+        "staff-of-swarming-insects": "Stab der Insektenschwärme",
+        "staff-of-the-python": "Stab der Python",
+    },
+    "es": {
+        "arrow-of-slaying": "Flecha asesina",
+        "staff-of-swarming-insects": "Bastón de enjambre de insectos",
+        "staff-of-the-python": "Bastón de la pitón",
+    },
+    "fr": {
+        "arrow-of-slaying": "Flèche tueuse",
+        "staff-of-swarming-insects": "Bâton du grand essaim",
+        "staff-of-the-python": "Bâton du python",
+    },
+}
+
+
 def compatible(item: dict, m: dict) -> bool:
     """The rarity, the attunement and the kind of item are the same in every language."""
     return (
@@ -174,12 +294,7 @@ def match(items: list[dict], lang: str = "it") -> tuple[dict, list]:
     raw = json.loads((ROOT / ".cache/srd51/5e-SRD-Magic-Items.json").read_text(encoding="utf-8"))
     # What the PDF has a section for: every item that is not itself a variant (the ones with
     # variants stand for all of them).
-    # The four vessels of the elementals are one section in the PDF, under the ring.
-    pool = {
-        m["index"]: m
-        for m in raw
-        if not m["variant"] and not re.search(r"Commanding .* Elementals|Controlling .* Elementals", m["name"])
-    }
+    pool = {m["index"]: m for m in raw if not m["variant"]}
     slugs = list(pool)
 
     def body(slug: str) -> str:
@@ -241,6 +356,11 @@ def match(items: list[dict], lang: str = "it") -> tuple[dict, list]:
             result[slugs[c]] = items[r]
             if matrix[r][c] > -20:
                 doubtful.append((slugs[c], items[r]["name"], round(matrix[r][c], 1)))
+    by_title = {item["name"]: item for item in items}
+    for slug, title in MANUAL.get(lang, {}).items():
+        for taken in [k for k, v in result.items() if v["name"] == title]:
+            del result[taken]
+        result[slug] = by_title[title]
     return result, doubtful
 
 
