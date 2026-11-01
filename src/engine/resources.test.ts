@@ -268,3 +268,44 @@ describe("spells cast without a slot", () => {
     expect(deriveSheet(c, idx).resources.some((r) => r.spell)).toBe(false);
   });
 });
+
+describe("traits that come at a level", () => {
+  it("gives a trait of a species only from its level, and one that depends on a choice with it", async () => {
+    const { indexPacks } = await import("./derive");
+    const { srd51Packs } = await import("../test/srd51");
+    const pack = {
+      manifest: { id: "t", ruleset: "custom", version: "1", license: "x", attribution: "x" },
+      entries: [
+        { id: "t:trait/glow", kind: "trait", effects: [], data: {} },
+        { id: "t:trait/dusk", kind: "trait", effects: [], data: {} },
+        { id: "t:trait/glow-dusk", kind: "trait", effects: [], data: {} },
+        {
+          id: "t:species/moonfolk",
+          kind: "species",
+          effects: [
+            { type: "trait", id: "t:trait/glow", minLevel: 3 },
+            { type: "choice", id: "season", choose: 1, grants: "trait", from: ["t:trait/dusk"] },
+            {
+              type: "when",
+              requires: "t:trait/dusk",
+              effects: [{ type: "trait", id: "t:trait/glow-dusk", minLevel: 3 }],
+            },
+          ],
+          data: {},
+        },
+      ],
+    };
+    const idx = indexPacks(...srd51Packs, pack as never);
+    const at = (level: number) => {
+      const c = createCharacter("srd51");
+      c.classes = [{ classId: "srd51:class/fighter", level }];
+      c.choices.species = "t:species/moonfolk";
+      c.selections = { "t:species/moonfolk/season": ["t:trait/dusk"] };
+      return deriveSheet(c, idx).traits;
+    };
+    expect(at(2)).toEqual(expect.arrayContaining(["t:trait/dusk"]));
+    expect(at(2)).not.toContain("t:trait/glow");
+    expect(at(2)).not.toContain("t:trait/glow-dusk");
+    expect(at(3)).toEqual(expect.arrayContaining(["t:trait/glow", "t:trait/glow-dusk"]));
+  });
+});

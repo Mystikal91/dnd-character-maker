@@ -237,6 +237,7 @@ async function importAuroraSources(
       importVersion: AURORA_IMPORT_VERSION,
       keepEditions: keep,
       aids: result.aids,
+      books: result.books,
     });
     await migrateSavedCharacters(moved);
   } catch (error) {

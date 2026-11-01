@@ -14,11 +14,13 @@ function baseEffects(ctx: Context, source: Source, prefix: string, holds?: Reado
   const gate = (requires: string | undefined, effect: Effect): Effect =>
     requires ? { type: "when", requires, effects: [effect] } : effect;
   for (const grant of mapped.grants) {
-    if (grant.source.id && grant.level === undefined)
+    // A trait that a species gives at a level (the aasimar's revelation at the 3rd) comes with it.
+    if (grant.source.id)
       effects.push(
         gate(grant.requires, {
           type: "trait",
           id: grant.source.id as `${string}:${string}/${string}`,
+          ...(grant.level !== undefined && { minLevel: grant.level }),
         }),
       );
   }

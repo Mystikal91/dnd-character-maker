@@ -223,7 +223,7 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
   const contributing = standsIn ? chosen.filter((e) => e.kind !== "species") : chosen;
   const { effects, sourced, choices } = collectEffects(
     [...contributing, ...wornWithEffects, ...(starting?.entry ? [starting.entry] : []), ...reached],
-    { index, selections: character.selections, warnings },
+    { index, selections: character.selections, warnings, levelOf },
     [
       ...character.classes.flatMap((cl) => [cl.classId, cl.subclassId ?? ""]),
       ...Object.values(character.choices),

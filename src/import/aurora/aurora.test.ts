@@ -699,6 +699,48 @@ describe("classes and archetypes", () => {
     expect(made.unsupportedBy.ID_T_BREATH).toBe(1);
   });
 
+  it("remembers the book of each listed entry, so same names imported apart can be told apart", () => {
+    const set = wrap(`
+      <element name="Moonfolk" type="Race" source="Test Book" id="ID_T_MOONFOLK2">
+        <description><p>Moon.</p></description>
+      </element>
+      <element name="Moon Glow" type="Racial Trait" source="Test Book" id="ID_T_MOONGLOW">
+        <description><p>Shine.</p></description>
+      </element>`);
+    const made = parseAurora([set], options);
+    expect(made.books).toEqual({ "imp1:species/moonfolk": "Test Book" });
+  });
+
+  it("keeps the traits that a species gives at a level, and the ones that depend on a choice", () => {
+    const set = wrap(`
+      <element name="Glow" type="Racial Trait" source="Test Book" id="ID_T_GLOW">
+        <description><p>Shine.</p></description>
+      </element>
+      <element name="Dusk" type="Racial Trait" source="Test Book" id="ID_T_DUSK">
+        <supports>Season</supports>
+        <description><p>Flavor.</p></description>
+      </element>
+      <element name="Glow (Dusk)" type="Racial Trait" source="Test Book" id="ID_T_GLOW_DUSK">
+        <description><p>Shine at dusk.</p></description>
+      </element>
+      <element name="Moonfolk" type="Race" source="Test Book" id="ID_T_MOONFOLK">
+        <description><p>Moon.</p></description>
+        <rules>
+          <grant type="Racial Trait" id="ID_T_GLOW" level="5" />
+          <select type="Racial Trait" name="Season" supports="Season" />
+          <grant type="Racial Trait" id="ID_T_GLOW_DUSK" level="3" requirements="ID_T_DUSK" />
+        </rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    const effects = byId(made, "imp1:species/moonfolk").effects;
+    expect(effects).toContainEqual({ type: "trait", id: "imp1:trait/glow", minLevel: 5 });
+    expect(effects).toContainEqual({
+      type: "when",
+      requires: "imp1:trait/dusk",
+      effects: [{ type: "trait", id: "imp1:trait/glow-dusk", minLevel: 3 }],
+    });
+  });
+
   it("marks the spells that a feat or a trait gives as cast once without a slot", () => {
     const spell = (name: string, level: number) => `
       <element name="${name}" type="Spell" source="Test Book" id="ID_T_SPELL_${name.toUpperCase()}">

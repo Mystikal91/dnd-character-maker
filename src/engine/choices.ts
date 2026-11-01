@@ -42,6 +42,8 @@ interface Input {
   index: PackIndex;
   selections: Record<string, string[]>;
   warnings: Warning[];
+  /** The level that counts for what an entry gives; without it a trait that comes at a level is given at once. */
+  levelOf?: (source: string) => number;
 }
 
 /** The id without the number that makes it unique within its pack. */
@@ -114,7 +116,7 @@ export function collectEffects(entries: Entry[], input: Input, alsoHeld: string[
 
 function walkEffects(
   entries: Entry[],
-  { index, selections, warnings }: Input,
+  { index, selections, warnings, levelOf }: Input,
   held: ReadonlySet<string>,
 ): Collected & { seen: Set<string>; gated: boolean } {
   const effects: Effect[] = [];
@@ -185,6 +187,9 @@ function walkEffects(
         for (const inner of effect.effects) apply(inner, source);
       return;
     }
+    // A trait that comes at a level is not there before it (Fey Step of the season, at the 3rd).
+    if (effect.type === "trait" && effect.minLevel !== undefined && levelOf)
+      if (levelOf(source) < effect.minLevel) return;
     effects.push(effect);
     sourced.push({ effect, source });
     if (effect.type === "trait") expandTrait(effect.id);

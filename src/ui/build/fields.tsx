@@ -1,4 +1,5 @@
 import { content } from "../../app/store";
+import { userPacks } from "../../app/userPacks";
 import { ui } from "../../i18n/ui";
 
 const RULESET = "srd51";
@@ -14,7 +15,19 @@ export function entriesOfKind(kind: string, parent?: string) {
       .filter((e) => parent === undefined || e.parent === parent)
       .map((e) => ({ id: e.id, label: c.name(e.id) }))
       .sort((a, b) => a.label.localeCompare(b.label))
+      .map((option, _, all) =>
+        // The same name twice (a subspecies of two books, imported apart) says where each is from.
+        all.filter((other) => other.label === option.label).length > 1
+          ? { ...option, label: `${option.label} (${bookOf(option.id)})` }
+          : option,
+      )
   );
+}
+
+/** The book an imported entry comes from, or the pack that holds it. */
+function bookOf(id: string): string {
+  const record = userPacks.value.find((p) => p.id === id.split(":")[0]);
+  return record?.books?.[id] ?? record?.name ?? id.split(":")[0] ?? id;
 }
 
 interface SelectProps {

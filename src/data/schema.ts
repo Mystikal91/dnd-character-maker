@@ -107,6 +107,8 @@ const PlainEffectSchema = v.variant("type", [
   v.object({
     type: v.literal("trait"),
     id: EntryIdSchema,
+    /** The trait comes with this level of the character (a species gives it at the 3rd or 5th). */
+    minLevel: v.optional(v.number()),
   }),
   v.object({
     type: v.literal("choice"),

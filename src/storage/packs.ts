@@ -28,6 +28,8 @@ export interface UserPackRecord {
   keepEditions?: boolean;
   /** The entry each Aurora id became, so importing again can tell which entry is which. */
   aids?: Record<string, string>;
+  /** The book each listed entry comes from, by entry id (see `AuroraResult.books`). */
+  books?: Record<string, string>;
 }
 
 const RecordSchema = v.object({
@@ -44,6 +46,7 @@ const RecordSchema = v.object({
   importVersion: v.optional(v.number()),
   keepEditions: v.optional(v.boolean()),
   aids: v.optional(v.record(v.string(), v.string())),
+  books: v.optional(v.record(v.string(), v.string())),
 });
 
 /** Ids of the packs that ship with the app: a user pack may not take their place. */

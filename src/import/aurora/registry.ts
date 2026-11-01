@@ -36,6 +36,12 @@ export interface AuroraResult {
   title: string;
   /** The entry each Aurora id became, by Aurora id: what a later import matches on. */
   aids: Record<string, string>;
+  /**
+   * The book each listed entry (species, class, feat...) says it comes from, by entry id. Two
+   * entries of the same name that were imported apart (the core books and the supplements) are
+   * told apart by it in a list.
+   */
+  books: Record<string, string>;
 }
 
 /** How the rules of one kind fared: counts, a few examples, and what the unsupported ones asked for. */

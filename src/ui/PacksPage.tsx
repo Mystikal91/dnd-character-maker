@@ -187,6 +187,7 @@ export function PacksPage() {
               e.preventDefault();
               if (address.trim() && !progress) {
                 void importAuroraUrl(address, targetPack.id);
+                setAddress("");
                 setTarget(undefined);
               }
             }}
@@ -280,7 +281,11 @@ export function PacksPage() {
           class="pack-address"
           onSubmit={(e) => {
             e.preventDefault();
-            if (address.trim() && !progress) void importAuroraUrl(address);
+            if (address.trim() && !progress) {
+              void importAuroraUrl(address);
+              // Empty, so that the next address can be typed right away.
+              setAddress("");
+            }
           }}
         >
           <input
