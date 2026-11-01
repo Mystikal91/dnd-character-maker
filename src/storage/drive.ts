@@ -36,13 +36,65 @@ async function call(token: string, url: string, init: RequestInit, fetcher: Fetc
   return response;
 }
 
-/** The transfer file the app made before, the most recent one if there are several. */
-export async function findTransferFile(
+/** The ending of the file name of a single character, which tells it from the whole-account file. */
+export const CHARACTER_FILE_SUFFIX = ".dndchar.json";
+
+/** The Drive file name for one character: readable, and the same every time for the same one. */
+export function characterDriveName(name: string, id: string): string {
+  const slug = name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  const tag = id.replace(/[^a-z0-9]/gi, "").slice(0, 8);
+  return `dnd-character-maker-${slug || "character"}${tag ? `-${tag}` : ""}${CHARACTER_FILE_SUFFIX}`;
+}
+
+/** What a file of the app in the Drive holds: one character, or all of the person's data. */
+export function driveFileKind(name: string): "character" | "account" | undefined {
+  if (name === DRIVE_FILE_NAME) return "account";
+  if (name.endsWith(CHARACTER_FILE_SUFFIX)) return "character";
+  return undefined;
+}
+
+export interface DriveListing extends DriveFile {
+  name: string;
+}
+
+/** Every file of the app in the Drive that can be imported, the most recent first. */
+export async function listDriveFiles(
   token: string,
   fetcher: Fetcher = fetch,
+): Promise<DriveListing[]> {
+  const query = new URLSearchParams({
+    q: "trashed=false",
+    spaces: "drive",
+    orderBy: "modifiedTime desc",
+    pageSize: "100",
+    fields: "files(id,name,modifiedTime)",
+  });
+  const response = await call(token, `${API}?${query}`, {}, fetcher);
+  const found = ((await response.json()) as { files?: DriveListing[] }).files ?? [];
+  return found.filter((f) => driveFileKind(f.name) !== undefined);
+}
+
+/** The text of one file listed by `listDriveFiles`. */
+export async function readDriveFile(
+  token: string,
+  id: string,
+  fetcher: Fetcher = fetch,
+): Promise<string> {
+  const response = await call(token, `${API}/${id}?alt=media`, {}, fetcher);
+  return response.text();
+}
+
+/** The file of that name the app made before, the most recent one if there are several. */
+async function findByName(
+  token: string,
+  name: string,
+  fetcher: Fetcher,
 ): Promise<DriveFile | undefined> {
   const query = new URLSearchParams({
-    q: `name='${DRIVE_FILE_NAME}' and trashed=false`,
+    q: `name='${name}' and trashed=false`,
     spaces: "drive",
     orderBy: "modifiedTime desc",
     fields: "files(id,modifiedTime)",
@@ -52,13 +104,24 @@ export async function findTransferFile(
   return found[0];
 }
 
+/** The transfer file the app made before, the most recent one if there are several. */
+export const findTransferFile = (token: string, fetcher: Fetcher = fetch) =>
+  findByName(token, DRIVE_FILE_NAME, fetcher);
+
 /** Writes the text over the transfer file, or makes the file the first time. */
-export async function saveTransferFile(
+export const saveTransferFile = (token: string, text: string, fetcher: Fetcher = fetch) =>
+  saveDriveFile(token, DRIVE_FILE_NAME, text, fetcher);
+
+/** Writes the text over the file of that name (made by the app), or makes it the first time. */
+export async function saveDriveFile(
   token: string,
+  name: string,
   text: string,
   fetcher: Fetcher = fetch,
 ): Promise<DriveFile> {
-  const existing = await findTransferFile(token, fetcher);
+  // The name is put in a query: only the characters the app's own names use are allowed.
+  if (!/^[A-Za-z0-9._-]+$/.test(name)) throw new Error("Unsupported file name");
+  const existing = await findByName(token, name, fetcher);
   const fields = "id,modifiedTime";
   if (existing) {
     const response = await call(
@@ -70,7 +133,7 @@ export async function saveTransferFile(
     return (await response.json()) as DriveFile;
   }
   const boundary = `dnd${Math.random().toString(36).slice(2)}`;
-  const metadata = JSON.stringify({ name: DRIVE_FILE_NAME, mimeType: "application/json" });
+  const metadata = JSON.stringify({ name, mimeType: "application/json" });
   const body = [
     `--${boundary}`,
     "Content-Type: application/json; charset=UTF-8",

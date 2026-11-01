@@ -30,7 +30,6 @@ import { PacksNotice } from "./PacksNotice";
 import { PacksPage } from "./PacksPage";
 import { QuickEditDialog } from "./QuickEdit";
 import { SearchButton } from "./SearchButton";
-import { ShareDialog } from "./ShareDialog";
 import { Sheet } from "./Sheet";
 import { Tabs } from "./Tabs";
 import { Tour } from "./Tour";
@@ -177,7 +176,6 @@ export function App() {
       <RuleDialog />
       <TransferDialog />
       <CustomSpellDialog />
-      <ShareDialog />
       <LevelUp />
       <Tour />
       <footer class="site-footer no-print">

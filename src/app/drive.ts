@@ -1,5 +1,14 @@
 import { signal } from "@preact/signals";
-import { DRIVE_SCOPE, DriveError, loadTransferFile, saveTransferFile } from "../storage/drive";
+import {
+  DRIVE_SCOPE,
+  DriveError,
+  type DriveListing,
+  listDriveFiles,
+  loadTransferFile,
+  readDriveFile,
+  saveDriveFile,
+  saveTransferFile,
+} from "../storage/drive";
 import { GOOGLE_CLIENT_ID } from "./driveConfig";
 
 /** Whether this build knows a Google client id: without one the Drive buttons are not shown. */
@@ -104,6 +113,29 @@ export async function saveToDrive(text: string): Promise<boolean> {
   if (!saved) return false;
   driveState.value = "saved";
   return true;
+}
+
+/** Puts one character's file in the person's Drive, under a name of its own. */
+export async function saveCharacterToDrive(name: string, text: string): Promise<boolean> {
+  const saved = await run(async () => saveDriveFile(await accessToken(), name, text));
+  if (!saved) return false;
+  driveState.value = "saved";
+  return true;
+}
+
+/** The files of the app in the person's Drive, or undefined when the call failed. */
+export async function listFromDrive(): Promise<DriveListing[] | undefined> {
+  const listed = await run(async () => listDriveFiles(await accessToken()));
+  if (!listed) return undefined;
+  driveState.value = listed.length === 0 ? "none" : "idle";
+  return listed;
+}
+
+/** The text of one of those files. */
+export async function readFromDrive(id: string): Promise<string | undefined> {
+  const text = await run(async () => readDriveFile(await accessToken(), id));
+  if (text !== undefined) driveState.value = "idle";
+  return text;
 }
 
 /** The transfer file from the person's Drive, when there is one. */

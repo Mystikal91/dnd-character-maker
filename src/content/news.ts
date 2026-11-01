@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.18.0 beta",
+    date: "2026-11-01",
+    notes: [
+      {
+        en: "Import / Export: the “⋯” menu has one Import / Export entry (and Share, which opens the same screen as Export › Only this character). Import asks where from, a file or Google Drive, and works out by itself whether it holds one character or all your data; from Drive you pick which file. Export asks whether it is this character (as a file, on Google Drive, as a link or as a QR code) or all your data. The separate “Back up all characters” entry is gone: exporting all data does the same.",
+        it: "Importa / Esporta: il menu “⋯” ha un’unica voce Importa / Esporta (e Condividi, che apre la stessa schermata di Esporta › Solo questo personaggio). Importa chiede da dove, un file o Google Drive, e capisce da solo se contiene un personaggio o tutti i tuoi dati; da Drive scegli quale file. Esporta chiede se è questo personaggio (come file, su Google Drive, come link o codice QR) o tutti i dati. La voce “Copia di sicurezza di tutti” non c’è più: esportare tutti i dati fa lo stesso.",
+        fr: "Importer / Exporter : le menu « ⋯ » a une seule entrée Importer / Exporter (et Partager, qui ouvre le même écran que Exporter › Seulement ce personnage). Importer demande d’où, un fichier ou Google Drive, et comprend seul s’il contient un personnage ou toutes tes données ; depuis Drive tu choisis le fichier. Exporter demande si c’est ce personnage (en fichier, sur Google Drive, en lien ou en code QR) ou toutes les données. L’entrée « Sauvegarder tous les personnages » a disparu : exporter toutes les données fait la même chose.",
+        de: "Importieren / Exportieren: Das „⋯“-Menü hat einen einzigen Eintrag Importieren / Exportieren (und Teilen, das denselben Bildschirm wie Exportieren › Nur diesen Charakter öffnet). Importieren fragt, woher, aus einer Datei oder aus Google Drive, und erkennt selbst, ob sie einen Charakter oder alle deine Daten enthält; aus Drive wählst du die Datei. Exportieren fragt, ob es dieser Charakter ist (als Datei, in Google Drive, als Link oder QR-Code) oder alle Daten. „Alle Charaktere sichern“ gibt es nicht mehr: Alle Daten zu exportieren leistet dasselbe.",
+        es: "Importar / Exportar: el menú «⋯» tiene una sola entrada Importar / Exportar (y Compartir, que abre la misma pantalla que Exportar › Solo este personaje). Importar pregunta desde dónde, un archivo o Google Drive, y entiende solo si contiene un personaje o todos tus datos; desde Drive eliges el archivo. Exportar pregunta si es este personaje (como archivo, en Google Drive, como enlace o código QR) o todos los datos. «Copia de seguridad de todos» ya no está: exportar todos los datos hace lo mismo.",
+      },
+    ],
+  },
+  {
     version: "1.17.0 beta",
     date: "2026-10-31",
     notes: [

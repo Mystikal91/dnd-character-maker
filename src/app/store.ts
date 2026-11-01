@@ -18,7 +18,7 @@ import {
   setCurrentId,
 } from "../storage/characters";
 import { decodeShare, isShareHash } from "../storage/share";
-import { backupFileName, parseBackup, parseImportFile, serializeBackup } from "../storage/transfer";
+import { parseBackup, parseImportFile } from "../storage/transfer";
 import { EXAMPLE_ID, buildExample } from "./example";
 import { showView, view } from "./navigation";
 import { transferDialog, transferInbox } from "./transferState";
@@ -43,17 +43,6 @@ export const importNotice = signal<{ added: number; skipped: number; packs?: num
   undefined,
 );
 
-const BACKUP_KEY = "lastBackup";
-function readLastBackup(): number | undefined {
-  try {
-    const saved = Number(localStorage.getItem(BACKUP_KEY));
-    return saved > 0 ? saved : undefined;
-  } catch {
-    return undefined;
-  }
-}
-/** When all the characters were last exported, if they ever were (kept in this browser). */
-export const lastBackup = signal<number | undefined>(readLastBackup());
 /** The character just deleted, kept for a few seconds so it can be brought back. */
 export const deletedCharacter = signal<Character | undefined>(undefined);
 let undoTimer: ReturnType<typeof setTimeout> | undefined;
@@ -310,16 +299,6 @@ export async function undoDelete() {
   await switchTo(back);
 }
 
-/** Hands a text to the user as a file download. */
-function download(name: string, text: string, type: string) {
-  const url = URL.createObjectURL(new Blob([text], { type }));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = name;
-  link.click();
-  URL.revokeObjectURL(url);
-}
-
 /** Every saved character, as saved. */
 export async function allCharacters(): Promise<Character[]> {
   await saveNow();
@@ -329,19 +308,6 @@ export async function allCharacters(): Promise<Character[]> {
     if (loaded) all.push(loaded);
   }
   return all;
-}
-
-/** Downloads every saved character in one file, so they can be kept or moved to another device. */
-export async function exportAllCharacters() {
-  const all = await allCharacters();
-  download(backupFileName(), serializeBackup(all), "application/json");
-  const now = Date.now();
-  lastBackup.value = now;
-  try {
-    localStorage.setItem(BACKUP_KEY, String(now));
-  } catch {
-    // Not remembered: the file was still made.
-  }
 }
 
 /**
@@ -425,32 +391,39 @@ async function restoreBackup(backup: { characters: Character[]; unreadable: numb
   importNotice.value = { added: done.added, skipped: done.skipped + backup.unreadable };
 }
 
-export async function importCharacterFile(file: File) {
+/**
+ * Reads the text of any file the app makes and does the right thing with it, without asking what
+ * it is: a transfer file goes to the transfer window ("transfer"), an old backup or a single
+ * character is put in directly ("done"), anything else is refused ("failed").
+ */
+export async function importText(text: string): Promise<"transfer" | "done" | "failed"> {
   importNotice.value = undefined;
   try {
-    const text = await file.text();
     // A transfer file (possibly protected) has a window of its own.
     if (openTransfer(text)) {
       transferInbox.value = text;
       transferDialog.value = "import";
       importFailed.value = false;
-      return;
+      return "transfer";
     }
     const backup = parseBackup(text);
     if (backup) {
       await restoreBackup(backup);
       importFailed.value = false;
-      return;
+      return "done";
     }
     const parsed = parseImportFile(text);
     await switchTo(parsed.character);
+    importFailed.value = false;
     // The packs that came with it are put with the ones here (a module loaded now: it uses this one).
     if (parsed.packs.length > 0) {
       const { addCarriedPacks } = await import("./carry");
       importNotice.value = { added: 1, skipped: 0, packs: await addCarriedPacks(parsed.packs) };
     }
+    return "done";
   } catch (error) {
     if (!(error instanceof CharacterParseError)) console.error("Import failed", error);
     importFailed.value = true;
+    return "failed";
   }
 }

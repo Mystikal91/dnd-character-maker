@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
+import { characterFile, exportCharacterWithPacks } from "../app/carry";
 import {
   driveConfigured,
   driveProblem,
   driveState,
-  loadFromDrive,
+  listFromDrive,
   loadSignIn,
+  readFromDrive,
+  saveCharacterToDrive,
   saveToDrive,
 } from "../app/drive";
 import { LEGACY_SITE, NEW_APP_URL } from "../app/legacy";
-import { type ConflictPolicy, countConflicts } from "../app/store";
+import { type ConflictPolicy, character, countConflicts, importText } from "../app/store";
 import {
   type TransferReport,
   applyTransfer,
@@ -16,7 +19,7 @@ import {
   downloadLinks,
   exportTransfer,
 } from "../app/transfer";
-import { transferDialog, transferInbox } from "../app/transferState";
+import { type TransferStep, transferDialog, transferInbox } from "../app/transferState";
 import { importProgress } from "../app/userPacks";
 import { parseCharacter } from "../engine/characterSchema";
 import { type UiKey, ui } from "../i18n/ui";
@@ -30,6 +33,8 @@ import {
   openTransfer,
 } from "../storage/bundle";
 import { WrongPassphrase } from "../storage/crypto";
+import { type DriveListing, characterDriveName, driveFileKind } from "../storage/drive";
+import { ShareCharacter } from "./ShareCharacter";
 
 /** What the old address moves: everything but the DeepL key, which should not travel unasked. */
 const MOVING = SECTIONS.filter((s) => s !== "deeplKey");
@@ -103,12 +108,12 @@ export function DriveMessage() {
   );
 }
 
-const Back = () => (
+const Back = ({ to = "start" }: { to?: TransferStep }) => (
   <button
     type="button"
     class="link transfer-back"
     onClick={() => {
-      transferDialog.value = "start";
+      transferDialog.value = to;
       transferInbox.value = undefined;
     }}
   >
@@ -193,17 +198,158 @@ function MigrationGuide() {
   );
 }
 
-/** The first screen: two things to do, each a big button that says what it does. */
+/** A big button with an arrow, a title and a line saying what it does. */
+function Card({
+  arrow,
+  title,
+  hint,
+  onClick,
+  disabled,
+}: {
+  arrow: string;
+  title: string;
+  hint: string;
+  onClick: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <button type="button" class="transfer-card" disabled={disabled} onClick={onClick}>
+      <span class="transfer-arrow" aria-hidden="true">
+        {arrow}
+      </span>
+      <b>{title}</b>
+      <small>{hint}</small>
+    </button>
+  );
+}
+
+/** The first screen: import or export. */
 function Start() {
+  return (
+    <>
+      <p class="muted">{ui("io.intro")}</p>
+      <div class="transfer-cards">
+        <Card
+          arrow="↓"
+          title={ui("io.import")}
+          hint={ui("io.importHint")}
+          onClick={() => {
+            transferDialog.value = "importFrom";
+          }}
+        />
+        <Card
+          arrow="↑"
+          title={ui("io.export")}
+          hint={ui("io.exportHint")}
+          onClick={() => {
+            transferDialog.value = "exportWhat";
+          }}
+        />
+      </div>
+    </>
+  );
+}
+
+/** Export, step two: this character alone, or everything on this device. */
+function ExportWhat() {
+  const name = character.value.name || ui("sheet.unnamed");
+  return (
+    <>
+      <Back />
+      <h4>{ui("io.exportWhat")}</h4>
+      <div class="transfer-cards">
+        <Card
+          arrow="♞"
+          title={ui("io.thisCharacter")}
+          hint={ui("io.thisCharacterHint", { name })}
+          onClick={() => {
+            transferDialog.value = "exportCharacter";
+          }}
+        />
+        <Card
+          arrow="⇅"
+          title={ui("io.everything")}
+          hint={ui("io.everythingHint")}
+          onClick={() => {
+            transferDialog.value = "export";
+          }}
+        />
+      </div>
+    </>
+  );
+}
+
+/** Export, step three for one character: a file, the Drive, a link or a QR code. */
+function ExportCharacter() {
+  const [saved, setSaved] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    driveState.value = "idle";
+    if (driveConfigured) void loadSignIn().catch(() => undefined);
+  }, []);
+  const current = character.value;
+  return (
+    <>
+      <Back to="exportWhat" />
+      <h4>{ui("io.characterHow", { name: current.name || ui("sheet.unnamed") })}</h4>
+      <div class="share-actions">
+        <button
+          type="button"
+          class="primary"
+          onClick={() => {
+            exportCharacterWithPacks();
+            setSaved(characterFile().name);
+          }}
+        >
+          {ui("transfer.save")}
+        </button>
+        {driveConfigured && (
+          <button
+            type="button"
+            disabled={driveState.value === "working"}
+            onClick={() =>
+              void saveCharacterToDrive(
+                characterDriveName(current.name, current.id),
+                characterFile().text,
+              )
+            }
+          >
+            {ui("transfer.drive.save")}
+          </button>
+        )}
+      </div>
+      {saved && (
+        <p class="note" aria-live="polite">
+          {ui("io.fileSaved", { name: saved })}
+        </p>
+      )}
+      <DriveMessage />
+      <ShareCharacter />
+    </>
+  );
+}
+
+/**
+ * Hands the text of a file to the app, which finds out by itself what it is. A transfer file moves
+ * on to its own step; a single character or an old backup is put in at once and the window closes.
+ */
+async function openText(text: string, setFailed: (failed: boolean) => void) {
+  const result = await importText(text);
+  setFailed(result === "failed");
+  if (result === "done") close();
+}
+
+/** Import, step two: a file on this device, or a file in Google Drive. */
+function ImportFrom() {
   const picker = useRef<HTMLInputElement>(null);
-  // Google's script is fetched now, so that the sign-in window opens at once when it is asked for.
+  const [failed, setFailed] = useState(false);
   useEffect(() => {
     driveState.value = "idle";
     if (driveConfigured) void loadSignIn().catch(() => undefined);
   }, []);
   return (
     <>
-      <p class="muted">{ui("transfer.intro")}</p>
+      <Back />
+      <h4>{ui("io.importFrom")}</h4>
       <input
         ref={picker}
         type="file"
@@ -212,53 +358,89 @@ function Start() {
         onChange={async (e) => {
           const file = e.currentTarget.files?.[0];
           e.currentTarget.value = "";
-          if (!file) return;
-          transferInbox.value = await file.text();
-          transferDialog.value = "import";
+          if (file) await openText(await file.text(), setFailed);
         }}
       />
       <div class="transfer-cards">
-        <button
-          type="button"
-          class="transfer-card"
-          onClick={() => {
-            transferDialog.value = "export";
-          }}
-        >
-          <span class="transfer-arrow" aria-hidden="true">
-            ↑
-          </span>
-          <b>{ui("transfer.export")}</b>
-          <small>{ui("transfer.exportHint")}</small>
-        </button>
-        <button type="button" class="transfer-card" onClick={() => picker.current?.click()}>
-          <span class="transfer-arrow" aria-hidden="true">
-            ↓
-          </span>
-          <b>{ui("transfer.import")}</b>
-          <small>{ui("transfer.importHint")}</small>
-        </button>
-      </div>
-      {driveConfigured && (
-        <>
-          <button
-            type="button"
-            class="secondary"
-            disabled={driveState.value === "working"}
-            onClick={async () => {
-              const text = await loadFromDrive();
-              if (text) {
-                transferInbox.value = text;
-                transferDialog.value = "import";
-              }
+        <Card
+          arrow="▤"
+          title={ui("io.fromFile")}
+          hint={ui("io.fromFileHint")}
+          onClick={() => picker.current?.click()}
+        />
+        {driveConfigured && (
+          <Card
+            arrow="☁"
+            title={ui("io.fromDrive")}
+            hint={ui("io.fromDriveHint")}
+            onClick={() => {
+              transferDialog.value = "importDrive";
             }}
-          >
-            {ui("transfer.drive.load")}
-          </button>
-          <p class="muted">{ui("transfer.drive.hint")}</p>
-          <DriveMessage />
-        </>
+          />
+        )}
+      </div>
+      {failed && (
+        <p class="note" role="alert">
+          {ui("bar.importError")}
+        </p>
       )}
+    </>
+  );
+}
+
+/** What a Drive file is, in words: a character (named after its file) or the whole account. */
+function driveLabel(file: DriveListing): string {
+  if (driveFileKind(file.name) === "account") return ui("io.driveAccount");
+  const words = file.name
+    .replace(/^dnd-character-maker-/, "")
+    .replace(/\.dndchar\.json$/, "")
+    .replace(/-[a-z0-9]{8}$/i, "")
+    .replace(/-/g, " ")
+    .trim();
+  return ui("io.driveCharacter", { name: words || ui("sheet.unnamed") });
+}
+
+/** Import from the Drive: the files the app made there, and the person picks which to bring in. */
+function ImportDrive() {
+  const [files, setFiles] = useState<DriveListing[] | undefined>(undefined);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    driveState.value = "idle";
+    void listFromDrive().then(setFiles);
+  }, []);
+  return (
+    <>
+      <Back to="importFrom" />
+      <h4>{ui("io.pickDrive")}</h4>
+      <p class="muted">{ui("transfer.drive.hint")}</p>
+      {files && files.length > 0 && (
+        <ul class="plain drive-files">
+          {files.map((file) => (
+            <li key={file.id}>
+              <button
+                type="button"
+                class="transfer-card"
+                disabled={driveState.value === "working"}
+                onClick={async () => {
+                  const text = await readFromDrive(file.id);
+                  if (text !== undefined) await openText(text, setFailed);
+                }}
+              >
+                <b>{driveLabel(file)}</b>
+                <small>
+                  {ui("io.driveModified", { date: new Date(file.modifiedTime).toLocaleString() })}
+                </small>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {failed && (
+        <p class="note" role="alert">
+          {ui("bar.importError")}
+        </p>
+      )}
+      <DriveMessage />
     </>
   );
 }
@@ -284,7 +466,7 @@ function ExportPane() {
 
   return (
     <>
-      <Back />
+      <Back to={LEGACY_SITE ? "start" : "exportWhat"} />
       <h4>{ui("transfer.takeWhat")}</h4>
       <Rows counts={info.counts} chosen={chosen} onChange={setChosen} />
       {chosen.has("links") && info.files.length > 0 && (
@@ -574,7 +756,7 @@ export function TransferDialog() {
   return (
     <dialog ref={dialog} class="quick-edit transfer" onClose={close}>
       <header class="transfer-head">
-        <h3>{ui("transfer.title")}</h3>
+        <h3>{ui(LEGACY_SITE ? "transfer.title" : "io.title")}</h3>
         <button type="button" class="link" aria-label={ui("transfer.close")} onClick={close}>
           ✕
         </button>
@@ -585,8 +767,16 @@ export function TransferDialog() {
         ) : (
           <Start />
         )
+      ) : mode === "exportWhat" ? (
+        <ExportWhat />
+      ) : mode === "exportCharacter" ? (
+        <ExportCharacter />
       ) : mode === "export" ? (
         <ExportPane />
+      ) : mode === "importFrom" ? (
+        <ImportFrom />
+      ) : mode === "importDrive" ? (
+        <ImportDrive />
       ) : (
         <ImportPane />
       )}

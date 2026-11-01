@@ -1,5 +1,3 @@
-import { useRef } from "preact/hooks";
-import { exportCharacterWithPacks } from "../app/carry";
 import {
   character,
   characters,
@@ -7,11 +5,8 @@ import {
   deleteCurrentCharacter,
   deletedCharacter,
   duplicateCharacter,
-  exportAllCharacters,
-  importCharacterFile,
   importFailed,
   importNotice,
-  lastBackup,
   newCharacter,
   openCharacter,
   saveStatus,
@@ -21,7 +16,6 @@ import {
 import { transferDialog } from "../app/transferState";
 import { ui } from "../i18n/ui";
 import { Popover } from "./Popover";
-import { shareOpen } from "./ShareDialog";
 
 // Nothing is said while idle, so that state has no text to translate.
 const STATUS_KEYS = {
@@ -31,7 +25,6 @@ const STATUS_KEYS = {
 } as const;
 
 export function CharacterBar() {
-  const fileInput = useRef<HTMLInputElement>(null);
   const current = character.value;
   const c = content.value;
   const unnamed = ui("sheet.unnamed");
@@ -79,24 +72,13 @@ export function CharacterBar() {
               </button>
             </li>
             <li>
-              <button type="button" onClick={exportCharacterWithPacks}>
-                {ui("bar.export")}
-              </button>
-            </li>
-            <li>
               <button
                 type="button"
-                class="menu-two-lines"
-                onClick={() => void exportAllCharacters()}
+                onClick={() => {
+                  transferDialog.value = "exportCharacter";
+                }}
               >
-                {ui("bar.backup")}
-                <small>
-                  {lastBackup.value
-                    ? ui("bar.backupLast", {
-                        date: new Date(lastBackup.value).toLocaleDateString(),
-                      })
-                    : ui("bar.backupNever")}
-                </small>
+                {ui("bar.share")}
               </button>
             </li>
             <li>
@@ -106,22 +88,7 @@ export function CharacterBar() {
                   transferDialog.value = "start";
                 }}
               >
-                {ui("transfer.menu")}
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                onClick={() => {
-                  shareOpen.value = true;
-                }}
-              >
-                {ui("bar.share")}
-              </button>
-            </li>
-            <li>
-              <button type="button" onClick={() => fileInput.current?.click()}>
-                {ui("bar.import")}
+                {ui("io.menu")}
               </button>
             </li>
             <li>
@@ -131,17 +98,6 @@ export function CharacterBar() {
             </li>
           </ul>
         </Popover>
-        <input
-          ref={fileInput}
-          type="file"
-          accept=".json,application/json"
-          hidden
-          onChange={(e) => {
-            const file = e.currentTarget.files?.[0];
-            e.currentTarget.value = "";
-            if (file) void importCharacterFile(file);
-          }}
-        />
       </div>
       {deletedCharacter.value && (
         <output class="note bar-undo">

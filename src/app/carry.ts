@@ -4,17 +4,22 @@ import { exportFileName, serializeCharacter } from "../storage/transfer";
 import { character } from "./store";
 import { addUserPack, userPacks } from "./userPacks";
 
-/** Downloads the open character with the homebrew packs it uses, so the file opens the same anywhere. */
-export function exportCharacterWithPacks(): void {
+/** The file of the open character, with the homebrew packs it uses so it opens the same anywhere. */
+export function characterFile(): { name: string; text: string } {
   const current = character.value;
-  const url = URL.createObjectURL(
-    new Blob([serializeCharacter(current, homebrewUsedBy(current, userPacks.value))], {
-      type: "application/json",
-    }),
-  );
+  return {
+    name: exportFileName(current),
+    text: serializeCharacter(current, homebrewUsedBy(current, userPacks.value)),
+  };
+}
+
+/** Downloads the open character as a file. */
+export function exportCharacterWithPacks(): void {
+  const file = characterFile();
+  const url = URL.createObjectURL(new Blob([file.text], { type: "application/json" }));
   const link = document.createElement("a");
   link.href = url;
-  link.download = exportFileName(current);
+  link.download = file.name;
   link.click();
   URL.revokeObjectURL(url);
 }

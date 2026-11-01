@@ -2,8 +2,12 @@ import { describe, expect, it } from "vitest";
 import {
   DRIVE_FILE_NAME,
   DriveError,
+  characterDriveName,
+  driveFileKind,
   findTransferFile,
+  listDriveFiles,
   loadTransferFile,
+  saveDriveFile,
   saveTransferFile,
 } from "./drive";
 
@@ -76,5 +80,40 @@ describe("the transfer file in Google Drive", () => {
     expect(await loadTransferFile("good", empty.fetcher)).toBeUndefined();
     await expect(loadTransferFile("bad", empty.fetcher)).rejects.toBeInstanceOf(DriveError);
     await expect(loadTransferFile("bad", empty.fetcher)).rejects.toMatchObject({ status: 401 });
+  });
+});
+
+describe("single characters and the list of files in Google Drive", () => {
+  it("names a character's file after it, apart from the whole-account file", () => {
+    const name = characterDriveName("Elowen Nightbloom!", "1234abcd-ffff");
+    expect(name).toBe("dnd-character-maker-elowen-nightbloom-1234abcd.dndchar.json");
+    expect(driveFileKind(name)).toBe("character");
+    expect(driveFileKind(DRIVE_FILE_NAME)).toBe("account");
+    expect(driveFileKind("holiday.pdf")).toBeUndefined();
+    // An unnamed character still gets a usable name.
+    expect(characterDriveName("", "zzzz1111")).toBe(
+      "dnd-character-maker-character-zzzz1111.dndchar.json",
+    );
+  });
+
+  it("saves a character under its own name and refuses names that could alter the search", async () => {
+    const drive = fakeDrive();
+    await saveDriveFile("good", "dnd-character-maker-a-12345678.dndchar.json", "{}", drive.fetcher);
+    expect(drive.calls.find((c) => c.url.includes("multipart"))?.body).toContain(
+      "dnd-character-maker-a-12345678.dndchar.json",
+    );
+    await expect(saveDriveFile("good", "x' or name!='", "{}", drive.fetcher)).rejects.toThrow();
+  });
+
+  it("lists only the files that this app can import", async () => {
+    const files = [
+      { id: "1", name: DRIVE_FILE_NAME, modifiedTime: "2026-10-25T10:00:00Z" },
+      { id: "2", name: "dnd-character-maker-a-12345678.dndchar.json", modifiedTime: "x" },
+      { id: "3", name: "unrelated.txt", modifiedTime: "x" },
+    ];
+    const fetcher = (async () =>
+      new Response(JSON.stringify({ files }), { status: 200 })) as unknown as typeof fetch;
+    const listed = await listDriveFiles("good", fetcher);
+    expect(listed.map((f) => f.id)).toEqual(["1", "2"]);
   });
 });
