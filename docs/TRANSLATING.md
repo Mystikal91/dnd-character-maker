@@ -89,6 +89,19 @@ ability names a text mentions, and its length; pairs that were checked by hand a
 are in `OVERRIDES`. `import_variants.py` gives the numbered variants ("Action Surge (2 uses)")
 the title of their section plus a translated suffix.
 
+The magic items are read from the "Magic Items A-Z" chapter, after the translated spells, monsters and
+rules texts are in place (they teach the script which words go together):
+
+```bash
+python scripts/srd-translations/import_magic_items.py it path/to/SRD_CC_v5.1_IT.pdf
+```
+
+Each section is paired with an English item by the rarity, the attunement, the kind of item, the
+numbers and the words learned from the other translations; a pair that disagrees on any of the first
+three is dropped. Only the Italian words are written down so far (`CONFIG` in the script; add the
+rarity and item words of another language to use it). The items with variants (the +1, +2 and +3
+weapons, the potions of giant strength...) stay in English.
+
 The monsters are read from the stat blocks of the same PDFs (`locales/<language>/srd51/monsters.json`),
 after `npm run data:srd51` has written the English ones:
 
