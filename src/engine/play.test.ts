@@ -5,6 +5,7 @@ import {
   applyHealing,
   castSpell,
   currentHp,
+  deathSaveRoll,
   deathStatus,
   gainTempHp,
   hitDiceLeft,
@@ -171,5 +172,28 @@ describe("casting a spell", () => {
     expect(cast?.slot).toEqual({ kind: "pact", level: 2 });
     expect(cast?.play.pactUsed).toBe(1);
     expect(castSpell(createPlayState(), 3, [0, 0, 0, 0, 0, 0, 0, 0, 0], pact)).toBeUndefined();
+  });
+});
+
+describe("a death save", () => {
+  const dying = () => ({ ...createPlayState(), hp: 0 });
+
+  it("counts a success from 10, a failure below it, and two failures for a 1", () => {
+    expect(deathSaveRoll(dying(), 20, 14).deathSaves).toEqual({ successes: 1, failures: 0 });
+    expect(deathSaveRoll(dying(), 20, 10).deathSaves).toEqual({ successes: 1, failures: 0 });
+    expect(deathSaveRoll(dying(), 20, 9).deathSaves).toEqual({ successes: 0, failures: 1 });
+    expect(deathSaveRoll(dying(), 20, 1).deathSaves).toEqual({ successes: 0, failures: 2 });
+  });
+
+  it("brings back one hit point and clears the saves on a 20", () => {
+    const hurt = { ...dying(), deathSaves: { successes: 1, failures: 2 } };
+    const back = deathSaveRoll(hurt, 20, 20);
+    expect(currentHp(back, 20)).toBe(1);
+    expect(back.deathSaves).toEqual({ successes: 0, failures: 0 });
+  });
+
+  it("never goes past three", () => {
+    const near = { ...dying(), deathSaves: { successes: 0, failures: 2 } };
+    expect(deathSaveRoll(near, 20, 1).deathSaves.failures).toBe(3);
   });
 });

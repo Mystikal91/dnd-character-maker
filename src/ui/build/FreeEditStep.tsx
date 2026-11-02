@@ -1,4 +1,5 @@
 import { calculated, character, content, sheet, updateCharacter } from "../../app/store";
+import { offerUndo } from "../../app/undo";
 import { ABILITIES } from "../../data/schema";
 import {
   OVERRIDE,
@@ -166,7 +167,12 @@ export function FreeEditStep() {
           type="button"
           class="secondary"
           onClick={() => {
-            if (!confirm(ui("freeEdit.resetAllConfirm"))) return;
+            const before = structuredClone(character.value.overrides);
+            offerUndo(ui("undo.overridesReset"), () =>
+              updateCharacter((d) => {
+                d.overrides = before;
+              }),
+            );
             updateCharacter((d) => {
               d.overrides = Object.fromEntries(
                 Object.entries(d.overrides).filter(([, v]) => typeof v !== "number"),

@@ -1,0 +1,77 @@
+/* ---- What was just removed (with the way back) and the question before what cannot be undone ---- */
+
+.undo-notice {
+  position: fixed;
+  inset: auto 0.75rem 0.9rem;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  width: fit-content;
+  max-width: calc(100vw - 1.5rem);
+  margin-inline: auto;
+  padding: 0.7rem 0.9rem 0.7rem 1.1rem;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: 0 8px 26px rgb(0 0 0 / 0.35);
+  color: var(--fg);
+}
+
+.undo-notice .link {
+  min-height: 2.5rem;
+  padding: 0 0.4rem;
+  font-weight: 700;
+}
+
+.undo-notice .undo-close {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .undo-notice {
+    animation: undo-in 0.2s ease-out;
+  }
+}
+
+@keyframes undo-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.8rem);
+  }
+}
+
+.confirm-dialog {
+  width: min(24rem, calc(100vw - 2rem));
+}
+
+.confirm-dialog h3 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+
+.confirm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+
+.confirm-actions button {
+  min-height: 2.75rem;
+  padding: 0 1.1rem;
+}
+
+.confirm-actions .danger-btn {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 700;
+}

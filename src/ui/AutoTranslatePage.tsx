@@ -1,4 +1,5 @@
 import { useState } from "preact/hooks";
+import { askConfirm } from "../app/confirm";
 import { language } from "../app/language";
 import { leavePage } from "../app/navigation";
 import { guidePath } from "../content/news";
@@ -42,9 +43,13 @@ export function AutoTranslatePage() {
     setChecking(false);
   };
 
-  const clear = () => {
-    if (confirm(ui("translate.clearConfirm", { n: cachedCount.value })))
-      void clearTranslationCache();
+  const clear = async () => {
+    const ok = await askConfirm({
+      title: ui("translate.clearConfirm", { n: cachedCount.value }),
+      confirm: ui("translate.clearGo"),
+      cancel: ui("confirm.cancel"),
+    });
+    if (ok) await clearTranslationCache();
   };
 
   return (

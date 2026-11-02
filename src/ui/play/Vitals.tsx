@@ -1,10 +1,18 @@
 import { useState } from "preact/hooks";
-import { addLog, changePlay, damageCharacter, damageResisted, vitals } from "../../app/play";
+import {
+  addLog,
+  changePlay,
+  damageCharacter,
+  damageResisted,
+  rollCheck,
+  vitals,
+} from "../../app/play";
 import { character } from "../../app/store";
 import { cryptoRandomInt } from "../../engine/dice";
 import {
   applyHealing,
   currentHp,
+  deathSaveRoll,
   deathStatus,
   gainTempHp,
   hitDiceLeft,
@@ -131,10 +139,16 @@ export function DeathSaves() {
   if (status === "alive" && play.deathSaves.successes === 0 && play.deathSaves.failures === 0)
     return null;
 
-  const row = (kind: "successes" | "failures", label: UiKey) => (
-    <div class="death-row">
-      <span>{ui(label)}</span>
-      <span class="pips-btns">
+  const card = (kind: "successes" | "failures", label: UiKey, glyph: string) => (
+    <li class="play-card death-card" data-kind={kind}>
+      <span class="card-badge" aria-hidden="true">
+        {glyph}
+      </span>
+      <div class="card-head">
+        <b class="feat-name">{ui(label)}</b>
+        <span class="card-meta">{play.deathSaves[kind]} / 3</span>
+      </div>
+      <span class="pips-btns death-pips">
         {[1, 2, 3].map((n) => {
           const on = play.deathSaves[kind] >= n;
           return (
@@ -151,16 +165,32 @@ export function DeathSaves() {
           );
         })}
       </span>
-    </div>
+    </li>
   );
 
   return (
-    <Panel title={ui("play.deathSaves")}>
+    <Panel title={ui("play.deathSaves")} className="death-panel">
       {status !== "alive" && (
-        <p class={`status status-${status}`}>{ui(`play.status.${status}` as UiKey)}</p>
+        <output class={`death-status status-${status}`}>
+          <b>{ui(`play.status.${status}` as UiKey)}</b>
+          {status === "dying" && (
+            <button
+              type="button"
+              class="card-btn card-primary"
+              onClick={() => {
+                const roll = rollCheck(ui("play.deathSaves"), 0);
+                changePlay((p) => deathSaveRoll(p, v.max, roll.used));
+              }}
+            >
+              {ui("play.deathSaveRoll")}
+            </button>
+          )}
+        </output>
       )}
-      {row("successes", "play.successes")}
-      {row("failures", "play.failures")}
+      <ul class="plain card-list">
+        {card("successes", "play.successes", "✓")}
+        {card("failures", "play.failures", "✕")}
+      </ul>
     </Panel>
   );
 }

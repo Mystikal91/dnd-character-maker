@@ -3,7 +3,9 @@ import { createHomebrewPack, openHomebrewPack } from "../app/homebrew";
 import { language } from "../app/language";
 import { leavePage } from "../app/navigation";
 import { content } from "../app/store";
+import { offerUndo } from "../app/undo";
 import {
+  addUserPack,
   exportPack,
   importAuroraFiles,
   importAuroraUrl,
@@ -81,7 +83,9 @@ export function PacksPage() {
   };
 
   const remove = (record: UserPackRecord) => {
-    if (confirm(ui("packs.removeConfirm", { name: record.name }))) void removeUserPack(record.id);
+    void removeUserPack(record.id).then(() =>
+      offerUndo(ui("undo.packRemoved", { name: record.name }), () => addUserPack(record)),
+    );
   };
 
   return (

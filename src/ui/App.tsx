@@ -26,6 +26,7 @@ import { CustomSpellDialog } from "./CustomSpellDialog";
 import { ExplainDialog } from "./Explain";
 import { HomebrewPage } from "./HomebrewPage";
 import { LegacyNotice } from "./LegacyNotice";
+import { ConfirmDialog, UndoNotice } from "./Notices";
 import { PacksNotice } from "./PacksNotice";
 import { PacksPage } from "./PacksPage";
 import { QuickEditDialog } from "./QuickEdit";
@@ -169,6 +170,8 @@ export function App() {
         </div>
       )}
       <RollToast />
+      <UndoNotice />
+      <ConfirmDialog />
       <UpdateNotice />
       <SpellDialog />
       <QuickEditDialog />

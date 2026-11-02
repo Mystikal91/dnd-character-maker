@@ -66,6 +66,19 @@ export function setDeathSave(
   return { ...play, deathSaves: { ...play.deathSaves, [kind]: clamp(count, 0, 3) } };
 }
 
+/**
+ * What a death save does: a 20 brings back one hit point (and clears the saves), a 1 counts as two
+ * failures, 10 or more is a success and anything lower a failure.
+ */
+export function deathSaveRoll(play: PlayState, max: number, natural: number): PlayState {
+  if (natural >= 20) return applyHealing(play, max, 1);
+  const { successes, failures } = play.deathSaves;
+  if (natural <= 1) return setDeathSave(play, "failures", failures + 2);
+  return natural >= 10
+    ? setDeathSave(play, "successes", successes + 1)
+    : setDeathSave(play, "failures", failures + 1);
+}
+
 /** Spell slots still available at one spell level, given how many the class has. */
 export function slotsLeft(play: PlayState, level: number, total: number): number {
   return Math.max(0, total - (play.slotsUsed[level - 1] ?? 0));

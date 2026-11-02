@@ -1,8 +1,14 @@
 import { useEffect, useState } from "preact/hooks";
-import { addCompanion, changeCompanion, removeCompanion } from "../../app/companions";
+import {
+  addCompanion,
+  changeCompanion,
+  removeCompanion,
+  restoreCompanion,
+} from "../../app/companions";
 import { currentOwner } from "../../app/owner";
 import { monstersWanted } from "../../app/rulesView";
 import { character, content } from "../../app/store";
+import { offerUndo } from "../../app/undo";
 import type { Companion } from "../../engine/character";
 import {
   companionHp,
@@ -107,8 +113,11 @@ export function Companions() {
                 type="button"
                 class="link"
                 onClick={() => {
-                  if (confirm(ui("play.companions.removeConfirm", { name: shown })))
-                    removeCompanion(companion.id);
+                  const at = list.findIndex((x) => x.id === companion.id);
+                  removeCompanion(companion.id);
+                  offerUndo(ui("undo.deleted", { name: shown }), () =>
+                    restoreCompanion(companion, at),
+                  );
                 }}
               >
                 {ui("play.companions.remove")}

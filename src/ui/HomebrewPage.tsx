@@ -8,7 +8,8 @@ import {
 } from "../app/homebrew";
 import { showView } from "../app/navigation";
 import { content } from "../app/store";
-import { exportPack } from "../app/userPacks";
+import { offerUndo } from "../app/undo";
+import { addUserPack, exportPack } from "../app/userPacks";
 import {
   ABILITY_IDS,
   CASTING_KINDS,
@@ -636,8 +637,10 @@ export function HomebrewPage() {
     if (draft) setOpen({ draft, editing: id });
   };
   const remove = (id: string) => {
-    if (confirm(ui("hb.deleteConfirm", { name: record.strings[`${id}.name`] ?? id })))
-      void deleteHomebrewEntry(id);
+    const name = record.strings[`${id}.name`] ?? id;
+    void deleteHomebrewEntry(id).then(() =>
+      offerUndo(ui("undo.deleted", { name }), () => addUserPack(record)),
+    );
   };
 
   return (

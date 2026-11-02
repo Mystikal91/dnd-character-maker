@@ -153,3 +153,60 @@
   justify-content: flex-start;
   text-align: left;
 }
+
+/* ---- Death saves: the state, a roll, and a card for the successes and one for the failures ---- */
+
+.death-card {
+  grid-template-columns: 2.7rem minmax(0, 1fr) auto;
+}
+
+.death-card[data-kind="successes"] {
+  --hue: #3f8a4a;
+}
+
+.death-card[data-kind="failures"] {
+  --hue: #9a3a3a;
+}
+
+.death-pips {
+  gap: 0.7rem;
+}
+
+output.death-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  margin-bottom: 0.8rem;
+  padding: 0.7rem 0.9rem;
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.death-status b {
+  font-size: 1.1rem;
+}
+
+.death-status.status-stable {
+  border-color: #3f8a4a;
+  background: color-mix(in srgb, #3f8a4a 14%, var(--surface));
+}
+
+.death-status.status-dead {
+  border-color: #555;
+  background: color-mix(in srgb, #000 18%, var(--surface));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .death-status.status-dying {
+    animation: death-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes death-pulse {
+  50% {
+    box-shadow: 0 0 0.9rem color-mix(in srgb, var(--accent) 60%, transparent);
+  }
+}
