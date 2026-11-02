@@ -5,6 +5,7 @@ import {
   type D20Options,
   type D20Roll,
   type DiceRoll,
+  cryptoRandomInt,
   parseDice,
   rollD20,
   rollExpression,
@@ -22,6 +23,8 @@ import {
   enterRage,
   halveDamage,
   resourceLeft,
+  setBardicDie,
+  setInspiration,
 } from "../engine/play";
 import { damageBeast } from "../engine/wildShape";
 import { ui } from "../i18n/ui";
@@ -81,6 +84,10 @@ export interface LogEntry {
   detail: string;
   total?: number;
   tone?: "critical" | "fumble";
+  /** A d20 roll can be taken again or have a die added: what it takes to make it again. */
+  redo?: { label: string; bonus: number; options: D20Options | undefined };
+  /** A die of Bardic Inspiration is already in the total. */
+  bardic?: boolean;
 }
 
 const MAX_LOG = 40;
@@ -129,8 +136,33 @@ export function rollCheck(label: string, bonus: number, options?: D20Options): D
     total: roll.total,
     ...(roll.critical && { tone: "critical" as const }),
     ...(roll.fumble && { tone: "fumble" as const }),
+    redo: { label, bonus, options },
   });
   return roll;
+}
+
+/** Spends the inspiration to roll a d20 again: the new roll is the one that counts. */
+export function rerollWithInspiration(entry: LogEntry) {
+  if (!entry.redo || !character.value.play.inspiration) return;
+  changePlay((p) => setInspiration(p, false));
+  const { label, bonus, options } = entry.redo;
+  rollCheck(`${label} (${ui("play.rerolled")})`, bonus, options);
+}
+
+/** Spends the die of a Bardic Inspiration: it is rolled and added to the total of the d20 roll. */
+export function addBardicDie(entry: LogEntry) {
+  const die = character.value.play.bardicDie;
+  if (!entry.redo || entry.total === undefined || entry.bardic || die === undefined) return;
+  changePlay((p) => setBardicDie(p, undefined));
+  const rolled = 1 + cryptoRandomInt(die);
+  addLog({
+    label: `${entry.label} + ${ui("play.bardicShort")}`,
+    detail: `${entry.detail} + d${die} [${rolled}]`,
+    total: entry.total + rolled,
+    ...(entry.tone && { tone: entry.tone }),
+    redo: entry.redo,
+    bardic: true,
+  });
 }
 
 /** Rolls dice like `2d6+3` and records it. Returns undefined when the text is not a dice expression. */

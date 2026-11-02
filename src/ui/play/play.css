@@ -783,16 +783,6 @@ fieldset.segmented {
   .play .coin-controls input {
     padding: 0 0.2rem;
   }
-
-  .rest-opts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 1.2rem;
-  }
-
-  .rest-opts .check-row {
-    margin-top: 0.2rem;
-  }
 }
 
 /* A swipe to another part: it slides in from the side it was swiped to. */
@@ -837,17 +827,15 @@ fieldset.segmented {
   margin: 0;
   overflow: visible;
   display: flex;
-  align-items: center;
-  gap: 0.9rem;
+  flex-direction: column;
   width: min(21rem, calc(100vw - 1.5rem));
-  padding: 0.8rem 1.2rem 0.8rem 1rem;
+  padding: 0;
   border: 2px solid var(--accent);
   border-radius: var(--radius-sm);
   background: var(--surface);
   box-shadow: 0 10px 30px rgb(0 0 0 / 0.35);
   color: var(--fg);
   text-align: left;
-  cursor: pointer;
   transform: translateX(50%);
   animation: toast-in 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }

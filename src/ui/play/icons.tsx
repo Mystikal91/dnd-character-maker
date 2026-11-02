@@ -135,3 +135,26 @@ export const CriticalIcon = () => (
     <path d="M12 3l2.200 5.300 5.800.5-4.400 3.800 1.400 5.700L12 15.300 7 18.300l1.400-5.700L4 8.800l5.800-.5z" />
   </Icon>
 );
+
+/** A crescent moon: the night of a long rest. */
+export const MoonIcon = () => (
+  <Icon>
+    <path d="M20 14.500A8 8 0 0 1 9.500 4 8 8 0 1 0 20 14.500z" />
+  </Icon>
+);
+
+/** A five-pointed star: the inspiration. */
+export const StarIcon = () => (
+  <Icon>
+    <path d="M12 3l2.600 5.600 6.100.7-4.500 4.200 1.200 6L12 16.600 6.600 19.500l1.200-6L3.300 9.300l6.100-.7z" />
+  </Icon>
+);
+
+/** A musical note: the bard. */
+export const NoteIcon = () => (
+  <Icon>
+    <path d="M9 18V5l11-2v13" />
+    <circle cx="6.500" cy="18" r="2.500" />
+    <circle cx="17.500" cy="16" r="2.500" />
+  </Icon>
+);

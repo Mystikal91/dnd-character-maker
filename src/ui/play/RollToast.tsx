@@ -1,6 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { view } from "../../app/navigation";
-import { rollLog } from "../../app/play";
+import { addBardicDie, rerollWithInspiration, rollLog } from "../../app/play";
+import { character } from "../../app/store";
 import { ui } from "../../i18n/ui";
 
 const ROLLING_MS = 560;
@@ -30,7 +31,7 @@ const Die = () => (
 );
 
 /** Moves the roll into the browser's top layer, above a dialog that is open (a popover that stays put). */
-function putOnTop(element: HTMLButtonElement | null) {
+function putOnTop(element: HTMLElement | null) {
   if (!element || typeof element.showPopover !== "function") return;
   element.setAttribute("popover", "manual");
   try {
@@ -93,42 +94,67 @@ export function RollToast() {
 
   if (!fresh || hidden || !onPlay) return null;
   const tone = rolling ? "" : (fresh.tone ?? "");
+  // A d20 roll that has landed can be taken again with the inspiration, or get the Bardic die.
+  const play = character.value.play;
+  const canReroll = !rolling && fresh.redo !== undefined && play.inspiration;
+  const canAddDie =
+    !rolling && fresh.redo !== undefined && !fresh.bardic && play.bardicDie !== undefined;
   return (
-    <button
-      type="button"
+    <div
       class={`roll-toast no-print ${rolling ? "rolling" : "settled"} ${tone}`}
       key={fresh.id}
       aria-live="polite"
       ref={putOnTop}
-      onClick={() => setHidden(true)}
     >
-      {tone === "critical" && !reducedMotion() && (
-        <div class="lv-sparks toast-sparks" aria-hidden="true">
-          {SPARKS.map((p) => (
-            <i
-              key={`${p.angle}-${p.size}`}
-              class={`lv-spark tone-${p.tone}`}
-              style={{
-                "--a": `${p.angle}deg`,
-                "--d": `${p.distance}px`,
-                "--delay": `${p.delay}s`,
-                "--size": `${p.size}px`,
-              }}
-            />
-          ))}
+      <button type="button" class="toast-main" onClick={() => setHidden(true)}>
+        {tone === "critical" && !reducedMotion() && (
+          <div class="lv-sparks toast-sparks" aria-hidden="true">
+            {SPARKS.map((p) => (
+              <i
+                key={`${p.angle}-${p.size}`}
+                class={`lv-spark tone-${p.tone}`}
+                style={{
+                  "--a": `${p.angle}deg`,
+                  "--d": `${p.distance}px`,
+                  "--delay": `${p.delay}s`,
+                  "--size": `${p.size}px`,
+                }}
+              />
+            ))}
+          </div>
+        )}
+        <Die />
+        <span class="toast-number">{rolling ? face : fresh.total}</span>
+        <span class="toast-text">
+          <b>{fresh.label}</b>
+          {/* Both lines are always there, hidden until the roll lands, so the box never changes size. */}
+          <small class={rolling ? "pending" : ""}>{fresh.detail || " "}</small>
+          <em class={`toast-tone${tone ? "" : " pending"}`}>
+            {tone === "fumble"
+              ? ui("play.fumble")
+              : tone === "critical"
+                ? ui("play.critical")
+                : " "}
+          </em>
+          <small class="toast-hint">{ui("play.tapToClose")}</small>
+        </span>
+      </button>
+      {(canReroll || canAddDie) && (
+        <div class="toast-actions">
+          {canAddDie && (
+            <button type="button" class="toast-act" onClick={() => addBardicDie(fresh)}>
+              <span aria-hidden="true">♪</span>
+              {ui("play.bardicAdd", { die: `d${play.bardicDie}` })}
+            </button>
+          )}
+          {canReroll && (
+            <button type="button" class="toast-act" onClick={() => rerollWithInspiration(fresh)}>
+              <span aria-hidden="true">✦</span>
+              {ui("play.rerollSpend")}
+            </button>
+          )}
         </div>
       )}
-      <Die />
-      <span class="toast-number">{rolling ? face : fresh.total}</span>
-      <span class="toast-text">
-        <b>{fresh.label}</b>
-        {/* Both lines are always there, hidden until the roll lands, so the box never changes size. */}
-        <small class={rolling ? "pending" : ""}>{fresh.detail || " "}</small>
-        <em class={`toast-tone${tone ? "" : " pending"}`}>
-          {tone === "fumble" ? ui("play.fumble") : tone === "critical" ? ui("play.critical") : " "}
-        </em>
-        <small class="toast-hint">{ui("play.tapToClose")}</small>
-      </span>
-    </button>
+    </div>
   );
 }

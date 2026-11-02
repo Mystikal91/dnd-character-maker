@@ -13,13 +13,15 @@ import { BeastStrip } from "./BeastStrip";
 import { Companions } from "./Companions";
 import { DiceButton, DiceDrawer } from "./DiceDrawer";
 import { PlayFeatures } from "./Features";
+import { BardNotes, Inspiration } from "./Inspiration";
 import { PlayInventory } from "./Inventory";
 import { Rage, RageStrip } from "./Rage";
 import { ClassResources, Conditions, PlayNotes, Slots } from "./Resources";
+import { Rests } from "./Rests";
 import { AttackRolls, CheckRolls, DiceTray, ModePicker, RollHistory } from "./Rolls";
 import { PlaySpells } from "./SpellList";
 import { GroupTabs, StatusBar } from "./StatusBar";
-import { DeathSaves, HitDice, HitPoints, Rests } from "./Vitals";
+import { DeathSaves, HitDice, HitPoints } from "./Vitals";
 import { WildShape } from "./WildShape";
 
 /**
@@ -83,7 +85,9 @@ export function PlayTab() {
 
   return (
     <>
-      <div class="play-aura" aria-hidden="true" {...states} />
+      <div class="play-aura" aria-hidden="true" {...states}>
+        {states["data-bardic"] && <BardNotes />}
+      </div>
       <div
         class="play"
         data-group={open}
@@ -127,6 +131,9 @@ export function PlayTab() {
               <WildShape />
             </Part>
             <Part group="combat" order={3}>
+              <Inspiration />
+            </Part>
+            <Part group="combat" order={4}>
               <DeathSaves />
             </Part>
             <Part group="resources" order={2}>
@@ -144,10 +151,10 @@ export function PlayTab() {
             <Part group="resources" order={5}>
               <PlayInventory />
             </Part>
-            <Part group="combat" order={4}>
+            <Part group="combat" order={5}>
               <Conditions />
             </Part>
-            <Part group="combat" order={5}>
+            <Part group="combat" order={6}>
               <Companions />
             </Part>
             <Part group="resources" order={6}>

@@ -2,6 +2,7 @@ import { LANGUAGES, type LanguageCode, language } from "../app/language";
 import { theme, updateTheme } from "../app/theme";
 import { PALETTES, type Scheme } from "../app/theme.logic";
 import { UNIT_SETTINGS, type UnitSetting, unitSetting } from "../app/units";
+import { canKeepAwake, keepAwake, setKeepAwake } from "../app/wakeLock";
 import { type UiKey, ui } from "../i18n/ui";
 
 const SCHEMES: Scheme[] = ["auto", "light", "dark"];
@@ -82,6 +83,16 @@ export function ThemeControls() {
           ))}
         </select>
       </label>
+      {canKeepAwake && (
+        <label class="check-row">
+          <input
+            type="checkbox"
+            checked={keepAwake.value}
+            onChange={(e) => void setKeepAwake(e.currentTarget.checked)}
+          />
+          {ui("play.keepAwake")}
+        </label>
+      )}
     </div>
   );
 }

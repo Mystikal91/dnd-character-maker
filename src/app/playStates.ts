@@ -13,6 +13,8 @@ export interface PlayStates {
   focus?: "on";
   /** The character has inspiration. */
   inspired?: "on";
+  /** The character holds a die of Bardic Inspiration. */
+  bardic?: "on";
   /** The character has temporary hit points. */
   temp?: "on";
   /** The conditions by their slug, separated by spaces: `poisoned frightened`. */
@@ -30,6 +32,7 @@ export function playStates(play: PlayState, max: number): PlayStates {
     ...(status !== "alive" && { dying: status }),
     ...(play.concentration && { focus: "on" as const }),
     ...(play.inspiration && { inspired: "on" as const }),
+    ...(play.bardicDie !== undefined && { bardic: "on" as const }),
     ...(play.tempHp > 0 && { temp: "on" as const }),
     ...(conditions && { conditions }),
   };
@@ -41,6 +44,7 @@ export function stateAttributes(states: PlayStates) {
     "data-dying": states.dying,
     "data-focus": states.focus,
     "data-inspired": states.inspired,
+    "data-bardic": states.bardic,
     "data-temp": states.temp,
     "data-conditions": states.conditions,
   };

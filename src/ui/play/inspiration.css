@@ -1,0 +1,136 @@
+/* ---- Inspiration: the card, the notes of the bard, and the buttons of the roll ---- */
+
+.insp-card[data-kind="inspiration"] {
+  --hue: #c9a227;
+}
+
+.insp-card[data-kind="bardic"] {
+  --hue: #8a52b0;
+}
+
+.insp-card[data-focus="on"] {
+  box-shadow: 0 0 0 2px var(--hue), 0 0 1.2rem color-mix(in srgb, var(--hue) 55%, transparent);
+}
+
+.insp-meta {
+  white-space: normal;
+}
+
+.insp-card .card-actions {
+  margin-top: 0.7rem;
+}
+
+.insp-dice {
+  margin-top: 0.7rem;
+}
+
+/* The bard's notes rise at the sides of the screen, slowly, and sway. */
+.bard-note {
+  position: absolute;
+  bottom: -2rem;
+  left: var(--x);
+  color: #8a52b0;
+  font-size: var(--size);
+  font-style: normal;
+  line-height: 1;
+  opacity: 0;
+  text-shadow: 0 0 0.6rem color-mix(in srgb, #8a52b0 60%, transparent);
+}
+
+:root[data-theme="dark"] .bard-note {
+  color: #c8a0ee;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bard-note {
+    color: #c8a0ee;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bard-note {
+    animation: bard-note-rise var(--time) ease-in-out var(--delay) infinite;
+  }
+}
+
+/* Without motion the notes stay where they are, faint, as a mark of the inspiration. */
+@media (prefers-reduced-motion: reduce) {
+  .bard-note {
+    bottom: 40%;
+    opacity: 0.35;
+  }
+}
+
+@keyframes bard-note-rise {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(-8deg);
+  }
+  12% {
+    opacity: 0.75;
+  }
+  35% {
+    transform: translate(0.8rem, -30vh) rotate(8deg);
+  }
+  65% {
+    transform: translate(-0.8rem, -60vh) rotate(-8deg);
+  }
+  88% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0.4rem, -92vh) rotate(6deg);
+  }
+}
+
+/* The roll, with the buttons to spend an inspiration on it. */
+.toast-main {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  padding: 0.8rem 1.2rem 0.8rem 1rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.toast-actions {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.6rem 0.8rem 0.8rem;
+  border-top: 1px solid var(--border);
+}
+
+.toast-act {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  color: var(--fg);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.toast-act:hover {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.toast-act span {
+  color: var(--accent);
+}
+
+.toast-act:hover span {
+  color: inherit;
+}

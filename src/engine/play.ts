@@ -195,6 +195,21 @@ export function concentrationDc(damage: number): number {
   return Math.max(10, Math.floor(damage / 2));
 }
 
+/** The dice a Bardic Inspiration can be (d6 at the start, up to d12 at level 15). */
+export const BARDIC_DICE = [6, 8, 10, 12] as const;
+
+/** Gives or takes away the inspiration of the character (the DM's gift, or spent). */
+export const setInspiration = (play: PlayState, on: boolean): PlayState => ({
+  ...play,
+  inspiration: on,
+});
+
+/** Holds a die of Bardic Inspiration (or lets go of it with `undefined`). */
+export function setBardicDie(play: PlayState, die: number | undefined): PlayState {
+  const { bardicDie: _gone, ...rest } = play;
+  return die === undefined ? rest : { ...rest, bardicDie: die };
+}
+
 /**
  * A long rest: full hit points, no temporary hit points, all slots back, no death saves, and
  * half of the hit dice (at least one) regained, largest dice first.

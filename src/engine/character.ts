@@ -97,6 +97,8 @@ export interface PlayState {
   /** Ids of the conditions currently affecting the character. */
   conditions: string[];
   inspiration: boolean;
+  /** The die of a Bardic Inspiration the character was given, to add to one d20 roll. */
+  bardicDie?: number;
 }
 
 export function createPlayState(): PlayState {
