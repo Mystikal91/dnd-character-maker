@@ -146,7 +146,9 @@ function AttackCard({ a }: { a: AttackResult }) {
               onClick={() => hurt(d.dice)}
             >
               <b>{dice}</b>
-              <small>{[d.label, typeName(d.part.type)].filter(Boolean).join(" · ")}</small>
+              <small>
+                {d.label && d.part.type === a.damage?.type ? d.label : typeName(d.part.type)}
+              </small>
             </button>
           );
         })}
@@ -179,6 +181,8 @@ function rollExtra(label: string, dice: string) {
 /** What the classes add to an attack (sneak attack, smite, rage), as cards, with the dice to roll after the weapon's. */
 export function ExtraCards() {
   const s = sheet.value;
+  const critical = criticalExtra.value;
+  const shown = (dice: string) => (critical ? (doubleDice(dice) ?? dice) : dice);
   const [slot, setSlot] = useState(1);
   if (!s || s.extraDamage.length === 0) return null;
   const play = character.value.play;
@@ -227,7 +231,7 @@ export function ExtraCards() {
                 >
                   <ChecksIcon />
                   <span>{extraName(extra)}</span>
-                  <b>{extra.dice}</b>
+                  <b>{shown(extra.dice)}</b>
                 </button>
               </div>
             )}
@@ -268,7 +272,7 @@ export function ExtraCards() {
                   >
                     <ChecksIcon />
                     <span>{extraName(extra)}</span>
-                    <b>{Math.min(5, 1 + chosen)}d8</b>
+                    <b>{shown(`${Math.min(5, 1 + chosen)}d8`)}</b>
                   </button>
                 </div>
               </>

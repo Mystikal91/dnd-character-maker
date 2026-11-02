@@ -23,7 +23,13 @@
 /* The attack and the mark for a critical hit on one line, the damages in two columns under it. */
 .attack-actions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+/* A weapon with one way to hurt takes the whole row. */
+.attack-actions > .card-damage:only-of-type {
+  grid-column: 1 / -1;
 }
 
 .card-main {
@@ -55,6 +61,10 @@
 }
 
 .play .card-damage small {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: var(--muted);
   font-size: 0.72rem;
   font-weight: 500;
