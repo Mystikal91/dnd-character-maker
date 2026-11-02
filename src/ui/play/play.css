@@ -219,8 +219,25 @@
   color: var(--muted);
 }
 
+/* A level of slots: its name, the gems (they wrap among themselves) and how many are left. */
 .slots-play .row-between {
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.5rem;
+}
+
+.slots-play .pips-btns {
+  justify-content: center;
+}
+
+@media (max-width: 30rem) {
+  .slots-play .slot-level {
+    min-width: 0;
+  }
+
+  .slots-play .pips-btns {
+    gap: 0.35rem;
+  }
 }
 
 .check-row {
