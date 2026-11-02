@@ -14,6 +14,7 @@ import {
 import { type UiKey, ui } from "../../i18n/ui";
 import { Roll } from "../Roll";
 import { Panel } from "../sheet/parts";
+import { HealIcon } from "./icons";
 
 export function HitPoints() {
   const [amount, setAmount] = useState("");
@@ -170,33 +171,57 @@ export function HitDice() {
   if (!v) return null;
   const dice = Object.entries(v.hitDice);
   if (dice.length === 0) return null;
+  const bonus = v.conMod === 0 ? "" : v.conMod > 0 ? `+${v.conMod}` : `${v.conMod}`;
 
   return (
-    <Panel title={ui("play.hitDice")}>
-      <ul class="plain">
+    <Panel title={ui("play.hitDice")} className="hitdice-panel">
+      <ul class="plain card-list">
         {dice.map(([die, total]) => {
           const left = hitDiceLeft(play, die, total);
           return (
-            <li class="row-between" key={die}>
-              <span>
-                <b>{die}</b> <span class="muted">{ui("play.hitDiceLeft", { left, total })}</span>
+            <li class="play-card die-card" key={die} data-empty={left === 0 ? "true" : undefined}>
+              <span class="card-badge" aria-hidden="true">
+                {die}
               </span>
-              <button
-                type="button"
-                disabled={left === 0}
-                onClick={() => {
-                  const rolled = 1 + cryptoRandomInt(Number(die.slice(1)));
-                  const heal = Math.max(0, rolled + v.conMod);
-                  changePlay((p) => spendHitDie(p, v.max, die, rolled, v.conMod));
-                  addLog({
-                    label: `${ui("play.hitDice")} ${die}`,
-                    detail: `${die} ${rolled}${v.conMod === 0 ? "" : v.conMod > 0 ? ` +${v.conMod}` : ` ${v.conMod}`} → ${ui("play.healedBy", { n: heal })}`,
-                    total: heal,
-                  });
-                }}
+              <div class="card-head">
+                <b class="feat-name">
+                  {ui("play.hitDice")} {die}
+                </b>
+                <span class="card-meta">{ui("play.hitDiceLeft", { left, total })}</span>
+              </div>
+              <span
+                class="slot-dots die-dots"
+                role="img"
+                aria-label={ui("play.hitDiceLeft", { left, total })}
               >
-                {ui("play.spendDie")}
-              </button>
+                {Array.from({ length: total }, (_, i) => (
+                  <i key={`${die}-${i + 1}`} class={i < left ? "on" : ""} />
+                ))}
+              </span>
+              <div class="card-actions">
+                <button
+                  type="button"
+                  class="card-btn card-primary card-wide card-roll card-heal"
+                  disabled={left === 0}
+                  onClick={() => {
+                    const rolled = 1 + cryptoRandomInt(Number(die.slice(1)));
+                    const heal = Math.max(0, rolled + v.conMod);
+                    changePlay((p) => spendHitDie(p, v.max, die, rolled, v.conMod));
+                    addLog({
+                      label: `${ui("play.hitDice")} ${die}`,
+                      detail: `${die} ${rolled}${v.conMod === 0 ? "" : v.conMod > 0 ? ` +${v.conMod}` : ` ${v.conMod}`} → ${ui("play.healedBy", { n: heal })}`,
+                      total: heal,
+                    });
+                  }}
+                >
+                  <HealIcon />
+                  <span>{ui("play.spendDie")}</span>
+                  <b>
+                    {die}
+                    {bonus}
+                  </b>
+                </button>
+              </div>
             </li>
           );
         })}

@@ -1,0 +1,82 @@
+import { changePlay } from "../../app/play";
+import { character, content, sheet } from "../../app/store";
+import { toggleCondition } from "../../engine/play";
+import { ui } from "../../i18n/ui";
+import { Panel, Paragraphs } from "../sheet/parts";
+import { ConditionIcon } from "./icons";
+
+/** The slug of a condition: `srd51:condition/blinded` is `blinded`. */
+const slugOf = (id: string) => id.split("/")[1] ?? "";
+
+/**
+ * The conditions of the rules: the ones in force first, as cards with their rules and a button that
+ * removes them; the list of all of them stays folded until a new one is wanted.
+ */
+export function Conditions() {
+  const c = content.value;
+  const play = character.value.play;
+  if (!c) return null;
+  const conditions = [...c.index.values()]
+    .filter((e) => e.kind === "condition")
+    .sort((a, b) => c.name(a.id).localeCompare(c.name(b.id)));
+  const active = conditions.filter((e) => play.conditions.includes(e.id));
+  const others = conditions.filter((e) => !play.conditions.includes(e.id));
+  const toggle = (id: string) => changePlay((p) => toggleCondition(p, id));
+  const immune = sheet.value?.conditionImmunities ?? [];
+
+  return (
+    <Panel title={ui("play.conditions")} className="conditions-panel">
+      {immune.length > 0 && (
+        <p class="muted">
+          {ui("sheet.immunities")}: {immune.map((id) => c.name(id)).join(", ")}
+        </p>
+      )}
+      {active.length > 0 && (
+        <ul class="plain card-list">
+          {active.map((e) => (
+            <li class="play-card cond-card" data-condition={slugOf(e.id)} key={e.id}>
+              <span class="card-badge" aria-hidden="true">
+                <ConditionIcon />
+              </span>
+              <div class="card-head">
+                <b class="feat-name">{c.name(e.id)}</b>
+                <span class="card-meta">{ui("play.conditionActive")}</span>
+              </div>
+              <button
+                type="button"
+                class="card-btn cond-remove"
+                aria-label={`${ui("play.conditionRemove")}: ${c.name(e.id)}`}
+                title={ui("play.conditionRemove")}
+                onClick={() => toggle(e.id)}
+              >
+                ✕
+              </button>
+              <details class="cond-rules">
+                <summary>{ui("play.conditionRules")}</summary>
+                <Paragraphs text={c.text(e.id, "desc")} />
+              </details>
+            </li>
+          ))}
+        </ul>
+      )}
+      <details class="add-condition" open={active.length === 0}>
+        <summary>{ui("play.addCondition")}</summary>
+        <p class="muted">{ui("play.conditionsHint")}</p>
+        <div class="cond-picks">
+          {others.map((e) => (
+            <button
+              type="button"
+              key={e.id}
+              class="card-btn cond-pick"
+              data-condition={slugOf(e.id)}
+              aria-pressed={false}
+              onClick={() => toggle(e.id)}
+            >
+              {c.name(e.id)}
+            </button>
+          ))}
+        </div>
+      </details>
+    </Panel>
+  );
+}

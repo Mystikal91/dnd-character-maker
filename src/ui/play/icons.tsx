@@ -158,3 +158,11 @@ export const NoteIcon = () => (
     <circle cx="17.500" cy="16" r="2.500" />
   </Icon>
 );
+
+/** A circle with a mark inside: a condition in force. */
+export const ConditionIcon = () => (
+  <Icon>
+    <circle cx="12" cy="12" r="8.500" />
+    <path d="M12 7.500v5.500M12 16.200v.2" />
+  </Icon>
+);

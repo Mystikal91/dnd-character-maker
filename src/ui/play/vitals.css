@@ -1,0 +1,155 @@
+/* ---- Hit dice and conditions as cards (the cards are in cards.css) ---- */
+
+.die-card {
+  --hue: #3f8a4a;
+}
+
+.die-card .card-badge {
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.die-card[data-empty="true"] {
+  --hue: var(--muted);
+}
+
+.die-dots {
+  grid-column: 1 / -1;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.die-dots i {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.die-card .card-actions {
+  margin-top: 0.6rem;
+}
+
+/* A condition in force: its colour says what kind of trouble it is. */
+.cond-card {
+  --hue: #8a52b0;
+}
+
+.cond-card[data-condition="blinded"],
+.cond-card[data-condition="deafened"] {
+  --hue: #5a6a8a;
+}
+.cond-card[data-condition="charmed"] {
+  --hue: #b0467f;
+}
+.cond-card[data-condition="frightened"] {
+  --hue: #8a52b0;
+}
+.cond-card[data-condition="grappled"],
+.cond-card[data-condition="restrained"] {
+  --hue: #9a6322;
+}
+.cond-card[data-condition="incapacitated"],
+.cond-card[data-condition="paralyzed"],
+.cond-card[data-condition="stunned"],
+.cond-card[data-condition="unconscious"] {
+  --hue: #9a3a3a;
+}
+.cond-card[data-condition="invisible"] {
+  --hue: #3f8a86;
+}
+.cond-card[data-condition="petrified"] {
+  --hue: #6e6e6e;
+}
+.cond-card[data-condition="poisoned"] {
+  --hue: #4f8a3d;
+}
+.cond-card[data-condition="prone"] {
+  --hue: #8d7a1c;
+}
+.cond-card[data-condition="exhaustion"] {
+  --hue: #c0702a;
+}
+
+.cond-card {
+  grid-template-columns: 2.7rem minmax(0, 1fr) auto;
+}
+
+.cond-card .cond-rules {
+  grid-column: 1 / -1;
+}
+
+.play .cond-remove:not(.pip-btn):not(.info-btn):not(.link) {
+  width: 2.75rem;
+  padding: 0;
+}
+
+.cond-rules {
+  margin-top: 0.5rem;
+}
+
+.cond-rules summary {
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.cond-rules p {
+  margin: 0.4rem 0 0;
+}
+
+/* The conditions that are not in force: a grid of buttons with the colour of each. */
+.cond-picks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.25rem, 1fr));
+  gap: 0.45rem;
+}
+
+.cond-pick::before {
+  flex: none;
+  content: "";
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: #8a52b0;
+}
+
+:root[data-style="fantasy"] .cond-pick::before {
+  border-radius: 0;
+  transform: rotate(45deg) scale(0.9);
+}
+
+.cond-pick[data-condition="blinded"]::before,
+.cond-pick[data-condition="deafened"]::before {
+  background: #5a6a8a;
+}
+.cond-pick[data-condition="charmed"]::before {
+  background: #b0467f;
+}
+.cond-pick[data-condition="grappled"]::before,
+.cond-pick[data-condition="restrained"]::before {
+  background: #9a6322;
+}
+.cond-pick[data-condition="incapacitated"]::before,
+.cond-pick[data-condition="paralyzed"]::before,
+.cond-pick[data-condition="stunned"]::before,
+.cond-pick[data-condition="unconscious"]::before {
+  background: #9a3a3a;
+}
+.cond-pick[data-condition="invisible"]::before {
+  background: #3f8a86;
+}
+.cond-pick[data-condition="petrified"]::before {
+  background: #6e6e6e;
+}
+.cond-pick[data-condition="poisoned"]::before {
+  background: #4f8a3d;
+}
+.cond-pick[data-condition="prone"]::before {
+  background: #8d7a1c;
+}
+.cond-pick[data-condition="exhaustion"]::before {
+  background: #c0702a;
+}
+
+.play .cond-pick:not(.pip-btn):not(.info-btn):not(.link) {
+  justify-content: flex-start;
+  text-align: left;
+}

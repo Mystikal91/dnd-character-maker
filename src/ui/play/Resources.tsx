@@ -1,9 +1,9 @@
 import { changePlay } from "../../app/play";
 import { character, content, sheet, updateCharacter } from "../../app/store";
-import { pactLeft, setPactUsed, setSlotsUsed, slotsLeft, toggleCondition } from "../../engine/play";
+import { pactLeft, setPactUsed, setSlotsUsed, slotsLeft } from "../../engine/play";
 import { type UiKey, ui } from "../../i18n/ui";
 import { SpellcastingStats } from "../sheet/SpellcastingPanel";
-import { Panel, RulesText } from "../sheet/parts";
+import { Panel } from "../sheet/parts";
 import { shownFeatures } from "./Features";
 import { ResourceControl, recoveryLabel, resourceLabel } from "./ResourceControl";
 import { ResourcesIcon } from "./icons";
@@ -156,56 +156,6 @@ export function PlayNotes() {
           })
         }
       />
-    </Panel>
-  );
-}
-
-/**
- * The conditions of the rules: the ones in force first, each a button that removes it with its
- * rules under it; the list of all of them stays folded until a new one is wanted.
- */
-export function Conditions() {
-  const c = content.value;
-  const play = character.value.play;
-  if (!c) return null;
-  const conditions = [...c.index.values()]
-    .filter((e) => e.kind === "condition")
-    .sort((a, b) => c.name(a.id).localeCompare(c.name(b.id)));
-  const active = conditions.filter((e) => play.conditions.includes(e.id));
-  const chip = (e: (typeof conditions)[number]) => {
-    const on = play.conditions.includes(e.id);
-    return (
-      <button
-        type="button"
-        key={e.id}
-        class={`chip${on ? " on" : ""}`}
-        aria-pressed={on}
-        onClick={() => changePlay((p) => toggleCondition(p, e.id))}
-      >
-        {c.name(e.id)}
-      </button>
-    );
-  };
-
-  return (
-    <Panel title={ui("play.conditions")}>
-      {sheet.value && sheet.value.conditionImmunities.length > 0 && (
-        <p class="muted">
-          {ui("sheet.immunities")}:{" "}
-          {sheet.value.conditionImmunities.map((id) => c.name(id)).join(", ")}
-        </p>
-      )}
-      {active.length > 0 && <div class="chips">{active.map(chip)}</div>}
-      {active.map((e) => (
-        <RulesText key={e.id} id={e.id} name={c.name(e.id)} text={c.text(e.id, "desc")} />
-      ))}
-      <details class="add-condition" open={active.length === 0}>
-        <summary>{ui("play.addCondition")}</summary>
-        <p class="muted">{ui("play.conditionsHint")}</p>
-        <div class="chips">
-          {conditions.filter((e) => !play.conditions.includes(e.id)).map(chip)}
-        </div>
-      </details>
     </Panel>
   );
 }
