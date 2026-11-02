@@ -1,12 +1,7 @@
-import { signal } from "@preact/signals";
 import { useState } from "preact/hooks";
 import {
   type LogEntry,
-  addLog,
-  changePlay,
   clearLog,
-  criticalExtra,
-  criticalWeapon,
   rollCheck,
   rollDiceText,
   rollLog,
@@ -14,12 +9,10 @@ import {
 } from "../../app/play";
 import { character, content, sheet } from "../../app/store";
 import { ABILITIES } from "../../data/schema";
-import { type D20Mode, doubleDice } from "../../engine/dice";
-import { castSpell, slotsLeft } from "../../engine/play";
+import type { D20Mode } from "../../engine/dice";
 import { type UiKey, signed, ui } from "../../i18n/ui";
-import { RuleInfoButton } from "../rules/EntryDetail";
-import { ExtraDamageList, extraName } from "../sheet/ExtraDamage";
 import { Panel } from "../sheet/parts";
+import { AttackCards, ExtraCards } from "./AttackCards";
 
 const MODES: D20Mode[] = ["normal", "advantage", "disadvantage"];
 const DICE = [4, 6, 8, 10, 12, 20, 100];
@@ -48,9 +41,6 @@ function RollButton({
   );
 }
 
-/** The weapon whose attack was just rolled: its next tap rolls the damage. */
-const damageDue = signal<string | undefined>(undefined);
-
 /** Advantage, disadvantage or a normal roll for every d20 check below. */
 export function ModePicker() {
   const mode = rollMode.value;
@@ -71,88 +61,6 @@ export function ModePicker() {
         </button>
       ))}
     </fieldset>
-  );
-}
-
-/** Roll one extra damage: the dice double on a critical hit. */
-function rollExtra(label: string, dice: string) {
-  const critical = criticalExtra.value;
-  const text = critical ? (doubleDice(dice) ?? dice) : dice;
-  rollDiceText(critical ? `${label} (${ui("play.criticalDamage")})` : label, text);
-}
-
-/** Damage the classes add to an attack, to roll after the weapon's: sneak attack, smite, rage. */
-function ExtraRolls() {
-  const s = sheet.value;
-  const [slot, setSlot] = useState(1);
-  if (!s || s.extraDamage.length === 0) return null;
-  const play = character.value.play;
-  const sneak = s.extraDamage.find((e) => e.kind === "sneakAttack");
-  const smite = s.extraDamage.find((e) => e.kind === "divineSmite");
-  const levels = s.spellSlots
-    .map((total, i) => ({ level: i + 1, left: slotsLeft(play, i + 1, total), total }))
-    .filter((x) => x.total > 0 && x.level <= 5);
-  const chosen = levels.find((x) => x.level === slot)?.level ?? levels[0]?.level ?? 1;
-
-  return (
-    <>
-      <ExtraDamageList />
-      <div class="extra-rolls">
-        <label class="check-row">
-          <input
-            type="checkbox"
-            checked={criticalExtra.value}
-            onChange={(e) => {
-              criticalExtra.value = e.currentTarget.checked;
-            }}
-          />
-          {ui("play.criticalHit")}
-        </label>
-        {sneak?.kind === "sneakAttack" && (
-          <button
-            type="button"
-            class="roll-btn"
-            onClick={() => rollExtra(extraName(sneak), sneak.dice)}
-          >
-            <span>{extraName(sneak)}</span>
-            <b>{sneak.dice}</b>
-          </button>
-        )}
-        {smite && levels.length > 0 && (
-          <span class="btn-row">
-            <label>
-              <span class="sr-only">{ui("extra.slot")}</span>
-              <select value={chosen} onChange={(e) => setSlot(Number(e.currentTarget.value))}>
-                {levels.map((x) => (
-                  <option key={x.level} value={x.level} disabled={x.left === 0}>
-                    {ui("sheet.slotLevel", { level: x.level })} ({x.left})
-                  </option>
-                ))}
-              </select>
-            </label>
-            <button
-              type="button"
-              class="roll-btn"
-              onClick={() => {
-                const cast = castSpell(play, chosen, s.spellSlots);
-                if (!cast) {
-                  addLog({ label: extraName(smite), detail: ui("play.noSlot") });
-                  return;
-                }
-                changePlay(() => cast.play);
-                rollExtra(
-                  `${extraName(smite)} (${ui("play.castSlot", { level: cast.slot.level })})`,
-                  `${Math.min(5, 1 + cast.slot.level)}d8`,
-                );
-              }}
-            >
-              <span>{extraName(smite)}</span>
-              <b>{Math.min(5, 1 + chosen)}d8</b>
-            </button>
-          </span>
-        )}
-      </div>
-    </>
   );
 }
 
@@ -200,87 +108,8 @@ function RollsPanel({ part }: { part: "attacks" | "checks" }) {
       {part === "attacks" && character.value.play.wildShape && (
         <p class="muted">{ui("play.wildShape.attacks")}</p>
       )}
-      {part === "attacks" && s.attacks.length === 0 && <p class="muted">{ui("play.noAttacks")}</p>}
-      {part === "attacks" && s.attacks.length > 0 && (
-        <ul class="plain">
-          {s.attacks.map((a) => {
-            const dmg = a.damage;
-            // A rage adds to melee weapon attacks.
-            const rage = s.extraDamage.find((e) => e.kind === "rage");
-            const rageBonus =
-              character.value.play.raging && !a.ranged && rage?.kind === "rage" ? rage.bonus : 0;
-            const bonus = (dmg?.bonus ?? 0) + rageBonus;
-            const dice = dmg
-              ? `${dmg.dice}${bonus === 0 ? "" : bonus > 0 ? `+${bonus}` : bonus}`
-              : "";
-            const attack = () => {
-              const roll = rollCheck(
-                `${c.name(a.itemId)} - ${ui("play.attackRoll")}`,
-                a.attackBonus,
-                { critMin: s.critRange },
-              );
-              criticalExtra.value = roll.critical;
-              // A natural 20 arms the critical damage; any other attack clears it.
-              if (roll.critical) criticalWeapon.value = a.itemId;
-              else if (criticalWeapon.value === a.itemId) criticalWeapon.value = undefined;
-              // The next tap on this weapon rolls its damage, unless the attack was a fumble.
-              damageDue.value = dmg && !roll.fumble ? a.itemId : undefined;
-            };
-            const damage = () => {
-              const critical = criticalWeapon.value === a.itemId;
-              const text = critical ? (doubleDice(dice) ?? dice) : dice;
-              const name = `${c.name(a.itemId)} - ${ui("play.damageRoll")}`;
-              rollDiceText(critical ? `${name} (${ui("play.criticalDamage")})` : name, text);
-              if (critical) criticalWeapon.value = undefined;
-              damageDue.value = undefined;
-            };
-            const armed = dmg !== undefined && damageDue.value === a.itemId;
-            const shownDice = criticalWeapon.value === a.itemId ? (doubleDice(dice) ?? dice) : dice;
-            return (
-              <li class="row-between attack-row" key={a.itemId}>
-                <span>
-                  {c.name(a.itemId)} <RuleInfoButton id={a.itemId} />
-                </span>
-                <span class="btn-row">
-                  <button
-                    type="button"
-                    class={`roll-btn attack-main${armed ? " armed" : ""}`}
-                    onClick={armed ? damage : attack}
-                  >
-                    <span>{ui(armed ? "play.damageRoll" : "play.attackRoll")}</span>
-                    <b>{armed ? shownDice : signed(a.attackBonus)}</b>
-                  </button>
-                  {armed && (
-                    <button type="button" class="roll-btn attack-again" onClick={attack}>
-                      <span>{ui("play.attackRoll")}</span>
-                      <b>{signed(a.attackBonus)}</b>
-                    </button>
-                  )}
-                  {dmg && !armed && (
-                    <button type="button" class="roll-btn attack-again" onClick={damage}>
-                      <span>{ui("play.damageRoll")}</span>
-                      <b>{shownDice}</b>
-                    </button>
-                  )}
-                  {dmg && (
-                    <label class="check-row crit-toggle">
-                      <input
-                        type="checkbox"
-                        checked={criticalWeapon.value === a.itemId}
-                        onChange={(e) => {
-                          criticalWeapon.value = e.currentTarget.checked ? a.itemId : undefined;
-                        }}
-                      />
-                      {ui("play.criticalHit")}
-                    </label>
-                  )}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-      {part === "attacks" && <ExtraRolls />}
+      {part === "attacks" && <AttackCards />}
+      {part === "attacks" && <ExtraCards />}
     </Panel>
   );
 }

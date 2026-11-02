@@ -1,18 +1,12 @@
 import { changePlay } from "../../app/play";
 import { character, content, sheet, updateCharacter } from "../../app/store";
-import {
-  pactLeft,
-  resourceLeft,
-  setPactUsed,
-  setResourceUsed,
-  setSlotsUsed,
-  slotsLeft,
-  toggleCondition,
-} from "../../engine/play";
-import type { ClassResource } from "../../engine/resources";
+import { pactLeft, setPactUsed, setSlotsUsed, slotsLeft, toggleCondition } from "../../engine/play";
 import { type UiKey, ui } from "../../i18n/ui";
 import { SpellcastingStats } from "../sheet/SpellcastingPanel";
 import { Panel, RulesText } from "../sheet/parts";
+import { shownFeatures } from "./Features";
+import { ResourceControl, recoveryLabel, resourceLabel } from "./ResourceControl";
+import { ResourcesIcon } from "./icons";
 
 /** Spell slots as gems to tap: a filled one is available, a hollow one is spent. */
 export function Slots() {
@@ -100,24 +94,22 @@ export function Slots() {
 
 const EXTRA_FACTS = new Set(["rageDamage", "sneakAttack", "martialArts"]);
 
-/** Limited-use class features to tick off, and the class numbers that go with them. */
+/**
+ * Limited-use class features to tick off, and the class numbers that go with them. The uses of a
+ * feature that is listed with the features (it has its own card there) are not listed twice.
+ */
 export function ClassResources() {
+  const c = content.value;
   const s = sheet.value;
-  const play = character.value.play;
+  if (!c || !s) return null;
   // What the extra damage panel of the rolls covers is not listed twice.
-  const facts = s?.facts.filter((f) => !EXTRA_FACTS.has(f.kind)) ?? [];
-  if (!s || (s.resources.length === 0 && facts.length === 0)) return null;
-
-  const label = (r: ClassResource) =>
-    r.name ??
-    (r.spell && ui("resource.freeSpell", { name: content.value?.name(r.spell) ?? "" })) ??
-    (r.entry && content.value?.name(r.entry)) ??
-    ui(`resource.${r.kind}` as UiKey, { level: r.level ?? 0 });
-  const spend = (r: ClassResource, change: number) =>
-    changePlay((p) => setResourceUsed(p, r.id, (p.resourcesUsed?.[r.id] ?? 0) + change, r.max));
+  const facts = s.facts.filter((f) => !EXTRA_FACTS.has(f.kind));
+  const listed = new Set(Object.values(shownFeatures(c, s)).flat());
+  const resources = s.resources.filter((r) => !(r.entry && listed.has(r.entry)));
+  if (resources.length === 0 && facts.length === 0) return null;
 
   return (
-    <Panel title={ui("play.classResources")}>
+    <Panel title={ui("play.classResources")} className="resources-panel">
       {facts.length > 0 && (
         <ul class="plain class-facts">
           {facts.map((f) => (
@@ -125,66 +117,24 @@ export function ClassResources() {
           ))}
         </ul>
       )}
-      {s.resources.length > 0 && <p class="muted">{ui("play.resourcesHint")}</p>}
-      <ul class="plain slots-play">
-        {s.resources.map((r) => {
-          const left = resourceLeft(play, r.id, r.max);
-          return (
-            <li class="row-between" key={r.id}>
-              <span class="slot-level">
-                {label(r)}
-                <small class="muted">
-                  {" "}
-                  · {ui(r.recovery === "short" ? "play.recoverShort" : "play.recoverLong")}
-                </small>
+      {resources.length > 0 && <p class="muted">{ui("play.resourcesHint")}</p>}
+      <ul class="plain card-list">
+        {resources.map((r) => (
+          <li class="play-card res-card" key={r.id}>
+            <span class="card-badge" aria-hidden="true">
+              <ResourcesIcon />
+            </span>
+            <div class="card-head">
+              <b class="feat-name">{resourceLabel(r)}</b>
+              <span class="feat-tags">
+                <span class="card-tag">{recoveryLabel(r)}</span>
               </span>
-              {r.unlimited ? (
-                <span class="muted">{ui("play.unlimited")}</span>
-              ) : r.pool ? (
-                <span class="counter">
-                  <button
-                    type="button"
-                    class="secondary"
-                    aria-label={`${label(r)} −`}
-                    disabled={left === 0}
-                    onClick={() => spend(r, 1)}
-                  >
-                    −
-                  </button>
-                  <b>{ui("play.slotLeft", { left, total: r.max })}</b>
-                  <button
-                    type="button"
-                    class="secondary"
-                    aria-label={`${label(r)} +`}
-                    disabled={left === r.max}
-                    onClick={() => spend(r, -1)}
-                  >
-                    +
-                  </button>
-                </span>
-              ) : (
-                <>
-                  <span class="pips-btns">
-                    {Array.from({ length: r.max }, (_, i) => {
-                      const available = i < left;
-                      return (
-                        <button
-                          type="button"
-                          key={`${r.id}-${i + 1}`}
-                          class={`pip-btn${available ? " on" : ""}`}
-                          aria-pressed={available}
-                          aria-label={`${label(r)} ${i + 1}`}
-                          onClick={() => spend(r, available ? 1 : -1)}
-                        />
-                      );
-                    })}
-                  </span>
-                  <span class="muted">{ui("play.slotLeft", { left, total: r.max })}</span>
-                </>
-              )}
-            </li>
-          );
-        })}
+            </div>
+            <div class="feat-uses">
+              <ResourceControl r={r} />
+            </div>
+          </li>
+        ))}
       </ul>
     </Panel>
   );

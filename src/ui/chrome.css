@@ -886,14 +886,6 @@ input:checked + .equip-tag {
   padding: 0.15rem 0;
 }
 
-.extra-rolls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 1rem;
-  margin: 0.5rem 0;
-}
-
 /* ---- Moving to another device ---- */
 
 .transfer-head {

@@ -1,0 +1,281 @@
+import { signal } from "@preact/signals";
+import { useState } from "preact/hooks";
+import {
+  addLog,
+  changePlay,
+  criticalExtra,
+  criticalWeapon,
+  rollCheck,
+  rollDiceText,
+} from "../../app/play";
+import { character, content, sheet } from "../../app/store";
+import { doubleDice } from "../../engine/dice";
+import type { AttackResult } from "../../engine/equipment";
+import { castSpell, slotsLeft } from "../../engine/play";
+import { type UiKey, signed, ui } from "../../i18n/ui";
+import { distance } from "../../i18n/units";
+import { ruleDetail } from "../rules/EntryDetail";
+import { extraAmount, extraName, extraNote } from "../sheet/ExtraDamage";
+import { BowIcon, ChecksIcon, CriticalIcon, SwordIcon } from "./icons";
+
+/** The weapon whose attack was just rolled: its damage button asks to be tapped. */
+const damageDue = signal<string | undefined>(undefined);
+
+const DAMAGE_TYPES = [
+  "acid",
+  "bludgeoning",
+  "cold",
+  "fire",
+  "force",
+  "lightning",
+  "necrotic",
+  "piercing",
+  "poison",
+  "psychic",
+  "radiant",
+  "slashing",
+  "thunder",
+];
+
+/** A kind of damage in the language ("contundente"), or as it is written when it is not a usual one. */
+const typeName = (type: string) =>
+  DAMAGE_TYPES.includes(type) ? ui(`hb.o.${type}` as UiKey).toLowerCase() : type;
+
+const withBonus = (dice: string, bonus: number) =>
+  `${dice}${bonus === 0 ? "" : bonus > 0 ? `+${bonus}` : bonus}`;
+
+/** One weapon: its name and what it is, then a button for the attack and one for each damage. */
+function AttackCard({ a }: { a: AttackResult }) {
+  const c = content.value;
+  const s = sheet.value;
+  if (!c || !s) return null;
+  const name = c.name(a.itemId);
+  // A rage adds to melee weapon attacks.
+  const rage = s.extraDamage.find((e) => e.kind === "rage");
+  const rageBonus =
+    character.value.play.raging && !a.ranged && rage?.kind === "rage" ? rage.bonus : 0;
+  const damages = [
+    ...(a.damage ? [{ key: "one", label: undefined, part: a.damage }] : []),
+    ...(a.twoHandedDamage
+      ? [{ key: "two", label: ui("play.weaponTwoHands"), part: a.twoHandedDamage }]
+      : []),
+  ].map((d) => ({ ...d, dice: withBonus(d.part.dice, d.part.bonus + rageBonus) }));
+  const critical = criticalWeapon.value === a.itemId;
+  const due = damageDue.value === a.itemId;
+
+  const attack = () => {
+    const roll = rollCheck(`${name} - ${ui("play.attackRoll")}`, a.attackBonus, {
+      critMin: s.critRange,
+    });
+    criticalExtra.value = roll.critical;
+    // A natural 20 arms the critical damage; any other attack clears it.
+    if (roll.critical) criticalWeapon.value = a.itemId;
+    else if (criticalWeapon.value === a.itemId) criticalWeapon.value = undefined;
+    // The damage is due, unless the attack was a fumble.
+    damageDue.value = a.damage && !roll.fumble ? a.itemId : undefined;
+  };
+  const hurt = (dice: string) => {
+    const text = critical ? (doubleDice(dice) ?? dice) : dice;
+    const label = `${name} - ${ui("play.damageRoll")}`;
+    rollDiceText(critical ? `${label} (${ui("play.criticalDamage")})` : label, text);
+    if (critical) criticalWeapon.value = undefined;
+    damageDue.value = undefined;
+  };
+
+  const range = a.range.long
+    ? ui("play.weaponRange", { normal: distance(a.range.normal), long: distance(a.range.long) })
+    : a.ranged
+      ? distance(a.range.normal)
+      : "";
+  const meta = [
+    ui(a.ranged ? "play.weaponRanged" : "play.weaponMelee"),
+    ...a.properties.map((p) => c.name(p)),
+    range,
+  ].filter(Boolean);
+
+  return (
+    <li class="play-card attack-card" data-damage={a.damage?.type ?? ""}>
+      <span class="card-badge" aria-hidden="true">
+        {a.ranged ? <BowIcon /> : <SwordIcon />}
+      </span>
+      <div class="card-head">
+        <button
+          type="button"
+          class="link card-name"
+          aria-label={`${ui("spells.info")}: ${name}`}
+          onClick={() => {
+            ruleDetail.value = a.itemId;
+          }}
+        >
+          {name}
+          {a.enhancement > 0 && <span class="card-tag">+{a.enhancement}</span>}
+        </button>
+        <span class="card-meta">{meta.join(" · ")}</span>
+      </div>
+      <div class="card-actions attack-actions">
+        <div class="card-main">
+          <button type="button" class="card-btn card-primary card-wide" onClick={attack}>
+            <ChecksIcon />
+            <span>{ui("play.attackRoll")}</span>
+            <b>{signed(a.attackBonus)}</b>
+          </button>
+          {a.damage && (
+            <button
+              type="button"
+              class="card-btn card-crit"
+              aria-pressed={critical}
+              aria-label={ui("play.criticalHit")}
+              title={ui("play.criticalHit")}
+              onClick={() => {
+                criticalWeapon.value = critical ? undefined : a.itemId;
+              }}
+            >
+              <CriticalIcon />
+            </button>
+          )}
+        </div>
+        {damages.map((d) => {
+          const dice = critical ? (doubleDice(d.dice) ?? d.dice) : d.dice;
+          return (
+            <button
+              key={d.key}
+              type="button"
+              class="card-btn card-roll card-damage"
+              data-damage={d.part.type}
+              data-due={due || undefined}
+              onClick={() => hurt(d.dice)}
+            >
+              <b>{dice}</b>
+              <small>{[d.label, typeName(d.part.type)].filter(Boolean).join(" · ")}</small>
+            </button>
+          );
+        })}
+      </div>
+    </li>
+  );
+}
+
+/** The weapons of the character, as cards. */
+export function AttackCards() {
+  const s = sheet.value;
+  if (!s) return null;
+  if (s.attacks.length === 0) return <p class="muted">{ui("play.noAttacks")}</p>;
+  return (
+    <ul class="plain card-list">
+      {s.attacks.map((a) => (
+        <AttackCard key={a.itemId} a={a} />
+      ))}
+    </ul>
+  );
+}
+
+/** Roll one extra damage: the dice double on a critical hit. */
+function rollExtra(label: string, dice: string) {
+  const critical = criticalExtra.value;
+  const text = critical ? (doubleDice(dice) ?? dice) : dice;
+  rollDiceText(critical ? `${label} (${ui("play.criticalDamage")})` : label, text);
+}
+
+/** What the classes add to an attack (sneak attack, smite, rage), as cards, with the dice to roll after the weapon's. */
+export function ExtraCards() {
+  const s = sheet.value;
+  const [slot, setSlot] = useState(1);
+  if (!s || s.extraDamage.length === 0) return null;
+  const play = character.value.play;
+  const levels = s.spellSlots
+    .map((total, i) => ({ level: i + 1, left: slotsLeft(play, i + 1, total), total }))
+    .filter((x) => x.total > 0 && x.level <= 5);
+  const chosen = levels.find((x) => x.level === slot)?.level ?? levels[0]?.level ?? 1;
+  const rollable = s.extraDamage.some((e) => e.kind === "sneakAttack" || e.kind === "divineSmite");
+
+  return (
+    <section class="card-group extra-cards">
+      <header class="card-group-head">
+        <h4>{ui("extra.title")}</h4>
+        {rollable && (
+          <button
+            type="button"
+            class="card-btn card-crit"
+            aria-pressed={criticalExtra.value}
+            onClick={() => {
+              criticalExtra.value = !criticalExtra.value;
+            }}
+          >
+            <CriticalIcon />
+            <span>{ui("play.criticalHit")}</span>
+          </button>
+        )}
+      </header>
+      <ul class="plain card-list">
+        {s.extraDamage.map((extra) => (
+          <li class="play-card extra-card" data-extra={extra.kind} key={extra.kind}>
+            <span class="card-badge" aria-hidden="true">
+              <CriticalIcon />
+            </span>
+            <div class="card-head">
+              <b class="extra-name">{extraName(extra)}</b>
+              <span class="card-meta extra-meta">
+                {extraAmount(extra)} · {extraNote(extra)}
+              </span>
+            </div>
+            {extra.kind === "sneakAttack" && (
+              <div class="card-actions">
+                <button
+                  type="button"
+                  class="card-btn card-roll card-primary card-wide"
+                  onClick={() => rollExtra(extraName(extra), extra.dice)}
+                >
+                  <ChecksIcon />
+                  <span>{extraName(extra)}</span>
+                  <b>{extra.dice}</b>
+                </button>
+              </div>
+            )}
+            {extra.kind === "divineSmite" && levels.length > 0 && (
+              <>
+                <div class="spell-slot-pick">
+                  <small>{ui("play.spellAtSlot")}</small>
+                  {levels.map((x) => (
+                    <button
+                      key={x.level}
+                      type="button"
+                      class="card-btn spell-slot-btn"
+                      aria-label={`${ui("extra.slot")}: ${x.level}`}
+                      aria-pressed={x.level === chosen}
+                      disabled={x.left === 0}
+                      onClick={() => setSlot(x.level)}
+                    >
+                      {x.level}
+                    </button>
+                  ))}
+                </div>
+                <div class="card-actions">
+                  <button
+                    type="button"
+                    class="card-btn card-roll card-primary card-wide"
+                    onClick={() => {
+                      const cast = castSpell(play, chosen, s.spellSlots);
+                      if (!cast) {
+                        addLog({ label: extraName(extra), detail: ui("play.noSlot") });
+                        return;
+                      }
+                      changePlay(() => cast.play);
+                      rollExtra(
+                        `${extraName(extra)} (${ui("play.castSlot", { level: cast.slot.level })})`,
+                        `${Math.min(5, 1 + cast.slot.level)}d8`,
+                      );
+                    }}
+                  >
+                    <ChecksIcon />
+                    <span>{extraName(extra)}</span>
+                    <b>{Math.min(5, 1 + chosen)}d8</b>
+                  </button>
+                </div>
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}

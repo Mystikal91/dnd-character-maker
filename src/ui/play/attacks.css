@@ -1,0 +1,108 @@
+/* ---- The attacks of Play: what is only theirs (the cards are in cards.css) ---- */
+
+/* The weapon's damage gives the colour of the card. */
+.attack-card[data-damage="bludgeoning"] {
+  --hue: #7a6248;
+}
+.attack-card[data-damage="piercing"] {
+  --hue: #4f6f8a;
+}
+.attack-card[data-damage="slashing"] {
+  --hue: #9a3a3a;
+}
+
+.attack-card .card-meta {
+  white-space: normal;
+}
+
+.card-tag {
+  margin-inline-start: 0.4rem;
+  color: var(--hue);
+}
+
+/* The attack and the mark for a critical hit on one line, the damages in two columns under it. */
+.attack-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+}
+
+.card-main {
+  display: flex;
+  grid-column: 1 / -1;
+  gap: 0.45rem;
+}
+
+.play .card-wide:not(.pip-btn):not(.info-btn):not(.link) {
+  flex: 1 1 auto;
+  max-width: none;
+  min-height: 3.1rem;
+  justify-content: space-between;
+}
+
+.play .card-wide b {
+  font-size: 1.15rem;
+}
+
+.play .card-damage:not(.pip-btn):not(.info-btn):not(.link) {
+  flex-direction: column;
+  gap: 0;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.play .card-damage b {
+  font-size: 1.15rem;
+}
+
+.play .card-damage small {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+/* The mark for a critical hit: armed, the damage rolls its dice twice. */
+.play .card-crit:not(.pip-btn):not(.info-btn):not(.link) {
+  flex: none;
+  width: 3.1rem;
+  min-height: 3.1rem;
+  padding: 0;
+}
+
+.play .extra-cards .card-group-head .card-crit:not(.pip-btn):not(.info-btn):not(.link) {
+  width: auto;
+  min-height: 2.75rem;
+  padding: 0 0.7rem;
+}
+
+/* What the classes add to an attack. */
+.extra-cards .card-group-head {
+  align-items: center;
+}
+
+.extra-card[data-extra="sneakAttack"] {
+  --hue: #52703c;
+}
+.extra-card[data-extra="divineSmite"] {
+  --hue: #b8921c;
+}
+.extra-card[data-extra="rage"] {
+  --hue: #9a3a3a;
+}
+.extra-card[data-extra="brutalCritical"] {
+  --hue: #7a3a5a;
+}
+.extra-card[data-extra="martialArts"] {
+  --hue: #4f6f8a;
+}
+
+.extra-name {
+  font-size: 1.05rem;
+}
+
+.extra-card .card-meta {
+  white-space: normal;
+}
+
+.extra-card .spell-slot-pick {
+  grid-column: 1 / -1;
+}

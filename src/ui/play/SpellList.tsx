@@ -53,7 +53,7 @@ function ConcentrationBanner({ spell }: { spell: string }) {
       {alert !== undefined && (
         <button
           type="button"
-          class="spell-btn"
+          class="card-btn"
           onClick={() => rollCheck(`${c.name(spell)} - ${ui("play.concentrationSave")}`, conSave)}
         >
           {ui("play.concentrationRoll")} {signed(conSave)}
@@ -61,7 +61,7 @@ function ConcentrationBanner({ spell }: { spell: string }) {
       )}
       <button
         type="button"
-        class="spell-btn"
+        class="card-btn"
         onClick={() => {
           concentrationAlert.value = undefined;
           changePlay((p) => endConcentration(p));
@@ -130,17 +130,17 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
 
   return (
     <li
-      class="spell-card"
+      class="play-card spell-card"
       data-school={data.school ?? ""}
       data-focus={concentrating ? "on" : undefined}
     >
-      <span class="spell-badge" aria-hidden="true">
+      <span class="card-badge" aria-hidden="true">
         {level === 0 ? "✦" : level}
       </span>
-      <div class="spell-head">
+      <div class="card-head">
         <button
           type="button"
-          class="link spell-name"
+          class="link card-name"
           aria-label={`${ui("spells.info")}: ${name}`}
           onClick={() => {
             spellDetail.value = id;
@@ -148,7 +148,7 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
         >
           {name}
         </button>
-        <span class="spell-meta">
+        <span class="card-meta">
           {[school, time].filter(Boolean).join(" · ")}
           {data.concentration && <abbr title={ui("spells.concentration")}>C</abbr>}
           {data.ritual && <abbr title={ui("spells.ritual")}>R</abbr>}
@@ -162,7 +162,7 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
             <button
               key={l}
               type="button"
-              class="spell-btn spell-slot-btn"
+              class="card-btn spell-slot-btn"
               aria-label={`${ui("play.spellSlotChoice", { spell: name })}: ${l}`}
               aria-pressed={l === slotLevel}
               onClick={() => {
@@ -176,16 +176,16 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
       )}
 
       {hasActions && (
-        <div class="spell-actions">
+        <div class="card-actions">
           {level > 0 && (
-            <button type="button" class="spell-btn spell-cast" onClick={cast}>
+            <button type="button" class="card-btn card-primary" onClick={cast}>
               {ui("play.cast")}
             </button>
           )}
           {rolls.attack && caster && (
             <button
               type="button"
-              class="spell-btn spell-roll spell-attack"
+              class="card-btn card-roll card-attack"
               onClick={() => {
                 const roll = rollCheck(`${name} - ${ui("play.spellAttack")}`, caster.attackBonus);
                 criticalSpell.value = roll.critical ? id : undefined;
@@ -202,7 +202,7 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
               <button
                 key={`${part.type}${part.dice}`}
                 type="button"
-                class="spell-btn spell-roll spell-damage"
+                class="card-btn card-roll card-damage"
                 data-damage={part.type}
                 onClick={() => {
                   rollDiceText(`${name} (${damageLabel(part, dice)})`, dice);
@@ -216,7 +216,7 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
           {rolls.heal && (
             <button
               type="button"
-              class="spell-btn spell-roll spell-heal"
+              class="card-btn card-roll card-heal"
               onClick={() => {
                 if (rolls.heal) rollDiceText(`${name} - ${ui("play.spellHeal")}`, rolls.heal);
               }}
@@ -237,7 +237,7 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
           {data.concentration === true && (
             <button
               type="button"
-              class="spell-btn spell-focus-btn"
+              class="card-btn spell-focus-btn"
               aria-pressed={concentrating}
               onClick={() => {
                 concentrationAlert.value = undefined;
@@ -275,7 +275,7 @@ export function PlaySpells() {
             <button
               key={level}
               type="button"
-              class="spell-btn spell-jump-btn"
+              class="card-btn spell-jump-btn"
               onClick={() =>
                 document.getElementById(levelId(level))?.scrollIntoView({ block: "start" })
               }

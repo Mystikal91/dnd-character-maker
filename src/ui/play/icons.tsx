@@ -108,3 +108,30 @@ export const SaveIcon = () => (
     <path d="M12 3l7 2.500v6c0 4.500-3 7.500-7 9.500-4-2-7-5-7-9.500v-6z" />
   </Icon>
 );
+
+/** A sword, point up. */
+export const SwordIcon = () => (
+  <Icon>
+    <path d="M20 4l-9.500 9.500" />
+    <path d="M20 4l-.2 3.800M20 4l-3.800.2" />
+    <path d="M8 12l4 4" />
+    <path d="M10.500 14.500L5.500 19.500" />
+    <circle cx="4.500" cy="19.500" r="1" />
+  </Icon>
+);
+
+/** A bow with an arrow. */
+export const BowIcon = () => (
+  <Icon>
+    <path d="M7 3.500c9 3.500 9 13.500 0 17" />
+    <path d="M7 3.500v17" />
+    <path d="M7 12h13M16.500 8.500L20 12l-3.500 3.500" />
+  </Icon>
+);
+
+/** A crossed-out star: a critical hit. */
+export const CriticalIcon = () => (
+  <Icon>
+    <path d="M12 3l2.200 5.300 5.800.5-4.400 3.800 1.400 5.700L12 15.300 7 18.300l1.400-5.700L4 8.800l5.800-.5z" />
+  </Icon>
+);

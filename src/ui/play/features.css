@@ -1,0 +1,157 @@
+/* ---- The features of Play: cards that open to their text (the cards are in cards.css) ---- */
+
+.feat-search {
+  width: 100%;
+  margin-bottom: 0.4rem;
+}
+
+.feat-card[data-origin="class"],
+.res-card {
+  --hue: var(--accent);
+}
+.feat-card[data-origin="species"] {
+  --hue: #4f8a3d;
+}
+.feat-card[data-origin="feat"] {
+  --hue: #b8801c;
+}
+
+/* The card is a summary that opens, and under it the uses to tick off. */
+.feat-card {
+  display: block;
+  padding: 0;
+}
+
+.feat-card details {
+  padding: 0.7rem 0.8rem;
+}
+
+.feat-summary {
+  display: grid;
+  grid-template-columns: 2.7rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.feat-summary::-webkit-details-marker {
+  display: none;
+}
+
+.feat-summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.feat-name {
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+:root[data-style="fantasy"] .feat-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
+
+.feat-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.feat-tags .card-tag {
+  margin: 0;
+  color: var(--hue);
+}
+
+.feat-tags:empty {
+  display: none;
+}
+
+/* The first lines of the text, while the card is closed. */
+.feat-preview {
+  display: -webkit-box;
+  font-family: var(--font-body);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+details[open] .feat-preview {
+  display: none;
+}
+
+.feat-chevron {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg);
+  transition: transform 0.15s;
+}
+
+details[open] .feat-chevron {
+  transform: rotate(-135deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feat-chevron {
+    transition: none;
+  }
+}
+
+.feat-body {
+  margin-top: 0.6rem;
+  font-family: var(--font-body);
+  letter-spacing: 0;
+  text-transform: none;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--border);
+}
+
+.feat-body p {
+  margin: 0 0 0.6rem;
+}
+
+/* The uses of a feature, always in view under its name. */
+.feat-uses {
+  padding: 0.5rem 0.8rem 0.7rem;
+  border-top: 1px solid var(--border);
+}
+
+.res-card .feat-uses {
+  grid-column: 1 / -1;
+  margin-top: 0.4rem;
+  padding: 0.5rem 0 0;
+}
+
+.res-control {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.8rem;
+}
+
+.class-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.8rem;
+}
+
+.class-facts li {
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-size: 0.92rem;
+}
