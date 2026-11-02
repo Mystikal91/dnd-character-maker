@@ -490,9 +490,9 @@ function termOfWord(value: string): FeatureTerm | undefined {
   return undefined;
 }
 
-/** What the `usage` of a sheet says: how many times (a number or a stat's name) and the rest. */
+/** What the `usage` of a sheet says: how many times (a number or a stat's name) and the rest ("day" is a long rest). */
 const USAGE_TEXT =
-  /^(\d+|\{\{\s*([^{}]+?)\s*\}\})\s*\/\s*(long rest|short rest|long or short rest|short or long rest)\.?$/i;
+  /^(\d+|\{\{\s*([^{}]+?)\s*\}\})\s*\/\s*(long rest|short rest|long or short rest|short or long rest|day)\.?$/i;
 
 /**
  * The limited uses a feature says it has between rests: `1/Long Rest`, or a count that a stat of

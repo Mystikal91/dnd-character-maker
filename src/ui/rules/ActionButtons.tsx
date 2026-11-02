@@ -20,7 +20,7 @@ const DAMAGE_TYPES = [
 ];
 
 /** The dice of a kind of damage as a button says them: `2d6+3 piercing`, in the language. */
-const damageLabel = (part: DamagePart, dice: string) =>
+export const damageLabel = (part: DamagePart, dice: string) =>
   DAMAGE_TYPES.includes(part.type)
     ? ui(`monster.damage.${part.type}` as UiKey, { dice })
     : `${dice} ${part.type}`;

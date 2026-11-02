@@ -17,6 +17,7 @@ import { type UiKey, signed, ui } from "../../i18n/ui";
 import { Panel, RulesText } from "../sheet/parts";
 import { collectSpellRows } from "../spellRows";
 import { SpellInfoButton } from "../spells/SpellInfo";
+import { SpellRollButtons } from "./SpellRolls";
 
 /** Spell slots as gems to tap: a filled one is available, a hollow one is spent. */
 export function Slots() {
@@ -290,6 +291,7 @@ export function PlaySpells() {
                       {ui("play.concentrate")}
                     </button>
                   )}
+                  <SpellRollButtons id={row.id} level={row.level} />
                 </li>
               ))}
           </ul>

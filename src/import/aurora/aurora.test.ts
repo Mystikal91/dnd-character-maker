@@ -813,6 +813,7 @@ describe("classes and archetypes", () => {
       ${trait("Flare", "1/Short Rest")}
       ${trait("Gift", "{{proficiency}}/Long Rest")}
       ${trait("Either", "1/Long or Short Rest")}
+      ${trait("Daily", "2/Day")}
       ${trait("Pooled", "Ki")}
       ${trait("Turny", "1/Turn")}
       ${trait("Stepped", "{{luck:usage}}/Long Rest", `<stat name="luck:usage" value="1" level="9" /><stat name="luck:usage" value="1" level="13" />`)}
@@ -821,7 +822,7 @@ describe("classes and archetypes", () => {
         <description><p>Folk.</p></description>
         <rules>
           <grant type="Racial Trait" id="ID_T_SENSE" /><grant type="Racial Trait" id="ID_T_FLARE" />
-          <grant type="Racial Trait" id="ID_T_GIFT" /><grant type="Racial Trait" id="ID_T_EITHER" />
+          <grant type="Racial Trait" id="ID_T_GIFT" /><grant type="Racial Trait" id="ID_T_EITHER" /><grant type="Racial Trait" id="ID_T_DAILY" />
           <grant type="Racial Trait" id="ID_T_POOLED" /><grant type="Racial Trait" id="ID_T_TURNY" />
           <grant type="Racial Trait" id="ID_T_STEPPED" /><grant type="Racial Trait" id="ID_T_UNKNOWN" />
         </rules>
@@ -836,6 +837,8 @@ describe("classes and archetypes", () => {
     expect(uses("flare")).toEqual([{ type: "uses", term: 1, recharge: "short" }]);
     expect(uses("gift")).toEqual([{ type: "uses", term: { of: "proficiency" }, recharge: "long" }]);
     expect(uses("either")).toEqual([{ type: "uses", term: 1, recharge: "short" }]);
+    // "Per day" is a long rest.
+    expect(uses("daily")).toEqual([{ type: "uses", term: 2, recharge: "long" }]);
     // A shared pool, a use per turn, a count that grows with the level or one the element does not give: left to the person.
     for (const slug of ["pooled", "turny", "stepped", "unknown"]) expect(uses(slug)).toEqual([]);
   });

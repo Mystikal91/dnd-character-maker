@@ -35,6 +35,13 @@ export const CHANGELOG: ChangelogEntry[] = [
         de: "Die 341 magischen Gegenstände des System Reference Document sind in der App (Text, Seltenheit und Einstimmung; was sie bewirken, steht im Text). Die von Aurora mit gleichem Namen bleiben getrennt, da sie auch ihre Boni geben. Aus Aurora importierte Inhalte zeigen „Veraltet“: Importiere sie erneut, um zu sehen, ob ein Merkmal eine Aktion, Bonusaktion oder Reaktion ist.",
         es: "Los 341 objetos mágicos del System Reference Document están en la app (texto, rareza y sintonización; lo que hacen está en el texto). Los de Aurora con el mismo nombre quedan aparte, pues también dan sus bonificaciones. Los contenidos importados de Aurora muestran «Por actualizar»: impórtalos de nuevo para ver si un rasgo es una acción, una acción adicional o una reacción.",
       },
+      {
+        en: "Spells you can roll in Play: next to each spell with an attack, damage or healing in the SRD there are buttons for the spell attack, the damage (a critical hit rolls the dice twice) and the healing, with the dice of the slot level you choose or of your level for a cantrip, and the save DC the target rolls against. Abilities that say “N per day” now count as one use for each long rest.",
+        it: "Gli incantesimi si tirano in Gioca: accanto a ogni magia con attacco, danni o guarigione dell’SRD ci sono i pulsanti per l’attacco magico, i danni (un colpo critico tira i dadi due volte) e la guarigione, con i dadi dello slot che scegli o del tuo livello per un trucchetto, e la CD del tiro salvezza del bersaglio. I privilegi che dicono “N al giorno” contano ora un uso per ogni riposo lungo.",
+        fr: "Les sorts se lancent en Jouer : à côté de chaque sort avec attaque, dégâts ou soins du SRD, des boutons pour l’attaque de sort, les dégâts (un coup critique lance les dés deux fois) et les soins, avec les dés de l’emplacement choisi ou de ton niveau pour un sort mineur, et le DD du jet de sauvegarde de la cible. Les aptitudes « N par jour » comptent maintenant une utilisation par repos long.",
+        de: "Zauber würfelst du im Spielmodus: Neben jedem Zauber mit Angriff, Schaden oder Heilung aus dem SRD gibt es Schaltflächen für den Zauberangriff, den Schaden (ein kritischer Treffer würfelt die Würfel doppelt) und die Heilung, mit den Würfeln der gewählten Zauberplatzstufe oder deiner Stufe bei einem Zaubertrick, und den Rettungswurf-SG des Ziels. Merkmale mit „N pro Tag“ zählen jetzt eine Anwendung je langer Rast.",
+        es: "Los conjuros se tiran en Jugar: junto a cada conjuro con ataque, daño o curación del SRD hay botones para el ataque de conjuro, el daño (un golpe crítico tira los dados dos veces) y la curación, con los dados del espacio elegido o de tu nivel para un truco, y la CD de la salvación del objetivo. Los rasgos de «N al día» cuentan ahora un uso por descanso largo.",
+      },
     ],
   },
   {
@@ -913,16 +920,6 @@ export const ROADMAP: RoadmapItem[] = [
       fr: "Les traductions manquantes : environ 140 pièces d'équipement, les variantes des objets magiques (armes +1, potions de force de géant...), les maîtrises et quelques options de classe. La traduction automatique les comble en attendant.",
       de: "Die fehlenden Übersetzungen: etwa 140 Ausrüstungsgegenstände, die Varianten der magischen Gegenstände (Waffen +1, Tränke der Riesenstärke ...), die Übungen und einige Klassenoptionen. Die automatische Übersetzung füllt sie in der Zwischenzeit.",
       es: "Las traducciones que faltan: unos 140 objetos de equipo, las variantes de los objetos mágicos (armas +1, pociones de fuerza de gigante...), las competencias y algunas opciones de clase. La traducción automática las cubre mientras tanto.",
-    },
-  },
-  {
-    id: "spellRolls",
-    text: {
-      en: "Spell attack and damage rolls in Play, with the dice for the slot used.",
-      it: "Tiri per colpire e per i danni degli incantesimi in Gioca, con i dadi del livello di slot usato.",
-      fr: "Jets d'attaque et de dégâts des sorts dans Jouer, avec les dés de l'emplacement utilisé.",
-      de: "Angriffs- und Schadenswürfe von Zaubern im Spielmodus, mit den Würfeln des verwendeten Zauberplatzes.",
-      es: "Tiradas de ataque y de daño de los conjuros en Jugar, con los dados del espacio usado.",
     },
   },
   {

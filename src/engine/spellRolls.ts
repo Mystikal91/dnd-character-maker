@@ -1,0 +1,74 @@
+/** What the SRD data of a spell says it rolls (`attackType`, `damage`, `healAtSlotLevel`). */
+export interface SpellRollData {
+  attackType?: string;
+  damage?: {
+    damageType?: { index: string };
+    damageAtSlotLevel?: Record<string, string>;
+    damageAtCharacterLevel?: Record<string, string>;
+  }[];
+  healAtSlotLevel?: Record<string, string>;
+  dc?: { dcType: { index: string }; dcSuccess?: string };
+}
+
+export interface SpellRolls {
+  /** The spell is cast with an attack roll. */
+  attack: boolean;
+  damage: { type: string; dice: string }[];
+  /** The dice of the healing, with the spellcasting modifier already in. */
+  heal?: string;
+  /** The ability the target saves with. */
+  save?: string;
+  /** The slot levels a bigger one changes something for: the dice differ from the base level. */
+  scalesBySlot: boolean;
+}
+
+/** The step of a table keyed by level that applies at `level`: the highest one not above it. */
+function stepAt(table: Record<string, string>, level: number): string | undefined {
+  const keys = Object.keys(table)
+    .map(Number)
+    .sort((a, b) => a - b);
+  const first = keys[0];
+  if (first === undefined) return undefined;
+  const key = keys.filter((k) => k <= level).pop() ?? first;
+  return table[String(key)];
+}
+
+/** `1d8 + MOD` with the modifier worked out, written for the dice roller (`1d8+3`). */
+function withModifier(text: string, modifier: number): string {
+  const worked = text.replace(
+    /\s*\+\s*MOD/gi,
+    modifier === 0 ? "" : modifier > 0 ? `+${modifier}` : `${modifier}`,
+  );
+  return worked.replace(/\s+/g, "");
+}
+
+/**
+ * What a spell rolls when cast with a slot of `slotLevel` by a character of `characterLevel`:
+ * the dice come from the table of the spell for that slot (or, for a cantrip, for that level).
+ */
+export function spellRolls(
+  data: SpellRollData,
+  options: { slotLevel: number; characterLevel: number; modifier: number },
+): SpellRolls {
+  const damage: SpellRolls["damage"] = [];
+  let scalesBySlot = false;
+  for (const part of data.damage ?? []) {
+    const bySlot = part.damageAtSlotLevel;
+    const table = bySlot ?? part.damageAtCharacterLevel;
+    const level = bySlot ? options.slotLevel : options.characterLevel;
+    const dice = table && stepAt(table, level);
+    if (!dice) continue;
+    if (bySlot && new Set(Object.values(bySlot)).size > 1) scalesBySlot = true;
+    damage.push({ type: part.damageType?.index ?? "", dice: withModifier(dice, options.modifier) });
+  }
+  const healTable = data.healAtSlotLevel;
+  const healed = healTable && stepAt(healTable, options.slotLevel);
+  if (healTable && new Set(Object.values(healTable)).size > 1) scalesBySlot = true;
+  return {
+    attack: Boolean(data.attackType),
+    damage,
+    ...(healed && { heal: withModifier(healed, options.modifier) }),
+    ...(data.dc && { save: data.dc.dcType.index }),
+    scalesBySlot,
+  };
+}
