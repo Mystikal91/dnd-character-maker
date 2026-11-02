@@ -15,6 +15,7 @@ import { applyUpdate, loadUpdateNews } from "./app/updates";
 import { App } from "./ui/App";
 import "./ui/build/build.css";
 import "./ui/play/play.css";
+import "./ui/play/spells.css";
 import "./ui/tour.css";
 import "./ui/print/print.css";
 import "./ui/theme/controls.css";

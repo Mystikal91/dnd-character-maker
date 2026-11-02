@@ -1486,12 +1486,3 @@ fieldset.segmented {
     animation: none !important;
   }
 }
-
-/* The rolls of a spell, next to its name in the list of spells. */
-.play .spell-rolls {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.3rem;
-  margin-inline-start: 0.4rem;
-}

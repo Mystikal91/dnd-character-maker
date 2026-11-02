@@ -1,23 +1,18 @@
-import { addLog, changePlay, concentrationAlert, rollCheck } from "../../app/play";
+import { changePlay } from "../../app/play";
 import { character, content, sheet, updateCharacter } from "../../app/store";
 import {
-  castSpell,
-  endConcentration,
   pactLeft,
   resourceLeft,
   setPactUsed,
   setResourceUsed,
   setSlotsUsed,
   slotsLeft,
-  startConcentration,
   toggleCondition,
 } from "../../engine/play";
 import type { ClassResource } from "../../engine/resources";
-import { type UiKey, signed, ui } from "../../i18n/ui";
+import { type UiKey, ui } from "../../i18n/ui";
+import { SpellcastingStats } from "../sheet/SpellcastingPanel";
 import { Panel, RulesText } from "../sheet/parts";
-import { collectSpellRows } from "../spellRows";
-import { SpellInfoButton } from "../spells/SpellInfo";
-import { SpellRollButtons } from "./SpellRolls";
 
 /** Spell slots as gems to tap: a filled one is available, a hollow one is spent. */
 export function Slots() {
@@ -29,7 +24,9 @@ export function Slots() {
     .filter((x) => x.total > 0);
 
   return (
-    <Panel title={ui("play.slots")}>
+    <Panel title={ui("sheet.spellcasting")}>
+      <SpellcastingStats s={s} />
+      <h4>{ui("play.slots")}</h4>
       <p class="muted">{ui("play.slotsHint")}</p>
       <ul class="plain slots-play">
         {levels.map(({ level, total }) => {
@@ -189,114 +186,6 @@ export function ClassResources() {
           );
         })}
       </ul>
-    </Panel>
-  );
-}
-
-/** The spells the character can cast, grouped by level, each with its details one tap away. */
-export function PlaySpells() {
-  const c = content.value;
-  const s = sheet.value;
-  const play = character.value.play;
-  if (!c || !s) return null;
-  const rows = collectSpellRows(c, s);
-  if (rows.length === 0) return null;
-  const levels = [...new Set(rows.map((r) => r.level))];
-  const concentrating = play.concentration;
-  const alert = concentrationAlert.value;
-  const conSave = s.saves.con.bonus;
-
-  return (
-    <Panel title={ui("play.spells")}>
-      {concentrating && (
-        <div class="concentration" aria-live="polite">
-          <b>{ui("play.concentrating", { spell: c.name(concentrating) })}</b>
-          {alert !== undefined && (
-            <p class="note">
-              {ui("play.concentrationCheck", { dc: alert })}{" "}
-              <button
-                type="button"
-                class="roll-btn"
-                onClick={() =>
-                  rollCheck(`${c.name(concentrating)} - ${ui("play.concentrationSave")}`, conSave)
-                }
-              >
-                <span>{ui("play.concentrationRoll")}</span>
-                <b>{signed(conSave)}</b>
-              </button>
-            </p>
-          )}
-          <button
-            type="button"
-            class="secondary"
-            onClick={() => {
-              concentrationAlert.value = undefined;
-              changePlay((p) => endConcentration(p));
-            }}
-          >
-            {ui("play.concentrationEnd")}
-          </button>
-        </div>
-      )}
-      {levels.map((level) => (
-        <div key={level}>
-          <h4>{level === 0 ? ui("spells.cantrips") : ui("spells.level", { level })}</h4>
-          <ul class="plain spell-names">
-            {rows
-              .filter((r) => r.level === level)
-              .map((row) => (
-                <li key={row.id}>
-                  {c.name(row.id)}
-                  <SpellInfoButton id={row.id} />
-                  {row.level > 0 && (
-                    <button
-                      type="button"
-                      class="chip"
-                      onClick={() => {
-                        const cast = castSpell(play, row.level, s.spellSlots, s.pactSlots);
-                        const name = c.name(row.id);
-                        if (!cast) {
-                          addLog({ label: name, detail: ui("play.noSlot") });
-                          return;
-                        }
-                        changePlay(() => cast.play);
-                        addLog({
-                          label: name,
-                          detail: ui(
-                            cast.slot.kind === "pact" ? "play.castPact" : "play.castSlot",
-                            {
-                              level: cast.slot.level,
-                            },
-                          ),
-                        });
-                      }}
-                    >
-                      {ui("play.cast")}
-                    </button>
-                  )}
-                  {c.index.get(row.id)?.data.concentration === true && (
-                    <button
-                      type="button"
-                      class={`chip${concentrating === row.id ? " on" : ""}`}
-                      aria-pressed={concentrating === row.id}
-                      onClick={() => {
-                        concentrationAlert.value = undefined;
-                        changePlay((p) =>
-                          concentrating === row.id
-                            ? endConcentration(p)
-                            : startConcentration(p, row.id),
-                        );
-                      }}
-                    >
-                      {ui("play.concentrate")}
-                    </button>
-                  )}
-                  <SpellRollButtons id={row.id} level={row.level} />
-                </li>
-              ))}
-          </ul>
-        </div>
-      ))}
     </Panel>
   );
 }

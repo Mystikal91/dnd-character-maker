@@ -84,3 +84,27 @@ export const ResourcesIcon = () => (
     <path d="M9.500 14h5" />
   </Icon>
 );
+
+/** Rings drawn inwards: keeping the mind on a spell. */
+export const FocusIcon = () => (
+  <Icon>
+    <circle cx="12" cy="12" r="8.500" />
+    <circle cx="12" cy="12" r="4.500" />
+    <circle cx="12" cy="12" r="1" />
+  </Icon>
+);
+
+/** A cross in a drop: healing. */
+export const HealIcon = () => (
+  <Icon>
+    <path d="M12 3.500c3.500 4 6 6.800 6 10a6 6 0 0 1-12 0c0-3.200 2.500-6 6-10z" />
+    <path d="M12 11v5M9.500 13.500h5" />
+  </Icon>
+);
+
+/** A shield: the saving throw of the target. */
+export const SaveIcon = () => (
+  <Icon>
+    <path d="M12 3l7 2.500v6c0 4.500-3 7.500-7 9.500-4-2-7-5-7-9.500v-6z" />
+  </Icon>
+);
