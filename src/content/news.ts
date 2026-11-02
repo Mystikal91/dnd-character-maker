@@ -19,7 +19,7 @@ export interface ChangelogEntry {
 export const CHANGELOG: ChangelogEntry[] = [
   {
     version: "1.19.0 beta",
-    date: "2026-11-01",
+    date: "2026-11-02",
     notes: [
       {
         en: "Spells show what they do: the attack, the damage (and how it grows with the slot or the level), the healing, the saving throw and the area, from the data of the System Reference Document.",
