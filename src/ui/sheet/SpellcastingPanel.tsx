@@ -27,7 +27,7 @@ export function SpellcastingStats({ s }: { s: DerivedSheet }) {
         const count = spellCount(caster);
         const book = caster.lists.preparation === "spellbook" ? caster.lists.known : undefined;
         return (
-          <div key={caster.classId}>
+          <div key={caster.classId} class="spell-stats">
             {s.spellcasters.length > 1 && <h4>{c.name(caster.classId)}</h4>}
             <div class="stat-row stat-row-4">
               <Stat label={ui("sheet.spellAttack")} forced={isForced(OVERRIDE.spellAttack)}>

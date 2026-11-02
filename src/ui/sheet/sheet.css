@@ -1031,3 +1031,14 @@ button.explain-trigger:hover {
   background: var(--accent);
   color: var(--accent-contrast);
 }
+
+/* The casting numbers: four squares in a row, two by two when the panel is under 30rem wide. */
+.spell-stats {
+  container: spell-stats / inline-size;
+}
+
+@container spell-stats (max-width: 30rem) {
+  .spell-stats .stat-row-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
