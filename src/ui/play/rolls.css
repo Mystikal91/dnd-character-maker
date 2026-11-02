@@ -1,0 +1,71 @@
+/* ---- The rolls of Play: a diamond before each name, in the colour of its ability ---- */
+
+[data-ability] {
+  --ab: var(--accent);
+}
+[data-ability="str"] {
+  --ab: #b0433a;
+}
+[data-ability="dex"] {
+  --ab: #4f8a3d;
+}
+[data-ability="con"] {
+  --ab: #c0702a;
+}
+[data-ability="int"] {
+  --ab: #3d6fa8;
+}
+[data-ability="wis"] {
+  --ab: #7a5ab0;
+}
+[data-ability="cha"] {
+  --ab: #b0467f;
+}
+
+.play .roll-btn[data-ability]::before {
+  flex: none;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--ab);
+  content: "";
+}
+
+:root[data-style="fantasy"] .play .roll-btn[data-ability]::before {
+  border-radius: 0;
+  transform: rotate(45deg) scale(0.9);
+}
+
+.play .roll-btn[data-ability] > span {
+  flex: 1;
+}
+
+/* What the colours stand for, in a row above the rolls. */
+.ability-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.9rem;
+  margin: 0.2rem 0 0.4rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+.ability-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ability-legend li::before {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--ab);
+  content: "";
+}
+
+:root[data-style="fantasy"] .ability-legend li::before {
+  border-radius: 0;
+  transform: rotate(45deg) scale(0.9);
+}

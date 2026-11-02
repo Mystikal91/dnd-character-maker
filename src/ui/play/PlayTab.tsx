@@ -1,5 +1,5 @@
 import type { ComponentChildren } from "preact";
-import { useRef } from "preact/hooks";
+import { useLayoutEffect, useRef, useState } from "preact/hooks";
 import { levelUpPhase } from "../../app/buildState";
 import { playStates, stateAttributes } from "../../app/playStates";
 import { type PlayGroup, playGroup, showPlayGroup } from "../../app/playView";
@@ -46,10 +46,165 @@ const Part = ({
   </div>
 );
 
+type PanelKey =
+  | "hp"
+  | "rage"
+  | "inspiration"
+  | "death"
+  | "hitdice"
+  | "rests"
+  | "classres"
+  | "coins"
+  | "inventory"
+  | "conditions"
+  | "companions"
+  | "features"
+  | "notes"
+  | "attacks"
+  | "checks"
+  | "dice"
+  | "history"
+  | "slots"
+  | "spells";
+
+interface PanelDef {
+  group: PlayGroup;
+  order: number;
+  wide?: boolean;
+  render: () => ComponentChildren;
+}
+
 /**
- * The screen for the table. On a wide screen: hit points and rests on the left, rolls in the
- * middle, spell slots and conditions on the right. On a phone it is split into parts (combat,
- * checks, magic, resources) behind tabs, under a bar that always shows hit points and armor class.
+ * Every panel of the screen, with the part of the phone it belongs to and where it sits in it. The
+ * keys are in the order a phone shows them when two panels have the same place.
+ */
+const PANELS: Record<PanelKey, PanelDef> = {
+  hp: { group: "combat", order: 1, render: () => <HitPoints /> },
+  rage: {
+    group: "combat",
+    order: 2,
+    render: () => (
+      <>
+        <Rage />
+        <WildShape />
+      </>
+    ),
+  },
+  inspiration: { group: "combat", order: 3, render: () => <Inspiration /> },
+  death: { group: "combat", order: 4, render: () => <DeathSaves /> },
+  hitdice: { group: "resources", order: 2, render: () => <HitDice /> },
+  rests: { group: "resources", order: 3, render: () => <Rests /> },
+  classres: { group: "resources", order: 1, render: () => <ClassResources /> },
+  coins: { group: "resources", order: 4, render: () => <CoinsPanel /> },
+  inventory: { group: "resources", order: 5, render: () => <PlayInventory /> },
+  conditions: { group: "combat", order: 5, render: () => <Conditions /> },
+  companions: { group: "combat", order: 6, render: () => <Companions /> },
+  features: { group: "resources", order: 6, render: () => <PlayFeatures /> },
+  notes: { group: "resources", order: 7, render: () => <PlayNotes /> },
+  attacks: { group: "combat", order: 2, render: () => <AttackRolls /> },
+  checks: { group: "checks", order: 1, render: () => <CheckRolls /> },
+  dice: { group: "checks", order: 2, wide: true, render: () => <DiceTray /> },
+  history: { group: "checks", order: 3, wide: true, render: () => <RollHistory /> },
+  slots: { group: "magic", order: 1, render: () => <Slots /> },
+  spells: { group: "magic", order: 2, render: () => <PlaySpells /> },
+};
+
+/**
+ * Which panels go in which column on a wide screen. The columns are worked out to be about as tall
+ * as one another: the long panels (the spells, the features) are spread out, and a character
+ * without magic gets other columns than one with it. On a phone there is one column of everything.
+ */
+function columnPlan(columns: 1 | 2 | 3, magic: boolean): PanelKey[][] {
+  const all = Object.keys(PANELS) as PanelKey[];
+  const present = (keys: PanelKey[]) => keys.filter((k) => magic || PANELS[k].group !== "magic");
+  if (columns === 1) return [present(all)];
+  if (columns === 2)
+    return magic
+      ? [
+          present([
+            "hp",
+            "death",
+            "rage",
+            "attacks",
+            "inspiration",
+            "dice",
+            "history",
+            "checks",
+            "slots",
+            "conditions",
+            "companions",
+            "hitdice",
+            "rests",
+          ]),
+          present(["spells", "classres", "features", "inventory", "coins", "notes"]),
+        ]
+      : [
+          [
+            "hp",
+            "death",
+            "rage",
+            "attacks",
+            "inspiration",
+            "dice",
+            "history",
+            "checks",
+            "conditions",
+            "companions",
+          ],
+          ["classres", "hitdice", "rests", "features", "inventory", "coins", "notes"],
+        ];
+  return magic
+    ? [
+        [
+          "hp",
+          "death",
+          "rage",
+          "attacks",
+          "inspiration",
+          "dice",
+          "history",
+          "conditions",
+          "companions",
+          "hitdice",
+          "rests",
+        ],
+        ["checks", "slots", "spells"],
+        ["classres", "features", "inventory", "coins", "notes"],
+      ]
+    : [
+        ["hp", "death", "rage", "attacks", "inspiration", "conditions", "companions", "hitdice"],
+        ["checks", "dice", "history", "rests", "classres", "coins"],
+        ["features", "inventory", "notes"],
+      ];
+}
+
+/** How many columns the play screen has room for: the same breakpoints as the styles (42 and 66rem). */
+const columnsFor = (rem: number): 1 | 2 | 3 => (rem >= 66 ? 3 : rem >= 42 ? 2 : 1);
+
+/** Follows the width of the screen and says how many columns it has room for. */
+function useColumns(root: { current: HTMLElement | null }, ready: boolean): 1 | 2 | 3 {
+  const [columns, setColumns] = useState<1 | 2 | 3>(() =>
+    columnsFor(typeof innerWidth === "number" ? innerWidth / 16 : 0),
+  );
+  useLayoutEffect(() => {
+    const el = root.current;
+    if (!el || !ready) return;
+    const measure = () => {
+      const rem = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      setColumns(columnsFor(el.getBoundingClientRect().width / rem));
+    };
+    measure();
+    const watch = new ResizeObserver(measure);
+    watch.observe(el);
+    return () => watch.disconnect();
+  }, [root, ready]);
+  return columns;
+}
+
+/**
+ * The screen for the table. On a wide screen the panels are in two or three columns of about the
+ * same height (see `columnPlan`). On a phone it is split into parts (combat, checks, magic,
+ * resources) behind tabs, under a bar that always shows hit points and armor class.
  */
 export function PlayTab() {
   const c = content.value;
@@ -71,6 +226,7 @@ export function PlayTab() {
       return next !== undefined;
     },
   );
+  const columns = useColumns(root, Boolean(c && s));
   if (!c || !s) return null;
   const canLevelUp = character.value.classes.length > 0 && s.level < MAX_LEVEL;
   const hasMagic = s.spellcasters.length > 0 || collectSpellRows(c, s).length > 0;
@@ -122,71 +278,19 @@ export function PlayTab() {
         )}
         <RageStrip wide />
         <BeastStrip wide />
-        <div class="play-grid">
-          <div class="play-col">
-            <Part group="combat" order={1}>
-              <HitPoints />
-            </Part>
-            <Part group="combat" order={2}>
-              <Rage />
-              <WildShape />
-            </Part>
-            <Part group="combat" order={3}>
-              <Inspiration />
-            </Part>
-            <Part group="combat" order={4}>
-              <DeathSaves />
-            </Part>
-            <Part group="resources" order={2}>
-              <HitDice />
-            </Part>
-            <Part group="resources" order={3}>
-              <Rests />
-            </Part>
-            <Part group="resources" order={1}>
-              <ClassResources />
-            </Part>
-            <Part group="resources" order={4}>
-              <CoinsPanel />
-            </Part>
-            <Part group="resources" order={5}>
-              <PlayInventory />
-            </Part>
-            <Part group="combat" order={5}>
-              <Conditions />
-            </Part>
-            <Part group="combat" order={6}>
-              <Companions />
-            </Part>
-            <Part group="resources" order={6}>
-              <PlayFeatures />
-            </Part>
-            <Part group="resources" order={7}>
-              <PlayNotes />
-            </Part>
-          </div>
-          <div class="play-col">
-            <Part group="combat" order={2}>
-              <AttackRolls />
-            </Part>
-            <Part group="checks" order={1}>
-              <CheckRolls />
-            </Part>
-          </div>
-          <div class="play-col">
-            <Part group="checks" order={2} wide>
-              <DiceTray />
-            </Part>
-            <Part group="checks" order={3} wide>
-              <RollHistory />
-            </Part>
-            <Part group="magic" order={1}>
-              <Slots />
-            </Part>
-            <Part group="magic" order={2}>
-              <PlaySpells />
-            </Part>
-          </div>
+        <div class="play-grid" data-cols={columns}>
+          {columnPlan(columns, hasMagic).map((keys) => (
+            <div class="play-col" key={keys.join("-")}>
+              {keys.map((key) => {
+                const panel = PANELS[key];
+                return (
+                  <Part key={key} group={panel.group} order={panel.order} wide={panel.wide}>
+                    {panel.render()}
+                  </Part>
+                );
+              })}
+            </div>
+          ))}
         </div>
         <DiceButton />
         <DiceDrawer />

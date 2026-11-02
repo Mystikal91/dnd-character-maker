@@ -10,6 +10,7 @@ import {
   gainTempHp,
   hitDiceLeft,
   longRest,
+  revive,
   setDeathSave,
   setSlotsUsed,
   shortRest,
@@ -190,6 +191,15 @@ describe("a death save", () => {
     const back = deathSaveRoll(hurt, 20, 20);
     expect(currentHp(back, 20)).toBe(1);
     expect(back.deathSaves).toEqual({ successes: 0, failures: 0 });
+  });
+
+  it("is undone by reviving: one hit point and clean saves, even from dead", () => {
+    const dead = { ...dying(), deathSaves: { successes: 1, failures: 3 } };
+    expect(deathStatus(dead, 20)).toBe("dead");
+    const back = revive(dead);
+    expect(currentHp(back, 20)).toBe(1);
+    expect(back.deathSaves).toEqual({ successes: 0, failures: 0 });
+    expect(deathStatus(back, 20)).toBe("alive");
   });
 
   it("never goes past three", () => {

@@ -16,6 +16,7 @@ import {
   deathStatus,
   gainTempHp,
   hitDiceLeft,
+  revive,
   setDeathSave,
   spendHitDie,
 } from "../../engine/play";
@@ -173,10 +174,22 @@ export function DeathSaves() {
       {status !== "alive" && (
         <output class={`death-status status-${status}`}>
           <b>{ui(`play.status.${status}` as UiKey)}</b>
+          {status === "dead" && (
+            <button
+              type="button"
+              class="card-btn card-revive"
+              onClick={() => {
+                changePlay((p) => revive(p));
+                addLog({ label: ui("play.revive"), detail: ui("play.reviveDetail") });
+              }}
+            >
+              {ui("play.revive")}
+            </button>
+          )}
           {status === "dying" && (
             <button
               type="button"
-              class="card-btn card-primary"
+              class="card-btn card-primary card-wide"
               onClick={() => {
                 const roll = rollCheck(ui("play.deathSaves"), 0);
                 changePlay((p) => deathSaveRoll(p, v.max, roll.used));

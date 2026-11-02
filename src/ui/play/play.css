@@ -20,26 +20,13 @@
   min-width: 0;
 }
 
-@container play (min-width: 42rem) {
-  .play-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-
-  .play-col:last-child {
-    grid-column: 1 / -1;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
+/* The columns are set by the component (data-cols), which also decides what goes in each. */
+.play-grid[data-cols="2"] {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
-@container play (min-width: 66rem) {
-  .play-grid {
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr) minmax(0, 1fr);
-  }
-
-  .play-col:last-child {
-    grid-column: auto;
-    grid-template-columns: minmax(0, 1fr);
-  }
+.play-grid[data-cols="3"] {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .plain {

@@ -157,7 +157,7 @@
 /* ---- Death saves: the state, a roll, and a card for the successes and one for the failures ---- */
 
 .death-card {
-  grid-template-columns: 2.7rem minmax(0, 1fr) auto;
+  grid-template-columns: 2.7rem minmax(0, 1fr);
 }
 
 .death-card[data-kind="successes"] {
@@ -169,7 +169,11 @@
 }
 
 .death-pips {
-  gap: 0.7rem;
+  grid-column: 1 / -1;
+  justify-content: center;
+  gap: 1.4rem;
+  margin-top: 0.4rem;
+  padding: 0.3rem 0;
 }
 
 output.death-status {
@@ -209,4 +213,17 @@ output.death-status {
   50% {
     box-shadow: 0 0 0.9rem color-mix(in srgb, var(--accent) 60%, transparent);
   }
+}
+
+/* The roll of a death save takes the whole row, and a dead character can be brought back. */
+.play .death-status .card-wide:not(.pip-btn):not(.info-btn):not(.link) {
+  flex: 1 1 100%;
+  max-width: none;
+  justify-content: center;
+}
+
+.play .card-revive:not(.pip-btn):not(.info-btn):not(.link) {
+  border-color: #3f8a4a;
+  background: color-mix(in srgb, #3f8a4a 14%, var(--surface));
+  font-weight: 700;
 }

@@ -79,6 +79,11 @@ export function deathSaveRoll(play: PlayState, max: number, natural: number): Pl
     : setDeathSave(play, "failures", failures + 1);
 }
 
+/** Brings a character back to 1 hit point, with the death saves cleared: as if the saves had been passed. */
+export function revive(play: PlayState): PlayState {
+  return { ...play, hp: 1, deathSaves: { successes: 0, failures: 0 } };
+}
+
 /** Spell slots still available at one spell level, given how many the class has. */
 export function slotsLeft(play: PlayState, level: number, total: number): number {
   return Math.max(0, total - (play.slotsUsed[level - 1] ?? 0));

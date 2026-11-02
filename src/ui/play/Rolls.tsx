@@ -8,7 +8,7 @@ import {
   rollMode,
 } from "../../app/play";
 import { character, content, sheet } from "../../app/store";
-import { ABILITIES } from "../../data/schema";
+import { ABILITIES, type Ability } from "../../data/schema";
 import type { D20Mode } from "../../engine/dice";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { Panel } from "../sheet/parts";
@@ -22,10 +22,13 @@ function RollButton({
   bonus,
   name = label,
   floor,
+  ability,
 }: {
   label: string;
   bonus: number;
   name?: string;
+  /** The ability the roll belongs to: its colour is the diamond before the name. */
+  ability?: Ability;
   /** A die lower than this counts as this (Reliable Talent). */
   floor?: number | undefined;
 }) {
@@ -33,6 +36,7 @@ function RollButton({
     <button
       type="button"
       class="roll-btn"
+      data-ability={ability}
       onClick={() => rollCheck(name, bonus, floor ? { floor } : undefined)}
     >
       <span>{label}</span>
@@ -77,9 +81,16 @@ function RollsPanel({ part }: { part: "attacks" | "checks" }) {
       <ModePicker />
       {part === "checks" && (
         <>
+          <ul class="plain ability-legend" aria-label={ui("play.abilityLegend")}>
+            {ABILITIES.map((a) => (
+              <li key={a} data-ability={a}>
+                {c.text(`${ruleset}:ability/${a}`, "abbreviation") ?? a}
+              </li>
+            ))}
+          </ul>
           <h4>{ui("play.initiative")}</h4>
           <div class="roll-grid">
-            <RollButton label={ui("play.initiative")} bonus={s.initiative} />
+            <RollButton label={ui("play.initiative")} bonus={s.initiative} ability="dex" />
           </div>
           <h4>{ui("play.saves")}</h4>
           <div class="roll-grid">
@@ -89,6 +100,7 @@ function RollsPanel({ part }: { part: "attacks" | "checks" }) {
                 label={c.text(`${ruleset}:ability/${a}`, "abbreviation") ?? a}
                 name={`${c.name(`${ruleset}:ability/${a}`)} - ${ui("sheet.savingThrow")}`}
                 bonus={s.saves[a].bonus}
+                ability={a}
               />
             ))}
           </div>
@@ -99,6 +111,7 @@ function RollsPanel({ part }: { part: "attacks" | "checks" }) {
                 key={sk.id}
                 label={c.name(sk.id)}
                 bonus={sk.bonus}
+                ability={sk.ability}
                 floor={sk.proficient ? s.proficientSkillFloor : undefined}
               />
             ))}
