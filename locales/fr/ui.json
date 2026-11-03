@@ -933,6 +933,7 @@
   "play.noAttacks": "Aucune arme pour attaquer : ajoutes-en une à l’étape Équipement.",
   "play.weaponMelee": "Mêlée",
   "play.weaponRanged": "À distance",
+  "play.weaponOffHand": "Main secondaire : sans modificateur aux dégâts",
   "play.weaponRange": "Portée {normal}/{long}",
   "play.weaponTwoHands": "À deux mains",
   "play.group.combat": "Combat",

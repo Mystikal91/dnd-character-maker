@@ -933,6 +933,7 @@
   "play.noAttacks": "Nessuna arma per attaccare: aggiungine una nel passo Equipaggiamento.",
   "play.weaponMelee": "Mischia",
   "play.weaponRanged": "A distanza",
+  "play.weaponOffHand": "Mano secondaria: senza modificatore ai danni",
   "play.weaponRange": "Gittata {normal}/{long}",
   "play.weaponTwoHands": "A due mani",
   "play.group.combat": "Lotta",

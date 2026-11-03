@@ -131,7 +131,15 @@ export function importFeature(ctx: Context, source: Source, owners: Map<Source, 
       ...(owner?.level !== undefined && { level: owner.level }),
     },
     { desc: description(source.el) },
-    { effects: mapped.effects as Effect[] },
+    {
+      effects: [
+        ...(mapped.effects as Effect[]),
+        // The fighting style of that name: the off-hand weapon adds its modifier to damage.
+        ...(slugify(source.name) === "two-weapon-fighting"
+          ? [{ type: "flag", id: "two-weapon-fighting" } as Effect]
+          : []),
+      ],
+    },
   );
 }
 

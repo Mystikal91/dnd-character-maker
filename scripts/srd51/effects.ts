@@ -195,6 +195,13 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
   "feature/ranger-fighting-style-defense": defense,
   "feature/fighter-fighting-style-dueling": dueling,
   "feature/fighting-style-dueling": dueling,
+  // The off-hand weapon adds the ability modifier to its damage (see `deriveAttacks`).
+  "feature/fighter-fighting-style-two-weapon-fighting": [
+    { type: "flag", id: "two-weapon-fighting" },
+  ],
+  "feature/ranger-fighting-style-two-weapon-fighting": [
+    { type: "flag", id: "two-weapon-fighting" },
+  ],
   "feature/ranger-fighting-style-dueling": dueling,
 };
 

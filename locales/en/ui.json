@@ -933,6 +933,7 @@
   "play.noAttacks": "No weapon to attack with: add one in the Equipment step.",
   "play.weaponMelee": "Melee",
   "play.weaponRanged": "Ranged",
+  "play.weaponOffHand": "Off hand: no modifier on damage",
   "play.weaponRange": "Range {normal}/{long}",
   "play.weaponTwoHands": "Two hands",
   "play.group.combat": "Combat",

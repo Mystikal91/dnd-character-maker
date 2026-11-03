@@ -89,6 +89,7 @@ function AttackCard({ a }: { a: AttackResult }) {
       : "";
   const meta = [
     ui(a.ranged ? "play.weaponRanged" : "play.weaponMelee"),
+    ...(a.offHand ? [ui("play.weaponOffHand")] : []),
     ...a.properties.map((p) => c.name(p)),
     range,
   ].filter(Boolean);

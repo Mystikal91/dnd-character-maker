@@ -5,6 +5,7 @@ import type { SourcedEffect } from "./choices";
 import { coinWeight } from "./coins";
 import type { AbilityResult, PackIndex } from "./derive";
 import { type AppliedModifier, type ArmorState, appliedModifiers, total } from "./modifiers";
+import { placeEquipment } from "./slots";
 import { type Warning, warn } from "./warnings";
 
 export interface DamageResult {
@@ -24,6 +25,8 @@ export interface AttackResult {
   ranged: boolean;
   /** The weapon counts as magic. */
   magical: boolean;
+  /** The weapon is in the off hand: its damage has no ability modifier unless it is negative or the style Two-Weapon Fighting is known. */
+  offHand?: boolean;
   /** The bonus to attack and damage rolls from a spell or an enchantment. */
   enhancement: number;
   /** The enchantment the weapon carries, when it has one. */
@@ -72,6 +75,8 @@ interface Context {
   abilities: Record<Ability, AbilityResult>;
   /** Held proficiencies as `category:target` keys. */
   held: Set<string>;
+  /** Every entry the character has and every flag set (a fighting style that has no number is only this). */
+  seen: ReadonlySet<string>;
   proficiencyBonus: number;
   /** Every effect in force with its source: features and choices add to armor class and attacks. */
   sourced: SourcedEffect[];
@@ -83,6 +88,10 @@ interface Context {
 }
 
 const isProficient = (held: Set<string>, keys: string[]) => keys.some((k) => held.has(k));
+
+/** The fighting style Two-Weapon Fighting (the fighter's, the ranger's or an imported one: each sets this flag). */
+export const TWO_WEAPON_FIGHTING = "two-weapon-fighting";
+const knowsTwoWeaponFighting = (seen: ReadonlySet<string>) => seen.has(TWO_WEAPON_FIGHTING);
 
 export function proficiencyKeys(proficiencies: Record<ProficiencyCategory, string[]>): Set<string> {
   return new Set(
@@ -193,6 +202,10 @@ function shillelaghDice(dice: string): string {
 function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
   const { character, index, abilities, held, proficiencyBonus } = ctx;
   const attacks: AttackResult[] = [];
+  // A weapon in the off hand: it does not add the ability modifier to damage, unless the style
+  // Two-Weapon Fighting is known; a negative modifier is still taken off.
+  const offHandId = placeEquipment(character.inventory, index).slots.offHand?.itemId;
+  const keepsModifier = knowsTwoWeaponFighting(ctx.seen);
   const heldWeapons = character.inventory.filter((i) => {
     const entry = i.equipped ? index.get(i.itemId) : undefined;
     return Boolean(entry && itemData(entry).weapon);
@@ -254,12 +267,14 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
     const toHit = appliedModifiers(ctx.sourced, "attack", grip(alwaysTwoHanded));
     const oneHand = appliedModifiers(ctx.sourced, "damage", grip(alwaysTwoHanded));
     const twoHands = appliedModifiers(ctx.sourced, "damage", grip(true));
+    const offHand = item.itemId === offHandId && !keepsModifier;
+    const damageModifier = offHand ? Math.min(modifier, 0) : modifier;
     const withBonus = (
       d: { dice: string; type: string },
       extra: AppliedModifier[],
     ): DamageResult => ({
       dice: d.dice,
-      bonus: modifier + enhancement + total(extra),
+      bonus: damageModifier + enhancement + total(extra),
       type: d.type,
     });
     const applied = [...toHit, ...oneHand];
@@ -269,6 +284,7 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       ...(abilityFrom && { abilityFrom }),
       ...(shillelagh && { shillelagh }),
       ranged: weapon.kind === "ranged",
+      ...(offHand && { offHand }),
       magical,
       enhancement,
       ...(item.enchantment && enchanted && { enchantment: item.enchantment }),

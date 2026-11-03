@@ -36,6 +36,8 @@ export interface Collected {
   /** The same effects, each with the entry that gave it. */
   sourced: SourcedEffect[];
   choices: PendingChoice[];
+  /** Every entry the walk met and every flag that was set. */
+  seen: ReadonlySet<string>;
 }
 
 interface Input {

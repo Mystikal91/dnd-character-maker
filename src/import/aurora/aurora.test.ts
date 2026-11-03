@@ -887,6 +887,21 @@ describe("classes and archetypes", () => {
     expect(spends("turny")).toEqual([]);
   });
 
+  it("marks the fighting style Two-Weapon Fighting of a book", () => {
+    const set = wrap(`
+      <element name="Brawler" type="Class" source="Test Book" id="ID_T_CLASS_BRAWLER">
+        <description><p>A fighter.</p></description>
+        <setters><set name="hd">d8</set></setters>
+        <rules><grant type="Class Feature" id="ID_T_TWF" level="1" /></rules>
+      </element>
+      <element name="Two-Weapon Fighting" type="Class Feature" source="Test Book" id="ID_T_TWF">
+        <description><p>You can add your modifier to the damage of the off-hand weapon.</p></description>
+      </element>`);
+    const made = parseAurora([set], { ...options, index: new Map(), nameOf: (id) => id });
+    const style = made.entries.find((e) => e.id.endsWith("feature/two-weapon-fighting"));
+    expect(style?.effects).toContainEqual({ type: "flag", id: "two-weapon-fighting" });
+  });
+
   it("keeps where a magic item is worn", () => {
     const item = (name: string, slot: string, extra = "") => `
       <element name="${name}" type="Magic Item" source="Test Book" id="ID_T_${name.toUpperCase().replace(/ /g, "_")}">

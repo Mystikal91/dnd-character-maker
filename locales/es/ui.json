@@ -933,6 +933,7 @@
   "play.noAttacks": "Ninguna arma para atacar: añade una en el paso Equipo.",
   "play.weaponMelee": "Cuerpo a cuerpo",
   "play.weaponRanged": "A distancia",
+  "play.weaponOffHand": "Mano secundaria: sin modificador al daño",
   "play.weaponRange": "Alcance {normal}/{long}",
   "play.weaponTwoHands": "A dos manos",
   "play.group.combat": "Combate",

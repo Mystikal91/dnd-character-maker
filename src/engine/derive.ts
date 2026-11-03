@@ -226,7 +226,12 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
   // A variant of a species (a half-elf of another descent) carries the species' effects itself.
   const standsIn = chosen.some((e) => e.kind === "subspecies" && e.data.replacesSpecies === true);
   const contributing = standsIn ? chosen.filter((e) => e.kind !== "species") : chosen;
-  const { effects, sourced, choices } = collectEffects(
+  const {
+    effects,
+    sourced,
+    choices,
+    seen: heldIds,
+  } = collectEffects(
     [...contributing, ...wornWithEffects, ...(starting?.entry ? [starting.entry] : []), ...reached],
     { index, selections: character.selections, warnings, levelOf },
     [
@@ -444,6 +449,7 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
     index,
     abilities,
     held,
+    seen: heldIds,
     proficiencyBonus,
     sourced,
     levelOf,

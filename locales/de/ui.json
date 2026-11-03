@@ -933,6 +933,7 @@
   "play.noAttacks": "Keine Waffe zum Angreifen: Füge im Schritt Ausrüstung eine hinzu.",
   "play.weaponMelee": "Nahkampf",
   "play.weaponRanged": "Fernkampf",
+  "play.weaponOffHand": "Nebenhand: ohne Modifikator auf den Schaden",
   "play.weaponRange": "Reichweite {normal}/{long}",
   "play.weaponTwoHands": "Zweihändig",
   "play.group.combat": "Kampf",

@@ -2064,7 +2064,12 @@
       "id": "srd51:feature/fighter-fighting-style-two-weapon-fighting",
       "kind": "feature",
       "parent": "srd51:feature/fighter-fighting-style",
-      "effects": [],
+      "effects": [
+        {
+          "type": "flag",
+          "id": "two-weapon-fighting"
+        }
+      ],
       "data": {
         "class": "srd51:class/fighter",
         "level": 1
@@ -3393,7 +3398,12 @@
       "id": "srd51:feature/ranger-fighting-style-two-weapon-fighting",
       "kind": "feature",
       "parent": "srd51:feature/ranger-fighting-style",
-      "effects": [],
+      "effects": [
+        {
+          "type": "flag",
+          "id": "two-weapon-fighting"
+        }
+      ],
       "data": {
         "class": "srd51:class/ranger",
         "level": 2
