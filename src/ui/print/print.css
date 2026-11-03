@@ -1188,3 +1188,74 @@
     print-color-adjust: exact;
   }
 }
+
+/* Inspiration: a box to mark, and the bardic die with its uses. */
+.p-inspire {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5mm 3mm;
+  padding: 1.5mm 2.5mm;
+  font-size: 7pt;
+}
+
+.p-inspire .p-pip {
+  margin-right: 0.8mm;
+}
+
+.p-inspire-die {
+  margin-inline-start: auto;
+  color: var(--p-muted);
+}
+
+/* The limited uses: a name with when they come back, and boxes to tick (or a number to write). */
+.p-uses {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.p-uses li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2mm;
+  margin-top: 1mm;
+  font-size: 7pt;
+}
+
+.p-use-name small {
+  margin-inline-start: 1.5mm;
+  color: var(--p-muted);
+  font-size: 5.5pt;
+}
+
+.p-use-boxes .p-pip {
+  margin-left: 0.8mm;
+}
+
+.p-use-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5mm;
+  font-weight: 700;
+}
+
+.p-use-count .p-write {
+  display: inline-block;
+  width: 10mm;
+}
+
+/* How a feature is used (action, bonus action, reaction) next to its name in the text. */
+.p-tag {
+  margin-inline-start: 2mm;
+  padding: 0 1mm;
+  border: 0.25mm solid currentcolor;
+  border-radius: 0.8mm;
+  color: var(--p-muted);
+  font-size: 6pt;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}

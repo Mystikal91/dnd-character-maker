@@ -4,6 +4,7 @@ import type { Content } from "../../content/browser";
 import type { DerivedSheet, SpellcastingResult } from "../../engine/derive";
 import { signed, ui } from "../../i18n/ui";
 import { type SpellRow, collectSpellRows } from "../spellRows";
+import { spellFacts } from "../spells/spellFacts";
 
 const levelTitle = (level: number) =>
   level === 0 ? ui("spells.cantrips") : ui("spells.level", { level });
@@ -19,6 +20,7 @@ function SpellBlock({ c, ruleset, row }: { c: Content; ruleset: string; row: Spe
     [ui("spells.components"), components && material ? `${components} (${material})` : components],
     [ui("spells.duration"), c.text(row.id, "duration")],
   ];
+  const facts = spellFacts(data, (index) => c.name(`${ruleset}:ability/${index}`));
   const tags = [
     data.concentration ? ui("spells.concentration") : undefined,
     data.ritual ? ui("spells.ritual") : undefined,
@@ -43,6 +45,15 @@ function SpellBlock({ c, ruleset, row }: { c: Content; ruleset: string; row: Spe
             </span>
           ))}
       </p>
+      {facts.length > 0 && (
+        <p class="p-spell-meta">
+          {facts.map(([label, value]) => (
+            <span key={label}>
+              <strong>{label}:</strong> {value}{" "}
+            </span>
+          ))}
+        </p>
+      )}
       {c
         .text(row.id, "desc")
         ?.split("\n\n")

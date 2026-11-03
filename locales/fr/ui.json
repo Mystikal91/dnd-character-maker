@@ -241,6 +241,8 @@
   "print.cardSomatic": "S",
   "print.cardMaterial": "M",
   "print.cardSpecies": "Espèce",
+  "print.resources": "Utilisations limitées",
+  "print.cardFeat": "Don",
   "print.field.age": "Âge",
   "print.field.height": "Taille",
   "print.field.weight": "Poids",

@@ -241,6 +241,8 @@
   "print.cardSomatic": "G",
   "print.cardMaterial": "M",
   "print.cardSpecies": "Spezies",
+  "print.resources": "Begrenzte Anwendungen",
+  "print.cardFeat": "Talent",
   "print.field.age": "Alter",
   "print.field.height": "Größe",
   "print.field.weight": "Gewicht",

@@ -4,13 +4,18 @@ import { classData, subclassData } from "../../data/progression";
 import { ABILITIES } from "../../data/schema";
 import type { ClassLevel } from "../../engine/character";
 import type { DamageResult } from "../../engine/equipment";
-import { signed, ui } from "../../i18n/ui";
+import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { movementLines } from "../movementLines";
+import { recoveryLabel, resourceLabel } from "../play/ResourceControl";
 import { extraAmount, extraName } from "../sheet/ExtraDamage";
 import { collectSpellRows } from "../spellRows";
 
 const BLANK_ATTACK_ROWS = 4;
+/** Facts that the attacks panel already says as damage (sneak attack, rage, martial arts). */
+const FACTS_AS_DAMAGE = new Set(["rageDamage", "sneakAttack", "martialArts"]);
+/** Up to this many uses are boxes to tick; more (ki points, hit points to heal) is a number to write. */
+const MAX_BOXES = 8;
 const PROFICIENCY_CATEGORIES = ["armor", "weapon", "tool", "language"] as const;
 const PROFICIENCY_LABELS = {
   armor: "sheet.armor",
@@ -63,6 +68,10 @@ export function FrontPage() {
     .join(" + ");
   // Climbing and swimming at half speed are not written on the sheet; what is given is.
   const otherSpeeds = movementLines(s.movement, s.senses, true);
+  const facts = s.facts.filter((f) => !FACTS_AS_DAMAGE.has(f.kind));
+  const feats = s.feats.filter((id) => !s.hiddenFeatures.includes(id));
+  const bardic = s.facts.find((f) => f.kind === "bardicDie");
+  const uses = s.resources.filter((r) => !r.unlimited);
   const list = (category: (typeof PROFICIENCY_CATEGORIES)[number]) =>
     s.proficiencies[category]
       .map((t) =>
@@ -213,6 +222,19 @@ export function FrontPage() {
             <div class="p-caption">{ui("print.deathSaves")}</div>
           </div>
 
+          <div class="p-frame p-inspire">
+            <span class="p-pip" />
+            <span>{ui("print.inspiration")}</span>
+            {bardic && (
+              <span class="p-inspire-die">
+                {ui("fact.bardicDie", bardic.params)}
+                <span class="p-pip" />
+                <span class="p-pip" />
+                <span class="p-pip" />
+              </span>
+            )}
+          </div>
+
           <section class="p-frame p-panel">
             <h3 class="p-h">{ui("sheet.attacks")}</h3>
             <table class="p-table">
@@ -239,6 +261,11 @@ export function FrontPage() {
             {s.extraDamage.length > 0 && (
               <p class="p-extra">
                 {s.extraDamage.map((x) => `${extraName(x)} ${extraAmount(x)}`).join(" · ")}
+              </p>
+            )}
+            {facts.length > 0 && (
+              <p class="p-extra">
+                {facts.map((f) => ui(`fact.${f.kind}` as UiKey, f.params)).join(" · ")}
               </p>
             )}
           </section>
@@ -326,6 +353,17 @@ export function FrontPage() {
             </section>
           )}
 
+          {feats.length > 0 && (
+            <section class="p-frame p-panel">
+              <h3 class="p-h">{ui("sheet.feats")}</h3>
+              <ul class="p-names">
+                {feats.map((id) => (
+                  <li key={id}>{name(id)}</li>
+                ))}
+              </ul>
+            </section>
+          )}
+
           {ch.classes.map((cl) => (
             <section class="p-frame p-panel" key={cl.classId}>
               <h3 class="p-h">{ui("sheet.classFeatures")}</h3>
@@ -337,6 +375,34 @@ export function FrontPage() {
               ))}
             </section>
           ))}
+
+          {uses.length > 0 && (
+            <section class="p-frame p-panel">
+              <h3 class="p-h">{ui("print.resources")}</h3>
+              <ul class="p-uses">
+                {uses.map((r) => (
+                  <li key={r.id}>
+                    <span class="p-use-name">
+                      {resourceLabel(r)}
+                      <small>{recoveryLabel(r)}</small>
+                    </span>
+                    {r.pool || r.max > MAX_BOXES ? (
+                      <span class="p-use-count">
+                        {r.max}
+                        <span class="p-write small" />
+                      </span>
+                    ) : (
+                      <span class="p-use-boxes">
+                        {Array.from({ length: r.max }, (_, i) => (
+                          <span class="p-pip" key={`${r.id}-${i + 1}`} />
+                        ))}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           {(ch.custom ?? []).some((f) => f.name.trim() !== "") && (
             <section class="p-frame p-panel">

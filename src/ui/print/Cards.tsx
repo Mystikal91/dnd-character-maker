@@ -112,6 +112,8 @@ interface FeatureCard {
 function featureCards(c: Content, s: NonNullable<typeof printSheet.value>): FeatureCard[] {
   const ch = character.value;
   const cards: FeatureCard[] = s.traits.map((id) => ({ id, source: ui("print.cardSpecies") }));
+  for (const id of s.feats)
+    if (!s.hiddenFeatures.includes(id)) cards.push({ id, source: ui("print.cardFeat") });
   for (const cl of ch.classes) {
     const entry = c.index.get(cl.classId);
     const sub = cl.subclassId ? c.index.get(cl.subclassId) : undefined;

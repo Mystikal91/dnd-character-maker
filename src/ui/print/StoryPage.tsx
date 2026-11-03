@@ -62,7 +62,10 @@ export function StoryPage() {
   const background = ch.choices.background;
   const featureName = background ? c.text(background, "featureName") : undefined;
   const featureDesc = background ? c.text(background, "featureDesc") : undefined;
-  const carried = ch.inventory.filter((i) => !i.equipped);
+  // A magic item (one with a rarity) goes in the box for them, whether it is worn or carried.
+  const isMagic = (i: (typeof ch.inventory)[number]) => Boolean(c.index.get(i.itemId)?.data.rarity);
+  const magicItems = ch.inventory.filter(isMagic);
+  const carried = ch.inventory.filter((i) => !i.equipped && !isMagic(i));
   const story = ch.story;
   // The background's feature first, then the player's backstory, sized together to fit the frame.
   const backgroundText = [
@@ -158,12 +161,17 @@ export function StoryPage() {
           </section>
           <section class="p-frame p-block grow">
             <h3 class="p-h">{ui("print.story.magicItems")}</h3>
-            {Array.from({ length: MAGIC_ITEM_LINES }, (_, i) => (
-              <div class="p-slot single" key={`magic-${i + 1}`}>
-                <span class="value">{" "}</span>
-                <span class="p-pip" title={ui("print.attuned")} />
-              </div>
-            ))}
+            {Array.from({ length: Math.max(MAGIC_ITEM_LINES, magicItems.length) }, (_, i) => {
+              const item = magicItems[i];
+              return (
+                <div class="p-slot single" key={`magic-${item?.itemId ?? i}`}>
+                  <span class="value">
+                    {item ? (item.custom?.name ?? c.name(item.itemId)) : " "}
+                  </span>
+                  <span class="p-pip" title={ui("print.attuned")} />
+                </div>
+              );
+            })}
           </section>
         </div>
 

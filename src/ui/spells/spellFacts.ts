@@ -45,7 +45,7 @@ export function spellFacts(
     const typeName = type ? ui(`hb.o.${type}` as UiKey).toLowerCase() : "";
     rows.push([
       ui("spells.damage"),
-      `${scaled(table, !part.damageAtSlotLevel)}${typeName ? ` ${typeName}` : ""}`,
+      `${scaled(table, !part.damageAtSlotLevel).replaceAll("MOD", ui("spells.mod"))}${typeName ? ` ${typeName}` : ""}`,
     ]);
   }
   if (data.healAtSlotLevel)
