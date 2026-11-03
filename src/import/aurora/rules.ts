@@ -886,6 +886,9 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
             name: rule.name.toLowerCase(),
             term,
             ...(rule.level !== undefined && { minLevel: rule.level }),
+            ...(rule.attrs.getAttribute("bonus") && {
+              bonus: rule.attrs.getAttribute("bonus") as string,
+            }),
           });
       } else {
         mapped.unsupported += 1;

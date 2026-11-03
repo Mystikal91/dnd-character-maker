@@ -232,15 +232,18 @@ const PlainEffectSchema = v.variant("type", [
   }),
   /**
    * A number that a feature shows on the sheet: the save DC of a breath weapon, its dice, the
-   * range of a power. The terms of one `name` (of one entry) add up; those with a `minLevel` do
-   * not add: the latest one the level has reached counts (1, 2, 3 and 4 dice at 1, 5, 11 and 17).
-   * A text term (a damage type) is shown as it is.
+   * range of a power. The terms of one `name` (of one entry) add up, those that come at a
+   * `minLevel` once the level is reached (2 rages at the 1st level, then 1 more at the 3rd). A term
+   * with a `bonus` is of a kind that does not stack, as Aurora has it: of the terms of the same
+   * `bonus` only the highest counts (an Extra Attack of 2 at the 5th level and 3 at the 11th is
+   * 3, not 5). A text term (a damage type) is shown as it is.
    */
   v.object({
     type: v.literal("featureValue"),
     name: v.string(),
     term: FeatureTermSchema,
     minLevel: v.optional(v.number()),
+    bonus: v.optional(v.string()),
   }),
   /** The character cannot be affected by this condition (by its slug: `poisoned`, `frightened`). */
   v.object({ type: v.literal("conditionImmunity"), condition: v.string() }),

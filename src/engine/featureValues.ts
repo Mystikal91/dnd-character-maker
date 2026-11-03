@@ -34,7 +34,8 @@ function termValue(term: FeatureTerm, state: FeatureValueState): number | string
 
 /**
  * The numbers the features of the character show, by the entry that gives them. The terms of a
- * name add up; those that come at a level replace one another (the latest one reached counts).
+ * name add up (those that come at a level once it is reached); of the terms that share a `bonus`
+ * only the highest counts, since a bonus of one kind does not stack.
  */
 export function deriveFeatureValues(
   sourced: SourcedEffect[],
@@ -42,7 +43,7 @@ export function deriveFeatureValues(
 ): Record<string, FeatureValue[]> {
   const sums = new Map<
     string,
-    Map<string, { sum: number; step?: { level: number; value: number }; text?: string }>
+    Map<string, { sum: number; typed: Map<string, number>; text?: string }>
   >();
   for (const { effect, source } of sourced) {
     if (effect.type !== "featureValue") continue;
@@ -50,18 +51,19 @@ export function deriveFeatureValues(
     if (level !== undefined && state.levelOf(source) < level) continue;
     const names = sums.get(source) ?? new Map();
     sums.set(source, names);
-    const acc = names.get(effect.name) ?? { sum: 0 };
+    const acc = names.get(effect.name) ?? { sum: 0, typed: new Map<string, number>() };
     names.set(effect.name, acc);
     const value = termValue(effect.term, state);
     if (typeof value === "string") acc.text ??= value;
-    else if (level === undefined) acc.sum += value;
-    else if (!acc.step || level >= acc.step.level) acc.step = { level, value };
+    else if (effect.bonus !== undefined)
+      acc.typed.set(effect.bonus, Math.max(acc.typed.get(effect.bonus) ?? value, value));
+    else acc.sum += value;
   }
   const found: Record<string, FeatureValue[]> = {};
   for (const [source, names] of sums)
     found[source] = [...names].map(([name, acc]) => ({
       name,
-      value: acc.text ?? String(acc.sum + (acc.step?.value ?? 0)),
+      value: acc.text ?? String(acc.sum + [...acc.typed.values()].reduce((a, b) => a + b, 0)),
     }));
   return found;
 }

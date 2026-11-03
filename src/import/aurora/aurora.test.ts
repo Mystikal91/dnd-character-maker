@@ -690,8 +690,21 @@ describe("classes and archetypes", () => {
       { type: "featureValue", name: "breath weapon:dc", term: 8 },
       { type: "featureValue", name: "breath weapon:dc", term: { mod: "con" } },
       { type: "featureValue", name: "breath weapon:dc", term: { of: "proficiency" } },
-      { type: "featureValue", name: "breath weapon:dice count", term: 1, minLevel: 1 },
-      { type: "featureValue", name: "breath weapon:dice count", term: 2, minLevel: 5 },
+      // The kind of bonus is kept: of the same kind only the highest counts, with none they add.
+      {
+        type: "featureValue",
+        name: "breath weapon:dice count",
+        term: 1,
+        minLevel: 1,
+        bonus: "base",
+      },
+      {
+        type: "featureValue",
+        name: "breath weapon:dice count",
+        term: 2,
+        minLevel: 5,
+        bonus: "base",
+      },
       { type: "featureValue", name: "mind link:range", term: { classLevel: "warlock" } },
       { type: "featureValue", name: "dragon ancestor damage type", term: { text: "Fire" } },
     ]);
@@ -1413,8 +1426,11 @@ describe("options and errors", () => {
     // The SRD already says Intimidating Presence is an action; it does not say it for Font of Magic.
     expect(presence?.activation).toBeUndefined();
     expect(result.overlays["srd51:feature/font-of-magic"]).toEqual({ activation: "bonus" });
-    // A count that grows at the levels is written as steps to add, which would be shown wrong.
-    expect(result.overlays["srd51:feature/rage"]).toBeUndefined();
+    // A count that grows at the levels is written as steps to add, and keeps them.
+    expect(result.overlays["srd51:feature/rage"]?.effects).toEqual([
+      { type: "featureValue", name: "barbarian rage:count", term: 2, minLevel: 1 },
+      { type: "featureValue", name: "barbarian rage:count", term: 1, minLevel: 3 },
+    ]);
     // A word, like the damage type of an ancestry, is in the SRD already.
     expect(result.overlays["srd51:trait/draconic-ancestry-black"]).toBeUndefined();
   });

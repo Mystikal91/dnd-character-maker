@@ -17,22 +17,25 @@ const ACTIVATIONS: Record<string, string> = {
 };
 
 /**
- * The numbers that are one value, whatever the level: a DC (8 + proficiency + a modifier), hit
- * points (5 + Constitution modifier). A name with a term that comes at a level is left out:
- * Aurora writes those as steps to add (a rage count of 2, then 1 more at the 3rd level), and the
- * sheet reads them as totals, so what it would show is wrong.
+ * Numbers that Aurora writes wrong: the aura of a Devotion or Ancients paladin is 10 feet and
+ * 30 at the 18th level, but the two terms have no kind of bonus, so they would add up to 40 (the
+ * Aura of Protection of the class has them as `base` and is right).
+ */
+const AURORA_DATA_ERRORS = new Set(["aura of devotion:range", "aura of warding:range"]);
+
+/**
+ * The numbers a feature shows. A name with a word in it (the damage type of an ancestry) is left
+ * out: the word is in the text and in the data of the SRD already.
  */
 function plainFeatureValues(effects: Effect[]): Effect[] {
-  // A word (the damage type of an ancestry) is in the text and in the data of the SRD already.
-  const stepped = new Set(
+  const words = new Set(
     effects.flatMap((e) =>
-      e.type === "featureValue" &&
-      (e.minLevel !== undefined || (typeof e.term === "object" && "text" in e.term))
-        ? [e.name]
-        : [],
+      e.type === "featureValue" && typeof e.term === "object" && "text" in e.term ? [e.name] : [],
     ),
   );
-  return effects.filter((e) => e.type === "featureValue" && !stepped.has(e.name));
+  return effects.filter(
+    (e) => e.type === "featureValue" && !words.has(e.name) && !AURORA_DATA_ERRORS.has(e.name),
+  );
 }
 
 /**
