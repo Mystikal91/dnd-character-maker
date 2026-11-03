@@ -11,6 +11,8 @@ import {
   shortRest,
   startConcentration,
 } from "./play";
+import { resourcesByEntry } from "./resources";
+import { deriveFreeSpells } from "./uses";
 
 function hero(classes: { id: string; level: number }[], scores = {}) {
   const c = createCharacter("srd51");
@@ -307,5 +309,24 @@ describe("traits that come at a level", () => {
     expect(at(2)).not.toContain("t:trait/glow");
     expect(at(2)).not.toContain("t:trait/glow-dusk");
     expect(at(3)).toEqual(expect.arrayContaining(["t:trait/glow", "t:trait/glow-dusk"]));
+  });
+});
+
+describe("the counters of one entry", () => {
+  it("keeps every free spell a feat gives, not only the last", () => {
+    const feat = "pack:feat/fey-touched";
+    const free = (spell: string) => ({
+      source: feat,
+      effect: { type: "grantSpell" as const, spell, free: true },
+    });
+    const found = deriveFreeSpells(
+      [free("srd51:spell/misty-step"), free("srd51:spell/bless")],
+      () => 4,
+    );
+    expect(found.map((r) => r.id)).toEqual([
+      `free:${feat}:srd51:spell/misty-step`,
+      `free:${feat}:srd51:spell/bless`,
+    ]);
+    expect(resourcesByEntry(found).get(feat)).toHaveLength(2);
   });
 });

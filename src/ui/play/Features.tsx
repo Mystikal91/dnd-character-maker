@@ -1,11 +1,11 @@
 import { useState } from "preact/hooks";
 import { content, sheet } from "../../app/store";
 import type { DerivedSheet } from "../../engine/derive";
-import type { ClassResource } from "../../engine/resources";
+import { type ClassResource, resourcesByEntry } from "../../engine/resources";
 import { ui } from "../../i18n/ui";
 import { EditPencil } from "../QuickEdit";
 import { FeatureValues, Panel, Paragraphs } from "../sheet/parts";
-import { ResourceControl, recoveryLabel } from "./ResourceControl";
+import { ResourceControl, recoveryLabel, resourceLabel } from "./ResourceControl";
 import { FeaturesIcon, MagicIcon, ProfileIcon } from "./icons";
 
 type Origin = "class" | "species" | "feat";
@@ -49,11 +49,11 @@ const preview = (text: string | undefined) => (text ?? "").split("\n\n")[0] ?? "
 function FeatureCard({
   id,
   origin,
-  resource,
+  resources,
 }: {
   id: string;
   origin: Origin;
-  resource: ClassResource | undefined;
+  resources: ClassResource[];
 }) {
   const c = content.value;
   const s = sheet.value;
@@ -81,7 +81,11 @@ function FeatureCard({
             <b class="feat-name">{c.name(id)}</b>
             <span class="feat-tags">
               {action && <span class="card-tag">{action}</span>}
-              {resource && <span class="card-tag">{recoveryLabel(resource)}</span>}
+              {[...new Set(resources.map(recoveryLabel))].map((when) => (
+                <span class="card-tag" key={when}>
+                  {when}
+                </span>
+              ))}
             </span>
             <span class="feat-preview">{preview(text)}</span>
           </span>
@@ -93,9 +97,14 @@ function FeatureCard({
           <EditPencil id={id} />
         </div>
       </details>
-      {resource && (
+      {resources.length > 0 && (
         <div class="feat-uses">
-          <ResourceControl r={resource} />
+          {resources.map((r) => (
+            <div class="feat-use" key={r.id}>
+              {resources.length > 1 && <span class="feat-use-name">{resourceLabel(r)}</span>}
+              <ResourceControl r={r} />
+            </div>
+          ))}
         </div>
       )}
     </li>
@@ -111,7 +120,7 @@ export function PlayFeatures() {
   const groups = shownFeatures(c, s);
   const total = groups.class.length + groups.species.length + groups.feat.length;
   if (total === 0) return null;
-  const byEntry = new Map(s.resources.flatMap((r) => (r.entry ? [[r.entry, r] as const] : [])));
+  const byEntry = resourcesByEntry(s.resources);
   const needle = query.trim().toLowerCase();
   const matches = (id: string) => !needle || c.name(id).toLowerCase().includes(needle);
 
@@ -138,7 +147,7 @@ export function PlayFeatures() {
             </header>
             <ul class="plain card-list">
               {ids.map((id) => (
-                <FeatureCard key={id} id={id} origin={origin} resource={byEntry.get(id)} />
+                <FeatureCard key={id} id={id} origin={origin} resources={byEntry.get(id) ?? []} />
               ))}
             </ul>
           </section>

@@ -168,3 +168,11 @@ export function classResources(input: Input): {
   }
   return { resources, facts, extras };
 }
+
+/** The counters each entry gives, in order: a feat can give several (Fey Touched: two free spells). */
+export function resourcesByEntry(resources: ClassResource[]): Map<string, ClassResource[]> {
+  const byEntry = new Map<string, ClassResource[]>();
+  for (const r of resources)
+    if (r.entry) byEntry.set(r.entry, [...(byEntry.get(r.entry) ?? []), r]);
+  return byEntry;
+}

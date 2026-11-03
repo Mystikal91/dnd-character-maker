@@ -128,6 +128,23 @@ details[open] .feat-chevron {
   border-top: 1px solid var(--border);
 }
 
+.feat-uses {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.feat-use {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 0.8rem;
+}
+
+.feat-use-name {
+  flex: 1 1 8rem;
+  font-size: 0.92rem;
+}
+
 .res-card .feat-uses {
   grid-column: 1 / -1;
   margin-top: 0.4rem;
