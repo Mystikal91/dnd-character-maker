@@ -1,0 +1,83 @@
+/* ---- The actions panel of Play: what the character can do with an action, in cards ---- */
+
+/* The colour of the badge says what it takes. */
+.action-card[data-activation="action"] {
+  --hue: var(--accent);
+}
+.action-card[data-activation="bonus"] {
+  --hue: #b9892b;
+}
+.action-card[data-activation="reaction"] {
+  --hue: #3d6fa8;
+}
+
+.action-card .card-meta {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.play .action-use:not(.pip-btn):not(.info-btn):not(.link) {
+  flex: 1 1 10rem;
+  max-width: none;
+  justify-content: space-between;
+}
+
+.play .action-use:not(.pip-btn):not(.info-btn):not(.link):disabled {
+  opacity: 0.55;
+}
+
+.action-use small {
+  margin-inline-end: auto;
+  color: inherit;
+  font-weight: 500;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+.action-use b {
+  white-space: nowrap;
+}
+
+/* With a cost to read ("−1 ki points") the button takes the whole row. */
+.play .action-use[data-cost]:not(.pip-btn):not(.info-btn):not(.link) {
+  flex-basis: 100%;
+}
+
+/* The actions anyone can take: a closed list, a line of the rules each. */
+.base-actions {
+  margin-top: 1.1rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.7rem;
+}
+
+.base-actions > summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.base-actions h5 {
+  margin: 0.9rem 0 0.3rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.base-actions dl {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.base-actions dt {
+  font-weight: 700;
+}
+
+.base-actions dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}

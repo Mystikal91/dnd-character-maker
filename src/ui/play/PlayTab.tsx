@@ -9,6 +9,7 @@ import { ui } from "../../i18n/ui";
 import { CoinsPanel } from "../Coins";
 import { collectSpellRows } from "../spellRows";
 import { neighbour, useSwipe } from "../useSwipe";
+import { ActionsPanel } from "./Actions";
 import { BeastStrip } from "./BeastStrip";
 import { Companions } from "./Companions";
 import { Conditions } from "./Conditions";
@@ -61,6 +62,7 @@ type PanelKey =
   | "features"
   | "notes"
   | "attacks"
+  | "actions"
   | "checks"
   | "dice"
   | "history"
@@ -102,6 +104,7 @@ const PANELS: Record<PanelKey, PanelDef> = {
   features: { group: "resources", order: 6, render: () => <PlayFeatures /> },
   notes: { group: "resources", order: 7, render: () => <PlayNotes /> },
   attacks: { group: "combat", order: 2, render: () => <AttackRolls /> },
+  actions: { group: "combat", order: 2, render: () => <ActionsPanel /> },
   checks: { group: "checks", order: 1, render: () => <CheckRolls /> },
   dice: { group: "checks", order: 2, wide: true, render: () => <DiceTray /> },
   history: { group: "checks", order: 3, wide: true, render: () => <RollHistory /> },
@@ -126,17 +129,17 @@ function columnPlan(columns: 1 | 2 | 3, magic: boolean): PanelKey[][] {
             "death",
             "rage",
             "attacks",
+            "actions",
             "inspiration",
             "dice",
             "history",
             "checks",
             "slots",
-            "conditions",
             "companions",
             "hitdice",
             "rests",
           ]),
-          present(["spells", "classres", "features", "inventory", "coins", "notes"]),
+          present(["spells", "classres", "features", "conditions", "inventory", "coins", "notes"]),
         ]
       : [
           [
@@ -144,6 +147,7 @@ function columnPlan(columns: 1 | 2 | 3, magic: boolean): PanelKey[][] {
             "death",
             "rage",
             "attacks",
+            "actions",
             "inspiration",
             "dice",
             "history",
@@ -160,20 +164,20 @@ function columnPlan(columns: 1 | 2 | 3, magic: boolean): PanelKey[][] {
           "death",
           "rage",
           "attacks",
+          "actions",
           "inspiration",
           "dice",
           "history",
-          "conditions",
           "companions",
           "hitdice",
           "rests",
         ],
         ["checks", "slots", "spells"],
-        ["classres", "features", "inventory", "coins", "notes"],
+        ["classres", "features", "conditions", "inventory", "coins", "notes"],
       ]
     : [
-        ["hp", "death", "rage", "attacks", "inspiration", "conditions", "companions", "hitdice"],
-        ["checks", "dice", "history", "rests", "classres", "coins"],
+        ["hp", "death", "rage", "attacks", "actions", "inspiration", "companions", "hitdice"],
+        ["checks", "dice", "history", "conditions", "rests", "classres", "coins"],
         ["features", "inventory", "notes"],
       ];
 }
