@@ -10,6 +10,7 @@ import {
   importSpell,
   importWeapon,
 } from "./items";
+import { collectOverlays } from "./overlays";
 import {
   importBackground,
   importDeity,
@@ -49,7 +50,7 @@ export { AuroraParseError, slugify } from "./xml";
  * the entries or texts it makes: packs imported with an older version are marked as needing an
  * update, and can be imported again with a click.
  */
-export const AURORA_IMPORT_VERSION = 31;
+export const AURORA_IMPORT_VERSION = 32;
 export type { AuroraOptions, AuroraResult } from "./registry";
 
 /**
@@ -172,6 +173,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     title: "",
     aids: {},
     existing: {},
+    overlays: {},
     books: {},
     unresolved: {},
   };
@@ -346,6 +348,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
   const made = new Set(result.entries.map((e) => e.id));
   for (const [aid, id] of Object.entries(result.aids)) if (!made.has(id)) delete result.aids[aid];
   result.unresolved = findUnresolved(ctx, made);
+  result.overlays = collectOverlays(ctx, options);
   for (const source of ctx.needed)
     if (
       source.id &&

@@ -74,6 +74,7 @@
   "ID_WOTC_ARCHETYPEFEATURE_RANGER_SUPERIOR_HUNTERS_DEFENSE_UNCANNY_DODGE": [
     "srd51:feature/superior-hunters-defense-uncanny-dodge"
   ],
+  "ID_WOTC_ARCHETYPE_RANGER_HUNTER": ["srd51:subclass/hunter"],
   "ID_WOTC_CLASSFEATURE_RANGER_EXTRA_ATTACK": ["srd51:feature/ranger-extra-attack"],
   "ID_WOTC_CLASSFEATURE_RANGER_FAVORED_ENEMY": [
     "srd51:feature/favored-enemy-1-type",
@@ -94,10 +95,10 @@
   "ID_WOTC_CLASSFEATURE_RANGER_RANGER_ARCHETYPE": ["srd51:feature/ranger-archetype"],
   "ID_WOTC_CLASSFEATURE_RANGER_SPELLCASTING": ["srd51:feature/spellcasting-ranger"],
   "ID_WOTC_CLASSFEATURE_RANGER_VANISH": ["srd51:feature/vanish"],
-  "ID_WOTC_PHB_ARCHETYPE_BARBARIAN_BERSERKER": ["srd51:subclass/berserker"],
-  "ID_WOTC_PHB_ARCHETYPE_BARD_LORE": ["srd51:subclass/lore"],
-  "ID_WOTC_PHB_ARCHETYPE_CLERIC_LIFE": ["srd51:subclass/life"],
-  "ID_WOTC_PHB_ARCHETYPE_DRUID_LAND": ["srd51:subclass/land"],
+  "ID_WOTC_PHB_ARCHETYPE_CHAMPION": ["srd51:subclass/champion"],
+  "ID_WOTC_PHB_ARCHETYPE_CIRCLEOFTHELAND": ["srd51:subclass/land"],
+  "ID_WOTC_PHB_ARCHETYPE_COLLEGE_OF_LORE": ["srd51:subclass/lore"],
+  "ID_WOTC_PHB_ARCHETYPE_DRACONIC_BLOODLINE": ["srd51:subclass/draconic"],
   "ID_WOTC_PHB_ARCHETYPE_FEATURE_ADDITIONALFIGHTINGSTYLE": [
     "srd51:feature/additional-fighting-style"
   ],
@@ -176,14 +177,13 @@
   "ID_WOTC_PHB_ARCHETYPE_FEATURE_WIZARD_EVOCATION_OVERCHANNEL": ["srd51:feature/overchannel"],
   "ID_WOTC_PHB_ARCHETYPE_FEATURE_WIZARD_EVOCATION_POTENT_CANTRIP": ["srd51:feature/potent-cantrip"],
   "ID_WOTC_PHB_ARCHETYPE_FEATURE_WIZARD_EVOCATION_SCULPT_SPELLS": ["srd51:feature/sculpt-spells"],
-  "ID_WOTC_PHB_ARCHETYPE_FIGHTER_CHAMPION": ["srd51:subclass/champion"],
-  "ID_WOTC_PHB_ARCHETYPE_MONK_OPEN_HAND": ["srd51:subclass/open-hand"],
-  "ID_WOTC_PHB_ARCHETYPE_PALADIN_DEVOTION": ["srd51:subclass/devotion"],
-  "ID_WOTC_PHB_ARCHETYPE_RANGER_HUNTER": ["srd51:subclass/hunter"],
-  "ID_WOTC_PHB_ARCHETYPE_ROGUE_THIEF": ["srd51:subclass/thief"],
-  "ID_WOTC_PHB_ARCHETYPE_SORCERER_DRACONIC": ["srd51:subclass/draconic"],
-  "ID_WOTC_PHB_ARCHETYPE_WARLOCK_FIEND": ["srd51:subclass/fiend"],
-  "ID_WOTC_PHB_ARCHETYPE_WIZARD_EVOCATION": ["srd51:subclass/evocation"],
+  "ID_WOTC_PHB_ARCHETYPE_LIFEDOMAIN": ["srd51:subclass/life"],
+  "ID_WOTC_PHB_ARCHETYPE_OTHERWORLDLY_PATRON_FIEND": ["srd51:subclass/fiend"],
+  "ID_WOTC_PHB_ARCHETYPE_PALADIN_OATH_OF_DEVOTION": ["srd51:subclass/devotion"],
+  "ID_WOTC_PHB_ARCHETYPE_PATH_OF_THE_BERSERKER": ["srd51:subclass/berserker"],
+  "ID_WOTC_PHB_ARCHETYPE_THIEF": ["srd51:subclass/thief"],
+  "ID_WOTC_PHB_ARCHETYPE_WAY_OF_THE_OPEN_HAND": ["srd51:subclass/open-hand"],
+  "ID_WOTC_PHB_ARCHETYPE_WIZARD_SCHOOL_OF_EVOCATION": ["srd51:subclass/evocation"],
   "ID_WOTC_PHB_CLASS_FEATURE_ACTIONSURGE": [
     "srd51:feature/action-surge-1-use",
     "srd51:feature/action-surge-2-uses"

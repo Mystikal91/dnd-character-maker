@@ -28,19 +28,6 @@ OUT = REPO / "src/import/aurora/srdPairs.json"
 
 # What the names cannot settle. Aurora id -> entries of the app (checked against the books).
 MANUAL: dict[str, list[str]] = {
-    # The subclasses: the SRD says "Berserker", Aurora "Path of the Berserker".
-    "ID_WOTC_PHB_ARCHETYPE_BARBARIAN_BERSERKER": ["srd51:subclass/berserker"],
-    "ID_WOTC_PHB_ARCHETYPE_BARD_LORE": ["srd51:subclass/lore"],
-    "ID_WOTC_PHB_ARCHETYPE_CLERIC_LIFE": ["srd51:subclass/life"],
-    "ID_WOTC_PHB_ARCHETYPE_DRUID_LAND": ["srd51:subclass/land"],
-    "ID_WOTC_PHB_ARCHETYPE_FIGHTER_CHAMPION": ["srd51:subclass/champion"],
-    "ID_WOTC_PHB_ARCHETYPE_MONK_OPEN_HAND": ["srd51:subclass/open-hand"],
-    "ID_WOTC_PHB_ARCHETYPE_PALADIN_DEVOTION": ["srd51:subclass/devotion"],
-    "ID_WOTC_PHB_ARCHETYPE_RANGER_HUNTER": ["srd51:subclass/hunter"],
-    "ID_WOTC_PHB_ARCHETYPE_ROGUE_THIEF": ["srd51:subclass/thief"],
-    "ID_WOTC_PHB_ARCHETYPE_SORCERER_DRACONIC": ["srd51:subclass/draconic"],
-    "ID_WOTC_PHB_ARCHETYPE_WARLOCK_FIEND": ["srd51:subclass/fiend"],
-    "ID_WOTC_PHB_ARCHETYPE_WIZARD_EVOCATION": ["srd51:subclass/evocation"],
     # Names the books spell otherwise.
     "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_PERSISTANT_RAGE": ["srd51:feature/persistent-rage"],
     "ID_WOTC_PHB_CLASS_FEATURE_WIZARD_SIGNATURE_SPELLS": ["srd51:feature/signature-spell"],
@@ -179,6 +166,21 @@ def main():
         for trait in sorted(traits_of.get(species, [])):
             if not any(trait in v for v in pairs.values()):
                 unpaired["species/" + species].append((trait, trait))
+
+    # The subclasses: the SRD says "Berserker", Aurora "Path of the Berserker". Each class has one in
+    # the SRD, and its file of Aurora holds the one element of type Archetype.
+    for slug, filename in SUBCLASS_FILE.items():
+        archetypes = [
+            el for el in read_elements([AURORA / f"archetypes/{filename}.xml"]) if el.get("type") == "Archetype"
+        ]
+        srd_subclass = next(e["id"] for e, _ in srd_entries("subclasses") if e["parent"] == classes[slug])
+        assert len(archetypes) == 1, f"{filename}: {len(archetypes)} archetypes"
+        pairs[archetypes[0].get("id")] = [srd_subclass]
+
+    # Every element written by hand must exist in the books, or the pair would never be used.
+    known = {el.get("id") for el in read_elements(glob.glob(str(AURORA / "**/*.xml"), recursive=True))}
+    missing = [aid for aid in MANUAL if aid not in known]
+    assert not missing, f"MANUAL names elements that are not in the books: {missing}"
 
     for aid, ids in MANUAL.items():
         pairs[aid] = ids

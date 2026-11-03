@@ -1375,16 +1375,60 @@ describe("options and errors", () => {
     }
   });
 
+  it("keeps what Aurora adds to the entries of the SRD it is paired with", () => {
+    const only = wrap(`
+      <element name="Intimidating Presence" type="Archetype Feature" source="Test Book" id="ID_WOTC_PHB_ARCHETYPE_FEATURE_PATH_OF_THE_BERSERKER_INTIMIDATING_PRESENCE">
+        <description><p>x</p></description>
+        <sheet action="Action" />
+        <rules>
+          <stat name="intimidating presence:dc" value="8" />
+          <stat name="intimidating presence:dc" value="proficiency" />
+          <stat name="intimidating presence:dc" value="charisma:modifier" />
+        </rules>
+      </element>
+      <element name="Font of Magic" type="Class Feature" source="Test Book" id="ID_WOTC_PHB_CLASS_FEATURE_SORCERER_FONT_OF_MAGIC">
+        <description><p>x</p></description>
+        <sheet action="Bonus Action" />
+      </element>
+      <element name="Draconic Ancestry (Black)" type="Racial Trait" source="Test Book" id="ID_RACIAL_TRAIT_DRACONIC_ANCESTRY_BLACK">
+        <description><p>x</p></description>
+        <rules><stat inline="true" name="draconic-ancestry:damage type" value="Acid" /></rules>
+      </element>
+      <element name="Rage" type="Class Feature" source="Test Book" id="ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_RAGE">
+        <description><p>x</p></description>
+        <rules>
+          <stat name="barbarian rage:count" value="2" level="1" />
+          <stat name="barbarian rage:count" value="1" level="3" />
+        </rules>
+      </element>`);
+    const result = parseAurora([only], options);
+    // Nothing is made for them: the entries are the SRD's.
+    expect(result.entries).toHaveLength(0);
+    const presence = result.overlays["srd51:feature/intimidating-presence"];
+    expect(presence?.effects).toEqual([
+      { type: "featureValue", name: "intimidating presence:dc", term: 8 },
+      { type: "featureValue", name: "intimidating presence:dc", term: { of: "proficiency" } },
+      { type: "featureValue", name: "intimidating presence:dc", term: { mod: "cha" } },
+    ]);
+    // The SRD already says Intimidating Presence is an action; it does not say it for Font of Magic.
+    expect(presence?.activation).toBeUndefined();
+    expect(result.overlays["srd51:feature/font-of-magic"]).toEqual({ activation: "bonus" });
+    // A count that grows at the levels is written as steps to add, which would be shown wrong.
+    expect(result.overlays["srd51:feature/rage"]).toBeUndefined();
+    // A word, like the damage type of an ancestry, is in the SRD already.
+    expect(result.overlays["srd51:trait/draconic-ancestry-black"]).toBeUndefined();
+  });
+
   it("recognises a subclass of the SRD that the book names otherwise", () => {
     // `College of Lore` is the SRD's `Lore`: the table of pairs says so, the name does not.
     const only = wrap(`
-      <element name="College of Lore" type="Archetype" source="Test Book" id="ID_WOTC_PHB_ARCHETYPE_BARD_LORE">
+      <element name="College of Lore" type="Archetype" source="Test Book" id="ID_WOTC_PHB_ARCHETYPE_COLLEGE_OF_LORE">
         <supports>Bard</supports><description><p>x</p></description>
       </element>`);
     const result = parseAurora([only], options);
     expect(result.entries.some((e) => e.kind === "subclass")).toBe(false);
     expect(result.duplicates).toBe(1);
-    expect(result.existing.ID_WOTC_PHB_ARCHETYPE_BARD_LORE).toBe("srd51:subclass/lore");
+    expect(result.existing.ID_WOTC_PHB_ARCHETYPE_COLLEGE_OF_LORE).toBe("srd51:subclass/lore");
   });
 
   it("still makes a spell the SRD does not have", () => {

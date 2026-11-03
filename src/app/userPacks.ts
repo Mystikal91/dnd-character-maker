@@ -325,6 +325,7 @@ async function importAuroraSources(
       aids: result.aids,
       books: result.books,
       unresolved: result.unresolved,
+      ...(Object.keys(result.overlays).length > 0 && { overlays: result.overlays }),
     });
     await migrateSavedCharacters(moved);
     for (const part of absorbed) await removeUserPack(part.id);

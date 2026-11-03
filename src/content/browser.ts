@@ -5,6 +5,7 @@ import { type PackIndex, indexPacks } from "../engine/derive";
 import { convertText } from "../i18n/units";
 import { type UserPackRecord, orderUserPacks } from "../storage/packs";
 import { autoText, displayedText } from "../translate/auto";
+import { applyOverlays } from "./overlays";
 
 /** Loaded rules content plus helpers to read its translated texts. */
 export interface Content {
@@ -114,6 +115,8 @@ export async function loadContent(
   // A quick edit made when the pack had another id (it was imported or downloaded again since)
   // is put on the entry as it is called now, unless that entry has an edit of its own.
   const index = indexPacks(...packs);
+  for (const record of orderUserPacks(userPacks))
+    if (record.origin === "personal") applyOverlays(index, record.overlays);
   for (const [key, value] of Object.entries(relinkEdits(Object.fromEntries(edited), index))) {
     if (edited.has(key)) continue;
     if (!original.has(key)) original.set(key, texts.get(key));

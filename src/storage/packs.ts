@@ -1,5 +1,6 @@
 import * as v from "valibot";
-import { type Pack, parsePack } from "../data/schema";
+import type { Overlay } from "../content/overlays";
+import { EffectSchema, type Pack, parsePack } from "../data/schema";
 import { dbDelete, dbGetAll, dbPut } from "./db";
 
 /**
@@ -32,6 +33,8 @@ export interface UserPackRecord {
   books?: Record<string, string>;
   /** The Aurora ids that entries refer to and the files did not define, by entry id. */
   unresolved?: Record<string, string[]>;
+  /** What the pack adds to entries of the app, by entry id (see `AuroraResult.overlays`). */
+  overlays?: Record<string, Overlay>;
 }
 
 /**
@@ -61,6 +64,15 @@ const RecordSchema = v.object({
   aids: v.optional(v.record(v.string(), v.string())),
   books: v.optional(v.record(v.string(), v.string())),
   unresolved: v.optional(v.record(v.string(), v.array(v.string()))),
+  overlays: v.optional(
+    v.record(
+      v.string(),
+      v.object({
+        effects: v.optional(v.array(EffectSchema)),
+        activation: v.optional(v.string()),
+      }),
+    ),
+  ),
 });
 
 /** Ids of the packs that ship with the app: a user pack may not take their place. */

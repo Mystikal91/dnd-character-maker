@@ -1,4 +1,5 @@
 import type { Entry } from "../../data/schema";
+import type { Overlay } from "./overlays";
 import pairs from "./srdPairs.json";
 import { clean, slugify, supportsOf } from "./xml";
 
@@ -43,6 +44,12 @@ export interface AuroraResult {
    * characters that use it move to this one.
    */
   existing: Record<string, string>;
+  /**
+   * What Aurora adds to entries of the app that its elements are (`srdPairs.json`), by entry id:
+   * the numbers a feature shows and how it is used. The pack keeps them and they are put on the
+   * entries when the content is built.
+   */
+  overlays: Record<string, Overlay>;
   /**
    * The book each listed entry (species, class, feat...) says it comes from, by entry id. Two
    * entries of the same name that were imported apart (the core books and the supplements) are
@@ -208,7 +215,7 @@ export function nameKey(kind: string, name: string): string {
   return `${kind}|${kind === "spell" ? (SPELL_ALIASES[plain] ?? plain) : plain}`;
 }
 
-const SRD_PAIRS: Record<string, string[]> = pairs;
+export const SRD_PAIRS: Record<string, string[]> = pairs;
 
 /**
  * The entry of the app that an element of the Player's Handbook is, when the names do not say so
