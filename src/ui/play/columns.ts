@@ -75,7 +75,7 @@ export function estimateHeights(f: LayoutFacts): Record<string, number> {
     hitdice: 100 + 115 * f.hitDiceKinds,
     rests: 480,
     features: 120 + 90 * f.features,
-    inventory: 170 + 100 * Math.ceil(f.tiles / 2) + 85 * f.pack,
+    inventory: 170 + 72 * f.tiles + 85 * f.pack,
     coins: 365,
     notes: 210,
   };

@@ -81,17 +81,17 @@ function Tile({
           picking.value = slot;
         }}
       >
-        <span class="equip-slot">
-          <span class="equip-icon" aria-hidden="true">
-            <SlotIcon slot={slot} />
-          </span>
-          {slotName(slot)}
+        <span class="equip-icon" aria-hidden="true">
+          <SlotIcon slot={slot} />
         </span>
-        <b class="equip-name">
-          {name ??
-            (blockedBy ? ui("equip.twoHands", { name: nameOf(blockedBy) }) : ui("equip.free"))}
-        </b>
-        {item && <span class="equip-detail">{detailOf(item)}</span>}
+        <span class="equip-text">
+          <span class="equip-slot">{slotName(slot)}</span>
+          <b class="equip-name">
+            {name ??
+              (blockedBy ? ui("equip.twoHands", { name: nameOf(blockedBy) }) : ui("equip.free"))}
+          </b>
+          {item && <span class="equip-detail">{detailOf(item)}</span>}
+        </span>
         {!item && fits > 0 && <span class="equip-hint">+{fits}</span>}
       </button>
     </li>
