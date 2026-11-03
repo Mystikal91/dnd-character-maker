@@ -37,6 +37,12 @@ export interface AuroraResult {
   /** The entry each Aurora id became, by Aurora id: what a later import matches on. */
   aids: Record<string, string>;
   /**
+   * The entry of the app that each element left out as a duplicate was taken for, by Aurora id. A
+   * pack imported before the duplicate was recognised made an entry of its own, and the
+   * characters that use it move to this one.
+   */
+  existing: Record<string, string>;
+  /**
    * The book each listed entry (species, class, feat...) says it comes from, by entry id. Two
    * entries of the same name that were imported apart (the core books and the supplements) are
    * told apart by it in a list.
@@ -163,6 +169,44 @@ export const FEATURE_TYPES = new Set([
   "Feat Feature",
 ]);
 
+/**
+ * The SRD calls some spells by a name without the wizard's: the books of Aurora keep it
+ * (`Melf's Acid Arrow` is `Acid Arrow`). Written by hand, since the SRD hardly changes.
+ */
+const SPELL_ALIASES: Record<string, string> = {
+  "bigby's hand": "arcane hand",
+  "drawmij's instant summons": "instant summons",
+  "evard's black tentacles": "black tentacles",
+  "leomund's secret chest": "secret chest",
+  "leomund's tiny hut": "tiny hut",
+  "melf's acid arrow": "acid arrow",
+  "mordenkainen's faithful hound": "faithful hound",
+  "mordenkainen's magnificent mansion": "magnificent mansion",
+  "mordenkainen's private sanctum": "private sanctum",
+  "mordenkainen's sword": "arcane sword",
+  "nystul's magic aura": "arcanist's magic aura",
+  "otiluke's freezing sphere": "freezing sphere",
+  "otiluke's resilient sphere": "resilient sphere",
+  "otto's irresistible dance": "irresistible dance",
+  "rary's telepathic bond": "telepathic bond",
+  "tasha's hideous laughter": "hideous laughter",
+  "tenser's floating disk": "floating disk",
+};
+
+/**
+ * What an element and an entry of the app share when they are the same thing: kind and name, with
+ * the case, the curly quotes of the books and the spaces set aside, and a spell named after a
+ * wizard under the name the SRD gives it.
+ */
+export function nameKey(kind: string, name: string): string {
+  const plain = name
+    .replace(/[\u2018\u2019\u02bc]/g, "'")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+  return `${kind}|${kind === "spell" ? (SPELL_ALIASES[plain] ?? plain) : plain}`;
+}
+
 /** Builds the lookup of the app's entries by kind and name, to recognise what it already has. */
 export function indexExisting(options: AuroraOptions): Map<string, string> {
   const found = new Map<string, string>();
@@ -170,7 +214,7 @@ export function indexExisting(options: AuroraOptions): Map<string, string> {
     if (!/^srd\d+:/.test(entry.id)) continue; // only content that ships with the app
     // A magic item of the app has only its text; the one of Aurora also gives what it does.
     if (entry.kind === "item" && entry.data.rarity) continue;
-    found.set(`${entry.kind}|${options.nameOf(entry.id).toLowerCase()}`, entry.id);
+    found.set(nameKey(entry.kind, options.nameOf(entry.id)), entry.id);
   }
   return found;
 }

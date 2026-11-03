@@ -278,7 +278,12 @@ async function importAuroraSources(
     const moved = old
       ? migrationMap(
           { entries: old.pack.entries, strings: old.strings, ...(old.aids && { aids: old.aids }) },
-          { entries: result.entries, strings: result.strings, aids: result.aids },
+          {
+            entries: result.entries,
+            strings: result.strings,
+            aids: result.aids,
+            existing: result.existing,
+          },
         )
       : new Map<string, string>();
     // What the packs that are folded in had keeps its place for the characters that use it.
@@ -289,7 +294,12 @@ async function importAuroraSources(
           strings: part.strings,
           ...(part.aids && { aids: part.aids }),
         },
-        { entries: result.entries, strings: result.strings, aids: result.aids },
+        {
+          entries: result.entries,
+          strings: result.strings,
+          aids: result.aids,
+          existing: result.existing,
+        },
       ))
         if (!moved.has(from)) moved.set(from, to);
     await addUserPack({

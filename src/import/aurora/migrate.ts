@@ -7,6 +7,8 @@ export interface PackSnapshot {
   strings: Record<string, string>;
   /** The entry each Aurora id became; packs imported before this was kept do not have it. */
   aids?: Record<string, string>;
+  /** The entries of the app that elements were taken for (see `AuroraResult.existing`). */
+  existing?: Record<string, string>;
 }
 
 const plain = (text: string | undefined) =>
@@ -30,6 +32,9 @@ export function migrationMap(old: PackSnapshot, next: PackSnapshot): Map<string,
   for (const [aid, oldId] of Object.entries(old.aids ?? {})) {
     const newId = next.aids?.[aid];
     if (newId && newId !== oldId && known.has(newId)) map.set(oldId, newId);
+    // The element is now the entry the app already has (a spell the SRD knows by another name).
+    const own = next.existing?.[aid];
+    if (own && own !== oldId && !newId) map.set(oldId, own);
   }
   // The entries the Aurora ids tell about: they moved (above) or kept their id.
   const decided = new Set(

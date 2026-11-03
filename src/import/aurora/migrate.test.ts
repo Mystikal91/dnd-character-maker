@@ -39,6 +39,20 @@ describe("moving what characters use when a pack is imported again", () => {
     });
   });
 
+  it("moves what used a copy of an entry the app has to that entry", () => {
+    // Hunter’s Mark was imported as an entry of the pack, before it was known to be the SRD's.
+    const old = pack([["p:trait/hunters-mark", "Hunter’s Mark", "Mark."]], {
+      ID_HUNTERS_MARK: "p:trait/hunters-mark",
+    });
+    const next = {
+      ...pack([["p:trait/other", "Other", "x"]], {}),
+      existing: { ID_HUNTERS_MARK: "srd51:spell/hunters-mark" },
+    };
+    expect(Object.fromEntries(migrationMap(old, next))).toEqual({
+      "p:trait/hunters-mark": "srd51:spell/hunters-mark",
+    });
+  });
+
   it("matches by name and text a pack imported before the Aurora ids were kept", () => {
     const old = pack([
       ["p:trait/charisma-2", "Charisma", "Fey Touched."],

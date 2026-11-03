@@ -1322,6 +1322,39 @@ describe("options and errors", () => {
     expect(result.duplicates).toBe(1);
   });
 
+  it("recognises an SRD spell by the name the books give it", () => {
+    // Curly quotes, and the names of the wizards that the SRD leaves out.
+    const names = [
+      "Hunter’s Mark",
+      "Heroes’ Feast",
+      "Melf’s Acid Arrow",
+      "Tasha’s Hideous Laughter",
+      "Bigby’s Hand",
+      "Nystul’s Magic Aura",
+    ];
+    for (const [i, name] of names.entries()) {
+      const only = wrap(`
+      <element name="${name}" type="Spell" source="Test Book" id="ID_X_SPELL_${i}">
+        <supports>Wizard</supports><description><p>x</p></description>
+        <setters><set name="level">3</set><set name="school">Evocation</set></setters>
+      </element>`);
+      const result = parseAurora([only], options);
+      expect(result.entries, name).toHaveLength(0);
+      expect(result.duplicates, name).toBe(1);
+    }
+  });
+
+  it("still makes a spell the SRD does not have", () => {
+    const only = wrap(`
+      <element name="Booming Blade" type="Spell" source="Test Book" id="ID_X_BOOMING">
+        <supports>Wizard</supports><description><p>x</p></description>
+        <setters><set name="level">0</set><set name="school">Evocation</set></setters>
+      </element>`);
+    const result = parseAurora([only], options);
+    expect(result.entries.some((e) => e.kind === "spell")).toBe(true);
+    expect(result.duplicates).toBe(0);
+  });
+
   it("rejects text that is not an Aurora file", () => {
     expect(() => parseAurora(["not xml at all <<"], options)).toThrow(AuroraParseError);
     expect(() => parseAurora(["<other><x/></other>"], options)).toThrow(AuroraParseError);

@@ -32,6 +32,7 @@ import {
   indexExisting,
   isAsiOption,
   kindOf,
+  nameKey,
   ofType,
   readSources,
 } from "./registry";
@@ -47,7 +48,7 @@ export { AuroraParseError, slugify } from "./xml";
  * the entries or texts it makes: packs imported with an older version are marked as needing an
  * update, and can be imported again with a click.
  */
-export const AURORA_IMPORT_VERSION = 29;
+export const AURORA_IMPORT_VERSION = 30;
 export type { AuroraOptions, AuroraResult } from "./registry";
 
 /**
@@ -169,6 +170,7 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     ruleKinds: {},
     title: "",
     aids: {},
+    existing: {},
     books: {},
     unresolved: {},
   };
@@ -215,11 +217,12 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     if (!kind) continue;
     if (ROOT_TYPES.has(source.type)) {
       if (isBookkeeping(source)) continue;
-      const existing = ctx.existingByName.get(`${kind}|${source.name.toLowerCase()}`);
+      const existing = ctx.existingByName.get(nameKey(kind, source.name));
       if (existing) {
         source.id = existing;
         source.kind = kind;
         source.existing = true;
+        result.existing[source.aid] = existing;
         result.duplicates += 1;
         continue;
       }
