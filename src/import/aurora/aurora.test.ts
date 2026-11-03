@@ -843,6 +843,37 @@ describe("classes and archetypes", () => {
     for (const slug of ["pooled", "turny", "stepped", "unknown"]) expect(uses(slug)).toEqual([]);
   });
 
+  it("reads the pool a feature spends from its usage", () => {
+    const trait = (id: string, usage: string) => `
+      <element name="${id}" type="Racial Trait" source="Test Book" id="ID_T_${id.toUpperCase()}">
+        <description><p>Text.</p></description>
+        <sheet usage="${usage}" />
+      </element>`;
+    const set = wrap(`
+      ${trait("Burst", "Ki")}
+      ${trait("Prayer", "Channel Divinity")}
+      ${trait("Surge", "Sorcery Point")}
+      ${trait("Maneuver", "Superiority Die")}
+      ${trait("Turny", "1/Turn")}
+      <element name="Folk" type="Race" source="Test Book" id="ID_T_FOLK">
+        <description><p>Folk.</p></description>
+        <rules>
+          <grant type="Racial Trait" id="ID_T_BURST" /><grant type="Racial Trait" id="ID_T_PRAYER" />
+          <grant type="Racial Trait" id="ID_T_SURGE" /><grant type="Racial Trait" id="ID_T_MANEUVER" />
+          <grant type="Racial Trait" id="ID_T_TURNY" />
+        </rules>
+      </element>`);
+    const made = parseAurora([set], options);
+    const spends = (slug: string) =>
+      byId(made, `imp1:trait/${slug}`).effects.filter((e) => e.type === "spends");
+    expect(spends("burst")).toEqual([{ type: "spends", pool: "ki" }]);
+    expect(spends("prayer")).toEqual([{ type: "spends", pool: "channelDivinity" }]);
+    expect(spends("surge")).toEqual([{ type: "spends", pool: "sorceryPoints" }]);
+    // A pool the app does not have, and a use per turn, spend nothing.
+    expect(spends("maneuver")).toEqual([]);
+    expect(spends("turny")).toEqual([]);
+  });
+
   it("keeps the kind of action a feature takes from its sheet", () => {
     const trait = (id: string, sheet: string) => `
       <element name="${id}" type="Racial Trait" source="Test Book" id="ID_T_${id.toUpperCase()}">

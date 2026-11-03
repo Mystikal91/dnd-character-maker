@@ -7,6 +7,7 @@ import {
   type ModifierTarget,
   type MovementMode,
   type Sense,
+  type SpendPool,
 } from "../../data/schema";
 import { evaluateRequirements } from "../../engine/requirements";
 import { classIdByName } from "./emit";
@@ -522,6 +523,31 @@ export function usesOf(el: Element): Effect[] {
   // `{{proficiency}}` and `{{wisdom:modifier}}` name the value itself.
   const term = termOfWord(name);
   return term === undefined ? [] : [effect(term)];
+}
+
+/** The pools of the class that Aurora names in a `usage`, as the kind of resource the app has for them. */
+const SPEND_POOL_NAMES: Record<string, SpendPool> = {
+  ki: "ki",
+  "channel divinity": "channelDivinity",
+  "sorcery point": "sorceryPoints",
+  "sorcery points": "sorceryPoints",
+  "wild shape": "wildShape",
+  "bardic inspiration": "bardicInspiration",
+};
+
+/**
+ * The pool a feature takes points from, when its `usage` is the name of one the class has
+ * (`<sheet usage="Ki">`): the feature then spends from that counter. Aurora does not say how many,
+ * and the text is not read for it, so it takes one; the person can change that. A pool the app does
+ * not have (Superiority Die, Channel Arcana) gives nothing.
+ */
+export function spendsOf(el: Element): Effect[] {
+  const sheet = el.querySelector(":scope > sheet");
+  const text = [sheet, ...(sheet?.querySelectorAll("[usage]") ?? [])]
+    .map((node) => node?.getAttribute("usage"))
+    .find(Boolean);
+  const pool = text ? SPEND_POOL_NAMES[text.trim().toLowerCase()] : undefined;
+  return pool ? [{ type: "spends", pool }] : [];
 }
 
 export interface MappedRules {
@@ -1116,7 +1142,7 @@ export function mapRules(ctx: Context, source: Source, options: MapOptions): Map
   else
     for (const [skill, value] of skillBonuses)
       mapped.effects.push({ type: "modifier", target: "skill", value, skill });
-  if (!options.item) mapped.effects.push(...usesOf(source.el));
+  if (!options.item) mapped.effects.push(...usesOf(source.el), ...spendsOf(source.el));
   ctx.result.unsupportedRules += mapped.unsupported;
   if (mapped.unsupported > 0)
     ctx.result.unsupportedBy[source.aid] =
