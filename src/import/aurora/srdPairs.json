@@ -1,0 +1,519 @@
+{
+  "ID_RACIAL_TRAIT_ARTIFICERS_LORE": ["srd51:trait/artificers-lore"],
+  "ID_RACIAL_TRAIT_BRAVE": ["srd51:trait/brave"],
+  "ID_RACIAL_TRAIT_BREATH_WEAPON": ["srd51:trait/breath-weapon"],
+  "ID_RACIAL_TRAIT_CANTRIP": ["srd51:trait/high-elf-cantrip"],
+  "ID_RACIAL_TRAIT_DAMAGE_RESISTANCE": ["srd51:trait/damage-resistance"],
+  "ID_RACIAL_TRAIT_DRACONIC_ANCESTRY": ["srd51:trait/draconic-ancestry"],
+  "ID_RACIAL_TRAIT_DRACONIC_ANCESTRY_BLACK": ["srd51:trait/draconic-ancestry-black"],
+  "ID_RACIAL_TRAIT_DRACONIC_ANCESTRY_BLUE": ["srd51:trait/draconic-ancestry-blue"],
+  "ID_RACIAL_TRAIT_DRACONIC_ANCESTRY_BRASS": ["srd51:trait/draconic-ancestry-brass"],
+  "ID_RACIAL_TRAIT_DRACONIC_ANCESTRY_BRONZE": ["srd51:trait/draconic-ancestry-bronze"],
+  "ID_RACIAL_TRAIT_DRACONIC_ANCESTRY_COPPER": ["srd51:trait/draconic-ancestry-copper"],
+  "ID_RACIAL_TRAIT_DRACONIC_ANCESTRY_GOLD": ["srd51:trait/draconic-ancestry-gold"],
+  "ID_RACIAL_TRAIT_DRACONIC_ANCESTRY_GREEN": ["srd51:trait/draconic-ancestry-green"],
+  "ID_RACIAL_TRAIT_DRACONIC_ANCESTRY_RED": ["srd51:trait/draconic-ancestry-red"],
+  "ID_RACIAL_TRAIT_DRACONIC_ANCESTRY_SILVER": ["srd51:trait/draconic-ancestry-silver"],
+  "ID_RACIAL_TRAIT_DRACONIC_ANCESTRY_WHITE": ["srd51:trait/draconic-ancestry-white"],
+  "ID_RACIAL_TRAIT_DWARVEN_COMBAT_TRAINING": ["srd51:trait/dwarven-combat-training"],
+  "ID_RACIAL_TRAIT_DWARVEN_RESILIENCE": ["srd51:trait/dwarven-resilience"],
+  "ID_RACIAL_TRAIT_DWARVEN_TOOL_PROFICIENCY": ["srd51:trait/tool-proficiency"],
+  "ID_RACIAL_TRAIT_DWARVEN_TOUGHNESS": ["srd51:trait/dwarven-toughness"],
+  "ID_RACIAL_TRAIT_ELF_WEAPON_TRAINING": ["srd51:trait/elf-weapon-training"],
+  "ID_RACIAL_TRAIT_EXTRA_LANGUAGE": ["srd51:trait/extra-language"],
+  "ID_RACIAL_TRAIT_FEY_ANCESTRY": ["srd51:trait/fey-ancestry"],
+  "ID_RACIAL_TRAIT_GNOME_CUNNING": ["srd51:trait/gnome-cunning"],
+  "ID_RACIAL_TRAIT_HALFELF_FEY_ANCESTRY": ["srd51:trait/fey-ancestry"],
+  "ID_RACIAL_TRAIT_HALFLING_NIMBLENESS": ["srd51:trait/halfling-nimbleness"],
+  "ID_RACIAL_TRAIT_HELLISH_RESISTANCE": ["srd51:trait/hellish-resistance"],
+  "ID_RACIAL_TRAIT_INFERNAL_LEGACY": ["srd51:trait/infernal-legacy"],
+  "ID_RACIAL_TRAIT_KEEN_SENSES": ["srd51:trait/keen-senses"],
+  "ID_RACIAL_TRAIT_LUCKY": ["srd51:trait/lucky"],
+  "ID_RACIAL_TRAIT_MENACING": ["srd51:trait/menacing"],
+  "ID_RACIAL_TRAIT_NATURALLY_STEALTHY": ["srd51:trait/naturally-stealthy"],
+  "ID_RACIAL_TRAIT_RELENTLESS_ENDURANCE": ["srd51:trait/relentless-endurance"],
+  "ID_RACIAL_TRAIT_SAVAGE_ATTACKS": ["srd51:trait/savage-attacks"],
+  "ID_RACIAL_TRAIT_SKILL_VERSATILITY": ["srd51:trait/skill-versatility"],
+  "ID_RACIAL_TRAIT_STONECUNNING": ["srd51:trait/stonecunning"],
+  "ID_RACIAL_TRAIT_TINKER": ["srd51:trait/tinker"],
+  "ID_RACIAL_TRAIT_TRANCE": ["srd51:trait/trance"],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_DEFENSIVE_TACTICS": ["srd51:feature/defensive-tactics"],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_DEFENSIVE_TACTICS_ESCAPE_THE_HORDE": [
+    "srd51:feature/defensive-tactics-escape-the-horde"
+  ],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_DEFENSIVE_TACTICS_MULTIATTACK_DEFENSE": [
+    "srd51:feature/defensive-tactics-multiattack-defense"
+  ],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_DEFENSIVE_TACTICS_STEEL_WILL": [
+    "srd51:feature/defensive-tactics-steel-will"
+  ],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_HUNTERS_PREY": ["srd51:feature/hunters-prey"],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_HUNTERS_PREY_COLOSSUS_SLAYER": [
+    "srd51:feature/hunters-prey-colossus-slayer"
+  ],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_HUNTERS_PREY_GIANT_KILLER": [
+    "srd51:feature/hunters-prey-giant-killer"
+  ],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_HUNTERS_PREY_HORDE_BREAKER": [
+    "srd51:feature/hunters-prey-horde-breaker"
+  ],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_MULTIATTACK": ["srd51:feature/multiattack"],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_MULTIATTACK_VOLLEY": ["srd51:feature/multiattack-volley"],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_MULTIATTACK_WHIRLWIND_ATTACK": [
+    "srd51:feature/multiattack-whirlwind-attack"
+  ],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_SUPERIOR_HUNTERS_DEFENSE": [
+    "srd51:feature/superior-hunters-defense"
+  ],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_SUPERIOR_HUNTERS_DEFENSE_EVASION": [
+    "srd51:feature/superior-hunters-defense-evasion"
+  ],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_SUPERIOR_HUNTERS_DEFENSE_STAND_AGAINST_THE_TIDE": [
+    "srd51:feature/superior-hunters-defense-stand-against-the-tide"
+  ],
+  "ID_WOTC_ARCHETYPEFEATURE_RANGER_SUPERIOR_HUNTERS_DEFENSE_UNCANNY_DODGE": [
+    "srd51:feature/superior-hunters-defense-uncanny-dodge"
+  ],
+  "ID_WOTC_CLASSFEATURE_RANGER_EXTRA_ATTACK": ["srd51:feature/ranger-extra-attack"],
+  "ID_WOTC_CLASSFEATURE_RANGER_FAVORED_ENEMY": [
+    "srd51:feature/favored-enemy-1-type",
+    "srd51:feature/favored-enemy-2-types",
+    "srd51:feature/favored-enemy-3-enemies"
+  ],
+  "ID_WOTC_CLASSFEATURE_RANGER_FERAL_SENSES": ["srd51:feature/feral-senses"],
+  "ID_WOTC_CLASSFEATURE_RANGER_FIGHTING_STYLE": ["srd51:feature/ranger-fighting-style"],
+  "ID_WOTC_CLASSFEATURE_RANGER_FOE_SLAYER": ["srd51:feature/foe-slayer"],
+  "ID_WOTC_CLASSFEATURE_RANGER_HIDE_IN_PLAIN_SIGHT": ["srd51:feature/hide-in-plain-sight"],
+  "ID_WOTC_CLASSFEATURE_RANGER_LANDS_STRIDE": ["srd51:feature/ranger-lands-stride"],
+  "ID_WOTC_CLASSFEATURE_RANGER_NATURAL_EXPLORER": [
+    "srd51:feature/natural-explorer-1-terrain-type",
+    "srd51:feature/natural-explorer-2-terrain-types",
+    "srd51:feature/natural-explorer-3-terrain-types"
+  ],
+  "ID_WOTC_CLASSFEATURE_RANGER_PRIMEVAL_AWARENESS": ["srd51:feature/primeval-awareness"],
+  "ID_WOTC_CLASSFEATURE_RANGER_RANGER_ARCHETYPE": ["srd51:feature/ranger-archetype"],
+  "ID_WOTC_CLASSFEATURE_RANGER_SPELLCASTING": ["srd51:feature/spellcasting-ranger"],
+  "ID_WOTC_CLASSFEATURE_RANGER_VANISH": ["srd51:feature/vanish"],
+  "ID_WOTC_PHB_ARCHETYPE_BARBARIAN_BERSERKER": ["srd51:subclass/berserker"],
+  "ID_WOTC_PHB_ARCHETYPE_BARD_LORE": ["srd51:subclass/lore"],
+  "ID_WOTC_PHB_ARCHETYPE_CLERIC_LIFE": ["srd51:subclass/life"],
+  "ID_WOTC_PHB_ARCHETYPE_DRUID_LAND": ["srd51:subclass/land"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_ADDITIONALFIGHTINGSTYLE": [
+    "srd51:feature/additional-fighting-style"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_BARD_LORE_ADDITIONAL_MAGICAL_SECRETS": [
+    "srd51:feature/additional-magical-secrets"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_BARD_LORE_BONUS_PROFICIENCIES": [
+    "srd51:feature/bonus-proficiencies"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_BARD_LORE_CUTTING_WORDS": ["srd51:feature/cutting-words"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_BARD_LORE_PEERLESS_SKILL": ["srd51:feature/peerless-skill"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_CIRCLE_LAND_BONUS_CANTRIP": ["srd51:feature/bonus-cantrip"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_CIRCLE_LAND_LANDS_STRIDE": ["srd51:feature/druid-lands-stride"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_CIRCLE_LAND_NATURAL_RECOVERY": ["srd51:feature/natural-recovery"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_CIRCLE_LAND_NATURES_SANCTUARY": [
+    "srd51:feature/natures-sanctuary"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_CIRCLE_LAND_NATURES_WARD": ["srd51:feature/natures-ward"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_DRACONIC_PRESENCE": ["srd51:feature/draconic-presence"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_DRACONIC_RESILIENCE": ["srd51:feature/draconic-resilience"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_DRAGON_ANCESTOR": ["srd51:feature/dragon-ancestor"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_DRAGON_WINGS": ["srd51:feature/dragon-wings"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_ELEMENTAL_AFFINITY": ["srd51:feature/elemental-affinity"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_FIEND_DARKONESBLESSING": ["srd51:feature/dark-ones-blessing"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_FIEND_DARKONESOWNLUCK": ["srd51:feature/dark-ones-own-luck"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_FIEND_FIENDISH_RESILIENCE": ["srd51:feature/fiendish-resilience"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_FIEND_HURL_THROUGH_HELL": ["srd51:feature/hurl-through-hell"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_IMPROVEDCRITICAL": ["srd51:feature/improved-critical"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_LIFE_BLESSEDHEALER": ["srd51:feature/blessed-healer"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_LIFE_BONUSPROFICIENCY": ["srd51:feature/bonus-proficiency"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_LIFE_CHANNELDIVINITY_PRESERVELIFE": [
+    "srd51:feature/channel-divinity-preserve-life"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_LIFE_DISCIPLEOFLIFE": ["srd51:feature/disciple-of-life"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_LIFE_DIVINESTRIKE": ["srd51:feature/divine-strike"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_LIFE_SUPREMEHEALING": ["srd51:feature/supreme-healing"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_PALADIN_AURA_OF_DEVOTION": ["srd51:feature/aura-of-devotion"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_PALADIN_CHANNEL_DIVINITY_SACRED_WEAPON": [
+    "srd51:feature/channel-divinity-sacred-weapon"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_PALADIN_CHANNEL_DIVINITY_TURN_THE_UNHOLY": [
+    "srd51:feature/channel-divinity-turn-the-unholy"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_PALADIN_HOLY_NIMBUS": ["srd51:feature/holy-nimbus"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_PALADIN_PURITY_OF_SPIRIT": ["srd51:feature/purity-of-spirit"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_PATH_OF_THE_BERSERKER_FRENZY": ["srd51:feature/frenzy"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_PATH_OF_THE_BERSERKER_INTIMIDATING_PRESENCE": [
+    "srd51:feature/intimidating-presence"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_PATH_OF_THE_BERSERKER_MINDLESS_RAGE": [
+    "srd51:feature/mindless-rage"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_PATH_OF_THE_BERSERKER_RETALIATION": ["srd51:feature/retaliation"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_REMARKABLEATHLETE": ["srd51:feature/remarkable-athlete"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_SUPERIORCRITICAL": ["srd51:feature/superior-critical"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_SURVIVOR": ["srd51:feature/survivor"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_THIEF_FASTHANDS": ["srd51:feature/fast-hands"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_THIEF_SECONDSTORYWORK": ["srd51:feature/second-story-work"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_THIEF_SUPREMESNEAK": ["srd51:feature/supreme-sneak"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_THIEF_THIEFS_REFLEXES": ["srd51:feature/thiefs-reflexes"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_THIEF_USEMAGICDEVICE": ["srd51:feature/use-magic-device"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_WAYOFTHEOPENHAND_OPEN_HAND_TECHNIQUE": [
+    "srd51:feature/open-hand-technique"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_WAYOFTHEOPENHAND_QUIVERING_PALM": ["srd51:feature/quivering-palm"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_WAYOFTHEOPENHAND_TRANQUILITY": ["srd51:feature/tranquility"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_WAYOFTHEOPENHAND_WHOLENESS_OF_BODY": [
+    "srd51:feature/wholeness-of-body"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_WIZARD_EVOCATION_EMPOWERED_EVOCATION": [
+    "srd51:feature/empowered-evocation"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_WIZARD_EVOCATION_EVOCATION_SAVANT": [
+    "srd51:feature/evocation-savant"
+  ],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_WIZARD_EVOCATION_OVERCHANNEL": ["srd51:feature/overchannel"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_WIZARD_EVOCATION_POTENT_CANTRIP": ["srd51:feature/potent-cantrip"],
+  "ID_WOTC_PHB_ARCHETYPE_FEATURE_WIZARD_EVOCATION_SCULPT_SPELLS": ["srd51:feature/sculpt-spells"],
+  "ID_WOTC_PHB_ARCHETYPE_FIGHTER_CHAMPION": ["srd51:subclass/champion"],
+  "ID_WOTC_PHB_ARCHETYPE_MONK_OPEN_HAND": ["srd51:subclass/open-hand"],
+  "ID_WOTC_PHB_ARCHETYPE_PALADIN_DEVOTION": ["srd51:subclass/devotion"],
+  "ID_WOTC_PHB_ARCHETYPE_RANGER_HUNTER": ["srd51:subclass/hunter"],
+  "ID_WOTC_PHB_ARCHETYPE_ROGUE_THIEF": ["srd51:subclass/thief"],
+  "ID_WOTC_PHB_ARCHETYPE_SORCERER_DRACONIC": ["srd51:subclass/draconic"],
+  "ID_WOTC_PHB_ARCHETYPE_WARLOCK_FIEND": ["srd51:subclass/fiend"],
+  "ID_WOTC_PHB_ARCHETYPE_WIZARD_EVOCATION": ["srd51:subclass/evocation"],
+  "ID_WOTC_PHB_CLASS_FEATURE_ACTIONSURGE": [
+    "srd51:feature/action-surge-1-use",
+    "srd51:feature/action-surge-2-uses"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_BRUTAL_CRITICAL": [
+    "srd51:feature/brutal-critical-1-die",
+    "srd51:feature/brutal-critical-2-dice",
+    "srd51:feature/brutal-critical-3-dice"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_DANGER_SENSE": ["srd51:feature/danger-sense"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_EXTRA_ATTACK": ["srd51:feature/barbarian-extra-attack"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_FAST_MOVEMENT": ["srd51:feature/fast-movement"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_FERAL_INSTINCT": ["srd51:feature/feral-instinct"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_INDOMITABLE_MIGHT": ["srd51:feature/indomitable-might"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_PERSISTANT_RAGE": ["srd51:feature/persistent-rage"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_PRIMAL_CHAMPION": ["srd51:feature/primal-champion"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_PRIMAL_PATH": ["srd51:feature/primal-path"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_RAGE": ["srd51:feature/rage"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_RECKLESS_ATTACK": ["srd51:feature/reckless-attack"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_RELENTLESS_RAGE": ["srd51:feature/relentless-rage"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARBARIAN_UNARMORED_DEFENCE": [
+    "srd51:feature/barbarian-unarmored-defense"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARD_BARDIC_INSPIRATION": [
+    "srd51:feature/bardic-inspiration-d10",
+    "srd51:feature/bardic-inspiration-d12",
+    "srd51:feature/bardic-inspiration-d6",
+    "srd51:feature/bardic-inspiration-d8"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARD_BARD_COLLEGE": ["srd51:feature/bard-college"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARD_COUNTERCHARM": ["srd51:feature/countercharm"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARD_EXPERTISE": [
+    "srd51:feature/bard-expertise-1",
+    "srd51:feature/bard-expertise-2"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARD_FONT_OF_INSPIRATION": ["srd51:feature/font-of-inspiration"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARD_JACK_OF_ALL_TRADES": ["srd51:feature/jack-of-all-trades"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARD_MAGICAL_SECRETS": [
+    "srd51:feature/magical-secrets-1",
+    "srd51:feature/magical-secrets-2",
+    "srd51:feature/magical-secrets-3"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARD_SONG_OF_REST": [
+    "srd51:feature/song-of-rest-d10",
+    "srd51:feature/song-of-rest-d12",
+    "srd51:feature/song-of-rest-d6",
+    "srd51:feature/song-of-rest-d8"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARD_SPELLCASTING_BARD": ["srd51:feature/spellcasting-bard"],
+  "ID_WOTC_PHB_CLASS_FEATURE_BARD_SUPERIOR_INSPIRATION": ["srd51:feature/superior-inspiration"],
+  "ID_WOTC_PHB_CLASS_FEATURE_CLERIC_CHANNELDIVINITY": [
+    "srd51:feature/channel-divinity-1-rest",
+    "srd51:feature/channel-divinity-2-rest",
+    "srd51:feature/channel-divinity-3-rest"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_CLERIC_CHANNELDIVINITY_TURN_UNDEAD": [
+    "srd51:feature/channel-divinity-turn-undead"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_CLERIC_DESTROYUNDEAD": [
+    "srd51:feature/destroy-undead-cr-1-2-or-below",
+    "srd51:feature/destroy-undead-cr-1-or-below",
+    "srd51:feature/destroy-undead-cr-2-or-below",
+    "srd51:feature/destroy-undead-cr-3-or-below",
+    "srd51:feature/destroy-undead-cr-4-or-below"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_CLERIC_DIVINEDOMAIN": ["srd51:feature/divine-domain"],
+  "ID_WOTC_PHB_CLASS_FEATURE_CLERIC_DIVINEINTERVENTION": ["srd51:feature/divine-intervention"],
+  "ID_WOTC_PHB_CLASS_FEATURE_CLERIC_SPELLCASTING_CLERIC": ["srd51:feature/spellcasting-cleric"],
+  "ID_WOTC_PHB_CLASS_FEATURE_DRUID_ARCHDRUID": ["srd51:feature/archdruid"],
+  "ID_WOTC_PHB_CLASS_FEATURE_DRUID_BEAST_SPELLS": ["srd51:feature/beast-spells"],
+  "ID_WOTC_PHB_CLASS_FEATURE_DRUID_DRUIDIC": ["srd51:feature/druidic"],
+  "ID_WOTC_PHB_CLASS_FEATURE_DRUID_DRUID_CIRCLE": ["srd51:feature/druid-circle"],
+  "ID_WOTC_PHB_CLASS_FEATURE_DRUID_SPELLCASTING_DRUID": ["srd51:feature/spellcasting-druid"],
+  "ID_WOTC_PHB_CLASS_FEATURE_DRUID_TIMELESS_BODY": ["srd51:feature/druid-timeless-body"],
+  "ID_WOTC_PHB_CLASS_FEATURE_DRUID_WILDSHAPE": [
+    "srd51:feature/wild-shape-cr-1-2-or-below-no-flying-speed",
+    "srd51:feature/wild-shape-cr-1-4-or-below-no-flying-or-swim-speed",
+    "srd51:feature/wild-shape-cr-1-or-below"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_AGONIZING_BLAST": [
+    "srd51:feature/eldritch-invocation-agonizing-blast"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_ARMOR_OF_SHADOWS": [
+    "srd51:feature/eldritch-invocation-armor-of-shadows"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_ASCENDANT_STEP": [
+    "srd51:feature/eldritch-invocation-ascendant-step"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_BEAST_SPEECH": [
+    "srd51:feature/eldritch-invocation-beast-speech"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_BEGUILING_INFLUENCE": [
+    "srd51:feature/eldritch-invocation-beguiling-influence"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_BEWITCHING_WHISPERS": [
+    "srd51:feature/eldritch-invocation-bewitching-whispers"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_BOOK_OF_ANCIENT_SECRETS": [
+    "srd51:feature/eldritch-invocation-book-of-ancient-secrets"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_CHAINS_OF_CARCERI": [
+    "srd51:feature/eldritch-invocation-chains-of-carceri"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_DEVILS_SIGHT": [
+    "srd51:feature/eldritch-invocation-devils-sight"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_DREADFUL_WORD": [
+    "srd51:feature/eldritch-invocation-dreadful-word"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_ELDRITCH_SIGHT": [
+    "srd51:feature/eldritch-invocation-eldritch-sight"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_EYES_OF_THE_RUNEKEEPER": [
+    "srd51:feature/eldritch-invocation-eyes-of-the-rune-keeper"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_Eldritch_Spear": [
+    "srd51:feature/eldritch-invocation-eldritch-spear"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_FIENDISH_VIGOR": [
+    "srd51:feature/eldritch-invocation-fiendish-vigor"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_GAZE_OF_TWO_MINDS": [
+    "srd51:feature/eldritch-invocation-gaze-of-two-minds"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_LIFEDRINKER": [
+    "srd51:feature/eldritch-invocation-lifedrinker"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_MASK_OF_MANY_FACES": [
+    "srd51:feature/eldritch-invocation-mask-of-many-faces"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_MASTER_OF_MYRIAD_FORMS": [
+    "srd51:feature/eldritch-invocation-master-of-myriad-forms"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_MINIONS_OF_CHAOS": [
+    "srd51:feature/eldritch-invocation-minions-of-chaos"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_MIRE_THE_MIND": [
+    "srd51:feature/eldritch-invocation-mire-the-mind"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_MISTY_VISIONS": [
+    "srd51:feature/eldritch-invocation-misty-visions"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_ONE_WITH_SHADOWS": [
+    "srd51:feature/eldritch-invocation-one-with-shadows"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_OTHERWORLDLY_LEAP": [
+    "srd51:feature/eldritch-invocation-otherworldly-leap"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_REPELLING_BLAST": [
+    "srd51:feature/eldritch-invocation-repelling-blast"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_SCULPTOR_OF_FLESH": [
+    "srd51:feature/eldritch-invocation-sculptor-of-flesh"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_SIGN_OF_ILL_OMEN": [
+    "srd51:feature/eldritch-invocation-sign-of-ill-omen"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_THIEF_OF_FIVE_FATES": [
+    "srd51:feature/eldritch-invocation-thief-of-five-fates"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_THIRSTING_BLADE": [
+    "srd51:feature/eldritch-invocation-thirsting-blade"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_VISIONS_OF_DISTANT_REALMS": [
+    "srd51:feature/eldritch-invocation-visions-of-distant-realms"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_VOICE_OF_THE_CHAIN_MASTER": [
+    "srd51:feature/eldritch-invocation-voice-of-the-chain-master"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_WHISPERS_OF_THE_GRAVE": [
+    "srd51:feature/eldritch-invocation-whispers-of-the-grave"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ELDRITCH_INVOCATION_WITCH_SIGHT": [
+    "srd51:feature/eldritch-invocation-witch-sight"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_EXTRAATTACK": [
+    "srd51:feature/extra-attack-1",
+    "srd51:feature/extra-attack-2",
+    "srd51:feature/extra-attack-3"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_FIGHTINGSTYLE": ["srd51:feature/fighter-fighting-style"],
+  "ID_WOTC_PHB_CLASS_FEATURE_FIGHTINGSTYLE_ARCHERY": [
+    "srd51:feature/fighter-fighting-style-archery",
+    "srd51:feature/ranger-fighting-style-archery"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_FIGHTINGSTYLE_DEFENSE": [
+    "srd51:feature/fighter-fighting-style-defense",
+    "srd51:feature/fighting-style-defense",
+    "srd51:feature/ranger-fighting-style-defense"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_FIGHTINGSTYLE_DUELING": [
+    "srd51:feature/fighter-fighting-style-dueling",
+    "srd51:feature/fighting-style-dueling",
+    "srd51:feature/ranger-fighting-style-dueling"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_FIGHTINGSTYLE_GREAT_WEAPON_FIGHTING": [
+    "srd51:feature/fighter-fighting-style-great-weapon-fighting",
+    "srd51:feature/fighting-style-great-weapon-fighting"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_FIGHTINGSTYLE_PROTECTION": [
+    "srd51:feature/fighter-fighting-style-protection",
+    "srd51:feature/fighting-style-protection"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_FIGHTINGSTYLE_TWOWEAPON_FIGHTING": [
+    "srd51:feature/fighter-fighting-style-two-weapon-fighting",
+    "srd51:feature/ranger-fighting-style-two-weapon-fighting"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_INDOMITABLE": [
+    "srd51:feature/indomitable-1-use",
+    "srd51:feature/indomitable-2-uses",
+    "srd51:feature/indomitable-3-uses"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_MARTIALARCHETYPE": ["srd51:feature/martial-archetype"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_DEFLECT_MISSILES": ["srd51:feature/deflect-missiles"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_DIAMOND_SOUL": ["srd51:feature/diamond-soul"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_EMPTY_BODY": ["srd51:feature/empty-body"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_EVASION_MONK": ["srd51:feature/monk-evasion"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_EXTRA_ATTACK_MONK": ["srd51:feature/monk-extra-attack"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_KI": ["srd51:feature/ki"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_KI_EMPOWERED_STRIKES": ["srd51:feature/ki-empowered-strikes"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_KI_FLURRY_OF_BLOWS": ["srd51:feature/flurry-of-blows"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_KI_PATIENT_DEFENSE": ["srd51:feature/patient-defense"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_KI_STEP_OF_THE_WIND": ["srd51:feature/step-of-the-wind"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_MARTIAL_ARTS": ["srd51:feature/martial-arts"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_MONASTIC_TRADITION": ["srd51:feature/monastic-tradition"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_PERFECT_SELF": ["srd51:feature/perfect-self"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_PURITY_OF_BODY": ["srd51:feature/purity-of-body"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_SLOW_FALL": ["srd51:feature/slow-fall"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_STILLNESS_OF_MIND": ["srd51:feature/stillness-of-mind"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_STUNNING_STRIKE": ["srd51:feature/stunning-strike"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_TIMELESS_BODY_MONK": ["srd51:feature/monk-timeless-body"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_TONGUE_OF_THE_SUN_AND_MOON": [
+    "srd51:feature/tongue-of-the-sun-and-moon"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_UNARMORED_DEFENSE": ["srd51:feature/monk-unarmored-defense"],
+  "ID_WOTC_PHB_CLASS_FEATURE_MONK_UNARMORED_MOVEMENT": [
+    "srd51:feature/unarmored-movement-1",
+    "srd51:feature/unarmored-movement-2"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_AURA_OF_COURAGE": ["srd51:feature/aura-of-courage"],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_AURA_OF_PROTECTION": ["srd51:feature/aura-of-protection"],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_CHANNEL_DIVINITY": ["srd51:feature/channel-divinity"],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_CLEANSING_TOUCH": ["srd51:feature/cleansing-touch"],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_DIVINE_HEALTH": ["srd51:feature/divine-health"],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_DIVINE_SENSE": ["srd51:feature/divine-sense"],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_DIVINE_SMITE": ["srd51:feature/divine-smite"],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_EXTRA_ATTACK": ["srd51:feature/paladin-extra-attack"],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_FIGHTING_STYLE": ["srd51:feature/paladin-fighting-style"],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_IMPROVED_DIVINE_SMITE": [
+    "srd51:feature/improved-divine-smite"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_LAY_ON_HANDS": ["srd51:feature/lay-on-hands"],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_SACRED_OATH": ["srd51:feature/sacred-oath"],
+  "ID_WOTC_PHB_CLASS_FEATURE_PALADIN_SPELLCASTING": ["srd51:feature/spellcasting-paladin"],
+  "ID_WOTC_PHB_CLASS_FEATURE_ROGUE_BLINDSENSE": ["srd51:feature/blindsense"],
+  "ID_WOTC_PHB_CLASS_FEATURE_ROGUE_CUNNINGACTION": ["srd51:feature/cunning-action"],
+  "ID_WOTC_PHB_CLASS_FEATURE_ROGUE_ELUSIVE": ["srd51:feature/elusive"],
+  "ID_WOTC_PHB_CLASS_FEATURE_ROGUE_EVASION": ["srd51:feature/rogue-evasion"],
+  "ID_WOTC_PHB_CLASS_FEATURE_ROGUE_EXPERTISE": [
+    "srd51:feature/rogue-expertise-1",
+    "srd51:feature/rogue-expertise-2"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_ROGUE_RELIABLETALENT": ["srd51:feature/reliable-talent"],
+  "ID_WOTC_PHB_CLASS_FEATURE_ROGUE_ROGUISHARCHETYPE": ["srd51:feature/roguish-archetype"],
+  "ID_WOTC_PHB_CLASS_FEATURE_ROGUE_SLIPPERYMIND": ["srd51:feature/slippery-mind"],
+  "ID_WOTC_PHB_CLASS_FEATURE_ROGUE_SNEAKATTACK": ["srd51:feature/sneak-attack"],
+  "ID_WOTC_PHB_CLASS_FEATURE_ROGUE_STROKEOFLUCK": ["srd51:feature/stroke-of-luck"],
+  "ID_WOTC_PHB_CLASS_FEATURE_ROGUE_THIEVES_CANT": ["srd51:feature/thieves-cant"],
+  "ID_WOTC_PHB_CLASS_FEATURE_ROGUE_UNCANNY_DODGE": ["srd51:feature/uncanny-dodge"],
+  "ID_WOTC_PHB_CLASS_FEATURE_SECONDWIND": ["srd51:feature/second-wind"],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_FONT_OF_MAGIC": ["srd51:feature/font-of-magic"],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_METAMAGIC": [
+    "srd51:feature/metamagic-1",
+    "srd51:feature/metamagic-2",
+    "srd51:feature/metamagic-3"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_METAMAGIC_CAREFUL_SPELL": [
+    "srd51:feature/metamagic-careful-spell"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_METAMAGIC_DISTANT_SPELL": [
+    "srd51:feature/metamagic-distant-spell"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_METAMAGIC_EMPOWERED_SPELL": [
+    "srd51:feature/metamagic-empowered-spell"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_METAMAGIC_EXTENDED_SPELL": [
+    "srd51:feature/metamagic-extended-spell"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_METAMAGIC_HEIGHTENED_SPELL": [
+    "srd51:feature/metamagic-heightened-spell"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_METAMAGIC_QUICKEND_SPELL": [
+    "srd51:feature/metamagic-quickened-spell"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_METAMAGIC_SUBTLE_SPELL": [
+    "srd51:feature/metamagic-subtle-spell"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_METAMAGIC_TWINNED_SPELL": [
+    "srd51:feature/metamagic-twinned-spell"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_SORCEROUS_ORIGIN": ["srd51:feature/sorcerous-origin"],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_SORCEROUS_RESTORATION": [
+    "srd51:feature/sorcerous-restoration"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_SORCERER_SPELLCASTING_SORCERER": [
+    "srd51:feature/spellcasting-sorcerer"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_WARLOCK_ELDRITCH_INVOCATIONS": ["srd51:feature/eldritch-invocations"],
+  "ID_WOTC_PHB_CLASS_FEATURE_WARLOCK_ELDRITCH_MASTER": ["srd51:feature/eldritch-master"],
+  "ID_WOTC_PHB_CLASS_FEATURE_WARLOCK_MYSTIC_ARCANUM": [
+    "srd51:feature/mystic-arcanum-6th-level",
+    "srd51:feature/mystic-arcanum-7th-level",
+    "srd51:feature/mystic-arcanum-8th-level",
+    "srd51:feature/mystic-arcanum-9th-level"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_WARLOCK_OTHERWORLDLY_PATRON": ["srd51:feature/otherworldly-patron"],
+  "ID_WOTC_PHB_CLASS_FEATURE_WARLOCK_PACT_BOON": ["srd51:feature/pact-boon"],
+  "ID_WOTC_PHB_CLASS_FEATURE_WARLOCK_PACT_BOON_PACT_OF_THE_BLADE": [
+    "srd51:feature/pact-of-the-blade"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_WARLOCK_PACT_BOON_PACT_OF_THE_CHAIN": [
+    "srd51:feature/pact-of-the-chain"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_WARLOCK_PACT_BOON_PACT_OF_THE_TOME": [
+    "srd51:feature/pact-of-the-tome"
+  ],
+  "ID_WOTC_PHB_CLASS_FEATURE_WARLOCK_SPELLCASTING_WARLOCK_PACT_MAGIC": ["srd51:feature/pact-magic"],
+  "ID_WOTC_PHB_CLASS_FEATURE_WIZARD_ARCANE_RECOVERY": ["srd51:feature/arcane-recovery"],
+  "ID_WOTC_PHB_CLASS_FEATURE_WIZARD_ARCANE_TRADITION": ["srd51:feature/arcane-tradition"],
+  "ID_WOTC_PHB_CLASS_FEATURE_WIZARD_SIGNATURE_SPELLS": ["srd51:feature/signature-spell"],
+  "ID_WOTC_PHB_CLASS_FEATURE_WIZARD_SPELLCASTING_WIZARD": ["srd51:feature/spellcasting-wizard"],
+  "ID_WOTC_PHB_CLASS_FEATURE_WIZARD_SPELL_MASTERY": ["srd51:feature/spell-mastery"]
+}

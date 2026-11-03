@@ -1344,6 +1344,18 @@ describe("options and errors", () => {
     }
   });
 
+  it("recognises a subclass of the SRD that the book names otherwise", () => {
+    // `College of Lore` is the SRD's `Lore`: the table of pairs says so, the name does not.
+    const only = wrap(`
+      <element name="College of Lore" type="Archetype" source="Test Book" id="ID_WOTC_PHB_ARCHETYPE_BARD_LORE">
+        <supports>Bard</supports><description><p>x</p></description>
+      </element>`);
+    const result = parseAurora([only], options);
+    expect(result.entries.some((e) => e.kind === "subclass")).toBe(false);
+    expect(result.duplicates).toBe(1);
+    expect(result.existing.ID_WOTC_PHB_ARCHETYPE_BARD_LORE).toBe("srd51:subclass/lore");
+  });
+
   it("still makes a spell the SRD does not have", () => {
     const only = wrap(`
       <element name="Booming Blade" type="Spell" source="Test Book" id="ID_X_BOOMING">

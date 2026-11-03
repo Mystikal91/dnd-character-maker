@@ -1,4 +1,5 @@
 import type { Entry } from "../../data/schema";
+import pairs from "./srdPairs.json";
 import { clean, slugify, supportsOf } from "./xml";
 
 export interface AuroraOptions {
@@ -205,6 +206,17 @@ export function nameKey(kind: string, name: string): string {
     .trim()
     .toLowerCase();
   return `${kind}|${kind === "spell" ? (SPELL_ALIASES[plain] ?? plain) : plain}`;
+}
+
+const SRD_PAIRS: Record<string, string[]> = pairs;
+
+/**
+ * The entry of the app that an element of the Player's Handbook is, when the names do not say so
+ * (`Path of the Berserker` is the SRD's `Berserker`). `srdPairs.json` is made by
+ * `scripts/aurora-pairs/pair.py`; what is not in the app's index is left out.
+ */
+export function pairedEntry(options: AuroraOptions, kind: string, aid: string): string | undefined {
+  return (SRD_PAIRS[aid] ?? []).find((id) => options.index.get(id)?.kind === kind);
 }
 
 /** Builds the lookup of the app's entries by kind and name, to recognise what it already has. */

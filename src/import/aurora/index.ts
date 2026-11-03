@@ -34,6 +34,7 @@ import {
   kindOf,
   nameKey,
   ofType,
+  pairedEntry,
   readSources,
 } from "./registry";
 import { mergeRepeats, preferOlderEdition } from "./repeats";
@@ -217,7 +218,9 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
     if (!kind) continue;
     if (ROOT_TYPES.has(source.type)) {
       if (isBookkeeping(source)) continue;
-      const existing = ctx.existingByName.get(nameKey(kind, source.name));
+      const existing =
+        ctx.existingByName.get(nameKey(kind, source.name)) ??
+        pairedEntry(options, kind, source.aid);
       if (existing) {
         source.id = existing;
         source.kind = kind;
