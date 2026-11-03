@@ -24,6 +24,7 @@ import { OVERRIDE, numberOverride } from "./overrides";
 import { type ClassFact, type ClassResource, type ExtraDamage, classResources } from "./resources";
 import { type FeatureSource, featureSources } from "./sources";
 import { type SpellLists, deriveSpellLists } from "./spells";
+import { type Spend, deriveSpends } from "./spends";
 import { withSubclassCasting } from "./subclassCasting";
 import { deriveFreeSpells, deriveUses, withFeatureSettings } from "./uses";
 import { type Warning, warn } from "./warnings";
@@ -87,6 +88,8 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   featureSources: Record<string, FeatureSource>;
   /** The numbers features show (a save DC, dice, a range), by the entry that gives them. */
   featureValues: Record<string, FeatureValue[]>;
+  /** What the features that use a pool of the class take from it, by the entry that is used. */
+  spends: Record<string, Spend>;
   /** Conditions the character cannot suffer (ids of the condition entries). */
   conditionImmunities: string[];
   /** The lowest die that is a critical hit with weapon attacks (20, or less with Improved Critical). */
@@ -609,6 +612,10 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
       ...effects.flatMap((e) => (e.type === "d20Floor" ? [e.value] : [])),
     ),
     featureValues: deriveFeatureValues(sourced, valueState),
+    spends: deriveSpends(sourced, resources, (entry) => {
+      const owner = (index.get(entry)?.data as { class?: string } | undefined)?.class;
+      return owner;
+    }),
     ...(spellcasting && { spellcasting }),
     spellcasters: casters,
     resources,

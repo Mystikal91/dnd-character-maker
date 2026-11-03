@@ -5,7 +5,13 @@
  * Add a line here (and regenerate with `npm run data:srd51`) to make a feature work on the
  * sheet. What cannot be expressed stays text.
  */
-import type { Effect, FeatureTerm, ModifierCondition, ModifierTarget } from "../../src/data/schema";
+import type {
+  Effect,
+  FeatureTerm,
+  ModifierCondition,
+  ModifierTarget,
+  SpendPool,
+} from "../../src/data/schema";
 
 /** A limited number of uses between rests (`n` fixed, or the terms given), ticked off in play. */
 const uses = (recharge: "short" | "long", ...terms: FeatureTerm[]): Effect[] =>
@@ -190,6 +196,108 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
   "feature/fighter-fighting-style-dueling": dueling,
   "feature/fighting-style-dueling": dueling,
   "feature/ranger-fighting-style-dueling": dueling,
+};
+
+/**
+ * What a feature takes from a pool of the class each time it is used, with how many (1 when not
+ * written). The text of each feature says it; the pools are the resources of `engine/resources.ts`.
+ */
+const SPENDS: Record<string, { pool: SpendPool; cost?: number }> = {
+  "feature/flurry-of-blows": { pool: "ki" },
+  "feature/patient-defense": { pool: "ki" },
+  "feature/step-of-the-wind": { pool: "ki" },
+  "feature/stunning-strike": { pool: "ki" },
+  "feature/diamond-soul": { pool: "ki" },
+  "feature/quivering-palm": { pool: "ki", cost: 3 },
+  // Empty Body also casts astral projection for 8 points: the text says it, 4 is the first use.
+  "feature/empty-body": { pool: "ki", cost: 4 },
+  "feature/channel-divinity-turn-undead": { pool: "channelDivinity" },
+  "feature/channel-divinity-preserve-life": { pool: "channelDivinity" },
+  "feature/channel-divinity-sacred-weapon": { pool: "channelDivinity" },
+  "feature/channel-divinity-turn-the-unholy": { pool: "channelDivinity" },
+  "feature/bardic-inspiration-d6": { pool: "bardicInspiration" },
+  "feature/bardic-inspiration-d8": { pool: "bardicInspiration" },
+  "feature/bardic-inspiration-d10": { pool: "bardicInspiration" },
+  "feature/bardic-inspiration-d12": { pool: "bardicInspiration" },
+  "feature/cutting-words": { pool: "bardicInspiration" },
+  "feature/wild-shape-cr-1-4-or-below-no-flying-or-swim-speed": { pool: "wildShape" },
+  "feature/wild-shape-cr-1-2-or-below-no-flying-speed": { pool: "wildShape" },
+  "feature/wild-shape-cr-1-or-below": { pool: "wildShape" },
+  "feature/draconic-presence": { pool: "sorceryPoints", cost: 5 },
+  // Twinned Spell costs as many points as the level of the spell: 1 is the least.
+  "feature/metamagic-careful-spell": { pool: "sorceryPoints" },
+  "feature/metamagic-distant-spell": { pool: "sorceryPoints" },
+  "feature/metamagic-empowered-spell": { pool: "sorceryPoints" },
+  "feature/metamagic-extended-spell": { pool: "sorceryPoints" },
+  "feature/metamagic-heightened-spell": { pool: "sorceryPoints", cost: 3 },
+  "feature/metamagic-quickened-spell": { pool: "sorceryPoints", cost: 2 },
+  "feature/metamagic-subtle-spell": { pool: "sorceryPoints" },
+  "feature/metamagic-twinned-spell": { pool: "sorceryPoints" },
+};
+for (const [key, spend] of Object.entries(SPENDS))
+  FEATURE_EFFECTS[key] = [
+    ...(FEATURE_EFFECTS[key] ?? []),
+    { type: "spends", pool: spend.pool, ...(spend.cost !== undefined && { cost: spend.cost }) },
+  ];
+
+/**
+ * What a feature or trait takes to use, written by hand from its text: an action, a bonus action
+ * or a reaction (the same `data.activation` that Aurora's `<sheet action>` gives). A feature that
+ * is used by another action (Action Surge, Extra Attack) or that is always on is not here.
+ */
+export const ACTIVATION: Record<string, "action" | "bonus" | "reaction"> = {
+  "feature/intimidating-presence": "action",
+  "feature/countercharm": "action",
+  "feature/channel-divinity-turn-undead": "action",
+  "feature/channel-divinity-preserve-life": "action",
+  "feature/channel-divinity-sacred-weapon": "action",
+  "feature/channel-divinity-turn-the-unholy": "action",
+  "feature/divine-intervention": "action",
+  "feature/wild-shape-cr-1-4-or-below-no-flying-or-swim-speed": "action",
+  "feature/wild-shape-cr-1-2-or-below-no-flying-speed": "action",
+  "feature/wild-shape-cr-1-or-below": "action",
+  "feature/wholeness-of-body": "action",
+  "feature/stillness-of-mind": "action",
+  "feature/empty-body": "action",
+  "feature/divine-sense": "action",
+  "feature/lay-on-hands": "action",
+  "feature/cleansing-touch": "action",
+  "feature/holy-nimbus": "action",
+  "feature/primeval-awareness": "action",
+  "feature/multiattack-volley": "action",
+  "feature/multiattack-whirlwind-attack": "action",
+  "feature/draconic-presence": "action",
+  "feature/eldritch-invocation-gaze-of-two-minds": "action",
+  "feature/eldritch-invocation-one-with-shadows": "action",
+  "feature/pact-of-the-blade": "action",
+  "trait/breath-weapon": "action",
+  "feature/rage": "bonus",
+  "feature/frenzy": "bonus",
+  "feature/bardic-inspiration-d6": "bonus",
+  "feature/bardic-inspiration-d8": "bonus",
+  "feature/bardic-inspiration-d10": "bonus",
+  "feature/bardic-inspiration-d12": "bonus",
+  "feature/second-wind": "bonus",
+  "feature/martial-arts": "bonus",
+  "feature/flurry-of-blows": "bonus",
+  "feature/patient-defense": "bonus",
+  "feature/step-of-the-wind": "bonus",
+  "feature/cunning-action": "bonus",
+  "feature/fast-hands": "bonus",
+  "feature/vanish": "bonus",
+  "feature/flexible-casting-creating-spell-slots": "bonus",
+  "feature/flexible-casting-converting-spell-slot": "bonus",
+  "feature/dragon-wings": "bonus",
+  "feature/retaliation": "reaction",
+  "feature/cutting-words": "reaction",
+  "feature/fighter-fighting-style-protection": "reaction",
+  "feature/fighting-style-protection": "reaction",
+  "feature/deflect-missiles": "reaction",
+  "feature/slow-fall": "reaction",
+  "feature/hunters-prey-giant-killer": "reaction",
+  "feature/superior-hunters-defense-stand-against-the-tide": "reaction",
+  "feature/superior-hunters-defense-uncanny-dodge": "reaction",
+  "feature/uncanny-dodge": "reaction",
 };
 
 /**

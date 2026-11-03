@@ -13,7 +13,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/barbarian",
-        "level": 1
+        "level": 1,
+        "activation": "bonus"
       }
     },
     {
@@ -68,7 +69,8 @@
       "data": {
         "class": "srd51:class/barbarian",
         "level": 3,
-        "subclass": "srd51:subclass/berserker"
+        "subclass": "srd51:subclass/berserker",
+        "activation": "bonus"
       }
     },
     {
@@ -158,7 +160,8 @@
       "data": {
         "class": "srd51:class/barbarian",
         "level": 10,
-        "subclass": "srd51:subclass/berserker"
+        "subclass": "srd51:subclass/berserker",
+        "activation": "action"
       }
     },
     {
@@ -204,7 +207,8 @@
       "data": {
         "class": "srd51:class/barbarian",
         "level": 14,
-        "subclass": "srd51:subclass/berserker"
+        "subclass": "srd51:subclass/berserker",
+        "activation": "reaction"
       }
     },
     {
@@ -282,10 +286,16 @@
     {
       "id": "srd51:feature/bardic-inspiration-d6",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "bardicInspiration"
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
-        "level": 1
+        "level": 1,
+        "activation": "bonus"
       }
     },
     {
@@ -333,11 +343,17 @@
     {
       "id": "srd51:feature/cutting-words",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "bardicInspiration"
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
         "level": 3,
-        "subclass": "srd51:subclass/lore"
+        "subclass": "srd51:subclass/lore",
+        "activation": "reaction"
       }
     },
     {
@@ -507,10 +523,16 @@
     {
       "id": "srd51:feature/bardic-inspiration-d8",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "bardicInspiration"
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
-        "level": 5
+        "level": 5,
+        "activation": "bonus"
       }
     },
     {
@@ -528,7 +550,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/bard",
-        "level": 6
+        "level": 6,
+        "activation": "action"
       }
     },
     {
@@ -571,10 +594,16 @@
     {
       "id": "srd51:feature/bardic-inspiration-d10",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "bardicInspiration"
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
-        "level": 10
+        "level": 10,
+        "activation": "bonus"
       }
     },
     {
@@ -790,10 +819,16 @@
     {
       "id": "srd51:feature/bardic-inspiration-d12",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "bardicInspiration"
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
-        "level": 15
+        "level": 15,
+        "activation": "bonus"
       }
     },
     {
@@ -900,10 +935,16 @@
     {
       "id": "srd51:feature/channel-divinity-turn-undead",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "channelDivinity"
+        }
+      ],
       "data": {
         "class": "srd51:class/cleric",
-        "level": 2
+        "level": 2,
+        "activation": "action"
       }
     },
     {
@@ -918,11 +959,17 @@
     {
       "id": "srd51:feature/channel-divinity-preserve-life",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "channelDivinity"
+        }
+      ],
       "data": {
         "class": "srd51:class/cleric",
         "level": 2,
-        "subclass": "srd51:subclass/life"
+        "subclass": "srd51:subclass/life",
+        "activation": "action"
       }
     },
     {
@@ -1056,7 +1103,8 @@
       ],
       "data": {
         "class": "srd51:class/cleric",
-        "level": 10
+        "level": 10,
+        "activation": "action"
       }
     },
     {
@@ -1170,10 +1218,16 @@
     {
       "id": "srd51:feature/wild-shape-cr-1-4-or-below-no-flying-or-swim-speed",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "wildShape"
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
-        "level": 2
+        "level": 2,
+        "activation": "action"
       }
     },
     {
@@ -1667,10 +1721,16 @@
     {
       "id": "srd51:feature/wild-shape-cr-1-2-or-below-no-flying-speed",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "wildShape"
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
-        "level": 4
+        "level": 4,
+        "activation": "action"
       }
     },
     {
@@ -1724,10 +1784,16 @@
     {
       "id": "srd51:feature/wild-shape-cr-1-or-below",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "wildShape"
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
-        "level": 8
+        "level": 8,
+        "activation": "action"
       }
     },
     {
@@ -1990,7 +2056,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/fighter",
-        "level": 1
+        "level": 1,
+        "activation": "reaction"
       }
     },
     {
@@ -2015,7 +2082,8 @@
       ],
       "data": {
         "class": "srd51:class/fighter",
-        "level": 1
+        "level": 1,
+        "activation": "bonus"
       }
     },
     {
@@ -2354,7 +2422,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/monk",
-        "level": 1
+        "level": 1,
+        "activation": "bonus"
       }
     },
     {
@@ -2369,28 +2438,46 @@
     {
       "id": "srd51:feature/flurry-of-blows",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "ki"
+        }
+      ],
       "data": {
         "class": "srd51:class/monk",
-        "level": 2
+        "level": 2,
+        "activation": "bonus"
       }
     },
     {
       "id": "srd51:feature/patient-defense",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "ki"
+        }
+      ],
       "data": {
         "class": "srd51:class/monk",
-        "level": 2
+        "level": 2,
+        "activation": "bonus"
       }
     },
     {
       "id": "srd51:feature/step-of-the-wind",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "ki"
+        }
+      ],
       "data": {
         "class": "srd51:class/monk",
-        "level": 2
+        "level": 2,
+        "activation": "bonus"
       }
     },
     {
@@ -2453,7 +2540,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/monk",
-        "level": 3
+        "level": 3,
+        "activation": "reaction"
       }
     },
     {
@@ -2481,7 +2569,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/monk",
-        "level": 4
+        "level": 4,
+        "activation": "reaction"
       }
     },
     {
@@ -2496,7 +2585,12 @@
     {
       "id": "srd51:feature/stunning-strike",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "ki"
+        }
+      ],
       "data": {
         "class": "srd51:class/monk",
         "level": 5
@@ -2533,7 +2627,8 @@
       "data": {
         "class": "srd51:class/monk",
         "level": 6,
-        "subclass": "srd51:subclass/open-hand"
+        "subclass": "srd51:subclass/open-hand",
+        "activation": "action"
       }
     },
     {
@@ -2551,7 +2646,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/monk",
-        "level": 7
+        "level": 7,
+        "activation": "action"
       }
     },
     {
@@ -2631,7 +2727,12 @@
     {
       "id": "srd51:feature/diamond-soul",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "ki"
+        }
+      ],
       "data": {
         "class": "srd51:class/monk",
         "level": 14
@@ -2667,7 +2768,13 @@
     {
       "id": "srd51:feature/quivering-palm",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "ki",
+          "cost": 3
+        }
+      ],
       "data": {
         "class": "srd51:class/monk",
         "level": 17,
@@ -2677,10 +2784,17 @@
     {
       "id": "srd51:feature/empty-body",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "ki",
+          "cost": 4
+        }
+      ],
       "data": {
         "class": "srd51:class/monk",
-        "level": 18
+        "level": 18,
+        "activation": "action"
       }
     },
     {
@@ -2720,7 +2834,8 @@
       ],
       "data": {
         "class": "srd51:class/paladin",
-        "level": 1
+        "level": 1,
+        "activation": "action"
       }
     },
     {
@@ -2729,7 +2844,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/paladin",
-        "level": 1
+        "level": 1,
+        "activation": "action"
       }
     },
     {
@@ -2840,7 +2956,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/paladin",
-        "level": 2
+        "level": 2,
+        "activation": "reaction"
       }
     },
     {
@@ -2900,21 +3017,33 @@
     {
       "id": "srd51:feature/channel-divinity-sacred-weapon",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "channelDivinity"
+        }
+      ],
       "data": {
         "class": "srd51:class/paladin",
         "level": 3,
-        "subclass": "srd51:subclass/devotion"
+        "subclass": "srd51:subclass/devotion",
+        "activation": "action"
       }
     },
     {
       "id": "srd51:feature/channel-divinity-turn-the-unholy",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "channelDivinity"
+        }
+      ],
       "data": {
         "class": "srd51:class/paladin",
         "level": 3,
-        "subclass": "srd51:subclass/devotion"
+        "subclass": "srd51:subclass/devotion",
+        "activation": "action"
       }
     },
     {
@@ -3019,7 +3148,8 @@
       ],
       "data": {
         "class": "srd51:class/paladin",
-        "level": 14
+        "level": 14,
+        "activation": "action"
       }
     },
     {
@@ -3084,7 +3214,8 @@
       "data": {
         "class": "srd51:class/paladin",
         "level": 20,
-        "subclass": "srd51:subclass/devotion"
+        "subclass": "srd51:subclass/devotion",
+        "activation": "action"
       }
     },
     {
@@ -3356,7 +3487,8 @@
       "data": {
         "class": "srd51:class/ranger",
         "level": 3,
-        "subclass": "srd51:subclass/hunter"
+        "subclass": "srd51:subclass/hunter",
+        "activation": "reaction"
       }
     },
     {
@@ -3376,7 +3508,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/ranger",
-        "level": 3
+        "level": 3,
+        "activation": "action"
       }
     },
     {
@@ -3669,7 +3802,8 @@
       "data": {
         "class": "srd51:class/ranger",
         "level": 11,
-        "subclass": "srd51:subclass/hunter"
+        "subclass": "srd51:subclass/hunter",
+        "activation": "action"
       }
     },
     {
@@ -3680,7 +3814,8 @@
       "data": {
         "class": "srd51:class/ranger",
         "level": 11,
-        "subclass": "srd51:subclass/hunter"
+        "subclass": "srd51:subclass/hunter",
+        "activation": "action"
       }
     },
     {
@@ -3733,7 +3868,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/ranger",
-        "level": 14
+        "level": 14,
+        "activation": "bonus"
       }
     },
     {
@@ -3815,7 +3951,8 @@
       "data": {
         "class": "srd51:class/ranger",
         "level": 15,
-        "subclass": "srd51:subclass/hunter"
+        "subclass": "srd51:subclass/hunter",
+        "activation": "reaction"
       }
     },
     {
@@ -3826,7 +3963,8 @@
       "data": {
         "class": "srd51:class/ranger",
         "level": 15,
-        "subclass": "srd51:subclass/hunter"
+        "subclass": "srd51:subclass/hunter",
+        "activation": "reaction"
       }
     },
     {
@@ -4188,7 +4326,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/rogue",
-        "level": 2
+        "level": 2,
+        "activation": "bonus"
       }
     },
     {
@@ -4207,7 +4346,8 @@
       "data": {
         "class": "srd51:class/rogue",
         "level": 3,
-        "subclass": "srd51:subclass/thief"
+        "subclass": "srd51:subclass/thief",
+        "activation": "bonus"
       }
     },
     {
@@ -4235,7 +4375,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/rogue",
-        "level": 5
+        "level": 5,
+        "activation": "reaction"
       }
     },
     {
@@ -4814,7 +4955,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/sorcerer",
-        "level": 2
+        "level": 2,
+        "activation": "bonus"
       }
     },
     {
@@ -4823,7 +4965,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/sorcerer",
-        "level": 2
+        "level": 2,
+        "activation": "bonus"
       }
     },
     {
@@ -4916,7 +5059,12 @@
       "id": "srd51:feature/metamagic-careful-spell",
       "kind": "feature",
       "parent": "srd51:feature/metamagic-1",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "sorceryPoints"
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 3
@@ -4926,7 +5074,12 @@
       "id": "srd51:feature/metamagic-distant-spell",
       "kind": "feature",
       "parent": "srd51:feature/metamagic-1",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "sorceryPoints"
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 3
@@ -4936,7 +5089,12 @@
       "id": "srd51:feature/metamagic-empowered-spell",
       "kind": "feature",
       "parent": "srd51:feature/metamagic-1",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "sorceryPoints"
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 3
@@ -4946,7 +5104,12 @@
       "id": "srd51:feature/metamagic-extended-spell",
       "kind": "feature",
       "parent": "srd51:feature/metamagic-1",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "sorceryPoints"
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 3
@@ -4956,7 +5119,13 @@
       "id": "srd51:feature/metamagic-heightened-spell",
       "kind": "feature",
       "parent": "srd51:feature/metamagic-1",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "sorceryPoints",
+          "cost": 3
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 3
@@ -4966,7 +5135,13 @@
       "id": "srd51:feature/metamagic-quickened-spell",
       "kind": "feature",
       "parent": "srd51:feature/metamagic-1",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "sorceryPoints",
+          "cost": 2
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 3
@@ -4976,7 +5151,12 @@
       "id": "srd51:feature/metamagic-subtle-spell",
       "kind": "feature",
       "parent": "srd51:feature/metamagic-1",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "sorceryPoints"
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 3
@@ -4985,7 +5165,12 @@
     {
       "id": "srd51:feature/metamagic-twinned-spell",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "sorceryPoints"
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 3
@@ -5121,7 +5306,8 @@
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 14,
-        "subclass": "srd51:subclass/draconic"
+        "subclass": "srd51:subclass/draconic",
+        "activation": "bonus"
       }
     },
     {
@@ -5213,11 +5399,18 @@
     {
       "id": "srd51:feature/draconic-presence",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "sorceryPoints",
+          "cost": 5
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 18,
-        "subclass": "srd51:subclass/draconic"
+        "subclass": "srd51:subclass/draconic",
+        "activation": "action"
       }
     },
     {
@@ -5579,7 +5772,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/warlock",
-        "level": 2
+        "level": 2,
+        "activation": "action"
       }
     },
     {
@@ -5703,7 +5897,8 @@
             "type": "level",
             "level": 5
           }
-        ]
+        ],
+        "activation": "action"
       }
     },
     {
@@ -6126,7 +6321,8 @@
       "effects": [],
       "data": {
         "class": "srd51:class/warlock",
-        "level": 3
+        "level": 3,
+        "activation": "action"
       }
     },
     {

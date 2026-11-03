@@ -88,6 +88,16 @@ export const FeatureTermSchema = v.union([
 ]);
 export type FeatureTerm = v.InferOutput<typeof FeatureTermSchema>;
 
+/** The kinds of resource that a feature can take points from (see the `spends` effect). */
+export const SPEND_POOLS = [
+  "ki",
+  "channelDivinity",
+  "bardicInspiration",
+  "sorceryPoints",
+  "wildShape",
+] as const;
+export type SpendPool = (typeof SPEND_POOLS)[number];
+
 const PlainEffectSchema = v.variant("type", [
   /**
    * A name other rules can ask for (`when.requires`), for a rule that says "this is held" without
@@ -262,6 +272,17 @@ const PlainEffectSchema = v.variant("type", [
     pool: v.optional(v.boolean()),
     /** The total is at least this many (a bonus of Charisma that cannot go below 1). */
     min: v.optional(v.number()),
+  }),
+  /**
+   * A feature that takes points from a pool the class gives (ki, Channel Divinity, sorcery points,
+   * uses of Bardic Inspiration or Wild Shape) each time it is used. `pool` is the kind of the
+   * resource (`ClassResource.kind`); the character spends from the one of the class that gives the
+   * feature, or from the only one it has. `cost` is how many it takes (1 when it is not written).
+   */
+  v.object({
+    type: v.literal("spends"),
+    pool: v.picklist(SPEND_POOLS),
+    cost: v.optional(v.pipe(v.number(), v.integer(), v.minValue(1), v.maxValue(9))),
   }),
   v.object({
     type: v.literal("resource"),

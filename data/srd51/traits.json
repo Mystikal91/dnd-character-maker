@@ -756,7 +756,9 @@
           "recharge": "short"
         }
       ],
-      "data": {}
+      "data": {
+        "activation": "action"
+      }
     },
     {
       "id": "srd51:trait/damage-resistance",

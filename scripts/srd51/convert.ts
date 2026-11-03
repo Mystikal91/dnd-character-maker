@@ -3,7 +3,7 @@
  * Pure functions: no file or network access, so they can be unit tested.
  */
 import type { Ability, Effect, Entry, ProficiencyCategory } from "../../src/data/schema";
-import { FEATURE_EFFECTS, OPTION_FEATURES, SUBCLASS_FIXES } from "./effects";
+import { ACTIVATION, FEATURE_EFFECTS, OPTION_FEATURES, SUBCLASS_FIXES } from "./effects";
 
 const PACK = "srd51";
 
@@ -206,11 +206,15 @@ function convertTraits(raw: RawSource, ctx: Context): Converted {
     }
     const leftover = cleanData(specific);
     effects.push(...(FEATURE_EFFECTS[`trait/${t.index}`] ?? []));
+    const activation = ACTIVATION[`trait/${t.index}`];
     const entry: Entry = {
       id: id("trait", t.index),
       kind: "trait",
       effects,
-      data: Object.keys(leftover).length ? { traitSpecific: leftover } : {},
+      data: {
+        ...(Object.keys(leftover).length && { traitSpecific: leftover }),
+        ...(activation && { activation }),
+      },
     };
     if (t.parent) entry.parent = id("trait", t.parent.index);
     entries.push(entry);
@@ -557,6 +561,8 @@ function convertFeatures(raw: RawSource): Converted {
     if (f.subclass) data.subclass = id("subclass", f.subclass.index);
     if (f.prerequisites.length) data.prerequisites = f.prerequisites.map(normalizePrerequisite);
     if (f.feature_specific) data.featureSpecific = cleanData(f.feature_specific);
+    const activation = ACTIVATION[`feature/${f.index}`];
+    if (activation) data.activation = activation;
     const entry: Entry = {
       id: id("feature", f.index),
       kind: "feature",
