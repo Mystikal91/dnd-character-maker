@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.21.1 beta",
+    date: "2026-11-03",
+    notes: [
+      {
+        en: "A weapon in the off hand no longer adds your ability modifier to its damage, as the rules say (unless the modifier is negative, or you have the fighting style Two-Weapon Fighting). The card of the weapon says so. Content imported from Aurora shows “Needs updating” so that its Two-Weapon Fighting is recognised.",
+        it: "Un’arma nella mano secondaria non aggiunge più il tuo modificatore di abilità ai danni, come dicono le regole (a meno che il modificatore sia negativo, o tu abbia lo stile di combattimento Combattere con due armi). La carta dell’arma lo dice. I contenuti importati da Aurora risultano “Da aggiornare” perché il loro Combattere con due armi venga riconosciuto.",
+        fr: "Une arme dans la main secondaire n’ajoute plus ton modificateur de caractéristique à ses dégâts, comme le disent les règles (sauf si le modificateur est négatif, ou si tu as le style de combat Combat à deux armes). La carte de l’arme le dit. Les contenus importés d’Aurora affichent « À mettre à jour » pour que leur Combat à deux armes soit reconnu.",
+        de: "Eine Waffe in der Nebenhand addiert nicht mehr deinen Attributsmodifikator zum Schaden, wie es die Regeln sagen (außer der Modifikator ist negativ oder du hast den Kampfstil Zwei-Waffen-Kampf). Die Karte der Waffe sagt es. Aus Aurora importierte Inhalte zeigen „Veraltet“, damit ihr Zwei-Waffen-Kampf erkannt wird.",
+        es: "Un arma en la mano secundaria ya no suma tu modificador de característica a su daño, como dicen las reglas (salvo que el modificador sea negativo, o tengas el estilo de combate Combate con dos armas). La carta del arma lo dice. Los contenidos importados de Aurora muestran «Por actualizar» para que se reconozca su Combate con dos armas.",
+      },
+    ],
+  },
+  {
     version: "1.21.0 beta",
     date: "2026-11-03",
     notes: [
