@@ -168,6 +168,28 @@ export function importLanguage(ctx: Context, source: Source): void {
 }
 
 /** The line a magic item starts with: what it is, how rare, and whether it needs attunement. */
+/** Where Aurora says an item is worn or held (`<set name="slot">`), as the app names it. */
+const SLOT_NAMES: Record<string, string> = {
+  head: "head",
+  neck: "neck",
+  shoulders: "shoulders",
+  body: "body",
+  arms: "arms",
+  hands: "hands",
+  waist: "waist",
+  belt: "waist",
+  feet: "feet",
+  ring: "ring",
+  onehand: "oneHand",
+  twohand: "twoHands",
+};
+
+/** The slot of an item: Aurora lists some by a comma (`onehand,secondary`), the first is where it goes. */
+export function slotOf(set: ReturnType<typeof setters>): string | undefined {
+  const first = (set.get("slot")?.text ?? "").split(",")[0] ?? "";
+  return SLOT_NAMES[first.trim().toLowerCase()];
+}
+
 function magicLine(set: ReturnType<typeof setters>): string {
   const type = set.get("type")?.text ?? "";
   const rarity = (set.get("rarity")?.text ?? "").toLowerCase();
@@ -202,6 +224,8 @@ export function importMagicItem(ctx: Context, source: Source): void {
   const heal = /potion/i.test(set.get("type")?.text ?? "")
     ? healingDice(description(source.el))
     : undefined;
+  // An enchantment goes on a weapon the character has, so it has no place of its own.
+  const slot = enchants ? undefined : slotOf(set);
   emit(
     ctx,
     source,
@@ -210,6 +234,7 @@ export function importMagicItem(ctx: Context, source: Source): void {
       cost: parseCost(set.get("cost")),
       ...(weight !== undefined && { weight }),
       ...(rarity && { rarity }),
+      ...(slot && { slot }),
       ...(heal && { use: { heal } }),
       ...(enchants && { enchants: true }),
       ...(enchants && enhancement !== undefined && enhancement > 0 && { enhancement }),

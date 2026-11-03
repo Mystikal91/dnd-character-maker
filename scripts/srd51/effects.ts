@@ -347,3 +347,116 @@ export const OPTION_FEATURES: Record<string, OptionFeature> = {
   "feature/superior-hunters-defense": { choose: 1 },
   "feature/circle-of-the-land": { choose: 1 },
 };
+
+/**
+ * Where a magic item of the SRD is worn or held (`data.slot`, see `ITEM_SLOTS` in `engine/slots.ts`),
+ * written by hand: the source database has only a category, and "wondrous item" says nothing of
+ * where. Rings, wands, rods, staves, weapons and armor come from the category (`MAGIC_SLOT_OF_CATEGORY`);
+ * an item that is only carried (a bag, a deck, a potion) has none.
+ */
+const WONDROUS_SLOT: Record<string, ItemSlotName> = {
+  // Head
+  "circlet-of-blasting": "head",
+  "eyes-of-charming": "head",
+  "eyes-of-minute-seeing": "head",
+  "eyes-of-the-eagle": "head",
+  "goggles-of-night": "head",
+  "hat-of-disguise": "head",
+  "headband-of-intellect": "head",
+  "helm-of-brilliance": "head",
+  "helm-of-comprehending-languages": "head",
+  "helm-of-telepathy": "head",
+  "helm-of-teleportation": "head",
+  // Neck
+  "amulet-of-health": "neck",
+  "amulet-of-proof-against-detection-and-location": "neck",
+  "amulet-of-the-planes": "neck",
+  "brooch-of-shielding": "neck",
+  "medallion-of-thoughts": "neck",
+  "necklace-of-adaptation": "neck",
+  "necklace-of-fireballs": "neck",
+  "necklace-of-prayer-beads": "neck",
+  "periapt-of-health": "neck",
+  "periapt-of-proof-against-poison": "neck",
+  "periapt-of-wound-closure": "neck",
+  "scarab-of-protection": "neck",
+  "talisman-of-pure-good": "neck",
+  "talisman-of-the-sphere": "neck",
+  "talisman-of-ultimate-evil": "neck",
+  // Shoulders
+  "cape-of-the-mountebank": "shoulders",
+  "cloak-of-arachnida": "shoulders",
+  "cloak-of-displacement": "shoulders",
+  "cloak-of-elvenkind": "shoulders",
+  "cloak-of-protection": "shoulders",
+  "cloak-of-the-bat": "shoulders",
+  "cloak-of-the-manta-ray": "shoulders",
+  "mantle-of-spell-resistance": "shoulders",
+  "wings-of-flying": "shoulders",
+  // Body
+  "robe-of-eyes": "body",
+  "robe-of-scintillating-colors": "body",
+  "robe-of-stars": "body",
+  "robe-of-the-archmagi": "body",
+  "robe-of-useful-items": "body",
+  // Arms, hands, waist, feet
+  "bracers-of-archery": "arms",
+  "bracers-of-defense": "arms",
+  "gauntlets-of-ogre-power": "hands",
+  "gloves-of-missile-snaring": "hands",
+  "gloves-of-swimming-and-climbing": "hands",
+  "belt-of-dwarvenkind": "waist",
+  "belt-of-giant-strength": "waist",
+  "boots-of-elvenkind": "feet",
+  "boots-of-levitation": "feet",
+  "boots-of-speed": "feet",
+  "boots-of-striding-and-springing": "feet",
+  "boots-of-the-winterlands": "feet",
+  "slippers-of-spider-climbing": "feet",
+  "winged-boots": "feet",
+};
+
+/** The slot of a magic item that its category settles; armor splits into shields and the rest by name. */
+const MAGIC_SLOT_OF_CATEGORY: Record<string, ItemSlotName> = {
+  ring: "ring",
+  wand: "oneHand",
+  rod: "oneHand",
+  staff: "oneHand",
+  weapon: "oneHand",
+  armor: "body",
+};
+
+/** Magic weapons that take two hands, and magic armor that is a shield. */
+const TWO_HANDED_MAGIC = new Set(["hammer-of-thunderbolts", "oathbow"]);
+const SHIELDS = new Set([
+  "animated-shield",
+  "arrow-catching-shield",
+  "shield-of-missile-attraction",
+  "spellguard-shield",
+]);
+
+export type ItemSlotName =
+  | "head"
+  | "neck"
+  | "shoulders"
+  | "body"
+  | "arms"
+  | "hands"
+  | "waist"
+  | "feet"
+  | "ring"
+  | "oneHand"
+  | "twoHands"
+  | "shield";
+
+/** The slot of a magic item of the SRD by its index and category, or nothing when it is only carried. */
+export function magicItemSlot(index: string, category: string): ItemSlotName | undefined {
+  // The variants (a belt of giant strength by the kind of giant) carry the name of the item.
+  if (category === "wondrous-items")
+    return Object.entries(WONDROUS_SLOT).find(
+      ([key]) => index === key || index.startsWith(`${key}-`),
+    )?.[1];
+  if (category === "armor" && SHIELDS.has(index)) return "shield";
+  if (category === "weapon" && TWO_HANDED_MAGIC.has(index)) return "twoHands";
+  return MAGIC_SLOT_OF_CATEGORY[category];
+}

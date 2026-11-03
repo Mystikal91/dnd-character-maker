@@ -4901,7 +4901,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "body"
       }
     },
     {
@@ -4957,7 +4958,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "neck"
       }
     },
     {
@@ -4971,7 +4973,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "neck"
       }
     },
     {
@@ -4985,7 +4988,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "neck"
       }
     },
     {
@@ -4999,7 +5003,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "shield"
       }
     },
     {
@@ -5027,7 +5032,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "body"
       }
     },
     {
@@ -5041,7 +5047,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "body"
       }
     },
     {
@@ -5055,7 +5062,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": false
+        "attunement": false,
+        "slot": "body"
       }
     },
     {
@@ -5069,7 +5077,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -5083,7 +5092,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -5097,7 +5107,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -5111,7 +5122,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "shield"
       }
     },
     {
@@ -5237,7 +5249,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "waist"
       }
     },
     {
@@ -5251,7 +5264,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "waist"
       }
     },
     {
@@ -5265,7 +5279,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "waist"
       }
     },
     {
@@ -5279,7 +5294,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "waist"
       }
     },
     {
@@ -5293,7 +5309,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "waist"
       }
     },
     {
@@ -5307,7 +5324,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "waist"
       }
     },
     {
@@ -5321,7 +5339,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "waist"
       }
     },
     {
@@ -5335,7 +5354,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -5349,7 +5369,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "feet"
       }
     },
     {
@@ -5363,7 +5384,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "feet"
       }
     },
     {
@@ -5377,7 +5399,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "feet"
       }
     },
     {
@@ -5391,7 +5414,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "feet"
       }
     },
     {
@@ -5405,7 +5429,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "feet"
       }
     },
     {
@@ -5433,7 +5458,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "arms"
       }
     },
     {
@@ -5447,7 +5473,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "arms"
       }
     },
     {
@@ -5475,7 +5502,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "neck"
       }
     },
     {
@@ -5517,7 +5545,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "shoulders"
       }
     },
     {
@@ -5615,7 +5644,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "head"
       }
     },
     {
@@ -5629,7 +5659,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "shoulders"
       }
     },
     {
@@ -5643,7 +5674,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "shoulders"
       }
     },
     {
@@ -5657,7 +5689,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "shoulders"
       }
     },
     {
@@ -5671,7 +5704,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "shoulders"
       }
     },
     {
@@ -5685,7 +5719,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "shoulders"
       }
     },
     {
@@ -5699,7 +5734,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "shoulders"
       }
     },
     {
@@ -5783,7 +5819,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -5797,7 +5834,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -5853,7 +5891,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -5867,7 +5906,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -5895,7 +5935,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -5909,7 +5950,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -5923,7 +5965,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -5937,7 +5980,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -5951,7 +5995,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -5965,7 +6010,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -5979,7 +6025,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -5993,7 +6040,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -6007,7 +6055,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -6021,7 +6070,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -6035,7 +6085,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -6091,7 +6142,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "body"
       }
     },
     {
@@ -6105,7 +6157,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -6203,7 +6256,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "body"
       }
     },
     {
@@ -6231,7 +6285,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "head"
       }
     },
     {
@@ -6245,7 +6300,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "head"
       }
     },
     {
@@ -6259,7 +6315,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "head"
       }
     },
     {
@@ -6483,7 +6540,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -6511,7 +6569,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -6525,7 +6584,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "hands"
       }
     },
     {
@@ -6567,7 +6627,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -6581,7 +6642,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "body"
       }
     },
     {
@@ -6595,7 +6657,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "hands"
       }
     },
     {
@@ -6609,7 +6672,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "hands"
       }
     },
     {
@@ -6623,7 +6687,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "head"
       }
     },
     {
@@ -6637,7 +6702,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": false
+        "attunement": false,
+        "slot": "twoHands"
       }
     },
     {
@@ -6665,7 +6731,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "head"
       }
     },
     {
@@ -6679,7 +6746,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "head"
       }
     },
     {
@@ -6693,7 +6761,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "head"
       }
     },
     {
@@ -6707,7 +6776,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "head"
       }
     },
     {
@@ -6721,7 +6791,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "head"
       }
     },
     {
@@ -6735,7 +6806,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "head"
       }
     },
     {
@@ -6749,7 +6821,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -6861,7 +6934,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -7113,7 +7187,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -7141,7 +7216,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -7155,7 +7231,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -7169,7 +7246,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -7183,7 +7261,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -7197,7 +7276,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "shoulders"
       }
     },
     {
@@ -7323,7 +7403,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "neck"
       }
     },
     {
@@ -7351,7 +7432,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "body"
       }
     },
     {
@@ -7365,7 +7447,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "neck"
       }
     },
     {
@@ -7379,7 +7462,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "neck"
       }
     },
     {
@@ -7393,7 +7477,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "neck"
       }
     },
     {
@@ -7407,7 +7492,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -7421,7 +7507,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "twoHands"
       }
     },
     {
@@ -7491,7 +7578,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "neck"
       }
     },
     {
@@ -7505,7 +7593,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "neck"
       }
     },
     {
@@ -7519,7 +7608,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "neck"
       }
     },
     {
@@ -7575,7 +7665,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -8079,7 +8170,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "ring"
       }
     },
     {
@@ -8093,7 +8185,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8107,7 +8200,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8121,7 +8215,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8135,7 +8230,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8149,7 +8245,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8163,7 +8260,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8177,7 +8275,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8191,7 +8290,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8205,7 +8305,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8219,7 +8320,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8233,7 +8335,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8247,7 +8350,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8261,7 +8365,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8275,7 +8380,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8289,7 +8395,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8303,7 +8410,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8317,7 +8425,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8331,7 +8440,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8345,7 +8455,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8359,7 +8470,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8373,7 +8485,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8387,7 +8500,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8401,7 +8515,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8415,7 +8530,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8429,7 +8545,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8443,7 +8560,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8457,7 +8575,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "ring"
       }
     },
     {
@@ -8471,7 +8590,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8485,7 +8605,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8499,7 +8620,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": false
+        "attunement": false,
+        "slot": "ring"
       }
     },
     {
@@ -8513,7 +8635,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8527,7 +8650,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "ring"
       }
     },
     {
@@ -8541,7 +8665,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "ring"
       }
     },
     {
@@ -8555,7 +8680,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -8569,7 +8695,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -8583,7 +8710,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -8597,7 +8725,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "body"
       }
     },
     {
@@ -8611,7 +8740,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "body"
       }
     },
     {
@@ -8625,7 +8755,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -8639,7 +8770,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -8653,7 +8785,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -8667,7 +8800,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -8681,7 +8815,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -8723,7 +8858,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "neck"
       }
     },
     {
@@ -8737,7 +8873,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -8751,7 +8888,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "shield"
       }
     },
     {
@@ -8765,7 +8903,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "feet"
       }
     },
     {
@@ -8933,7 +9072,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "shield"
       }
     },
     {
@@ -8961,7 +9101,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -8975,7 +9116,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -8989,7 +9131,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9003,7 +9146,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9017,7 +9161,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9031,7 +9176,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9045,7 +9191,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9059,7 +9206,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9073,7 +9221,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9087,7 +9236,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9101,7 +9251,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9115,7 +9266,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9157,7 +9309,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9171,7 +9324,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9185,7 +9339,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9199,7 +9354,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9213,7 +9369,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "neck"
       }
     },
     {
@@ -9227,7 +9384,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "neck"
       }
     },
     {
@@ -9241,7 +9399,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "neck"
       }
     },
     {
@@ -9297,7 +9456,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9325,7 +9485,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -9339,7 +9500,8 @@
           "unit": "gp"
         },
         "rarity": "legendary",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9353,7 +9515,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9367,7 +9530,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9381,7 +9545,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9395,7 +9560,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9409,7 +9575,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9423,7 +9590,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -9437,7 +9605,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -9451,7 +9620,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9465,7 +9635,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9479,7 +9650,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -9493,7 +9665,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9507,7 +9680,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9521,7 +9695,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9535,7 +9710,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9549,7 +9725,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "oneHand"
       }
     },
     {
@@ -9563,7 +9740,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -9577,7 +9755,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -9591,7 +9770,8 @@
           "unit": "gp"
         },
         "rarity": "very-rare",
-        "attunement": false
+        "attunement": false,
+        "slot": "oneHand"
       }
     },
     {
@@ -9633,7 +9813,8 @@
           "unit": "gp"
         },
         "rarity": "uncommon",
-        "attunement": true
+        "attunement": true,
+        "slot": "feet"
       }
     },
     {
@@ -9647,7 +9828,8 @@
           "unit": "gp"
         },
         "rarity": "rare",
-        "attunement": true
+        "attunement": true,
+        "slot": "shoulders"
       }
     },
     {

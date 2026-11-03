@@ -4,7 +4,9 @@ import { levelUpPhase } from "../../app/buildState";
 import { playStates, stateAttributes } from "../../app/playStates";
 import { type PlayGroup, playGroup, showPlayGroup } from "../../app/playView";
 import { character, content, sheet } from "../../app/store";
+import { ACTIVATIONS, characterActions } from "../../engine/actions";
 import { MAX_LEVEL } from "../../engine/levelUp";
+import { visibleSlots } from "../../engine/slots";
 import { ui } from "../../i18n/ui";
 import { CoinsPanel } from "../Coins";
 import { collectSpellRows } from "../spellRows";
@@ -14,7 +16,7 @@ import { BeastStrip } from "./BeastStrip";
 import { Companions } from "./Companions";
 import { Conditions } from "./Conditions";
 import { DiceButton, DiceDrawer } from "./DiceDrawer";
-import { PlayFeatures } from "./Features";
+import { PlayFeatures, shownFeatures } from "./Features";
 import { BardNotes, Inspiration } from "./Inspiration";
 import { PlayInventory } from "./Inventory";
 import { Rage, RageStrip } from "./Rage";
@@ -25,6 +27,7 @@ import { PlaySpells } from "./SpellList";
 import { GroupTabs, StatusBar } from "./StatusBar";
 import { DeathSaves, HitDice, HitPoints } from "./Vitals";
 import { WildShape } from "./WildShape";
+import { type LayoutFacts, estimateHeights, planColumns } from "./columns";
 
 /**
  * A panel and the part of the screen it belongs to. On a phone only the part that is open is
@@ -84,7 +87,7 @@ const PANELS: Record<PanelKey, PanelDef> = {
   hp: { group: "combat", order: 1, render: () => <HitPoints /> },
   rage: {
     group: "combat",
-    order: 2,
+    order: 4,
     render: () => (
       <>
         <Rage />
@@ -92,19 +95,19 @@ const PANELS: Record<PanelKey, PanelDef> = {
       </>
     ),
   },
-  inspiration: { group: "combat", order: 3, render: () => <Inspiration /> },
-  death: { group: "combat", order: 4, render: () => <DeathSaves /> },
+  inspiration: { group: "combat", order: 5, render: () => <Inspiration /> },
+  death: { group: "combat", order: 2, render: () => <DeathSaves /> },
   hitdice: { group: "resources", order: 2, render: () => <HitDice /> },
   rests: { group: "resources", order: 3, render: () => <Rests /> },
   classres: { group: "resources", order: 1, render: () => <ClassResources /> },
-  coins: { group: "resources", order: 4, render: () => <CoinsPanel /> },
-  inventory: { group: "resources", order: 5, render: () => <PlayInventory /> },
-  conditions: { group: "combat", order: 5, render: () => <Conditions /> },
-  companions: { group: "combat", order: 6, render: () => <Companions /> },
+  coins: { group: "resources", order: 5, render: () => <CoinsPanel /> },
+  inventory: { group: "resources", order: 4, render: () => <PlayInventory /> },
+  conditions: { group: "combat", order: 3, render: () => <Conditions /> },
+  companions: { group: "combat", order: 8, render: () => <Companions /> },
   features: { group: "resources", order: 6, render: () => <PlayFeatures /> },
   notes: { group: "resources", order: 7, render: () => <PlayNotes /> },
-  attacks: { group: "combat", order: 2, render: () => <AttackRolls /> },
-  actions: { group: "combat", order: 2, render: () => <ActionsPanel /> },
+  attacks: { group: "combat", order: 6, render: () => <AttackRolls /> },
+  actions: { group: "combat", order: 7, render: () => <ActionsPanel /> },
   checks: { group: "checks", order: 1, render: () => <CheckRolls /> },
   dice: { group: "checks", order: 2, wide: true, render: () => <DiceTray /> },
   history: { group: "checks", order: 3, wide: true, render: () => <RollHistory /> },
@@ -112,74 +115,30 @@ const PANELS: Record<PanelKey, PanelDef> = {
   spells: { group: "magic", order: 2, render: () => <PlaySpells /> },
 };
 
-/**
- * Which panels go in which column on a wide screen. The columns are worked out to be about as tall
- * as one another: the long panels (the spells, the features) are spread out, and a character
- * without magic gets other columns than one with it. On a phone there is one column of everything.
- */
-function columnPlan(columns: 1 | 2 | 3, magic: boolean): PanelKey[][] {
-  const all = Object.keys(PANELS) as PanelKey[];
-  const present = (keys: PanelKey[]) => keys.filter((k) => magic || PANELS[k].group !== "magic");
-  if (columns === 1) return [present(all)];
-  if (columns === 2)
-    return magic
-      ? [
-          present([
-            "hp",
-            "death",
-            "rage",
-            "attacks",
-            "actions",
-            "inspiration",
-            "dice",
-            "history",
-            "checks",
-            "slots",
-            "companions",
-            "hitdice",
-            "rests",
-          ]),
-          present(["spells", "classres", "features", "conditions", "inventory", "coins", "notes"]),
-        ]
-      : [
-          [
-            "hp",
-            "death",
-            "rage",
-            "attacks",
-            "actions",
-            "inspiration",
-            "dice",
-            "history",
-            "checks",
-            "conditions",
-            "companions",
-          ],
-          ["classres", "hitdice", "rests", "features", "inventory", "coins", "notes"],
-        ];
-  return magic
-    ? [
-        [
-          "hp",
-          "death",
-          "rage",
-          "attacks",
-          "actions",
-          "inspiration",
-          "dice",
-          "history",
-          "companions",
-          "hitdice",
-          "rests",
-        ],
-        ["checks", "slots", "spells"],
-        ["classres", "features", "conditions", "inventory", "coins", "notes"],
-      ]
-    : [
-        ["hp", "death", "rage", "attacks", "actions", "inspiration", "companions", "hitdice"],
-        ["checks", "dice", "history", "conditions", "rests", "classres", "coins"],
-        ["features", "inventory", "notes"],
-      ];
+/** What the character has, for the estimate of how tall each panel is (see `columns.ts`). */
+function layoutFacts(
+  c: NonNullable<typeof content.value>,
+  s: NonNullable<typeof sheet.value>,
+): LayoutFacts {
+  const inventory = character.value.inventory;
+  const actions = characterActions(s, c.index);
+  const shown = shownFeatures(c, s);
+  return {
+    attacks: s.attacks.length,
+    extraDamage: s.extraDamage.length,
+    actionCards: ACTIVATIONS.reduce((n, a) => n + actions[a].length, 0),
+    actionGroups: ACTIVATIONS.filter((a) => actions[a].length > 0).length,
+    hitDiceKinds: Object.keys(s.hitPoints.hitDice).length,
+    resources: s.resources.length + s.facts.length,
+    features: shown.class.length + shown.species.length + shown.feat.length,
+    companions: character.value.companions?.length ?? 0,
+    tiles: visibleSlots(inventory, c.index).length,
+    pack: inventory.filter((i) => !i.equipped).length,
+    spells: collectSpellRows(c, s).length,
+    rage: s.extraDamage.some((x) => x.kind === "rage"),
+    wildShape: s.facts.some((f) => f.kind === "wildShape"),
+    bardic: s.facts.some((f) => f.kind === "bardicDie"),
+  };
 }
 
 /** How many columns the play screen has room for: the same breakpoints as the styles (42 and 66rem). */
@@ -207,7 +166,7 @@ function useColumns(root: { current: HTMLElement | null }, ready: boolean): 1 | 
 
 /**
  * The screen for the table. On a wide screen the panels are in two or three columns of about the
- * same height (see `columnPlan`). On a phone it is split into parts (combat, checks, magic,
+ * same height (see `columns.ts`). On a phone it is split into parts (combat, checks, magic,
  * resources) behind tabs, under a bar that always shows hit points and armor class.
  */
 export function PlayTab() {
@@ -283,10 +242,14 @@ export function PlayTab() {
         <RageStrip wide />
         <BeastStrip wide />
         <div class="play-grid" data-cols={columns}>
-          {columnPlan(columns, hasMagic).map((keys) => (
+          {planColumns(
+            columns,
+            estimateHeights(layoutFacts(c, s)),
+            (key) => hasMagic || PANELS[key as PanelKey]?.group !== "magic",
+          ).map((keys) => (
             <div class="play-col" key={keys.join("-")}>
               {keys.map((key) => {
-                const panel = PANELS[key];
+                const panel = PANELS[key as PanelKey];
                 return (
                   <Part key={key} group={panel.group} order={panel.order} wide={panel.wide}>
                     {panel.render()}

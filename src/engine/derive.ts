@@ -90,6 +90,8 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   featureValues: Record<string, FeatureValue[]>;
   /** What the features that use a pool of the class take from it, by the entry that is used. */
   spends: Record<string, Spend>;
+  /** The items the character is attuned to (the equipped ones that ask for it) and how many it may be. */
+  attunement: { used: number; max: number };
   /** Conditions the character cannot suffer (ids of the condition entries). */
   conditionImmunities: string[];
   /** The lowest die that is a critical hit with weapon attacks (20, or less with Improved Critical). */
@@ -612,6 +614,7 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
       ...effects.flatMap((e) => (e.type === "d20Floor" ? [e.value] : [])),
     ),
     featureValues: deriveFeatureValues(sourced, valueState),
+    attunement: { used: attuned, max: attunementMax },
     spends: deriveSpends(sourced, resources, (entry) => {
       const owner = (index.get(entry)?.data as { class?: string } | undefined)?.class;
       return owner;

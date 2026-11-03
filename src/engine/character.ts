@@ -1,6 +1,7 @@
 import { ABILITIES, type Ability } from "../data/schema";
 import type { Coins } from "./coins";
 import type { CustomFeature } from "./custom";
+import type { BoardSlot } from "./slots";
 import type { FeatureSetting } from "./uses";
 
 export const CHARACTER_SCHEMA_VERSION = 6;
@@ -117,6 +118,8 @@ export interface InventoryItem {
   itemId: string;
   quantity: number;
   equipped: boolean;
+  /** The place of the board it is worn or held in (see `engine/slots.ts`); when it has none, the first that fits. */
+  slot?: BoardSlot | undefined;
   /** An item of the player's own, with no entry in any pack: `itemId` is only a key. Weight is in pounds. */
   custom?: { name: string; weight?: number; note?: string };
   /** A weapon that is magic (made so by a spell such as Magic Weapon, or by a ritual). */

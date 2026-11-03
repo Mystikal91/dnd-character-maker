@@ -3,7 +3,13 @@
  * Pure functions: no file or network access, so they can be unit tested.
  */
 import type { Ability, Effect, Entry, ProficiencyCategory } from "../../src/data/schema";
-import { ACTIVATION, FEATURE_EFFECTS, OPTION_FEATURES, SUBCLASS_FIXES } from "./effects";
+import {
+  ACTIVATION,
+  FEATURE_EFFECTS,
+  OPTION_FEATURES,
+  SUBCLASS_FIXES,
+  magicItemSlot,
+} from "./effects";
 
 const PACK = "srd51";
 
@@ -706,6 +712,7 @@ function convertItems(raw: RawSource): Converted {
   for (const m of raw.magicItems) {
     if (((m.variants as Raw[]) ?? []).length > 0) continue;
     const description = m.desc as string[];
+    const slot = magicItemSlot(m.index, m.equipment_category?.index ?? "");
     entries.push({
       id: id("item", m.index),
       kind: "item",
@@ -715,6 +722,7 @@ function convertItems(raw: RawSource): Converted {
         cost: { amount: 0, unit: "gp" },
         rarity: slugify(m.rarity.name),
         attunement: /requires attunement/i.test(description[0] ?? ""),
+        ...(slot && { slot }),
       },
     });
     strings[`${m.index}.name`] = m.name;

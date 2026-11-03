@@ -34,6 +34,8 @@ export const ItemDataSchema = v.object({
   weight: v.optional(v.number()),
   /** Present on a magic item: how rare it is. */
   rarity: v.optional(v.string()),
+  /** Where it is worn or held (see `ITEM_SLOTS`): Aurora's `slot`, written by hand for the magic items of the SRD. */
+  slot: v.optional(v.string()),
   /** A bonus to attack and damage rolls (+1, +2, +3) that a magic weapon gives. */
   enhancement: v.optional(v.number()),
   /** What using the item does when it can be worked out: the dice of the hit points it restores. */

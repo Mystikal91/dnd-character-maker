@@ -6,6 +6,7 @@ import {
   createPlayState,
   createStory,
 } from "./character";
+import { BOARD_SLOTS } from "./slots";
 
 const ClassLevelSchema = v.object({
   classId: v.string(),
@@ -20,6 +21,7 @@ const InventoryItemSchema = v.object({
   itemId: v.string(),
   quantity: v.pipe(v.number(), v.integer(), v.minValue(1)),
   equipped: v.boolean(),
+  slot: v.optional(v.picklist(BOARD_SLOTS)),
   custom: v.optional(
     v.object({
       name: v.pipe(v.string(), v.minLength(1), v.maxLength(80)),

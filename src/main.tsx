@@ -19,6 +19,7 @@ import "./ui/play/cards.css";
 import "./ui/play/spells.css";
 import "./ui/play/attacks.css";
 import "./ui/play/actions.css";
+import "./ui/equipment/equipment.css";
 import "./ui/play/features.css";
 import "./ui/play/rests.css";
 import "./ui/play/vitals.css";

@@ -31,6 +31,26 @@ export function ItemTag({ id }: { id: string }) {
   return tag ? <span class="item-tag">[{tag}]</span> : null;
 }
 
+const DAMAGE_TYPES = new Set([
+  "acid",
+  "bludgeoning",
+  "cold",
+  "fire",
+  "force",
+  "lightning",
+  "necrotic",
+  "piercing",
+  "poison",
+  "psychic",
+  "radiant",
+  "slashing",
+  "thunder",
+]);
+
+/** A kind of damage in the language ("tagliente"), or as it is written when it is not a usual one. */
+const damageName = (type: string) =>
+  DAMAGE_TYPES.has(type) ? ui(`hb.o.${type}` as UiKey).toLowerCase() : type;
+
 /** The numbers of a weapon or armor on one line: damage and properties, or armor class and needs. */
 export function itemFacts(id: string): string | undefined {
   const c = content.value;
@@ -41,7 +61,7 @@ export function itemFacts(id: string): string | undefined {
     if (data.weapon) {
       const w = data.weapon;
       const parts: string[] = [];
-      if (w.damage) parts.push(`${w.damage.dice} ${w.damage.type}`.trim());
+      if (w.damage) parts.push(`${w.damage.dice} ${damageName(w.damage.type)}`.trim());
       if (w.twoHandedDamage) parts.push(`${ui("sheet.twoHanded")} ${w.twoHandedDamage.dice}`);
       for (const p of w.properties) parts.push(c.name(p));
       if (w.kind === "ranged" && w.range.long)

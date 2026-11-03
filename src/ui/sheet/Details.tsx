@@ -3,7 +3,7 @@ import { character, content, shownSheet } from "../../app/store";
 import type { Warning } from "../../engine/warnings";
 import { type UiKey, ui } from "../../i18n/ui";
 import { Coins } from "../Coins";
-import { InventoryList, LoadLine } from "../InventoryList";
+import { EquipmentBoard } from "../equipment/EquipmentBoard";
 import { Panel, RulesText } from "./parts";
 
 const PROFICIENCY_CATEGORIES = ["armor", "weapon", "tool", "language"] as const;
@@ -123,8 +123,7 @@ export function Inventory() {
   return (
     <Panel title={ui("sheet.inventory")}>
       {ch.inventory.length > 0 && <p class="muted">{ui("sheet.equipHint")}</p>}
-      <InventoryList removable={false} />
-      <LoadLine />
+      <EquipmentBoard mode="sheet" />
       <h5>{ui("coin.title")}</h5>
       <Coins />
     </Panel>

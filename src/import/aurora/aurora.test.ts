@@ -887,6 +887,38 @@ describe("classes and archetypes", () => {
     expect(spends("turny")).toEqual([]);
   });
 
+  it("keeps where a magic item is worn", () => {
+    const item = (name: string, slot: string, extra = "") => `
+      <element name="${name}" type="Magic Item" source="Test Book" id="ID_T_${name.toUpperCase().replace(/ /g, "_")}">
+        <description><p>x</p></description>
+        <setters><set name="rarity">rare</set>${slot ? `<set name="slot">${slot}</set>` : ""}${extra}</setters>
+      </element>`;
+    const set = wrap(`
+      ${item("Hat", "head")}
+      ${item("Boots", "feet")}
+      ${item("Belt", "belt")}
+      ${item("Sword", "onehand,secondary")}
+      ${item("Staff", "twohand")}
+      ${item("Trinket", "misc")}
+      ${item("Lamp", "")}
+      ${item("Bonus", "onehand", '<set name="weapon">Longsword</set>')}`);
+    const made = parseAurora([set], { ...options, index: new Map(), nameOf: (id) => id });
+    const slotOf = (name: string) =>
+      (made.entries.find((e) => made.strings[`${e.id}.name`] === name)?.data as { slot?: string })
+        .slot;
+    expect(slotOf("Hat")).toBe("head");
+    expect(slotOf("Boots")).toBe("feet");
+    // A belt is at the waist; a list is read by its first word; what Aurora keeps for gifts and the
+    // like (misc) has no place on the board.
+    expect(slotOf("Belt")).toBe("waist");
+    expect(slotOf("Sword")).toBe("oneHand");
+    expect(slotOf("Staff")).toBe("twoHands");
+    expect(slotOf("Trinket")).toBeUndefined();
+    expect(slotOf("Lamp")).toBeUndefined();
+    // An enchantment goes on a weapon the character has: no place of its own.
+    expect(slotOf("Bonus")).toBeUndefined();
+  });
+
   it("keeps the kind of action a feature takes from its sheet", () => {
     const trait = (id: string, sheet: string) => `
       <element name="${id}" type="Racial Trait" source="Test Book" id="ID_T_${id.toUpperCase()}">

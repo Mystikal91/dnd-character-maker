@@ -1,0 +1,288 @@
+/* ---- Equipment: a tile for each place of the body, and the backpack below ---- */
+
+.equipment {
+  container: equipment / inline-size;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.equip-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem 1rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.equip-attune {
+  padding: 0.1rem 0.6rem;
+  border: 1px solid currentcolor;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.equip-attune[data-over] {
+  color: var(--danger, #b0433a);
+}
+
+/* The places of the body: two across on a phone, more where there is room. */
+.equip-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+}
+
+@container equipment (min-width: 34rem) {
+  .equip-board {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@container equipment (min-width: 52rem) {
+  .equip-board {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.equipment .equip-tile:not(.pip-btn):not(.info-btn):not(.link) {
+  --hue: var(--accent);
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.2rem;
+  width: 100%;
+  min-height: 4.6rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.equipment .equip-tile:not(.pip-btn):not(.info-btn):not(.link)[data-state="on"] {
+  border-style: solid;
+  border-left: 4px solid var(--hue);
+  background: var(--surface);
+}
+
+.equipment .equip-tile:not(.pip-btn):not(.info-btn):not(.link)[data-state="blocked"] {
+  opacity: 0.7;
+}
+
+.equipment .equip-tile:not(.pip-btn):not(.info-btn):not(.link):hover {
+  border-color: var(--accent);
+}
+
+.equip-slot {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.equip-icon {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+.equip-icon .play-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+[data-state="on"] > .equip-slot .equip-icon,
+.equip-dialog-head .equip-icon {
+  background: var(--hue, var(--accent));
+  color: #fff;
+}
+
+:root[data-style="fantasy"] .equip-icon {
+  border-radius: 0;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.equip-name {
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+[data-state="empty"] > .equip-name,
+[data-state="blocked"] > .equip-name {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+:root[data-style="fantasy"] .equipment [data-state="on"] > .equip-name {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+
+.equip-detail {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+/* The count of what could go in an empty place. */
+.equip-hint {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-contrast, #fff);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.equipment .equip-toggle {
+  justify-self: start;
+}
+
+.equip-extra h5 {
+  margin: 0 0 0.45rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.equip-extra[data-warn] h5 {
+  color: var(--danger, #b0433a);
+}
+
+.equip-pack,
+.equip-extra > ul {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.equip-pack-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.15rem 0.6rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--surface);
+}
+
+.equipment .equip-pack-name {
+  justify-self: start;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  text-decoration: none;
+}
+
+.equipment button.equip-pack-name:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.equip-pack-main {
+  display: grid;
+  min-width: 0;
+}
+
+.equip-pack-buttons {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
+.equip-pack-buttons:empty {
+  display: none;
+}
+
+.equip-pack-detail {
+  min-width: 0;
+}
+
+.equipment .equip-pack-row .card-btn:not(.pip-btn):not(.info-btn):not(.link) {
+  min-height: 2.3rem;
+  padding: 0 0.8rem;
+  font-size: 0.88rem;
+}
+
+/* The quantity keeps to the right of its line. */
+.equip-pack-row > .qty,
+.equip-pack-row > .play-item-qty {
+  justify-self: end;
+}
+
+.equip-weapon-magic {
+  margin-bottom: 0.4rem;
+}
+
+/* The question of what goes in a place. */
+.equip-dialog {
+  --hue: var(--accent);
+  width: min(28rem, calc(100vw - 2rem));
+}
+
+.equip-dialog-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.8rem;
+}
+
+.equip-dialog-head h3 {
+  margin: 0;
+}
+
+.equip-choices {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0 0 0.9rem;
+}
+
+.equip-choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--surface-2);
+}
+
+.equip-choice[data-state="on"] {
+  margin-bottom: 0.6rem;
+  border-left: 4px solid var(--hue);
+}
+
+.equip-choice > div {
+  display: grid;
+  min-width: 0;
+}
