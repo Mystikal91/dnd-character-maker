@@ -1407,5 +1407,8 @@
   "spells.atWill": "À volonté",
   "play.shillelagh": "Shillelagh",
   "play.shillelaghHint": "Le sort mineur Gourdin magique est sur cette arme : elle est magique, utilise ton caractéristique d’incantation pour l’attaque et les dégâts, et son dé de dégâts est un d8. Un repos y met fin.",
-  "choice.needScore": "{ability} {n}"
+  "choice.needScore": "{ability} {n}",
+  "play.magicWeapon": "Arme magique",
+  "play.magicWeaponBonus": "Arme magique +{n}",
+  "play.magicWeaponHint": "Le sort Arme magique est sur cette arme : elle est magique et a le bonus à l’attaque et aux dégâts que donne le niveau de l’emplacement (+1 dès le niveau 2, +2 dès le 4, +3 dès le 6). Un repos y met fin."
 }

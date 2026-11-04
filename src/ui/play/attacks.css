@@ -116,3 +116,16 @@
 .extra-card .spell-slot-pick {
   grid-column: 1 / -1;
 }
+
+/* A spell that is on a weapon for a while (Magic Weapon): its name and the bonus it gives, as buttons. */
+.card-effect-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.card-effect-group > span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}

@@ -23,6 +23,10 @@ export interface AttackResult {
   shillelagh?: boolean;
   /** The weapon can take the cantrip (a club or quarterstaff, or a copy of one) and the character casts spells. */
   canShillelagh?: boolean;
+  /** The bonus the spell Magic Weapon gives the weapon now (0 when it is not on it). */
+  magicWeapon?: number;
+  /** The character has the spell Magic Weapon, so the weapon can take it. */
+  canMagicWeapon?: boolean;
   /** The attack is made at range. */
   ranged: boolean;
   /** The weapon counts as magic. */
@@ -210,9 +214,22 @@ function shillelaghDice(dice: string): string {
   return m && Number(m[1]) < 8 ? "1d8" : dice;
 }
 
+/** The spell that gives a weapon a bonus for an hour, which the character casts on a weapon in Play. */
+export const MAGIC_WEAPON_SPELL = "srd51:spell/magic-weapon";
+
+/** Whether the character has the spell: picked, prepared or granted. */
+function knowsSpell(ctx: Context, spell: string): boolean {
+  return (
+    Object.values(ctx.character.spells).some((l) =>
+      [...l.cantrips, ...l.known, ...l.prepared].includes(spell),
+    ) || ctx.sourced.some(({ effect }) => effect.type === "grantSpell" && effect.spell === spell)
+  );
+}
+
 function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
   const { character, index, abilities, held, proficiencyBonus } = ctx;
   const attacks: AttackResult[] = [];
+  const knowsMagicWeapon = knowsSpell(ctx, MAGIC_WEAPON_SPELL);
   // A weapon in the off hand: it does not add the ability modifier to damage, unless the style
   // Two-Weapon Fighting is known; a negative modifier is still taken off.
   const offHandId = placeEquipment(character.inventory, index).slots.offHand?.itemId;
@@ -237,8 +254,11 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
     const proficient = isProficient(held, weapon.proficiency);
     const enchanted = item.enchantment ? index.get(item.enchantment) : undefined;
     // The bonus can come from the weapon itself (a homebrew +1 sword), the person's ticks or an enchantment.
+    const spellBonus =
+      character.play.magicWeapon?.itemId === item.itemId ? character.play.magicWeapon.bonus : 0;
     const enhancement = Math.max(
       item.bonus ?? 0,
+      spellBonus,
       itemData(entry).enhancement ?? 0,
       enchanted ? (itemData(enchanted).enhancement ?? 0) : 0,
     );
@@ -249,6 +269,7 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       item.magical === true ||
       itemData(entry).magical === true ||
       enchanted !== undefined ||
+      spellBonus > 0 ||
       enhancement > 0 ||
       Boolean(itemData(entry).rarity);
     // Features that let the weapon use another ability: the best one that applies wins.
@@ -299,6 +320,8 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       ...(abilityFrom && { abilityFrom }),
       ...(shillelagh && { shillelagh }),
       ...(canShillelagh && ctx.spellAbilities.length > 0 && { canShillelagh }),
+      ...(spellBonus > 0 && { magicWeapon: spellBonus }),
+      ...(knowsMagicWeapon && { canMagicWeapon: true }),
       ranged: weapon.kind === "ranged",
       ...(offHand && { offHand }),
       magical,

@@ -106,6 +106,11 @@ export interface PlayState {
    * ability and its damage die is a d8, until a rest ends it.
    */
   shillelagh?: string;
+  /**
+   * The spell Magic Weapon is on this weapon (its inventory id), with the bonus to attack and damage
+   * it gives (+1, +2 or +3 by the level of the slot): the weapon is magical until a rest ends it.
+   */
+  magicWeapon?: { itemId: string; bonus: number };
 }
 
 export function createPlayState(): PlayState {

@@ -1407,5 +1407,8 @@
   "spells.atWill": "Beliebig oft",
   "play.shillelagh": "Shillelagh",
   "play.shillelaghHint": "Der Zaubertrick Knüppel ist auf dieser Waffe: Sie ist magisch, nutzt deine Zauberwirker-Fähigkeit für Angriff und Schaden, und ihr Schadenswürfel ist ein W8. Eine Rast beendet ihn.",
-  "choice.needScore": "{ability} {n}"
+  "choice.needScore": "{ability} {n}",
+  "play.magicWeapon": "Magische Waffe",
+  "play.magicWeaponBonus": "Magische Waffe +{n}",
+  "play.magicWeaponHint": "Der Zauber Magische Waffe ist auf dieser Waffe: Sie ist magisch und hat den Bonus auf Angriff und Schaden, den der Grad des Platzes gibt (+1 ab Grad 2, +2 ab 4, +3 ab 6). Eine Rast beendet ihn."
 }

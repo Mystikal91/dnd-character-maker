@@ -155,6 +155,12 @@ const CharacterSchema = v.object({
     inspiration: v.boolean(),
     bardicDie: v.optional(v.picklist([4, 6, 8, 10, 12])),
     shillelagh: v.optional(v.string()),
+    magicWeapon: v.optional(
+      v.object({
+        itemId: v.string(),
+        bonus: v.pipe(v.number(), v.integer(), v.minValue(1), v.maxValue(3)),
+      }),
+    ),
   }),
   asi: v.array(v.pipe(v.array(AbilitySchema), v.minLength(1), v.maxLength(2))),
   feats: v.array(v.string()),

@@ -177,7 +177,7 @@ export function shortRest(
   resources: string[] = [],
 ): PlayState {
   // A rage and the cantrip Shillelagh last a minute: a short rest has ended them.
-  let next = endShillelagh(endRage(play));
+  let next = endMagicWeapon(endShillelagh(endRage(play)));
   if (recovers === "all") next = { ...next, slotsUsed: next.slotsUsed.map(() => 0), pactUsed: 0 };
   else if (recovers === "pact") next = { ...next, pactUsed: 0 };
   if (resources.length > 0 && next.resourcesUsed) {
@@ -285,6 +285,22 @@ export function setShillelagh(play: PlayState, itemId: string | undefined): Play
 export function endShillelagh(play: PlayState): PlayState {
   if (play.shillelagh === undefined) return play;
   const { shillelagh: _over, ...rest } = play;
+  return rest;
+}
+
+/** Puts the spell Magic Weapon on a weapon with a bonus of 1 to 3, or takes it off (`undefined`). */
+export function setMagicWeapon(
+  play: PlayState,
+  on: { itemId: string; bonus: number } | undefined,
+): PlayState {
+  if (!on) return endMagicWeapon(play);
+  return { ...play, magicWeapon: { itemId: on.itemId, bonus: Math.min(3, Math.max(1, on.bonus)) } };
+}
+
+/** The spell lasts an hour: it ends at any rest, and when it is taken off. */
+export function endMagicWeapon(play: PlayState): PlayState {
+  if (play.magicWeapon === undefined) return play;
+  const { magicWeapon: _over, ...rest } = play;
   return rest;
 }
 

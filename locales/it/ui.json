@@ -1407,5 +1407,8 @@
   "spells.atWill": "A volontà",
   "play.shillelagh": "Shillelagh",
   "play.shillelaghHint": "Il trucchetto Shillelagh è su quest’arma: è magica, usa la tua caratteristica da incantatore per attacco e danni e il suo dado dei danni è un d8. Un riposo lo termina.",
-  "choice.needScore": "{ability} {n}"
+  "choice.needScore": "{ability} {n}",
+  "play.magicWeapon": "Arma magica",
+  "play.magicWeaponBonus": "Arma magica +{n}",
+  "play.magicWeaponHint": "L’incantesimo Arma magica è su quest’arma: è magica e ha il bonus ad attacco e danni che dà il livello dello slot (+1 dal 2° livello, +2 dal 4°, +3 dal 6°). Un riposo lo termina."
 }

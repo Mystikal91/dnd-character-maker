@@ -1407,5 +1407,8 @@
   "spells.atWill": "A voluntad",
   "play.shillelagh": "Shillelagh",
   "play.shillelaghHint": "El truco Garrote mágico está en esta arma: es mágica, usa tu característica de lanzamiento de conjuros para el ataque y el daño, y su dado de daño es un d8. Un descanso lo termina.",
-  "choice.needScore": "{ability} {n}"
+  "choice.needScore": "{ability} {n}",
+  "play.magicWeapon": "Arma mágica",
+  "play.magicWeaponBonus": "Arma mágica +{n}",
+  "play.magicWeaponHint": "El conjuro Arma mágica está en esta arma: es mágica y tiene el bonificador al ataque y al daño que da el nivel del espacio (+1 desde el nivel 2, +2 desde el 4, +3 desde el 6). Un descanso lo termina."
 }

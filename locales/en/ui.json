@@ -1407,5 +1407,8 @@
   "spells.atWill": "At will",
   "play.shillelagh": "Shillelagh",
   "play.shillelaghHint": "The cantrip Shillelagh is on this weapon: it is magical, uses your spellcasting ability for attack and damage, and its damage die is a d8. A rest ends it.",
-  "choice.needScore": "{ability} {n}"
+  "choice.needScore": "{ability} {n}",
+  "play.magicWeapon": "Magic weapon",
+  "play.magicWeaponBonus": "Magic weapon +{n}",
+  "play.magicWeaponHint": "The spell Magic Weapon is on this weapon: it is magical and has the bonus to attack and damage that the level of the slot gives (+1 from the 2nd level, +2 from the 4th, +3 from the 6th). A rest ends it."
 }

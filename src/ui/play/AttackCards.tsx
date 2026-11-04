@@ -11,7 +11,7 @@ import {
 import { character, content, sheet } from "../../app/store";
 import { doubleDice } from "../../engine/dice";
 import type { AttackResult } from "../../engine/equipment";
-import { castSpell, setShillelagh, slotsLeft } from "../../engine/play";
+import { castSpell, setMagicWeapon, setShillelagh, slotsLeft } from "../../engine/play";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { ruleDetail } from "../rules/EntryDetail";
@@ -135,6 +135,30 @@ function AttackCard({ a }: { a: AttackResult }) {
             </button>
           )}
         </div>
+        {(a.canMagicWeapon || a.magicWeapon) && (
+          <div class="card-effect-group" title={ui("play.magicWeaponHint")}>
+            <span>{ui("play.magicWeapon")}</span>
+            {[1, 2, 3].map((n) => (
+              <button
+                key={n}
+                type="button"
+                class="card-btn card-effect"
+                aria-pressed={a.magicWeapon === n}
+                aria-label={ui("play.magicWeaponBonus", { n })}
+                onClick={() =>
+                  changePlay((p) =>
+                    setMagicWeapon(
+                      p,
+                      a.magicWeapon === n ? undefined : { itemId: a.itemId, bonus: n },
+                    ),
+                  )
+                }
+              >
+                +{n}
+              </button>
+            ))}
+          </div>
+        )}
         {a.canShillelagh && (
           <button
             type="button"

@@ -4,7 +4,7 @@ import { srd51Index } from "../test/srd51";
 import { type InventoryItem, createCharacter } from "./character";
 import { createPlayState } from "./character";
 import { deriveSheet } from "./derive";
-import { longRest, setShillelagh, shortRest } from "./play";
+import { longRest, setMagicWeapon, setShillelagh, shortRest } from "./play";
 
 const enchantment = (
   slug: string,
@@ -204,5 +204,64 @@ describe("magic weapons", () => {
     expect(magic?.ability).toBe("int");
     // Intelligence 18 (+4) over Strength 14 (+2), and the +1 of the spell.
     expect(magic?.damage?.bonus).toBe(5);
+  });
+});
+
+describe("the spell Magic Weapon, in Play", () => {
+  const SPELL = "srd51:spell/magic-weapon";
+  const sword = "srd51:item/longsword";
+  const paladin = (on?: { itemId: string; bonus: number }, knows = true) => {
+    const c = createCharacter("srd51");
+    c.classes = [{ classId: "srd51:class/paladin", level: 5 }];
+    c.abilityBase = { str: 16, dex: 10, con: 10, int: 10, wis: 10, cha: 14 };
+    c.inventory = [
+      { itemId: sword, quantity: 1, equipped: true },
+      { itemId: "srd51:item/dagger", quantity: 1, equipped: true },
+    ];
+    if (knows) c.spells["srd51:class/paladin"] = { cantrips: [], known: [], prepared: [SPELL] };
+    if (on) c.play.magicWeapon = on;
+    return deriveSheet(c, index).attacks;
+  };
+  const of = (attacks: ReturnType<typeof paladin>, id: string) =>
+    attacks.find((a) => a.itemId === id);
+
+  it("adds its bonus to attack and damage of that weapon, and makes it magical", () => {
+    const plain = of(paladin(), sword);
+    const on = of(paladin({ itemId: sword, bonus: 2 }), sword);
+    expect(on).toMatchObject({ magical: true, enhancement: 2, magicWeapon: 2 });
+    expect(on?.attackBonus).toBe((plain?.attackBonus ?? 0) + 2);
+    expect(on?.damage?.bonus).toBe((plain?.damage?.bonus ?? 0) + 2);
+    expect(plain).toMatchObject({ magical: false, enhancement: 0 });
+  });
+
+  it("is on one weapon only", () => {
+    const attacks = paladin({ itemId: sword, bonus: 1 });
+    expect(of(attacks, "srd51:item/dagger")).toMatchObject({ magical: false, enhancement: 0 });
+    expect(of(attacks, "srd51:item/dagger")?.magicWeapon).toBeUndefined();
+  });
+
+  it("does not stack with a bonus the weapon already has: the better counts", () => {
+    const c = createCharacter("srd51");
+    c.classes = [{ classId: "srd51:class/paladin", level: 5 }];
+    c.abilityBase = { str: 16, dex: 10, con: 10, int: 10, wis: 10, cha: 10 };
+    c.inventory = [{ itemId: sword, quantity: 1, equipped: true, bonus: 2 }];
+    c.play.magicWeapon = { itemId: sword, bonus: 1 };
+    expect(deriveSheet(c, index).attacks[0]?.enhancement).toBe(2);
+  });
+
+  it("is offered to a character who has the spell, and to nobody else", () => {
+    expect(of(paladin(), sword)?.canMagicWeapon).toBe(true);
+    expect(of(paladin(undefined, false), sword)?.canMagicWeapon).toBeUndefined();
+  });
+
+  it("is ended by any rest, and is kept between 1 and 3", () => {
+    const play = setMagicWeapon(createPlayState(), { itemId: sword, bonus: 2 });
+    expect(play.magicWeapon).toEqual({ itemId: sword, bonus: 2 });
+    expect(shortRest(play, "none").magicWeapon).toBeUndefined();
+    expect(longRest(play, {}).magicWeapon).toBeUndefined();
+    expect(setMagicWeapon(play, undefined).magicWeapon).toBeUndefined();
+    expect(setMagicWeapon(createPlayState(), { itemId: sword, bonus: 9 }).magicWeapon?.bonus).toBe(
+      3,
+    );
   });
 });
