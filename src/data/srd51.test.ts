@@ -191,7 +191,8 @@ describe("features with effects", () => {
     }
     const lost = [...index.values()]
       .filter((e) => e.kind === "feature" && e.effects.some((x) => x.type === "choice"))
-      .filter((e) => !reachable.has(e.id))
+      // An option of a feature that is reached (a pact of the warlock) is reached through it.
+      .filter((e) => !reachable.has(e.id) && !(e.parent && reachable.has(e.parent)))
       .map((e) => e.id);
     expect(lost).toEqual([]);
   });

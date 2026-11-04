@@ -48,7 +48,7 @@ function withModifier(text: string, modifier: number): string {
  */
 export function spellRolls(
   data: SpellRollData,
-  options: { slotLevel: number; characterLevel: number; modifier: number },
+  options: { slotLevel: number; characterLevel: number; modifier: number; bonus?: number },
 ): SpellRolls {
   const damage: SpellRolls["damage"] = [];
   let scalesBySlot = false;
@@ -59,7 +59,13 @@ export function spellRolls(
     const dice = table && stepAt(table, level);
     if (!dice) continue;
     if (bySlot && new Set(Object.values(bySlot)).size > 1) scalesBySlot = true;
-    damage.push({ type: part.damageType?.index ?? "", dice: withModifier(dice, options.modifier) });
+    const worked = withModifier(dice, options.modifier);
+    // A bonus a feature adds to the damage (Agonizing Blast) is one more step after the dice.
+    const bonus = options.bonus ?? 0;
+    damage.push({
+      type: part.damageType?.index ?? "",
+      dice: bonus === 0 ? worked : `${worked}${bonus > 0 ? "+" : ""}${bonus}`,
+    });
   }
   const healTable = data.healAtSlotLevel;
   const healed = healTable && stepAt(healTable, options.slotLevel);

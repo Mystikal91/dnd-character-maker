@@ -66,10 +66,20 @@ function renumbered(picked: string, options: string[]): string | undefined {
   return same.length === 1 ? same[0] : undefined;
 }
 
-/** The options of a choice: what it lists, or every feat when a feat choice lists none. */
+/**
+ * The options of a choice: what it lists, or every feat when a feat choice lists none, or every
+ * spell of the level it names when a spell choice has a `spellLevel` and lists none (the cantrips
+ * of the Pact of the Tome come from the list of any class).
+ */
 function optionsOf(index: PackIndex, choice: ChoiceEffect): string[] {
-  if (choice.grants !== "feat" || choice.from.length > 0) return choice.from;
-  return [...index.values()].filter((e) => e.kind === "feat").map((e) => e.id);
+  if (choice.from.length > 0) return choice.from;
+  if (choice.grants === "feat")
+    return [...index.values()].filter((e) => e.kind === "feat").map((e) => e.id);
+  if (choice.grants === "spell" && choice.spellLevel !== undefined)
+    return [...index.values()]
+      .filter((e) => e.kind === "spell" && e.data.level === choice.spellLevel)
+      .map((e) => e.id);
+  return choice.from;
 }
 
 /** The effect that picking `option` of a choice results in. */

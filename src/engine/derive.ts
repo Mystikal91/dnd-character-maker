@@ -119,6 +119,10 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   choices: PendingChoice[];
   /** Spells granted outright or by a choice (e.g. a High Elf cantrip). */
   grantedSpells: string[];
+  /** The granted spells that can be cast as often as wanted without a slot (an invocation): cantrips in all but their level. */
+  atWillSpells: string[];
+  /** What a feature adds to the damage a spell rolls (Agonizing Blast: the Charisma modifier), by spell. */
+  spellDamage: Record<string, number>;
   /** Feats the character took. */
   feats: string[];
   /** Ability Score Improvements available from class levels and how many are taken. */
@@ -663,6 +667,22 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
         ),
       ),
     ],
+    atWillSpells: [
+      ...new Set(
+        sourced.flatMap(({ effect, source }) =>
+          effect.type === "grantSpell" &&
+          effect.atWill &&
+          (effect.minLevel === undefined || levelOf(source) >= effect.minLevel)
+            ? [effect.spell]
+            : [],
+        ),
+      ),
+    ],
+    spellDamage: sourced.reduce<Record<string, number>>((by, { effect }) => {
+      if (effect.type === "spellDamage")
+        by[effect.spell] = (by[effect.spell] ?? 0) + abilities[effect.plus].modifier;
+      return by;
+    }, {}),
     feats: [
       ...new Set([...chosen.filter((e) => e.kind === "feat").map((e) => e.id), ...givenFeats]),
     ],

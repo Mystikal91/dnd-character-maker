@@ -1405,5 +1405,6 @@
   "hb.myPack": "Mon homebrew",
   "choice.needs": "Demande : {what}",
   "choice.needLevel": "niveau {level}",
-  "warning.optionSpell": "{option} demande le sort {spell}."
+  "warning.optionSpell": "{option} demande le sort {spell}.",
+  "spells.atWill": "À volonté"
 }

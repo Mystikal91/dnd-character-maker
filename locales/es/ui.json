@@ -1405,5 +1405,6 @@
   "hb.myPack": "Mi homebrew",
   "choice.needs": "Requiere: {what}",
   "choice.needLevel": "nivel {level}",
-  "warning.optionSpell": "{option} requiere el conjuro {spell}."
+  "warning.optionSpell": "{option} requiere el conjuro {spell}.",
+  "spells.atWill": "A voluntad"
 }

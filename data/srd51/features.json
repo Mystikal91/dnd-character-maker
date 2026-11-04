@@ -5630,7 +5630,13 @@
       "id": "srd51:feature/eldritch-invocation-agonizing-blast",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spellDamage",
+          "spell": "srd51:spell/eldritch-blast",
+          "plus": "cha"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 2,
@@ -5649,7 +5655,8 @@
       "effects": [
         {
           "type": "grantSpell",
-          "spell": "srd51:spell/mage-armor"
+          "spell": "srd51:spell/mage-armor",
+          "atWill": true
         }
       ],
       "data": {
@@ -5664,7 +5671,8 @@
       "effects": [
         {
           "type": "grantSpell",
-          "spell": "srd51:spell/speak-with-animals"
+          "spell": "srd51:spell/speak-with-animals",
+          "atWill": true
         }
       ],
       "data": {
@@ -5726,7 +5734,8 @@
       "effects": [
         {
           "type": "grantSpell",
-          "spell": "srd51:spell/detect-magic"
+          "spell": "srd51:spell/detect-magic",
+          "atWill": true
         }
       ],
       "data": {
@@ -5767,7 +5776,8 @@
       "effects": [
         {
           "type": "grantSpell",
-          "spell": "srd51:spell/false-life"
+          "spell": "srd51:spell/false-life",
+          "atWill": true
         }
       ],
       "data": {
@@ -5793,7 +5803,8 @@
       "effects": [
         {
           "type": "grantSpell",
-          "spell": "srd51:spell/disguise-self"
+          "spell": "srd51:spell/disguise-self",
+          "atWill": true
         }
       ],
       "data": {
@@ -5808,7 +5819,8 @@
       "effects": [
         {
           "type": "grantSpell",
-          "spell": "srd51:spell/silent-image"
+          "spell": "srd51:spell/silent-image",
+          "atWill": true
         }
       ],
       "data": {
@@ -6051,7 +6063,8 @@
       "effects": [
         {
           "type": "grantSpell",
-          "spell": "srd51:spell/levitate"
+          "spell": "srd51:spell/levitate",
+          "atWill": true
         }
       ],
       "data": {
@@ -6098,7 +6111,8 @@
       "effects": [
         {
           "type": "grantSpell",
-          "spell": "srd51:spell/jump"
+          "spell": "srd51:spell/jump",
+          "atWill": true
         }
       ],
       "data": {
@@ -6119,7 +6133,8 @@
       "effects": [
         {
           "type": "grantSpell",
-          "spell": "srd51:spell/speak-with-dead"
+          "spell": "srd51:spell/speak-with-dead",
+          "atWill": true
         }
       ],
       "data": {
@@ -6178,12 +6193,8 @@
       "effects": [
         {
           "type": "grantSpell",
-          "spell": "srd51:spell/hold-monster"
-        },
-        {
-          "type": "uses",
-          "term": 1,
-          "recharge": "long"
+          "spell": "srd51:spell/hold-monster",
+          "atWill": true
         }
       ],
       "data": {
@@ -6208,7 +6219,8 @@
       "effects": [
         {
           "type": "grantSpell",
-          "spell": "srd51:spell/alter-self"
+          "spell": "srd51:spell/alter-self",
+          "atWill": true
         }
       ],
       "data": {
@@ -6229,7 +6241,8 @@
       "effects": [
         {
           "type": "grantSpell",
-          "spell": "srd51:spell/arcane-eye"
+          "spell": "srd51:spell/arcane-eye",
+          "atWill": true
         }
       ],
       "data": {
@@ -6339,7 +6352,16 @@
       "id": "srd51:feature/pact-of-the-tome",
       "kind": "feature",
       "parent": "srd51:feature/pact-boon",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "cantrip",
+          "choose": 3,
+          "grants": "spell",
+          "from": [],
+          "spellLevel": 0
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 3

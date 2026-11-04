@@ -20,6 +20,7 @@ function SpellDetails({ c, ruleset, row }: { c: Content; ruleset: string; row: S
     data.concentration ? ui("spells.concentration") : undefined,
     data.ritual ? ui("spells.ritual") : undefined,
     row.alwaysPrepared ? ui("spells.alwaysPrepared") : undefined,
+    row.atWill ? ui("spells.atWill") : undefined,
   ].filter(Boolean);
 
   return (

@@ -69,6 +69,12 @@ const expertise = (id: string, extra: string[] = []): Effect => ({
 });
 
 const spell = (slug: string): Effect => ({ type: "grantSpell", spell: `srd51:spell/${slug}` });
+/** A spell an invocation lets the warlock cast as often as wanted, without a slot: listed as a cantrip. */
+const atWill = (slug: string): Effect => ({
+  type: "grantSpell",
+  spell: `srd51:spell/${slug}`,
+  atWill: true,
+});
 const skill = (target: string): Effect => ({ type: "proficiency", category: "skill", target });
 
 const archery = [modifier("attack", 2, "ranged")];
@@ -164,18 +170,19 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
   "feature/rogue-expertise-2": [expertise("expertise", ["thieves-tools"])],
 
   // Eldritch invocations and the pact of the chain that give a spell or a proficiency.
-  "feature/eldritch-invocation-armor-of-shadows": [spell("mage-armor")],
-  "feature/eldritch-invocation-beast-speech": [spell("speak-with-animals")],
-  "feature/eldritch-invocation-eldritch-sight": [spell("detect-magic")],
-  "feature/eldritch-invocation-fiendish-vigor": [spell("false-life")],
-  "feature/eldritch-invocation-mask-of-many-faces": [spell("disguise-self")],
-  "feature/eldritch-invocation-misty-visions": [spell("silent-image")],
-  "feature/eldritch-invocation-whispers-of-the-grave": [spell("speak-with-dead")],
-  "feature/eldritch-invocation-ascendant-step": [spell("levitate")],
-  "feature/eldritch-invocation-otherworldly-leap": [spell("jump")],
-  "feature/eldritch-invocation-master-of-myriad-forms": [spell("alter-self")],
-  "feature/eldritch-invocation-visions-of-distant-realms": [spell("arcane-eye")],
-  "feature/eldritch-invocation-chains-of-carceri": [spell("hold-monster"), ...uses("long", 1)],
+  "feature/eldritch-invocation-armor-of-shadows": [atWill("mage-armor")],
+  "feature/eldritch-invocation-beast-speech": [atWill("speak-with-animals")],
+  "feature/eldritch-invocation-eldritch-sight": [atWill("detect-magic")],
+  "feature/eldritch-invocation-fiendish-vigor": [atWill("false-life")],
+  "feature/eldritch-invocation-mask-of-many-faces": [atWill("disguise-self")],
+  "feature/eldritch-invocation-misty-visions": [atWill("silent-image")],
+  "feature/eldritch-invocation-whispers-of-the-grave": [atWill("speak-with-dead")],
+  "feature/eldritch-invocation-ascendant-step": [atWill("levitate")],
+  "feature/eldritch-invocation-otherworldly-leap": [atWill("jump")],
+  "feature/eldritch-invocation-master-of-myriad-forms": [atWill("alter-self")],
+  "feature/eldritch-invocation-visions-of-distant-realms": [atWill("arcane-eye")],
+  // At will; the rule that it is not used twice on the same creature before a long rest is left to the player.
+  "feature/eldritch-invocation-chains-of-carceri": [atWill("hold-monster")],
   "feature/eldritch-invocation-thief-of-five-fates": [spell("bane"), ...uses("long", 1)],
   "feature/eldritch-invocation-sign-of-ill-omen": [spell("bestow-curse"), ...uses("long", 1)],
   "feature/eldritch-invocation-bewitching-whispers": [spell("compulsion"), ...uses("long", 1)],
@@ -185,6 +192,14 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
   "feature/eldritch-invocation-mire-the-mind": [spell("slow"), ...uses("long", 1)],
   "feature/eldritch-invocation-beguiling-influence": [skill("deception"), skill("persuasion")],
   "feature/pact-of-the-chain": [spell("find-familiar")],
+  // Three cantrips from the list of any class (the spells of the other lists the book names are all cantrips).
+  "feature/pact-of-the-tome": [
+    { type: "choice", id: "cantrip", choose: 3, grants: "spell", from: [], spellLevel: 0 },
+  ],
+  // Eldritch Blast adds the Charisma modifier to its damage with this invocation.
+  "feature/eldritch-invocation-agonizing-blast": [
+    { type: "spellDamage", spell: "srd51:spell/eldritch-blast", plus: "cha" },
+  ],
 
   // Fighting styles that change a number. Great Weapon Fighting, Two-Weapon Fighting and
   // Protection depend on dice rerolls, the off hand and reactions, so they stay text.

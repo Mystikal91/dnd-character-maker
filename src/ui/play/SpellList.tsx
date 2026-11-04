@@ -95,7 +95,12 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
   );
   const picked = slotChoice.value[id] ?? level;
   const slotLevel = slotLevels.includes(picked) ? picked : level;
-  const rolls = spellRolls(data, { slotLevel, characterLevel: s.level, modifier });
+  const rolls = spellRolls(data, {
+    slotLevel,
+    characterLevel: s.level,
+    modifier,
+    bonus: s.spellDamage[id] ?? 0,
+  });
   const choosing = rolls.scalesBySlot && slotLevels.length > 1;
   const castLevel = rolls.scalesBySlot ? slotLevel : level;
 
@@ -152,6 +157,7 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
           {[school, time].filter(Boolean).join(" · ")}
           {data.concentration && <abbr title={ui("spells.concentration")}>C</abbr>}
           {data.ritual && <abbr title={ui("spells.ritual")}>R</abbr>}
+          {row.atWill && <abbr title={ui("spells.atWill")}>∞</abbr>}
         </span>
       </div>
 

@@ -1405,5 +1405,6 @@
   "hb.myPack": "Il mio homebrew",
   "choice.needs": "Richiede: {what}",
   "choice.needLevel": "livello {level}",
-  "warning.optionSpell": "{option} richiede l’incantesimo {spell}."
+  "warning.optionSpell": "{option} richiede l’incantesimo {spell}.",
+  "spells.atWill": "A volontà"
 }

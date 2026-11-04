@@ -142,6 +142,11 @@ const PlainEffectSchema = v.variant("type", [
     /** For a `spell` choice: what is picked can be cast once between rests without a slot. */
     free: v.optional(v.boolean()),
     /**
+     * For a `spell` choice with no `from`: the level of the spells it offers, from every list (the
+     * three cantrips of the Pact of the Tome are `0`).
+     */
+    spellLevel: v.optional(v.number()),
+    /**
      * A key of the class table (`classSpecific`): the number of picks is that value at the
      * class level, and `choose` is only a placeholder. Invocations and metamagic grow this way.
      */
@@ -154,6 +159,17 @@ const PlainEffectSchema = v.variant("type", [
     minLevel: v.optional(v.number()),
     /** The spell can be cast once between rests without a slot (a feat or a species trait gives it so). */
     free: v.optional(v.boolean()),
+    /**
+     * The spell can be cast as often as wanted without a slot (an eldritch invocation gives it so):
+     * it is listed and treated as a cantrip.
+     */
+    atWill: v.optional(v.boolean()),
+  }),
+  /** A bonus to the damage a spell rolls: the modifier of an ability (Agonizing Blast on Eldritch Blast). */
+  v.object({
+    type: v.literal("spellDamage"),
+    spell: EntryIdSchema,
+    plus: AbilitySchema,
   }),
   /** A flat bonus to a number of the sheet, with an optional condition. */
   v.object({
@@ -400,7 +416,8 @@ export function brokenReferences(packs: Pack[]): { from: string; ref: string }[]
     const visit = (effects: Effect[]) => {
       for (const effect of effects) {
         if (effect.type === "trait") check(entry.id, effect.id);
-        else if (effect.type === "grantSpell") check(entry.id, effect.spell);
+        else if (effect.type === "grantSpell" || effect.type === "spellDamage")
+          check(entry.id, effect.spell);
         else if (effect.type === "when") visit(effect.effects);
         else if (
           effect.type === "choice" &&

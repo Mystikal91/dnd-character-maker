@@ -1405,5 +1405,6 @@
   "hb.myPack": "My homebrew",
   "choice.needs": "Requires: {what}",
   "choice.needLevel": "level {level}",
-  "warning.optionSpell": "{option} needs the spell {spell}."
+  "warning.optionSpell": "{option} needs the spell {spell}.",
+  "spells.atWill": "At will"
 }

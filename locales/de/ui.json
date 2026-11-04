@@ -1405,5 +1405,6 @@
   "hb.myPack": "Mein Homebrew",
   "choice.needs": "Erfordert: {what}",
   "choice.needLevel": "Grad {level}",
-  "warning.optionSpell": "{option} erfordert den Zauber {spell}."
+  "warning.optionSpell": "{option} erfordert den Zauber {spell}.",
+  "spells.atWill": "Beliebig oft"
 }
