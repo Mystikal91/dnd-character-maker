@@ -1,0 +1,330 @@
+/* ---- The inventory of the Create tab and the Sheet: cards, and the window that customizes an item ---- */
+
+/* A card of the inventory: the look of the cards of Play, outside of Play. */
+.inv-card {
+  --hue: var(--accent);
+  margin: 0;
+  list-style: none;
+}
+
+.inv-card[data-kind="armor"] {
+  --hue: #4f6f8a;
+}
+.inv-card[data-kind="weapon"] {
+  --hue: #9a3a3a;
+}
+.inv-card[data-kind="magic"] {
+  --hue: #b8921c;
+}
+.inv-card[data-kind="homebrew"] {
+  --hue: #8a4fa0;
+}
+.inv-card[data-kind="gear"],
+.inv-card[data-kind="tool"],
+.inv-card[data-kind="mount"],
+.inv-card[data-kind="custom"] {
+  --hue: #7a6248;
+}
+
+.inv-card[data-equipped="on"] {
+  background: color-mix(in srgb, var(--hue) 7%, var(--surface));
+}
+
+.inv-card .card-meta {
+  overflow: visible;
+  white-space: normal;
+}
+
+/* The name opens the rules of the item: it reads as a title, not as a link. */
+.inv-card-name {
+  justify-self: start;
+  min-height: 0;
+  padding: 0.1rem 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: left;
+  text-decoration: none;
+}
+
+button.inv-card-name {
+  cursor: pointer;
+}
+
+button.inv-card-name:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+:root[data-style="fantasy"] .inv-card-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
+
+/* The buttons of a card outside of Play: big enough for a thumb. */
+.inv-card .card-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--fg);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.inv-card .card-btn[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* The cross that takes an item out, in the corner so the buttons have the whole row. */
+.inv-card {
+  position: relative;
+}
+
+.inv-card .card-head {
+  padding-inline-end: 2rem;
+}
+
+.inv-card .card-x {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.inv-card .card-x:hover,
+.inv-card .card-x:focus-visible {
+  color: var(--danger, #b3402e);
+}
+
+/* The buttons of a card: on a phone Equipped has a row, and the quantity and Customize share the next. */
+.inv-card .card-actions {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.5rem;
+}
+
+.inv-card .card-actions > .card-equip {
+  grid-column: 1 / -1;
+}
+
+.inv-card .card-btn {
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.inv-card .card-actions .qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.inv-card .qty button {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.inv-card .qty output {
+  min-width: 1.6rem;
+}
+
+@media (min-width: 36rem) {
+  .inv-card .card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
+
+.inv-card .shillelagh-tick,
+.inv-card .inv-info {
+  grid-column: 1 / -1;
+  margin: 0.5rem 0 0;
+}
+
+.inv-card .inv-info summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ---- The window that customizes a weapon or an armor ---- */
+
+.item-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0;
+  overflow: hidden;
+}
+
+.item-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.9rem 1.1rem 0;
+}
+
+.item-dialog-head h3 {
+  margin: 0;
+}
+
+.item-dialog-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 0 1.1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.item-section {
+  margin: 0 0 1.1rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--border);
+}
+
+.item-section h4 {
+  margin: 0 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+/* The buttons stay in view while the form scrolls. */
+.item-dialog-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.7rem 1.1rem calc(0.8rem + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.item-dialog-actions button {
+  min-height: 2.75rem;
+  padding: 0 1.2rem;
+}
+
+.item-dialog-actions .primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+}
+
+/* On a phone the window is the whole screen. */
+@media (max-width: 40rem) {
+  dialog.quick-edit.item-dialog {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+}
+
+/* ---- Properties as chips ---- */
+
+.item-section .prop-picker {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.item-section .prop-picker legend {
+  display: none;
+}
+
+.prop-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.4rem 0;
+}
+
+.prop-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.5rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.prop-chip[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.prop-chip small {
+  font-size: 0.7rem;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.prop-write {
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.prop-new {
+  margin-top: 0.5rem;
+  padding: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.prop-new textarea {
+  width: 100%;
+}
+
+.prop-new-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.prop-new-actions button {
+  min-height: 2.5rem;
+  padding: 0 1rem;
+}

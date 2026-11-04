@@ -1,5 +1,6 @@
 import { signal } from "@preact/signals";
 import { useEffect, useRef } from "preact/hooks";
+import { isHomebrewId } from "../../app/homebrew";
 import type { SearchKind } from "../../app/search";
 import { content } from "../../app/store";
 import { itemData } from "../../data/items";
@@ -19,7 +20,8 @@ function Properties({ id }: { id: string }) {
   if (!c || !entry) return null;
   let properties: string[] = [];
   try {
-    properties = itemData(entry).weapon?.properties ?? [];
+    const data = itemData(entry);
+    properties = data.weapon?.properties ?? data.armor?.properties ?? [];
   } catch {
     // An item the engine cannot read has no properties to explain.
   }
@@ -51,6 +53,7 @@ export function EntryDetail({ id }: { id: string }) {
       <p class="muted">
         {ui(`search.kind.${entry.kind as SearchKind}` as UiKey)}
         {entry.kind === "item" && <ItemTag id={id} />}
+        {isHomebrewId(id) && <span class="card-tag">{ui("tag.homebrew")}</span>}
       </p>
       {facts && <p class="inv-facts">{facts}</p>}
       <Paragraphs text={c.text(id, "desc")} />

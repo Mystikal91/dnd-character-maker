@@ -9,6 +9,7 @@ export const HOMEBREW_KINDS = [
   "weapon",
   "armor",
   "gear",
+  "property",
   "language",
   "feat",
   "species",
@@ -217,12 +218,15 @@ export function buildDraft(draft: Draft, id: Id, context: BuildContext): Built {
       const span = normal > 0 ? { normal, long: Math.max(long, normal) } : undefined;
       const reach = properties.some((p) => p.endsWith("/reach"));
       const thrown = properties.some((p) => p.endsWith("/thrown"));
+      const bonus = Math.min(3, Math.max(0, whole(values.enhancement, 0)));
       entry = {
         id,
         kind: "item",
         effects: [],
         data: {
           ...itemBase(values, "weapon"),
+          ...(bonus > 0 && { enhancement: bonus }),
+          ...(on(values.magical) && { magical: true }),
           weapon: {
             category,
             kind,
@@ -249,6 +253,7 @@ export function buildDraft(draft: Draft, id: Id, context: BuildContext): Built {
         effects: [],
         data: {
           ...itemBase(values, "armor"),
+          ...(on(values.magical) && { magical: true }),
           armor: {
             category,
             base: whole(values.base, category === "shield" ? 2 : 10),
@@ -256,6 +261,7 @@ export function buildDraft(draft: Draft, id: Id, context: BuildContext): Built {
             ...(maxDex !== undefined && { maxDexBonus: maxDex }),
             strengthMinimum: Math.max(0, whole(values.strMin, 0)),
             stealthDisadvantage: on(values.stealth),
+            ...(list(values.properties).length > 0 && { properties: list(values.properties) }),
             proficiency: [category === "shield" ? "armor:shields" : `armor:${category}-armor`],
           },
         },
@@ -269,6 +275,10 @@ export function buildDraft(draft: Draft, id: Id, context: BuildContext): Built {
         effects: [],
         data: itemBase(values, "adventuring-gear"),
       };
+      break;
+    }
+    case "property": {
+      entry = { id, kind: "property", effects: [], data: {} };
       break;
     }
     case "language": {
@@ -543,6 +553,8 @@ export function draftFromEntry(
           properties: ((w.properties as string[] | undefined) ?? []).join(","),
           rangeNormal: span ? String(span.normal) : "",
           rangeLong: span?.long ? String(span.long) : "",
+          enhancement: d.enhancement ? String(d.enhancement) : "0",
+          magical: flag(d.magical),
         });
         return { kind: "weapon", values, traits: [] };
       }
@@ -555,11 +567,15 @@ export function draftFromEntry(
           maxDex: a.maxDexBonus !== undefined ? String(a.maxDexBonus) : "",
           strMin: String(a.strengthMinimum ?? 0),
           stealth: flag(a.stealthDisadvantage),
+          properties: ((a.properties as string[] | undefined) ?? []).join(","),
+          magical: flag(d.magical),
         });
         return { kind: "armor", values, traits: [] };
       }
       return { kind: "gear", values, traits: [] };
     }
+    case "property":
+      return { kind: "property", values, traits: [] };
     case "language":
       values.speakers = s("speakers");
       values.script = s("script");

@@ -58,6 +58,12 @@ export async function copyAsNewHomebrew(id: string): Promise<boolean> {
   return true;
 }
 
+/** The entry belongs to a homebrew pack: the person wrote it. */
+export function isHomebrewId(id: string): boolean {
+  const pack = id.split(":")[0];
+  return userPacks.value.some((p) => p.origin === "homebrew" && p.id === pack);
+}
+
 /** The slugs of every entry of one kind the app knows. */
 function slugsOf(kind: string): string[] {
   return [...(content.value?.index.values() ?? [])]

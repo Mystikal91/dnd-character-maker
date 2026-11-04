@@ -1,33 +1,70 @@
+import { isHomebrewId } from "../app/homebrew";
 import { character, content, sheet, updateCharacter } from "../app/store";
 import { itemData } from "../data/items";
 import type { InventoryItem } from "../engine/character";
 import { itemKind } from "../engine/gear";
+import { itemSlot } from "../engine/slots";
 import { type UiKey, ui } from "../i18n/ui";
 import { weight } from "../i18n/units";
-import { ItemTag, itemFacts } from "./ItemTag";
+import { CustomizeButton, ShillelaghTick } from "./ItemCustomize";
+import { itemFacts, itemTag } from "./ItemTag";
 import { EditPencil } from "./QuickEdit";
-import { WeaponMagic } from "./WeaponMagic";
+import { SlotIcon } from "./equipment/slotIcons";
+import { ruleDetail } from "./rules/EntryDetail";
 import { Paragraphs } from "./sheet/parts";
 import { useHoldRepeat } from "./useHoldRepeat";
 
-const GROUP_ORDER = ["armor", "weapon", "gear", "tool", "mount", "magic", "custom"] as const;
+const GROUP_ORDER = [
+  "homebrew",
+  "armor",
+  "weapon",
+  "gear",
+  "tool",
+  "mount",
+  "magic",
+  "custom",
+] as const;
 type Group = (typeof GROUP_ORDER)[number];
 
-/** Where an item of the inventory is listed. */
+/** Where an item of the inventory is listed: what the person wrote first, then by kind. */
 function groupOf(item: InventoryItem): Group {
   if (item.custom) return "custom";
+  if (isHomebrewId(item.itemId)) return "homebrew";
   const entry = content.value?.index.get(item.itemId);
   const kind = entry ? itemKind(entry) : "gear";
   return kind === "pack" || kind === "enchantment" ? "gear" : kind;
 }
 
+/** The mark at the left of a card: the place of the body it goes to, or the first letter of the name. */
+function Badge({ item, name }: { item: InventoryItem; name: string }) {
+  const entry = content.value?.index.get(item.itemId);
+  const slot = item.custom ? undefined : itemSlot(entry);
+  const icon =
+    slot === "body" ? (
+      <SlotIcon slot="body" />
+    ) : slot === "shield" ? (
+      <SlotIcon slot="offHand" />
+    ) : slot === "oneHand" || slot === "twoHands" ? (
+      <SlotIcon slot="mainHand" />
+    ) : undefined;
+  return (
+    <span class="card-badge" aria-hidden="true">
+      {icon ?? name.trim().charAt(0).toUpperCase()}
+    </span>
+  );
+}
+
+/** One thing the character carries, as a card: its name opens the rules, and the buttons are under it. */
 function Row({ item, removable }: { item: InventoryItem; removable: boolean }) {
   const hold = useHoldRepeat();
   const c = content.value;
   if (!c) return null;
   const entry = c.index.get(item.itemId);
   const name = item.custom?.name ?? c.name(item.itemId);
+  const kind = item.custom || !entry ? "custom" : itemKind(entry);
+  const homebrew = !item.custom && isHomebrewId(item.itemId);
   const facts = itemFacts(item.itemId);
+  const tag = itemTag(item.itemId);
   const desc = entry ? c.text(item.itemId, "desc") : undefined;
   let data: ReturnType<typeof itemData> | undefined;
   try {
@@ -37,7 +74,8 @@ function Row({ item, removable }: { item: InventoryItem; removable: boolean }) {
   }
   const perItem = item.custom?.weight ?? data?.weight;
   const cost = data?.cost;
-  const hasInfo = Boolean(desc || item.custom?.note || perItem !== undefined || cost);
+  const hasInfo = Boolean(item.custom?.note || perItem !== undefined || cost || (!entry && desc));
+  const meta = [tag, facts].filter(Boolean).join(" · ");
 
   const change = (apply: (found: InventoryItem) => void) =>
     updateCharacter((d) => {
@@ -46,24 +84,47 @@ function Row({ item, removable }: { item: InventoryItem; removable: boolean }) {
     });
 
   return (
-    <li class="inv-row">
-      <div class="inv-main">
-        <label class="equip-row">
-          <input
-            type="checkbox"
-            checked={item.equipped}
-            onChange={(e) =>
-              change((found) => {
-                found.equipped = e.currentTarget.checked;
-              })
-            }
-          />
-          <span class="equip-tag">{ui("form.equipped")}</span>
-          <span class="inv-name">
+    <li
+      class="play-card inv-card"
+      data-kind={homebrew ? "homebrew" : kind}
+      data-equipped={item.equipped ? "on" : undefined}
+    >
+      <Badge item={item} name={name} />
+      <div class="card-head">
+        {entry ? (
+          <button
+            type="button"
+            class="link inv-card-name"
+            aria-label={`${ui("inv.info")}: ${name}`}
+            onClick={() => {
+              ruleDetail.value = item.itemId;
+            }}
+          >
             {name}
-            <ItemTag id={item.itemId} />
+          </button>
+        ) : (
+          <span class="inv-card-name">{name}</span>
+        )}
+        {(meta || homebrew) && (
+          <span class="card-meta">
+            {meta}
+            {homebrew && <span class="card-tag">{ui("tag.homebrew")}</span>}
           </span>
-        </label>
+        )}
+      </div>
+      <div class="card-actions">
+        <button
+          type="button"
+          class="card-btn card-equip"
+          aria-pressed={item.equipped}
+          onClick={() =>
+            change((found) => {
+              found.equipped = !found.equipped;
+            })
+          }
+        >
+          {ui("form.equipped")}
+        </button>
         <span class="qty">
           <button
             type="button"
@@ -92,21 +153,24 @@ function Row({ item, removable }: { item: InventoryItem; removable: boolean }) {
             +
           </button>
         </span>
+        <CustomizeButton item={item} />
         {removable && (
           <button
             type="button"
-            class="link"
+            class="card-x"
+            aria-label={`${ui("form.remove")}: ${name}`}
+            title={ui("form.remove")}
             onClick={() =>
               updateCharacter((d) => {
                 d.inventory = d.inventory.filter((i) => i.itemId !== item.itemId);
               })
             }
           >
-            {ui("form.remove")}
+            ×
           </button>
         )}
       </div>
-      {facts && <p class="inv-facts muted">{facts}</p>}
+      <ShillelaghTick item={item} />
       {hasInfo && (
         <details class="inv-info">
           <summary>{ui("inv.info")}</summary>
@@ -131,7 +195,6 @@ function Row({ item, removable }: { item: InventoryItem; removable: boolean }) {
           </dl>
         </details>
       )}
-      <WeaponMagic item={item} />
     </li>
   );
 }
@@ -147,9 +210,9 @@ export function InventoryList({ removable }: { removable: boolean }) {
   return (
     <div class="inventory-groups">
       {groups.map(({ group, items }) => (
-        <section key={group}>
-          <h5>{ui(`inv.group.${group}` as UiKey)}</h5>
-          <ul class="equip-list">
+        <section key={group} class="card-group">
+          <h5 class="card-group-head">{ui(`inv.group.${group}` as UiKey)}</h5>
+          <ul class="plain card-list">
             {items.map((item) => (
               <Row key={item.itemId} item={item} removable={removable} />
             ))}

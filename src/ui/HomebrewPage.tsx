@@ -30,6 +30,7 @@ import {
   editableEntries,
 } from "../homebrew/model";
 import { type UiKey, ui } from "../i18n/ui";
+import { PropertyPicker } from "./PropertyPicker";
 import { entriesOfKind } from "./build/fields";
 
 const label = (key: string) => ui(`hb.f.${key}` as UiKey);
@@ -42,9 +43,14 @@ export interface FormApi {
   setTraits: (traits: DraftTrait[]) => void;
   /** Fields to leave out, when the place that opens the form already knows them. */
   hide?: string[];
+  /** The properties an item can have; `create` is there where a new one can be written on the spot. */
+  properties?: {
+    options: { id: string; label: string }[];
+    create?: (name: string, desc: string) => string;
+  };
 }
 
-function Text({
+export function Text({
   api,
   name,
   area,
@@ -71,7 +77,7 @@ function Text({
   );
 }
 
-function Num({
+export function Num({
   api,
   name,
   min,
@@ -90,7 +96,7 @@ function Num({
   );
 }
 
-function Pick({
+export function Pick({
   api,
   name,
   options,
@@ -122,7 +128,7 @@ function Pick({
   );
 }
 
-function Check({ api, name }: { api: FormApi; name: string }) {
+export function Check({ api, name }: { api: FormApi; name: string }) {
   return (
     <label class="check">
       <input
@@ -176,7 +182,7 @@ const range = (from: number, to: number) =>
     label: String(from + i),
   }));
 
-function Cost({ api }: { api: FormApi }) {
+export function Cost({ api }: { api: FormApi }) {
   return (
     <div class="hb-row">
       <Num api={api} name="costAmount" min={0} />
@@ -262,7 +268,16 @@ function Fields({ api }: { api: FormApi }) {
             <Num api={api} name="rangeNormal" min={0} />
             <Num api={api} name="rangeLong" min={0} />
           </div>
-          <Many api={api} name="properties" options={entriesOfKind("property")} />
+          <div class="hb-row">
+            <Pick
+              api={api}
+              name="enhancement"
+              fallback="0"
+              options={[0, 1, 2, 3].map((n) => ({ id: String(n), label: n === 0 ? "—" : `+${n}` }))}
+            />
+          </div>
+          <Check api={api} name="magical" />
+          <PropertyPicker api={api} />
           <Cost api={api} />
           <Text api={api} name="desc" area />
         </>
@@ -287,7 +302,9 @@ function Fields({ api }: { api: FormApi }) {
           <div class="hb-grid">
             <Check api={api} name="dexBonus" />
             <Check api={api} name="stealth" />
+            <Check api={api} name="magical" />
           </div>
+          <PropertyPicker api={api} />
           <Cost api={api} />
           <Text api={api} name="desc" area />
         </>
@@ -296,6 +313,13 @@ function Fields({ api }: { api: FormApi }) {
       return (
         <>
           <Cost api={api} />
+          <Text api={api} name="desc" area />
+        </>
+      );
+    case "property":
+      return (
+        <>
+          <p class="muted">{ui("item.propertiesHint")}</p>
           <Text api={api} name="desc" area />
         </>
       );

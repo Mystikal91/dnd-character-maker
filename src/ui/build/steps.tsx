@@ -1,4 +1,5 @@
 import { useState } from "preact/hooks";
+import { isHomebrewId } from "../../app/homebrew";
 import { character, content, sheet, updateCharacter } from "../../app/store";
 import { itemData } from "../../data/items";
 import { proficiencyKeys } from "../../engine/equipment";
@@ -77,6 +78,7 @@ export function OriginStep() {
 }
 
 const PICKER_GROUPS = [
+  ["homebrew", "inv.group.homebrew"],
   ["armor", "form.armorGroup"],
   ["weapon", "form.weaponGroup"],
   ["pack", "form.packGroup"],
@@ -108,7 +110,9 @@ export function EquipmentStep() {
     const kind = itemKind(entry);
     const label = itemLabel(o.id);
     const shown = (!wanted || label.toLowerCase().includes(wanted)) && proficientIn(o.id);
-    return shown && kind !== "enchantment" ? [{ id: o.id, kind, label }] : [];
+    // What the person wrote is listed apart, first.
+    const group = isHomebrewId(o.id) ? ("homebrew" as const) : kind;
+    return shown && kind !== "enchantment" ? [{ id: o.id, kind: group, label }] : [];
   });
 
   return (

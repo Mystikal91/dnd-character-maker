@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "preact/hooks";
+import { isHomebrewId } from "../../app/homebrew";
 import { rulesFocus, rulesKind, rulesQuery, showRulesKind } from "../../app/rulesView";
 import { type SearchHit, browse, kindsOf, search } from "../../app/search";
 import { content } from "../../app/store";
@@ -103,6 +104,7 @@ export function RulesPage() {
                       onClick={() => setPicked(hit.id)}
                     >
                       <span class="search-name">{hit.name}</span>
+                      {isHomebrewId(hit.id) && <small class="card-tag">{ui("tag.homebrew")}</small>}
                       {!rulesKind.value && (
                         <small class="muted">{ui(`search.kind.${hit.kind}` as UiKey)}</small>
                       )}

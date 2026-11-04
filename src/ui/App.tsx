@@ -23,6 +23,7 @@ import { AboutPage } from "./AboutPage";
 import { AppMenu } from "./AppMenu";
 import { AutoTranslatePage } from "./AutoTranslatePage";
 import { CustomSpellDialog } from "./CustomSpellDialog";
+import { CustomizeItemDialog } from "./CustomizeItemDialog";
 import { ExplainDialog } from "./Explain";
 import { HomebrewPage } from "./HomebrewPage";
 import { ConfirmDialog, UndoNotice } from "./Notices";
@@ -177,6 +178,7 @@ export function App() {
       <RuleDialog />
       <TransferDialog />
       <CustomSpellDialog />
+      <CustomizeItemDialog />
       <LevelUp />
       <Tour />
       <footer class="site-footer no-print">

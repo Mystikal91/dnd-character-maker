@@ -225,14 +225,17 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
           : "str";
     const proficient = isProficient(held, weapon.proficiency);
     const enchanted = item.enchantment ? index.get(item.enchantment) : undefined;
+    // The bonus can come from the weapon itself (a homebrew +1 sword), the person's ticks or an enchantment.
     const enhancement = Math.max(
       item.bonus ?? 0,
+      itemData(entry).enhancement ?? 0,
       enchanted ? (itemData(enchanted).enhancement ?? 0) : 0,
     );
     const shillelagh = item.shillelagh === true && takesShillelagh(item.itemId);
     const magical =
       shillelagh ||
       item.magical === true ||
+      itemData(entry).magical === true ||
       enchanted !== undefined ||
       enhancement > 0 ||
       Boolean(itemData(entry).rarity);

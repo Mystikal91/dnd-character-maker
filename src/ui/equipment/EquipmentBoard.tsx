@@ -1,5 +1,6 @@
 import { signal } from "@preact/signals";
 import { useEffect, useRef, useState } from "preact/hooks";
+import { canCustomize } from "../../app/customizeItem";
 import { putOn, takeOff } from "../../app/equipment";
 import { useItem } from "../../app/play";
 import { character, content, sheet, updateCharacter } from "../../app/store";
@@ -16,8 +17,8 @@ import {
 } from "../../engine/slots";
 import { type UiKey, ui } from "../../i18n/ui";
 import { weight } from "../../i18n/units";
+import { CustomizeButton, ShillelaghTick } from "../ItemCustomize";
 import { itemFacts, itemTag } from "../ItemTag";
-import { WeaponMagic } from "../WeaponMagic";
 import { ruleDetail } from "../rules/EntryDetail";
 import { useHoldRepeat } from "../useHoldRepeat";
 import { SlotIcon } from "./slotIcons";
@@ -293,10 +294,8 @@ export function EquipmentBoard({ mode }: { mode: Mode }) {
   const hidden = BOARD_SLOTS.length - shown.length;
   const pack = ch.inventory.filter((i) => !i.equipped);
   const attunement = s?.attunement;
-  const weapons = ch.inventory.filter((i) => {
-    const entry = c.index.get(i.itemId);
-    return mode === "sheet" && Boolean(entry && itemData(entry).weapon);
-  });
+  // The weapons and armor can be changed on the Sheet: a button opens the window of the item.
+  const customizable = mode === "sheet" ? ch.inventory.filter((i) => canCustomize(i.itemId)) : [];
 
   return (
     <div class="equipment" data-mode={mode}>
@@ -384,14 +383,20 @@ export function EquipmentBoard({ mode }: { mode: Mode }) {
         )}
       </section>
 
-      {weapons.length > 0 && (
+      {customizable.length > 0 && (
         <section class="equip-extra">
-          {weapons.map((item) => (
-            <div key={item.itemId} class="equip-weapon-magic">
-              <b>{nameOf(item)}</b>
-              <WeaponMagic item={item} />
-            </div>
-          ))}
+          <h5>{ui("item.customize.list")}</h5>
+          <ul class="plain">
+            {customizable.map((item) => (
+              <li key={item.itemId} class="equip-pack-row">
+                <div class="equip-pack-main">
+                  <span class="equip-pack-name">{nameOf(item)}</span>
+                </div>
+                <CustomizeButton item={item} />
+                <ShillelaghTick item={item} />
+              </li>
+            ))}
+          </ul>
         </section>
       )}
       <SlotPicker />

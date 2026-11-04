@@ -61,9 +61,12 @@ export function itemFacts(id: string): string | undefined {
     if (data.weapon) {
       const w = data.weapon;
       const parts: string[] = [];
-      if (w.damage) parts.push(`${w.damage.dice} ${damageName(w.damage.type)}`.trim());
+      if (w.damage)
+        parts.push(
+          `${w.damage.dice}${data.enhancement ? ` +${data.enhancement}` : ""} ${damageName(w.damage.type)}`.trim(),
+        );
       if (w.twoHandedDamage) parts.push(`${ui("sheet.twoHanded")} ${w.twoHandedDamage.dice}`);
-      for (const p of w.properties) parts.push(c.name(p));
+      for (const p of w.properties) if (c.index.has(p)) parts.push(c.name(p));
       if (w.kind === "ranged" && w.range.long)
         parts.push(`${distance(w.range.normal)} / ${distance(w.range.long)}`);
       return parts.join(" · ") || undefined;
@@ -80,6 +83,7 @@ export function itemFacts(id: string): string | undefined {
       }
       if (a.strengthMinimum > 0) parts.push(ui("item.facts.str", { n: a.strengthMinimum }));
       if (a.stealthDisadvantage) parts.push(ui("item.facts.stealth"));
+      for (const p of a.properties ?? []) if (c.index.has(p)) parts.push(c.name(p));
       return parts.join(" · ");
     }
   } catch {

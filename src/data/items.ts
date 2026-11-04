@@ -24,6 +24,8 @@ const ArmorSchema = v.object({
   maxDexBonus: v.optional(v.number()),
   strengthMinimum: v.number(),
   stealthDisadvantage: v.boolean(),
+  /** Properties of the armor, with a text each (the ones a person writes); they change no number. */
+  properties: v.optional(v.array(EntryIdSchema)),
   proficiency: v.array(v.string()),
 });
 
@@ -38,6 +40,8 @@ export const ItemDataSchema = v.object({
   slot: v.optional(v.string()),
   /** A bonus to attack and damage rolls (+1, +2, +3) that a magic weapon gives. */
   enhancement: v.optional(v.number()),
+  /** The item is magic without a rarity (a weapon a person made magic): it hurts what resists plain weapons. */
+  magical: v.optional(v.boolean()),
   /** What using the item does when it can be worked out: the dice of the hit points it restores. */
   use: v.optional(v.object({ heal: v.optional(v.string()) })),
   /** The item is not carried by itself: it is an enchantment put on a weapon in the inventory. */

@@ -233,10 +233,6 @@
   justify-self: end;
 }
 
-.equip-weapon-magic {
-  margin-bottom: 0.4rem;
-}
-
 /* The question of what goes in a place. */
 .equip-dialog {
   --hue: var(--accent);

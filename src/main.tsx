@@ -20,6 +20,7 @@ import "./ui/play/attacks.css";
 import "./ui/play/actions.css";
 import "./ui/play/customize.css";
 import "./ui/equipment/equipment.css";
+import "./ui/inventory.css";
 import "./ui/play/features.css";
 import "./ui/play/rests.css";
 import "./ui/play/vitals.css";
