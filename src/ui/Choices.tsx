@@ -1,6 +1,7 @@
 import { character, content, sheet, updateCharacter } from "../app/store";
 import type { Content } from "../content/browser";
 import type { PendingChoice } from "../engine/choices";
+import { type OptionNeed, needWords } from "../engine/optionNeeds";
 import { type UiKey, signed, ui } from "../i18n/ui";
 import { RuleInfoButton } from "./rules/EntryDetail";
 import { RulesText } from "./sheet/parts";
@@ -28,6 +29,17 @@ function optionLabel(c: Content, ruleset: string, choice: PendingChoice, option:
         ? c.name(`${ruleset}:skill/${option}`)
         : c.name(`${ruleset}:proficiency/${option}`);
   }
+}
+
+/** What an option asks for, in words: the text the book gives, or the level and the features named. */
+function needLabel(c: Content, option: string, need: OptionNeed): string {
+  const written = c.text(option, "prerequisite");
+  const what =
+    written ??
+    needWords(need.expression, (id) => c.index.has(id))
+      .map((w) => ("level" in w ? ui("choice.needLevel", { level: w.level }) : c.name(w.id)))
+      .join(", ");
+  return what ? ui("choice.needs", { what }) : "";
 }
 
 /** A pick among many options (every feat): one menu per pick, with the text of what was picked. */
@@ -136,18 +148,28 @@ export function Choices() {
                 const held = alreadyHeld(choice, option);
                 const checked = choice.selected.includes(option);
                 const full = !checked && choice.remaining === 0;
+                const need = choice.needs?.[option];
+                // An option whose requirement is not met cannot be picked; one already picked stays
+                // so it can be taken off, and the sheet warns about it.
+                const blocked = need !== undefined && !need.met && !checked;
+                const asks = need ? needLabel(c, option, need) : "";
                 return (
                   <li key={option}>
-                    <label class={held ? "disabled" : ""}>
+                    <label class={held || blocked ? "disabled" : ""}>
                       <input
                         type="checkbox"
                         checked={checked}
-                        disabled={held || full}
+                        disabled={held || full || blocked}
                         onChange={(e) => toggle(choice, option, e.currentTarget.checked)}
                       />
                       <span>
                         {optionLabel(c, ch.ruleset, choice, option)}
                         {held && <span class="muted"> ({ui("choice.alreadyHave")})</span>}
+                        {asks && (
+                          <small class="option-need" data-met={need?.met ? "true" : "false"}>
+                            {asks}
+                          </small>
+                        )}
                       </span>
                     </label>
                     {choice.grants === "spell" && <SpellInfoButton id={option} />}

@@ -11,6 +11,7 @@ export type WarningCode =
   | "featPrerequisite"
   | "optionLevel"
   | "optionFeature"
+  | "optionSpell"
   | "expertiseNeedsProficiency"
   | "multipleArmor"
   | "multipleShields"

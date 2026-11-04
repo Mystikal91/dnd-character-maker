@@ -1402,5 +1402,8 @@
   "hb.kind.property": "Property",
   "hb.f.enhancement": "Bonus to attack and damage",
   "hb.f.magical": "Counts as magical",
-  "hb.myPack": "My homebrew"
+  "hb.myPack": "My homebrew",
+  "choice.needs": "Requires: {what}",
+  "choice.needLevel": "level {level}",
+  "warning.optionSpell": "{option} needs the spell {spell}."
 }

@@ -20,6 +20,7 @@ import { type FeatureValue, deriveFeatureValues } from "./featureValues";
 import { type AppliedModifier, appliedModifiers, total } from "./modifiers";
 import { type Movement, deriveMovement, deriveSenses } from "./movement";
 import { type CasterInput, casterKind, slotPools, unmetPrerequisites } from "./multiclass";
+import { type OptionNeed, checkNeeds, needsOf } from "./optionNeeds";
 import { OVERRIDE, numberOverride } from "./overrides";
 import { type ClassFact, type ClassResource, type ExtraDamage, classResources } from "./resources";
 import { type FeatureSource, featureSources } from "./sources";
@@ -474,22 +475,40 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
       : [],
   );
 
-  // What a feature asks of its options: a level, or another feature.
-  const known = new Set([...reached.map((e) => e.id), ...traits]);
+  // What an option asks of the character (an invocation: a level, a pact, a cantrip): each option
+  // of a choice says whether it is met, and one that is picked without it is warned about.
+  const heldNow = new Set<string>([
+    ...heldIds,
+    ...reached.map((e) => e.id),
+    ...traits,
+    ...character.classes.flatMap((cl) => [cl.classId, cl.subclassId ?? ""]),
+    ...Object.values(character.choices),
+    ...Object.values(character.spells).flatMap((l) => [...l.cantrips, ...l.known, ...l.prepared]),
+    ...sourced.flatMap(({ effect }) => (effect.type === "grantSpell" ? [effect.spell] : [])),
+  ]);
   for (const choice of choices) {
     if (choice.grants !== "trait") continue;
+    const state = { level: levelOf(choice.source), held: heldNow };
+    const needs: Record<string, OptionNeed> = {};
+    for (const option of choice.options) {
+      const expression = needsOf(index.get(option));
+      if (expression)
+        needs[option] = { expression, met: checkNeeds(expression, state, (w) => index.has(w)).met };
+    }
+    if (Object.keys(needs).length > 0) choice.needs = needs;
     for (const id of choice.selected) {
-      const option = index.get(id);
-      const needs = (option?.data.prerequisites ?? []) as {
-        type: string;
-        level?: number;
-        feature?: string;
-      }[];
-      for (const need of needs) {
-        if (need.type === "level" && need.level !== undefined && levelOf(id) < need.level)
-          warn(warnings, "optionLevel", { option: id, level: need.level });
-        if (need.type === "feature" && need.feature && !known.has(need.feature))
-          warn(warnings, "optionFeature", { option: id, feature: need.feature });
+      const need = needs[id];
+      if (!need || need.met) continue;
+      for (const word of checkNeeds(need.expression, state, (w) => index.has(w)).missing) {
+        if ("level" in word) {
+          warn(warnings, "optionLevel", { option: id, level: word.level });
+        } else {
+          const isSpell = index.get(word.id)?.kind === "spell";
+          warn(warnings, isSpell ? "optionSpell" : "optionFeature", {
+            option: id,
+            ...(isSpell ? { spell: word.id } : { feature: word.id }),
+          });
+        }
       }
     }
   }

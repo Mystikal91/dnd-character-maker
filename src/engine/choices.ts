@@ -1,5 +1,6 @@
 import type { Ability, Effect, Entry, ProficiencyCategory } from "../data/schema";
 import type { PackIndex } from "./derive";
+import type { OptionNeed } from "./optionNeeds";
 import { evaluateRequirements } from "./requirements";
 import { type Warning, warn } from "./warnings";
 
@@ -17,6 +18,8 @@ export interface PendingChoice {
   /** Ability bonus per pick, for `abilityBonus` choices. */
   value?: number;
   options: string[];
+  /** For a choice of features: what each option asks for, when it asks for something. */
+  needs?: Record<string, OptionNeed>;
   /** Picks that are valid options, at most `choose` of them. */
   selected: string[];
   remaining: number;

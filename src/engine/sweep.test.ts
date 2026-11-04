@@ -12,6 +12,7 @@ const EXPECTED = new Set([
   "strengthMinimum",
   "optionLevel",
   "optionFeature",
+  "optionSpell",
   "expertiseNeedsProficiency",
 ]);
 

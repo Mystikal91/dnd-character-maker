@@ -1402,5 +1402,8 @@
   "hb.kind.property": "Proprietà",
   "hb.f.enhancement": "Bonus a attacco e danni",
   "hb.f.magical": "Conta come magica",
-  "hb.myPack": "Il mio homebrew"
+  "hb.myPack": "Il mio homebrew",
+  "choice.needs": "Richiede: {what}",
+  "choice.needLevel": "livello {level}",
+  "warning.optionSpell": "{option} richiede l’incantesimo {spell}."
 }

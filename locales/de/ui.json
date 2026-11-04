@@ -1402,5 +1402,8 @@
   "hb.kind.property": "Eigenschaft",
   "hb.f.enhancement": "Bonus auf Angriff und Schaden",
   "hb.f.magical": "Gilt als magisch",
-  "hb.myPack": "Mein Homebrew"
+  "hb.myPack": "Mein Homebrew",
+  "choice.needs": "Erfordert: {what}",
+  "choice.needLevel": "Grad {level}",
+  "warning.optionSpell": "{option} erfordert den Zauber {spell}."
 }

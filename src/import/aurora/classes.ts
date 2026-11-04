@@ -9,6 +9,7 @@ import {
   readRules,
   requirementsMet,
   selectMatches,
+  translateRequirement,
 } from "./rules";
 import { clean, description, setters, slugify, supportsOf } from "./xml";
 
@@ -122,6 +123,10 @@ export function claimFeatures(ctx: Context, owners: Map<Source, Owner>): void {
 export function importFeature(ctx: Context, source: Source, owners: Map<Source, Owner>): void {
   const owner = owners.get(source);
   const mapped = mapRules(ctx, source, { idPrefix: "feature", skipLevelled: true, live: true });
+  // What the feature asks of whoever picks it (an eldritch invocation: a level, a pact, a cantrip):
+  // the sheet checks it when the feature is an option of a choice. The words are the ids the app holds.
+  const asked = clean(source.el.querySelector(":scope > requirements")?.textContent);
+  const prerequisite = clean(source.el.querySelector(":scope > prerequisite")?.textContent);
   emit(
     ctx,
     source,
@@ -129,8 +134,9 @@ export function importFeature(ctx: Context, source: Source, owners: Map<Source, 
       ...(owner && { class: owner.classId }),
       ...(owner?.subclassId && { subclass: owner.subclassId }),
       ...(owner?.level !== undefined && { level: owner.level }),
+      ...(asked && { requires: translateRequirement(ctx, asked) }),
     },
-    { desc: description(source.el) },
+    { desc: description(source.el), ...(prerequisite && { prerequisite }) },
     {
       effects: [
         ...(mapped.effects as Effect[]),

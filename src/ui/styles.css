@@ -322,6 +322,17 @@ button.secondary {
   color: var(--muted);
 }
 
+/* What an option asks for, under its name: plain when the character has it, in the warning colour when not. */
+.option-need {
+  display: block;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.option-need[data-met="false"] {
+  color: var(--danger, #b3402e);
+}
+
 .spell-list {
   margin-top: 0.75rem;
 }

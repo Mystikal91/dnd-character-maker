@@ -1402,5 +1402,8 @@
   "hb.kind.property": "Propriété",
   "hb.f.enhancement": "Bonus à l’attaque et aux dégâts",
   "hb.f.magical": "Compte comme magique",
-  "hb.myPack": "Mon homebrew"
+  "hb.myPack": "Mon homebrew",
+  "choice.needs": "Demande : {what}",
+  "choice.needLevel": "niveau {level}",
+  "warning.optionSpell": "{option} demande le sort {spell}."
 }

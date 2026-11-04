@@ -2038,3 +2038,41 @@ describe("collections written for other readers", () => {
     expect(result.skipped).toEqual({});
   });
 });
+
+describe("what a feature asks of whoever picks it", () => {
+  const HEXER = wrap(`
+    <element name="Hexer" type="Class" source="Test Book" id="ID_H_CLASS">
+      <description><p>A caster of curses.</p></description>
+      <setters><set name="hd">d8</set></setters>
+      <rules>
+        <grant type="Class Feature" id="ID_H_OPTIONS" level="2" />
+      </rules>
+    </element>
+    <element name="Hexes" type="Class Feature" source="Test Book" id="ID_H_OPTIONS">
+      <description><p>Choose a hex.</p></description>
+      <rules><select type="Class Feature" name="Hex" supports="Hex Option" level="2" number="1" /></rules>
+    </element>
+    <element name="Hex Lash" type="Class Feature" source="Test Book" id="ID_H_LASH">
+      <supports>Hex Option</supports>
+      <requirements>[level:5],(ID_H_CLASS||ID_H_ELSEWHERE)</requirements>
+      <prerequisite>5th level, Hexer</prerequisite>
+      <description><p>Lash.</p></description>
+    </element>
+    <element name="Plain Hex" type="Class Feature" source="Test Book" id="ID_H_PLAIN">
+      <supports>Hex Option</supports>
+      <description><p>Nothing asked.</p></description>
+    </element>`);
+  const result = parseAurora([HEXER], options);
+
+  it("keeps the requirement with the ids the app holds, and the words of the book", () => {
+    const lash = byId(result, "imp1:feature/hex-lash");
+    expect(lash.data.requires).toBe("[level:5],(imp1:class/hexer||ID_H_ELSEWHERE)");
+    expect(result.strings["imp1:feature/hex-lash.prerequisite"]).toBe("5th level, Hexer");
+  });
+
+  it("leaves a feature that asks for nothing as it was", () => {
+    const plain = byId(result, "imp1:feature/plain-hex");
+    expect(plain.data.requires).toBeUndefined();
+    expect(result.strings["imp1:feature/plain-hex.prerequisite"]).toBeUndefined();
+  });
+});
