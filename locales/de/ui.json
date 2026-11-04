@@ -1395,7 +1395,6 @@
   "item.customize.value": "Preis und Gewicht",
   "item.customize.character": "Für diesen Charakter",
   "item.customize.list": "Waffen und Rüstungen ändern",
-  "item.propertiesHint": "Eine Eigenschaft besteht aus Titel und Text: Sie steht am Gegenstand und in den Regeln und ändert keine Zahl.",
   "item.prop.new": "+ Neue Eigenschaft",
   "item.prop.title": "Titel",
   "item.prop.desc": "Beschreibung",

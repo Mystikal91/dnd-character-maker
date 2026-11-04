@@ -35,7 +35,6 @@ export function PropertyPicker({ api }: { api: FormApi }) {
   return (
     <fieldset class="hb-many prop-picker">
       <legend>{ui("hb.f.properties")}</legend>
-      <p class="muted">{ui("item.propertiesHint")}</p>
       <div class="prop-chips">
         {options.map((o) => (
           <button

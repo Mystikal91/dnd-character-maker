@@ -1395,7 +1395,6 @@
   "item.customize.value": "Cost and weight",
   "item.customize.character": "For this character",
   "item.customize.list": "Change weapons and armor",
-  "item.propertiesHint": "A property is a title and a text: it is written on the item and in the rules, and changes no number.",
   "item.prop.new": "+ New property",
   "item.prop.title": "Title",
   "item.prop.desc": "Description",

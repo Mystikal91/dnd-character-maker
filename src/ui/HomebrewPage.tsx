@@ -319,7 +319,6 @@ function Fields({ api }: { api: FormApi }) {
     case "property":
       return (
         <>
-          <p class="muted">{ui("item.propertiesHint")}</p>
           <Text api={api} name="desc" area />
         </>
       );

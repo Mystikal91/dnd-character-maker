@@ -1,4 +1,5 @@
 import type { ClassResource, ResourceRecovery } from "./resources";
+import { uuid } from "./uuid";
 
 /**
  * A feature that a person writes on their own character: a boon, a gift of a patron, something
@@ -16,7 +17,7 @@ export interface CustomFeature {
 export const MAX_CUSTOM_USES = 99;
 
 export function newCustomFeature(): CustomFeature {
-  return { id: crypto.randomUUID().slice(0, 8), name: "", text: "" };
+  return { id: uuid().slice(0, 8), name: "", text: "" };
 }
 
 /** The limited uses of the custom features, to be ticked off in play like those of a class. */

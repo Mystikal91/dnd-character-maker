@@ -1395,7 +1395,6 @@
   "item.customize.value": "Coste y peso",
   "item.customize.character": "Para este personaje",
   "item.customize.list": "Cambiar armas y armaduras",
-  "item.propertiesHint": "Una propiedad es un título y un texto: aparece en el objeto y en las reglas, y no cambia ningún número.",
   "item.prop.new": "+ Nueva propiedad",
   "item.prop.title": "Título",
   "item.prop.desc": "Descripción",

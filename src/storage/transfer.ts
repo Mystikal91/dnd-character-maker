@@ -1,5 +1,6 @@
 import type { Character } from "../engine/character";
 import { CharacterParseError, parseCharacter } from "../engine/characterSchema";
+import { uuid } from "../engine/uuid";
 import { carriedPacks } from "./carried";
 import type { UserPackRecord } from "./packs";
 
@@ -36,7 +37,7 @@ export function parseImportFile(text: string): { character: Character; packs: Us
       ? (raw as { character: unknown }).character
       : raw;
   return {
-    character: { ...parseCharacter(document), id: crypto.randomUUID() },
+    character: { ...parseCharacter(document), id: uuid() },
     packs: carriedPacks(raw),
   };
 }

@@ -3,6 +3,7 @@ import type { Coins } from "./coins";
 import type { CustomFeature } from "./custom";
 import type { BoardSlot } from "./slots";
 import type { FeatureSetting } from "./uses";
+import { uuid } from "./uuid";
 
 export const CHARACTER_SCHEMA_VERSION = 6;
 
@@ -207,7 +208,7 @@ export interface Character {
 
 export function createCharacter(ruleset: Character["ruleset"]): Character {
   return {
-    id: crypto.randomUUID(),
+    id: uuid(),
     schemaVersion: CHARACTER_SCHEMA_VERSION,
     ruleset,
     name: "",

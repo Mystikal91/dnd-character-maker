@@ -1,5 +1,6 @@
 import type { Character } from "../engine/character";
 import { CharacterParseError, parseCharacter } from "../engine/characterSchema";
+import { uuid } from "../engine/uuid";
 
 /**
  * A character travels in a link as `#c=<version>.<data>`: the character document, compressed
@@ -64,7 +65,7 @@ export async function decodeShare(hash: string): Promise<Character> {
   } catch {
     throw new CharacterParseError("The share link is damaged");
   }
-  return parseCharacter({ ...(raw as object), id: crypto.randomUUID() });
+  return parseCharacter({ ...(raw as object), id: uuid() });
 }
 
 /** The full link for a character on this page. */

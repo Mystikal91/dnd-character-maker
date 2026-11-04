@@ -1,10 +1,11 @@
 import type { Companion } from "../engine/character";
+import { uuid } from "../engine/uuid";
 import { updateCharacter } from "./store";
 
 /** Gives the open character a creature, at full health. */
 export function addCompanion(monster: string) {
   updateCharacter((draft) => {
-    draft.companions = [...(draft.companions ?? []), { id: crypto.randomUUID(), monster }];
+    draft.companions = [...(draft.companions ?? []), { id: uuid(), monster }];
   });
 }
 

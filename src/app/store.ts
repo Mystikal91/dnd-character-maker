@@ -5,6 +5,7 @@ import { type Character, createCharacter } from "../engine/character";
 import { CharacterParseError } from "../engine/characterSchema";
 import { type DerivedSheet, deriveSheet } from "../engine/derive";
 import { relinkCharacter } from "../engine/relink";
+import { uuid } from "../engine/uuid";
 import { ui } from "../i18n/ui";
 import { openTransfer } from "../storage/bundle";
 import {
@@ -254,7 +255,7 @@ export function duplicateCharacter() {
   const original = character.value;
   const copy = {
     ...structuredClone(original),
-    id: crypto.randomUUID(),
+    id: uuid(),
     name: ui("bar.copyName", { name: original.name || ui("sheet.unnamed") }),
   };
   return switchTo(copy);
@@ -373,7 +374,7 @@ export async function restoreCharacters(
     const kept = here
       ? {
           ...incoming,
-          id: crypto.randomUUID(),
+          id: uuid(),
           name: ui("bar.copyName", { name: incoming.name || ui("sheet.unnamed") }),
         }
       : incoming;
