@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.22.0 beta",
+    date: "2026-11-04",
+    notes: [
+      {
+        en: "You can arrange the Play screen: the new “Customize” button lets you drag each panel by its title (or move it with the arrows) to the place you like, in two or three columns, and hide the ones you do not need. The arrangement is saved on your device, one for each number of columns. The d20 button is now on every screen, and on a computer the dice open in a panel at the side, which frees room in the page.",
+        it: "Puoi organizzare la schermata Gioca: il nuovo pulsante “Personalizza” permette di trascinare ogni pannello dal titolo (o spostarlo con le frecce) nel punto che preferisci, in due o tre colonne, e di nascondere quelli che non ti servono. La disposizione è salvata sul dispositivo, una per ogni numero di colonne. Il pulsante d20 ora c’è su ogni schermo e, su computer, i dadi si aprono in un pannello laterale, che libera spazio nella pagina.",
+        fr: "Tu peux organiser l’écran Jouer : le nouveau bouton « Personnaliser » permet de faire glisser chaque panneau par son titre (ou de le déplacer avec les flèches) à l’endroit que tu préfères, sur deux ou trois colonnes, et de masquer ceux dont tu n’as pas besoin. La disposition est enregistrée sur l’appareil, une pour chaque nombre de colonnes. Le bouton d20 est désormais sur tous les écrans et, sur ordinateur, les dés s’ouvrent dans un panneau latéral, ce qui libère de la place dans la page.",
+        de: "Du kannst den Spielbildschirm einrichten: Mit dem neuen Knopf „Anpassen“ ziehst du jedes Feld am Titel (oder mit den Pfeilen) an die Stelle, die dir gefällt, auf zwei oder drei Spalten, und blendest aus, was du nicht brauchst. Die Anordnung wird auf dem Gerät gespeichert, eine für jede Spaltenzahl. Der d20-Knopf ist jetzt auf jedem Bildschirm, und am Computer öffnen sich die Würfel in einem seitlichen Fenster, das Platz auf der Seite schafft.",
+        es: "Puedes organizar la pantalla de Jugar: el nuevo botón «Personalizar» permite arrastrar cada panel por su título (o moverlo con las flechas) al lugar que prefieras, en dos o tres columnas, y ocultar los que no necesites. La disposición se guarda en el dispositivo, una para cada número de columnas. El botón d20 ya está en todas las pantallas y, en ordenador, los dados se abren en un panel lateral, que libera espacio en la página.",
+      },
+    ],
+  },
+  {
     version: "1.21.1 beta",
     date: "2026-11-03",
     notes: [
