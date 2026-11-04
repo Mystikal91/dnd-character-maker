@@ -1,9 +1,9 @@
 // The contribute page: where to help, in every language. A way of helping appears on the page only
 // while its address is set here, so a section is never a dead end (donations are left out for now).
 export const COMMUNITY = {
-  repo: "https://github.com/Mystikal91/dnd-character-maker",
-  issues: "https://github.com/Mystikal91/dnd-character-maker/issues",
-  discussions: "https://github.com/Mystikal91/dnd-character-maker/discussions",
+  repo: "https://github.com/Mystikal91/heroquill",
+  issues: "https://github.com/Mystikal91/heroquill/issues",
+  discussions: "https://github.com/Mystikal91/heroquill/discussions",
   weblate: "https://weblate.mystikal.it/projects/heroquill/",
   email: "hello@heroquill.app",
 };

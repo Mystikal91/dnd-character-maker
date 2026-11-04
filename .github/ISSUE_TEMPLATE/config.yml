@@ -1,7 +1,7 @@
 blank_issues_enabled: true
 contact_links:
   - name: Question, idea or just saying hello
-    url: https://github.com/Mystikal91/dnd-character-maker/discussions
+    url: https://github.com/Mystikal91/heroquill/discussions
     about: Ask how something works, share an idea, or tell us you like Heroquill.
   - name: Help translate Heroquill
     url: https://weblate.mystikal.it/projects/heroquill/

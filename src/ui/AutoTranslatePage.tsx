@@ -15,7 +15,7 @@ import {
 } from "../translate/auto";
 import { DEFAULT_RELAY, TranslateError, fetchUsage } from "../translate/deepl";
 
-const REPO_URL = "https://github.com/Mystikal91/dnd-character-maker";
+const REPO_URL = "https://github.com/Mystikal91/heroquill";
 
 /** Machine translation of the texts that have no translation yet: the person's DeepL key and relay. */
 export function AutoTranslatePage() {

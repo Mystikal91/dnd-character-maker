@@ -2,7 +2,7 @@ import { leavePage } from "../app/navigation";
 import { content } from "../app/store";
 import { ui } from "../i18n/ui";
 
-const REPO_URL = "https://github.com/Mystikal91/dnd-character-maker";
+const REPO_URL = "https://github.com/Mystikal91/heroquill";
 
 /** The official translations of the SRD that the rules texts come from, by file code. */
 const TRANSLATED_SRDS = [

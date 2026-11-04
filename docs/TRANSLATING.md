@@ -23,7 +23,7 @@ discovery"** so new files appear on their own:
 
 | Setting | Value |
 | --- | --- |
-| Version control system | Git, repository `https://github.com/Mystikal91/dnd-character-maker.git`, branch `main` |
+| Version control system | Git, repository `https://github.com/Mystikal91/heroquill.git`, branch `main` |
 | File format | JSON file (`json`) |
 | Regular expression to match translation files | `locales/(?P<language>[^/.]*)/(?P<component>.*)\.json` |
 | Source language | English |

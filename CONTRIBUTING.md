@@ -5,13 +5,13 @@ so small and focused contributions are the easiest to look at.
 
 You do not need to write code to help:
 
-- **Say you like it.** Write in [Discussions](https://github.com/Mystikal91/dnd-character-maker/discussions)
+- **Say you like it.** Write in [Discussions](https://github.com/Mystikal91/heroquill/discussions)
   or to hello@heroquill.app.
 - **Translate it.** Translations are done in the browser on
   [Weblate](https://weblate.mystikal.it/projects/heroquill/), with no code and no GitHub account
   needed. Weblate sends the changes to this repository as a pull request.
 - **Report a problem or suggest something.** Open an
-  [issue](https://github.com/Mystikal91/dnd-character-maker/issues): what you did, what you
+  [issue](https://github.com/Mystikal91/heroquill/issues): what you did, what you
   expected, what happened, and your browser and device. A screenshot or an exported character
   (with nothing private in it) helps a lot.
 

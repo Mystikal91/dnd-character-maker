@@ -5,7 +5,7 @@ import { STAGE, VERSION } from "../app/version";
 import { CHANGELOG, ROADMAP, contributePath, newsPath, pick } from "../content/news";
 import { type UiKey, ui } from "../i18n/ui";
 
-const REPO_URL = "https://github.com/Mystikal91/dnd-character-maker";
+const REPO_URL = "https://github.com/Mystikal91/heroquill";
 const TABS = ["home", "roadmap", "changelog"] as const;
 
 const SECTIONS = ["welcome", "flow", "share", "packs", "translation"] as const;

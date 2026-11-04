@@ -11,7 +11,7 @@ English, Italian, French, German and Spanish, and it reads the content files mad
 and Aurora Legacy that you already own.
 
 > **Version 1.0 beta.** It works, but it needs more testing, so some numbers may be wrong in
-> places. If something looks off, please [open an issue](https://github.com/Mystikal91/dnd-character-maker/issues).
+> places. If something looks off, please [open an issue](https://github.com/Mystikal91/heroquill/issues).
 > What is still missing is on the roadmap, inside the app (click the title).
 >
 > A note on how it was made: a lot of this project was written with the help of an AI assistant
@@ -119,7 +119,7 @@ vite-plugin-pwa.
 
 Code, translations ([Weblate](https://weblate.mystikal.it/projects/heroquill/)), bug reports and
 a hello are all welcome: see [CONTRIBUTING.md](CONTRIBUTING.md). Questions and ideas go in
-[Discussions](https://github.com/Mystikal91/dnd-character-maker/discussions).
+[Discussions](https://github.com/Mystikal91/heroquill/discussions).
 
 ## Versions and changelog
 
