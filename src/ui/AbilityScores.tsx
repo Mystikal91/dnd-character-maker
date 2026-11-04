@@ -13,8 +13,10 @@ import {
   reroll,
 } from "../engine/abilityScores";
 import type { AbilityMethod } from "../engine/character";
+import { checkNeeds, needsOf } from "../engine/optionNeeds";
 import { type UiKey, signed, ui } from "../i18n/ui";
 import { entriesOfKind } from "./build/fields";
+import { needLabel } from "./needLabel";
 
 const METHODS: AbilityMethod[] = ["manual", "standard", "pointbuy", "roll"];
 const asNumber = (value: string, fallback: number) => {
@@ -184,7 +186,17 @@ function FeatPicker() {
   const s = sheet.value;
   const ct = content.value;
   if (!s || !ct) return null;
-  const options = entriesOfKind("feat").filter((o) => !c.feats.includes(o.id));
+  const scores = Object.fromEntries(Object.entries(s.abilities).map(([id, a]) => [id, a.score]));
+  const state = { level: s.level, held: new Set(s.held), scores };
+  // A feat that asks for something the character lacks stays in the list, greyed, with what it asks.
+  const options = entriesOfKind("feat")
+    .filter((o) => !c.feats.includes(o.id))
+    .map((o) => {
+      const expression = needsOf(ct.index.get(o.id));
+      const unmet = expression && !checkNeeds(expression, state, (w) => ct.index.has(w)).met;
+      const asks = unmet ? needLabel(ct, c.ruleset, o.id, expression) : "";
+      return { ...o, blocked: Boolean(unmet), label: asks ? `${o.label} (${asks})` : o.label };
+    });
   if (options.length === 0 && c.feats.length === 0) return null;
   const left = s.asi.available - s.asi.used;
 
@@ -226,7 +238,7 @@ function FeatPicker() {
           >
             <option value="">{ui("form.none")}</option>
             {options.map((o) => (
-              <option key={o.id} value={o.id}>
+              <option key={o.id} value={o.id} disabled={o.blocked}>
                 {o.label}
               </option>
             ))}

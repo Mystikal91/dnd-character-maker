@@ -566,7 +566,16 @@
     {
       "id": "srd51:feature/additional-magical-secrets",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "secrets",
+          "choose": 2,
+          "grants": "spell",
+          "from": [],
+          "spellUpTo": 3
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
         "level": 6,
@@ -764,7 +773,16 @@
     {
       "id": "srd51:feature/magical-secrets-1",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "secrets",
+          "choose": 2,
+          "grants": "spell",
+          "from": [],
+          "spellUpTo": 5
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
         "level": 10
@@ -791,7 +809,16 @@
     {
       "id": "srd51:feature/magical-secrets-2",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "secrets",
+          "choose": 2,
+          "grants": "spell",
+          "from": [],
+          "spellUpTo": 7
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
         "level": 14
@@ -852,7 +879,16 @@
     {
       "id": "srd51:feature/magical-secrets-3",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "secrets",
+          "choose": 2,
+          "grants": "spell",
+          "from": [],
+          "spellUpTo": 9
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
         "level": 18
@@ -4740,7 +4776,26 @@
     {
       "id": "srd51:feature/dragon-ancestor",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "option",
+          "choose": 1,
+          "grants": "trait",
+          "from": [
+            "srd51:feature/dragon-ancestor-black---acid-damage",
+            "srd51:feature/dragon-ancestor-blue---lightning-damage",
+            "srd51:feature/dragon-ancestor-brass---fire-damage",
+            "srd51:feature/dragon-ancestor-bronze---lightning-damage",
+            "srd51:feature/dragon-ancestor-copper---acid-damage",
+            "srd51:feature/dragon-ancestor-gold---fire-damage",
+            "srd51:feature/dragon-ancestor-green---poison-damage",
+            "srd51:feature/dragon-ancestor-red---fire-damage",
+            "srd51:feature/dragon-ancestor-silver---cold-damage",
+            "srd51:feature/dragon-ancestor-white---cold-damage"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 1,
@@ -5207,7 +5262,68 @@
     {
       "id": "srd51:feature/elemental-affinity",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "when",
+          "requires": "srd51:feature/dragon-ancestor-black---acid-damage||srd51:feature/dragon-ancestor-copper---acid-damage",
+          "effects": [
+            {
+              "type": "spellDamage",
+              "plus": "cha",
+              "damageType": "acid",
+              "once": true
+            }
+          ]
+        },
+        {
+          "type": "when",
+          "requires": "srd51:feature/dragon-ancestor-blue---lightning-damage||srd51:feature/dragon-ancestor-bronze---lightning-damage",
+          "effects": [
+            {
+              "type": "spellDamage",
+              "plus": "cha",
+              "damageType": "lightning",
+              "once": true
+            }
+          ]
+        },
+        {
+          "type": "when",
+          "requires": "srd51:feature/dragon-ancestor-brass---fire-damage||srd51:feature/dragon-ancestor-gold---fire-damage||srd51:feature/dragon-ancestor-red---fire-damage",
+          "effects": [
+            {
+              "type": "spellDamage",
+              "plus": "cha",
+              "damageType": "fire",
+              "once": true
+            }
+          ]
+        },
+        {
+          "type": "when",
+          "requires": "srd51:feature/dragon-ancestor-green---poison-damage",
+          "effects": [
+            {
+              "type": "spellDamage",
+              "plus": "cha",
+              "damageType": "poison",
+              "once": true
+            }
+          ]
+        },
+        {
+          "type": "when",
+          "requires": "srd51:feature/dragon-ancestor-silver---cold-damage||srd51:feature/dragon-ancestor-white---cold-damage",
+          "effects": [
+            {
+              "type": "spellDamage",
+              "plus": "cha",
+              "damageType": "cold",
+              "once": true
+            }
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 6,
@@ -5633,8 +5749,8 @@
       "effects": [
         {
           "type": "spellDamage",
-          "spell": "srd51:spell/eldritch-blast",
-          "plus": "cha"
+          "plus": "cha",
+          "spell": "srd51:spell/eldritch-blast"
         }
       ],
       "data": {
@@ -5705,7 +5821,17 @@
       "id": "srd51:feature/eldritch-invocation-book-of-ancient-secrets",
       "kind": "feature",
       "parent": "srd51:feature/eldritch-invocations",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "rituals",
+          "choose": 2,
+          "grants": "spell",
+          "from": [],
+          "spellLevel": 1,
+          "ritual": true
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 2,
@@ -6417,7 +6543,18 @@
     {
       "id": "srd51:feature/mystic-arcanum-6th-level",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "arcanum",
+          "choose": 1,
+          "grants": "spell",
+          "from": [],
+          "free": true,
+          "spellLevel": 6,
+          "spellClass": "srd51:class/warlock"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 11
@@ -6435,7 +6572,18 @@
     {
       "id": "srd51:feature/mystic-arcanum-7th-level",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "arcanum",
+          "choose": 1,
+          "grants": "spell",
+          "from": [],
+          "free": true,
+          "spellLevel": 7,
+          "spellClass": "srd51:class/warlock"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 13
@@ -6460,7 +6608,18 @@
     {
       "id": "srd51:feature/mystic-arcanum-8th-level",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "arcanum",
+          "choose": 1,
+          "grants": "spell",
+          "from": [],
+          "free": true,
+          "spellLevel": 8,
+          "spellClass": "srd51:class/warlock"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 15
@@ -6478,7 +6637,18 @@
     {
       "id": "srd51:feature/mystic-arcanum-9th-level",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "arcanum",
+          "choose": 1,
+          "grants": "spell",
+          "from": [],
+          "free": true,
+          "spellLevel": 9,
+          "spellClass": "srd51:class/warlock"
+        }
+      ],
       "data": {
         "class": "srd51:class/warlock",
         "level": 17
@@ -6604,7 +6774,14 @@
     {
       "id": "srd51:feature/empowered-evocation",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spellDamage",
+          "plus": "int",
+          "school": "evocation",
+          "once": true
+        }
+      ],
       "data": {
         "class": "srd51:class/wizard",
         "level": 10,
@@ -6651,7 +6828,28 @@
     {
       "id": "srd51:feature/spell-mastery",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "first",
+          "choose": 1,
+          "grants": "spell",
+          "from": [],
+          "spellLevel": 1,
+          "spellClass": "srd51:class/wizard",
+          "atWill": true
+        },
+        {
+          "type": "choice",
+          "id": "second",
+          "choose": 1,
+          "grants": "spell",
+          "from": [],
+          "spellLevel": 2,
+          "spellClass": "srd51:class/wizard",
+          "atWill": true
+        }
+      ],
       "data": {
         "class": "srd51:class/wizard",
         "level": 18
@@ -6671,9 +6869,15 @@
       "kind": "feature",
       "effects": [
         {
-          "type": "uses",
-          "term": 2,
-          "recharge": "short"
+          "type": "choice",
+          "id": "signature",
+          "choose": 2,
+          "grants": "spell",
+          "from": [],
+          "free": true,
+          "spellLevel": 3,
+          "spellClass": "srd51:class/wizard",
+          "rest": "short"
         }
       ],
       "data": {

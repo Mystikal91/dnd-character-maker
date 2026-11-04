@@ -101,6 +101,11 @@ export interface PlayState {
   inspiration: boolean;
   /** The die of a Bardic Inspiration the character was given, to add to one d20 roll. */
   bardicDie?: number;
+  /**
+   * The cantrip Shillelagh is on this weapon (its inventory id): it is magic, uses the spellcasting
+   * ability and its damage die is a d8, until a rest ends it.
+   */
+  shillelagh?: string;
 }
 
 export function createPlayState(): PlayState {
@@ -127,8 +132,6 @@ export interface InventoryItem {
   magical?: boolean;
   /** A bonus to attack and damage rolls that a spell or an enchantment gives (0 to 3). */
   bonus?: number;
-  /** The cantrip Shillelagh is on this club or quarterstaff: it is magic and uses the spellcasting ability. */
-  shillelagh?: boolean;
   /** A magic item (an entry with `enchants`) that the weapon carries: its bonus and effects apply. */
   enchantment?: string;
 }

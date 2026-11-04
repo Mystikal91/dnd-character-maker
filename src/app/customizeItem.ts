@@ -68,6 +68,8 @@ export function planCustomize(itemId: string): CustomizePlan | undefined {
       newHomebrewPack(ui("hb.myPack"));
   }
   if (!draft) return undefined;
+  // A copy remembers what it was made from, so a customized club still takes Shillelagh.
+  if (!owner) draft.values.copyOf = itemId;
   const held = character.value.inventory.find((i) => i.itemId === itemId);
   if (held) {
     const bonus = Math.max(Number(draft.values.enhancement) || 0, held.bonus ?? 0);
@@ -95,7 +97,6 @@ function whenIndexed(id: string): Promise<void> {
 
 /** What the window saves besides the item: what only this character has done to it. */
 export interface CharacterPart {
-  shillelagh: boolean;
   /** The id of an enchantment put on the weapon, or empty. */
   enchantment: string;
 }
@@ -132,7 +133,6 @@ export async function saveCustomItem(
     found.itemId = saved.id;
     found.bonus = undefined;
     found.magical = undefined;
-    found.shillelagh = part.shillelagh ? true : undefined;
     found.enchantment = part.enchantment || undefined;
   });
   return saved.id;

@@ -78,7 +78,7 @@ function Form({ itemId, plan }: { itemId: string; plan: CustomizePlan }) {
   const save = async () => {
     if (!ready || saving) return;
     setSaving(true);
-    const part: CharacterPart = { shillelagh: held?.shillelagh === true, enchantment };
+    const part: CharacterPart = { enchantment };
     await saveCustomItem(itemId, plan, record, draft, part);
     closeCustomize();
   };
@@ -165,7 +165,6 @@ function Form({ itemId, plan }: { itemId: string; plan: CustomizePlan }) {
             <div class="hb-grid">
               <Check api={api} name="dexBonus" />
               <Check api={api} name="stealth" />
-              <Check api={api} name="magical" />
             </div>
           </Section>
         )}

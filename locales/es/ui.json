@@ -1169,8 +1169,6 @@
   "sheet.noAttacksCarried": "Llevas un arma, pero aún no está equipada.",
   "sheet.equipItem": "Equipar {name}",
   "weapon.enchantment": "Encantamiento",
-  "weapon.shillelagh": "Tiene Shillelagh",
-  "weapon.shillelaghHint": "Para una maza o un bastón bajo el truco Shillelagh: es mágica, usa tu característica de lanzamiento para el ataque y el daño, y su dado de daño pasa a ser un d8. Desmárcalo cuando termine el conjuro.",
   "play.cast": "Lanzar",
   "play.spellAttack": "Ataque de conjuro",
   "play.spellHeal": "Curación",
@@ -1406,5 +1404,8 @@
   "choice.needs": "Requiere: {what}",
   "choice.needLevel": "nivel {level}",
   "warning.optionSpell": "{option} requiere el conjuro {spell}.",
-  "spells.atWill": "A voluntad"
+  "spells.atWill": "A voluntad",
+  "play.shillelagh": "Shillelagh",
+  "play.shillelaghHint": "El truco Garrote mágico está en esta arma: es mágica, usa tu característica de lanzamiento de conjuros para el ataque y el daño, y su dado de daño es un d8. Un descanso lo termina.",
+  "choice.needScore": "{ability} {n}"
 }

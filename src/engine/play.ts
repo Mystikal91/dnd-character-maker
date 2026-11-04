@@ -176,8 +176,8 @@ export function shortRest(
   /** Ids of the class resources that come back on a short rest. */
   resources: string[] = [],
 ): PlayState {
-  // A rage lasts a minute: a short rest has ended it.
-  let next = endRage(play);
+  // A rage and the cantrip Shillelagh last a minute: a short rest has ended them.
+  let next = endShillelagh(endRage(play));
   if (recovers === "all") next = { ...next, slotsUsed: next.slotsUsed.map(() => 0), pactUsed: 0 };
   else if (recovers === "pact") next = { ...next, pactUsed: 0 };
   if (resources.length > 0 && next.resourcesUsed) {
@@ -272,6 +272,19 @@ export function enterRage(play: PlayState, resource?: { id: string; max: number 
 export function endRage(play: PlayState): PlayState {
   if (!play.raging) return play;
   const { raging: _over, ...rest } = play;
+  return rest;
+}
+
+/** Puts the cantrip Shillelagh on a weapon, or takes it off (`undefined`). */
+export function setShillelagh(play: PlayState, itemId: string | undefined): PlayState {
+  if (itemId === undefined) return endShillelagh(play);
+  return { ...play, shillelagh: itemId };
+}
+
+/** The cantrip lasts a minute: it ends at any rest, and when it is taken off. */
+export function endShillelagh(play: PlayState): PlayState {
+  if (play.shillelagh === undefined) return play;
+  const { shillelagh: _over, ...rest } = play;
   return rest;
 }
 

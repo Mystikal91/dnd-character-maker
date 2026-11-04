@@ -6,7 +6,7 @@ import { itemKind } from "../engine/gear";
 import { itemSlot } from "../engine/slots";
 import { type UiKey, ui } from "../i18n/ui";
 import { weight } from "../i18n/units";
-import { CustomizeButton, ShillelaghTick } from "./ItemCustomize";
+import { CustomizeButton } from "./ItemCustomize";
 import { itemFacts, itemTag } from "./ItemTag";
 import { EditPencil } from "./QuickEdit";
 import { SlotIcon } from "./equipment/slotIcons";
@@ -170,7 +170,6 @@ function Row({ item, removable }: { item: InventoryItem; removable: boolean }) {
           </button>
         )}
       </div>
-      <ShillelaghTick item={item} />
       {hasInfo && (
         <details class="inv-info">
           <summary>{ui("inv.info")}</summary>

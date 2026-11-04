@@ -17,7 +17,7 @@ import {
 } from "../../engine/slots";
 import { type UiKey, ui } from "../../i18n/ui";
 import { weight } from "../../i18n/units";
-import { CustomizeButton, ShillelaghTick } from "../ItemCustomize";
+import { CustomizeButton } from "../ItemCustomize";
 import { itemFacts, itemTag } from "../ItemTag";
 import { ruleDetail } from "../rules/EntryDetail";
 import { useHoldRepeat } from "../useHoldRepeat";
@@ -393,7 +393,6 @@ export function EquipmentBoard({ mode }: { mode: Mode }) {
                   <span class="equip-pack-name">{nameOf(item)}</span>
                 </div>
                 <CustomizeButton item={item} />
-                <ShillelaghTick item={item} />
               </li>
             ))}
           </ul>

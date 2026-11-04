@@ -302,7 +302,6 @@ function Fields({ api }: { api: FormApi }) {
           <div class="hb-grid">
             <Check api={api} name="dexBonus" />
             <Check api={api} name="stealth" />
-            <Check api={api} name="magical" />
           </div>
           <PropertyPicker api={api} />
           <Cost api={api} />

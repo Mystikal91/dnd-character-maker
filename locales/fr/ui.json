@@ -1169,8 +1169,6 @@
   "sheet.noAttacksCarried": "Tu portes une arme, mais elle n'est pas encore équipée.",
   "sheet.equipItem": "Équiper {name}",
   "weapon.enchantment": "Enchantement",
-  "weapon.shillelagh": "Gourdin magique actif",
-  "weapon.shillelaghHint": "Pour un gourdin ou un bâton sous le sort Gourdin magique (Shillelagh) : il est magique, utilise ta caractéristique d'incantation pour l'attaque et les dégâts, et son dé de dégâts devient un d8. Décoche quand le sort prend fin.",
   "play.cast": "Lancer",
   "play.spellAttack": "Attaque de sort",
   "play.spellHeal": "Soins",
@@ -1406,5 +1404,8 @@
   "choice.needs": "Demande : {what}",
   "choice.needLevel": "niveau {level}",
   "warning.optionSpell": "{option} demande le sort {spell}.",
-  "spells.atWill": "À volonté"
+  "spells.atWill": "À volonté",
+  "play.shillelagh": "Shillelagh",
+  "play.shillelaghHint": "Le sort mineur Gourdin magique est sur cette arme : elle est magique, utilise ton caractéristique d’incantation pour l’attaque et les dégâts, et son dé de dégâts est un d8. Un repos y met fin.",
+  "choice.needScore": "{ability} {n}"
 }

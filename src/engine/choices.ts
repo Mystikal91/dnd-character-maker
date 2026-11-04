@@ -75,9 +75,23 @@ function optionsOf(index: PackIndex, choice: ChoiceEffect): string[] {
   if (choice.from.length > 0) return choice.from;
   if (choice.grants === "feat")
     return [...index.values()].filter((e) => e.kind === "feat").map((e) => e.id);
-  if (choice.grants === "spell" && choice.spellLevel !== undefined)
+  if (
+    choice.grants === "spell" &&
+    (choice.spellLevel !== undefined || choice.spellUpTo !== undefined)
+  )
     return [...index.values()]
-      .filter((e) => e.kind === "spell" && e.data.level === choice.spellLevel)
+      .filter((e) => {
+        if (e.kind !== "spell") return false;
+        const level = typeof e.data.level === "number" ? e.data.level : 0;
+        if (choice.spellLevel !== undefined && level !== choice.spellLevel) return false;
+        if (choice.spellUpTo !== undefined && level > choice.spellUpTo) return false;
+        if (choice.ritual && e.data.ritual !== true) return false;
+        if (choice.spellClass) {
+          const classes = e.data.classes;
+          if (!Array.isArray(classes) || !classes.includes(choice.spellClass)) return false;
+        }
+        return true;
+      })
       .map((e) => e.id);
   return choice.from;
 }
@@ -94,7 +108,13 @@ function grantEffect(choice: ChoiceEffect, option: string): Effect {
     case "abilityBonus":
       return { type: "abilityBonus", ability: option as Ability, value: choice.value ?? 1 };
     case "spell":
-      return { type: "grantSpell", spell: option, ...(choice.free && { free: true }) };
+      return {
+        type: "grantSpell",
+        spell: option,
+        ...(choice.free && { free: true }),
+        ...(choice.rest && { rest: choice.rest }),
+        ...(choice.atWill && { atWill: true }),
+      };
     case "trait":
     case "feat":
       return { type: "trait", id: option };

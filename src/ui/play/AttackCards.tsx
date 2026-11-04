@@ -11,7 +11,7 @@ import {
 import { character, content, sheet } from "../../app/store";
 import { doubleDice } from "../../engine/dice";
 import type { AttackResult } from "../../engine/equipment";
-import { castSpell, slotsLeft } from "../../engine/play";
+import { castSpell, setShillelagh, slotsLeft } from "../../engine/play";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { ruleDetail } from "../rules/EntryDetail";
@@ -135,6 +135,17 @@ function AttackCard({ a }: { a: AttackResult }) {
             </button>
           )}
         </div>
+        {a.canShillelagh && (
+          <button
+            type="button"
+            class="card-btn card-effect"
+            aria-pressed={a.shillelagh === true}
+            title={ui("play.shillelaghHint")}
+            onClick={() => changePlay((p) => setShillelagh(p, a.shillelagh ? undefined : a.itemId))}
+          >
+            {ui("play.shillelagh")}
+          </button>
+        )}
         {damages.map((d) => {
           const dice = critical ? (doubleDice(d.dice) ?? d.dice) : d.dice;
           return (

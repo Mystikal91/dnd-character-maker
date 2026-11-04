@@ -30,7 +30,7 @@ describe("what an option asks for", () => {
       effects: [],
       data: { requires: "[level:5],(a||b)" },
     } as Entry;
-    expect(needsOf(aurora)).toBe("([level:5],(a||b))");
+    expect(needsOf(aurora)).toBe("[level:5],(a||b)");
     expect(needsOf(srd51Index.get(invocation("devils-sight")))).toBe("");
   });
 
@@ -102,5 +102,55 @@ describe("the invocations of the warlock", () => {
       option: invocation("agonizing-blast"),
       spell: "srd51:spell/eldritch-blast",
     });
+  });
+});
+
+describe("what a feat asks for", () => {
+  it("writes the minimum score of the SRD as a word, and Aurora's own words say it all", () => {
+    const grappler = {
+      id: "x:feat/grappler",
+      kind: "feat",
+      effects: [],
+      data: { prerequisites: [{ ability: "str", minimum: 13 }] },
+    } as Entry;
+    expect(needsOf(grappler)).toBe("[str:13]");
+    const aurora = {
+      id: "x:feat/grip",
+      kind: "feat",
+      effects: [],
+      data: { prerequisites: [{ ability: "str", minimum: 13 }], requires: "[str:15]||UNLOCK" },
+    } as Entry;
+    expect(needsOf(aurora)).toBe("[str:15]||UNLOCK");
+  });
+
+  it("checks a minimum score when the scores are given, and not when they are not", () => {
+    const state = { level: 4, held: new Set<string>() };
+    const knows = () => false;
+    expect(checkNeeds("[str:13]", { ...state, scores: { str: 12 } }, knows)).toEqual({
+      met: false,
+      missing: [{ ability: "str", minimum: 13 }],
+    });
+    expect(checkNeeds("[str:13]", { ...state, scores: { str: 13 } }, knows).met).toBe(true);
+    expect(needsMet("[str:13]", state)).toBe(true);
+  });
+
+  it("reads the words of a book: the score is asked, the flags the app does not know are not", () => {
+    const expression = "([str:13],!ID_PHB24_FEAT_GRAPPLER)||ID_GRANTS_FEAT_UNLOCKER";
+    const knows = () => false;
+    expect(
+      checkNeeds(expression, { level: 1, held: new Set(), scores: { str: 10 } }, knows).met,
+    ).toBe(false);
+    expect(
+      checkNeeds(expression, { level: 1, held: new Set(), scores: { str: 14 } }, knows).met,
+    ).toBe(true);
+  });
+
+  it("tells what the character has, so a picker can check it", () => {
+    const c = warlock(3);
+    c.selections[PACT] = ["srd51:feature/pact-of-the-blade"];
+    const held = deriveSheet(c, srd51Index).held;
+    expect(held).toEqual(
+      expect.arrayContaining(["srd51:class/warlock", "srd51:feature/pact-of-the-blade"]),
+    );
   });
 });

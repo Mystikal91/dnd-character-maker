@@ -77,9 +77,47 @@ const atWill = (slug: string): Effect => ({
 });
 const skill = (target: string): Effect => ({ type: "proficiency", category: "skill", target });
 
+/**
+ * A spell the character picks from the lists of the game, given as a choice with no options listed:
+ * `where` says which spells (a level, up to a level, a class, rituals only) and how it is cast.
+ */
+const pickSpells = (
+  id: string,
+  choose: number,
+  where: {
+    spellLevel?: number;
+    spellUpTo?: number;
+    spellClass?: string;
+    ritual?: boolean;
+    free?: boolean;
+    atWill?: boolean;
+    rest?: "short" | "long";
+  },
+): Effect => ({ type: "choice", id, choose, grants: "spell", from: [], ...where });
+
+const WIZARD = "srd51:class/wizard";
+const WARLOCK = "srd51:class/warlock";
+
+/** Elemental Affinity: the Charisma modifier on the damage of the type of the dragon ancestor. */
+const affinity = (damageType: string, ancestors: string[]): Effect => ({
+  type: "when",
+  requires: ancestors
+    .map((a) => `srd51:feature/dragon-ancestor-${a}---${damageType}-damage`)
+    .join("||"),
+  effects: [{ type: "spellDamage", plus: "cha", damageType, once: true }],
+});
+
 const archery = [modifier("attack", 2, "ranged")];
 const defense = [modifier("ac", 1, "wearingArmor")];
 const dueling = [modifier("damage", 2, "dueling")];
+
+const AFFINITY: Record<string, string[]> = {
+  acid: ["black", "copper"],
+  lightning: ["blue", "bronze"],
+  fire: ["brass", "gold", "red"],
+  poison: ["green"],
+  cold: ["silver", "white"],
+};
 
 export const FEATURE_EFFECTS: Record<string, Effect[]> = {
   // Limited uses, ticked off in play. Bardic Inspiration, Channel Divinity, Action Surge and the
@@ -95,7 +133,6 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
   "feature/divine-intervention": uses("long", 1),
   "feature/dark-ones-own-luck": [usesAtLeast(1, "short", { mod: "cha" })],
   "feature/hurl-through-hell": uses("long", 1),
-  "feature/signature-spell": uses("short", 2),
   "trait/breath-weapon": uses("short", 1),
   "trait/relentless-endurance": uses("long", 1),
   // A tiefling casts each of these once between long rests, without a slot.
@@ -192,6 +229,40 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
   "feature/eldritch-invocation-mire-the-mind": [spell("slow"), ...uses("long", 1)],
   "feature/eldritch-invocation-beguiling-influence": [skill("deception"), skill("persuasion")],
   "feature/pact-of-the-chain": [spell("find-familiar")],
+  // The spells these features let the person pick, from the lists of the game.
+  "feature/eldritch-invocation-book-of-ancient-secrets": [
+    pickSpells("rituals", 2, { spellLevel: 1, ritual: true }),
+  ],
+  "feature/mystic-arcanum-6th-level": [
+    pickSpells("arcanum", 1, { spellLevel: 6, spellClass: WARLOCK, free: true }),
+  ],
+  "feature/mystic-arcanum-7th-level": [
+    pickSpells("arcanum", 1, { spellLevel: 7, spellClass: WARLOCK, free: true }),
+  ],
+  "feature/mystic-arcanum-8th-level": [
+    pickSpells("arcanum", 1, { spellLevel: 8, spellClass: WARLOCK, free: true }),
+  ],
+  "feature/mystic-arcanum-9th-level": [
+    pickSpells("arcanum", 1, { spellLevel: 9, spellClass: WARLOCK, free: true }),
+  ],
+  "feature/spell-mastery": [
+    pickSpells("first", 1, { spellLevel: 1, spellClass: WIZARD, atWill: true }),
+    pickSpells("second", 1, { spellLevel: 2, spellClass: WIZARD, atWill: true }),
+  ],
+  "feature/signature-spell": [
+    pickSpells("signature", 2, { spellLevel: 3, spellClass: WIZARD, free: true, rest: "short" }),
+  ],
+  "feature/additional-magical-secrets": [pickSpells("secrets", 2, { spellUpTo: 3 })],
+  "feature/magical-secrets-1": [pickSpells("secrets", 2, { spellUpTo: 5 })],
+  "feature/magical-secrets-2": [pickSpells("secrets", 2, { spellUpTo: 7 })],
+  "feature/magical-secrets-3": [pickSpells("secrets", 2, { spellUpTo: 9 })],
+  // Damage bonuses of spells.
+  "feature/empowered-evocation": [
+    { type: "spellDamage", plus: "int", school: "evocation", once: true },
+  ],
+  "feature/elemental-affinity": Object.entries(AFFINITY).map(([type, ancestors]) =>
+    affinity(type, ancestors),
+  ),
   // Three cantrips from the list of any class (the spells of the other lists the book names are all cantrips).
   "feature/pact-of-the-tome": [
     { type: "choice", id: "cantrip", choose: 3, grants: "spell", from: [], spellLevel: 0 },
@@ -358,6 +429,8 @@ export const OPTION_FEATURES: Record<string, OptionFeature> = {
   "feature/additional-fighting-style": { choose: 1, optionsOf: "feature/fighter-fighting-style" },
   "feature/eldritch-invocations": { choose: 1, chooseBy: "invocationsKnown" },
   "feature/pact-boon": { choose: 1 },
+  // The draconic sorcerer picks the dragon of their ancestry, which sets the damage type of Elemental Affinity.
+  "feature/dragon-ancestor": { choose: 1 },
   "feature/metamagic-1": {
     choose: 2,
     chooseBy: "metamagicKnown",

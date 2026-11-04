@@ -1,8 +1,8 @@
 import { character, content, sheet, updateCharacter } from "../app/store";
 import type { Content } from "../content/browser";
 import type { PendingChoice } from "../engine/choices";
-import { type OptionNeed, needWords } from "../engine/optionNeeds";
 import { type UiKey, signed, ui } from "../i18n/ui";
+import { needLabel } from "./needLabel";
 import { RuleInfoButton } from "./rules/EntryDetail";
 import { RulesText } from "./sheet/parts";
 import { SpellInfoButton } from "./spells/SpellInfo";
@@ -31,20 +31,10 @@ function optionLabel(c: Content, ruleset: string, choice: PendingChoice, option:
   }
 }
 
-/** What an option asks for, in words: the text the book gives, or the level and the features named. */
-function needLabel(c: Content, option: string, need: OptionNeed): string {
-  const written = c.text(option, "prerequisite");
-  const what =
-    written ??
-    needWords(need.expression, (id) => c.index.has(id))
-      .map((w) => ("level" in w ? ui("choice.needLevel", { level: w.level }) : c.name(w.id)))
-      .join(", ");
-  return what ? ui("choice.needs", { what }) : "";
-}
-
 /** A pick among many options (every feat): one menu per pick, with the text of what was picked. */
 function MenuPicks({ choice }: { choice: PendingChoice }) {
   const c = content.value;
+  const ruleset = character.value.ruleset;
   const s = sheet.value;
   if (!c || !s) return null;
   const name = (id: string) => c.name(id);
@@ -77,11 +67,17 @@ function MenuPicks({ choice }: { choice: PendingChoice }) {
               <option value="">{ui("form.none")}</option>
               {sorted
                 .filter((id) => id === own || !taken.has(id))
-                .map((id) => (
-                  <option key={id} value={id}>
-                    {name(id)}
-                  </option>
-                ))}
+                .map((id) => {
+                  // An option whose requirement is not met is there, greyed, with what it asks for.
+                  const need = choice.needs?.[id];
+                  const blocked = need !== undefined && !need.met && id !== own;
+                  const asks = blocked ? needLabel(c, ruleset, id, need.expression) : "";
+                  return (
+                    <option key={id} value={id} disabled={blocked}>
+                      {asks ? `${name(id)} (${asks})` : name(id)}
+                    </option>
+                  );
+                })}
             </select>
             {own && <RulesText id={own} name={name(own)} text={c.text(own, "desc")} />}
           </div>
@@ -140,7 +136,7 @@ export function Choices() {
               : ""}{" "}
             · {ui("choice.hint", { n: choice.choose, left: choice.remaining })}
           </p>
-          {choice.grants === "feat" ? (
+          {choice.grants === "feat" || (choice.grants === "spell" && choice.options.length > 40) ? (
             <MenuPicks choice={choice} />
           ) : (
             <ul class="options">
@@ -152,7 +148,7 @@ export function Choices() {
                 // An option whose requirement is not met cannot be picked; one already picked stays
                 // so it can be taken off, and the sheet warns about it.
                 const blocked = need !== undefined && !need.met && !checked;
-                const asks = need ? needLabel(c, option, need) : "";
+                const asks = need ? needLabel(c, ch.ruleset, option, need.expression) : "";
                 return (
                   <li key={option}>
                     <label class={held || blocked ? "disabled" : ""}>

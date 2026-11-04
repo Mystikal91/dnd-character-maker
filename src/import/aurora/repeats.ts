@@ -27,17 +27,24 @@ function textsByEntry(strings: Record<string, string>): Map<string, [string, str
 }
 
 /**
- * What makes two entries the same: kind, name, text, effects and data. The raw `requirements`
+ * What makes two entries the same: kind, name, text, effects and data. The raw `requirements` and `requires`
  * text is left out: a feat that can be taken again is written as copies, each asking for the
  * one before it, and those are one feat.
  */
 function signature(entry: Entry, texts: [string, string][] | undefined): string {
   const body = (texts ?? [])
+    // What the book says an entry asks for is left out with the requirement itself.
+    .filter(([field]) => field !== "prerequisite")
     .map(([field, value]) => [field, plain(value)] as const)
     .sort(([a], [b]) => a.localeCompare(b));
   // The classes that have a spell grow with each book that adds some (the artificer came later):
   // the same spell with another list of classes is the same spell, with all the classes.
-  const { requirements: _raw, classes: _classes, ...data } = entry.data as Record<string, unknown>;
+  const {
+    requirements: _raw,
+    requires: _words,
+    classes: _classes,
+    ...data
+  } = entry.data as Record<string, unknown>;
   if (entry.kind !== "spell") Object.assign(data, { classes: _classes });
   return JSON.stringify([entry.kind, entry.parent ?? null, entry.effects, data, body]);
 }

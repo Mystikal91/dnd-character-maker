@@ -1169,8 +1169,6 @@
   "sheet.noAttacksCarried": "Hai un'arma con te, ma non è ancora equipaggiata.",
   "sheet.equipItem": "Equipaggia {name}",
   "weapon.enchantment": "Incantamento",
-  "weapon.shillelagh": "Ha su Shillelagh",
-  "weapon.shillelaghHint": "Per una clava o un bastone sotto l'incantesimo Shillelagh: è magica, usa la tua caratteristica da incantatore per attacco e danno e il suo dado di danno diventa un d8. Togli la spunta quando l'incantesimo finisce.",
   "play.cast": "Lancia",
   "play.spellAttack": "Attacco magico",
   "play.spellHeal": "Guarigione",
@@ -1406,5 +1404,8 @@
   "choice.needs": "Richiede: {what}",
   "choice.needLevel": "livello {level}",
   "warning.optionSpell": "{option} richiede l’incantesimo {spell}.",
-  "spells.atWill": "A volontà"
+  "spells.atWill": "A volontà",
+  "play.shillelagh": "Shillelagh",
+  "play.shillelaghHint": "Il trucchetto Shillelagh è su quest’arma: è magica, usa la tua caratteristica da incantatore per attacco e danni e il suo dado dei danni è un d8. Un riposo lo termina.",
+  "choice.needScore": "{ability} {n}"
 }

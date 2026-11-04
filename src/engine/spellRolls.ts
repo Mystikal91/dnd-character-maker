@@ -1,5 +1,16 @@
 /** What the SRD data of a spell says it rolls (`attackType`, `damage`, `healAtSlotLevel`). */
+/** A bonus a feature adds to the damage of spells: whom it is for is the spell, the school or the damage type. */
+export interface SpellBonus {
+  value: number;
+  spell?: string;
+  school?: string;
+  damageType?: string;
+  /** Added to one damage roll of the spell (the first it fits), not to every one. */
+  once: boolean;
+}
+
 export interface SpellRollData {
+  school?: string;
   attackType?: string;
   damage?: {
     damageType?: { index: string };
@@ -48,10 +59,18 @@ function withModifier(text: string, modifier: number): string {
  */
 export function spellRolls(
   data: SpellRollData,
-  options: { slotLevel: number; characterLevel: number; modifier: number; bonus?: number },
+  options: {
+    slotLevel: number;
+    characterLevel: number;
+    modifier: number;
+    /** What features add to the damage, and the id of this spell to tell which of them are for it. */
+    bonuses?: SpellBonus[];
+    spellId?: string;
+  },
 ): SpellRolls {
   const damage: SpellRolls["damage"] = [];
   let scalesBySlot = false;
+  const spent = new Set<SpellBonus>();
   for (const part of data.damage ?? []) {
     const bySlot = part.damageAtSlotLevel;
     const table = bySlot ?? part.damageAtCharacterLevel;
@@ -60,10 +79,20 @@ export function spellRolls(
     if (!dice) continue;
     if (bySlot && new Set(Object.values(bySlot)).size > 1) scalesBySlot = true;
     const worked = withModifier(dice, options.modifier);
-    // A bonus a feature adds to the damage (Agonizing Blast) is one more step after the dice.
-    const bonus = options.bonus ?? 0;
+    const type = part.damageType?.index ?? "";
+    // What a feature adds to the damage (Agonizing Blast) is one more step after the dice.
+    let bonus = 0;
+    for (const b of options.bonuses ?? []) {
+      const fits =
+        (b.spell !== undefined && b.spell === options.spellId) ||
+        (b.school !== undefined && b.school === data.school) ||
+        (b.damageType !== undefined && b.damageType === type);
+      if (!fits || (b.once && spent.has(b))) continue;
+      if (b.once) spent.add(b);
+      bonus += b.value;
+    }
     damage.push({
-      type: part.damageType?.index ?? "",
+      type,
       dice: bonus === 0 ? worked : `${worked}${bonus > 0 ? "+" : ""}${bonus}`,
     });
   }

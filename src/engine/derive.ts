@@ -24,6 +24,7 @@ import { type OptionNeed, checkNeeds, needsOf } from "./optionNeeds";
 import { OVERRIDE, numberOverride } from "./overrides";
 import { type ClassFact, type ClassResource, type ExtraDamage, classResources } from "./resources";
 import { type FeatureSource, featureSources } from "./sources";
+import type { SpellBonus } from "./spellRolls";
 import { type SpellLists, deriveSpellLists } from "./spells";
 import { type Spend, deriveSpends } from "./spends";
 import { withSubclassCasting } from "./subclassCasting";
@@ -121,8 +122,10 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   grantedSpells: string[];
   /** The granted spells that can be cast as often as wanted without a slot (an invocation): cantrips in all but their level. */
   atWillSpells: string[];
-  /** What a feature adds to the damage a spell rolls (Agonizing Blast: the Charisma modifier), by spell. */
-  spellDamage: Record<string, number>;
+  /** Ids of what the character has (features, traits, spells, class, subclass, flags): what a requirement checks. */
+  held: string[];
+  /** What features add to the damage that spells roll (Agonizing Blast: the Charisma modifier), see `spellRolls`. */
+  spellDamage: SpellBonus[];
   /** Feats the character took. */
   feats: string[];
   /** Ability Score Improvements available from class levels and how many are taken. */
@@ -490,9 +493,15 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
     ...Object.values(character.spells).flatMap((l) => [...l.cantrips, ...l.known, ...l.prepared]),
     ...sourced.flatMap(({ effect }) => (effect.type === "grantSpell" ? [effect.spell] : [])),
   ]);
+  const scores = Object.fromEntries(Object.entries(abilities).map(([id, a]) => [id, a.score]));
   for (const choice of choices) {
-    if (choice.grants !== "trait") continue;
-    const state = { level: levelOf(choice.source), held: heldNow };
+    if (choice.grants !== "trait" && choice.grants !== "feat") continue;
+    // A feat is asked for the level of the character, a feature of a class for the level in it.
+    const state = {
+      level: choice.grants === "feat" ? level : levelOf(choice.source),
+      held: heldNow,
+      scores,
+    };
     const needs: Record<string, OptionNeed> = {};
     for (const option of choice.options) {
       const expression = needsOf(index.get(option));
@@ -506,6 +515,8 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
       for (const word of checkNeeds(need.expression, state, (w) => index.has(w)).missing) {
         if ("level" in word) {
           warn(warnings, "optionLevel", { option: id, level: word.level });
+        } else if ("ability" in word) {
+          // A score a feat asks for is warned about as `featPrerequisite`.
         } else {
           const isSpell = index.get(word.id)?.kind === "spell";
           warn(warnings, isSpell ? "optionSpell" : "optionFeature", {
@@ -667,6 +678,7 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
         ),
       ),
     ],
+    held: [...heldNow],
     atWillSpells: [
       ...new Set(
         sourced.flatMap(({ effect, source }) =>
@@ -678,11 +690,19 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
         ),
       ),
     ],
-    spellDamage: sourced.reduce<Record<string, number>>((by, { effect }) => {
-      if (effect.type === "spellDamage")
-        by[effect.spell] = (by[effect.spell] ?? 0) + abilities[effect.plus].modifier;
-      return by;
-    }, {}),
+    spellDamage: sourced.flatMap(({ effect }) =>
+      effect.type === "spellDamage"
+        ? [
+            {
+              value: abilities[effect.plus].modifier,
+              once: effect.once === true,
+              ...(effect.spell && { spell: effect.spell }),
+              ...(effect.school && { school: effect.school }),
+              ...(effect.damageType && { damageType: effect.damageType }),
+            },
+          ]
+        : [],
+    ),
     feats: [
       ...new Set([...chosen.filter((e) => e.kind === "feat").map((e) => e.id), ...givenFeats]),
     ],

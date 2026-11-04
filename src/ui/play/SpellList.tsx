@@ -99,7 +99,8 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
     slotLevel,
     characterLevel: s.level,
     modifier,
-    bonus: s.spellDamage[id] ?? 0,
+    bonuses: s.spellDamage,
+    spellId: id,
   });
   const choosing = rolls.scalesBySlot && slotLevels.length > 1;
   const castLevel = rolls.scalesBySlot ? slotLevel : level;

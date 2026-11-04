@@ -196,7 +196,12 @@ export function importFeat(ctx: Context, source: Source): void {
   emit(
     ctx,
     source,
-    { prerequisites: prerequisites(source.el), requirements },
+    {
+      prerequisites: prerequisites(source.el),
+      requirements,
+      // What the feat asks for, with the ids the app holds: the picker checks it.
+      ...(requirements && { requires: translateRequirement(ctx, requirements) }),
+    },
     { desc: description(source.el) },
     { effects },
   );

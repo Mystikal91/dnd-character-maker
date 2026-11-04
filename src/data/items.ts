@@ -40,6 +40,8 @@ export const ItemDataSchema = v.object({
   slot: v.optional(v.string()),
   /** A bonus to attack and damage rolls (+1, +2, +3) that a magic weapon gives. */
   enhancement: v.optional(v.number()),
+  /** The id of the item a person's copy was made from (a customized club is still a club for Shillelagh). */
+  copyOf: v.optional(v.string()),
   /** The item is magic without a rarity (a weapon a person made magic): it hurts what resists plain weapons. */
   magical: v.optional(v.boolean()),
   /** What using the item does when it can be worked out: the dice of the hit points it restores. */

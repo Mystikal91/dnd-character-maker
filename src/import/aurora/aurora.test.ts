@@ -2076,3 +2076,10 @@ describe("what a feature asks of whoever picks it", () => {
     expect(result.strings["imp1:feature/plain-hex.prerequisite"]).toBeUndefined();
   });
 });
+
+describe("what a feat asks for", () => {
+  it("keeps the requirement of a feat with the words the app holds", () => {
+    const result = parseAurora([PEOPLE], options);
+    expect(byId(result, "imp1:feat/lucky-star").data.requires).toBe("[dex:13]");
+  });
+});

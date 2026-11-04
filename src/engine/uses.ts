@@ -25,7 +25,7 @@ export function deriveFreeSpells(
         entry: source,
         spell: effect.spell,
         max: 1,
-        recovery: "long",
+        recovery: effect.rest ?? "long",
       });
   }
   return [...found.values()];

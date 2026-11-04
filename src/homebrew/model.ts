@@ -164,7 +164,12 @@ function cost(values: Record<string, string>) {
 
 function itemBase(values: Record<string, string>, category: string) {
   const weight = text(values.weight) === "" ? undefined : num(values.weight, 0);
-  return { category, cost: cost(values), ...(weight !== undefined && { weight }) };
+  return {
+    category,
+    cost: cost(values),
+    ...(weight !== undefined && { weight }),
+    ...(text(values.copyOf) && { copyOf: text(values.copyOf) }),
+  };
 }
 
 /** Builds the entries and texts a draft stands for. `id` is the main entry's id. */
@@ -253,7 +258,6 @@ export function buildDraft(draft: Draft, id: Id, context: BuildContext): Built {
         effects: [],
         data: {
           ...itemBase(values, "armor"),
-          ...(on(values.magical) && { magical: true }),
           armor: {
             category,
             base: whole(values.base, category === "shield" ? 2 : 10),
@@ -517,6 +521,7 @@ export function draftFromEntry(
     values.costAmount = String(d.cost?.amount ?? 0);
     values.costUnit = String(d.cost?.unit ?? "gp");
     if (d.weight !== undefined) values.weight = String(d.weight);
+    if (typeof d.copyOf === "string") values.copyOf = d.copyOf;
   };
 
   switch (entry.kind) {
@@ -568,7 +573,6 @@ export function draftFromEntry(
           strMin: String(a.strengthMinimum ?? 0),
           stealth: flag(a.stealthDisadvantage),
           properties: ((a.properties as string[] | undefined) ?? []).join(","),
-          magical: flag(d.magical),
         });
         return { kind: "armor", values, traits: [] };
       }

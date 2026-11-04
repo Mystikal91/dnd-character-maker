@@ -31,7 +31,6 @@ const InventoryItemSchema = v.object({
   ),
   magical: v.optional(v.boolean()),
   bonus: v.optional(v.pipe(v.number(), v.integer(), v.minValue(0), v.maxValue(3))),
-  shillelagh: v.optional(v.boolean()),
   enchantment: v.optional(v.string()),
 });
 
@@ -155,6 +154,7 @@ const CharacterSchema = v.object({
     conditions: v.array(v.string()),
     inspiration: v.boolean(),
     bardicDie: v.optional(v.picklist([4, 6, 8, 10, 12])),
+    shillelagh: v.optional(v.string()),
   }),
   asi: v.array(v.pipe(v.array(AbilitySchema), v.minLength(1), v.maxLength(2))),
   feats: v.array(v.string()),

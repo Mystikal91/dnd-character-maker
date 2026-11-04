@@ -1169,8 +1169,6 @@
   "sheet.noAttacksCarried": "Du trägst eine Waffe, aber sie ist noch nicht ausgerüstet.",
   "sheet.equipItem": "{name} ausrüsten",
   "weapon.enchantment": "Verzauberung",
-  "weapon.shillelagh": "Shillelagh liegt darauf",
-  "weapon.shillelaghHint": "Für eine Keule oder einen Kampfstab unter dem Zaubertrick Shillelagh: Sie ist magisch, nutzt deine Zauberfähigkeit für Angriff und Schaden, und ihr Schadenswürfel wird ein W8. Nimm den Haken weg, wenn der Zauber endet.",
   "play.cast": "Wirken",
   "play.spellAttack": "Zauberangriff",
   "play.spellHeal": "Heilung",
@@ -1406,5 +1404,8 @@
   "choice.needs": "Erfordert: {what}",
   "choice.needLevel": "Grad {level}",
   "warning.optionSpell": "{option} erfordert den Zauber {spell}.",
-  "spells.atWill": "Beliebig oft"
+  "spells.atWill": "Beliebig oft",
+  "play.shillelagh": "Shillelagh",
+  "play.shillelaghHint": "Der Zaubertrick Knüppel ist auf dieser Waffe: Sie ist magisch, nutzt deine Zauberwirker-Fähigkeit für Angriff und Schaden, und ihr Schadenswürfel ist ein W8. Eine Rast beendet ihn.",
+  "choice.needScore": "{ability} {n}"
 }

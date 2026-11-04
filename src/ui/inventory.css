@@ -159,7 +159,6 @@ button.inv-card-name:hover {
   }
 }
 
-.inv-card .shillelagh-tick,
 .inv-card .inv-info {
   grid-column: 1 / -1;
   margin: 0.5rem 0 0;

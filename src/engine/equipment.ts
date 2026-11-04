@@ -21,6 +21,8 @@ export interface AttackResult {
   abilityFrom?: string;
   /** The cantrip Shillelagh is on the weapon. */
   shillelagh?: boolean;
+  /** The weapon can take the cantrip (a club or quarterstaff, or a copy of one) and the character casts spells. */
+  canShillelagh?: boolean;
   /** The attack is made at range. */
   ranged: boolean;
   /** The weapon counts as magic. */
@@ -190,8 +192,17 @@ function deriveArmorClass(ctx: Context, state: ArmorState): ArmorClassResult {
   };
 }
 
-/** Shillelagh works on a club or a quarterstaff. */
-export const takesShillelagh = (itemId: string) => /\/(club|quarterstaff)$/.test(itemId);
+/**
+ * Shillelagh works on a club or a quarterstaff, and on a copy of one a person made (`data.copyOf`
+ * says which item it was made from).
+ */
+export const takesShillelagh = (
+  itemId: string,
+  index?: ReadonlyMap<string, { data: Record<string, unknown> }>,
+) => {
+  const base = index?.get(itemId)?.data.copyOf;
+  return /\/(club|quarterstaff)$/.test(typeof base === "string" ? base : itemId);
+};
 
 /** A d4 or d6 becomes a d8; anything bigger stays. */
 function shillelaghDice(dice: string): string {
@@ -231,7 +242,8 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       itemData(entry).enhancement ?? 0,
       enchanted ? (itemData(enchanted).enhancement ?? 0) : 0,
     );
-    const shillelagh = item.shillelagh === true && takesShillelagh(item.itemId);
+    const canShillelagh = takesShillelagh(item.itemId, index);
+    const shillelagh = canShillelagh && character.play.shillelagh === item.itemId;
     const magical =
       shillelagh ||
       item.magical === true ||
@@ -286,6 +298,7 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       ability,
       ...(abilityFrom && { abilityFrom }),
       ...(shillelagh && { shillelagh }),
+      ...(canShillelagh && ctx.spellAbilities.length > 0 && { canShillelagh }),
       ranged: weapon.kind === "ranged",
       ...(offHand && { offHand }),
       magical,
