@@ -1,7 +1,6 @@
 import { signal } from "@preact/signals";
 import { useRef } from "preact/hooks";
 import { driveConfigured, driveState, loadFromDrive } from "../app/drive";
-import { LEGACY_SITE } from "../app/legacy";
 import { character, characters } from "../app/store";
 import { transferDialog, transferInbox } from "../app/transferState";
 import { ui } from "../i18n/ui";
@@ -33,7 +32,7 @@ export function FromOldVersion() {
   const picker = useRef<HTMLInputElement>(null);
   const c = character.value;
   const blank = !c.name && c.classes.length === 0 && !c.choices.species && !c.choices.background;
-  if (LEGACY_SITE || hidden.value || !blank || characters.value.length > 1) return null;
+  if (hidden.value || !blank || characters.value.length > 1) return null;
   return (
     <section class="card welcome">
       <h2>{ui("fromOld.title")}</h2>

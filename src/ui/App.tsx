@@ -25,7 +25,6 @@ import { AutoTranslatePage } from "./AutoTranslatePage";
 import { CustomSpellDialog } from "./CustomSpellDialog";
 import { ExplainDialog } from "./Explain";
 import { HomebrewPage } from "./HomebrewPage";
-import { LegacyNotice } from "./LegacyNotice";
 import { ConfirmDialog, UndoNotice } from "./Notices";
 import { PacksNotice } from "./PacksNotice";
 import { PacksPage } from "./PacksPage";
@@ -126,7 +125,6 @@ export function App() {
 
   return (
     <main class="shell">
-      <LegacyNotice />
       <button
         type="button"
         class="skip-link no-print"

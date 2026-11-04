@@ -10,7 +10,6 @@ import {
   saveCharacterToDrive,
   saveToDrive,
 } from "../app/drive";
-import { LEGACY_SITE, NEW_APP_URL } from "../app/legacy";
 import { type ConflictPolicy, character, countConflicts, importText } from "../app/store";
 import {
   type TransferReport,
@@ -35,9 +34,6 @@ import {
 import { WrongPassphrase } from "../storage/crypto";
 import { type DriveListing, characterDriveName, driveFileKind } from "../storage/drive";
 import { ShareCharacter } from "./ShareCharacter";
-
-/** What the old address moves: everything but the DeepL key, which should not travel unasked. */
-const MOVING = SECTIONS.filter((s) => s !== "deeplKey");
 
 const close = () => {
   transferDialog.value = undefined;
@@ -120,83 +116,6 @@ const Back = ({ to = "start" }: { to?: TransferStep }) => (
     ← {ui("transfer.back")}
   </button>
 );
-
-/** The first screen on the old address: the recommended way to move to Heroquill, step by step. */
-function MigrationGuide() {
-  const [busy, setBusy] = useState(false);
-  useEffect(() => {
-    driveState.value = "idle";
-    if (driveConfigured) void loadSignIn().catch(() => undefined);
-  }, []);
-  const saved = driveState.value === "saved";
-  const saveAll = async () => {
-    setBusy(true);
-    try {
-      const info = currentCounts();
-      const chosen = new Set(MOVING.filter((s) => info.counts[s] > 0 || s === "settings"));
-      const file = await exportTransfer(chosen, "");
-      await saveToDrive(file.text);
-    } finally {
-      setBusy(false);
-    }
-  };
-  return (
-    <>
-      <p>{ui("legacy.guide.intro")}</p>
-      <ol class="plain migration-steps">
-        <li>
-          <h4>{ui("legacy.guide.step1")}</h4>
-          {driveConfigured ? (
-            <>
-              <p class="muted">{ui("legacy.guide.step1Hint")}</p>
-              <button
-                type="button"
-                class={saved ? "" : "primary"}
-                disabled={busy || driveState.value === "working"}
-                onClick={() => void saveAll()}
-              >
-                {ui("transfer.drive.save")}
-              </button>
-              <DriveMessage />
-            </>
-          ) : (
-            <p class="muted">{ui("legacy.guide.noDrive")}</p>
-          )}
-          <p class="muted">
-            {ui("legacy.guide.file")}{" "}
-            <button
-              type="button"
-              class="link"
-              onClick={() => {
-                transferDialog.value = "export";
-              }}
-            >
-              {ui("transfer.export")}
-            </button>
-          </p>
-        </li>
-        <li>
-          <h4>{ui("legacy.guide.step2")}</h4>
-          <button
-            type="button"
-            class={saved ? "primary" : ""}
-            onClick={() => window.open(NEW_APP_URL, "_blank", "noopener")}
-          >
-            {ui("legacy.guide.open")}
-          </button>
-        </li>
-        <li>
-          <h4>{ui("legacy.guide.step3")}</h4>
-          <p class="muted">{ui("legacy.guide.step3Hint")}</p>
-        </li>
-        <li>
-          <h4>{ui("legacy.guide.step4")}</h4>
-          <p class="muted">{ui("legacy.guide.step4Hint")}</p>
-        </li>
-      </ol>
-    </>
-  );
-}
 
 /** A big button with an arrow, a title and a line saying what it does. */
 function Card({
@@ -466,7 +385,7 @@ function ExportPane() {
 
   return (
     <>
-      <Back to={LEGACY_SITE ? "start" : "exportWhat"} />
+      <Back to="exportWhat" />
       <h4>{ui("transfer.takeWhat")}</h4>
       <Rows counts={info.counts} chosen={chosen} onChange={setChosen} />
       {chosen.has("links") && info.files.length > 0 && (
@@ -756,17 +675,13 @@ export function TransferDialog() {
   return (
     <dialog ref={dialog} class="quick-edit transfer" onClose={close}>
       <header class="transfer-head">
-        <h3>{ui(LEGACY_SITE ? "transfer.title" : "io.title")}</h3>
+        <h3>{ui("io.title")}</h3>
         <button type="button" class="link" aria-label={ui("transfer.close")} onClick={close}>
           ✕
         </button>
       </header>
       {mode === "start" ? (
-        LEGACY_SITE ? (
-          <MigrationGuide />
-        ) : (
-          <Start />
-        )
+        <Start />
       ) : mode === "exportWhat" ? (
         <ExportWhat />
       ) : mode === "exportCharacter" ? (
