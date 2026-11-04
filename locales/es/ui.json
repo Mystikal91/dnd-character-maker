@@ -1406,7 +1406,7 @@
   "warning.optionSpell": "{option} requiere el conjuro {spell}.",
   "spells.atWill": "A voluntad",
   "play.shillelagh": "Shillelagh",
-  "play.shillelaghHint": "El truco Garrote mágico está en esta arma: es mágica, usa tu característica de lanzamiento de conjuros para el ataque y el daño, y su dado de daño es un d8. Un descanso lo termina.",
+  "play.shillelaghHint": "El truco Shillelagh está en esta arma: es mágica, usa tu característica de lanzamiento de conjuros para el ataque y el daño, y su dado de daño es un d8. Un descanso lo termina.",
   "choice.needScore": "{ability} {n}",
   "play.magicWeapon": "Arma mágica",
   "play.magicWeaponBonus": "Arma mágica +{n}",

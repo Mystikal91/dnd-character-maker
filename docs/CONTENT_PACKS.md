@@ -48,10 +48,14 @@ of entry ids; the build step lists them). A switched-on option is held by its id
 effects apply. The Aurora importer makes the options that other rules ask for (Tasha's customised
 origin) and gives each a `flag` with its Aurora id, so that rules of another pack, which can only
 name it by that id, see it too.
-- Item data can hold `rarity` (a magic item), `enhancement` (+1 to +3 to attack and damage) and
-  `enchants: true` (the item is put on a weapon of the inventory instead of being carried: the
-  Aurora importer sets it for the magic weapons it reads). A weapon in the inventory can also
-  be marked `magical` and given a `bonus` by the person using the sheet.
+- Item data can hold `rarity` (a magic item), `enhancement` (+1 to +3 to attack and damage, also on
+  a weapon that is carried: a homebrew +1 sword), `magical` (a weapon that counts as magic without
+  a rarity), `copyOf` (the id of the item a person's copy was made from: a customized club still
+  takes Shillelagh) and `enchants: true` (the item is put on a weapon of the inventory instead of
+  being carried: the Aurora importer sets it for the magic weapons it reads). Armor and weapons
+  can list `properties` (ids of entries of kind `property`: a title and a text, no effect). The
+  spells Shillelagh and Magic Weapon are not item data: they are effects the person switches on
+  in Play, on one weapon, until a rest.
 - `{ "type": "defense", "kind": "resistance", "damage": "fire" }` is a resistance, an
   immunity or a vulnerability to a type of damage; the sheet lists them.
 - `{ "type": "unarmoredDefense", "base": 10, "add": ["con"], "shield": true }` is armor class
@@ -69,7 +73,26 @@ these from Aurora's race variants, taking from the race what the variant replace
 A `choice` can grant a `feat`: with an empty `from` it offers every feat there is, and the pick
 (like a feat a species gives outright, as a `trait`) is listed with the feats of the sheet.
 
-A `grantSpell` effect can carry a `minLevel` (the spell comes with that level of the class).
+A `grantSpell` effect can carry a `minLevel` (the spell comes with that level of the class),
+`free: true` (cast once between rests without a slot, with `rest: "short"` for a short rest, the
+long rest otherwise) or `atWill: true` (cast as often as wanted without a slot: the sheet lists it
+with the cantrips and it has no Cast button; the invocations of the warlock use it).
+
+A `choice` that grants a `spell` and lists no `from` is open: `spellLevel` (one level), `spellUpTo`
+(that level and below, cantrips included), `spellClass` and `ritual` say which spells of the
+whole game it offers, and `free`, `rest` and `atWill` say how a pick is cast (the three cantrips
+of the Pact of the Tome, Mystic Arcanum, Spell Mastery, Magical Secrets). A list of more than
+forty spells is a menu in the choices.
+
+`{ "type": "spellDamage", "plus": "cha", "spell": "srd51:spell/eldritch-blast" }` adds the
+modifier of an ability to the damage a spell rolls in Play; `spell`, `school` or `damageType` say
+which spells, and `once` adds it to one roll of the spell instead of every roll.
+
+What an option of a choice asks for is read from `data.prerequisites` of the option (entries with
+`type` `level`, `feature` or `spell`, or an `ability` with a `minimum`) or, in an imported pack,
+from `data.requires`, written as the requirements of `when`. The choices show it ("Requires: level
+9, Pact of the Blade") and do not let the person pick an option whose requirement is not met; a
+word the app does not know never shuts an option. Feats are checked the same way.
 A subclass entry can list spells it always prepares (`spells`), spells it adds to the class's
 list (`expanded`, a warlock patron) and, for a class that does not cast, its own
 `spellcasting`: the ability, the class whose list it picks from and the cantrips, spells known
@@ -83,8 +106,11 @@ count once the character has reached their level.
 ## Homebrew editor
 
 *New homebrew pack* on the packs page opens an editor with a form for each kind of entry:
-spells, weapons, armor, gear, languages, feats, species (with their traits), backgrounds, classes and subclasses
-(with personality tables). Entries are saved as soon as the form is saved, appear in the build
+spells, weapons, armor, gear, properties (a title and a text, for weapons and armor), languages,
+feats, species (with their traits), backgrounds, classes and subclasses (with personality tables).
+Weapons and armor can also be made from the inventory: *Customize* on a weapon or armor opens a
+window with the same fields, and saves the result as an item of the first homebrew pack (one is
+made if there is none) that takes the place of the original in the inventory. Entries are saved as soon as the form is saved, appear in the build
 steps like the built-in ones, and can be edited or deleted later. A pack can be exported as a
 file and added on another device. Classes use the standard spell slot tables (full caster, half caster or Pact Magic); every class and subclass feature is a name and a text at a level.
 

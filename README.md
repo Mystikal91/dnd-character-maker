@@ -26,7 +26,9 @@ and Aurora Legacy that you already own.
 - *Free edit*: override any number the rules would work out, and see what the automatic value
   would be.
 - **Multiclassing** with the shared spell slots table, separate Pact Magic slots and the ability
-  score prerequisites; **feats** in place of ability score improvements.
+  score prerequisites; **feats** in place of ability score improvements. Options that ask for
+  something (an invocation's level, pact or cantrip; a feat's scores) say so and stay locked until
+  the character has it.
 - **Level up**, from the Create or Play tabs: choose the class and the hit points, see exactly what
   changes, then jump to whatever is left to decide (subclass, ability scores, spells, choices).
   With a small celebration.
@@ -38,6 +40,8 @@ and Aurora Legacy that you already own.
   Channel Divinity, Bardic Inspiration...) and the numbers that matter at the table.
 - Quick rolls for checks, saves, attacks and damage, with advantage and critical hits, a dice
   tray and a roll history. Conditions with their rules.
+- Effects you switch on from a weapon's attack card (Shillelagh, Magic Weapon) until the next rest;
+  spells cast at will, such as the warlock's invocations, are listed with the cantrips.
 
 **Print and share**
 
@@ -49,8 +53,9 @@ and Aurora Legacy that you already own.
 
 - The whole SRD 5.1: classes, subclasses, species, backgrounds, spells, equipment and features.
 - **Content packs** (footer, *Content packs*):
-  - a **homebrew editor** for spells, weapons, armor, gear, languages, feats, species,
-    backgrounds, classes and subclasses, with export and import of your packs;
+  - a **homebrew editor** for spells, weapons, armor, gear, properties, languages, feats, species,
+    backgrounds, classes and subclasses, with export and import of your packs; weapons and armor
+    can also be customized from the inventory (*Customize*);
   - an importer for **Aurora** XML files that you already have, by file, by index file (every file
     it lists is fetched) or by address. Nothing from Aurora or any publisher is bundled.
   - see [docs/CONTENT_PACKS.md](docs/CONTENT_PACKS.md).

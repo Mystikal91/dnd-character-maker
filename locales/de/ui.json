@@ -1406,7 +1406,7 @@
   "warning.optionSpell": "{option} erfordert den Zauber {spell}.",
   "spells.atWill": "Beliebig oft",
   "play.shillelagh": "Shillelagh",
-  "play.shillelaghHint": "Der Zaubertrick Knüppel ist auf dieser Waffe: Sie ist magisch, nutzt deine Zauberwirker-Fähigkeit für Angriff und Schaden, und ihr Schadenswürfel ist ein W8. Eine Rast beendet ihn.",
+  "play.shillelaghHint": "Der Zaubertrick Shillelagh ist auf dieser Waffe: Sie ist magisch, nutzt deine Zauberwirker-Fähigkeit für Angriff und Schaden, und ihr Schadenswürfel ist ein W8. Eine Rast beendet ihn.",
   "choice.needScore": "{ability} {n}",
   "play.magicWeapon": "Magische Waffe",
   "play.magicWeaponBonus": "Magische Waffe +{n}",
