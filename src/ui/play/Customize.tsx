@@ -8,18 +8,16 @@ const name = (panel: string) => ui(`play.panel.${panel}` as UiKey);
 /** The button that opens the arranging of the panels, at the top of the screen. */
 export function CustomizeButton() {
   return (
-    <div class="customize-row">
-      <button
-        type="button"
-        class="customize-open"
-        onClick={() => {
-          customizing.value = true;
-        }}
-      >
-        <span aria-hidden="true">{"⇄ "}</span>
-        {ui("play.customize")}
-      </button>
-    </div>
+    <button
+      type="button"
+      class="customize-open"
+      onClick={() => {
+        customizing.value = true;
+      }}
+    >
+      <span aria-hidden="true">{"⇄ "}</span>
+      {ui("play.customize")}
+    </button>
   );
 }
 
@@ -87,6 +85,7 @@ export function PanelBar({
   can,
   onMove,
   onHide,
+  onGrab,
 }: {
   panel: string;
   /** More than one column: the panel can go left and right. */
@@ -94,6 +93,8 @@ export function PanelBar({
   can: Record<Dir, boolean>;
   onMove: (dir: Dir) => void;
   onHide: () => void;
+  /** A press on the grip and the name: the start of a drag. */
+  onGrab: (event: PointerEvent) => void;
 }) {
   const steps: { dir: Dir; mark: string; label: UiKey }[] = [
     { dir: "up", mark: "↑", label: "play.customize.up" },
@@ -107,7 +108,12 @@ export function PanelBar({
   ];
   return (
     <div class="panel-bar" data-locked={!canHide(panel) || undefined}>
-      <span class="panel-name">{name(panel)}</span>
+      <div class="panel-grip" onPointerDown={onGrab} title={ui("play.customize.drag")}>
+        <span class="grip" aria-hidden="true">
+          {"⠿"}
+        </span>
+        <span class="panel-name">{name(panel)}</span>
+      </div>
       <div class="panel-tools">
         {steps.map((s) => (
           <button

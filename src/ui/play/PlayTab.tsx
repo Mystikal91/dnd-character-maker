@@ -7,6 +7,7 @@ import {
   customizing,
   isArranged,
   keepHidden,
+  moveTo,
   nudge,
   playLayout,
   setPlayLayout,
@@ -17,7 +18,7 @@ import { character, content, sheet } from "../../app/store";
 import { ACTIVATIONS, characterActions } from "../../engine/actions";
 import { MAX_LEVEL } from "../../engine/levelUp";
 import { visibleSlots } from "../../engine/slots";
-import { ui } from "../../i18n/ui";
+import { type UiKey, ui } from "../../i18n/ui";
 import { CoinsPanel } from "../Coins";
 import { collectSpellRows } from "../spellRows";
 import { neighbour, useSwipe } from "../useSwipe";
@@ -39,21 +40,24 @@ import { GroupTabs, StatusBar } from "./StatusBar";
 import { DeathSaves, HitDice, HitPoints } from "./Vitals";
 import { WildShape } from "./WildShape";
 import { type LayoutFacts, arrange, columnsUsed, estimateHeights } from "./columns";
+import { beginDrag } from "./drag";
 
 /**
  * A panel and the part of the screen it belongs to. On a phone only the part that is open is
  * shown and `order` says where each panel sits in it; on a wide screen every part is shown.
  */
 const Part = ({
+  panel,
   group,
   order,
   children,
 }: {
+  panel: string;
   group: PlayGroup;
   order: number;
   children: ComponentChildren;
 }) => (
-  <div class="pg" data-g={group} style={{ "--o": order }}>
+  <div class="pg" data-panel={panel} data-g={group} style={{ "--o": order }}>
     {children}
   </div>
 );
@@ -176,6 +180,7 @@ export function PlayTab() {
   const c = content.value;
   const s = sheet.value;
   const root = useRef<HTMLDivElement>(null);
+  const grid = useRef<HTMLDivElement>(null);
   const parts = useRef<{ groups: PlayGroup[]; open: PlayGroup }>({
     groups: [],
     open: "combat",
@@ -265,21 +270,24 @@ export function PlayTab() {
             </div>
           )}
         </div>
-        {canLevelUp && (
-          <button
-            type="button"
-            class="level-up-button play-levelup"
-            onClick={() => {
-              levelUpPhase.value = "choose";
-            }}
-          >
-            <span aria-hidden="true">{"✦ "}</span>
-            {ui("levelUp.button")}
-          </button>
-        )}
+        <div class="play-topbar">
+          {canLevelUp && (
+            <button
+              type="button"
+              class="level-up-button play-levelup"
+              onClick={() => {
+                levelUpPhase.value = "choose";
+              }}
+            >
+              <span aria-hidden="true">{"✦ "}</span>
+              {ui("levelUp.button")}
+            </button>
+          )}
+          {!arranging && <CustomizeButton />}
+        </div>
         <RageStrip wide />
         <BeastStrip wide />
-        {arranging ? (
+        {arranging && (
           <CustomizeToolbar
             count={count}
             choice={room === 3}
@@ -290,10 +298,8 @@ export function PlayTab() {
               setPlayLayout({ ...layout, layouts: rest });
             }}
           />
-        ) : (
-          <CustomizeButton />
         )}
-        <div class="play-grid" data-cols={count} data-arranging={arranging || undefined}>
+        <div class="play-grid" data-cols={count} data-arranging={arranging || undefined} ref={grid}>
           {columns.map((keys, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: a column is its place on the screen
             <div class="play-col" key={i}>
@@ -301,7 +307,7 @@ export function PlayTab() {
                 const panel = PANELS[key as PanelKey];
                 const { to, can } = moves(key);
                 return (
-                  <Part key={key} group={panel.group} order={orderOf(key)}>
+                  <Part key={key} panel={key} group={panel.group} order={orderOf(key)}>
                     {arranging ? (
                       <PanelBar
                         panel={key}
@@ -313,6 +319,23 @@ export function PlayTab() {
                           right: can("right"),
                         }}
                         onMove={(dir) => arrangeNow(() => to(dir))}
+                        onGrab={(e) => {
+                          if (!grid.current || (e.pointerType === "mouse" && e.button !== 0))
+                            return;
+                          e.preventDefault();
+                          beginDrag(e, {
+                            grid: grid.current,
+                            panel: key,
+                            label: ui(`play.panel.${key}` as UiKey),
+                            onDrop: (col, at) => {
+                              const next = moveTo(columns, key, col, at);
+                              // Dropped where it was: nothing to save.
+                              if (JSON.stringify(next) !== JSON.stringify(columns)) {
+                                arrangeNow(() => next);
+                              }
+                            },
+                          });
+                        }}
                         onHide={() => setPlayLayout({ ...layout, hidden: [...layout.hidden, key] })}
                       />
                     ) : (
