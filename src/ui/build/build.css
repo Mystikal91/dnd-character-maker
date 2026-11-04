@@ -50,10 +50,13 @@
     grid-template-columns: minmax(0, 1fr) 20rem;
   }
 
-  /* More specific than the fantasy frame, which would otherwise reset the position. */
+  /*
+   * More specific than the fantasy frame, which would otherwise reset the position. It sticks below
+   * the tabs, which are sticky too: at `1rem` it slid under them.
+   */
   :root[data-style] .card.summary {
     position: sticky;
-    top: 1rem;
+    top: calc(var(--tabs-height, 2.9rem) + 1rem);
   }
 }
 
