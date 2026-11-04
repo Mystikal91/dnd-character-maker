@@ -1,6 +1,16 @@
 import type { ComponentChildren } from "preact";
 import { useLayoutEffect, useRef, useState } from "preact/hooks";
 import { levelUpPhase } from "../../app/buildState";
+import {
+  type Columns,
+  canHide,
+  customizing,
+  isArranged,
+  keepHidden,
+  nudge,
+  playLayout,
+  setPlayLayout,
+} from "../../app/playLayout";
 import { playStates, stateAttributes } from "../../app/playStates";
 import { type PlayGroup, playGroup, showPlayGroup } from "../../app/playView";
 import { character, content, sheet } from "../../app/store";
@@ -15,6 +25,7 @@ import { ActionsPanel } from "./Actions";
 import { BeastStrip } from "./BeastStrip";
 import { Companions } from "./Companions";
 import { Conditions } from "./Conditions";
+import { CustomizeButton, CustomizeToolbar, HiddenPanels, PanelBar } from "./Customize";
 import { DiceButton, DiceDrawer } from "./DiceDrawer";
 import { PlayFeatures, shownFeatures } from "./Features";
 import { BardNotes, Inspiration } from "./Inspiration";
@@ -22,12 +33,12 @@ import { PlayInventory } from "./Inventory";
 import { Rage, RageStrip } from "./Rage";
 import { ClassResources, PlayNotes, Slots } from "./Resources";
 import { Rests } from "./Rests";
-import { AttackRolls, CheckRolls, DiceTray, ModePicker, RollHistory } from "./Rolls";
+import { AttackRolls, CheckRolls, ModePicker } from "./Rolls";
 import { PlaySpells } from "./SpellList";
 import { GroupTabs, StatusBar } from "./StatusBar";
 import { DeathSaves, HitDice, HitPoints } from "./Vitals";
 import { WildShape } from "./WildShape";
-import { type LayoutFacts, estimateHeights, planColumns } from "./columns";
+import { type LayoutFacts, arrange, columnsUsed, estimateHeights } from "./columns";
 
 /**
  * A panel and the part of the screen it belongs to. On a phone only the part that is open is
@@ -36,16 +47,13 @@ import { type LayoutFacts, estimateHeights, planColumns } from "./columns";
 const Part = ({
   group,
   order,
-  wide,
   children,
 }: {
   group: PlayGroup;
   order: number;
-  /** Only on a wide screen: on a phone it lives elsewhere (the dice drawer). */
-  wide?: boolean;
   children: ComponentChildren;
 }) => (
-  <div class={`pg${wide ? " wide-only" : ""}`} data-g={group} style={{ "--o": order }}>
+  <div class="pg" data-g={group} style={{ "--o": order }}>
     {children}
   </div>
 );
@@ -67,15 +75,12 @@ type PanelKey =
   | "attacks"
   | "actions"
   | "checks"
-  | "dice"
-  | "history"
   | "slots"
   | "spells";
 
 interface PanelDef {
   group: PlayGroup;
   order: number;
-  wide?: boolean;
   render: () => ComponentChildren;
 }
 
@@ -109,8 +114,6 @@ const PANELS: Record<PanelKey, PanelDef> = {
   attacks: { group: "combat", order: 6, render: () => <AttackRolls /> },
   actions: { group: "combat", order: 7, render: () => <ActionsPanel /> },
   checks: { group: "checks", order: 1, render: () => <CheckRolls /> },
-  dice: { group: "checks", order: 2, wide: true, render: () => <DiceTray /> },
-  history: { group: "checks", order: 3, wide: true, render: () => <RollHistory /> },
   slots: { group: "magic", order: 1, render: () => <Slots /> },
   spells: { group: "magic", order: 2, render: () => <PlaySpells /> },
 };
@@ -189,7 +192,7 @@ export function PlayTab() {
       return next !== undefined;
     },
   );
-  const columns = useColumns(root, Boolean(c && s));
+  const room = useColumns(root, Boolean(c && s));
   if (!c || !s) return null;
   const canLevelUp = character.value.classes.length > 0 && s.level < MAX_LEVEL;
   const hasMagic = s.spellcasters.length > 0 || collectSpellRows(c, s).length > 0;
@@ -199,6 +202,41 @@ export function PlayTab() {
   // A part that is not there (no magic) opens the first one.
   const open = groups.includes(playGroup.value) ? playGroup.value : "combat";
   parts.current = { groups, open };
+
+  // The panels the character has and the person has not hidden, in the columns they asked for.
+  const facts = layoutFacts(c, s);
+  const present = (key: string) => {
+    const panel = PANELS[key as PanelKey];
+    if (!panel) return false;
+    if (panel.group === "magic") return hasMagic;
+    return key !== "rage" || facts.rage || facts.wildShape;
+  };
+  const layout = playLayout.value;
+  const count = columnsUsed(layout.wanted, room);
+  const columns = arrange(count, layout, estimateHeights(facts), present);
+  const arranging = customizing.value;
+  // The phone follows the order the person set; without one, the order made for each part.
+  const line = columns.flat();
+  const orderOf = (key: string) =>
+    count === 1 && isArranged(layout)
+      ? line.indexOf(key) + 1
+      : (PANELS[key as PanelKey]?.order ?? 0);
+  const arrangeNow = (change: (cols: Columns) => Columns) =>
+    setPlayLayout({
+      ...layout,
+      layouts: {
+        ...layout.layouts,
+        [count]: keepHidden(layout.layouts[count], change(columns), layout.hidden),
+      },
+    });
+  const moves = (key: string) => {
+    // On a phone a panel moves among the ones of its own part: the others are on other tabs.
+    const group = PANELS[key as PanelKey]?.group;
+    const accept = count === 1 ? (o: string) => PANELS[o as PanelKey]?.group === group : undefined;
+    const to = (dir: "up" | "down" | "left" | "right") => nudge(columns, key, dir, accept);
+    return { to, can: (dir: "up" | "down" | "left" | "right") => to(dir) !== columns };
+  };
+  const hiddenNow = layout.hidden.filter((key) => present(key) && canHide(key));
 
   // What the character is going through colours the screen: an aura at its edges, and the cards.
   const states = stateAttributes(playStates(character.value.play, s.hitPoints.max));
@@ -241,24 +279,60 @@ export function PlayTab() {
         )}
         <RageStrip wide />
         <BeastStrip wide />
-        <div class="play-grid" data-cols={columns}>
-          {planColumns(
-            columns,
-            estimateHeights(layoutFacts(c, s)),
-            (key) => hasMagic || PANELS[key as PanelKey]?.group !== "magic",
-          ).map((keys) => (
-            <div class="play-col" key={keys.join("-")}>
+        {arranging ? (
+          <CustomizeToolbar
+            count={count}
+            choice={room === 3}
+            arranged={layout.layouts[count] !== undefined}
+            onChoice={(wanted) => setPlayLayout({ ...layout, wanted })}
+            onReset={() => {
+              const { [count]: _, ...rest } = layout.layouts;
+              setPlayLayout({ ...layout, layouts: rest });
+            }}
+          />
+        ) : (
+          <CustomizeButton />
+        )}
+        <div class="play-grid" data-cols={count} data-arranging={arranging || undefined}>
+          {columns.map((keys, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: a column is its place on the screen
+            <div class="play-col" key={i}>
               {keys.map((key) => {
                 const panel = PANELS[key as PanelKey];
+                const { to, can } = moves(key);
                 return (
-                  <Part key={key} group={panel.group} order={panel.order} wide={panel.wide}>
-                    {panel.render()}
+                  <Part key={key} group={panel.group} order={orderOf(key)}>
+                    {arranging ? (
+                      <PanelBar
+                        panel={key}
+                        columns={count > 1}
+                        can={{
+                          up: can("up"),
+                          down: can("down"),
+                          left: can("left"),
+                          right: can("right"),
+                        }}
+                        onMove={(dir) => arrangeNow(() => to(dir))}
+                        onHide={() => setPlayLayout({ ...layout, hidden: [...layout.hidden, key] })}
+                      />
+                    ) : (
+                      panel.render()
+                    )}
                   </Part>
                 );
               })}
             </div>
           ))}
         </div>
+        {arranging && (
+          <HiddenPanels
+            panels={hiddenNow}
+            onShow={(key) =>
+              setPlayLayout({ ...layout, hidden: layout.hidden.filter((k) => k !== key) })
+            }
+            onShowAll={() => setPlayLayout({ ...layout, hidden: [] })}
+          />
+        )}
         <DiceButton />
         <DiceDrawer />
       </div>

@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { GROUPS, type LayoutFacts, estimateHeights, planColumns } from "./columns";
+import type { PlayLayout } from "../../app/playLayout";
+import {
+  GROUPS,
+  type LayoutFacts,
+  arrange,
+  columnsUsed,
+  estimateHeights,
+  planColumns,
+} from "./columns";
 
 const facts = (over: Partial<LayoutFacts> = {}): LayoutFacts => ({
   attacks: 1,
@@ -82,6 +90,74 @@ describe("the columns of the Play screen", () => {
     // (what is worn, the money, the notes) and nothing of the combat groups.
     const withFeatures = big.find((col) => col.includes("features")) ?? [];
     expect(withFeatures.filter((p) => ["hp", "attacks", "checks"].includes(p))).toEqual([]);
+  });
+
+  describe("the arrangement of the person", () => {
+    const heights = estimateHeights(facts());
+    const layout = (over: Partial<PlayLayout> = {}): PlayLayout => ({
+      wanted: 3,
+      layouts: {},
+      hidden: [],
+      ...over,
+    });
+
+    it("is the plan of the groups while the person has arranged nothing", () => {
+      expect(arrange(3, layout(), heights, noMagic)).toEqual(planColumns(3, heights, noMagic));
+    });
+
+    it("leaves out what the person hid, but never an essential panel", () => {
+      const plan = arrange(
+        3,
+        layout({ hidden: ["notes", "conditions", "hp", "coins"] }),
+        heights,
+        noMagic,
+      ).flat();
+      expect(plan).not.toContain("notes");
+      expect(plan).not.toContain("conditions");
+      expect(plan).not.toContain("coins");
+      expect(plan).toContain("hp");
+    });
+
+    it("uses the columns the person set, with what is new at the end of the shortest one", () => {
+      const own = [["attacks", "hp"], ["checks"], []];
+      const plan = arrange(3, layout({ layouts: { 3: own } }), heights, noMagic);
+      expect(plan[0]?.slice(0, 2)).toEqual(["attacks", "hp"]);
+      expect(plan[1]?.[0]).toBe("checks");
+      // Everything the character has is there once, though the person named only three panels.
+      const all = plan.flat();
+      expect(new Set(all).size).toBe(all.length);
+      expect(all.length).toBe(GROUPS.flat().length - 2 + 1);
+      expect(plan[2]?.length).toBeGreaterThan(0);
+    });
+
+    it("drops a panel the character does not have and a panel named twice", () => {
+      const own = [["spells", "hp", "hp"], ["checks", "hp"], []];
+      const plan = arrange(3, layout({ layouts: { 3: own } }), heights, noMagic).flat();
+      expect(plan).not.toContain("spells");
+      expect(plan.filter((p) => p === "hp")).toHaveLength(1);
+    });
+
+    it("cuts another arrangement of the person's again for a count they have not set", () => {
+      const own = [["checks", "attacks"], ["hp"], ["notes"]];
+      const two = arrange(2, layout({ layouts: { 3: own } }), heights, noMagic);
+      expect(two).toHaveLength(2);
+      // Read column after column the order is theirs: checks, attacks, hp, notes, then what was left.
+      expect(two.flat().slice(0, 4)).toEqual(["checks", "attacks", "hp", "notes"]);
+    });
+
+    it("gives one column of the arrangement for a phone", () => {
+      const own = [["checks", "attacks"], ["hp"], ["notes"]];
+      const [only, ...rest] = arrange(1, layout({ layouts: { 3: own } }), heights, noMagic);
+      expect(rest).toEqual([]);
+      expect(only?.slice(0, 4)).toEqual(["checks", "attacks", "hp", "notes"]);
+    });
+
+    it("uses as many columns as asked for when there is room, and as many as there is room for", () => {
+      expect(columnsUsed(2, 3)).toBe(2);
+      expect(columnsUsed(3, 3)).toBe(3);
+      expect(columnsUsed(3, 2)).toBe(2);
+      expect(columnsUsed(2, 1)).toBe(1);
+    });
   });
 
   it("puts the notes at the end of the shortest column", () => {

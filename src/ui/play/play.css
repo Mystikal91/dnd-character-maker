@@ -454,10 +454,6 @@ fieldset.segmented {
   .play[data-group="resources"] .pg[data-g="resources"] {
     display: block;
   }
-
-  .play[data-group] .pg.wide-only[data-g] {
-    display: none;
-  }
 }
 
 .play-status {
@@ -623,30 +619,33 @@ fieldset.segmented {
   hyphens: none;
 }
 
-/* ---- The dice and the history in a sheet, on a phone ---- */
+/* ---- The dice and the history in a sheet: from the bottom on a phone, from the side on a wide screen ---- */
 
-.dice-fab {
-  display: none;
+.play .dice-fab:not(.pip-btn):not(.info-btn):not(.link) {
+  position: fixed;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  z-index: 19;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  min-height: 0;
+  padding: 0;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 3px 12px rgb(0 0 0 / 0.3);
+  color: var(--accent-contrast);
+  font-weight: 700;
 }
 
 @container play (max-width: 41.99rem) {
   .play .dice-fab:not(.pip-btn):not(.info-btn):not(.link) {
-    position: fixed;
     right: 0.6rem;
     bottom: 5.2rem;
-    z-index: 19;
-    display: grid;
-    place-items: center;
     width: 3rem;
     height: 3rem;
-    min-height: 0;
-    padding: 0;
-    border: 2px solid var(--ink);
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 3px 12px rgb(0 0 0 / 0.3);
-    color: var(--accent-contrast);
-    font-weight: 700;
   }
 }
 
@@ -684,6 +683,22 @@ fieldset.segmented {
 /* A cross is understood without a line under it, which makes it look like another sign. */
 .dice-drawer .drawer-close button.link {
   text-decoration: none;
+}
+
+/*
+ * On a wide screen the sheet comes in from the right and takes the whole height. A dialog is in the
+ * top layer, where a container query does not reach it: this one looks at the window.
+ */
+@media (min-width: 42rem) {
+  .dice-drawer {
+    width: min(26rem, 100vw);
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0 0 0 auto;
+    border-width: 0 0 0 2px;
+    border-radius: 0;
+    overflow-y: auto;
+  }
 }
 
 .hp-undo {

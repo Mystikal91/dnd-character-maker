@@ -1,0 +1,119 @@
+/* ---- Arranging the panels of Play: a bar for each panel instead of its content ---- */
+
+.customize-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+.play .customize-open:not(.pip-btn):not(.info-btn):not(.link) {
+  min-height: 2.2rem;
+  padding: 0 0.8rem;
+  font-size: 0.85rem;
+}
+
+.customize-bar,
+.hidden-panels {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.hidden-panels {
+  margin: 1rem 0 0;
+}
+
+.customize-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.customize-head h3 {
+  margin: 0;
+}
+
+.customize-bar .note {
+  margin: 0;
+}
+
+.customize-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.customize-columns {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.customize-columns legend {
+  float: left;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+.customize-columns button {
+  min-width: 2.75rem;
+}
+
+.hidden-panels li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.2rem 0;
+}
+
+/* The panel bars: the whole panel is a row with a name and its buttons. */
+.panel-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.panel-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+.panel-tools {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.play .panel-tools button:not(.pip-btn):not(.info-btn):not(.link) {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  letter-spacing: 0;
+}
+
+.panel-locked {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+}
