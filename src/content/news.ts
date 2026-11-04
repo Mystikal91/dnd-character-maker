@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.22.1 beta",
+    date: "2026-11-04",
+    notes: [
+      {
+        en: "In the Create tab on a wide screen, the box with your character’s numbers no longer slides under the tabs when you scroll: it stays just below them.",
+        it: "Nella scheda Crea, su schermo largo, il riquadro con i numeri del personaggio non scivola più sotto i tab quando scorri la pagina: resta appena sotto di essi.",
+        fr: "Dans l’onglet Créer, sur un grand écran, le cadre avec les chiffres du personnage ne glisse plus sous les onglets quand tu fais défiler la page : il reste juste en dessous.",
+        de: "Im Tab Erstellen auf einem breiten Bildschirm rutscht der Kasten mit den Zahlen des Charakters beim Scrollen nicht mehr unter die Tabs: Er bleibt direkt darunter.",
+        es: "En la pestaña Crear, en una pantalla ancha, el recuadro con los números del personaje ya no se desliza bajo las pestañas al desplazarte: se queda justo debajo.",
+      },
+    ],
+  },
+  {
     version: "1.22.0 beta",
     date: "2026-11-04",
     notes: [
