@@ -2,6 +2,7 @@ import { character, content, sheet, updateCharacter } from "../app/store";
 import type { Content } from "../content/browser";
 import type { PendingChoice } from "../engine/choices";
 import { type UiKey, signed, ui } from "../i18n/ui";
+import { RuleInfoButton } from "./rules/EntryDetail";
 import { RulesText } from "./sheet/parts";
 import { SpellInfoButton } from "./spells/SpellInfo";
 
@@ -150,6 +151,7 @@ export function Choices() {
                       </span>
                     </label>
                     {choice.grants === "spell" && <SpellInfoButton id={option} />}
+                    {choice.grants === "trait" && <RuleInfoButton id={option} />}
                   </li>
                 );
               })}
