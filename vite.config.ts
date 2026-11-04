@@ -4,14 +4,11 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 // The app lives under /app/ of heroquill.app; the welcome page and the legal pages are in site/.
-// The build for the old address (github.io, `vite build --mode legacy`, see .env.legacy) only
-// helps people move to Heroquill.
-export default defineConfig(({ mode }) => {
-  const legacy = mode === "legacy";
-  const base = legacy ? "/dnd-character-maker/" : "/app/";
+export default defineConfig(() => {
+  const base = "/app/";
   return {
     base,
-    build: { outDir: legacy ? "dist" : "dist/app", emptyOutDir: true },
+    build: { outDir: "dist/app", emptyOutDir: true },
     plugins: [
       preact(),
       VitePWA({

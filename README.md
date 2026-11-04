@@ -85,8 +85,7 @@ site is published to Cloudflare (Workers static assets, `wrangler.jsonc`) by the
 `dist/app/`, and `npm run build` makes one plain page per language of the welcome page (`site/`, with the
 texts in `site/texts.mjs`), the guide (`site/guide.mjs`) and the news page, made from the changelog and the
 roadmap of `src/content/news.ts`, with a sitemap, the data for search engines and `changelog.json`, which the
-app reads to tell what an update brings. The old address (github.io) gets a build that only helps people move to Heroquill,
-published by hand with the workflow `legacy-site.yml` (`npm run build:legacy`).
+app reads to tell what an update brings.
 
 | Command | What it does |
 |---------|--------------|

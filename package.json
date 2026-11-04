@@ -11,7 +11,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build && tsx scripts/build-site.mjs",
-    "build:legacy": "tsc --noEmit && vite build --mode legacy",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",
