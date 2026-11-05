@@ -1422,5 +1422,6 @@
   "play.conditionEnded": "Finita",
   "play.nextRoundHint": "Imposta i round rimasti di una condizione per contarli",
   "play.unarmed": "Colpo senz’armi",
-  "play.unarmedBonus": "anche come azione bonus"
+  "play.unarmedBonus": "anche come azione bonus",
+  "fact.kiSaveDc": "CD dei tiri salvezza del ki: {dc}"
 }

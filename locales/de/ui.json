@@ -1422,5 +1422,6 @@
   "play.conditionEnded": "Beendet",
   "play.nextRoundHint": "Gib einer Bedingung verbleibende Runden, um sie zu zählen",
   "play.unarmed": "Waffenloser Schlag",
-  "play.unarmedBonus": "auch als Bonusaktion"
+  "play.unarmedBonus": "auch als Bonusaktion",
+  "fact.kiSaveDc": "Ki-Rettungswurf-SG: {dc}"
 }

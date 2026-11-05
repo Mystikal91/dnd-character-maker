@@ -61,7 +61,7 @@ export function FrontPage() {
   const spellLevels = [...new Set(spellRows.map((r) => r.level))];
   const insight = s.skills.find((sk) => sk.id === `${ruleset}:skill/insight`);
   // The unarmed strike is the last row, since everyone has it.
-  const allAttacks = [...s.attacks, s.unarmed];
+  const allAttacks = [...s.attacks, ...(s.unarmed ? [s.unarmed] : [])];
   const attackRows = Math.max(BLANK_ATTACK_ROWS, allAttacks.length);
   const caster = s.spellcasting;
   const slots = caster?.spellSlots.map((n, i) => ({ level: i + 1, n })).filter((x) => x.n > 0);

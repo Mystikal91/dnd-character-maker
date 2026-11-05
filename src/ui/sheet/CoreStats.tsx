@@ -150,7 +150,7 @@ export function Attacks() {
         </>
       )}
       <ul class="attack-list">
-        {[...s.attacks, s.unarmed].map((a) => (
+        {[...s.attacks, ...(s.unarmed ? [s.unarmed] : [])].map((a) => (
           <li key={a.itemId}>
             <div class="attack-name">
               {attackName(c, a)}

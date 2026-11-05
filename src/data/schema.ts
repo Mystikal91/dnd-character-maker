@@ -177,6 +177,15 @@ const PlainEffectSchema = v.variant("type", [
     atWill: v.optional(v.boolean()),
   }),
   /**
+   * A natural weapon (claws, a bite, horns): the unarmed strike rolls this die and this kind of
+   * damage in place of its 1 and bludgeoning, and is always there, even with a weapon in hand.
+   */
+  v.object({
+    type: v.literal("unarmedStrike"),
+    dice: v.string(),
+    damageType: v.string(),
+  }),
+  /**
    * A bonus to the damage that spells roll: the modifier of an ability. It applies to the spell of
    * `spell`, to the spells of a `school`, or to damage of a `damageType`; `once` is for "one damage
    * roll of the spell" (Empowered Evocation), else it is added to every roll (Agonizing Blast).

@@ -25,6 +25,8 @@ export interface AttackResult {
   canShillelagh?: boolean;
   /** The unarmed strike: not a weapon of the inventory, every character has it. */
   unarmed?: boolean;
+  /** A natural weapon of the species (claws, a bite): there even when a weapon is held. */
+  natural?: boolean;
   /** The attack can also be made as a bonus action (a monk's martial arts). */
   bonusAction?: boolean;
   /** The bonus the spell Magic Weapon gives the weapon now (0 when it is not on it). */
@@ -76,8 +78,11 @@ export interface EquipmentResult {
   armor: ArmorState;
   armorClass: ArmorClassResult;
   attacks: AttackResult[];
-  /** What the character does with bare hands: always there, whatever the inventory holds. */
-  unarmed: AttackResult;
+  /**
+   * What the character does with bare hands. It is there for a monk, for a natural weapon, and for
+   * whoever holds no weapon: with a weapon in hand the other classes have no free hand to hit with.
+   */
+  unarmed: AttackResult | undefined;
   load: LoadResult;
 }
 
@@ -261,6 +266,21 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
         : finesse && abilities.dex.modifier > abilities.str.modifier
           ? "dex"
           : "str";
+    // A monk's weapons (the shortsword and the simple melee weapons without two hands or heavy)
+    // use the better of Strength and Dexterity, and the die of martial arts when it is bigger.
+    const monkWeapon =
+      ctx.martialArts !== undefined &&
+      weapon.kind === "melee" &&
+      weapon.properties.some((p) => p.endsWith("/monk"));
+    if (monkWeapon && abilities.dex.modifier > abilities[ability].modifier) ability = "dex";
+    const baseDamage =
+      weapon.damage && monkWeapon && ctx.martialArts
+        ? withMartialArts(weapon.damage, ctx.martialArts)
+        : weapon.damage;
+    const baseTwoHanded =
+      weapon.twoHandedDamage && monkWeapon && ctx.martialArts
+        ? withMartialArts(weapon.twoHandedDamage, ctx.martialArts)
+        : weapon.twoHandedDamage;
     const proficient = isProficient(held, weapon.proficiency);
     const enchanted = item.enchantment ? index.get(item.enchantment) : undefined;
     // The bonus can come from the weapon itself (a homebrew +1 sword), the person's ticks or an enchantment.
@@ -339,16 +359,14 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       ...(item.enchantment && enchanted && { enchantment: item.enchantment }),
       attackBonus: modifier + enhancement + (proficient ? proficiencyBonus : 0) + total(toHit),
       proficient,
-      ...(weapon.damage && {
+      ...(baseDamage && {
         damage: withBonus(
-          shillelagh
-            ? { ...weapon.damage, dice: shillelaghDice(weapon.damage.dice) }
-            : weapon.damage,
+          shillelagh ? { ...baseDamage, dice: shillelaghDice(baseDamage.dice) } : baseDamage,
           oneHand,
         ),
       }),
-      ...(weapon.twoHandedDamage && {
-        twoHandedDamage: withBonus(weapon.twoHandedDamage, twoHands),
+      ...(baseTwoHanded && {
+        twoHandedDamage: withBonus(baseTwoHanded, twoHands),
       }),
       properties: weapon.properties,
       range: weapon.range,
@@ -374,6 +392,18 @@ function deriveLoad(ctx: Context): LoadResult {
   return { carried, capacity: ctx.abilities.str.score * 15 };
 }
 
+/** The average of a die written `2d6`, to tell the bigger of two. */
+function averageOf(dice: string): number {
+  const m = /^(\d+)d(\d+)$/.exec(dice);
+  return m ? (Number(m[1]) * (Number(m[2]) + 1)) / 2 : Number(dice) || 0;
+}
+
+/** The damage with the die of martial arts in place of its own when that is bigger (a monk weapon). */
+function withMartialArts(damage: DamageResultLike, die: string): DamageResultLike {
+  return averageOf(die) > averageOf(damage.dice) ? { ...damage, dice: die } : damage;
+}
+type DamageResultLike = { dice: string; type: string };
+
 /** The feat Tavern Brawler, by the name of its id (it is not in the SRD: an imported or homebrew pack has it). */
 const TAVERN_BRAWLER = /\/tavern-brawler(-\d+)?$/;
 /** The monk feature that makes unarmed strikes count as magic. */
@@ -390,6 +420,18 @@ function deriveUnarmed(ctx: Context, armor: ArmorState): AttackResult {
   const ability: Ability = monk && abilities.dex.modifier > abilities.str.modifier ? "dex" : "str";
   const modifier = abilities[ability].modifier;
   const brawler = ctx.featIds.some((id) => TAVERN_BRAWLER.test(id));
+  // Dice that can stand in for the 1, the biggest wins: martial arts, a natural weapon, Tavern Brawler.
+  const dice = [
+    ...(ctx.martialArts ? [{ dice: ctx.martialArts, type: "bludgeoning" }] : []),
+    ...ctx.sourced.flatMap(({ effect }) =>
+      effect.type === "unarmedStrike" ? [{ dice: effect.dice, type: effect.damageType }] : [],
+    ),
+    ...(brawler ? [{ dice: "1d4", type: "bludgeoning" }] : []),
+  ];
+  const best = dice.reduce<DamageResultLike | undefined>(
+    (top, d) => (!top || averageOf(d.dice) > averageOf(top.dice) ? d : top),
+    undefined,
+  );
   const grip = {
     armor,
     levelOf: ctx.levelOf,
@@ -408,10 +450,11 @@ function deriveUnarmed(ctx: Context, armor: ArmorState): AttackResult {
     attackBonus: modifier + proficiencyBonus + total(toHit),
     proficient: true,
     damage: {
-      dice: ctx.martialArts ?? (brawler ? "1d4" : "1"),
+      dice: best?.dice ?? "1",
       bonus: modifier + total(extra),
-      type: "bludgeoning",
+      type: best?.type ?? "bludgeoning",
     },
+    ...(ctx.sourced.some(({ effect }) => effect.type === "unarmedStrike") && { natural: true }),
     properties: [],
     range: { normal: 5 },
     ...(monk && { bonusAction: true }),
@@ -421,11 +464,14 @@ function deriveUnarmed(ctx: Context, armor: ArmorState): AttackResult {
 
 export function deriveEquipment(ctx: Context): EquipmentResult {
   const armor = armorStateOf(ctx);
+  const attacks = deriveAttacks(ctx, armor);
+  const unarmed = deriveUnarmed(ctx, armor);
+  const free = ctx.martialArts !== undefined || unarmed.natural === true || attacks.length === 0;
   return {
     armor,
     armorClass: deriveArmorClass(ctx, armor),
-    attacks: deriveAttacks(ctx, armor),
-    unarmed: deriveUnarmed(ctx, armor),
+    attacks,
+    unarmed: free ? unarmed : undefined,
     load: deriveLoad(ctx),
   };
 }

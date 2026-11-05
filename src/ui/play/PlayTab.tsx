@@ -131,7 +131,7 @@ function layoutFacts(
   const actions = characterActions(s, c.index);
   const shown = shownFeatures(c, s);
   return {
-    attacks: s.attacks.length + 1,
+    attacks: s.attacks.length + (s.unarmed ? 1 : 0),
     extraDamage: s.extraDamage.length,
     actionCards: ACTIVATIONS.reduce((n, a) => n + actions[a].length, 0),
     actionGroups: ACTIVATIONS.filter((a) => actions[a].length > 0).length,

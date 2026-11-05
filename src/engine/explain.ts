@@ -139,7 +139,9 @@ export function explain(
     }
 
     case "attack": {
-      const attack = [...sheet.attacks, sheet.unarmed].find((a) => a.itemId === target.itemId);
+      const attack = [...sheet.attacks, ...(sheet.unarmed ? [sheet.unarmed] : [])].find(
+        (a) => a.itemId === target.itemId,
+      );
       if (!attack) return undefined;
       const mods = (attack.modifiers ?? []).filter((m) => m.target === "attack");
       const lines: ExplainLine[] = [

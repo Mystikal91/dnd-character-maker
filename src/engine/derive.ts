@@ -362,6 +362,7 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
       level: cl.level,
       data,
       modifier: (a) => abilities[a].modifier,
+      proficiencyBonus,
     });
     resources.push(...classBits.resources);
     facts.push(...classBits.facts);
@@ -607,7 +608,7 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
     ...skillMods,
   ])
     note(m);
-  for (const attack of [...equipment.attacks, equipment.unarmed])
+  for (const attack of [...equipment.attacks, ...(equipment.unarmed ? [equipment.unarmed] : [])])
     for (const m of attack.modifiers ?? []) note(m);
 
   const valueState = {

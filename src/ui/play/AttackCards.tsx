@@ -12,6 +12,7 @@ import { character, content, sheet } from "../../app/store";
 import { doubleDice } from "../../engine/dice";
 import type { AttackResult } from "../../engine/equipment";
 import { castSpell, setMagicWeapon, setShillelagh, slotsLeft } from "../../engine/play";
+import { canSpend, spendPool } from "../../engine/spends";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { attackName } from "../attackName";
@@ -51,10 +52,12 @@ function AttackCard({ a }: { a: AttackResult }) {
   const s = sheet.value;
   if (!c || !s) return null;
   const name = attackName(c, a);
-  // A rage adds to melee weapon attacks.
+  // A rage adds to the melee attacks made with Strength.
   const rage = s.extraDamage.find((e) => e.kind === "rage");
   const rageBonus =
-    character.value.play.raging && !a.ranged && rage?.kind === "rage" ? rage.bonus : 0;
+    character.value.play.raging && !a.ranged && a.ability === "str" && rage?.kind === "rage"
+      ? rage.bonus
+      : 0;
   const damages = [
     ...(a.damage ? [{ key: "one", label: undefined, part: a.damage }] : []),
     ...(a.twoHandedDamage
@@ -74,6 +77,25 @@ function AttackCard({ a }: { a: AttackResult }) {
     else if (criticalWeapon.value === a.itemId) criticalWeapon.value = undefined;
     // The damage is due, unless the attack was a fumble.
     damageDue.value = a.damage && !roll.fumble ? a.itemId : undefined;
+  };
+  // A monk can spend a ki point for two unarmed strikes as a bonus action: Flurry of Blows.
+  const flurryId = "srd51:feature/flurry-of-blows";
+  const flurry = a.unarmed ? s.spends[flurryId] : undefined;
+  const flurryNow = () => {
+    if (!flurry) return;
+    changePlay((p) => spendPool(p, flurry, s.resources));
+    let landed = false;
+    let fumbled = true;
+    for (const n of [1, 2]) {
+      const roll = rollCheck(`${name} - ${c.name(flurryId)} ${n}`, a.attackBonus, {
+        critMin: s.critRange,
+      });
+      landed = landed || roll.critical;
+      fumbled = fumbled && roll.fumble;
+    }
+    criticalExtra.value = landed;
+    criticalWeapon.value = landed ? a.itemId : undefined;
+    damageDue.value = a.damage && !fumbled ? a.itemId : undefined;
   };
   const hurt = (dice: string) => {
     const text = critical ? (doubleDice(dice) ?? dice) : dice;
@@ -141,6 +163,16 @@ function AttackCard({ a }: { a: AttackResult }) {
             </button>
           )}
         </div>
+        {flurry && (
+          <button
+            type="button"
+            class="card-btn card-effect"
+            disabled={!canSpend(character.value.play, flurry, s.resources)}
+            onClick={flurryNow}
+          >
+            {`${c.name(flurryId)} · ${flurry.cost} ki`}
+          </button>
+        )}
         {(a.canMagicWeapon || a.magicWeapon) && (
           <div class="card-effect-group" title={ui("play.magicWeaponHint")}>
             <span>{ui("play.magicWeapon")}</span>
@@ -205,7 +237,7 @@ export function AttackCards() {
   if (!s) return null;
   return (
     <ul class="plain card-list">
-      {[...s.attacks, s.unarmed].map((a) => (
+      {[...s.attacks, ...(s.unarmed ? [s.unarmed] : [])].map((a) => (
         <AttackCard key={a.itemId} a={a} />
       ))}
     </ul>

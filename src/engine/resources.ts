@@ -57,6 +57,8 @@ interface Input {
   level: number;
   data: ClassData;
   modifier: (ability: Ability) => number;
+  /** For the saving throws of a class feature (the ki save DC). */
+  proficiencyBonus?: number;
 }
 
 const slug = (classId: string) => classId.split("/")[1] ?? classId;
@@ -127,6 +129,12 @@ export function classResources(input: Input): {
         facts.push({ kind: "martialArts", params: { dice } });
         extras.push({ kind: "martialArts", dice });
       }
+      // Stunning Strike and the other ki features that make a creature save: 8 + proficiency + Wisdom.
+      if (num("kiPoints") > 0 && input.proficiencyBonus !== undefined)
+        facts.push({
+          kind: "kiSaveDc",
+          params: { dc: 8 + input.proficiencyBonus + input.modifier("wis") },
+        });
       break;
     }
     case "paladin":
