@@ -1411,5 +1411,14 @@
   "play.magicWeaponBonus": "Arme magique +{n}",
   "play.magicWeaponHint": "Le sort Arme magique est sur cette arme : elle est magique et a le bonus à l’attaque et aux dégâts que donne le niveau de l’emplacement (+1 dès le niveau 2, +2 dès le 4, +3 dès le 6). Un repos y met fin.",
   "play.damageResistant": "Résistant",
-  "play.damageVulnerable": "Vulnérable"
+  "play.damageVulnerable": "Vulnérable",
+  "play.conditionRounds": "Rounds restants",
+  "play.roundsLeft": "{n} rounds restants",
+  "play.roundsLeftOne": "1 round restant",
+  "play.roundsMore": "Plus de rounds : {name}",
+  "play.roundsFewer": "Moins de rounds : {name}",
+  "play.nextRound": "Round suivant",
+  "play.roundPassed": "Round passé",
+  "play.roundPassedEnded": "Round passé. Terminé : {names}",
+  "play.conditionEnded": "Terminé"
 }

@@ -98,6 +98,12 @@ export interface PlayState {
   deathSaves: { successes: number; failures: number };
   /** Ids of the conditions currently affecting the character. */
   conditions: string[];
+  /**
+   * The rounds left of what lasts a number of them, by what it is (the id of a condition). Passing
+   * the round takes one off each, and what reaches none ends. What has no entry lasts until it is
+   * taken off.
+   */
+  rounds?: Record<string, number>;
   inspiration: boolean;
   /** The die of a Bardic Inspiration the character was given, to add to one d20 roll. */
   bardicDie?: number;

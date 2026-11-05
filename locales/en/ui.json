@@ -1411,5 +1411,14 @@
   "play.magicWeaponBonus": "Magic weapon +{n}",
   "play.magicWeaponHint": "The spell Magic Weapon is on this weapon: it is magical and has the bonus to attack and damage that the level of the slot gives (+1 from the 2nd level, +2 from the 4th, +3 from the 6th). A rest ends it.",
   "play.damageResistant": "Resistant",
-  "play.damageVulnerable": "Vulnerable"
+  "play.damageVulnerable": "Vulnerable",
+  "play.conditionRounds": "Rounds left",
+  "play.roundsLeft": "{n} rounds left",
+  "play.roundsLeftOne": "1 round left",
+  "play.roundsMore": "More rounds: {name}",
+  "play.roundsFewer": "Fewer rounds: {name}",
+  "play.nextRound": "Next round",
+  "play.roundPassed": "Round passed",
+  "play.roundPassedEnded": "Round passed. Ended: {names}",
+  "play.conditionEnded": "Ended"
 }

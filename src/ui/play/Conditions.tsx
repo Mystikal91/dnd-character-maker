@@ -1,12 +1,59 @@
-import { changePlay } from "../../app/play";
+import { addLog, changePlay } from "../../app/play";
 import { character, content, sheet } from "../../app/store";
-import { toggleCondition } from "../../engine/play";
+import { offerUndo } from "../../app/undo";
+import {
+  MAX_ROUNDS,
+  advanceRound,
+  roundsLeft,
+  setRounds,
+  toggleCondition,
+} from "../../engine/play";
 import { ui } from "../../i18n/ui";
 import { Panel, Paragraphs } from "../sheet/parts";
+import { useHoldRepeat } from "../useHoldRepeat";
 import { ConditionIcon } from "./icons";
 
 /** The slug of a condition: `srd51:condition/blinded` is `blinded`. */
 const slugOf = (id: string) => id.split("/")[1] ?? "";
+
+/** How many rounds a condition has left: a number to type, with buttons to change it; nothing is no limit. */
+function RoundsField({ id, name }: { id: string; name: string }) {
+  const hold = useHoldRepeat();
+  const left = roundsLeft(character.value.play, id) ?? 0;
+  const set = (n: number) => changePlay((p) => setRounds(p, id, n), { undo: false });
+  return (
+    <div class="cond-rounds">
+      <span>{ui("play.conditionRounds")}</span>
+      <button
+        type="button"
+        class="card-btn hold"
+        aria-label={ui("play.roundsFewer", { name })}
+        disabled={left === 0}
+        {...hold(() => set(Math.max(0, (roundsLeft(character.value.play, id) ?? 0) - 1)))}
+      >
+        −
+      </button>
+      <input
+        type="number"
+        min={0}
+        max={MAX_ROUNDS}
+        inputMode="numeric"
+        placeholder="—"
+        aria-label={`${ui("play.conditionRounds")}: ${name}`}
+        value={left === 0 ? "" : left}
+        onInput={(e) => set(Number.parseInt(e.currentTarget.value, 10) || 0)}
+      />
+      <button
+        type="button"
+        class="card-btn hold"
+        aria-label={ui("play.roundsMore", { name })}
+        {...hold(() => set(Math.min(MAX_ROUNDS, (roundsLeft(character.value.play, id) ?? 0) + 1)))}
+      >
+        +
+      </button>
+    </div>
+  );
+}
 
 /**
  * The conditions of the rules: the ones in force first, as cards with their rules and a button that
@@ -23,6 +70,18 @@ export function Conditions() {
   const others = conditions.filter((e) => !play.conditions.includes(e.id));
   const toggle = (id: string) => changePlay((p) => toggleCondition(p, id));
   const immune = sheet.value?.conditionImmunities ?? [];
+  const timed = active.some((e) => roundsLeft(play, e.id) !== undefined);
+  // Passing the round takes one off every condition that has a limit, and ends those that run out.
+  const passRound = () => {
+    const before = structuredClone(character.value.play);
+    const { play: after, ended } = advanceRound(before);
+    changePlay(() => after, { undo: false });
+    const names = ended.map((id) => c.name(id)).join(", ");
+    for (const id of ended) addLog({ label: c.name(id), detail: ui("play.conditionEnded") });
+    offerUndo(names ? ui("play.roundPassedEnded", { names }) : ui("play.roundPassed"), () =>
+      changePlay(() => before, { undo: false }),
+    );
+  };
 
   return (
     <Panel title={ui("play.conditions")} className="conditions-panel">
@@ -30,6 +89,11 @@ export function Conditions() {
         <p class="muted">
           {ui("sheet.immunities")}: {immune.map((id) => c.name(id)).join(", ")}
         </p>
+      )}
+      {timed && (
+        <button type="button" class="card-btn card-primary next-round" onClick={passRound}>
+          {ui("play.nextRound")}
+        </button>
       )}
       {active.length > 0 && (
         <ul class="plain card-list">
@@ -40,7 +104,11 @@ export function Conditions() {
               </span>
               <div class="card-head">
                 <b class="feat-name">{c.name(e.id)}</b>
-                <span class="card-meta">{ui("play.conditionActive")}</span>
+                <span class="card-meta">
+                  {ui("play.conditionActive")}
+                  {roundsLeft(play, e.id) !== undefined &&
+                    ` · ${ui(roundsLeft(play, e.id) === 1 ? "play.roundsLeftOne" : "play.roundsLeft", { n: roundsLeft(play, e.id) ?? 0 })}`}
+                </span>
               </div>
               <button
                 type="button"
@@ -51,6 +119,7 @@ export function Conditions() {
               >
                 ✕
               </button>
+              <RoundsField id={e.id} name={c.name(e.id)} />
               <details class="cond-rules">
                 <summary>{ui("play.conditionRules")}</summary>
                 <Paragraphs text={c.text(e.id, "desc")} />

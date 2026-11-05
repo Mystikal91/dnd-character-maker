@@ -248,17 +248,57 @@ export function longRest(play: PlayState, hitDice: Record<string, number>): Play
     ...createPlayState(),
     inspiration: play.inspiration,
     conditions: play.conditions,
+    ...(play.rounds && { rounds: play.rounds }),
     hitDiceUsed: Object.fromEntries(Object.entries(hitDiceUsed).filter(([, n]) => n > 0)),
   };
 }
 
+/** The most rounds a condition can be given. */
+export const MAX_ROUNDS = 99;
+
 export function toggleCondition(play: PlayState, id: string): PlayState {
-  return {
-    ...play,
-    conditions: play.conditions.includes(id)
-      ? play.conditions.filter((c) => c !== id)
-      : [...play.conditions, id],
+  if (!play.conditions.includes(id)) return { ...play, conditions: [...play.conditions, id] };
+  // A condition taken off takes its rounds with it.
+  return withoutRounds({ ...play, conditions: play.conditions.filter((c) => c !== id) }, [id]);
+}
+
+function withoutRounds(play: PlayState, ids: string[]): PlayState {
+  if (!play.rounds) return play;
+  const left = Object.fromEntries(Object.entries(play.rounds).filter(([id]) => !ids.includes(id)));
+  const { rounds: _gone, ...rest } = play;
+  return Object.keys(left).length > 0 ? { ...rest, rounds: left } : rest;
+}
+
+/** The rounds left for something, or `undefined` when it has no limit. */
+export const roundsLeft = (play: PlayState, id: string): number | undefined => play.rounds?.[id];
+
+/** Sets the rounds left of a condition (0, or `undefined`, takes the limit off). */
+export function setRounds(play: PlayState, id: string, rounds: number | undefined): PlayState {
+  const n = Math.min(MAX_ROUNDS, Math.trunc(rounds ?? 0));
+  if (!(n >= 1)) return withoutRounds(play, [id]);
+  return { ...play, rounds: { ...play.rounds, [id]: n } };
+}
+
+/**
+ * Passes a round: one round less for everything that has a limit, and what has none left ends (a
+ * condition is taken off). Gives the new state and the ids of what ended.
+ */
+export function advanceRound(play: PlayState): { play: PlayState; ended: string[] } {
+  const rounds = play.rounds;
+  if (!rounds) return { play, ended: [] };
+  const left: Record<string, number> = {};
+  const ended: string[] = [];
+  for (const [id, n] of Object.entries(rounds)) {
+    if (n - 1 >= 1) left[id] = n - 1;
+    else ended.push(id);
+  }
+  const { rounds: _old, ...rest } = play;
+  const next: PlayState = {
+    ...rest,
+    conditions: play.conditions.filter((c) => !ended.includes(c)),
+    ...(Object.keys(left).length > 0 && { rounds: left }),
   };
+  return { play: next, ended };
 }
 
 /** Enters a rage, spending one of its uses (unless they are unlimited, `max` of 0). */

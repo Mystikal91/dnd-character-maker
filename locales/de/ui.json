@@ -1411,5 +1411,14 @@
   "play.magicWeaponBonus": "Magische Waffe +{n}",
   "play.magicWeaponHint": "Der Zauber Magische Waffe ist auf dieser Waffe: Sie ist magisch und hat den Bonus auf Angriff und Schaden, den der Grad des Platzes gibt (+1 ab Grad 2, +2 ab 4, +3 ab 6). Eine Rast beendet ihn.",
   "play.damageResistant": "Resistent",
-  "play.damageVulnerable": "Verwundbar"
+  "play.damageVulnerable": "Verwundbar",
+  "play.conditionRounds": "Verbleibende Runden",
+  "play.roundsLeft": "{n} Runden übrig",
+  "play.roundsLeftOne": "1 Runde übrig",
+  "play.roundsMore": "Mehr Runden: {name}",
+  "play.roundsFewer": "Weniger Runden: {name}",
+  "play.nextRound": "Nächste Runde",
+  "play.roundPassed": "Runde vorbei",
+  "play.roundPassedEnded": "Runde vorbei. Beendet: {names}",
+  "play.conditionEnded": "Beendet"
 }

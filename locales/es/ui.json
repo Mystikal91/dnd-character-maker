@@ -1411,5 +1411,14 @@
   "play.magicWeaponBonus": "Arma mágica +{n}",
   "play.magicWeaponHint": "El conjuro Arma mágica está en esta arma: es mágica y tiene el bonificador al ataque y al daño que da el nivel del espacio (+1 desde el nivel 2, +2 desde el 4, +3 desde el 6). Un descanso lo termina.",
   "play.damageResistant": "Resistente",
-  "play.damageVulnerable": "Vulnerable"
+  "play.damageVulnerable": "Vulnerable",
+  "play.conditionRounds": "Asaltos restantes",
+  "play.roundsLeft": "{n} asaltos restantes",
+  "play.roundsLeftOne": "1 asalto restante",
+  "play.roundsMore": "Más asaltos: {name}",
+  "play.roundsFewer": "Menos asaltos: {name}",
+  "play.nextRound": "Siguiente asalto",
+  "play.roundPassed": "Asalto pasado",
+  "play.roundPassedEnded": "Asalto pasado. Terminado: {names}",
+  "play.conditionEnded": "Terminado"
 }
