@@ -88,6 +88,11 @@ forty spells is a menu in the choices.
 modifier of an ability to the damage a spell rolls in Play; `spell`, `school` or `damageType` say
 which spells, and `once` adds it to one roll of the spell instead of every roll.
 
+`{ "type": "unarmedStrike", "dice": "1d6", "damageType": "piercing" }` is a natural weapon (claws, a
+bite, horns): the unarmed strike rolls that die and that kind of damage in place of its 1 and
+bludgeoning, and is shown even when a weapon is in hand. Without one, the unarmed strike is shown to a
+monk (martial arts die, Strength or Dexterity) and to a character who holds no weapon.
+
 What an option of a choice asks for is read from `data.prerequisites` of the option (entries with
 `type` `level`, `feature` or `spell`, or an `ability` with a `minimum`) or, in an imported pack,
 from `data.requires`, written as the requirements of `when`. The choices show it ("Requires: level

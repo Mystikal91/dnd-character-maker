@@ -42,6 +42,10 @@ and Aurora Legacy that you already own.
   tray and a roll history. Conditions with their rules.
 - Effects you switch on from a weapon's attack card (Shillelagh, Magic Weapon) until the next rest;
   spells cast at will, such as the warlock's invocations, are listed with the cantrips.
+- Damage with *Resistant (x1/2)* and *Vulnerable (x2)* buttons, for the character and the companions;
+  rounds left for conditions, concentration and rage, with a *Next round* button that ends what runs out.
+- The unarmed strike for whoever holds no weapon, and for the monk always: martial arts die,
+  Dexterity, Flurry of Blows, and the monk's weapons with the same die.
 
 **Print and share**
 
