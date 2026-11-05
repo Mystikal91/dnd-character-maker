@@ -739,8 +739,7 @@
   "play.rage.unlimited": "Iras ilimitadas.",
   "play.rage.noUses": "No quedan iras.",
   "play.rage.rules": "Ventaja en pruebas y salvaciones de Fuerza. Resistencia al daño contundente, perforante y cortante. +{n} al daño de los ataques cuerpo a cuerpo con Fuerza. La ira termina si quedas inconsciente, o si pasa un turno entero sin que ataques ni recibas daño.",
-  "play.rage.note": "En ira: para el daño contundente, perforante y cortante usa el botón de la mitad.",
-  "play.damageHalved": "Mitad (Con/Per/Cor)",
+  "play.rage.note": "En furia: para el daño contundente, perforante y cortante usa el botón «Resistente».",
   "monster.rollAll": "Tirar los ataques",
   "play.wildShape.attacks": "En forma de bestia atacas con las acciones de la criatura: mira su ficha.",
   "play.wildShape.combat": "Forma Salvaje de combate: como acción adicional, gasta un espacio de conjuro para recuperar 1d8 puntos de golpe por nivel del espacio.",
@@ -1410,5 +1409,7 @@
   "choice.needScore": "{ability} {n}",
   "play.magicWeapon": "Arma mágica",
   "play.magicWeaponBonus": "Arma mágica +{n}",
-  "play.magicWeaponHint": "El conjuro Arma mágica está en esta arma: es mágica y tiene el bonificador al ataque y al daño que da el nivel del espacio (+1 desde el nivel 2, +2 desde el 4, +3 desde el 6). Un descanso lo termina."
+  "play.magicWeaponHint": "El conjuro Arma mágica está en esta arma: es mágica y tiene el bonificador al ataque y al daño que da el nivel del espacio (+1 desde el nivel 2, +2 desde el 4, +3 desde el 6). Un descanso lo termina.",
+  "play.damageResistant": "Resistente (×½)",
+  "play.damageVulnerable": "Vulnerable (×2)"
 }

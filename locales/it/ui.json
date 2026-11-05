@@ -739,8 +739,7 @@
   "play.rage.unlimited": "Ire illimitate.",
   "play.rage.noUses": "Non ti restano ire.",
   "play.rage.rules": "Vantaggio alle prove e ai tiri salvezza di Forza. Resistenza ai danni contundenti, perforanti e taglienti. +{n} ai danni degli attacchi in mischia con la Forza. L’ira termina se cadi privo di sensi, o se per un intero turno non attacchi né subisci danni.",
-  "play.rage.note": "In ira: per i danni perforanti, taglienti e contundenti usa il tasto dimezzato.",
-  "play.damageHalved": "Dimezzato (P/T/C)",
+  "play.rage.note": "In ira: per i danni contundenti, perforanti e taglienti usa il tasto “Resistente”.",
   "monster.rollAll": "Tira gli attacchi",
   "play.wildShape.attacks": "In forma di bestia attacchi con le azioni della creatura: vedi la sua scheda.",
   "play.wildShape.combat": "Forma Selvatica da combattimento: come azione bonus, spendi uno slot incantesimo per recuperare 1d8 punti ferita per livello dello slot.",
@@ -1410,5 +1409,7 @@
   "choice.needScore": "{ability} {n}",
   "play.magicWeapon": "Arma magica",
   "play.magicWeaponBonus": "Arma magica +{n}",
-  "play.magicWeaponHint": "L’incantesimo Arma magica è su quest’arma: è magica e ha il bonus ad attacco e danni che dà il livello dello slot (+1 dal 2° livello, +2 dal 4°, +3 dal 6°). Un riposo lo termina."
+  "play.magicWeaponHint": "L’incantesimo Arma magica è su quest’arma: è magica e ha il bonus ad attacco e danni che dà il livello dello slot (+1 dal 2° livello, +2 dal 4°, +3 dal 6°). Un riposo lo termina.",
+  "play.damageResistant": "Resistente (×½)",
+  "play.damageVulnerable": "Vulnerabile (×2)"
 }

@@ -739,8 +739,7 @@
   "play.rage.unlimited": "Unbegrenzte Raserei.",
   "play.rage.noUses": "Keine Raserei mehr übrig.",
   "play.rage.rules": "Vorteil bei Stärkewürfen und Stärkerettungswürfen. Resistenz gegen Wucht-, Stich- und Hiebschaden. +{n} Schaden bei Nahkampfangriffen mit Stärke. Die Raserei endet, wenn du bewusstlos wirst oder ein ganzer Zug ohne Angriff und ohne Schaden vergeht.",
-  "play.rage.note": "In Raserei: Bei Wucht-, Stich- und Hiebschaden nutze die Taste für halben Schaden.",
-  "play.damageHalved": "Halbiert (W/S/H)",
+  "play.rage.note": "Im Wutrausch: Bei Wucht-, Stich- und Hiebschaden den Knopf „Resistent“ benutzen.",
   "monster.rollAll": "Angriffe würfeln",
   "play.wildShape.attacks": "In Tiergestalt greifst du mit den Aktionen des Wesens an: siehe seinen Werteblock.",
   "play.wildShape.combat": "Kampf-Tiergestalt: Als Bonusaktion verbrauchst du einen Zauberplatz und erhältst 1W8 Trefferpunkte pro Grad des Platzes zurück.",
@@ -1410,5 +1409,7 @@
   "choice.needScore": "{ability} {n}",
   "play.magicWeapon": "Magische Waffe",
   "play.magicWeaponBonus": "Magische Waffe +{n}",
-  "play.magicWeaponHint": "Der Zauber Magische Waffe ist auf dieser Waffe: Sie ist magisch und hat den Bonus auf Angriff und Schaden, den der Grad des Platzes gibt (+1 ab Grad 2, +2 ab 4, +3 ab 6). Eine Rast beendet ihn."
+  "play.magicWeaponHint": "Der Zauber Magische Waffe ist auf dieser Waffe: Sie ist magisch und hat den Bonus auf Angriff und Schaden, den der Grad des Platzes gibt (+1 ab Grad 2, +2 ab 4, +3 ab 6). Eine Rast beendet ihn.",
+  "play.damageResistant": "Resistent (×½)",
+  "play.damageVulnerable": "Verwundbar (×2)"
 }

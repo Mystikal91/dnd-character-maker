@@ -21,9 +21,12 @@ import {
 import { ui } from "../../i18n/ui";
 import { MonsterBlock } from "../rules/MonsterBlock";
 import { Panel } from "../sheet/parts";
+import { DamageButtons } from "./DamageButtons";
 
 /** Hit points of one companion: a bar, and buttons to take damage or heal. */
 function CompanionHp({ companion, max }: { companion: Companion; max: number }) {
+  const [amount, setAmount] = useState("");
+  const n = Math.max(0, Number.parseInt(amount, 10) || 0);
   const hp = companionHp(companion, max);
   const percent = Math.round((hp / max) * 100);
   const hurt = (n: number) => changeCompanion(companion.id, (c) => hurtCompanion(c, max, n));
@@ -65,6 +68,37 @@ function CompanionHp({ companion, max }: { companion: Companion; max: number }) 
             +{n}
           </button>
         ))}
+      </div>
+      <div class="hp-controls">
+        <label class="field">
+          <span>{ui("play.amount")}</span>
+          <input
+            type="number"
+            min={0}
+            inputMode="numeric"
+            value={amount}
+            onInput={(e) => setAmount(e.currentTarget.value)}
+          />
+        </label>
+        <div class="btn-row">
+          <DamageButtons
+            amount={n}
+            apply={(dealt) => {
+              hurt(dealt);
+              setAmount("");
+            }}
+          />
+          <button
+            type="button"
+            disabled={n === 0}
+            onClick={() => {
+              heal(n);
+              setAmount("");
+            }}
+          >
+            {ui("play.heal")}
+          </button>
+        </div>
       </div>
     </>
   );

@@ -1,12 +1,5 @@
 import { useState } from "preact/hooks";
-import {
-  addLog,
-  changePlay,
-  damageCharacter,
-  damageResisted,
-  rollCheck,
-  vitals,
-} from "../../app/play";
+import { addLog, changePlay, damageCharacter, rollCheck, vitals } from "../../app/play";
 import { character } from "../../app/store";
 import { cryptoRandomInt } from "../../engine/dice";
 import {
@@ -23,6 +16,7 @@ import {
 import { type UiKey, ui } from "../../i18n/ui";
 import { Roll } from "../Roll";
 import { Panel } from "../sheet/parts";
+import { DamageButtons } from "./DamageButtons";
 import { HealIcon } from "./icons";
 
 export function HitPoints() {
@@ -94,24 +88,7 @@ export function HitPoints() {
           />
         </label>
         <div class="btn-row">
-          <button
-            type="button"
-            class="danger-btn"
-            disabled={n === 0}
-            onClick={() => apply(damageCharacter)}
-          >
-            {ui("play.damage")}
-          </button>
-          {play.raging && (
-            <button
-              type="button"
-              class="danger-btn"
-              disabled={n === 0}
-              onClick={() => apply(damageResisted)}
-            >
-              {ui("play.damageHalved")}
-            </button>
-          )}
+          <DamageButtons amount={n} apply={(dealt) => apply(() => damageCharacter(dealt))} />
           <button
             type="button"
             disabled={n === 0}

@@ -311,3 +311,12 @@ export function endRageIfDown(play: PlayState, max: number): PlayState {
 
 /** Resistance halves the damage, rounding down. */
 export const halveDamage = (amount: number): number => Math.floor(Math.max(0, amount) / 2);
+
+/** What a creature does to the damage: nothing, a resistance (half, rounded down) or a vulnerability (double). */
+export type DamageKind = "normal" | "resistant" | "vulnerable";
+
+/** The damage that is dealt once the resistance or the vulnerability is counted. */
+export function adjustDamage(amount: number, kind: DamageKind): number {
+  const base = Math.max(0, Math.trunc(amount));
+  return kind === "resistant" ? halveDamage(base) : kind === "vulnerable" ? base * 2 : base;
+}

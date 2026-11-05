@@ -227,3 +227,33 @@ output.death-status {
   background: color-mix(in srgb, #3f8a4a 14%, var(--surface));
   font-weight: 700;
 }
+
+/* The damage buttons: as it is, resistant (half), vulnerable (double), with what each takes off.
+   Three in a row, then heal and temporary hit points: the same on a phone and a wide screen. */
+.hp-controls .btn-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.hp-controls .btn-row > button {
+  grid-column: span 2;
+  padding-inline: 0.3rem !important;
+  font-size: 0.85rem;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.hp-controls .btn-row > button:nth-child(n + 4) {
+  grid-column: span 3;
+}
+
+.hp-controls .btn-row > button:nth-child(4):last-child {
+  grid-column: span 6;
+}
+
+.damage-kind small {
+  display: block;
+  font-weight: 400;
+  opacity: 0.85;
+}

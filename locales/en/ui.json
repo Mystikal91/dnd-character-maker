@@ -739,8 +739,7 @@
   "play.rage.unlimited": "Unlimited rages.",
   "play.rage.noUses": "No rages left.",
   "play.rage.rules": "Advantage on Strength checks and saving throws. Resistance to bludgeoning, piercing and slashing damage. +{n} damage on melee attacks with Strength. The rage ends if you fall unconscious, or if a whole turn goes by without you attacking or taking damage.",
-  "play.rage.note": "Raging: use the halved button for bludgeoning, piercing and slashing damage.",
-  "play.damageHalved": "Halved (B/P/S)",
+  "play.rage.note": "Raging: for bludgeoning, piercing and slashing damage use the “Resistant” button.",
   "monster.rollAll": "Roll the attacks",
   "play.wildShape.attacks": "In beast form you attack with the actions of the creature: see its stat block.",
   "play.wildShape.combat": "Combat Wild Shape: as a bonus action, spend a spell slot to regain 1d8 hit points per level of the slot.",
@@ -1410,5 +1409,7 @@
   "choice.needScore": "{ability} {n}",
   "play.magicWeapon": "Magic weapon",
   "play.magicWeaponBonus": "Magic weapon +{n}",
-  "play.magicWeaponHint": "The spell Magic Weapon is on this weapon: it is magical and has the bonus to attack and damage that the level of the slot gives (+1 from the 2nd level, +2 from the 4th, +3 from the 6th). A rest ends it."
+  "play.magicWeaponHint": "The spell Magic Weapon is on this weapon: it is magical and has the bonus to attack and damage that the level of the slot gives (+1 from the 2nd level, +2 from the 4th, +3 from the 6th). A rest ends it.",
+  "play.damageResistant": "Resistant (×½)",
+  "play.damageVulnerable": "Vulnerable (×2)"
 }

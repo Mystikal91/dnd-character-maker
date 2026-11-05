@@ -21,7 +21,6 @@ import {
   endRage,
   endRageIfDown,
   enterRage,
-  halveDamage,
   resourceLeft,
   setBardicDie,
   setInspiration,
@@ -232,11 +231,6 @@ export function damageCharacter(amount: number) {
     changePlay(hit);
     if (concentrating) concentrationAlert.value = concentrationDc(amount);
   }
-}
-
-/** Damage the barbarian resists in a rage (bludgeoning, piercing, slashing): half of it, rounded down. */
-export function damageResisted(amount: number) {
-  damageCharacter(halveDamage(amount));
 }
 
 /** Enters a rage, using up one of its uses; it does nothing when none is left. */
