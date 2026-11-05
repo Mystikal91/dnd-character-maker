@@ -1420,5 +1420,6 @@
   "play.nextRound": "Nächste Runde",
   "play.roundPassed": "Runde vorbei",
   "play.roundPassedEnded": "Runde vorbei. Beendet: {names}",
-  "play.conditionEnded": "Beendet"
+  "play.conditionEnded": "Beendet",
+  "play.nextRoundHint": "Gib einer Bedingung verbleibende Runden, um sie zu zählen"
 }

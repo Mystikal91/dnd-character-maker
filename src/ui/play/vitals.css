@@ -306,7 +306,7 @@ output.death-status {
 
 .round-strip li {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.4rem 0.7rem;
@@ -317,6 +317,7 @@ output.death-status {
 }
 
 .round-strip span {
+  margin-inline-start: auto;
   color: var(--muted);
   font-size: 0.9rem;
   white-space: nowrap;

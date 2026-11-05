@@ -4,6 +4,9 @@ import { offerUndo } from "../../app/undo";
 import {
   MAX_ROUNDS,
   advanceRound,
+  endConcentration,
+  endRage,
+  endShillelagh,
   roundsLeft,
   setRounds,
   toggleCondition,
@@ -75,6 +78,19 @@ export function Conditions() {
     (id) => roundsLeft(play, id) !== undefined,
   );
   const timed = Object.keys(play.rounds ?? {}).length > 0;
+  // The button is there whenever something is in force, and greyed while nothing counts rounds: it
+  // does not appear under the finger of someone who is still setting the first number.
+  const showRound = timed || active.length > 0 || running.length > 0;
+  const stop = (id: "concentration" | "rage" | "shillelagh") =>
+    changePlay(
+      (p) =>
+        id === "concentration"
+          ? endConcentration(p)
+          : id === "rage"
+            ? endRage(p)
+            : endShillelagh(p),
+      { undo: false },
+    );
   const nameOf = (id: string): string =>
     id === "concentration"
       ? ui("play.concentrating", { spell: c.name(play.concentration ?? "") })
@@ -102,8 +118,14 @@ export function Conditions() {
           {ui("sheet.immunities")}: {immune.map((id) => c.name(id)).join(", ")}
         </p>
       )}
-      {timed && (
-        <button type="button" class="card-btn card-primary next-round" onClick={passRound}>
+      {showRound && (
+        <button
+          type="button"
+          class="card-btn card-primary next-round"
+          disabled={!timed}
+          title={timed ? undefined : ui("play.nextRoundHint")}
+          onClick={passRound}
+        >
           {ui("play.nextRound")}
         </button>
       )}
@@ -115,6 +137,15 @@ export function Conditions() {
               <li key={id} data-timer={id}>
                 <b>{nameOf(id)}</b>
                 <span>{ui(n === 1 ? "play.roundsLeftOne" : "play.roundsLeft", { n })}</span>
+                <button
+                  type="button"
+                  class="card-btn cond-remove"
+                  aria-label={`${ui("play.conditionRemove")}: ${nameOf(id)}`}
+                  title={ui("play.conditionRemove")}
+                  onClick={() => stop(id)}
+                >
+                  ✕
+                </button>
               </li>
             );
           })}

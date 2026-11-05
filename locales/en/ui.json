@@ -1420,5 +1420,6 @@
   "play.nextRound": "Next round",
   "play.roundPassed": "Round passed",
   "play.roundPassedEnded": "Round passed. Ended: {names}",
-  "play.conditionEnded": "Ended"
+  "play.conditionEnded": "Ended",
+  "play.nextRoundHint": "Set the rounds left of a condition to count them"
 }
