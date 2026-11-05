@@ -2,6 +2,7 @@ import { signal } from "@preact/signals";
 import { addLog, changePlay, concentrationAlert, rollCheck, rollDiceText } from "../../app/play";
 import { character, content, sheet } from "../../app/store";
 import type { DerivedSheet } from "../../engine/derive";
+import { durationRounds } from "../../engine/durations";
 import { doubleDice } from "../../engine/monsterRolls";
 import { castSpell, endConcentration, slotsLeft, startConcentration } from "../../engine/play";
 import { type SpellRollData, spellRolls } from "../../engine/spellRolls";
@@ -249,7 +250,9 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
               onClick={() => {
                 concentrationAlert.value = undefined;
                 changePlay((p) =>
-                  concentrating ? endConcentration(p) : startConcentration(p, id),
+                  concentrating
+                    ? endConcentration(p)
+                    : startConcentration(p, id, durationRounds(c.text(id, "duration"))),
                 );
               }}
             >

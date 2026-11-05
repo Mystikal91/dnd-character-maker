@@ -1,4 +1,5 @@
 import { type PlayState, createPlayState } from "./character";
+import { RAGE_ROUNDS, SHILLELAGH_ROUNDS } from "./durations";
 
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
 
@@ -199,13 +200,19 @@ export function setResourceUsed(play: PlayState, id: string, used: number, max: 
 }
 
 /** Starts concentrating on a spell, which ends any concentration already going. */
-export function startConcentration(play: PlayState, spell: string): PlayState {
-  return { ...play, concentration: spell };
+export function startConcentration(
+  play: PlayState,
+  spell: string,
+  /** The rounds the spell lasts, when they can be counted: they run out and end it. */
+  rounds?: number,
+): PlayState {
+  const next: PlayState = { ...withoutRounds(play, ["concentration"]), concentration: spell };
+  return rounds ? setRounds(next, "concentration", rounds) : next;
 }
 
 export function endConcentration(play: PlayState): PlayState {
   const { concentration: _ended, ...rest } = play;
-  return rest;
+  return withoutRounds(rest, ["concentration"]);
 }
 
 /** The Constitution save DC to keep concentrating after taking damage: 10 or half, if higher. */
@@ -248,13 +255,22 @@ export function longRest(play: PlayState, hitDice: Record<string, number>): Play
     ...createPlayState(),
     inspiration: play.inspiration,
     conditions: play.conditions,
-    ...(play.rounds && { rounds: play.rounds }),
+    // The rounds of the conditions stay with them; a rest ended the rest (a concentration, a rage).
+    ...keptRounds(play),
     hitDiceUsed: Object.fromEntries(Object.entries(hitDiceUsed).filter(([, n]) => n > 0)),
   };
 }
 
 /** The most rounds a condition can be given. */
-export const MAX_ROUNDS = 99;
+export const MAX_ROUNDS = 999;
+
+/** What a long rest keeps of the rounds: those of the conditions that are still in force. */
+function keptRounds(play: PlayState): { rounds?: Record<string, number> } {
+  const kept = Object.fromEntries(
+    Object.entries(play.rounds ?? {}).filter(([id]) => play.conditions.includes(id)),
+  );
+  return Object.keys(kept).length > 0 ? { rounds: kept } : {};
+}
 
 export function toggleCondition(play: PlayState, id: string): PlayState {
   if (!play.conditions.includes(id)) return { ...play, conditions: [...play.conditions, id] };
@@ -293,11 +309,15 @@ export function advanceRound(play: PlayState): { play: PlayState; ended: string[
     else ended.push(id);
   }
   const { rounds: _old, ...rest } = play;
-  const next: PlayState = {
+  let next: PlayState = {
     ...rest,
     conditions: play.conditions.filter((c) => !ended.includes(c)),
     ...(Object.keys(left).length > 0 && { rounds: left }),
   };
+  // What the rounds were counting ends with them: the concentration, the rage, the cantrip.
+  if (ended.includes("concentration")) next = endConcentration(next);
+  if (ended.includes("rage")) next = endRage(next);
+  if (ended.includes("shillelagh")) next = endShillelagh(next);
   return { play: next, ended };
 }
 
@@ -306,26 +326,28 @@ export function enterRage(play: PlayState, resource?: { id: string; max: number 
   const spent = resource
     ? setResourceUsed(play, resource.id, (play.resourcesUsed?.[resource.id] ?? 0) + 1, resource.max)
     : play;
-  return { ...spent, raging: true };
+  // A rage lasts a minute: ten rounds.
+  return setRounds({ ...spent, raging: true }, "rage", RAGE_ROUNDS);
 }
 
 export function endRage(play: PlayState): PlayState {
   if (!play.raging) return play;
   const { raging: _over, ...rest } = play;
-  return rest;
+  return withoutRounds(rest, ["rage"]);
 }
 
 /** Puts the cantrip Shillelagh on a weapon, or takes it off (`undefined`). */
 export function setShillelagh(play: PlayState, itemId: string | undefined): PlayState {
   if (itemId === undefined) return endShillelagh(play);
-  return { ...play, shillelagh: itemId };
+  // The cantrip lasts a minute: ten rounds.
+  return setRounds({ ...play, shillelagh: itemId }, "shillelagh", SHILLELAGH_ROUNDS);
 }
 
 /** The cantrip lasts a minute: it ends at any rest, and when it is taken off. */
 export function endShillelagh(play: PlayState): PlayState {
   if (play.shillelagh === undefined) return play;
   const { shillelagh: _over, ...rest } = play;
-  return rest;
+  return withoutRounds(rest, ["shillelagh"]);
 }
 
 /** Puts the spell Magic Weapon on a weapon with a bonus of 1 to 3, or takes it off (`undefined`). */

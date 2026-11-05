@@ -153,7 +153,7 @@ const CharacterSchema = v.object({
     }),
     conditions: v.array(v.string()),
     rounds: v.optional(
-      v.record(v.string(), v.pipe(v.number(), v.integer(), v.minValue(1), v.maxValue(99))),
+      v.record(v.string(), v.pipe(v.number(), v.integer(), v.minValue(1), v.maxValue(999))),
     ),
     inspiration: v.boolean(),
     bardicDie: v.optional(v.picklist([4, 6, 8, 10, 12])),

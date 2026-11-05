@@ -296,3 +296,28 @@ output.death-status {
   max-width: none;
   margin-bottom: 0.75rem;
 }
+
+/* What runs by rounds besides the conditions (concentration, rage, a cantrip): a name and the rounds left. */
+.round-strip {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0 0 0.75rem;
+}
+
+.round-strip li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.round-strip span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}

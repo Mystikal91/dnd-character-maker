@@ -70,14 +70,26 @@ export function Conditions() {
   const others = conditions.filter((e) => !play.conditions.includes(e.id));
   const toggle = (id: string) => changePlay((p) => toggleCondition(p, id));
   const immune = sheet.value?.conditionImmunities ?? [];
-  const timed = active.some((e) => roundsLeft(play, e.id) !== undefined);
+  // What else runs by rounds: the concentration, the rage and the cantrip Shillelagh.
+  const running = (["concentration", "rage", "shillelagh"] as const).filter(
+    (id) => roundsLeft(play, id) !== undefined,
+  );
+  const timed = Object.keys(play.rounds ?? {}).length > 0;
+  const nameOf = (id: string): string =>
+    id === "concentration"
+      ? ui("play.concentrating", { spell: c.name(play.concentration ?? "") })
+      : id === "rage"
+        ? c.name(`${character.value.ruleset}:feature/rage`)
+        : id === "shillelagh"
+          ? ui("play.shillelagh")
+          : c.name(id);
   // Passing the round takes one off every condition that has a limit, and ends those that run out.
   const passRound = () => {
     const before = structuredClone(character.value.play);
     const { play: after, ended } = advanceRound(before);
     changePlay(() => after, { undo: false });
-    const names = ended.map((id) => c.name(id)).join(", ");
-    for (const id of ended) addLog({ label: c.name(id), detail: ui("play.conditionEnded") });
+    const names = ended.map(nameOf).join(", ");
+    for (const id of ended) addLog({ label: nameOf(id), detail: ui("play.conditionEnded") });
     offerUndo(names ? ui("play.roundPassedEnded", { names }) : ui("play.roundPassed"), () =>
       changePlay(() => before, { undo: false }),
     );
@@ -94,6 +106,19 @@ export function Conditions() {
         <button type="button" class="card-btn card-primary next-round" onClick={passRound}>
           {ui("play.nextRound")}
         </button>
+      )}
+      {running.length > 0 && (
+        <ul class="plain round-strip">
+          {running.map((id) => {
+            const n = roundsLeft(play, id) ?? 0;
+            return (
+              <li key={id} data-timer={id}>
+                <b>{nameOf(id)}</b>
+                <span>{ui(n === 1 ? "play.roundsLeftOne" : "play.roundsLeft", { n })}</span>
+              </li>
+            );
+          })}
+        </ul>
       )}
       {active.length > 0 && (
         <ul class="plain card-list">
