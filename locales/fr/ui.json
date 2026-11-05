@@ -963,7 +963,6 @@
   "credits.legal": "Confidentialité et conditions",
   "credits.privacy": "Politique de confidentialité",
   "credits.terms": "Conditions d’utilisation",
-  "play.noAttacks": "Aucune arme pour attaquer : ajoutes-en une à l’étape Équipement.",
   "play.weaponMelee": "Mêlée",
   "play.weaponRanged": "À distance",
   "play.weaponOffHand": "Main secondaire : sans modificateur aux dégâts",
@@ -1421,5 +1420,7 @@
   "play.roundPassed": "Round passé",
   "play.roundPassedEnded": "Round passé. Terminé : {names}",
   "play.conditionEnded": "Terminé",
-  "play.nextRoundHint": "Indique les rounds restants d’une condition pour les compter"
+  "play.nextRoundHint": "Indique les rounds restants d’une condition pour les compter",
+  "play.unarmed": "Frappe à mains nues",
+  "play.unarmedBonus": "aussi en action bonus"
 }

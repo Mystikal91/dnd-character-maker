@@ -6,6 +6,7 @@ import { OVERRIDE } from "../../engine/overrides";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { ExplainButton } from "../Explain";
+import { attackName } from "../attackName";
 import { useRoll } from "../useRoll";
 import { ExtraDamageList } from "./ExtraDamage";
 import { Panel } from "./parts";
@@ -126,7 +127,7 @@ export function Attacks() {
 
   return (
     <Panel title={ui("sheet.attacks")}>
-      {s.attacks.length === 0 ? (
+      {s.attacks.length === 0 && (
         <>
           <p class="muted">
             {ui(carried.length > 0 ? "sheet.noAttacksCarried" : "sheet.noAttacks")}
@@ -147,30 +148,29 @@ export function Attacks() {
             </button>
           ))}
         </>
-      ) : (
-        <ul class="attack-list">
-          {s.attacks.map((a) => (
-            <li key={a.itemId}>
-              <div class="attack-name">
-                {c.name(a.itemId)}
-                {a.enhancement > 0 && ` +${a.enhancement}`}
-                {a.enchantment && <span class="muted"> · {c.name(a.enchantment)}</span>}
-              </div>
-              <ExplainButton class="attack-bonus" target={{ kind: "attack", itemId: a.itemId }}>
-                <b>{signed(a.attackBonus)}</b>
-              </ExplainButton>
-              <div class="attack-damage">
-                {a.damage && formatDamage(a.damage)}
-                {a.twoHandedDamage && (
-                  <div class="muted">
-                    {formatDamage(a.twoHandedDamage)} ({ui("sheet.twoHanded")})
-                  </div>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
       )}
+      <ul class="attack-list">
+        {[...s.attacks, s.unarmed].map((a) => (
+          <li key={a.itemId}>
+            <div class="attack-name">
+              {attackName(c, a)}
+              {a.enhancement > 0 && ` +${a.enhancement}`}
+              {a.enchantment && <span class="muted"> · {c.name(a.enchantment)}</span>}
+            </div>
+            <ExplainButton class="attack-bonus" target={{ kind: "attack", itemId: a.itemId }}>
+              <b>{signed(a.attackBonus)}</b>
+            </ExplainButton>
+            <div class="attack-damage">
+              {a.damage && formatDamage(a.damage)}
+              {a.twoHandedDamage && (
+                <div class="muted">
+                  {formatDamage(a.twoHandedDamage)} ({ui("sheet.twoHanded")})
+                </div>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
       <ExtraDamageList />
     </Panel>
   );

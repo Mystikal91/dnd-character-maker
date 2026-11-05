@@ -23,6 +23,10 @@ export interface AttackResult {
   shillelagh?: boolean;
   /** The weapon can take the cantrip (a club or quarterstaff, or a copy of one) and the character casts spells. */
   canShillelagh?: boolean;
+  /** The unarmed strike: not a weapon of the inventory, every character has it. */
+  unarmed?: boolean;
+  /** The attack can also be made as a bonus action (a monk's martial arts). */
+  bonusAction?: boolean;
   /** The bonus the spell Magic Weapon gives the weapon now (0 when it is not on it). */
   magicWeapon?: number;
   /** The character has the spell Magic Weapon, so the weapon can take it. */
@@ -72,6 +76,8 @@ export interface EquipmentResult {
   armor: ArmorState;
   armorClass: ArmorClassResult;
   attacks: AttackResult[];
+  /** What the character does with bare hands: always there, whatever the inventory holds. */
+  unarmed: AttackResult;
   load: LoadResult;
 }
 
@@ -91,6 +97,10 @@ interface Context {
   warnings: Warning[];
   /** The ability of each class that casts spells. */
   spellAbilities: Ability[];
+  /** The die of the monk's martial arts (`1d6`), which replaces the 1 of an unarmed strike. */
+  martialArts?: string | undefined;
+  /** The feats the character has, by id. */
+  featIds: string[];
 }
 
 const isProficient = (held: Set<string>, keys: string[]) => keys.some((k) => held.has(k));
@@ -364,12 +374,58 @@ function deriveLoad(ctx: Context): LoadResult {
   return { carried, capacity: ctx.abilities.str.score * 15 };
 }
 
+/** The feat Tavern Brawler, by the name of its id (it is not in the SRD: an imported or homebrew pack has it). */
+const TAVERN_BRAWLER = /\/tavern-brawler(-\d+)?$/;
+/** The monk feature that makes unarmed strikes count as magic. */
+const KI_EMPOWERED = /\/ki-empowered-strikes$/;
+
+/**
+ * The unarmed strike: Strength (a monk takes Dexterity when it is better), the proficiency bonus,
+ * and 1 + the modifier of bludgeoning damage. The monk's martial arts die takes the place of the 1,
+ * and a d4 does for the feat Tavern Brawler. A monk can make it as a bonus action as well.
+ */
+function deriveUnarmed(ctx: Context, armor: ArmorState): AttackResult {
+  const { abilities, proficiencyBonus } = ctx;
+  const monk = ctx.martialArts !== undefined;
+  const ability: Ability = monk && abilities.dex.modifier > abilities.str.modifier ? "dex" : "str";
+  const modifier = abilities[ability].modifier;
+  const brawler = ctx.featIds.some((id) => TAVERN_BRAWLER.test(id));
+  const grip = {
+    armor,
+    levelOf: ctx.levelOf,
+    weapon: { kind: "melee" as const, twoHanded: false, held: 0 },
+  };
+  const toHit = appliedModifiers(ctx.sourced, "attack", grip);
+  const extra = appliedModifiers(ctx.sourced, "damage", grip);
+  const applied = [...toHit, ...extra];
+  return {
+    itemId: "unarmed",
+    unarmed: true,
+    ability,
+    ranged: false,
+    magical: [...ctx.seen].some((id) => KI_EMPOWERED.test(id)),
+    enhancement: 0,
+    attackBonus: modifier + proficiencyBonus + total(toHit),
+    proficient: true,
+    damage: {
+      dice: ctx.martialArts ?? (brawler ? "1d4" : "1"),
+      bonus: modifier + total(extra),
+      type: "bludgeoning",
+    },
+    properties: [],
+    range: { normal: 5 },
+    ...(monk && { bonusAction: true }),
+    ...(applied.length > 0 && { modifiers: applied }),
+  };
+}
+
 export function deriveEquipment(ctx: Context): EquipmentResult {
   const armor = armorStateOf(ctx);
   return {
     armor,
     armorClass: deriveArmorClass(ctx, armor),
     attacks: deriveAttacks(ctx, armor),
+    unarmed: deriveUnarmed(ctx, armor),
     load: deriveLoad(ctx),
   };
 }

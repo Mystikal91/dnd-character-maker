@@ -963,7 +963,6 @@
   "credits.legal": "Privacy and terms",
   "credits.privacy": "Privacy policy",
   "credits.terms": "Terms of service",
-  "play.noAttacks": "No weapon to attack with: add one in the Equipment step.",
   "play.weaponMelee": "Melee",
   "play.weaponRanged": "Ranged",
   "play.weaponOffHand": "Off hand: no modifier on damage",
@@ -1421,5 +1420,7 @@
   "play.roundPassed": "Round passed",
   "play.roundPassedEnded": "Round passed. Ended: {names}",
   "play.conditionEnded": "Ended",
-  "play.nextRoundHint": "Set the rounds left of a condition to count them"
+  "play.nextRoundHint": "Set the rounds left of a condition to count them",
+  "play.unarmed": "Unarmed strike",
+  "play.unarmedBonus": "also as a bonus action"
 }

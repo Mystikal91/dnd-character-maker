@@ -14,6 +14,7 @@ import type { AttackResult } from "../../engine/equipment";
 import { castSpell, setMagicWeapon, setShillelagh, slotsLeft } from "../../engine/play";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
+import { attackName } from "../attackName";
 import { ruleDetail } from "../rules/EntryDetail";
 import { extraAmount, extraName, extraNote } from "../sheet/ExtraDamage";
 import { BowIcon, ChecksIcon, CriticalIcon, SwordIcon } from "./icons";
@@ -49,7 +50,7 @@ function AttackCard({ a }: { a: AttackResult }) {
   const c = content.value;
   const s = sheet.value;
   if (!c || !s) return null;
-  const name = c.name(a.itemId);
+  const name = attackName(c, a);
   // A rage adds to melee weapon attacks.
   const rage = s.extraDamage.find((e) => e.kind === "rage");
   const rageBonus =
@@ -90,6 +91,7 @@ function AttackCard({ a }: { a: AttackResult }) {
   const meta = [
     ui(a.ranged ? "play.weaponRanged" : "play.weaponMelee"),
     ...(a.offHand ? [ui("play.weaponOffHand")] : []),
+    ...(a.bonusAction ? [ui("play.unarmedBonus")] : []),
     ...a.properties.map((p) => c.name(p)),
     range,
   ].filter(Boolean);
@@ -100,17 +102,21 @@ function AttackCard({ a }: { a: AttackResult }) {
         {a.ranged ? <BowIcon /> : <SwordIcon />}
       </span>
       <div class="card-head">
-        <button
-          type="button"
-          class="link card-name"
-          aria-label={`${ui("spells.info")}: ${name}`}
-          onClick={() => {
-            ruleDetail.value = a.itemId;
-          }}
-        >
-          {name}
-          {a.enhancement > 0 && <span class="card-tag">+{a.enhancement}</span>}
-        </button>
+        {a.unarmed ? (
+          <b class="card-name">{name}</b>
+        ) : (
+          <button
+            type="button"
+            class="link card-name"
+            aria-label={`${ui("spells.info")}: ${name}`}
+            onClick={() => {
+              ruleDetail.value = a.itemId;
+            }}
+          >
+            {name}
+            {a.enhancement > 0 && <span class="card-tag">+{a.enhancement}</span>}
+          </button>
+        )}
         <span class="card-meta">{meta.join(" · ")}</span>
       </div>
       <div class="card-actions attack-actions">
@@ -197,10 +203,9 @@ function AttackCard({ a }: { a: AttackResult }) {
 export function AttackCards() {
   const s = sheet.value;
   if (!s) return null;
-  if (s.attacks.length === 0) return <p class="muted">{ui("play.noAttacks")}</p>;
   return (
     <ul class="plain card-list">
-      {s.attacks.map((a) => (
+      {[...s.attacks, s.unarmed].map((a) => (
         <AttackCard key={a.itemId} a={a} />
       ))}
     </ul>

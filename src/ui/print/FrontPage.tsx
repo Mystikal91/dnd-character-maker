@@ -60,7 +60,9 @@ export function FrontPage() {
   const spellRows = collectSpellRows(c, s);
   const spellLevels = [...new Set(spellRows.map((r) => r.level))];
   const insight = s.skills.find((sk) => sk.id === `${ruleset}:skill/insight`);
-  const attackRows = Math.max(BLANK_ATTACK_ROWS, s.attacks.length);
+  // The unarmed strike is the last row, since everyone has it.
+  const allAttacks = [...s.attacks, s.unarmed];
+  const attackRows = Math.max(BLANK_ATTACK_ROWS, allAttacks.length);
   const caster = s.spellcasting;
   const slots = caster?.spellSlots.map((n, i) => ({ level: i + 1, n })).filter((x) => x.n > 0);
   const hitDice = Object.entries(s.hitPoints.hitDice)
@@ -247,10 +249,10 @@ export function FrontPage() {
               </thead>
               <tbody>
                 {Array.from({ length: attackRows }, (_, i) => {
-                  const a = s.attacks[i];
+                  const a = allAttacks[i];
                   return (
                     <tr key={a?.itemId ?? `blank-${i + 1}`}>
-                      <td>{a ? name(a.itemId) : " "}</td>
+                      <td>{a ? (a.unarmed ? ui("play.unarmed") : name(a.itemId)) : " "}</td>
                       <td>{a ? signed(a.attackBonus) : ""}</td>
                       <td>{a?.damage ? formatDamage(a.damage) : ""}</td>
                     </tr>

@@ -963,7 +963,6 @@
   "credits.legal": "Datenschutz und Bedingungen",
   "credits.privacy": "Datenschutzerklärung",
   "credits.terms": "Nutzungsbedingungen",
-  "play.noAttacks": "Keine Waffe zum Angreifen: Füge im Schritt Ausrüstung eine hinzu.",
   "play.weaponMelee": "Nahkampf",
   "play.weaponRanged": "Fernkampf",
   "play.weaponOffHand": "Nebenhand: ohne Modifikator auf den Schaden",
@@ -1421,5 +1420,7 @@
   "play.roundPassed": "Runde vorbei",
   "play.roundPassedEnded": "Runde vorbei. Beendet: {names}",
   "play.conditionEnded": "Beendet",
-  "play.nextRoundHint": "Gib einer Bedingung verbleibende Runden, um sie zu zählen"
+  "play.nextRoundHint": "Gib einer Bedingung verbleibende Runden, um sie zu zählen",
+  "play.unarmed": "Waffenloser Schlag",
+  "play.unarmedBonus": "auch als Bonusaktion"
 }

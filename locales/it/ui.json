@@ -963,7 +963,6 @@
   "credits.legal": "Privacy e termini",
   "credits.privacy": "Informativa sulla privacy",
   "credits.terms": "Termini di servizio",
-  "play.noAttacks": "Nessuna arma per attaccare: aggiungine una nel passo Equipaggiamento.",
   "play.weaponMelee": "Mischia",
   "play.weaponRanged": "A distanza",
   "play.weaponOffHand": "Mano secondaria: senza modificatore ai danni",
@@ -1421,5 +1420,7 @@
   "play.roundPassed": "Round passato",
   "play.roundPassedEnded": "Round passato. Finito: {names}",
   "play.conditionEnded": "Finita",
-  "play.nextRoundHint": "Imposta i round rimasti di una condizione per contarli"
+  "play.nextRoundHint": "Imposta i round rimasti di una condizione per contarli",
+  "play.unarmed": "Colpo senz’armi",
+  "play.unarmedBonus": "anche come azione bonus"
 }

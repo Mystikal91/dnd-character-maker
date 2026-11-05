@@ -26,7 +26,7 @@ function nameOf(target: ExplainTarget): string {
     case "skill":
       return c.name(target.id);
     case "attack":
-      return `${c.name(target.itemId)} · ${ui("sheet.attackBonus")}`;
+      return `${target.itemId === "unarmed" ? ui("play.unarmed") : c.name(target.itemId)} · ${ui("sheet.attackBonus")}`;
   }
 }
 

@@ -463,6 +463,10 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
     levelOf,
     warnings,
     spellAbilities: casters.map((c) => c.ability),
+    martialArts: extraDamage.find((e) => e.kind === "martialArts")?.dice,
+    featIds: [
+      ...new Set([...chosen.filter((e) => e.kind === "feat").map((e) => e.id), ...givenFeats]),
+    ],
   });
 
   // Expertise doubles the proficiency bonus of skills the character is proficient in.
@@ -603,7 +607,8 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
     ...skillMods,
   ])
     note(m);
-  for (const attack of equipment.attacks) for (const m of attack.modifiers ?? []) note(m);
+  for (const attack of [...equipment.attacks, equipment.unarmed])
+    for (const m of attack.modifiers ?? []) note(m);
 
   const valueState = {
     levelOf,

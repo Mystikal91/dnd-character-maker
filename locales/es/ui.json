@@ -963,7 +963,6 @@
   "credits.legal": "Privacidad y términos",
   "credits.privacy": "Política de privacidad",
   "credits.terms": "Términos de servicio",
-  "play.noAttacks": "Ninguna arma para atacar: añade una en el paso Equipo.",
   "play.weaponMelee": "Cuerpo a cuerpo",
   "play.weaponRanged": "A distancia",
   "play.weaponOffHand": "Mano secundaria: sin modificador al daño",
@@ -1421,5 +1420,7 @@
   "play.roundPassed": "Asalto pasado",
   "play.roundPassedEnded": "Asalto pasado. Terminado: {names}",
   "play.conditionEnded": "Terminado",
-  "play.nextRoundHint": "Indica los asaltos restantes de una condición para contarlos"
+  "play.nextRoundHint": "Indica los asaltos restantes de una condición para contarlos",
+  "play.unarmed": "Ataque sin armas",
+  "play.unarmedBonus": "también como acción adicional"
 }
