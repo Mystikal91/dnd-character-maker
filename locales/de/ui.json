@@ -1410,6 +1410,6 @@
   "play.magicWeapon": "Magische Waffe",
   "play.magicWeaponBonus": "Magische Waffe +{n}",
   "play.magicWeaponHint": "Der Zauber Magische Waffe ist auf dieser Waffe: Sie ist magisch und hat den Bonus auf Angriff und Schaden, den der Grad des Platzes gibt (+1 ab Grad 2, +2 ab 4, +3 ab 6). Eine Rast beendet ihn.",
-  "play.damageResistant": "Resistent (×½)",
-  "play.damageVulnerable": "Verwundbar (×2)"
+  "play.damageResistant": "Resistent",
+  "play.damageVulnerable": "Verwundbar"
 }

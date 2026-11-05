@@ -1410,6 +1410,6 @@
   "play.magicWeapon": "Arma magica",
   "play.magicWeaponBonus": "Arma magica +{n}",
   "play.magicWeaponHint": "L’incantesimo Arma magica è su quest’arma: è magica e ha il bonus ad attacco e danni che dà il livello dello slot (+1 dal 2° livello, +2 dal 4°, +3 dal 6°). Un riposo lo termina.",
-  "play.damageResistant": "Resistente (×½)",
-  "play.damageVulnerable": "Vulnerabile (×2)"
+  "play.damageResistant": "Resistente",
+  "play.damageVulnerable": "Vulnerabile"
 }

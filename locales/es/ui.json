@@ -1410,6 +1410,6 @@
   "play.magicWeapon": "Arma mágica",
   "play.magicWeaponBonus": "Arma mágica +{n}",
   "play.magicWeaponHint": "El conjuro Arma mágica está en esta arma: es mágica y tiene el bonificador al ataque y al daño que da el nivel del espacio (+1 desde el nivel 2, +2 desde el 4, +3 desde el 6). Un descanso lo termina.",
-  "play.damageResistant": "Resistente (×½)",
-  "play.damageVulnerable": "Vulnerable (×2)"
+  "play.damageResistant": "Resistente",
+  "play.damageVulnerable": "Vulnerable"
 }

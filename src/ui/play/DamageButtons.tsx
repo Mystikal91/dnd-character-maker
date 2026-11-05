@@ -1,10 +1,11 @@
 import { type DamageKind, adjustDamage } from "../../engine/play";
 import { type UiKey, ui } from "../../i18n/ui";
 
-const KINDS: [DamageKind, UiKey][] = [
-  ["normal", "play.damage"],
-  ["resistant", "play.damageResistant"],
-  ["vulnerable", "play.damageVulnerable"],
+/** The kinds, with the name of the button and the factor written under it. */
+const KINDS: [DamageKind, UiKey, string][] = [
+  ["normal", "play.damage", ""],
+  ["resistant", "play.damageResistant", "(×½)"],
+  ["vulnerable", "play.damageVulnerable", "(×2)"],
 ];
 
 /**
@@ -21,7 +22,7 @@ export function DamageButtons({
 }) {
   return (
     <>
-      {KINDS.map(([kind, label]) => {
+      {KINDS.map(([kind, label, factor]) => {
         const dealt = adjustDamage(amount, kind);
         return (
           <button
@@ -29,11 +30,12 @@ export function DamageButtons({
             key={kind}
             class="danger-btn damage-kind"
             data-kind={kind}
+            aria-label={factor ? `${ui(label)} ${factor}` : ui(label)}
             disabled={amount === 0}
             onClick={() => apply(dealt)}
           >
             {ui(label)}
-            {amount > 0 && kind !== "normal" && <small>{`→ ${dealt}`}</small>}
+            {factor && <small>{amount > 0 ? `${factor} → ${dealt}` : factor}</small>}
           </button>
         );
       })}

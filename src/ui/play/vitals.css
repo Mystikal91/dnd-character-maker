@@ -252,8 +252,10 @@ output.death-status {
   grid-column: span 6;
 }
 
+/* The name of the button on one line and the factor with the result under it, on one line too. */
 .damage-kind small {
   display: block;
   font-weight: 400;
   opacity: 0.85;
+  white-space: nowrap;
 }
