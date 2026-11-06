@@ -6,6 +6,7 @@ import {
   advanceRound,
   endConcentration,
   endRage,
+  endSacredWeapon,
   endShillelagh,
   roundsLeft,
   setRounds,
@@ -74,21 +75,23 @@ export function Conditions() {
   const toggle = (id: string) => changePlay((p) => toggleCondition(p, id));
   const immune = sheet.value?.conditionImmunities ?? [];
   // What else runs by rounds: the concentration, the rage and the cantrip Shillelagh.
-  const running = (["concentration", "rage", "shillelagh"] as const).filter(
+  const running = (["concentration", "rage", "shillelagh", "sacredWeapon"] as const).filter(
     (id) => roundsLeft(play, id) !== undefined,
   );
   const timed = Object.keys(play.rounds ?? {}).length > 0;
   // The button is there whenever something is in force, and greyed while nothing counts rounds: it
   // does not appear under the finger of someone who is still setting the first number.
   const showRound = timed || active.length > 0 || running.length > 0;
-  const stop = (id: "concentration" | "rage" | "shillelagh") =>
+  const stop = (id: "concentration" | "rage" | "shillelagh" | "sacredWeapon") =>
     changePlay(
       (p) =>
         id === "concentration"
           ? endConcentration(p)
           : id === "rage"
             ? endRage(p)
-            : endShillelagh(p),
+            : id === "sacredWeapon"
+              ? endSacredWeapon(p)
+              : endShillelagh(p),
       { undo: false },
     );
   const nameOf = (id: string): string =>
@@ -98,7 +101,9 @@ export function Conditions() {
         ? c.name(`${character.value.ruleset}:feature/rage`)
         : id === "shillelagh"
           ? ui("play.shillelagh")
-          : c.name(id);
+          : id === "sacredWeapon"
+            ? ui("play.sacredWeapon")
+            : c.name(id);
   // Passing the round takes one off every condition that has a limit, and ends those that run out.
   const passRound = () => {
     const before = structuredClone(character.value.play);

@@ -1441,5 +1441,7 @@
   "more.passiveInsight": "Passives Motiv erkennen",
   "more.critRange": "Kritischer Treffer bei {min}–20",
   "extra.note.oncePerTurn": "Einmal in jedem deiner Züge, wenn du eine Kreatur mit einem Waffenangriff triffst.",
-  "play.spellHealSelf": "Du +{n}"
+  "play.spellHealSelf": "Du +{n}",
+  "play.sacredWeapon": "Heilige Waffe",
+  "play.sacredWeaponHint": "Göttliche Macht kanalisieren: Heilige Waffe liegt auf dieser Waffe: Sie addiert deinen Charisma-Modifikator (mindestens +1) auf ihre Angriffswürfe und ist magisch, für 1 Minute. Das Einschalten kostet eine Anwendung von Göttliche Macht kanalisieren; eine Rast beendet sie."
 }

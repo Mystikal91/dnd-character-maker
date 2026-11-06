@@ -1441,5 +1441,7 @@
   "more.passiveInsight": "Perspicacia pasiva",
   "more.critRange": "Crítico con {min}–20",
   "extra.note.oncePerTurn": "Una vez en cada uno de tus turnos, cuando golpeas a una criatura con un ataque con arma.",
-  "play.spellHealSelf": "Tú +{n}"
+  "play.spellHealSelf": "Tú +{n}",
+  "play.sacredWeapon": "Arma sagrada",
+  "play.sacredWeaponHint": "Canalizar divinidad: Arma sagrada está en esta arma: suma tu modificador de Carisma (al menos +1) a sus tiradas de ataque y es mágica, durante 1 minuto. Activarla cuesta un uso de Canalizar divinidad; un descanso la termina."
 }

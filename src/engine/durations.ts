@@ -2,6 +2,8 @@
 export const RAGE_ROUNDS = 10;
 /** The cantrip Shillelagh lasts a minute too. */
 export const SHILLELAGH_ROUNDS = 10;
+/** The Channel Divinity: Sacred Weapon of a paladin lasts a minute too. */
+export const SACRED_WEAPON_ROUNDS = 10;
 
 /** The longest duration that is counted in rounds: ten minutes. Longer is told in hours, which a fight does not count. */
 const LONGEST_ROUNDS = 100;

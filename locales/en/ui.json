@@ -1441,5 +1441,7 @@
   "more.passiveInsight": "Passive Insight",
   "more.critRange": "Critical hit on {min}–20",
   "extra.note.oncePerTurn": "Once on each of your turns, when you hit a creature with a weapon attack.",
-  "play.spellHealSelf": "You +{n}"
+  "play.spellHealSelf": "You +{n}",
+  "play.sacredWeapon": "Sacred Weapon",
+  "play.sacredWeaponHint": "Channel Divinity: Sacred Weapon is on this weapon: it adds your Charisma modifier (at least +1) to its attack rolls and is magical, for 1 minute. Turning it on takes a Channel Divinity use; a rest ends it."
 }

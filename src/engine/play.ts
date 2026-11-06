@@ -1,5 +1,5 @@
 import { type PlayState, createPlayState } from "./character";
-import { RAGE_ROUNDS, SHILLELAGH_ROUNDS } from "./durations";
+import { RAGE_ROUNDS, SACRED_WEAPON_ROUNDS, SHILLELAGH_ROUNDS } from "./durations";
 
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
 
@@ -178,7 +178,7 @@ export function shortRest(
   resources: string[] = [],
 ): PlayState {
   // A rage and the cantrip Shillelagh last a minute: a short rest has ended them.
-  let next = endMagicWeapon(endShillelagh(endRage(play)));
+  let next = endMagicWeapon(endSacredWeapon(endShillelagh(endRage(play))));
   if (recovers === "all") next = { ...next, slotsUsed: next.slotsUsed.map(() => 0), pactUsed: 0 };
   else if (recovers === "pact") next = { ...next, pactUsed: 0 };
   if (resources.length > 0 && next.resourcesUsed) {
@@ -318,6 +318,7 @@ export function advanceRound(play: PlayState): { play: PlayState; ended: string[
   if (ended.includes("concentration")) next = endConcentration(next);
   if (ended.includes("rage")) next = endRage(next);
   if (ended.includes("shillelagh")) next = endShillelagh(next);
+  if (ended.includes("sacredWeapon")) next = endSacredWeapon(next);
   return { play: next, ended };
 }
 
@@ -348,6 +349,20 @@ export function endShillelagh(play: PlayState): PlayState {
   if (play.shillelagh === undefined) return play;
   const { shillelagh: _over, ...rest } = play;
   return withoutRounds(rest, ["shillelagh"]);
+}
+
+/** Puts the Channel Divinity: Sacred Weapon on a weapon, or takes it off (`undefined`). */
+export function setSacredWeapon(play: PlayState, itemId: string | undefined): PlayState {
+  if (itemId === undefined) return endSacredWeapon(play);
+  // It lasts a minute: ten rounds.
+  return setRounds({ ...play, sacredWeapon: itemId }, "sacredWeapon", SACRED_WEAPON_ROUNDS);
+}
+
+/** Sacred Weapon lasts a minute: it ends at any rest, and when it is taken off. */
+export function endSacredWeapon(play: PlayState): PlayState {
+  if (play.sacredWeapon === undefined) return play;
+  const { sacredWeapon: _over, ...rest } = play;
+  return withoutRounds(rest, ["sacredWeapon"]);
 }
 
 /** Puts the spell Magic Weapon on a weapon with a bonus of 1 to 3, or takes it off (`undefined`). */

@@ -158,6 +158,7 @@ const CharacterSchema = v.object({
     inspiration: v.boolean(),
     bardicDie: v.optional(v.picklist([4, 6, 8, 10, 12])),
     shillelagh: v.optional(v.string()),
+    sacredWeapon: v.optional(v.string()),
     magicWeapon: v.optional(
       v.object({
         itemId: v.string(),

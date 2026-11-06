@@ -11,7 +11,13 @@ import {
 import { character, content, sheet } from "../../app/store";
 import { doubleDice } from "../../engine/dice";
 import type { AttackResult } from "../../engine/equipment";
-import { castSpell, setMagicWeapon, setShillelagh, slotsLeft } from "../../engine/play";
+import {
+  castSpell,
+  setMagicWeapon,
+  setSacredWeapon,
+  setShillelagh,
+  slotsLeft,
+} from "../../engine/play";
 import { canSpend, spendPool } from "../../engine/spends";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
@@ -78,6 +84,18 @@ function AttackCard({ a }: { a: AttackResult }) {
     // The damage is due, unless the attack was a fumble.
     damageDue.value = a.damage && !roll.fumble ? a.itemId : undefined;
   };
+  // A paladin's Channel Divinity: Sacred Weapon, turned on from the weapon: it takes the use it costs
+  // (unless it is only moved from another weapon) and ends with a rest or when the rounds run out.
+  const sacredSpend = Object.entries(s.spends).find(([id]) =>
+    id.endsWith("/channel-divinity-sacred-weapon"),
+  )?.[1];
+  const sacredElsewhere = character.value.play.sacredWeapon !== undefined;
+  const sacredOn = a.sacredWeapon !== undefined;
+  const sacredCannot =
+    !sacredOn &&
+    !sacredElsewhere &&
+    sacredSpend !== undefined &&
+    !canSpend(character.value.play, sacredSpend, s.resources);
   // A monk can spend a ki point for two unarmed strikes as a bonus action: Flurry of Blows.
   const flurryId = "srd51:feature/flurry-of-blows";
   const flurry = a.unarmed ? s.spends[flurryId] : undefined;
@@ -196,6 +214,29 @@ function AttackCard({ a }: { a: AttackResult }) {
               </button>
             ))}
           </div>
+        )}
+        {a.canSacredWeapon && (
+          <button
+            type="button"
+            class="card-btn card-effect"
+            aria-pressed={sacredOn}
+            disabled={sacredCannot}
+            title={ui("play.sacredWeaponHint")}
+            onClick={() =>
+              changePlay((p) =>
+                sacredOn
+                  ? setSacredWeapon(p, undefined)
+                  : setSacredWeapon(
+                      sacredSpend && p.sacredWeapon === undefined
+                        ? spendPool(p, sacredSpend, s.resources)
+                        : p,
+                      a.itemId,
+                    ),
+              )
+            }
+          >
+            {ui("play.sacredWeapon")}
+          </button>
         )}
         {a.canShillelagh && (
           <button

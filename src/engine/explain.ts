@@ -192,6 +192,18 @@ export function explain(
         ...(attack.enhancement > 0
           ? [{ part: "enhancement" as const, value: attack.enhancement }]
           : []),
+        // The Channel Divinity: Sacred Weapon, while it is on the weapon.
+        ...(attack.sacredWeapon
+          ? [
+              {
+                part: "feature" as const,
+                value: attack.sacredWeapon,
+                ref:
+                  sheet.features.find((f) => f.endsWith("/channel-divinity-sacred-weapon")) ??
+                  "channel-divinity-sacred-weapon",
+              },
+            ]
+          : []),
         ...mods.map((m) => ({ part: "feature" as const, value: m.value, ref: m.source })),
       ];
       const ability = attack.attackBonus - lines.reduce((sum, l) => sum + l.value, 0);

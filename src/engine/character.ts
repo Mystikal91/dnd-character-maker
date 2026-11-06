@@ -100,7 +100,7 @@ export interface PlayState {
   conditions: string[];
   /**
    * The rounds left of what lasts a number of them, by what it is: the id of a condition, or
-   * `concentration`, `rage` or `shillelagh`. Passing
+   * `concentration`, `rage`, `shillelagh` or `sacredWeapon`. Passing
    * the round takes one off each, and what reaches none ends. What has no entry lasts until it is
    * taken off.
    */
@@ -113,6 +113,11 @@ export interface PlayState {
    * ability and its damage die is a d8, until a rest ends it.
    */
   shillelagh?: string;
+  /**
+   * The paladin's Channel Divinity: Sacred Weapon is on this weapon (its inventory id): the
+   * Charisma modifier (at least +1) is added to its attack rolls and it is magical, for a minute.
+   */
+  sacredWeapon?: string;
   /**
    * The spell Magic Weapon is on this weapon (its inventory id), with the bonus to attack and damage
    * it gives (+1, +2 or +3 by the level of the slot): the weapon is magical until a rest ends it.

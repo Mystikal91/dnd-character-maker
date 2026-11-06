@@ -1441,5 +1441,7 @@
   "more.passiveInsight": "Intuition passive",
   "more.critRange": "Coup critique sur {min}–20",
   "extra.note.oncePerTurn": "Une fois à chacun de vos tours, quand vous touchez une créature avec une attaque d'arme.",
-  "play.spellHealSelf": "Vous +{n}"
+  "play.spellHealSelf": "Vous +{n}",
+  "play.sacredWeapon": "Arme sacrée",
+  "play.sacredWeaponHint": "Conduit divin : Arme sacrée est sur cette arme : elle ajoute votre modificateur de Charisme (au moins +1) à ses jets d'attaque et devient magique, pendant 1 minute. L'activer coûte une utilisation de Conduit divin ; un repos y met fin."
 }

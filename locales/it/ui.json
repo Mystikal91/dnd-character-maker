@@ -1441,5 +1441,7 @@
   "more.passiveInsight": "Intuizione passiva",
   "more.critRange": "Colpo critico con {min}–20",
   "extra.note.oncePerTurn": "Una volta per turno, quando colpisci una creatura con un attacco con arma.",
-  "play.spellHealSelf": "Tu +{n}"
+  "play.spellHealSelf": "Tu +{n}",
+  "play.sacredWeapon": "Arma Sacra",
+  "play.sacredWeaponHint": "Incanalare Divinità: Arma Sacra è su quest'arma: aggiunge il tuo modificatore di Carisma (almeno +1) ai suoi tiri per colpire ed è magica, per 1 minuto. Attivarla costa un uso di Incanalare Divinità; un riposo la termina."
 }

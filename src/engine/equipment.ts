@@ -23,6 +23,10 @@ export interface AttackResult {
   shillelagh?: boolean;
   /** The weapon can take the cantrip (a club or quarterstaff, or a copy of one) and the character casts spells. */
   canShillelagh?: boolean;
+  /** The bonus the Channel Divinity: Sacred Weapon gives the weapon's attack rolls now (the Charisma modifier, at least 1). */
+  sacredWeapon?: number;
+  /** The character has the Channel Divinity: Sacred Weapon, so the weapon can take it. */
+  canSacredWeapon?: boolean;
   /** The unarmed strike: not a weapon of the inventory, every character has it. */
   unarmed?: boolean;
   /** A natural weapon of the species (claws, a bite): there even when a weapon is held. */
@@ -245,6 +249,10 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
   const { character, index, abilities, held, proficiencyBonus } = ctx;
   const attacks: AttackResult[] = [];
   const knowsMagicWeapon = knowsSpell(ctx, MAGIC_WEAPON_SPELL);
+  // The paladin's Sacred Weapon: found by the slug of its feature, as the SRD and Aurora each have their own entry.
+  const knowsSacredWeapon = ctx.sourced.some(({ source }) =>
+    /\/channel-divinity-sacred-weapon$/.test(source),
+  );
   // A weapon in the off hand: it does not add the ability modifier to damage, unless the style
   // Two-Weapon Fighting is known; a negative modifier is still taken off.
   const offHandId = placeEquipment(character.inventory, index).slots.offHand?.itemId;
@@ -292,10 +300,13 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       itemData(entry).enhancement ?? 0,
       enchanted ? (itemData(enchanted).enhancement ?? 0) : 0,
     );
+    const sacred = knowsSacredWeapon && character.play.sacredWeapon === item.itemId;
+    const sacredBonus = sacred ? Math.max(1, abilities.cha.modifier) : 0;
     const canShillelagh = takesShillelagh(item.itemId, index);
     const shillelagh = canShillelagh && character.play.shillelagh === item.itemId;
     const magical =
       shillelagh ||
+      sacred ||
       item.magical === true ||
       itemData(entry).magical === true ||
       enchanted !== undefined ||
@@ -352,12 +363,15 @@ function deriveAttacks(ctx: Context, armor: ArmorState): AttackResult[] {
       ...(canShillelagh && ctx.spellAbilities.length > 0 && { canShillelagh }),
       ...(spellBonus > 0 && { magicWeapon: spellBonus }),
       ...(knowsMagicWeapon && { canMagicWeapon: true }),
+      ...(sacred && { sacredWeapon: sacredBonus }),
+      ...(knowsSacredWeapon && { canSacredWeapon: true }),
       ranged: weapon.kind === "ranged",
       ...(offHand && { offHand }),
       magical,
       enhancement,
       ...(item.enchantment && enchanted && { enchantment: item.enchantment }),
-      attackBonus: modifier + enhancement + (proficient ? proficiencyBonus : 0) + total(toHit),
+      attackBonus:
+        modifier + enhancement + sacredBonus + (proficient ? proficiencyBonus : 0) + total(toHit),
       proficient,
       ...(baseDamage && {
         damage: withBonus(
