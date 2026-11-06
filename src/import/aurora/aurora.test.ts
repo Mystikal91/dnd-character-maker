@@ -2083,3 +2083,53 @@ describe("what a feat asks for", () => {
     expect(byId(result, "imp1:feat/lucky-star").data.requires).toBe("[dex:13]");
   });
 });
+
+describe("the natural weapons of the species of the books", () => {
+  // The names and the text are invented; the ids are those of the books, which the table knows.
+  const claws = wrap(`
+    <element name="Clawfolk" type="Race" source="Test Book" id="ID_T_CLAWFOLK">
+      <description><p>People with claws.</p></description>
+      <rules>
+        <grant type="Racial Trait" id="ID_WOTC_VGTM_RACIAL_TRAIT_TAXBAXI_CATS_CLAWS" />
+        <grant type="Racial Trait" id="ID_T_TRAIT_PLAIN" />
+      </rules>
+    </element>
+    <element name="Sharp Claws" type="Racial Trait" source="Test Book" id="ID_WOTC_VGTM_RACIAL_TRAIT_TAXBAXI_CATS_CLAWS">
+      <description><p>Your claws are natural weapons.</p></description>
+    </element>
+    <element name="Plain Trait" type="Racial Trait" source="Test Book" id="ID_T_TRAIT_PLAIN">
+      <description><p>Nothing to hit with.</p></description>
+    </element>`);
+  const result = parseAurora([claws], options);
+
+  it("gives the trait of the table its unarmed strike, and the others nothing", () => {
+    expect(byId(result, "imp1:trait/sharp-claws").effects).toContainEqual({
+      type: "unarmedStrike",
+      dice: "1d4",
+      damageType: "slashing",
+    });
+    expect(byId(result, "imp1:trait/plain-trait").effects).not.toContainEqual(
+      expect.objectContaining({ type: "unarmedStrike" }),
+    );
+  });
+
+  it("makes the unarmed strike of the species hit with them, even with a weapon in hand", () => {
+    const pack = parsePack({
+      manifest: {
+        id: "imp1",
+        ruleset: "custom",
+        version: "1",
+        license: "Personal",
+        attribution: "x",
+      },
+      entries: result.entries,
+    });
+    const index = indexPacks(...srd51Packs, pack);
+    const c = createCharacter("srd51");
+    c.choices.species = "imp1:species/clawfolk";
+    c.abilityBase = { str: 14, dex: 10, con: 10, int: 10, wis: 10, cha: 10 };
+    c.inventory = [{ itemId: "srd51:item/longsword", quantity: 1, equipped: true }];
+    const sheet = deriveSheet(c, index);
+    expect(sheet.unarmed?.damage).toMatchObject({ dice: "1d4", type: "slashing", bonus: 2 });
+  });
+});

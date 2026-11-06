@@ -6,6 +6,7 @@ import { createCharacter } from "../../engine/character";
 import { deriveSheet, indexPacks } from "../../engine/derive";
 import { SRD51_FILES, loadSrd51Strings, srd51Index, srd51Packs } from "../../test/srd51";
 import { type AuroraResult, parseAurora } from "./index";
+import { NATURAL_WEAPONS } from "./naturalWeapons";
 import { type Outcomes, measure, ruleReport, toFile, worse } from "./ratchet";
 
 /**
@@ -196,6 +197,14 @@ export function corpusSuite(reverse: boolean) {
         expect(armorClass("ID_WOTC_MOTM_RACE_LIZARDFOLK")).toBe(15);
         expect(armorClass("ID_WOTC_MOTM_RACE_TORTLE")).toBe(17);
         expect(armorClass("ID_WOTC_MOTM_RACE_FIRBOLG")).toBe(12);
+      });
+
+      it("finds every natural weapon of the table in the books, with its unarmed strike", () => {
+        const missing = Object.keys(NATURAL_WEAPONS).filter((aid) => {
+          const entry = result.entries.find((e) => e.id === result.aids[aid]);
+          return !entry?.effects.some((e) => e.type === "unarmedStrike");
+        });
+        expect(missing).toEqual([]);
       });
 
       it("points only at entries that exist", () => {

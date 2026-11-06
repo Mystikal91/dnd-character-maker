@@ -1,5 +1,6 @@
 import type { Effect } from "../../data/schema";
 import { emit } from "./emit";
+import { naturalWeaponEffects } from "./naturalWeapons";
 import { type Context, FEATURE_TYPES, type Source, ofType, sharesTag } from "./registry";
 import { mapRules, readRules, requirementsMet, selectMatches, translateRequirement } from "./rules";
 import { clean, description, setters, supportsOf } from "./xml";
@@ -178,7 +179,14 @@ export function importOption(ctx: Context, source: Source): void {
 /** A racial trait, a feat feature or any other named option that has effects of its own. */
 export function importTrait(ctx: Context, source: Source): void {
   const { effects } = baseEffects(ctx, source, "trait");
-  emit(ctx, source, {}, { desc: description(source.el) }, { effects });
+  // The natural weapons of the species of the books are in a table: Aurora has only their words.
+  emit(
+    ctx,
+    source,
+    {},
+    { desc: description(source.el) },
+    { effects: [...effects, ...naturalWeaponEffects(source.aid)] },
+  );
 }
 
 /** `[dex:13]` style requirements: the minimum ability scores a feat asks for. */
