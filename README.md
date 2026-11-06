@@ -46,6 +46,11 @@ and Aurora Legacy that you already own.
   rounds left for conditions, concentration and rage, with a *Next round* button that ends what runs out.
 - The unarmed strike for whoever holds no weapon, and for the monk always: martial arts die,
   Dexterity, Flurry of Blows, and the monk's weapons with the same die.
+- Quick numbers: a strip under the tabs on a wide screen (armor class as a crest, initiative, speed,
+  passive Perception, proficiency, martial and spell save DCs) and, on a phone, a button that opens a
+  window with all of them. Each one can be tapped to see how it adds up.
+- Class features that are played, not only read: Sacred Weapon, the Life domain's healing and
+  Divine Strike, a sorcerer's Flexible Casting (slots from points and back).
 
 **Print and share**
 
