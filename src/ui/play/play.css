@@ -671,7 +671,8 @@ fieldset.segmented {
   justify-content: center;
   gap: 0.2rem;
   min-width: 0;
-  padding: 0;
+  /* The line sits at the top of the box with a baseline; this puts it in the middle, level with the buttons. */
+  padding: 0.44rem 0 0;
   border-color: transparent;
   background: transparent;
 }
