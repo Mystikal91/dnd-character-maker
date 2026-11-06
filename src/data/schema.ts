@@ -198,6 +198,29 @@ const PlainEffectSchema = v.variant("type", [
     damageType: v.optional(v.string()),
     once: v.optional(v.boolean()),
   }),
+  /**
+   * What features do to the healing of spells (only spells that have a healing roll in the data).
+   * `plusSlotLevel`: every healing roll of a spell of 1st level or higher gets this plus the level of
+   * the slot (Disciple of Life: 2). `maxDice`: the dice give their highest number (Supreme Healing).
+   * `selfPlusSlotLevel`: healing someone else also heals the caster this plus the slot level
+   * (Blessed Healer: 2).
+   */
+  v.object({
+    type: v.literal("spellHealing"),
+    plusSlotLevel: v.optional(v.number()),
+    maxDice: v.optional(v.boolean()),
+    selfPlusSlotLevel: v.optional(v.number()),
+  }),
+  /**
+   * Damage a feature adds to attacks, rolled by the card of its own in Play: the dice of the highest
+   * step the class level reaches, of a kind of damage. `note` names the text that says when it applies.
+   */
+  v.object({
+    type: v.literal("extraDamage"),
+    damageType: v.string(),
+    steps: v.array(v.object({ minLevel: v.number(), dice: v.string() })),
+    note: v.picklist(["oncePerTurn"]),
+  }),
   /** A flat bonus to a number of the sheet, with an optional condition. */
   v.object({
     type: v.literal("modifier"),

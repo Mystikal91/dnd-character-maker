@@ -990,7 +990,12 @@
     {
       "id": "srd51:feature/disciple-of-life",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spellHealing",
+          "plusSlotLevel": 2
+        }
+      ],
       "data": {
         "class": "srd51:class/cleric",
         "level": 1,
@@ -1103,7 +1108,12 @@
     {
       "id": "srd51:feature/blessed-healer",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spellHealing",
+          "selfPlusSlotLevel": 2
+        }
+      ],
       "data": {
         "class": "srd51:class/cleric",
         "level": 6,
@@ -1149,7 +1159,23 @@
     {
       "id": "srd51:feature/divine-strike",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "extraDamage",
+          "damageType": "radiant",
+          "steps": [
+            {
+              "minLevel": 8,
+              "dice": "1d8"
+            },
+            {
+              "minLevel": 14,
+              "dice": "2d8"
+            }
+          ],
+          "note": "oncePerTurn"
+        }
+      ],
       "data": {
         "class": "srd51:class/cleric",
         "level": 8,
@@ -1238,7 +1264,12 @@
     {
       "id": "srd51:feature/supreme-healing",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spellHealing",
+          "maxDice": true
+        }
+      ],
       "data": {
         "class": "srd51:class/cleric",
         "level": 17

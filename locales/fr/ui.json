@@ -1439,5 +1439,7 @@
   "more.attacks": "Attaques et sauvegardes",
   "more.passiveInvestigation": "Investigation passive",
   "more.passiveInsight": "Intuition passive",
-  "more.critRange": "Coup critique sur {min}–20"
+  "more.critRange": "Coup critique sur {min}–20",
+  "extra.note.oncePerTurn": "Une fois à chacun de vos tours, quand vous touchez une créature avec une attaque d'arme.",
+  "play.spellHealSelf": "Vous +{n}"
 }

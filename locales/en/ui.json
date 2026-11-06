@@ -1439,5 +1439,7 @@
   "more.attacks": "Attacks and saving throws",
   "more.passiveInvestigation": "Passive Investigation",
   "more.passiveInsight": "Passive Insight",
-  "more.critRange": "Critical hit on {min}–20"
+  "more.critRange": "Critical hit on {min}–20",
+  "extra.note.oncePerTurn": "Once on each of your turns, when you hit a creature with a weapon attack.",
+  "play.spellHealSelf": "You +{n}"
 }

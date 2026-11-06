@@ -88,6 +88,17 @@ forty spells is a menu in the choices.
 modifier of an ability to the damage a spell rolls in Play; `spell`, `school` or `damageType` say
 which spells, and `once` adds it to one roll of the spell instead of every roll.
 
+`{ "type": "spellHealing", "plusSlotLevel": 2 }` changes the healing that spells roll in Play (only
+spells with a healing roll in the data, cast with a slot of 1st level or higher): `plusSlotLevel` adds
+that and the level of the slot to every roll (Disciple of Life), `maxDice` gives the highest number on
+every die (Supreme Healing) and `selfPlusSlotLevel` adds a button that heals the caster that and the
+level of the slot when the healing is for someone else (Blessed Healer).
+
+`{ "type": "extraDamage", "damageType": "radiant", "steps": [{ "minLevel": 8, "dice": "1d8" }], "note":
+"oncePerTurn" }` is damage a feature adds to attacks (Divine Strike): the dice of the highest step the
+level of the class reaches, shown with the extra damage of the classes and rolled by a card of its own in
+Play. `note` picks the sentence that says when it applies (so far only `oncePerTurn`).
+
 `{ "type": "unarmedStrike", "dice": "1d6", "damageType": "piercing" }` is a natural weapon (claws, a
 bite, horns): the unarmed strike rolls that die and that kind of damage in place of its 1 and
 bludgeoning, and is shown even when a weapon is in hand. Without one, the unarmed strike is shown to a

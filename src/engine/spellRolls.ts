@@ -1,3 +1,5 @@
+import { parseDice } from "./dice";
+
 /** What the SRD data of a spell says it rolls (`attackType`, `damage`, `healAtSlotLevel`). */
 /** A bonus a feature adds to the damage of spells: whom it is for is the spell, the school or the damage type. */
 export interface SpellBonus {
@@ -7,6 +9,13 @@ export interface SpellBonus {
   damageType?: string;
   /** Added to one damage roll of the spell (the first it fits), not to every one. */
   once: boolean;
+}
+
+/** What features do to the healing of spells (see the `spellHealing` effect), the sum of all of them. */
+export interface SpellHealing {
+  plusSlotLevel: number;
+  maxDice: boolean;
+  selfPlusSlotLevel: number;
 }
 
 export interface SpellRollData {
@@ -27,6 +36,10 @@ export interface SpellRolls {
   damage: { type: string; dice: string }[];
   /** The dice of the healing, with the spellcasting modifier already in. */
   heal?: string;
+  /** With the highest number on every die (Supreme Healing): the total of the healing. */
+  healFixed?: number;
+  /** What the caster is healed too when the healing is for someone else (Blessed Healer). */
+  selfHeal?: number;
   /** The ability the target saves with. */
   save?: string;
   /** The slot levels a bigger one changes something for: the dice differ from the base level. */
@@ -42,6 +55,14 @@ function stepAt(table: Record<string, string>, level: number): string | undefine
   if (first === undefined) return undefined;
   const key = keys.filter((k) => k <= level).pop() ?? first;
   return table[String(key)];
+}
+
+/** The most a dice expression can give: every die on its highest face. */
+function highest(text: string): number | undefined {
+  const parsed = parseDice(text);
+  return parsed
+    ? parsed.terms.reduce((sum, t) => sum + t.count * t.sides, 0) + parsed.modifier
+    : undefined;
 }
 
 /** `1d8 + MOD` with the modifier worked out, written for the dice roller (`1d8+3`). */
@@ -66,6 +87,8 @@ export function spellRolls(
     /** What features add to the damage, and the id of this spell to tell which of them are for it. */
     bonuses?: SpellBonus[];
     spellId?: string;
+    /** What features do to healing, for a spell of 1st level or higher. */
+    healing?: SpellHealing;
   },
 ): SpellRolls {
   const damage: SpellRolls["damage"] = [];
@@ -99,10 +122,21 @@ export function spellRolls(
   const healTable = data.healAtSlotLevel;
   const healed = healTable && stepAt(healTable, options.slotLevel);
   if (healTable && new Set(Object.values(healTable)).size > 1) scalesBySlot = true;
+  let heal = healed ? withModifier(healed, options.modifier) : undefined;
+  let healFixed: number | undefined;
+  let selfHeal: number | undefined;
+  const h = options.healing;
+  if (heal && h && options.slotLevel >= 1) {
+    if (h.plusSlotLevel > 0) heal = `${heal}+${h.plusSlotLevel + options.slotLevel}`;
+    if (h.maxDice) healFixed = highest(heal);
+    if (h.selfPlusSlotLevel > 0) selfHeal = h.selfPlusSlotLevel + options.slotLevel;
+  }
   return {
     attack: Boolean(data.attackType),
     damage,
-    ...(healed && { heal: withModifier(healed, options.modifier) }),
+    ...(heal && { heal }),
+    ...(healFixed !== undefined && { healFixed }),
+    ...(selfHeal !== undefined && { selfHeal }),
     ...(data.dc && { save: data.dc.dcType.index }),
     scalesBySlot,
   };

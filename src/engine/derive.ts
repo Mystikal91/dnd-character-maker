@@ -24,7 +24,7 @@ import { type OptionNeed, checkNeeds, needsOf } from "./optionNeeds";
 import { OVERRIDE, numberOverride } from "./overrides";
 import { type ClassFact, type ClassResource, type ExtraDamage, classResources } from "./resources";
 import { type FeatureSource, featureSources } from "./sources";
-import type { SpellBonus } from "./spellRolls";
+import type { SpellBonus, SpellHealing } from "./spellRolls";
 import { type SpellLists, deriveSpellLists } from "./spells";
 import { type Spend, deriveSpends } from "./spends";
 import { withSubclassCasting } from "./subclassCasting";
@@ -128,6 +128,8 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   held: string[];
   /** What features add to the damage that spells roll (Agonizing Blast: the Charisma modifier), see `spellRolls`. */
   spellDamage: SpellBonus[];
+  /** What features do to the healing of spells (Disciple of Life, Supreme Healing, Blessed Healer). */
+  spellHealing: SpellHealing;
   /** Feats the character took. */
   feats: string[];
   /** Ability Score Improvements available from class levels and how many are taken. */
@@ -673,7 +675,26 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
     resources,
     hiddenFeatures: [],
     facts,
-    extraDamage,
+    extraDamage: [
+      ...extraDamage,
+      ...sourced.flatMap(({ effect, source }) => {
+        if (effect.type !== "extraDamage") return [];
+        const step = effect.steps
+          .filter((x) => levelOf(source) >= x.minLevel)
+          .sort((a, b) => b.minLevel - a.minLevel)[0];
+        return step
+          ? [
+              {
+                kind: "feature" as const,
+                entry: source,
+                dice: step.dice,
+                damageType: effect.damageType,
+                note: effect.note,
+              },
+            ]
+          : [];
+      }),
+    ],
     spellSlots: pools.slots,
     ...(pools.pact && { pactSlots: pools.pact }),
     choices,
@@ -699,6 +720,17 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
         ),
       ),
     ],
+    spellHealing: sourced.reduce<SpellHealing>(
+      (sum, { effect }) =>
+        effect.type === "spellHealing"
+          ? {
+              plusSlotLevel: sum.plusSlotLevel + (effect.plusSlotLevel ?? 0),
+              maxDice: sum.maxDice || effect.maxDice === true,
+              selfPlusSlotLevel: sum.selfPlusSlotLevel + (effect.selfPlusSlotLevel ?? 0),
+            }
+          : sum,
+      { plusSlotLevel: 0, maxDice: false, selfPlusSlotLevel: 0 },
+    ),
     spellDamage: sourced.flatMap(({ effect }) =>
       effect.type === "spellDamage"
         ? [

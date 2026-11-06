@@ -1,10 +1,23 @@
 import { signal } from "@preact/signals";
-import { addLog, changePlay, concentrationAlert, rollCheck, rollDiceText } from "../../app/play";
+import {
+  addLog,
+  changePlay,
+  concentrationAlert,
+  rollCheck,
+  rollDiceText,
+  vitals,
+} from "../../app/play";
 import { character, content, sheet } from "../../app/store";
 import type { DerivedSheet } from "../../engine/derive";
 import { durationRounds } from "../../engine/durations";
 import { doubleDice } from "../../engine/monsterRolls";
-import { castSpell, endConcentration, slotsLeft, startConcentration } from "../../engine/play";
+import {
+  applyHealing,
+  castSpell,
+  endConcentration,
+  slotsLeft,
+  startConcentration,
+} from "../../engine/play";
 import { type SpellRollData, spellRolls } from "../../engine/spellRolls";
 import { signed, ui } from "../../i18n/ui";
 import { damageLabel } from "../rules/ActionButtons";
@@ -102,6 +115,7 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
     modifier,
     bonuses: s.spellDamage,
     spellId: id,
+    healing: s.spellHealing,
   });
   const choosing = rolls.scalesBySlot && slotLevels.length > 1;
   const castLevel = rolls.scalesBySlot ? slotLevel : level;
@@ -226,11 +240,37 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
               type="button"
               class="card-btn card-roll card-heal"
               onClick={() => {
-                if (rolls.heal) rollDiceText(`${name} - ${ui("play.spellHeal")}`, rolls.heal);
+                const label = `${name} - ${ui("play.spellHeal")}`;
+                // The highest number on every die: nothing to roll, the total goes to the log.
+                if (rolls.healFixed !== undefined)
+                  addLog({ label, detail: rolls.heal ?? "", total: rolls.healFixed });
+                else if (rolls.heal) rollDiceText(label, rolls.heal);
               }}
             >
               <HealIcon />
-              <span>{ui("play.spellHealDice", { dice: rolls.heal })}</span>
+              <span>
+                {ui("play.spellHealDice", { dice: String(rolls.healFixed ?? rolls.heal ?? "") })}
+              </span>
+            </button>
+          )}
+          {rolls.selfHeal !== undefined && (
+            <button
+              type="button"
+              class="card-btn card-roll card-heal"
+              onClick={() => {
+                const v = vitals();
+                const amount = rolls.selfHeal ?? 0;
+                if (!v) return;
+                changePlay((p) => applyHealing(p, v.max, amount));
+                addLog({
+                  label: `${name} - ${ui("play.spellHealSelf", { n: amount })}`,
+                  detail: "",
+                  total: amount,
+                });
+              }}
+            >
+              <HealIcon />
+              <span>{ui("play.spellHealSelf", { n: rolls.selfHeal })}</span>
             </button>
           )}
           {rolls.save && caster && (

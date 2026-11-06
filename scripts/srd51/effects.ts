@@ -291,6 +291,23 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
   "feature/second-story-work": [{ type: "movement", mode: "climb", feet: "walk" }],
   "feature/dragon-wings": [{ type: "movement", mode: "fly", feet: "walk" }],
 
+  // The Life domain: its healing is stronger, heals the cleric too, and at the end takes the best of each die;
+  // its Divine Strike is a die of radiant damage once per turn.
+  "feature/disciple-of-life": [{ type: "spellHealing", plusSlotLevel: 2 }],
+  "feature/blessed-healer": [{ type: "spellHealing", selfPlusSlotLevel: 2 }],
+  "feature/supreme-healing": [{ type: "spellHealing", maxDice: true }],
+  "feature/divine-strike": [
+    {
+      type: "extraDamage",
+      damageType: "radiant",
+      steps: [
+        { minLevel: 8, dice: "1d8" },
+        { minLevel: 14, dice: "2d8" },
+      ],
+      note: "oncePerTurn",
+    },
+  ],
+
   // Fighting styles that change a number. Great Weapon Fighting, Two-Weapon Fighting and
   // Protection depend on dice rerolls, the off hand and reactions, so they stay text.
   "feature/fighter-fighting-style-archery": archery,

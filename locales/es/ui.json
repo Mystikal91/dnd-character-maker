@@ -1439,5 +1439,7 @@
   "more.attacks": "Ataques y salvaciones",
   "more.passiveInvestigation": "Investigación pasiva",
   "more.passiveInsight": "Perspicacia pasiva",
-  "more.critRange": "Crítico con {min}–20"
+  "more.critRange": "Crítico con {min}–20",
+  "extra.note.oncePerTurn": "Una vez en cada uno de tus turnos, cuando golpeas a una criatura con un ataque con arma.",
+  "play.spellHealSelf": "Tú +{n}"
 }

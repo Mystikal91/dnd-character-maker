@@ -17,7 +17,7 @@ import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { attackName } from "../attackName";
 import { ruleDetail } from "../rules/EntryDetail";
-import { extraAmount, extraName, extraNote } from "../sheet/ExtraDamage";
+import { extraAmount, extraKey, extraName, extraNote } from "../sheet/ExtraDamage";
 import { BowIcon, ChecksIcon, CriticalIcon, SwordIcon } from "./icons";
 
 /** The weapon whose attack was just rolled: its damage button asks to be tapped. */
@@ -263,7 +263,9 @@ export function ExtraCards() {
     .map((total, i) => ({ level: i + 1, left: slotsLeft(play, i + 1, total), total }))
     .filter((x) => x.total > 0 && x.level <= 5);
   const chosen = levels.find((x) => x.level === slot)?.level ?? levels[0]?.level ?? 1;
-  const rollable = s.extraDamage.some((e) => e.kind === "sneakAttack" || e.kind === "divineSmite");
+  const rollable = s.extraDamage.some(
+    (e) => e.kind === "sneakAttack" || e.kind === "divineSmite" || e.kind === "feature",
+  );
 
   return (
     <section class="card-group extra-cards">
@@ -285,7 +287,7 @@ export function ExtraCards() {
       </header>
       <ul class="plain card-list">
         {s.extraDamage.map((extra) => (
-          <li class="play-card extra-card" data-extra={extra.kind} key={extra.kind}>
+          <li class="play-card extra-card" data-extra={extra.kind} key={extraKey(extra)}>
             <span class="card-badge" aria-hidden="true">
               <CriticalIcon />
             </span>
@@ -295,7 +297,7 @@ export function ExtraCards() {
                 {extraAmount(extra)} · {extraNote(extra)}
               </span>
             </div>
-            {extra.kind === "sneakAttack" && (
+            {(extra.kind === "sneakAttack" || extra.kind === "feature") && (
               <div class="card-actions">
                 <button
                   type="button"

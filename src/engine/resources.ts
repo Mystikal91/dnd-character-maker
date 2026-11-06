@@ -50,7 +50,9 @@ export type ExtraDamage =
   | { kind: "rage"; bonus: number }
   | { kind: "brutalCritical"; dice: number }
   | { kind: "divineSmite" }
-  | { kind: "martialArts"; dice: string };
+  | { kind: "martialArts"; dice: string }
+  /** Damage a feature adds (Divine Strike): the entry that gives it, the dice now and the kind of damage. */
+  | { kind: "feature"; entry: string; dice: string; damageType: string; note: "oncePerTurn" };
 
 interface Input {
   classId: string;

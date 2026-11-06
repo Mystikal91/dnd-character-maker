@@ -1439,5 +1439,7 @@
   "more.attacks": "Attacchi e tiri salvezza",
   "more.passiveInvestigation": "Indagare passivo",
   "more.passiveInsight": "Intuizione passiva",
-  "more.critRange": "Colpo critico con {min}–20"
+  "more.critRange": "Colpo critico con {min}–20",
+  "extra.note.oncePerTurn": "Una volta per turno, quando colpisci una creatura con un attacco con arma.",
+  "play.spellHealSelf": "Tu +{n}"
 }
