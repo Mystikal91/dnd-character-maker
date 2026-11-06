@@ -7,7 +7,6 @@ import { classesNeedingSubclass } from "../../engine/subclass";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { AbilityScores } from "../AbilityScores";
 import { Choices } from "../Choices";
-import { FromOldVersion } from "../FromOldVersion";
 import { SpellPicker } from "../SpellPicker";
 import { Welcome } from "../Welcome";
 import { ClassStep } from "./ClassStep";
@@ -263,7 +262,6 @@ export function BuildTab() {
   return (
     <>
       <Welcome />
-      <FromOldVersion />
       <SummaryStrip />
       <div class="build">
         <div class="steps">
