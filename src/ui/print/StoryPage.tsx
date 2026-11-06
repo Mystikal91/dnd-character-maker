@@ -5,6 +5,7 @@ import type { Character } from "../../engine/character";
 import { COINS } from "../../engine/coins";
 import { type UiKey, ui } from "../../i18n/ui";
 import { FitBox } from "./FitBox";
+import { RuledArea } from "./RuledArea";
 
 const FIELDS = ["age", "height", "weight", "eyes", "skin", "hair"] as const;
 const SLOTS = [
@@ -49,7 +50,7 @@ function Block({
   return (
     <section class={`p-frame p-block ${className}`.trim()}>
       <h3 class="p-h">{title}</h3>
-      {text.trim() ? <FitBox text={text} /> : <div class="p-ruled-area" />}
+      {text.trim() ? <FitBox text={text} /> : <RuledArea />}
     </section>
   );
 }
@@ -126,11 +127,7 @@ export function StoryPage() {
           <section class="p-frame p-block fill wide">
             <h3 class="p-h">{ui("print.story.background")}</h3>
             {background && <strong>{c.name(background)}</strong>}
-            {backgroundText.trim() ? (
-              <FitBox text={backgroundText} />
-            ) : (
-              <div class="p-ruled-area" />
-            )}
+            {backgroundText.trim() ? <FitBox text={backgroundText} /> : <RuledArea />}
           </section>
           <Block title={ui("print.story.allies")} text={story.allies} className="fill" />
           <Block title={ui("print.story.enemies")} text={story.enemies} className="fill" />
@@ -185,7 +182,7 @@ export function StoryPage() {
               </li>
             ))}
           </ul>
-          <div class="p-ruled-area" />
+          <RuledArea />
         </section>
       </div>
     </section>

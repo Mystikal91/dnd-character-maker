@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from "preact/hooks";
 import { character, content, printSheet } from "../../app/store";
 import type { Content } from "../../content/browser";
 import { classData, subclassData } from "../../data/progression";
@@ -10,6 +11,8 @@ import { movementLines } from "../movementLines";
 import { recoveryLabel, resourceLabel } from "../play/ResourceControl";
 import { extraAmount, extraName } from "../sheet/ExtraDamage";
 import { collectSpellRows } from "../spellRows";
+import { RuledArea } from "./RuledArea";
+import { fitFront } from "./fitFront";
 
 const BLANK_ATTACK_ROWS = 4;
 /** Facts that the attacks panel already says as damage (sneak attack, rage, martial arts). */
@@ -43,6 +46,17 @@ function featureRows(c: Content, cl: ClassLevel): [number, string[]][] {
 
 /** The main sheet: everything needed at the table, laid out like the on-screen sheet. */
 export function FrontPage() {
+  const page = useRef<HTMLElement>(null);
+  // One page tall: when the columns do not fit, the page gets denser until they do (see fitFront).
+  useLayoutEffect(() => {
+    const el = page.current;
+    if (!el) return;
+    const fit = () => fitFront(el);
+    fit();
+    void document.fonts?.ready.then(fit);
+    window.addEventListener("beforeprint", fit);
+    return () => window.removeEventListener("beforeprint", fit);
+  });
   const c = content.value;
   const s = printSheet.value;
   const ch = character.value;
@@ -84,7 +98,7 @@ export function FrontPage() {
       .join(", ");
 
   return (
-    <section class="p-page p-front">
+    <section class="p-page p-front" ref={page}>
       <header class="p-head">
         <div class="p-banner">
           <h1>{ch.name || ui("sheet.unnamed")}</h1>
@@ -125,15 +139,15 @@ export function FrontPage() {
           <div class="p-badges">
             <div class="p-badge">
               <b>{signed(s.proficiencyBonus)}</b>
-              <span>{ui("sheet.proficiencyBonus")}</span>
+              <span>{ui("quick.proficiency")}</span>
             </div>
             <div class="p-badge">
               <b>{s.passivePerception}</b>
-              <span>{ui("sheet.passivePerception")}</span>
+              <span>{ui("quick.perception")}</span>
             </div>
             <div class="p-badge">
               <b>{10 + (insight?.bonus ?? s.abilities.wis.modifier)}</b>
-              <span>{ui("sheet.passiveInsight")}</span>
+              <span>{ui("quick.insight")}</span>
             </div>
             <div class="p-badge">
               <b>{s.martialSaveDc}</b>
@@ -241,7 +255,7 @@ export function FrontPage() {
             )}
           </div>
 
-          <section class="p-frame p-panel">
+          <section class={`p-frame p-panel${caster ? "" : " grow"}`}>
             <h3 class="p-h">{ui("sheet.attacks")}</h3>
             <table class="p-table">
               <thead>
@@ -277,7 +291,7 @@ export function FrontPage() {
           </section>
 
           {caster && (
-            <section class="p-frame p-panel">
+            <section class={`p-frame p-panel${spellRows.length > 0 ? "" : " grow"}`}>
               <h3 class="p-h">{ui("sheet.spellcasting")}</h3>
               <div class="p-stat-row">
                 <div class="p-box">
@@ -293,21 +307,23 @@ export function FrontPage() {
                   <span>{ui("sheet.spellAbility")}</span>
                 </div>
               </div>
-              {slots?.map((x) => (
-                <div class="p-slotrow" key={x.level}>
-                  <span class="lvl">{ui("sheet.slotLevel", { level: x.level })}</span>
-                  <span>
-                    {Array.from({ length: x.n }, (_, i) => (
-                      <span class="p-pip" key={`slot-${x.level}-${i + 1}`} />
-                    ))}
-                  </span>
-                </div>
-              ))}
+              <div class="p-slots">
+                {slots?.map((x) => (
+                  <div class="p-slotrow" key={x.level}>
+                    <span class="lvl">{ui("sheet.slotLevel", { level: x.level })}</span>
+                    <span>
+                      {Array.from({ length: x.n }, (_, i) => (
+                        <span class="p-pip" key={`slot-${x.level}-${i + 1}`} />
+                      ))}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </section>
           )}
 
           {spellRows.length > 0 && (
-            <section class="p-frame p-panel">
+            <section class="p-frame p-panel grow">
               <h3 class="p-h">{ui("sheet.spellList")}</h3>
               {spellLevels.map((level) => (
                 <div class="p-quick-row" key={level}>
@@ -328,11 +344,6 @@ export function FrontPage() {
               ))}
             </section>
           )}
-
-          <section class="p-frame p-panel grow">
-            <h3 class="p-h">{ui("print.notes")}</h3>
-            <div class="p-ruled-area" />
-          </section>
         </div>
 
         <div class="p-col">
@@ -426,9 +437,9 @@ export function FrontPage() {
             </section>
           )}
 
-          <section class="p-frame p-panel grow">
+          <section class="p-frame p-panel grow p-notes">
             <h3 class="p-h">{ui("print.notes")}</h3>
-            <div class="p-ruled-area" />
+            <RuledArea />
           </section>
         </div>
       </div>

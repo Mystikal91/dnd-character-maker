@@ -205,31 +205,31 @@
   background-color: #fff;
   background-image: linear-gradient(
       135deg,
-      transparent var(--stroke),
+      #fff var(--stroke),
       var(--p-ink) var(--stroke),
       var(--p-ink) calc(var(--stroke) + 0.5mm),
-      transparent calc(var(--stroke) + 0.5mm)
+      #fff calc(var(--stroke) + 0.5mm)
     ),
     linear-gradient(
       225deg,
-      transparent var(--stroke),
+      #fff var(--stroke),
       var(--p-ink) var(--stroke),
       var(--p-ink) calc(var(--stroke) + 0.5mm),
-      transparent calc(var(--stroke) + 0.5mm)
+      #fff calc(var(--stroke) + 0.5mm)
     ),
     linear-gradient(
       315deg,
-      transparent var(--stroke),
+      #fff var(--stroke),
       var(--p-ink) var(--stroke),
       var(--p-ink) calc(var(--stroke) + 0.5mm),
-      transparent calc(var(--stroke) + 0.5mm)
+      #fff calc(var(--stroke) + 0.5mm)
     ),
     linear-gradient(
       45deg,
-      transparent var(--stroke),
+      #fff var(--stroke),
       var(--p-ink) var(--stroke),
       var(--p-ink) calc(var(--stroke) + 0.5mm),
-      transparent calc(var(--stroke) + 0.5mm)
+      #fff calc(var(--stroke) + 0.5mm)
     );
   background-size: var(--corner) var(--corner);
   background-position: top left, top right, bottom right, bottom left;
@@ -419,7 +419,8 @@
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   gap: 3mm;
-  min-height: var(--p-page-h);
+  height: var(--p-page-h);
+  break-inside: avoid;
 }
 
 .p-head {
@@ -442,13 +443,15 @@
   grid-template-columns: var(--p-front-cols);
   gap: 3mm;
   align-items: stretch;
+  min-height: 0;
 }
 
 .p-col {
   display: flex;
   flex-direction: column;
-  gap: 2.5mm;
+  gap: 2.2mm;
   min-width: 0;
+  min-height: 0;
 }
 
 .p-badges {
@@ -633,6 +636,22 @@
   padding: 2.2mm 2.8mm 2.5mm;
 }
 
+.p-panel .p-stat-row .p-box {
+  padding: 1mm;
+}
+
+.p-panel .p-stat-row .p-box span {
+  font-size: 5pt;
+  letter-spacing: 0.02em;
+}
+
+/* The slots of two levels on each line. */
+.p-slots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 3mm;
+}
+
 .p-slotrow {
   display: flex;
   align-items: center;
@@ -706,6 +725,12 @@
   flex-direction: column;
 }
 
+/* The notes give way when the column is full. */
+.p-notes {
+  min-height: 0;
+  overflow: hidden;
+}
+
 /* Text the player wrote, kept as typed and sized to fit its frame by FitBox. */
 .p-fit {
   flex: 1 1 0;
@@ -715,17 +740,17 @@
   overflow-wrap: anywhere;
 }
 
-/* Lines to write on, filling whatever space is left. */
+/* Lines to write on, filling whatever space is left: real borders, as many as there are (RuledArea),
+   cut off by the room there is. A repeating gradient prints as thick bars in Firefox. */
 .p-ruled-area {
-  flex: 1 1 auto;
+  flex: 1 1 0;
   min-height: 6mm;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 5.2mm,
-    var(--p-line) 5.2mm,
-    var(--p-line) 5.45mm
-  );
+  overflow: hidden;
+}
+
+.p-ruled-area .p-rule {
+  height: 5.45mm;
+  border-bottom: 0.25mm solid var(--p-line);
 }
 
 .p-quick-row {
@@ -754,6 +779,88 @@
   display: inline-flex;
   gap: 1mm;
   align-items: center;
+}
+
+/* A page that does not fit at the usual size gets denser, level by level (fitFront.ts): tighter
+   frames and rows first, then smaller type, and last the notes go. */
+.p-front[data-density="1"] .p-col {
+  gap: 1.6mm;
+}
+
+.p-front[data-density="1"] .p-panel {
+  padding: 1.6mm 2.2mm 1.8mm;
+}
+
+.p-front[data-density="1"] .p-quick-row {
+  padding: 0.5mm 0;
+}
+
+.p-front[data-density="1"] .p-ability {
+  padding: 1.2mm 2mm;
+}
+
+.p-front[data-density="1"] .p-checks li {
+  min-height: 3.5mm;
+}
+
+.p-front[data-density="1"] .p-level-row,
+.p-front[data-density="1"] .p-names li {
+  padding: 0.4mm 0;
+}
+
+.p-front[data-density="1"] .p-table td {
+  padding: 0.7mm 1.2mm;
+}
+
+.p-front[data-density="1"] .p-h {
+  margin-bottom: 1mm;
+}
+
+.p-front[data-density="2"],
+.p-front[data-density="3"] {
+  font-size: 8pt;
+}
+
+.p-front[data-density="2"] .p-col,
+.p-front[data-density="3"] .p-col {
+  gap: 1.4mm;
+}
+
+.p-front[data-density="2"] .p-panel,
+.p-front[data-density="3"] .p-panel {
+  padding: 1.4mm 2mm 1.5mm;
+}
+
+.p-front[data-density="2"] .p-quick-row,
+.p-front[data-density="3"] .p-quick-row,
+.p-front[data-density="2"] .p-level-row,
+.p-front[data-density="3"] .p-level-row,
+.p-front[data-density="2"] .p-names li,
+.p-front[data-density="3"] .p-names li {
+  padding: 0.3mm 0;
+  font-size: 7.4pt;
+}
+
+.p-front[data-density="2"] .p-ability,
+.p-front[data-density="3"] .p-ability {
+  padding: 1mm 1.8mm;
+}
+
+.p-front[data-density="2"] .p-checks li,
+.p-front[data-density="3"] .p-checks li {
+  min-height: 3.2mm;
+  font-size: 7.6pt;
+}
+
+.p-front[data-density="2"] .p-notes,
+.p-front[data-density="3"] .p-notes {
+  display: none;
+}
+
+.p-front[data-density="3"] .p-quick-row,
+.p-front[data-density="3"] .p-level-row,
+.p-front[data-density="3"] .p-names li {
+  font-size: 6.8pt;
 }
 
 /* ---- Story and equipment page ---- */
@@ -1186,6 +1293,15 @@
   .print-root {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+}
+
+/* A dark colour set must not paint the sheet's margins: Chrome fills the page with the dark canvas of
+   the scheme when background graphics are on, even when the page's own background is white. */
+@media print {
+  :root,
+  :root[data-style] {
+    color-scheme: light !important;
   }
 }
 
