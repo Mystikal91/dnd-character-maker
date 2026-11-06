@@ -1455,5 +1455,11 @@
   "play.flexible.noSlots": "Nessuno slot da spendere.",
   "play.flexible.make": "Crea uno slot",
   "play.flexible.convert": "Trasforma uno slot in punti",
-  "play.flexible.full": "Punti stregoneria al massimo: non c'è nulla da guadagnare."
+  "play.flexible.full": "Punti stregoneria al massimo: non c'è nulla da guadagnare.",
+  "install.invite": "Installa Heroquill su questo dispositivo per aprirla come un’app, anche senza connessione.",
+  "install.ios": "Per installare Heroquill: tocca il pulsante Condividi, poi “Aggiungi alla schermata Home”.",
+  "install.action": "Installa",
+  "install.later": "Più tardi",
+  "install.never": "No, grazie",
+  "install.menu": "Installa l’app"
 }

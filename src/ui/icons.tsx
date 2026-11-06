@@ -66,6 +66,15 @@ export const FlagIcon = () => (
   </Icon>
 );
 
+/** An arrow into a tray: put the app on the device. */
+export const DownloadIcon = () => (
+  <Icon>
+    <path d="M12 4v11" />
+    <path d="M7.5 11.5L12 16l4.500-4.500" />
+    <path d="M5 20h14" />
+  </Icon>
+);
+
 export const InfoIcon = () => (
   <Icon>
     <circle cx="12" cy="12" r="9" />

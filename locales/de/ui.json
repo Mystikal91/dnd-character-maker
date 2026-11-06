@@ -1455,5 +1455,11 @@
   "play.flexible.noSlots": "Kein Zauberplatz zum Ausgeben übrig.",
   "play.flexible.make": "Zauberplatz erschaffen",
   "play.flexible.convert": "Zauberplatz in Punkte umwandeln",
-  "play.flexible.full": "Zauberpunkte voll: nichts zu gewinnen."
+  "play.flexible.full": "Zauberpunkte voll: nichts zu gewinnen.",
+  "install.invite": "Installiere Heroquill auf diesem Gerät, um es wie eine App zu öffnen, auch ohne Verbindung.",
+  "install.ios": "So installierst du Heroquill: Tippe auf Teilen und dann auf „Zum Home-Bildschirm“.",
+  "install.action": "Installieren",
+  "install.later": "Später",
+  "install.never": "Nein, danke",
+  "install.menu": "App installieren"
 }

@@ -1455,5 +1455,11 @@
   "play.flexible.noSlots": "Ningún espacio que gastar.",
   "play.flexible.make": "Crear un espacio",
   "play.flexible.convert": "Convertir un espacio en puntos",
-  "play.flexible.full": "Puntos de hechicería al máximo: nada que ganar."
+  "play.flexible.full": "Puntos de hechicería al máximo: nada que ganar.",
+  "install.invite": "Instala Heroquill en este dispositivo para abrirla como una app, incluso sin conexión.",
+  "install.ios": "Para instalar Heroquill: toca el botón Compartir y luego «Añadir a pantalla de inicio».",
+  "install.action": "Instalar",
+  "install.later": "Más tarde",
+  "install.never": "No, gracias",
+  "install.menu": "Instalar la app"
 }

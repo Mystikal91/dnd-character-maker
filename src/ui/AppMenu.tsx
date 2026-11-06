@@ -1,10 +1,19 @@
 import type { JSX } from "preact";
+import { installApp, installable } from "../app/install";
 import { type View, showView } from "../app/navigation";
 import { startTour } from "../app/tour";
 import { type UiKey, ui } from "../i18n/ui";
 import { Popover } from "./Popover";
 import { ThemeControls } from "./ThemeControls";
-import { BoxIcon, FlagIcon, FlaskIcon, GlobeIcon, HeartIcon, InfoIcon } from "./icons";
+import {
+  BoxIcon,
+  DownloadIcon,
+  FlagIcon,
+  FlaskIcon,
+  GlobeIcon,
+  HeartIcon,
+  InfoIcon,
+} from "./icons";
 
 const PAGES: { view: View; label: UiKey; icon: () => JSX.Element }[] = [
   { view: "about", label: "footer.about", icon: InfoIcon },
@@ -30,6 +39,14 @@ export function AppMenu() {
             </button>
           </li>
         ))}
+        {installable.value && (
+          <li>
+            <button type="button" onClick={() => void installApp()}>
+              <DownloadIcon />
+              <span>{ui("install.menu")}</span>
+            </button>
+          </li>
+        )}
         <li>
           <button type="button" onClick={startTour}>
             <FlagIcon />

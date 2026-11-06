@@ -26,6 +26,7 @@ import { CustomSpellDialog } from "./CustomSpellDialog";
 import { CustomizeItemDialog } from "./CustomizeItemDialog";
 import { ExplainDialog } from "./Explain";
 import { HomebrewPage } from "./HomebrewPage";
+import { InstallNotice } from "./InstallNotice";
 import { ConfirmDialog, UndoNotice } from "./Notices";
 import { PacksNotice } from "./PacksNotice";
 import { PacksPage } from "./PacksPage";
@@ -172,6 +173,7 @@ export function App() {
       <UndoNotice />
       <ConfirmDialog />
       <UpdateNotice />
+      <InstallNotice />
       <SpellDialog />
       <QuickEditDialog />
       <ExplainDialog />

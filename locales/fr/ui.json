@@ -1455,5 +1455,11 @@
   "play.flexible.noSlots": "Aucun emplacement à dépenser.",
   "play.flexible.make": "Créer un emplacement",
   "play.flexible.convert": "Changer un emplacement en points",
-  "play.flexible.full": "Points de sorcellerie au maximum : rien à gagner."
+  "play.flexible.full": "Points de sorcellerie au maximum : rien à gagner.",
+  "install.invite": "Installe Heroquill sur cet appareil pour l’ouvrir comme une appli, même sans connexion.",
+  "install.ios": "Pour installer Heroquill : touche le bouton Partager, puis « Sur l’écran d’accueil ».",
+  "install.action": "Installer",
+  "install.later": "Plus tard",
+  "install.never": "Non, merci",
+  "install.menu": "Installer l’appli"
 }
