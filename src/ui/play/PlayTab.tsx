@@ -31,6 +31,7 @@ import { DiceButton, DiceDrawer } from "./DiceDrawer";
 import { PlayFeatures, shownFeatures } from "./Features";
 import { BardNotes, Inspiration } from "./Inspiration";
 import { PlayInventory } from "./Inventory";
+import { QuickStats } from "./QuickStats";
 import { Rage, RageStrip } from "./Rage";
 import { ClassResources, PlayNotes, Slots } from "./Resources";
 import { Rests } from "./Rests";
@@ -270,6 +271,7 @@ export function PlayTab() {
             </div>
           )}
         </div>
+        <QuickStats />
         <div class="play-topbar">
           {canLevelUp && (
             <button

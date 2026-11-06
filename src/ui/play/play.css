@@ -427,6 +427,31 @@ fieldset.segmented {
   display: none;
 }
 
+/* On a wide screen the numbers one looks for all the time stay under the tabs; a phone has the bar of the head. */
+.play-quick {
+  display: none;
+}
+
+@container play (min-width: 42rem) {
+  .play-quick {
+    position: sticky;
+    top: var(--tabs-height, 2.9rem);
+    z-index: 15;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.75rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .play-quick .ps-stat small {
+    white-space: nowrap;
+  }
+}
+
 @container play (max-width: 41.99rem) {
   .play-head {
     position: sticky;
