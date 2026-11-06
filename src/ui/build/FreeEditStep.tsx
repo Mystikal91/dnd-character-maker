@@ -99,6 +99,11 @@ export function FreeEditStep() {
             overrideKey={OVERRIDE.proficiencyBonus}
             calculatedValue={base.proficiencyBonus}
           />
+          <ForcedNumber
+            label={ui("play.martialDc")}
+            overrideKey={OVERRIDE.martialSaveDc}
+            calculatedValue={base.martialSaveDc}
+          />
         </div>
       </fieldset>
 

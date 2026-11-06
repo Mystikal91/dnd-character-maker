@@ -27,6 +27,10 @@ export function Badges() {
         <b>{10 + (insight?.bonus ?? s.abilities.wis.modifier)}</b>
         <span>{ui("sheet.passiveInsight")}</span>
       </div>
+      <div class="badge" title={ui("play.martialDc")}>
+        <b>{s.martialSaveDc}</b>
+        <span>{ui("quick.martialDc")}</span>
+      </div>
     </div>
   );
 }

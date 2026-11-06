@@ -135,6 +135,10 @@ export function FrontPage() {
               <b>{10 + (insight?.bonus ?? s.abilities.wis.modifier)}</b>
               <span>{ui("sheet.passiveInsight")}</span>
             </div>
+            <div class="p-badge">
+              <b>{s.martialSaveDc}</b>
+              <span>{ui("quick.martialDc")}</span>
+            </div>
           </div>
 
           {ABILITIES.map((a) => (

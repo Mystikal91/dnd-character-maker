@@ -151,7 +151,8 @@ export function explain(
         { part: "ability", value: sheet.abilities[better].modifier, ref: better },
         { part: "proficiency", value: pb },
       ];
-      return { total: sheet.martialSaveDc, forced: false, lines };
+      const forced = typeof character.overrides[OVERRIDE.martialSaveDc] === "number";
+      return { total: sheet.martialSaveDc, forced, lines };
     }
 
     case "save": {

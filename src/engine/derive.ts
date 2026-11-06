@@ -651,7 +651,9 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
   return {
     ...equipment,
     ...checks,
-    martialSaveDc: 8 + proficiencyBonus + Math.max(abilities.str.modifier, abilities.dex.modifier),
+    martialSaveDc:
+      overrideNumber(character, OVERRIDE.martialSaveDc) ??
+      8 + proficiencyBonus + Math.max(abilities.str.modifier, abilities.dex.modifier),
     initiative:
       overrideNumber(character, "initiative") ??
       abilities.dex.modifier + halfBonus(halves, "dex", proficiencyBonus) + total(initiativeMods),

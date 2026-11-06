@@ -14,6 +14,7 @@ export const OVERRIDE = {
   speed: "speed",
   initiative: "initiative",
   proficiencyBonus: "proficiencyBonus",
+  martialSaveDc: "martial.dc",
   spellSaveDc: "spell.dc",
   spellAttack: "spell.attack",
 } as const;

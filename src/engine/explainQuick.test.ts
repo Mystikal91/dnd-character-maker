@@ -61,3 +61,18 @@ describe("the other quick numbers, taken apart", () => {
     expect(explained(make("fighter", 1), { kind: "spellDc" }).result).toBeUndefined();
   });
 });
+
+describe("the martial save DC in free edit", () => {
+  it("takes the number the person forces, and the explanation says it is forced", () => {
+    const c = make("fighter", 5, { str: 16, dex: 12 });
+    const calculated = deriveSheet(c, srd51Index).martialSaveDc;
+    expect(calculated).toBe(8 + 3 + 3);
+    c.overrides["martial.dc"] = 18;
+    const { sheet, result } = explained(c, { kind: "martialDc" });
+    expect(sheet.martialSaveDc).toBe(18);
+    expect(result?.forced).toBe(true);
+    expect(result?.total).toBe(18);
+    // The lines still show how the book works it out.
+    expect(sum(result?.lines ?? [])).toBe(calculated);
+  });
+});
