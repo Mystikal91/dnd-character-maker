@@ -53,7 +53,8 @@ export const TEXTS = {
     "faq.q2": "Where do my characters go?",
     "faq.a2": "On your own device. To move or save them you can use a file or your Google Drive.",
     "faq.q3": "Does it work without internet?",
-    "faq.a3": "Yes, once it has been opened. You can also install it on your phone like an app.",
+    "faq.a3":
+      "Yes, once it has been opened. You can also install it on your phone or computer like an app: Heroquill offers it after a few seconds (or choose “Install the app” in the ☰ menu), and on an iPhone or iPad use Share, then “Add to Home Screen”.",
     "faq.q4": "Is it an official D&D product?",
     "faq.a4":
       "No. It uses the SRD 5.1, under a free licence, and is not affiliated with Wizards of the Coast.",
@@ -143,7 +144,8 @@ export const TEXTS = {
     "faq.a2":
       "Sul tuo dispositivo. Per spostarli o salvarli puoi usare un file o il tuo Google Drive.",
     "faq.q3": "Funziona senza internet?",
-    "faq.a3": "Sì, dopo il primo accesso. Si può anche installare sul telefono come un’app.",
+    "faq.a3":
+      "Sì, dopo il primo accesso. Si può anche installare su telefono o computer come un’app: Heroquill lo propone dopo qualche secondo (o scegli “Installa l’app” nel menu ☰), e su iPhone e iPad usa Condividi, poi “Aggiungi alla schermata Home”.",
     "faq.q4": "È un prodotto ufficiale di D&D?",
     "faq.a4": "No. Usa l’SRD 5.1, con licenza libera, e non è affiliato a Wizards of the Coast.",
     "faq.q5": "Funziona con i contenuti di Aurora?",
@@ -232,7 +234,8 @@ export const TEXTS = {
     "faq.a2":
       "Sur ton appareil. Pour les déplacer ou les sauvegarder, tu peux utiliser un fichier ou ton Google Drive.",
     "faq.q3": "Ça marche sans internet ?",
-    "faq.a3": "Oui, une fois ouvert. On peut aussi l’installer sur le téléphone comme une app.",
+    "faq.a3":
+      "Oui, une fois ouvert. On peut aussi l’installer sur le téléphone ou l’ordinateur comme une app : Heroquill le propose après quelques secondes (ou choisis « Installer l’appli » dans le menu ☰), et sur iPhone et iPad utilise Partager, puis « Sur l’écran d’accueil ».",
     "faq.q4": "C’est un produit officiel de D&D ?",
     "faq.a4":
       "Non. Il utilise le SRD 5.1, sous licence libre, et n’est pas affilié à Wizards of the Coast.",
@@ -322,7 +325,7 @@ export const TEXTS = {
       "Auf dein eigenes Gerät. Zum Verschieben oder Sichern kannst du eine Datei oder dein Google Drive nutzen.",
     "faq.q3": "Funktioniert es ohne Internet?",
     "faq.a3":
-      "Ja, sobald es einmal geöffnet wurde. Du kannst es auch wie eine App auf dem Handy installieren.",
+      "Ja, sobald es einmal geöffnet wurde. Du kannst es auch wie eine App auf Handy oder Computer installieren: Heroquill bietet es nach ein paar Sekunden an (oder wähle „App installieren“ im ☰-Menü), und auf iPhone und iPad tippst du auf Teilen und dann auf „Zum Home-Bildschirm“.",
     "faq.q4": "Ist es ein offizielles D&D-Produkt?",
     "faq.a4":
       "Nein. Es nutzt das SRD 5.1 unter freier Lizenz und ist nicht mit Wizards of the Coast verbunden.",
@@ -411,7 +414,8 @@ export const TEXTS = {
     "faq.a2":
       "A tu propio dispositivo. Para moverlos o guardarlos puedes usar un archivo o tu Google Drive.",
     "faq.q3": "¿Funciona sin internet?",
-    "faq.a3": "Sí, una vez abierta. También puedes instalarla en el teléfono como una app.",
+    "faq.a3":
+      "Sí, una vez abierta. También puedes instalarla en el teléfono o el ordenador como una app: Heroquill la propone tras unos segundos (o elige «Instalar la app» en el menú ☰), y en iPhone e iPad usa Compartir y luego «Añadir a pantalla de inicio».",
     "faq.q4": "¿Es un producto oficial de D&D?",
     "faq.a4": "No. Usa el SRD 5.1, con licencia libre, y no está afiliado a Wizards of the Coast.",
     "faq.q5": "¿Funciona con el contenido de Aurora?",

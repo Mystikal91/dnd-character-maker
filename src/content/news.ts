@@ -1234,11 +1234,11 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "features",
     text: {
-      en: "Features that depend on dice, reactions or spell damage (Great Weapon Fighting, Two-Weapon Fighting, Agonizing Blast, Divine Smite) are still only text: use Free edit for their effects.",
-      it: "I privilegi che dipendono da dadi, reazioni o danni degli incantesimi (Combattere con armi possenti, Combattere con due armi, Deflagrazione agonizzante, Punizione divina) per ora sono solo testo: usa la Modifica libera per i loro effetti.",
-      fr: "Les aptitudes qui dépendent des dés, des réactions ou des dégâts de sorts (Armes à deux mains, Combat à deux armes, Décharge déchirante, Châtiment divin) ne sont encore que du texte : utilise l'édition libre pour leurs effets.",
-      de: "Merkmale, die von Würfeln, Reaktionen oder Zauberschaden abhängen (Kampf mit großen Waffen, Zwei-Waffen-Kampf, Qualvoller Strahl, Göttliches Niederstrecken), sind vorerst nur Text: Nutze für ihre Wirkung die freie Bearbeitung.",
-      es: "Los rasgos que dependen de dados, reacciones o daño de conjuros (Combate con armas a dos manos, Combate con dos armas, Descarga agónica, Castigo divino) por ahora son solo texto: usa la edición libre para sus efectos.",
+      en: "Features that depend on dice rerolls, advantage or reactions (Great Weapon Fighting, Danger Sense, Reckless Attack, Uncanny Dodge, Deflect Missiles) are still only text: use Free edit for their effects.",
+      it: "I privilegi che dipendono da ritiri dei dadi, vantaggio o reazioni (Combattere con Armi Possenti, Percezione del Pericolo, Attacco Irruento, Schivata Prodigiosa, Deviare Proiettili) per ora sono solo testo: usa la Modifica libera per i loro effetti.",
+      fr: "Les aptitudes qui dépendent de relances de dés, de l’avantage ou de réactions (Armes à deux mains, Sens du danger, Témérité, Esquive instinctive, Parade de projectiles) ne sont encore que du texte : utilise l'édition libre pour leurs effets.",
+      de: "Merkmale, die von neu geworfenen Würfeln, Vorteil oder Reaktionen abhängen (Kampf mit großen Waffen, Gefahrengespür, Rücksichtsloser Angriff, Unglaubliches Ausweichen, Geschosse abwehren), sind vorerst nur Text: Nutze für ihre Wirkung die freie Bearbeitung.",
+      es: "Los rasgos que dependen de repetir dados, de la ventaja o de reacciones (Combate con armas a dos manos, Sentir el Peligro, Ataque Temerario, Esquiva Asombrosa, Desviar Proyectiles) por ahora son solo texto: usa la edición libre para sus efectos.",
     },
   },
   {
