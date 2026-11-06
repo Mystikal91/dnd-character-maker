@@ -384,6 +384,25 @@
   margin-bottom: 0.75rem;
 }
 
+/* The classes the character does not have: folded behind a button, then a grid of names. */
+.levelup-new {
+  margin-top: 0.4rem;
+}
+
+.levelup-new-toggle {
+  min-height: 2.5rem;
+}
+
+.levelup-new-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0.1rem 0.75rem;
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
 .radio-row {
   display: flex;
   flex-wrap: wrap;

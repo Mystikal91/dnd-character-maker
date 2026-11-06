@@ -131,6 +131,8 @@ function Choose({ c }: { c: Content }) {
   const [classId, setClassId] = useState(options[0]?.classId ?? "");
   const [rolled, setRolled] = useState<number | undefined>();
   const [mode, setMode] = useState<"average" | "roll">("average");
+  // The classes the character does not have yet stay folded behind a button until wanted.
+  const [showNew, setShowNew] = useState(false);
 
   if (!s || options.length === 0) {
     return (
@@ -155,6 +157,38 @@ function Choose({ c }: { c: Content }) {
     mode === "roll" && rolled !== undefined ? { type: "roll", value: rolled } : { type: "average" };
   const summary = previewLevelUp(ch, selected.classId, hp, c.index);
   const needsRoll = mode === "roll" && rolled === undefined;
+  const mine = options.filter((o) => !o.isNew);
+  const others = options.filter((o) => o.isNew);
+  // A class that is picked is never hidden.
+  const openNew = showNew || selected.isNew;
+
+  const radio = (o: (typeof options)[number]) => (
+    <label key={o.classId} class="radio-row">
+      <input
+        type="radio"
+        name="levelup-class"
+        checked={o.classId === selected.classId}
+        onChange={() => {
+          setClassId(o.classId);
+          setRolled(undefined);
+        }}
+      />
+      <span>{o.isNew ? c.name(o.classId) : optionLabel(o, c)}</span>
+      {o.unmet.length > 0 && (
+        <small class="note">
+          {o.unmet
+            .map((u) =>
+              ui("levelUp.needs", {
+                class: c.name(u.classId),
+                ability: c.text(`${ch.ruleset}:ability/${u.ability}`, "abbreviation") ?? u.ability,
+                minimum: u.minimum,
+              }),
+            )
+            .join(" · ")}
+        </small>
+      )}
+    </label>
+  );
 
   const apply = () => {
     const next = applyLevelUp(ch, selected.classId, hp, c.index);
@@ -170,34 +204,21 @@ function Choose({ c }: { c: Content }) {
       <p class="muted">{ui("levelUp.intro", { level: s.level })}</p>
       <fieldset class="levelup-options">
         <legend>{ui("form.class")}</legend>
-        {options.map((o) => (
-          <label key={o.classId} class="radio-row">
-            <input
-              type="radio"
-              name="levelup-class"
-              checked={o.classId === selected.classId}
-              onChange={() => {
-                setClassId(o.classId);
-                setRolled(undefined);
-              }}
-            />
-            <span>{optionLabel(o, c)}</span>
-            {o.unmet.length > 0 && (
-              <small class="note">
-                {o.unmet
-                  .map((u) =>
-                    ui("levelUp.needs", {
-                      class: c.name(u.classId),
-                      ability:
-                        c.text(`${ch.ruleset}:ability/${u.ability}`, "abbreviation") ?? u.ability,
-                      minimum: u.minimum,
-                    }),
-                  )
-                  .join(" · ")}
-              </small>
-            )}
-          </label>
-        ))}
+        {mine.map(radio)}
+        {others.length > 0 && (
+          <div class="levelup-new">
+            <button
+              type="button"
+              class="secondary levelup-new-toggle"
+              aria-expanded={openNew}
+              disabled={selected.isNew}
+              onClick={() => setShowNew(!showNew)}
+            >
+              <span aria-hidden="true">{openNew ? "−" : "+"}</span> {ui("levelUp.addClass")}
+            </button>
+            {openNew && <div class="levelup-new-list">{others.map(radio)}</div>}
+          </div>
+        )}
       </fieldset>
 
       <fieldset class="levelup-options">

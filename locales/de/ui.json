@@ -833,6 +833,7 @@
   "levelUp.close": "Fertig",
   "levelUp.existing": "{class}: Stufe {from} → {to}",
   "levelUp.newClass": "{class} (neue Klasse, Stufe 1)",
+  "levelUp.addClass": "Neue Klasse hinzufügen",
   "levelUp.needs": "{class} verlangt {ability} {minimum}",
   "levelUp.hp": "Trefferpunkte",
   "levelUp.hpAverage": "Durchschnitt nehmen: +{value}",

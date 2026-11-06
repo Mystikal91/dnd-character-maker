@@ -833,6 +833,7 @@
   "levelUp.close": "Done",
   "levelUp.existing": "{class}: level {from} → {to}",
   "levelUp.newClass": "{class} (a new class, level 1)",
+  "levelUp.addClass": "Add a new class",
   "levelUp.needs": "{class} needs {ability} {minimum}",
   "levelUp.hp": "Hit points",
   "levelUp.hpAverage": "Take the average: +{value}",
