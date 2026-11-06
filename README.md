@@ -31,7 +31,11 @@ and Aurora Legacy that you already own.
   the character has it.
 - **Level up**, from the Create or Play tabs: choose the class and the hit points, see exactly what
   changes, then jump to whatever is left to decide (subclass, ability scores, spells, choices).
-  With a small celebration.
+  With a small celebration. The classes you do not have yet wait behind an *Add a new class* button,
+  and only the ones whose minimum scores you meet are offered.
+- **Install it** like an app: a discreet strip offers it after a few seconds (Install, Later for a
+  week, No thanks to stop), the menu has an *Install the app* entry, and on an iPhone or iPad it shows
+  the steps of Safari.
 
 **Play**
 

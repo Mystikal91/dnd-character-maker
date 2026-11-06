@@ -18,6 +18,26 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.26.0 beta",
+    date: "2026-11-06",
+    notes: [
+      {
+        en: "Install Heroquill like an app: after a few seconds of use a strip at the bottom offers to install it (Install, Later for a week, or No, thanks to stop asking). The ☰ menu has an “Install the app” entry too, for whoever wants it later. On an iPhone or iPad the strip shows the steps of Safari (Share, then “Add to Home Screen”).",
+        it: "Installa Heroquill come un’app: dopo qualche secondo d’uso una striscia in basso propone di installarla (Installa, Più tardi per una settimana, oppure No, grazie per non chiederlo più). Anche il menu ☰ ha la voce “Installa l’app”, per chi la vuole dopo. Su iPhone e iPad la striscia mostra i passi di Safari (Condividi, poi “Aggiungi alla schermata Home”).",
+        fr: "Installe Heroquill comme une appli : après quelques secondes d’utilisation, une bande en bas propose de l’installer (Installer, Plus tard pour une semaine, ou Non, merci pour ne plus demander). Le menu ☰ a aussi une entrée « Installer l’appli », pour qui la veut plus tard. Sur iPhone et iPad, la bande montre les étapes de Safari (Partager, puis « Sur l’écran d’accueil »).",
+        de: "Installiere Heroquill wie eine App: Nach ein paar Sekunden Benutzung bietet eine Leiste unten die Installation an (Installieren, Später für eine Woche oder Nein, danke, um nicht mehr zu fragen). Auch das ☰-Menü hat den Eintrag „App installieren“, für alle, die es später möchten. Auf iPhone und iPad zeigt die Leiste die Schritte von Safari (Teilen, dann „Zum Home-Bildschirm“).",
+        es: "Instala Heroquill como una app: tras unos segundos de uso, una franja abajo propone instalarla (Instalar, Más tarde para una semana, o No, gracias para dejar de preguntar). El menú ☰ también tiene la entrada «Instalar la app», para quien la quiera después. En iPhone y iPad la franja muestra los pasos de Safari (Compartir, luego «Añadir a pantalla de inicio»).",
+      },
+      {
+        en: "Level up is tidier: the classes you do not have yet wait behind an “Add a new class” button, and only the ones whose minimum scores you meet are offered.",
+        it: "Salire di livello è più ordinato: le classi che non hai ancora stanno dietro un pulsante “Aggiungi una nuova classe”, e vengono proposte solo quelle di cui hai i punteggi minimi.",
+        fr: "Monter de niveau est plus net : les classes que tu n’as pas encore attendent derrière un bouton « Ajouter une nouvelle classe », et seules celles dont tu as les scores minimums sont proposées.",
+        de: "Der Stufenaufstieg ist aufgeräumter: Die Klassen, die du noch nicht hast, warten hinter einem Knopf „Neue Klasse hinzufügen“, und es werden nur die angeboten, für die du die Mindestwerte erreichst.",
+        es: "Subir de nivel es más ordenado: las clases que aún no tienes esperan tras un botón «Añadir una nueva clase», y solo se ofrecen aquellas cuyas puntuaciones mínimas cumples.",
+      },
+    ],
+  },
+  {
     version: "1.25.0 beta",
     date: "2026-11-06",
     notes: [
