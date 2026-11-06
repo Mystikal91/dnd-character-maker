@@ -49,7 +49,9 @@ and Aurora Legacy that you already own.
 - Damage with *Resistant (x1/2)* and *Vulnerable (x2)* buttons, for the character and the companions;
   rounds left for conditions, concentration and rage, with a *Next round* button that ends what runs out.
 - The unarmed strike for whoever holds no weapon, and for the monk always: martial arts die,
-  Dexterity, Flurry of Blows, and the monk's weapons with the same die.
+  Dexterity, Flurry of Blows, and the monk's weapons with the same die. The claws, bite, horns,
+  hooves and talons of the species of the official books (Tabaxi, Tortle, Lizardfolk, Minotaur,
+  Centaur, Satyr, Aarakocra, Leonin) give it their own die and damage, even with a weapon in hand.
 - Quick numbers: a strip under the tabs on a wide screen (armor class as a crest, initiative, speed,
   passive Perception, proficiency, martial and spell save DCs) and, on a phone, a button that opens a
   window with all of them. Each one can be tapped to see how it adds up.

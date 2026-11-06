@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.26.2 beta",
+    date: "2026-11-06",
+    notes: [
+      {
+        en: "The natural weapons of the species of the official books now count: the claws of the Tabaxi and the Tortle, the bite of the Lizardfolk, the horns of the Minotaur, the hooves of the Centaur, the Satyr’s ram, the Aarakocra’s talons and the Leonin’s claws give the unarmed strike its own die and kind of damage (1d4 or 1d6, as each book prints it), and it is there even with a weapon in hand. Packs imported from Aurora ask to be updated to get it.",
+        it: "Le armi naturali delle specie dei libri ufficiali ora contano: gli artigli di Tabaxi e Tortle, il morso del Lizardfolk, le corna del Minotauro, gli zoccoli del Centauro, la testata del Satiro, gli artigli dell’Aarakocra e dei Leonin danno al colpo senz’armi il suo dado e il suo tipo di danno (1d4 o 1d6, come li riporta ogni libro), e c’è anche con un’arma in mano. I pacchetti importati da Aurora chiedono di essere aggiornati per averlo.",
+        fr: "Les armes naturelles des espèces des livres officiels comptent maintenant : les griffes du Tabaxi et du Tortle, la morsure du Lézardien, les cornes du Minotaure, les sabots du Centaure, le coup de tête du Satyre, les serres de l’Aarakocra et les griffes du Léonin donnent à la frappe à mains nues son propre dé et son type de dégâts (1d4 ou 1d6, comme chaque livre l’imprime), et elle est là même avec une arme en main. Les packs importés depuis Aurora demandent à être mis à jour pour l’avoir.",
+        de: "Die natürlichen Waffen der Völker der offiziellen Bücher zählen jetzt: die Krallen von Tabaxi und Tortle, der Biss des Echsenvolks, die Hörner des Minotauren, die Hufe des Zentauren, der Stoß des Satyrs, die Klauen des Aarakocra und die Krallen des Leonin geben dem waffenlosen Schlag ihren eigenen Würfel und ihre Schadensart (1W4 oder 1W6, wie jedes Buch es druckt), und er ist auch mit einer Waffe in der Hand da. Aus Aurora importierte Pakete fragen nach einem Update, um ihn zu bekommen.",
+        es: "Las armas naturales de las especies de los libros oficiales ahora cuentan: las garras del Tabaxi y del Tortle, la mordedura del Lagarto, los cuernos del Minotauro, los cascos del Centauro, el topetazo del Sátiro, las garras del Aarakocra y las del Leonin dan al ataque sin armas su propio dado y su tipo de daño (1d4 o 1d6, como lo imprime cada libro), y está ahí incluso con un arma en la mano. Los paquetes importados de Aurora piden actualizarse para tenerlo.",
+      },
+    ],
+  },
+  {
     version: "1.26.1 beta",
     date: "2026-11-06",
     notes: [
