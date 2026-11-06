@@ -1431,5 +1431,13 @@
   "quick.proficiency": "Comp.",
   "quick.martialDc": "CD marz.",
   "quick.spellDc": "CD inc.",
-  "quick.spellAttack": "Att. inc."
+  "quick.spellAttack": "Att. inc.",
+  "more.open": "Altri numeri",
+  "more.title": "Numeri a colpo d'occhio",
+  "more.defense": "Difesa e movimento",
+  "more.senses": "Sensi",
+  "more.attacks": "Attacchi e tiri salvezza",
+  "more.passiveInvestigation": "Indagare passivo",
+  "more.passiveInsight": "Intuizione passiva",
+  "more.critRange": "Colpo critico con {min}–20"
 }

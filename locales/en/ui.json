@@ -1431,5 +1431,13 @@
   "quick.proficiency": "Prof.",
   "quick.martialDc": "Martial DC",
   "quick.spellDc": "Spell DC",
-  "quick.spellAttack": "Spell atk."
+  "quick.spellAttack": "Spell atk.",
+  "more.open": "More numbers",
+  "more.title": "Numbers at a glance",
+  "more.defense": "Defense and movement",
+  "more.senses": "Senses",
+  "more.attacks": "Attacks and saving throws",
+  "more.passiveInvestigation": "Passive Investigation",
+  "more.passiveInsight": "Passive Insight",
+  "more.critRange": "Critical hit on {min}–20"
 }

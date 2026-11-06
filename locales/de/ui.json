@@ -1431,5 +1431,13 @@
   "quick.proficiency": "Übung",
   "quick.martialDc": "Kampf-SG",
   "quick.spellDc": "Zauber-SG",
-  "quick.spellAttack": "Zauberang."
+  "quick.spellAttack": "Zauberang.",
+  "more.open": "Weitere Werte",
+  "more.title": "Zahlen auf einen Blick",
+  "more.defense": "Verteidigung und Bewegung",
+  "more.senses": "Sinne",
+  "more.attacks": "Angriffe und Rettungswürfe",
+  "more.passiveInvestigation": "Passive Nachforschungen",
+  "more.passiveInsight": "Passives Motiv erkennen",
+  "more.critRange": "Kritischer Treffer bei {min}–20"
 }

@@ -1431,5 +1431,13 @@
   "quick.proficiency": "Maîtr.",
   "quick.martialDc": "DD mart.",
   "quick.spellDc": "DD sorts",
-  "quick.spellAttack": "Att. sort"
+  "quick.spellAttack": "Att. sort",
+  "more.open": "Autres valeurs",
+  "more.title": "Les chiffres en un coup d'œil",
+  "more.defense": "Défense et déplacement",
+  "more.senses": "Sens",
+  "more.attacks": "Attaques et sauvegardes",
+  "more.passiveInvestigation": "Investigation passive",
+  "more.passiveInsight": "Intuition passive",
+  "more.critRange": "Coup critique sur {min}–20"
 }

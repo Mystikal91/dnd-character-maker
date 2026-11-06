@@ -5,6 +5,7 @@ import type { ExplainTarget } from "../../engine/explain";
 import { signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { ExplainButton } from "../Explain";
+import { beastArmorClass } from "./beastArmorClass";
 import { BootIcon, EyeIcon, FocusIcon, MagicIcon, StarIcon, SwordIcon } from "./icons";
 
 /** One number: a small icon and a short name above the value. The full name is in the tooltip. */
@@ -66,10 +67,7 @@ export function QuickStats() {
   const play = character.value.play;
   if (!s || !c) return null;
   // In the shape of a beast the armor class is the beast's.
-  const shape = play.wildShape;
-  const beastAc = shape
-    ? (c.index.get(shape.monster)?.data.armorClass as { value: number }[] | undefined)?.[0]?.value
-    : undefined;
+  const beastAc = beastArmorClass(c, play);
   const caster = s.spellcasters[0];
   const crest = (
     <>

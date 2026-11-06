@@ -182,3 +182,12 @@ export const EyeIcon = () => (
     <circle cx="12" cy="12" r="2.800" />
   </Icon>
 );
+
+/** A circle with an "i": more numbers than the bar has room for. */
+export const MoreIcon = () => (
+  <Icon>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 11v5.500" />
+    <circle cx="12" cy="7.800" r="0.600" />
+  </Icon>
+);

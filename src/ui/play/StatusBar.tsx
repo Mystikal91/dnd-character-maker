@@ -7,6 +7,8 @@ import { healBeast } from "../../engine/wildShape";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { ExplainButton } from "../Explain";
 import { useHoldRepeat } from "../useHoldRepeat";
+import { MoreButton } from "./MoreStats";
+import { beastArmorClass } from "./beastArmorClass";
 import { ChecksIcon, CombatIcon, MagicIcon, ResourcesIcon } from "./icons";
 
 const ICONS: Record<PlayGroup, () => preact.JSX.Element> = {
@@ -29,9 +31,7 @@ export function StatusBar() {
   if (!s || !v || !c) return null;
   // In the shape of a beast the bar shows the beast: its hit points and its armor class.
   const shape = play.wildShape;
-  const beastAc = shape
-    ? (c.index.get(shape.monster)?.data.armorClass as { value: number }[] | undefined)?.[0]?.value
-    : undefined;
+  const beastAc = beastArmorClass(c, play);
   const max = shape ? shape.max : v.max;
   const hp = shape ? shape.hp : currentHp(play, v.max);
   const percent = max > 0 ? hp / max : 0;
@@ -87,6 +87,13 @@ export function StatusBar() {
           <small>{ui("play.init")}</small>
           <b>{signed(s.initiative)}</b>
         </button>
+        {s.spellcasters[0] && (
+          <ExplainButton class="ps-stat" target={{ kind: "spellDc" }}>
+            <small>{ui("quick.spellDc")}</small>
+            <b>{s.spellcasters[0].saveDc}</b>
+          </ExplainButton>
+        )}
+        <MoreButton />
         {play.conditions.length > 0 && (
           <button
             type="button"

@@ -1431,5 +1431,13 @@
   "quick.proficiency": "Comp.",
   "quick.martialDc": "CD marc.",
   "quick.spellDc": "CD conj.",
-  "quick.spellAttack": "Atq. conj."
+  "quick.spellAttack": "Atq. conj.",
+  "more.open": "Más números",
+  "more.title": "Números de un vistazo",
+  "more.defense": "Defensa y movimiento",
+  "more.senses": "Sentidos",
+  "more.attacks": "Ataques y salvaciones",
+  "more.passiveInvestigation": "Investigación pasiva",
+  "more.passiveInsight": "Perspicacia pasiva",
+  "more.critRange": "Crítico con {min}–20"
 }
