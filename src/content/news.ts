@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.26.1 beta",
+    date: "2026-11-06",
+    notes: [
+      {
+        en: "Printing is fixed: the main sheet now fits on its first page in Chrome and in Firefox (it used to be cut at the bottom, or move whole to the second page), a dark colour set no longer paints black borders when “Background graphics” is on, the lines to write on and the corners of the frames print cleanly in Firefox, and the text of the round badges stays inside the circles. A long spell list or many features make the page denser instead of spilling over.",
+        it: "La stampa è sistemata: la scheda principale ora sta nella prima pagina sia in Chrome sia in Firefox (prima veniva tagliata in fondo, o finiva intera nella seconda), un tema scuro non dipinge più bordi neri con “Grafica in background” attiva, le linee per scrivere e gli angoli dei riquadri escono puliti in Firefox, e il testo dei cerchi resta dentro il cerchio. Un elenco di incantesimi lungo o molti privilegi rendono la pagina più densa invece di uscire dal foglio.",
+        fr: "L’impression est corrigée : la fiche principale tient maintenant sur sa première page dans Chrome comme dans Firefox (elle était coupée en bas, ou passait tout entière à la deuxième), un thème sombre ne peint plus de bordures noires quand « Graphiques d’arrière-plan » est activé, les lignes à écrire et les coins des cadres s’impriment proprement dans Firefox, et le texte des pastilles rondes reste dans le cercle. Une longue liste de sorts ou beaucoup de capacités rendent la page plus dense au lieu de déborder.",
+        de: "Der Druck ist repariert: Der Hauptbogen passt jetzt in Chrome und in Firefox auf die erste Seite (vorher wurde er unten abgeschnitten oder rutschte ganz auf die zweite), ein dunkles Farbschema malt bei aktivierten „Hintergrundgrafiken“ keine schwarzen Ränder mehr, die Schreiblinien und die Ecken der Rahmen drucken in Firefox sauber, und der Text der runden Abzeichen bleibt im Kreis. Eine lange Zauberliste oder viele Merkmale machen die Seite dichter, statt überzulaufen.",
+        es: "La impresión está arreglada: la hoja principal cabe ahora en su primera página en Chrome y en Firefox (antes se cortaba abajo o pasaba entera a la segunda), un tema oscuro ya no pinta bordes negros con «Gráficos de fondo» activado, las líneas para escribir y las esquinas de los marcos se imprimen limpias en Firefox, y el texto de las insignias redondas queda dentro del círculo. Una lista de conjuros larga o muchos rasgos hacen la página más densa en vez de desbordarse.",
+      },
+    ],
+  },
+  {
     version: "1.26.0 beta",
     date: "2026-11-06",
     notes: [
