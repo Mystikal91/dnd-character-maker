@@ -333,7 +333,34 @@
     {
       "id": "srd51:feature/bonus-proficiencies",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "skills",
+          "choose": 3,
+          "grants": "proficiency",
+          "from": [
+            "skill:acrobatics",
+            "skill:animal-handling",
+            "skill:arcana",
+            "skill:athletics",
+            "skill:deception",
+            "skill:history",
+            "skill:insight",
+            "skill:intimidation",
+            "skill:investigation",
+            "skill:medicine",
+            "skill:nature",
+            "skill:perception",
+            "skill:performance",
+            "skill:persuasion",
+            "skill:religion",
+            "skill:sleight-of-hand",
+            "skill:stealth",
+            "skill:survival"
+          ]
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
         "level": 3,
@@ -836,7 +863,12 @@
     {
       "id": "srd51:feature/peerless-skill",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "spends",
+          "pool": "bardicInspiration"
+        }
+      ],
       "data": {
         "class": "srd51:class/bard",
         "level": 14,
@@ -942,7 +974,13 @@
     {
       "id": "srd51:feature/bonus-proficiency",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "armor",
+          "target": "heavy-armor"
+        }
+      ],
       "data": {
         "class": "srd51:class/cleric",
         "level": 1,
@@ -1721,7 +1759,17 @@
     {
       "id": "srd51:feature/bonus-cantrip",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "choice",
+          "id": "cantrip",
+          "choose": 1,
+          "grants": "spell",
+          "from": [],
+          "spellLevel": 0,
+          "spellClass": "srd51:class/druid"
+        }
+      ],
       "data": {
         "class": "srd51:class/druid",
         "level": 2,
@@ -4399,7 +4447,13 @@
     {
       "id": "srd51:feature/second-story-work",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "movement",
+          "mode": "climb",
+          "feet": "walk"
+        }
+      ],
       "data": {
         "class": "srd51:class/rogue",
         "level": 3,
@@ -5428,7 +5482,13 @@
     {
       "id": "srd51:feature/dragon-wings",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "movement",
+          "mode": "fly",
+          "feet": "walk"
+        }
+      ],
       "data": {
         "class": "srd51:class/sorcerer",
         "level": 14,

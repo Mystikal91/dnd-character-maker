@@ -13,7 +13,7 @@ import { type Outcomes, measure, ruleReport, toFile, worse } from "./ratchet";
  * Without `AURORA_CORPUS` (a folder with a copy of the elements) the tests are skipped, so the
  * ordinary `npm test` stays offline; `npm run test:corpus` runs them.
  */
-const DIR = process.env.AURORA_CORPUS ?? "";
+export const DIR = process.env.AURORA_CORPUS ?? "";
 
 function collect(dir: string, found: string[] = []): string[] {
   for (const item of readdirSync(dir, { withFileTypes: true })) {
@@ -26,7 +26,7 @@ function collect(dir: string, found: string[] = []): string[] {
 }
 
 /** Core and supplements are what the app offers to import; the other folders are left out. */
-function readElements(dir: string, folders = ["core", "supplements"]): string[] {
+export function readElements(dir: string, folders = ["core", "supplements"]): string[] {
   const parts = folders.map((n) => join(dir, n)).filter((p) => existsSync(p));
   return (parts.length > 0 ? parts : [dir])
     .flatMap((p) => collect(p))
@@ -40,7 +40,7 @@ function readElements(dir: string, folders = ["core", "supplements"]): string[] 
     });
 }
 
-function nameOf() {
+export function nameOf() {
   const names = new Map<string, string>();
   const loaded = SRD51_FILES.map(loadSrd51Strings);
   for (const [id, entry] of srd51Index) {
@@ -50,7 +50,7 @@ function nameOf() {
   return (id: string) => names.get(id) ?? id;
 }
 
-const available = Boolean(DIR) && existsSync(DIR);
+export const available = Boolean(DIR) && existsSync(DIR);
 
 /**
  * The content is read in the order it is listed or in reverse (a file of its own for each, so

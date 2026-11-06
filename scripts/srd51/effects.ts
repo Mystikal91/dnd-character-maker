@@ -272,6 +272,25 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
     { type: "spellDamage", spell: "srd51:spell/eldritch-blast", plus: "cha" },
   ],
 
+  // What the subclasses give that the vocabulary already holds: a proficiency, three skills, a
+  // cantrip, a climbing speed and wings (shown in the speed's explanation; the wings are a bonus
+  // action in the game and the sheet shows them as always there).
+  "feature/bonus-proficiency": [{ type: "proficiency", category: "armor", target: "heavy-armor" }],
+  "feature/bonus-proficiencies": [
+    {
+      type: "choice",
+      id: "skills",
+      choose: 3,
+      grants: "proficiency",
+      from: SKILLS.map((s) => `skill:${s}`),
+    },
+  ],
+  "feature/bonus-cantrip": [
+    pickSpells("cantrip", 1, { spellLevel: 0, spellClass: "srd51:class/druid" }),
+  ],
+  "feature/second-story-work": [{ type: "movement", mode: "climb", feet: "walk" }],
+  "feature/dragon-wings": [{ type: "movement", mode: "fly", feet: "walk" }],
+
   // Fighting styles that change a number. Great Weapon Fighting, Two-Weapon Fighting and
   // Protection depend on dice rerolls, the off hand and reactions, so they stay text.
   "feature/fighter-fighting-style-archery": archery,
@@ -313,6 +332,7 @@ const SPENDS: Record<string, { pool: SpendPool; cost?: number }> = {
   "feature/bardic-inspiration-d10": { pool: "bardicInspiration" },
   "feature/bardic-inspiration-d12": { pool: "bardicInspiration" },
   "feature/cutting-words": { pool: "bardicInspiration" },
+  "feature/peerless-skill": { pool: "bardicInspiration" },
   "feature/wild-shape-cr-1-4-or-below-no-flying-or-swim-speed": { pool: "wildShape" },
   "feature/wild-shape-cr-1-2-or-below-no-flying-speed": { pool: "wildShape" },
   "feature/wild-shape-cr-1-or-below": { pool: "wildShape" },
