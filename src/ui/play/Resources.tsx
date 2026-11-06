@@ -5,6 +5,7 @@ import { type UiKey, ui } from "../../i18n/ui";
 import { SpellcastingStats } from "../sheet/SpellcastingPanel";
 import { Panel } from "../sheet/parts";
 import { shownFeatures } from "./Features";
+import { FlexibleCasting } from "./FlexibleCasting";
 import { ResourceControl, recoveryLabel, resourceLabel } from "./ResourceControl";
 import { ResourcesIcon } from "./icons";
 
@@ -88,6 +89,7 @@ export function Slots() {
           </li>
         )}
       </ul>
+      <FlexibleCasting />
     </Panel>
   );
 }

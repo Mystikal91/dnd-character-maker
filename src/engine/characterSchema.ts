@@ -136,6 +136,9 @@ const CharacterSchema = v.object({
     tempHp: v.pipe(v.number(), v.integer(), v.minValue(0)),
     hitDiceUsed: v.record(v.string(), v.pipe(v.number(), v.integer(), v.minValue(0))),
     slotsUsed: v.pipe(v.array(v.pipe(v.number(), v.integer(), v.minValue(0))), v.length(9)),
+    createdSlots: v.optional(
+      v.pipe(v.array(v.pipe(v.number(), v.integer(), v.minValue(0))), v.length(9)),
+    ),
     resourcesUsed: v.optional(v.record(v.string(), v.pipe(v.number(), v.integer(), v.minValue(0)))),
     concentration: v.optional(v.string()),
     raging: v.optional(v.boolean()),

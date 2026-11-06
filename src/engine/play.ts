@@ -131,6 +131,61 @@ export function castSpell(
   return undefined;
 }
 
+/** What a spell slot costs in sorcery points to make (Flexible Casting): the slot level and its price. */
+export const SLOT_COSTS: Record<number, number> = { 1: 2, 2: 3, 3: 5, 4: 6, 5: 7 };
+
+/** The pool of sorcery points: its id and how many there are at most. */
+export interface PointPool {
+  id: string;
+  max: number;
+}
+
+/** Whether a slot of this level can be made now: it costs no more than the points left. */
+export function canCreateSlot(play: PlayState, level: number, pool: PointPool): boolean {
+  const cost = SLOT_COSTS[level];
+  return cost !== undefined && resourceLeft(play, pool.id, pool.max) >= cost;
+}
+
+/**
+ * Makes a spell slot of the level from sorcery points, up to the 5th: the points are spent and the
+ * slot is there until a long rest. Nothing changes when the points do not reach.
+ */
+export function createSlot(play: PlayState, level: number, pool: PointPool): PlayState {
+  const cost = SLOT_COSTS[level];
+  if (cost === undefined || !canCreateSlot(play, level, pool)) return play;
+  const created = [...(play.createdSlots ?? Array.from({ length: 9 }, () => 0))];
+  created[level - 1] = (created[level - 1] ?? 0) + 1;
+  const spent = setResourceUsed(
+    play,
+    pool.id,
+    (play.resourcesUsed?.[pool.id] ?? 0) + cost,
+    pool.max,
+  );
+  return { ...spent, createdSlots: created };
+}
+
+/** The sorcery points a slot of the level gives when it is spent, never more than the pool lacks. */
+export function pointsFromSlot(play: PlayState, level: number, pool: PointPool): number {
+  return Math.min(level, play.resourcesUsed?.[pool.id] ?? 0);
+}
+
+/**
+ * Spends a spell slot to gain as many sorcery points as its level (the pool never goes over its
+ * maximum). `total` is the slots of that level the character has now, made ones included. Nothing
+ * changes when there is no slot, or when no point would be gained.
+ */
+export function convertSlot(
+  play: PlayState,
+  level: number,
+  total: number,
+  pool: PointPool,
+): PlayState {
+  const gain = pointsFromSlot(play, level, pool);
+  if (gain <= 0 || slotsLeft(play, level, total) <= 0) return play;
+  const spent = setSlotsUsed(play, level, (play.slotsUsed[level - 1] ?? 0) + 1, total);
+  return setResourceUsed(spent, pool.id, (spent.resourcesUsed?.[pool.id] ?? 0) - gain, pool.max);
+}
+
 /** Hit dice of one size that are still unspent. */
 export function hitDiceLeft(play: PlayState, die: string, total: number): number {
   return Math.max(0, total - (play.hitDiceUsed[die] ?? 0));

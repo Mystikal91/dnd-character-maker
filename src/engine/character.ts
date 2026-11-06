@@ -85,6 +85,11 @@ export interface PlayState {
   hitDiceUsed: Record<string, number>;
   /** Spell slots spent per spell level 1..9. */
   slotsUsed: number[];
+  /**
+   * Slots a sorcerer made from sorcery points (Flexible Casting), by level 1..9: they are added to
+   * the slots of the class until a long rest.
+   */
+  createdSlots?: number[];
   /** Uses spent of limited class features, by resource id (see `ClassResource`). */
   resourcesUsed?: Record<string, number>;
   /** The spell the character is concentrating on, if any. */

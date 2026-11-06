@@ -1444,5 +1444,13 @@
   "extra.note.oncePerTurn": "Einmal in jedem deiner Züge, wenn du eine Kreatur mit einem Waffenangriff triffst.",
   "play.spellHealSelf": "Du +{n}",
   "play.sacredWeapon": "Heilige Waffe",
-  "play.sacredWeaponHint": "Göttliche Macht kanalisieren: Heilige Waffe liegt auf dieser Waffe: Sie addiert deinen Charisma-Modifikator (mindestens +1) auf ihre Angriffswürfe und ist magisch, für 1 Minute. Das Einschalten kostet eine Anwendung von Göttliche Macht kanalisieren; eine Rast beendet sie."
+  "play.sacredWeaponHint": "Göttliche Macht kanalisieren: Heilige Waffe liegt auf dieser Waffe: Sie addiert deinen Charisma-Modifikator (mindestens +1) auf ihre Angriffswürfe und ist magisch, für 1 Minute. Das Einschalten kostet eine Anwendung von Göttliche Macht kanalisieren; eine Rast beendet sie.",
+  "play.flexible.title": "Flexibles Zaubern",
+  "play.flexible.points": "Zauberpunkte: {left} von {max}",
+  "play.flexible.make": "Zauberplatz erschaffen (Grad · Punkte)",
+  "play.flexible.makeHint": "Gib {cost} Zauberpunkte aus, um einen Zauberplatz von Grad {level} bis zur nächsten langen Rast zu erschaffen.",
+  "play.flexible.madeLog": "Zauberplatz von Grad {level} erschaffen ({cost} Zauberpunkte)",
+  "play.flexible.convert": "Zauberplatz in Punkte umwandeln (Grad → Punkte)",
+  "play.flexible.convertHint": "Gib einen Zauberplatz von Grad {level} aus, um {gain} Zauberpunkte zu erhalten.",
+  "play.flexible.convertedLog": "Zauberplatz von Grad {level} in {gain} Zauberpunkte umgewandelt"
 }

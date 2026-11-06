@@ -430,7 +430,10 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
   const hpOverride = overrideNumber(character, "hp.max");
   // Several casting classes share their slots; each class keeps its own spell lists.
   const pools = slotPools(casterInputs);
-  for (const caster of casters) caster.spellSlots = pools.slots;
+  // The slots a sorcerer made from sorcery points count with the others until a long rest.
+  const created = character.play.createdSlots;
+  const slots = created ? pools.slots.map((n, i) => n + (created[i] ?? 0)) : pools.slots;
+  for (const caster of casters) caster.spellSlots = slots;
   const spellcasting = casters[0];
 
   // Multiclassing asks for a minimum in the key abilities of every class involved.
@@ -712,7 +715,7 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
           : [];
       }),
     ],
-    spellSlots: pools.slots,
+    spellSlots: slots,
     ...(pools.pact && { pactSlots: pools.pact }),
     choices,
     grantedSpells: [

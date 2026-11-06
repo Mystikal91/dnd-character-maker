@@ -1444,5 +1444,13 @@
   "extra.note.oncePerTurn": "Once on each of your turns, when you hit a creature with a weapon attack.",
   "play.spellHealSelf": "You +{n}",
   "play.sacredWeapon": "Sacred Weapon",
-  "play.sacredWeaponHint": "Channel Divinity: Sacred Weapon is on this weapon: it adds your Charisma modifier (at least +1) to its attack rolls and is magical, for 1 minute. Turning it on takes a Channel Divinity use; a rest ends it."
+  "play.sacredWeaponHint": "Channel Divinity: Sacred Weapon is on this weapon: it adds your Charisma modifier (at least +1) to its attack rolls and is magical, for 1 minute. Turning it on takes a Channel Divinity use; a rest ends it.",
+  "play.flexible.title": "Flexible Casting",
+  "play.flexible.points": "Sorcery points: {left} of {max}",
+  "play.flexible.make": "Make a slot (level · points)",
+  "play.flexible.makeHint": "Spend {cost} sorcery points to make a level {level} slot, until a long rest.",
+  "play.flexible.madeLog": "Made a level {level} slot ({cost} sorcery points)",
+  "play.flexible.convert": "Turn a slot into points (level → points)",
+  "play.flexible.convertHint": "Spend a level {level} slot to gain {gain} sorcery points.",
+  "play.flexible.convertedLog": "Level {level} slot turned into {gain} sorcery points"
 }
