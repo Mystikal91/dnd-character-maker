@@ -1447,10 +1447,13 @@
   "play.sacredWeaponHint": "Conduit divin : Arme sacrée est sur cette arme : elle ajoute votre modificateur de Charisme (au moins +1) à ses jets d'attaque et devient magique, pendant 1 minute. L'activer coûte une utilisation de Conduit divin ; un repos y met fin.",
   "play.flexible.title": "Incantation flexible",
   "play.flexible.points": "Points de sorcellerie : {left} sur {max}",
-  "play.flexible.make": "Créer un emplacement (niveau · points)",
   "play.flexible.makeHint": "Dépensez {cost} points de sorcellerie pour créer un emplacement de niveau {level}, jusqu'à un repos long.",
   "play.flexible.madeLog": "Emplacement de niveau {level} créé ({cost} points de sorcellerie)",
-  "play.flexible.convert": "Changer un emplacement en points (niveau → points)",
   "play.flexible.convertHint": "Dépensez un emplacement de niveau {level} pour gagner {gain} points de sorcellerie.",
-  "play.flexible.convertedLog": "Emplacement de niveau {level} changé en {gain} points de sorcellerie"
+  "play.flexible.convertedLog": "Emplacement de niveau {level} changé en {gain} points de sorcellerie",
+  "play.flexible.pt": "pts",
+  "play.flexible.noSlots": "Aucun emplacement à dépenser.",
+  "play.flexible.make": "Créer un emplacement",
+  "play.flexible.convert": "Changer un emplacement en points",
+  "play.flexible.full": "Points de sorcellerie au maximum : rien à gagner."
 }

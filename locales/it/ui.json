@@ -1447,10 +1447,13 @@
   "play.sacredWeaponHint": "Incanalare Divinità: Arma Sacra è su quest'arma: aggiunge il tuo modificatore di Carisma (almeno +1) ai suoi tiri per colpire ed è magica, per 1 minuto. Attivarla costa un uso di Incanalare Divinità; un riposo la termina.",
   "play.flexible.title": "Lancio Flessibile",
   "play.flexible.points": "Punti stregoneria: {left} su {max}",
-  "play.flexible.make": "Crea uno slot (livello · punti)",
   "play.flexible.makeHint": "Spendi {cost} punti stregoneria per creare uno slot di livello {level}, fino a un riposo lungo.",
   "play.flexible.madeLog": "Creato uno slot di livello {level} ({cost} punti stregoneria)",
-  "play.flexible.convert": "Trasforma uno slot in punti (livello → punti)",
   "play.flexible.convertHint": "Spendi uno slot di livello {level} per ottenere {gain} punti stregoneria.",
-  "play.flexible.convertedLog": "Slot di livello {level} trasformato in {gain} punti stregoneria"
+  "play.flexible.convertedLog": "Slot di livello {level} trasformato in {gain} punti stregoneria",
+  "play.flexible.pt": "pt",
+  "play.flexible.noSlots": "Nessuno slot da spendere.",
+  "play.flexible.make": "Crea uno slot",
+  "play.flexible.convert": "Trasforma uno slot in punti",
+  "play.flexible.full": "Punti stregoneria al massimo: non c'è nulla da guadagnare."
 }

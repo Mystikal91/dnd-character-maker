@@ -1447,10 +1447,13 @@
   "play.sacredWeaponHint": "Canalizar divinidad: Arma sagrada está en esta arma: suma tu modificador de Carisma (al menos +1) a sus tiradas de ataque y es mágica, durante 1 minuto. Activarla cuesta un uso de Canalizar divinidad; un descanso la termina.",
   "play.flexible.title": "Lanzamiento flexible",
   "play.flexible.points": "Puntos de hechicería: {left} de {max}",
-  "play.flexible.make": "Crear un espacio (nivel · puntos)",
   "play.flexible.makeHint": "Gasta {cost} puntos de hechicería para crear un espacio de nivel {level}, hasta un descanso largo.",
   "play.flexible.madeLog": "Espacio de nivel {level} creado ({cost} puntos de hechicería)",
-  "play.flexible.convert": "Convertir un espacio en puntos (nivel → puntos)",
   "play.flexible.convertHint": "Gasta un espacio de nivel {level} para ganar {gain} puntos de hechicería.",
-  "play.flexible.convertedLog": "Espacio de nivel {level} convertido en {gain} puntos de hechicería"
+  "play.flexible.convertedLog": "Espacio de nivel {level} convertido en {gain} puntos de hechicería",
+  "play.flexible.pt": "pts",
+  "play.flexible.noSlots": "Ningún espacio que gastar.",
+  "play.flexible.make": "Crear un espacio",
+  "play.flexible.convert": "Convertir un espacio en puntos",
+  "play.flexible.full": "Puntos de hechicería al máximo: nada que ganar."
 }
