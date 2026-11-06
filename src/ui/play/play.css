@@ -469,38 +469,23 @@ fieldset.segmented {
   }
 }
 
-/* The bar holds hit points, armor class, initiative, the spell DC and the picture button: tighter. */
-.play-status {
-  gap: 0.3rem;
-}
-
-.play-status .ps-stat,
-:root[data-style] .play .play-status button.ps-stat:not(.ps-roll) {
-  min-width: 2.4rem;
-  padding: 0.1rem 0.25rem;
-}
-
-.play .play-status .ps-step:not(.pip-btn):not(.info-btn):not(.link) {
-  width: 2rem;
-  min-width: 2rem;
-}
-
-/* The small picture button of the phone bar that opens all the numbers. */
+/* The picture button of the phone bar that opens all the numbers: a box like the numbers beside it, so it reads as a button. */
 :root[data-style] .play .ps-more:not(.pip-btn):not(.info-btn):not(.link) {
   display: grid;
   flex: none;
   place-items: center;
-  width: 1.6rem;
+  width: 2.4rem;
   min-width: 0;
   min-height: 2.75rem;
   padding: 0;
-  border: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   background: none;
-  color: var(--muted);
+  color: var(--accent);
 }
 
 :root[data-style] .play .ps-more:not(.pip-btn):not(.info-btn):not(.link):hover {
-  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 /* The dialog with all the numbers: a line for each, the ones that can be taken apart are buttons. */

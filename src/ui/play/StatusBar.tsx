@@ -87,12 +87,6 @@ export function StatusBar() {
           <small>{ui("play.init")}</small>
           <b>{signed(s.initiative)}</b>
         </button>
-        {s.spellcasters[0] && (
-          <ExplainButton class="ps-stat" target={{ kind: "spellDc" }}>
-            <small>{ui("quick.spellDc")}</small>
-            <b>{s.spellcasters[0].saveDc}</b>
-          </ExplainButton>
-        )}
         <MoreButton />
         {play.conditions.length > 0 && (
           <button
