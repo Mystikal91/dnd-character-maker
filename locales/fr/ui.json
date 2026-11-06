@@ -1424,5 +1424,12 @@
   "play.unarmed": "Frappe à mains nues",
   "play.unarmedBonus": "aussi en action bonus",
   "fact.kiSaveDc": "DD des jets de sauvegarde du ki : {dc}",
-  "play.martialDc": "DD de sauvegarde martial"
+  "play.martialDc": "DD de sauvegarde martial",
+  "quick.initiative": "Init.",
+  "quick.speed": "Vitesse",
+  "quick.perception": "Perc. pass.",
+  "quick.proficiency": "Maîtr.",
+  "quick.martialDc": "DD mart.",
+  "quick.spellDc": "DD sorts",
+  "quick.spellAttack": "Att. sort"
 }

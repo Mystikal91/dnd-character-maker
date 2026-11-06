@@ -63,23 +63,6 @@ export function ExplainButton({
   );
 }
 
-/** A small "i" that opens how a number adds up, for a number whose own tap does something else (a roll). */
-export function ExplainInfo({ target }: { target: ExplainTarget }) {
-  return (
-    <button
-      type="button"
-      class="info-btn"
-      aria-label={ui("explain.open", { what: nameOf(target) })}
-      aria-haspopup="dialog"
-      onClick={() => {
-        explaining.value = target;
-      }}
-    >
-      i
-    </button>
-  );
-}
-
 function lineLabel(line: ExplainLine): string {
   const c = content.value;
   if (!c) return "";

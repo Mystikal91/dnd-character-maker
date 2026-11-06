@@ -1424,5 +1424,12 @@
   "play.unarmed": "Waffenloser Schlag",
   "play.unarmedBonus": "auch als Bonusaktion",
   "fact.kiSaveDc": "Ki-Rettungswurf-SG: {dc}",
-  "play.martialDc": "Kampf-Rettungswurf-SG"
+  "play.martialDc": "Kampf-Rettungswurf-SG",
+  "quick.initiative": "Init.",
+  "quick.speed": "Bew.",
+  "quick.perception": "Pass. Wahrn.",
+  "quick.proficiency": "Übung",
+  "quick.martialDc": "Kampf-SG",
+  "quick.spellDc": "Zauber-SG",
+  "quick.spellAttack": "Zauberang."
 }

@@ -447,16 +447,122 @@ fieldset.segmented {
     background: var(--bg);
   }
 
-  .play-quick .ps-stat small {
-    white-space: nowrap;
+  .play-quick {
+    gap: 0.9rem;
+    align-items: stretch;
   }
 
-  /* The initiative rolls when tapped: its small "i" sits beside it and opens how it adds up. */
-  .play-quick .qs-pair {
+  /* Groups by meaning, a thin line between them. */
+  .play-quick .qs-group {
     display: flex;
-    align-items: flex-start;
-    gap: 0.1rem;
+    align-items: center;
+    gap: 0.9rem;
   }
+
+  .play-quick .qs-group + .qs-group {
+    padding-left: 0.9rem;
+    border-left: 1px solid var(--border);
+  }
+
+  .play-quick .qs-group:empty {
+    display: none;
+  }
+}
+
+/* One number: a small icon and a short name above, the value below. */
+:root[data-style] .play .qs-stat:not(.pip-btn):not(.info-btn):not(.link) {
+  display: grid;
+  justify-items: center;
+  min-width: 2.9rem;
+  min-height: 0;
+  padding: 0.15rem 0.2rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--fg);
+  font-family: var(--font-body);
+  line-height: 1.1;
+  text-transform: none;
+}
+
+.qs-stat small {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.qs-stat small .play-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.qs-stat b {
+  font-size: 1.25rem;
+}
+
+:root[data-style] .play .qs-roll:not(.pip-btn):not(.info-btn):not(.link):hover {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+/* Armor class is the crest: a diamond, as the marks of the cards, with a ring inside. */
+:root[data-style] .play .qs-crest:not(.pip-btn):not(.info-btn):not(.link) {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-content: center;
+  justify-items: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--fg);
+  font-family: var(--font-body);
+  line-height: 1;
+  text-transform: none;
+}
+
+.qs-crest::before,
+.qs-crest::after {
+  position: absolute;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  content: "";
+}
+
+.qs-crest::before {
+  inset: 0;
+  background: var(--accent);
+}
+
+.qs-crest::after {
+  inset: 0.18rem;
+  background: var(--surface);
+}
+
+.qs-crest b,
+.qs-crest small {
+  position: relative;
+  z-index: 1;
+}
+
+.qs-crest b {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+}
+
+.qs-crest small {
+  color: var(--muted);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 @container play (max-width: 41.99rem) {

@@ -1424,5 +1424,12 @@
   "play.unarmed": "Ataque sin armas",
   "play.unarmedBonus": "también como acción adicional",
   "fact.kiSaveDc": "CD de salvación del ki: {dc}",
-  "play.martialDc": "CD de salvación marcial"
+  "play.martialDc": "CD de salvación marcial",
+  "quick.initiative": "Inic.",
+  "quick.speed": "Veloc.",
+  "quick.perception": "Perc. pas.",
+  "quick.proficiency": "Comp.",
+  "quick.martialDc": "CD marc.",
+  "quick.spellDc": "CD conj.",
+  "quick.spellAttack": "Atq. conj."
 }

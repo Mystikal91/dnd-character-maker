@@ -166,3 +166,19 @@ export const ConditionIcon = () => (
     <path d="M12 7.500v5.500M12 16.200v.2" />
   </Icon>
 );
+
+/** A boot: how far one moves. */
+export const BootIcon = () => (
+  <Icon>
+    <path d="M8 3h5v6.500l5.500 2.500a2.500 2.500 0 0 1 1.500 2.300V18H5.500v-4L8 11z" />
+    <path d="M5.500 21h14.500" />
+  </Icon>
+);
+
+/** An eye: what one notices. */
+export const EyeIcon = () => (
+  <Icon>
+    <path d="M2.500 12S6 5.500 12 5.500 21.500 12 21.500 12 18 18.500 12 18.500 2.500 12 2.500 12z" />
+    <circle cx="12" cy="12" r="2.800" />
+  </Icon>
+);

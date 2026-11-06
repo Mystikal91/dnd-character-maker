@@ -1424,5 +1424,12 @@
   "play.unarmed": "Unarmed strike",
   "play.unarmedBonus": "also as a bonus action",
   "fact.kiSaveDc": "Ki save DC: {dc}",
-  "play.martialDc": "Martial save DC"
+  "play.martialDc": "Martial save DC",
+  "quick.initiative": "Init.",
+  "quick.speed": "Speed",
+  "quick.perception": "Passive Perc.",
+  "quick.proficiency": "Prof.",
+  "quick.martialDc": "Martial DC",
+  "quick.spellDc": "Spell DC",
+  "quick.spellAttack": "Spell atk."
 }

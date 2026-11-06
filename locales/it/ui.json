@@ -1424,5 +1424,12 @@
   "play.unarmed": "Colpo senz’armi",
   "play.unarmedBonus": "anche come azione bonus",
   "fact.kiSaveDc": "CD dei tiri salvezza del ki: {dc}",
-  "play.martialDc": "CD tiro salvezza marziale"
+  "play.martialDc": "CD tiro salvezza marziale",
+  "quick.initiative": "Iniz.",
+  "quick.speed": "Velocità",
+  "quick.perception": "Perc. pass.",
+  "quick.proficiency": "Comp.",
+  "quick.martialDc": "CD marz.",
+  "quick.spellDc": "CD inc.",
+  "quick.spellAttack": "Att. inc."
 }

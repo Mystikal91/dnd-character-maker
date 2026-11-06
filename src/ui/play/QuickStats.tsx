@@ -1,16 +1,64 @@
+import type { ComponentChildren } from "preact";
 import { rollCheck } from "../../app/play";
 import { character, content, sheet } from "../../app/store";
+import type { ExplainTarget } from "../../engine/explain";
 import { signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
-import { ExplainButton, ExplainInfo } from "../Explain";
+import { ExplainButton } from "../Explain";
+import { BootIcon, EyeIcon, FocusIcon, MagicIcon, StarIcon, SwordIcon } from "./icons";
+
+/** One number: a small icon and a short name above the value. The full name is in the tooltip. */
+function Stat({
+  icon,
+  short,
+  full,
+  value,
+  target,
+  onRoll,
+}: {
+  icon: ComponentChildren;
+  short: string;
+  full: string;
+  value: string | number;
+  target?: ExplainTarget;
+  onRoll?: () => void;
+}) {
+  const inside = (
+    <>
+      <small>
+        {icon}
+        {short}
+      </small>
+      <b>{value}</b>
+    </>
+  );
+  if (onRoll)
+    return (
+      <button type="button" class="qs-stat qs-roll" title={full} onClick={onRoll}>
+        {inside}
+      </button>
+    );
+  if (target)
+    return (
+      <ExplainButton class="qs-stat" target={target}>
+        {inside}
+      </ExplainButton>
+    );
+  return (
+    <span class="qs-stat" title={full}>
+      {inside}
+    </span>
+  );
+}
 
 /**
  * The numbers a player looks for all the time, in a strip that stays under the tabs on a wide
- * screen: armor class, initiative, speed, passive Perception, proficiency bonus, the martial save
- * DC and, for a caster, the save DC and the attack bonus of the spells. Every one but the
- * proficiency bonus opens how it adds up; the initiative rolls when tapped and has a small "i" for
- * that. On a phone the bar of the play head has the armor class and the initiative, and this strip
- * is not shown.
+ * screen. Armor class is the crest; the rest are in groups by meaning, with a thin line between:
+ * moving (initiative, speed), noticing and training (passive Perception, proficiency bonus) and
+ * the numbers others roll against or that the character rolls (the martial save DC and, for a
+ * caster, the spell save DC and attack bonus). Every number but the proficiency bonus and the
+ * initiative opens how it adds up; the initiative rolls when tapped. On a phone the bar of the
+ * play head has the armor class and the initiative, and this strip is not shown.
  */
 export function QuickStats() {
   const s = sheet.value;
@@ -23,59 +71,82 @@ export function QuickStats() {
     ? (c.index.get(shape.monster)?.data.armorClass as { value: number }[] | undefined)?.[0]?.value
     : undefined;
   const caster = s.spellcasters[0];
+  const crest = (
+    <>
+      <b>{beastAc ?? s.armorClass.value}</b>
+      <small>{ui("play.ac")}</small>
+    </>
+  );
 
   return (
     <div class="play-quick">
-      {beastAc !== undefined ? (
-        <span class="ps-stat">
-          <small>{ui("play.ac")}</small>
-          <b>{beastAc}</b>
-        </span>
-      ) : (
-        <ExplainButton class="ps-stat" target={{ kind: "ac" }}>
-          <small>{ui("play.ac")}</small>
-          <b>{s.armorClass.value}</b>
-        </ExplainButton>
-      )}
-      <span class="qs-pair">
-        <button
-          type="button"
-          class="ps-stat ps-roll"
-          onClick={() => rollCheck(ui("play.initiative"), s.initiative)}
-        >
-          <small>{ui("play.initiative")}</small>
-          <b>{signed(s.initiative)}</b>
-        </button>
-        <ExplainInfo target={{ kind: "initiative" }} />
-      </span>
-      <ExplainButton class="ps-stat" target={{ kind: "speed" }}>
-        <small>{ui("sheet.speed")}</small>
-        <b>{s.speed === undefined ? "—" : distance(s.speed)}</b>
-      </ExplainButton>
-      <ExplainButton class="ps-stat" target={{ kind: "passivePerception" }}>
-        <small>{ui("sheet.passivePerception")}</small>
-        <b>{s.passivePerception}</b>
-      </ExplainButton>
-      <span class="ps-stat">
-        <small>{ui("sheet.proficiencyBonus")}</small>
-        <b>{signed(s.proficiencyBonus)}</b>
-      </span>
-      <ExplainButton class="ps-stat" target={{ kind: "martialDc" }}>
-        <small>{ui("play.martialDc")}</small>
-        <b>{s.martialSaveDc}</b>
-      </ExplainButton>
-      {caster && (
-        <>
-          <ExplainButton class="ps-stat" target={{ kind: "spellDc" }}>
-            <small>{ui("sheet.spellSaveDc")}</small>
-            <b>{caster.saveDc}</b>
+      <div class="qs-group">
+        {beastAc !== undefined ? (
+          <span class="qs-crest" title={ui("sheet.armorClass")}>
+            {crest}
+          </span>
+        ) : (
+          <ExplainButton class="qs-crest" target={{ kind: "ac" }}>
+            {crest}
           </ExplainButton>
-          <ExplainButton class="ps-stat" target={{ kind: "spellAttack" }}>
-            <small>{ui("sheet.spellAttack")}</small>
-            <b>{signed(caster.attackBonus)}</b>
-          </ExplainButton>
-        </>
-      )}
+        )}
+        <Stat
+          icon={<FocusIcon />}
+          short={ui("quick.initiative")}
+          full={ui("sheet.initiative")}
+          value={signed(s.initiative)}
+          onRoll={() => rollCheck(ui("play.initiative"), s.initiative)}
+        />
+        <Stat
+          icon={<BootIcon />}
+          short={ui("quick.speed")}
+          full={ui("sheet.speed")}
+          value={s.speed === undefined ? "—" : distance(s.speed)}
+          target={{ kind: "speed" }}
+        />
+      </div>
+      <div class="qs-group">
+        <Stat
+          icon={<EyeIcon />}
+          short={ui("quick.perception")}
+          full={ui("sheet.passivePerception")}
+          value={s.passivePerception}
+          target={{ kind: "passivePerception" }}
+        />
+        <Stat
+          icon={<StarIcon />}
+          short={ui("quick.proficiency")}
+          full={ui("sheet.proficiencyBonus")}
+          value={signed(s.proficiencyBonus)}
+        />
+      </div>
+      <div class="qs-group">
+        <Stat
+          icon={<SwordIcon />}
+          short={ui("quick.martialDc")}
+          full={ui("play.martialDc")}
+          value={s.martialSaveDc}
+          target={{ kind: "martialDc" }}
+        />
+        {caster && (
+          <>
+            <Stat
+              icon={<MagicIcon />}
+              short={ui("quick.spellDc")}
+              full={ui("sheet.spellSaveDc")}
+              value={caster.saveDc}
+              target={{ kind: "spellDc" }}
+            />
+            <Stat
+              icon={<MagicIcon />}
+              short={ui("quick.spellAttack")}
+              full={ui("sheet.spellAttack")}
+              value={signed(caster.attackBonus)}
+              target={{ kind: "spellAttack" }}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }
