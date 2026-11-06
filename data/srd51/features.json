@@ -268,7 +268,20 @@
     {
       "id": "srd51:feature/primal-champion",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "abilityBonus",
+          "ability": "str",
+          "value": 4,
+          "max": 24
+        },
+        {
+          "type": "abilityBonus",
+          "ability": "con",
+          "value": 4,
+          "max": 24
+        }
+      ],
       "data": {
         "class": "srd51:class/barbarian",
         "level": 20
@@ -2849,6 +2862,36 @@
       "kind": "feature",
       "effects": [
         {
+          "type": "proficiency",
+          "category": "save",
+          "target": "str"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "dex"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "con"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "int"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "wis"
+        },
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "cha"
+        },
+        {
           "type": "spends",
           "pool": "ki"
         }
@@ -3187,7 +3230,15 @@
     {
       "id": "srd51:feature/aura-of-protection",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "modifier",
+          "target": "save",
+          "value": 0,
+          "plus": "cha",
+          "min": 1
+        }
+      ],
       "data": {
         "class": "srd51:class/paladin",
         "level": 6
@@ -4764,7 +4815,13 @@
     {
       "id": "srd51:feature/blindsense",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "sense",
+          "sense": "blindsight",
+          "range": 10
+        }
+      ],
       "data": {
         "class": "srd51:class/rogue",
         "level": 14
@@ -4773,7 +4830,13 @@
     {
       "id": "srd51:feature/slippery-mind",
       "kind": "feature",
-      "effects": [],
+      "effects": [
+        {
+          "type": "proficiency",
+          "category": "save",
+          "target": "wis"
+        }
+      ],
       "data": {
         "class": "srd51:class/rogue",
         "level": 15

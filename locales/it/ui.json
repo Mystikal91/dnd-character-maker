@@ -1235,6 +1235,7 @@
   "sheet.bonus.hpPerLevel": "{value} punti ferita per livello",
   "sheet.bonus.hp": "{value} ai punti ferita",
   "sheet.bonus.skill": "{value} alle prove di abilità",
+  "sheet.bonus.save": "{value} ai tiri salvezza",
   "sheet.bonus.spellAttack": "{value} ai tiri per colpire con incantesimi",
   "sheet.bonus.spellDc": "{value} alla CD degli incantesimi",
   "sheet.hitPoints": "Punti ferita",

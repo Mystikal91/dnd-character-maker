@@ -159,6 +159,10 @@ export function explain(
       const lines: ExplainLine[] = [
         { part: "ability", value: sheet.abilities[target.ability].modifier, ref: target.ability },
         ...(save.proficient ? [{ part: "proficiency" as const, value: pb }] : []),
+        // What features add to every saving throw (an aura of protection).
+        ...sheet.bonuses
+          .filter((m) => m.target === "save")
+          .map((m) => ({ part: "feature" as const, value: m.value, ref: m.source })),
       ];
       const forced = typeof character.overrides[OVERRIDE.save(target.ability)] === "number";
       return { total: save.bonus, forced, lines: forced ? lines : withRest(save.bonus, lines) };

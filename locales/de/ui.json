@@ -1235,6 +1235,7 @@
   "sheet.bonus.hpPerLevel": "{value} Trefferpunkte pro Grad",
   "sheet.bonus.hp": "{value} auf die Trefferpunkte",
   "sheet.bonus.skill": "{value} auf Fertigkeitsproben",
+  "sheet.bonus.save": "{value} auf Rettungswürfe",
   "sheet.bonus.spellAttack": "{value} auf Zauberangriffswürfe",
   "sheet.bonus.spellDc": "{value} auf den Zauber-Rettungswurf-SG",
   "sheet.hitPoints": "Trefferpunkte",

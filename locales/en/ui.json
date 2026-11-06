@@ -1235,6 +1235,7 @@
   "sheet.bonus.hpPerLevel": "{value} hit points per level",
   "sheet.bonus.hp": "{value} hit points",
   "sheet.bonus.skill": "{value} to skill checks",
+  "sheet.bonus.save": "{value} to saving throws",
   "sheet.bonus.spellAttack": "{value} to spell attack rolls",
   "sheet.bonus.spellDc": "{value} to spell save DC",
   "sheet.hitPoints": "Hit points",

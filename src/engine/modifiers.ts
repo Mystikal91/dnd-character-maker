@@ -82,7 +82,10 @@ export function appliedModifiers(
     if (holds(effect.when, state))
       applied.push({
         target,
-        value: effect.value + plus,
+        value:
+          effect.min === undefined
+            ? effect.value + plus
+            : Math.max(effect.min, effect.value + plus),
         source,
         ...(effect.skill && { skill: effect.skill }),
       });

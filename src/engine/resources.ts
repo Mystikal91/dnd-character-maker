@@ -115,7 +115,12 @@ export function classResources(input: Input): {
       });
       break;
     case "druid":
-      if (level >= 2) add("wildShape", 2, "short", { covers: "^wild-shape" });
+      // The Archdruid, at the 20th level, can Wild Shape as often as wanted.
+      if (level >= 2)
+        add("wildShape", level >= 20 ? 99 : 2, "short", {
+          covers: "^wild-shape",
+          ...(level >= 20 && { unlimited: true }),
+        });
       if (num("wildShapeMaxCr") > 0)
         facts.push({ kind: "wildShape", params: { cr: fraction(num("wildShapeMaxCr")) } });
       break;

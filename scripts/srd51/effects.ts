@@ -291,6 +291,22 @@ export const FEATURE_EFFECTS: Record<string, Effect[]> = {
   "feature/second-story-work": [{ type: "movement", mode: "climb", feet: "walk" }],
   "feature/dragon-wings": [{ type: "movement", mode: "fly", feet: "walk" }],
 
+  // What the classes give that changes a number and was only text: the barbarian's capstone (the scores go
+  // to 24), the rogue's proficiency in Wisdom saves and its blindsense, the monk's proficiency in every
+  // save, and the paladin's aura of protection (his own Charisma modifier on every save, at least +1).
+  "feature/primal-champion": [
+    { type: "abilityBonus", ability: "str", value: 4, max: 24 },
+    { type: "abilityBonus", ability: "con", value: 4, max: 24 },
+  ],
+  "feature/slippery-mind": [{ type: "proficiency", category: "save", target: "wis" }],
+  "feature/blindsense": [{ type: "sense", sense: "blindsight", range: 10 }],
+  "feature/diamond-soul": (["str", "dex", "con", "int", "wis", "cha"] as const).map(
+    (target): Effect => ({ type: "proficiency", category: "save", target }),
+  ),
+  "feature/aura-of-protection": [
+    { type: "modifier", target: "save", value: 0, plus: "cha", min: 1 },
+  ],
+
   // The Life domain: its healing is stronger, heals the cleric too, and at the end takes the best of each die;
   // its Divine Strike is a die of radiant damage once per turn.
   "feature/disciple-of-life": [{ type: "spellHealing", plusSlotLevel: 2 }],

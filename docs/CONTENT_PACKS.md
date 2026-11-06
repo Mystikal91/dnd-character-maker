@@ -88,6 +88,11 @@ forty spells is a menu in the choices.
 modifier of an ability to the damage a spell rolls in Play; `spell`, `school` or `damageType` say
 which spells, and `once` adds it to one roll of the spell instead of every roll.
 
+`{ "type": "abilityBonus", "ability": "str", "value": 4, "max": 24 }` raises a score; `max` is the most the
+score may reach with it (24 for the barbarian's Primal Champion), 20 when absent, and the sheet warns above it.
+A `modifier` may have `min`: the bonus is at least that once `plus` is added (an aura of protection adds the
+Charisma modifier to saves, +1 at the least).
+
 `{ "type": "spellHealing", "plusSlotLevel": 2 }` changes the healing that spells roll in Play (only
 spells with a healing roll in the data, cast with a slot of 1st level or higher): `plusSlotLevel` adds
 that and the level of the slot to every roll (Disciple of Life), `maxDice` gives the highest number on

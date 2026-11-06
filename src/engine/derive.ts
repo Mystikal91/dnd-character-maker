@@ -287,6 +287,8 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
 
   // Abilities
   const abilities = {} as Record<Ability, AbilityResult>;
+  /** The highest an ability may go: 20, or what a feature raises it to (a barbarian's 24). */
+  const limits = {} as Record<Ability, number>;
   for (const ability of ABILITIES) {
     const base = character.abilityBase[ability];
     const bonus = effects.reduce(
@@ -301,7 +303,13 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
       0,
     );
     const score = override ?? Math.max(base + bonus, floor);
-    if (!overridden && score > 20) warn(warnings, "abilityTooHigh", { ability, score });
+    limits[ability] = effects.reduce(
+      (most, e) =>
+        e.type === "abilityBonus" && e.ability === ability ? Math.max(most, e.max ?? 20) : most,
+      20,
+    );
+    if (!overridden && score > limits[ability])
+      warn(warnings, "abilityTooHigh", { ability, score });
     abilities[ability] = {
       base,
       bonus: overridden ? bonus : score - base,
@@ -536,6 +544,13 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
       }
     }
   }
+  // What a bonus to saving throws can read: the modifiers and the proficiency bonus (an aura adds Charisma).
+  const saveState = {
+    armor: equipment.armor,
+    levelOf,
+    proficiencyBonus,
+    abilityModifier: (a: Ability) => abilities[a].modifier,
+  };
   const checks = deriveChecks({
     index,
     ruleset: character.ruleset,
@@ -545,7 +560,7 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
     expertise,
     halves,
     overrides: character.overrides,
-    saveBonus: total(appliedModifiers(sourced, "save", { armor: equipment.armor, levelOf })),
+    saveBonus: total(appliedModifiers(sourced, "save", saveState)),
     skillBonus: (slug) =>
       total(
         appliedModifiers(sourced, "skill", { armor: equipment.armor, levelOf }).filter(
@@ -569,6 +584,7 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
   const spellDcMods = appliedModifiers(sourced, "spellDc", state);
   // A bonus to every skill is told on the sheet; one for a single skill is only in its number.
   const skillMods = appliedModifiers(sourced, "skill", state).filter((m) => !m.skill);
+  const saveMods = appliedModifiers(sourced, "save", saveState);
   for (const caster of casters) {
     if (numberOverride(character.overrides, OVERRIDE.spellAttack) === undefined)
       caster.attackBonus += total(spellAttackMods);
@@ -610,6 +626,7 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
     ...spellAttackMods,
     ...spellDcMods,
     ...skillMods,
+    ...saveMods,
   ])
     note(m);
   for (const attack of [...equipment.attacks, ...(equipment.unarmed ? [equipment.unarmed] : [])])

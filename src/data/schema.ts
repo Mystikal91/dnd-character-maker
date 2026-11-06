@@ -108,6 +108,8 @@ const PlainEffectSchema = v.variant("type", [
     type: v.literal("abilityBonus"),
     ability: AbilitySchema,
     value: v.number(),
+    /** The most the score may reach with this bonus (a barbarian's Primal Champion: 24); 20 when absent. */
+    max: v.optional(v.number()),
   }),
   v.object({
     type: v.literal("proficiency"),
@@ -233,6 +235,8 @@ const PlainEffectSchema = v.variant("type", [
     when: v.optional(v.picklist(MODIFIER_CONDITIONS)),
     /** Applies from this level of the class that gives it (of the whole character, for a species). */
     minLevel: v.optional(v.number()),
+    /** The bonus is at least this, once `plus` is added (an aura of protection: the Charisma modifier, but +1 at the least). */
+    min: v.optional(v.number()),
   }),
   /**
    * A speed of climbing, swimming, flying or burrowing, in feet, or `"walk"` for one equal to the

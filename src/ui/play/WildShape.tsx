@@ -44,7 +44,8 @@ export function WildShape() {
 
   const { limits } = druid;
   const resource = sheet.value?.resources.find((r) => r.kind === "wildShape");
-  const left = resource ? resourceLeft(play, resource.id, resource.max) : 1;
+  // The Archdruid's uses are unlimited: there is always one left, and none is taken.
+  const left = resource && !resource.unlimited ? resourceLeft(play, resource.id, resource.max) : 1;
   const cr = challengeText(limits.maxCr);
   const movement = limits.fly
     ? undefined
@@ -56,9 +57,15 @@ export function WildShape() {
     if (typeof hp !== "number") return;
     changePlay(
       (p) => {
-        const spent = resource
-          ? setResourceUsed(p, resource.id, (p.resourcesUsed?.[resource.id] ?? 0) + 1, resource.max)
-          : p;
+        const spent =
+          resource && !resource.unlimited
+            ? setResourceUsed(
+                p,
+                resource.id,
+                (p.resourcesUsed?.[resource.id] ?? 0) + 1,
+                resource.max,
+              )
+            : p;
         return assumeBeast(spent, id, hp);
       },
       { undo: false },
@@ -172,7 +179,13 @@ export function WildShape() {
       <p class="muted">
         {ui("play.wildShape.limits", { cr, hours: limits.hours })} {movement}
       </p>
-      {resource && <p class="muted">{ui("play.wildShape.uses", { left, max: resource.max })}</p>}
+      {resource && (
+        <p class="muted">
+          {resource.unlimited
+            ? ui("play.unlimited")
+            : ui("play.wildShape.uses", { left, max: resource.max })}
+        </p>
+      )}
       {choosing ? (
         c.monsters ? (
           <label class="field">

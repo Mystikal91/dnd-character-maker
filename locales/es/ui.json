@@ -1235,6 +1235,7 @@
   "sheet.bonus.hpPerLevel": "{value} punto de golpe por nivel",
   "sheet.bonus.hp": "{value} a los puntos de golpe",
   "sheet.bonus.skill": "{value} a las pruebas de habilidad",
+  "sheet.bonus.save": "{value} a las salvaciones",
   "sheet.bonus.spellAttack": "{value} a las tiradas de ataque de conjuro",
   "sheet.bonus.spellDc": "{value} a la CD de salvación de conjuros",
   "sheet.hitPoints": "Puntos de golpe",
