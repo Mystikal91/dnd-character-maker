@@ -2,13 +2,15 @@ import { rollCheck } from "../../app/play";
 import { character, content, sheet } from "../../app/store";
 import { signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
-import { ExplainButton } from "../Explain";
+import { ExplainButton, ExplainInfo } from "../Explain";
 
 /**
  * The numbers a player looks for all the time, in a strip that stays under the tabs on a wide
- * screen: armor class, initiative, speed, passive Perception, proficiency bonus and, for a caster,
- * the save DC and the attack bonus of the spells. On a phone the bar of the play head has the
- * armor class and the initiative, and this strip is not shown.
+ * screen: armor class, initiative, speed, passive Perception, proficiency bonus, the martial save
+ * DC and, for a caster, the save DC and the attack bonus of the spells. Every one but the
+ * proficiency bonus opens how it adds up; the initiative rolls when tapped and has a small "i" for
+ * that. On a phone the bar of the play head has the armor class and the initiative, and this strip
+ * is not shown.
  */
 export function QuickStats() {
   const s = sheet.value;
@@ -35,36 +37,43 @@ export function QuickStats() {
           <b>{s.armorClass.value}</b>
         </ExplainButton>
       )}
-      <button
-        type="button"
-        class="ps-stat ps-roll"
-        onClick={() => rollCheck(ui("play.initiative"), s.initiative)}
-      >
-        <small>{ui("play.initiative")}</small>
-        <b>{signed(s.initiative)}</b>
-      </button>
+      <span class="qs-pair">
+        <button
+          type="button"
+          class="ps-stat ps-roll"
+          onClick={() => rollCheck(ui("play.initiative"), s.initiative)}
+        >
+          <small>{ui("play.initiative")}</small>
+          <b>{signed(s.initiative)}</b>
+        </button>
+        <ExplainInfo target={{ kind: "initiative" }} />
+      </span>
       <ExplainButton class="ps-stat" target={{ kind: "speed" }}>
         <small>{ui("sheet.speed")}</small>
         <b>{s.speed === undefined ? "—" : distance(s.speed)}</b>
       </ExplainButton>
-      <span class="ps-stat">
+      <ExplainButton class="ps-stat" target={{ kind: "passivePerception" }}>
         <small>{ui("sheet.passivePerception")}</small>
         <b>{s.passivePerception}</b>
-      </span>
+      </ExplainButton>
       <span class="ps-stat">
         <small>{ui("sheet.proficiencyBonus")}</small>
         <b>{signed(s.proficiencyBonus)}</b>
       </span>
+      <ExplainButton class="ps-stat" target={{ kind: "martialDc" }}>
+        <small>{ui("play.martialDc")}</small>
+        <b>{s.martialSaveDc}</b>
+      </ExplainButton>
       {caster && (
         <>
-          <span class="ps-stat">
+          <ExplainButton class="ps-stat" target={{ kind: "spellDc" }}>
             <small>{ui("sheet.spellSaveDc")}</small>
             <b>{caster.saveDc}</b>
-          </span>
-          <span class="ps-stat">
+          </ExplainButton>
+          <ExplainButton class="ps-stat" target={{ kind: "spellAttack" }}>
             <small>{ui("sheet.spellAttack")}</small>
             <b>{signed(caster.attackBonus)}</b>
-          </span>
+          </ExplainButton>
         </>
       )}
     </div>

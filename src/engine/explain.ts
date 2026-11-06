@@ -10,6 +10,10 @@ export type ExplainTarget =
   | { kind: "ac" }
   | { kind: "initiative" }
   | { kind: "speed" }
+  | { kind: "passivePerception" }
+  | { kind: "spellDc" }
+  | { kind: "spellAttack" }
+  | { kind: "martialDc" }
   | { kind: "save"; ability: Ability }
   | { kind: "skill"; id: string }
   | { kind: "attack"; itemId: string };
@@ -109,6 +113,45 @@ export function explain(
         lines: forced ? lines : withRest(total, lines),
         also: { movement: sheet.movement, senses: sheet.senses },
       };
+    }
+
+    case "passivePerception": {
+      // 10 and what the Perception check adds.
+      const skill = explain(
+        { kind: "skill", id: `${character.ruleset}:skill/perception` },
+        sheet,
+        character,
+        index,
+      );
+      if (!skill) return undefined;
+      return {
+        total: sheet.passivePerception,
+        forced: skill.forced,
+        lines: [{ part: "base", value: 10 }, ...skill.lines],
+      };
+    }
+
+    case "spellDc":
+    case "spellAttack": {
+      const caster = sheet.spellcasters[0];
+      if (!caster) return undefined;
+      const total = target.kind === "spellDc" ? caster.saveDc : caster.attackBonus;
+      const lines: ExplainLine[] = [
+        ...(target.kind === "spellDc" ? [{ part: "base" as const, value: 8 }] : []),
+        { part: "ability", value: sheet.abilities[caster.ability].modifier, ref: caster.ability },
+        { part: "proficiency", value: pb },
+      ];
+      return { total, forced: false, lines: withRest(total, lines) };
+    }
+
+    case "martialDc": {
+      const better = sheet.abilities.dex.modifier > sheet.abilities.str.modifier ? "dex" : "str";
+      const lines: ExplainLine[] = [
+        { part: "base", value: 8 },
+        { part: "ability", value: sheet.abilities[better].modifier, ref: better },
+        { part: "proficiency", value: pb },
+      ];
+      return { total: sheet.martialSaveDc, forced: false, lines };
     }
 
     case "save": {

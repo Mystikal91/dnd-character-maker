@@ -1423,5 +1423,6 @@
   "play.nextRoundHint": "Indica los asaltos restantes de una condición para contarlos",
   "play.unarmed": "Ataque sin armas",
   "play.unarmedBonus": "también como acción adicional",
-  "fact.kiSaveDc": "CD de salvación del ki: {dc}"
+  "fact.kiSaveDc": "CD de salvación del ki: {dc}",
+  "play.martialDc": "CD de salvación marcial"
 }

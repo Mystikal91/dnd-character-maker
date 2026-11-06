@@ -450,6 +450,13 @@ fieldset.segmented {
   .play-quick .ps-stat small {
     white-space: nowrap;
   }
+
+  /* The initiative rolls when tapped: its small "i" sits beside it and opens how it adds up. */
+  .play-quick .qs-pair {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.1rem;
+  }
 }
 
 @container play (max-width: 41.99rem) {

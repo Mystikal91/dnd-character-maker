@@ -1423,5 +1423,6 @@
   "play.nextRoundHint": "Indique les rounds restants d’une condition pour les compter",
   "play.unarmed": "Frappe à mains nues",
   "play.unarmedBonus": "aussi en action bonus",
-  "fact.kiSaveDc": "DD des jets de sauvegarde du ki : {dc}"
+  "fact.kiSaveDc": "DD des jets de sauvegarde du ki : {dc}",
+  "play.martialDc": "DD de sauvegarde martial"
 }

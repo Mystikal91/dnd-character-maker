@@ -67,6 +67,8 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   level: number;
   proficiencyBonus: number;
   initiative: number;
+  /** The save DC of martial features (maneuvers): 8 + proficiency + Strength or Dexterity, the better. */
+  martialSaveDc: number;
   /**
    * The bonuses that features and choices give right now, with where each comes from: armor
    * class, speed, initiative, hit points per level, and attack and damage rolls.
@@ -627,6 +629,7 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
   return {
     ...equipment,
     ...checks,
+    martialSaveDc: 8 + proficiencyBonus + Math.max(abilities.str.modifier, abilities.dex.modifier),
     initiative:
       overrideNumber(character, "initiative") ??
       abilities.dex.modifier + halfBonus(halves, "dex", proficiencyBonus) + total(initiativeMods),

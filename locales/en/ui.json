@@ -1423,5 +1423,6 @@
   "play.nextRoundHint": "Set the rounds left of a condition to count them",
   "play.unarmed": "Unarmed strike",
   "play.unarmedBonus": "also as a bonus action",
-  "fact.kiSaveDc": "Ki save DC: {dc}"
+  "fact.kiSaveDc": "Ki save DC: {dc}",
+  "play.martialDc": "Martial save DC"
 }

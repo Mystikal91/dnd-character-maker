@@ -21,6 +21,14 @@ function nameOf(target: ExplainTarget): string {
       return ui("sheet.initiative");
     case "speed":
       return ui("sheet.speed");
+    case "passivePerception":
+      return ui("sheet.passivePerception");
+    case "spellDc":
+      return ui("sheet.spellSaveDc");
+    case "spellAttack":
+      return ui("sheet.spellAttack");
+    case "martialDc":
+      return ui("play.martialDc");
     case "save":
       return `${c.name(`${ruleset}:ability/${target.ability}`)} · ${ui("sheet.savingThrow")}`;
     case "skill":
@@ -51,6 +59,23 @@ export function ExplainButton({
       }}
     >
       {children}
+    </button>
+  );
+}
+
+/** A small "i" that opens how a number adds up, for a number whose own tap does something else (a roll). */
+export function ExplainInfo({ target }: { target: ExplainTarget }) {
+  return (
+    <button
+      type="button"
+      class="info-btn"
+      aria-label={ui("explain.open", { what: nameOf(target) })}
+      aria-haspopup="dialog"
+      onClick={() => {
+        explaining.value = target;
+      }}
+    >
+      i
     </button>
   );
 }
