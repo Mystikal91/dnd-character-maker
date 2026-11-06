@@ -834,7 +834,6 @@
   "levelUp.existing": "{class} : niveau {from} → {to}",
   "levelUp.newClass": "{class} (nouvelle classe, niveau 1)",
   "levelUp.addClass": "Ajouter une nouvelle classe",
-  "levelUp.needs": "{class} demande {ability} {minimum}",
   "levelUp.hp": "Points de vie",
   "levelUp.hpAverage": "Prendre la moyenne : +{value}",
   "levelUp.hpRoll": "Lancer un d{die}",

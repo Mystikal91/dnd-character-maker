@@ -158,7 +158,8 @@ function Choose({ c }: { c: Content }) {
   const summary = previewLevelUp(ch, selected.classId, hp, c.index);
   const needsRoll = mode === "roll" && rolled === undefined;
   const mine = options.filter((o) => !o.isNew);
-  const others = options.filter((o) => o.isNew);
+  // A class whose minimums the character does not reach cannot be taken: it is not listed at all.
+  const others = options.filter((o) => o.isNew && o.unmet.length === 0);
   // A class that is picked is never hidden.
   const openNew = showNew || selected.isNew;
 
@@ -174,19 +175,6 @@ function Choose({ c }: { c: Content }) {
         }}
       />
       <span>{o.isNew ? c.name(o.classId) : optionLabel(o, c)}</span>
-      {o.unmet.length > 0 && (
-        <small class="note">
-          {o.unmet
-            .map((u) =>
-              ui("levelUp.needs", {
-                class: c.name(u.classId),
-                ability: c.text(`${ch.ruleset}:ability/${u.ability}`, "abbreviation") ?? u.ability,
-                minimum: u.minimum,
-              }),
-            )
-            .join(" · ")}
-        </small>
-      )}
     </label>
   );
 
