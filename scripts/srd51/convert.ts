@@ -592,6 +592,48 @@ function normalizePrerequisite(p: Raw): Raw {
   throw new Error(`Unknown feature prerequisite: ${p.type}`);
 }
 
+/**
+ * The class features the SRD lists once for each step of an improvement ("Brutal Critical (1 die)",
+ * "(2 dice)", "(3 dice)"): each one says the same and replaces the one before. The classes and the names
+ * (without the part in brackets) are written here by hand: other features that come back at a level
+ * (Ability Score Improvement, Expertise, Metamagic, Mystic Arcanum...) add to the earlier ones and stay out.
+ */
+const REPLACING_SERIES: [classIndex: string, name: string][] = [
+  ["barbarian", "Brutal Critical"],
+  ["bard", "Bardic Inspiration"],
+  ["bard", "Song of Rest"],
+  ["cleric", "Channel Divinity"],
+  ["cleric", "Destroy Undead"],
+  ["druid", "Wild Shape"],
+  ["fighter", "Action Surge"],
+  ["fighter", "Extra Attack"],
+  ["fighter", "Indomitable"],
+  ["monk", "Unarmored Movement"],
+  ["ranger", "Favored Enemy"],
+  ["ranger", "Natural Explorer"],
+];
+
+/** Gives each feature of a replacing series the one before it in `data.replaces`. */
+function linkReplacingSeries(raw: Raw[], entries: Entry[]): void {
+  for (const [classIndex, name] of REPLACING_SERIES) {
+    const members = raw
+      .filter(
+        (f) =>
+          f.class.index === classIndex &&
+          !f.subclass &&
+          f.name.replace(/\s*\([^)]*\)$/, "") === name,
+      )
+      .sort((a, b) => a.level - b.level);
+    if (members.length === 0) continue; // a source without this class (the tests use a small one)
+    if (members.length < 2) throw new Error(`${classIndex} ${name}: not a series`);
+    members.forEach((f, i) => {
+      const previous = members[i - 1];
+      const entry = entries.find((e) => e.id === id("feature", f.index));
+      if (previous && entry) entry.data.replaces = [id("feature", previous.index)];
+    });
+  }
+}
+
 function convertFeatures(raw: RawSource): Converted {
   const entries: Entry[] = [];
   const strings: Strings = {};
@@ -616,6 +658,7 @@ function convertFeatures(raw: RawSource): Converted {
     strings[`${f.index}.name`] = f.name;
     strings[`${f.index}.desc`] = text(f.desc) ?? "";
   }
+  linkReplacingSeries(raw.features, entries);
   // The Circle of the Land lists the spells of its seven terrains one after the other, eight each,
   // in the order of the terrains: each belongs to its terrain feature.
   const land = (raw.subclasses as Raw[]).find((s) => s.index === "land");

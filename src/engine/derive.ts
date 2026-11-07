@@ -112,6 +112,8 @@ export interface DerivedSheet extends EquipmentResult, ChecksResult {
   resources: ClassResource[];
   /** Features, traits and feats the person hid from the sheet (their effects still apply). */
   hiddenFeatures: string[];
+  /** Entries a better step of the same feature replaces, as `replaced id -> id that replaces it`. */
+  superseded: Record<string, string>;
   /** Class numbers worth showing during play: sneak attack dice, rage damage and the like. */
   facts: ClassFact[];
   /** Damage the classes add to attacks: sneak attack, rage, smite... */
@@ -182,7 +184,7 @@ export function deriveSheet(character: Character, index: PackIndex): DerivedShee
   const sheet = beast
     ? withBeastChecks(deriveForm(inBeastShape(character, beast), index), beast)
     : deriveForm(character, index);
-  return withFeatureSettings(sheet, character.featureSettings);
+  return withFeatureSettings(sheet, character.featureSettings, index);
 }
 
 function deriveForm(character: Character, index: PackIndex): DerivedSheet {
@@ -696,6 +698,7 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
     spellcasters: casters,
     resources,
     hiddenFeatures: [],
+    superseded: {},
     facts,
     extraDamage: [
       ...extraDamage,

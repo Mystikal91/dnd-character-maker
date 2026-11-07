@@ -99,6 +99,13 @@ export function RulesText({
   tag?: string | undefined;
 }) {
   const activation = id ? content.value?.index.get(id)?.data.activation : undefined;
+  // A step of an improving feature says which ones it replaces; one the person turned back on says what replaced it.
+  const superseded = id ? shownSheet.value?.superseded : undefined;
+  const replacedBy = id ? superseded?.[id] : undefined;
+  const replaces = id
+    ? Object.entries(superseded ?? {}).flatMap(([old, by]) => (by === id ? [old] : []))
+    : [];
+  const nameOf = (entry: string) => content.value?.name(entry) ?? entry;
   return (
     <details>
       <summary>
@@ -111,6 +118,14 @@ export function RulesText({
       </summary>
       <Paragraphs text={text} />
       <FeatureValues values={id ? shownSheet.value?.featureValues[id] : undefined} />
+      {replaces.length > 0 && (
+        <p class="muted replaces-note">
+          {ui("feature.replaces", { names: replaces.map(nameOf).join(", ") })}
+        </p>
+      )}
+      {replacedBy && (
+        <p class="muted replaces-note">{ui("feature.replacedBy", { name: nameOf(replacedBy) })}</p>
+      )}
     </details>
   );
 }

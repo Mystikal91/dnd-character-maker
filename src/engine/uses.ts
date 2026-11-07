@@ -1,7 +1,9 @@
+import type { Entry } from "../data/schema";
 import type { SourcedEffect } from "./choices";
 import { MAX_CUSTOM_USES } from "./custom";
 import type { DerivedSheet } from "./derive";
 import { type FeatureValueState, termNumber } from "./featureValues";
+import { supersededBy } from "./replaced";
 import type { ClassResource, ResourceRecovery } from "./resources";
 
 /**
@@ -92,12 +94,19 @@ export function deriveUses(sourced: SourcedEffect[], state: FeatureValueState): 
 /**
  * Applies the settings of the person to a sheet: the uses they set replace those the data gives,
  * and the entries they hid are listed. Settings of entries the character does not have are ignored.
+ * An entry that a better step of the same feature replaces (`superseded`) is hidden too, unless
+ * the person turned it back on (`hidden: false`).
  */
 export function withFeatureSettings(
   sheet: DerivedSheet,
   settings: Record<string, FeatureSetting> | undefined,
+  index?: ReadonlyMap<string, Entry>,
 ): DerivedSheet {
-  if (!settings) return sheet;
+  const superseded = index
+    ? supersededBy([...sheet.traits, ...sheet.feats, ...sheet.features], index)
+    : {};
+  const replaced = Object.keys(superseded).filter((id) => settings?.[id]?.hidden !== false);
+  if (!settings) return { ...sheet, superseded, hiddenFeatures: replaced };
   const have = new Set([...sheet.traits, ...sheet.feats, ...sheet.features]);
   let resources = sheet.resources;
   const hidden: string[] = [];
@@ -111,7 +120,7 @@ export function withFeatureSettings(
       continue;
     }
     if (!have.has(id)) continue;
-    if (setting.hidden) hidden.push(id);
+    if (setting.hidden && !hidden.includes(id)) hidden.push(id);
     if (setting.uses === undefined && setting.recharge === undefined) continue;
     const current = countedBy(resources, id);
     const max = Math.min(setting.uses ?? current?.max ?? 0, MAX_CUSTOM_USES);
@@ -133,7 +142,8 @@ export function withFeatureSettings(
             },
       );
   }
-  return { ...sheet, resources, hiddenFeatures: hidden };
+  for (const id of replaced) if (!hidden.includes(id)) hidden.push(id);
+  return { ...sheet, resources, superseded, hiddenFeatures: hidden };
 }
 
 /** The resource that counts the uses of an entry: its own, or a class one that stands for it. */

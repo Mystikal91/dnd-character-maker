@@ -10,7 +10,9 @@ function change(id: string, patch: Partial<FeatureSetting>) {
   updateCharacter((d) => {
     const next: FeatureSetting = { ...d.featureSettings?.[id], ...patch };
     const clean = Object.fromEntries(
-      Object.entries(next).filter(([, value]) => value !== undefined && value !== false),
+      Object.entries(next).filter(
+        ([key, value]) => value !== undefined && (value !== false || key === "hidden"),
+      ),
     ) as FeatureSetting;
     const others = Object.entries(d.featureSettings ?? {}).filter(([key]) => key !== id);
     const all = Object.keys(clean).length === 0 ? others : [...others, [id, clean] as const];
@@ -47,7 +49,9 @@ export function FeaturesStep() {
               {group.ids.map((id) => {
                 const setting = settings[id] ?? {};
                 const counted = countedBy(s.resources, id);
-                const hidden = setting.hidden === true;
+                const replacedBy = s.superseded[id];
+                // A step that a better one replaces is hidden unless the person turned it back on.
+                const hidden = replacedBy ? setting.hidden !== false : setting.hidden === true;
                 return (
                   <details class={`feature-row${hidden ? " is-hidden" : ""}`} key={id}>
                     <summary>
@@ -56,7 +60,8 @@ export function FeaturesStep() {
                         {" "}
                         {counted &&
                           `· ${counted.max} × ${ui(counted.recovery === "short" ? "play.recoverShort" : "play.recoverLong")}`}
-                        {hidden && ` · ${ui("features.hiddenTag")}`}
+                        {hidden &&
+                          ` · ${replacedBy ? ui("features.replacedTag", { name: c.name(replacedBy) }) : ui("features.hiddenTag")}`}
                       </small>
                     </summary>
                     <Paragraphs text={c.text(id, "desc")} />
@@ -134,10 +139,23 @@ export function FeaturesStep() {
                       <input
                         type="checkbox"
                         checked={hidden}
-                        onChange={(e) => change(id, { hidden: e.currentTarget.checked })}
+                        onChange={(e) =>
+                          change(id, {
+                            hidden: replacedBy
+                              ? e.currentTarget.checked
+                                ? undefined
+                                : false
+                              : e.currentTarget.checked,
+                          })
+                        }
                       />{" "}
                       {ui("features.hide")}
                     </label>
+                    {replacedBy && (
+                      <p class="muted">
+                        {ui("features.replacedHint", { name: c.name(replacedBy) })}
+                      </p>
+                    )}
                   </details>
                 );
               })}

@@ -197,7 +197,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/barbarian",
-        "level": 13
+        "level": 13,
+        "replaces": [
+          "srd51:feature/brutal-critical-1-die"
+        ]
       }
     },
     {
@@ -244,7 +247,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/barbarian",
-        "level": 17
+        "level": 17,
+        "replaces": [
+          "srd51:feature/brutal-critical-2-dice"
+        ]
       }
     },
     {
@@ -572,7 +578,10 @@
       "data": {
         "class": "srd51:class/bard",
         "level": 5,
-        "activation": "bonus"
+        "activation": "bonus",
+        "replaces": [
+          "srd51:feature/bardic-inspiration-d6"
+        ]
       }
     },
     {
@@ -637,7 +646,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/bard",
-        "level": 9
+        "level": 9,
+        "replaces": [
+          "srd51:feature/song-of-rest-d6"
+        ]
       }
     },
     {
@@ -652,7 +664,10 @@
       "data": {
         "class": "srd51:class/bard",
         "level": 10,
-        "activation": "bonus"
+        "activation": "bonus",
+        "replaces": [
+          "srd51:feature/bardic-inspiration-d8"
+        ]
       }
     },
     {
@@ -843,7 +858,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/bard",
-        "level": 13
+        "level": 13,
+        "replaces": [
+          "srd51:feature/song-of-rest-d8"
+        ]
       }
     },
     {
@@ -900,7 +918,10 @@
       "data": {
         "class": "srd51:class/bard",
         "level": 15,
-        "activation": "bonus"
+        "activation": "bonus",
+        "replaces": [
+          "srd51:feature/bardic-inspiration-d10"
+        ]
       }
     },
     {
@@ -918,7 +939,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/bard",
-        "level": 17
+        "level": 17,
+        "replaces": [
+          "srd51:feature/song-of-rest-d10"
+        ]
       }
     },
     {
@@ -1106,7 +1130,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/cleric",
-        "level": 6
+        "level": 6,
+        "replaces": [
+          "srd51:feature/channel-divinity-1-rest"
+        ]
       }
     },
     {
@@ -1157,7 +1184,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/cleric",
-        "level": 8
+        "level": 8,
+        "replaces": [
+          "srd51:feature/destroy-undead-cr-1-2-or-below"
+        ]
       }
     },
     {
@@ -1226,7 +1256,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/cleric",
-        "level": 11
+        "level": 11,
+        "replaces": [
+          "srd51:feature/destroy-undead-cr-1-or-below"
+        ]
       }
     },
     {
@@ -1244,7 +1277,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/cleric",
-        "level": 14
+        "level": 14,
+        "replaces": [
+          "srd51:feature/destroy-undead-cr-2-or-below"
+        ]
       }
     },
     {
@@ -1262,7 +1298,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/cleric",
-        "level": 17
+        "level": 17,
+        "replaces": [
+          "srd51:feature/destroy-undead-cr-3-or-below"
+        ]
       }
     },
     {
@@ -1294,7 +1333,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/cleric",
-        "level": 18
+        "level": 18,
+        "replaces": [
+          "srd51:feature/channel-divinity-2-rest"
+        ]
       }
     },
     {
@@ -1858,7 +1900,10 @@
       "data": {
         "class": "srd51:class/druid",
         "level": 4,
-        "activation": "action"
+        "activation": "action",
+        "replaces": [
+          "srd51:feature/wild-shape-cr-1-4-or-below-no-flying-or-swim-speed"
+        ]
       }
     },
     {
@@ -1921,7 +1966,10 @@
       "data": {
         "class": "srd51:class/druid",
         "level": 8,
-        "activation": "action"
+        "activation": "action",
+        "replaces": [
+          "srd51:feature/wild-shape-cr-1-2-or-below-no-flying-speed"
+        ]
       }
     },
     {
@@ -2413,7 +2461,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/fighter",
-        "level": 11
+        "level": 11,
+        "replaces": [
+          "srd51:feature/extra-attack-1"
+        ]
       }
     },
     {
@@ -2431,7 +2482,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/fighter",
-        "level": 13
+        "level": 13,
+        "replaces": [
+          "srd51:feature/indomitable-1-use"
+        ]
       }
     },
     {
@@ -2482,7 +2536,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/fighter",
-        "level": 17
+        "level": 17,
+        "replaces": [
+          "srd51:feature/action-surge-1-use"
+        ]
       }
     },
     {
@@ -2491,7 +2548,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/fighter",
-        "level": 17
+        "level": 17,
+        "replaces": [
+          "srd51:feature/indomitable-2-uses"
+        ]
       }
     },
     {
@@ -2528,7 +2588,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/fighter",
-        "level": 20
+        "level": 20,
+        "replaces": [
+          "srd51:feature/extra-attack-2"
+        ]
       }
     },
     {
@@ -2798,7 +2861,10 @@
       "effects": [],
       "data": {
         "class": "srd51:class/monk",
-        "level": 9
+        "level": 9,
+        "replaces": [
+          "srd51:feature/unarmored-movement-1"
+        ]
       }
     },
     {
@@ -3738,7 +3804,10 @@
               ]
             }
           }
-        }
+        },
+        "replaces": [
+          "srd51:feature/favored-enemy-1-type"
+        ]
       }
     },
     {
@@ -3766,7 +3835,10 @@
               ]
             }
           }
-        }
+        },
+        "replaces": [
+          "srd51:feature/natural-explorer-1-terrain-type"
+        ]
       }
     },
     {
@@ -3905,7 +3977,10 @@
               ]
             }
           }
-        }
+        },
+        "replaces": [
+          "srd51:feature/natural-explorer-2-terrain-types"
+        ]
       }
     },
     {
@@ -4035,7 +4110,10 @@
               ]
             }
           }
-        }
+        },
+        "replaces": [
+          "srd51:feature/favored-enemy-2-types"
+        ]
       }
     },
     {
