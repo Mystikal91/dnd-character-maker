@@ -6,6 +6,7 @@ import { convertText } from "../i18n/units";
 import { type UserPackRecord, orderUserPacks } from "../storage/packs";
 import { autoText, displayedText } from "../translate/auto";
 import { applyOverlays } from "./overlays";
+import { spellTerm } from "./spellTerms";
 
 /** Loaded rules content plus helpers to read its translated texts. */
 export interface Content {
@@ -130,6 +131,11 @@ export async function loadContent(
     const key = `${id}.${field}`;
     const value = texts.get(key);
     if (value === undefined) return undefined;
+    if (english.has(key)) {
+      // The standard words of a spell (1 action, Instantaneous...) are known: no machine needed.
+      const term = spellTerm(key.slice(key.lastIndexOf(".") + 1), value, locales[0] ?? "en");
+      if (term !== undefined) return term;
+    }
     const converted = convertText(value);
     return english.has(key) ? autoText(key, converted) : converted;
   };
@@ -150,6 +156,10 @@ export async function loadContent(
       const key = `${id}.${field}`;
       const value = texts.get(key);
       if (value === undefined) return undefined;
+      if (english.has(key)) {
+        const term = spellTerm(key.slice(key.lastIndexOf(".") + 1), value, locales[0] ?? "en");
+        if (term !== undefined) return term;
+      }
       const converted = convertText(value);
       return english.has(key) ? displayedText(key, converted) : converted;
     },
