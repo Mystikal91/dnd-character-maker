@@ -3,6 +3,11 @@
  * Pure functions: no file or network access, so they can be unit tested.
  */
 import type { Ability, Effect, Entry, ProficiencyCategory } from "../../src/data/schema";
+import type {
+  StartingChoice,
+  StartingPart,
+  StartingWealth,
+} from "../../src/data/startingEquipment";
 import {
   ACTIVATION,
   FEATURE_EFFECTS,
@@ -66,6 +71,62 @@ export type ConvertedPack = Record<
 >;
 
 const id = (kind: string, slug: string) => `${PACK}:${kind}/${slug}`;
+/** One part of a starting equipment option: a counted item, a group of them, or a pick from a category. */
+function startingParts(option: Raw): StartingPart[] {
+  switch (option.option_type) {
+    case "counted_reference":
+      return [{ item: id("item", option.of.index), quantity: option.count }];
+    case "multiple":
+      return (option.items as Raw[]).flatMap(startingParts);
+    case "choice":
+      return [
+        { category: option.choice.from.equipment_category.index, count: option.choice.choose },
+      ];
+    default:
+      throw new Error(`unknown starting equipment option ${option.option_type}`);
+  }
+}
+
+/** The choices the rules give for starting equipment, as the sheet asks them (take one option of each). */
+export function startingChoices(rawOptions: Raw[]): StartingChoice[] {
+  return rawOptions.map((option) => {
+    if (option.choose !== 1)
+      throw new Error("a starting equipment choice that takes more than one");
+    const from = option.from;
+    if (from.option_set_type === "equipment_category")
+      return {
+        options: [{ items: [{ category: from.equipment_category.index, count: 1 }] }],
+      };
+    return {
+      options: (from.options as Raw[]).map((o) => ({
+        items: startingParts(o),
+        ...(o.prerequisites?.[0]?.proficiency && {
+          requires: o.prerequisites[0].proficiency.index,
+        }),
+      })),
+    };
+  });
+}
+
+/**
+ * The gold a class may start with instead of its equipment (the Player's Handbook table, which the
+ * SRD 5.1 does not print): the dice times ten, except the monk's.
+ */
+const STARTING_WEALTH: Record<string, StartingWealth> = {
+  barbarian: { dice: "2d4", multiplier: 10 },
+  bard: { dice: "5d4", multiplier: 10 },
+  cleric: { dice: "5d4", multiplier: 10 },
+  druid: { dice: "2d4", multiplier: 10 },
+  fighter: { dice: "5d4", multiplier: 10 },
+  monk: { dice: "5d4", multiplier: 1 },
+  paladin: { dice: "5d4", multiplier: 10 },
+  ranger: { dice: "5d4", multiplier: 10 },
+  rogue: { dice: "4d4", multiplier: 10 },
+  sorcerer: { dice: "3d4", multiplier: 10 },
+  warlock: { dice: "4d4", multiplier: 10 },
+  wizard: { dice: "4d4", multiplier: 10 },
+};
+
 const text = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value.join("\n\n") : value;
 
@@ -317,7 +378,7 @@ function convertBackgrounds(raw: RawSource, ctx: Context): Converted {
           item: id("item", e.equipment.index),
           quantity: e.quantity,
         })),
-        startingEquipmentOptions: cleanData(b.starting_equipment_options),
+        startingChoices: startingChoices(b.starting_equipment_options ?? []),
       },
     });
   }
@@ -440,10 +501,8 @@ function convertClasses(raw: RawSource, ctx: Context): Converted {
 
     const multi = c.multi_classing;
     const options = multi.prerequisite_options;
-    const equipmentOptions = (c.starting_equipment_options as Raw[]).map((option, i) => {
-      const { desc, ...rest } = option;
-      strings[`${c.index}.startingEquipment.${i + 1}`] = desc;
-      return cleanData(rest);
+    (c.starting_equipment_options as Raw[]).forEach((option, i) => {
+      strings[`${c.index}.startingEquipment.${i + 1}`] = option.desc;
     });
     (casting?.info as Raw[] | undefined)?.forEach((info, i) => {
       strings[`${c.index}.spellcasting.${i + 1}.name`] = info.name;
@@ -487,7 +546,8 @@ function convertClasses(raw: RawSource, ctx: Context): Converted {
           item: id("item", e.equipment.index),
           quantity: e.quantity,
         })),
-        startingEquipmentOptions: equipmentOptions,
+        startingChoices: startingChoices(c.starting_equipment_options),
+        ...(STARTING_WEALTH[c.index] && { startingWealth: STARTING_WEALTH[c.index] }),
       },
     });
   }

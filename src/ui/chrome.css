@@ -676,6 +676,36 @@ input:checked + .equip-tag {
   padding-left: 1.2rem;
 }
 
+.start-choice {
+  margin: 0.5rem 0;
+  padding: 0;
+  border: 0;
+}
+
+.start-choice legend {
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.start-option {
+  display: block;
+  padding: 0.15rem 0;
+}
+
+.start-slot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.25rem 0;
+}
+
+.start-slot select {
+  min-width: 10rem;
+  max-width: 100%;
+}
+
 .item-tag {
   margin-left: 0.4rem;
   color: var(--muted);

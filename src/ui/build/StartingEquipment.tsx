@@ -1,9 +1,24 @@
+import { useState } from "preact/hooks";
 import { character, content, updateCharacter } from "../../app/store";
 import type { Content } from "../../content/browser";
 import type { Entry } from "../../data/schema";
+import {
+  type Starting,
+  type StartingChoice,
+  type StartingPart,
+  startingOf,
+} from "../../data/startingEquipment";
 import type { InventoryItem } from "../../engine/character";
 import { addStartingItems } from "../../engine/gear";
-import { ui } from "../../i18n/ui";
+import {
+  type StartingPicks,
+  categoryItems,
+  noPicks,
+  resolveStarting,
+  slotKeys,
+  takenOption,
+} from "../../engine/startingGear";
+import { type UiKey, ui } from "../../i18n/ui";
 
 const MAX_LINES = 12;
 
@@ -18,24 +33,105 @@ function classLines(c: Content, classId: string): string[] {
   return lines;
 }
 
-/** What an entry hands out without a choice. */
-function givenItems(entry: Entry): { item: string; quantity: number }[] {
-  return (entry.data.startingEquipment ?? []) as { item: string; quantity: number }[];
+const partText = (c: Content, part: StartingPart) =>
+  "item" in part
+    ? part.quantity > 1
+      ? `${c.name(part.item)} ×${part.quantity}`
+      : c.name(part.item)
+    : ui(`equipment.cat.${part.category}` as UiKey);
+
+/** What an option hands out, in words ("a light crossbow and 20 bolts"). */
+function optionText(c: Content, choice: StartingChoice, option: number): string {
+  const o = choice.options[option];
+  if (!o) return "";
+  const text = o.items.map((p) => partText(c, p)).join(", ");
+  return o.requires ? `${text} (${ui("equipment.startingNeeds")})` : text;
 }
 
-/** What an entry hands out without a choice, as a short list ("Explorer's Pack, Javelin ×4"). */
-function fixedItems(c: Content, entry: Entry): string {
-  return givenItems(entry)
+interface SectionProps {
+  c: Content;
+  entry: Entry;
+  starting: Starting;
+  picks: StartingPicks;
+  onChange: (picks: StartingPicks) => void;
+}
+
+/** The questions of one class or background: which option to take, and which item of a category. */
+function Questions({ c, entry, starting, picks, onChange }: SectionProps) {
+  return (
+    <>
+      {starting.choices.map((choice, n) => {
+        const taken = takenOption(choice, picks, n);
+        const option = taken === undefined ? undefined : choice.options[taken];
+        const slots = (option?.items ?? []).flatMap((part, p) =>
+          "category" in part ? slotKeys(n, p, part).map((key) => ({ key, part })) : [],
+        );
+        return (
+          <fieldset key={`${entry.id}:${n}`} class="start-choice">
+            {choice.options.length > 1 && (
+              <>
+                <legend>{ui("equipment.startingChoice", { n: String(n + 1) })}</legend>
+                {choice.options.map((_, i) => (
+                  <label key={optionText(c, choice, i)} class="start-option">
+                    <input
+                      type="radio"
+                      name={`${entry.id}:${n}`}
+                      checked={taken === i}
+                      onChange={() => {
+                        const options = [...picks.options];
+                        options[n] = i;
+                        onChange({ ...picks, options });
+                      }}
+                    />{" "}
+                    {optionText(c, choice, i)}
+                  </label>
+                ))}
+              </>
+            )}
+            {slots.map(({ key, part }) => (
+              <label key={key} class="start-slot">
+                <span>
+                  {ui(`equipment.cat.${(part as { category: string }).category}` as UiKey)}
+                </span>
+                <select
+                  value={picks.items[key] ?? ""}
+                  onChange={(e) =>
+                    onChange({ ...picks, items: { ...picks.items, [key]: e.currentTarget.value } })
+                  }
+                >
+                  <option value="">{ui("equipment.startingChoose")}</option>
+                  {categoryItems((part as { category: string }).category, c.index)
+                    .map((id) => ({ id, name: c.name(id) }))
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                </select>
+              </label>
+            ))}
+          </fieldset>
+        );
+      })}
+    </>
+  );
+}
+
+/** A short list of the items an entry gives without a choice ("Explorer's Pack, Javelin ×4"). */
+const fixedText = (c: Content, starting: Starting) =>
+  starting.fixed
     .map((i) => (i.quantity > 1 ? `${c.name(i.item)} ×${i.quantity}` : c.name(i.item)))
     .join(", ");
-}
 
 /**
- * A reminder, in the Equipment step, of what the first class and the background start with:
- * the choices the rules give, as text. What to take is added from the lists below, where a pack
- * adds everything it holds.
+ * The starting equipment of the first class and the background, in the Equipment step: what the
+ * rules give without a choice, a question for each choice they give, and one button that puts it
+ * all in the inventory (a pack adds everything it holds). A class with no choices in the data keeps
+ * the text of the rules.
  */
 export function StartingEquipment() {
+  const [all, setAll] = useState<Record<string, StartingPicks>>({});
   const c = content.value;
   const ch = character.value;
   if (!c) return null;
@@ -43,47 +139,82 @@ export function StartingEquipment() {
   const cls = classId ? c.index.get(classId) : undefined;
   const background = ch.choices.background ? c.index.get(ch.choices.background) : undefined;
 
-  const sections = [
-    cls && classId
-      ? { id: classId, lines: classLines(c, classId), also: fixedItems(c, cls) }
-      : undefined,
-    background ? { id: background.id, lines: [], also: fixedItems(c, background) } : undefined,
-  ].filter((s): s is { id: string; lines: string[]; also: string } =>
-    Boolean(s && (s.lines.length > 0 || s.also)),
-  );
+  const sections = [cls, background]
+    .flatMap((entry) => (entry ? [{ entry, starting: startingOf(entry) }] : []))
+    .map((s) => ({
+      ...s,
+      lines:
+        s.starting.choices.length === 0 && s.entry.kind === "class"
+          ? classLines(c, s.entry.id)
+          : [],
+    }))
+    .filter(
+      (s) => s.starting.fixed.length > 0 || s.starting.choices.length > 0 || s.lines.length > 0,
+    );
   if (sections.length === 0) return null;
-  const given = [cls, background].flatMap((e) => (e ? givenItems(e) : []));
+
+  const resolved = sections.map((s) =>
+    resolveStarting(s.starting.choices, all[s.entry.id] ?? noPicks()),
+  );
+  const given = sections.flatMap((s, i) => [...s.starting.fixed, ...(resolved[i]?.items ?? [])]);
+  const complete = resolved.every((r) => r.complete);
   // Already added once: everything it would put in the inventory is there in full.
   const wanted: InventoryItem[] = [];
   addStartingItems(wanted, c.index, given);
-  const added = wanted.every(
-    (w) => (ch.inventory.find((i) => i.itemId === w.itemId)?.quantity ?? 0) >= w.quantity,
-  );
+  const added =
+    wanted.length > 0 &&
+    wanted.every(
+      (w) => (ch.inventory.find((i) => i.itemId === w.itemId)?.quantity ?? 0) >= w.quantity,
+    );
 
   return (
     <details class="starting-equipment" open>
       <summary>{ui("equipment.starting")}</summary>
       <p class="muted">{ui("equipment.startingHint")}</p>
-      {sections.map((s) => (
-        <section key={s.id}>
-          <h5>{c.name(s.id)}</h5>
-          <ul>
-            {s.lines.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-            {s.also && <li>{ui("equipment.startingAlso", { items: s.also })}</li>}
-          </ul>
-        </section>
-      ))}
+      {sections.map((s) => {
+        const wealth = s.starting.wealth;
+        const fixed = fixedText(c, s.starting);
+        return (
+          <section key={s.entry.id}>
+            <h5>{c.name(s.entry.id)}</h5>
+            {s.lines.length > 0 && (
+              <ul>
+                {s.lines.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            )}
+            {fixed && <p>{ui("equipment.startingAlso", { items: fixed })}</p>}
+            <Questions
+              c={c}
+              entry={s.entry}
+              starting={s.starting}
+              picks={all[s.entry.id] ?? noPicks()}
+              onChange={(p) => setAll({ ...all, [s.entry.id]: p })}
+            />
+            {wealth && (
+              <p class="muted">
+                {ui("equipment.startingWealth", {
+                  amount:
+                    wealth.multiplier > 1 ? `${wealth.dice} × ${wealth.multiplier}` : wealth.dice,
+                })}
+              </p>
+            )}
+          </section>
+        );
+      })}
       {given.length > 0 && (
-        <button
-          type="button"
-          class="secondary"
-          disabled={added}
-          onClick={() => updateCharacter((d) => addStartingItems(d.inventory, c.index, given))}
-        >
-          {ui("equipment.startingAdd")}
-        </button>
+        <>
+          <button
+            type="button"
+            class="secondary"
+            disabled={added || !complete}
+            onClick={() => updateCharacter((d) => addStartingItems(d.inventory, c.index, given))}
+          >
+            {ui("equipment.startingAdd")}
+          </button>
+          {!complete && <p class="muted">{ui("equipment.startingIncomplete")}</p>}
+        </>
       )}
     </details>
   );

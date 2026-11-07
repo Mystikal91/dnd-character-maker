@@ -332,68 +332,52 @@
             "quantity": 4
           }
         ],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "greataxe"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/greataxe",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "any martial melee weapon",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "martial-melee-weapons"
-                      }
-                    }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "martial-melee-weapons",
+                    "count": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 2,
-                  "of": {
-                    "index": "handaxe"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/handaxe",
+                    "quantity": 2
                   }
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "any simple weapon",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "simple-weapons"
-                      }
-                    }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "simple-weapons",
+                    "count": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "startingWealth": {
+          "dice": "2d4",
+          "multiplier": 10
+        }
       }
     },
     {
@@ -1101,98 +1085,80 @@
             "quantity": 1
           }
         ],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "rapier"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/rapier",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "longsword"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/longsword",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "any simple weapon",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "simple-weapons"
-                      }
-                    }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "simple-weapons",
+                    "count": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "diplomats-pack"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/diplomats-pack",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "entertainers-pack"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/entertainers-pack",
+                    "quantity": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "lute"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/lute",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "any other musical instrument",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "musical-instruments"
-                      }
-                    }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "musical-instruments",
+                    "count": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "startingWealth": {
+          "dice": "5d4",
+          "multiplier": 10
+        }
       }
     },
     {
@@ -1740,152 +1706,118 @@
             "quantity": 1
           }
         ],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "mace"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/mace",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "warhammer"
-                  },
-                  "prerequisites": [
-                    {
-                      "type": "proficiency",
-                      "proficiency": {
-                        "index": "warhammers"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "scale-mail"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/warhammer",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "leather-armor"
-                  }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "chain-mail"
-                  },
-                  "prerequisites": [
-                    {
-                      "type": "proficiency",
-                      "proficiency": {
-                        "index": "chain-mail"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "multiple",
-                  "items": [
-                    {
-                      "optionType": "counted_reference",
-                      "count": 1,
-                      "of": {
-                        "index": "crossbow-light"
-                      }
-                    },
-                    {
-                      "optionType": "counted_reference",
-                      "count": 20,
-                      "of": {
-                        "index": "crossbow-bolt"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "any simple weapon",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "simple-weapons"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "priests-pack"
-                  }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "explorers-pack"
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "equipment_category",
-              "equipmentCategory": {
-                "index": "holy-symbols"
+                ],
+                "requires": "warhammers"
               }
-            }
+            ]
+          },
+          {
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/scale-mail",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/leather-armor",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/chain-mail",
+                    "quantity": 1
+                  }
+                ],
+                "requires": "chain-mail"
+              }
+            ]
+          },
+          {
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/crossbow-light",
+                    "quantity": 1
+                  },
+                  {
+                    "item": "srd51:item/crossbow-bolt",
+                    "quantity": 20
+                  }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "simple-weapons",
+                    "count": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/priests-pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/explorers-pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "options": [
+              {
+                "items": [
+                  {
+                    "category": "holy-symbols",
+                    "count": 1
+                  }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "startingWealth": {
+          "dice": "5d4",
+          "multiplier": 10
+        }
       }
     },
     {
@@ -2494,78 +2426,64 @@
             "quantity": 1
           }
         ],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "shield"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/shield",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "any simple weapon",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "simple-weapons"
-                      }
-                    }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "simple-weapons",
+                    "count": 1
                   }
-                }
-              ]
-            }
-          },
-          {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "scimitar"
-                  }
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "any simple melee weapon",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "simple-melee-weapons"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "equipment_category",
-              "equipmentCategory": {
-                "index": "druidic-foci"
+                ]
               }
-            }
+            ]
+          },
+          {
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/scimitar",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "simple-melee-weapons",
+                    "count": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "options": [
+              {
+                "items": [
+                  {
+                    "category": "druidic-foci",
+                    "count": 1
+                  }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "startingWealth": {
+          "dice": "2d4",
+          "multiplier": 10
+        }
       }
     },
     {
@@ -2890,157 +2808,108 @@
           }
         ],
         "startingEquipment": [],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "chain-mail"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/chain-mail",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "multiple",
-                  "items": [
-                    {
-                      "optionType": "counted_reference",
-                      "count": 1,
-                      "of": {
-                        "index": "leather-armor"
-                      }
-                    },
-                    {
-                      "optionType": "counted_reference",
-                      "count": 1,
-                      "of": {
-                        "index": "longbow"
-                      }
-                    },
-                    {
-                      "optionType": "counted_reference",
-                      "count": 20,
-                      "of": {
-                        "index": "arrow"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/leather-armor",
+                    "quantity": 1
+                  },
+                  {
+                    "item": "srd51:item/longbow",
+                    "quantity": 1
+                  },
+                  {
+                    "item": "srd51:item/arrow",
+                    "quantity": 20
+                  }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "multiple",
-                  "items": [
-                    {
-                      "optionType": "choice",
-                      "choice": {
-                        "desc": "a martial weapon",
-                        "choose": 1,
-                        "type": "equipment",
-                        "from": {
-                          "optionSetType": "equipment_category",
-                          "equipmentCategory": {
-                            "index": "martial-weapons"
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "optionType": "counted_reference",
-                      "count": 1,
-                      "of": {
-                        "index": "shield"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "two martial weapons",
-                    "choose": 2,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "martial-weapons"
-                      }
-                    }
+            "options": [
+              {
+                "items": [
+                  {
+                    "category": "martial-weapons",
+                    "count": 1
+                  },
+                  {
+                    "item": "srd51:item/shield",
+                    "quantity": 1
                   }
-                }
-              ]
-            }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "martial-weapons",
+                    "count": 2
+                  }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "multiple",
-                  "items": [
-                    {
-                      "optionType": "counted_reference",
-                      "count": 1,
-                      "of": {
-                        "index": "crossbow-light"
-                      }
-                    },
-                    {
-                      "optionType": "counted_reference",
-                      "count": 20,
-                      "of": {
-                        "index": "crossbow-bolt"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 2,
-                  "of": {
-                    "index": "handaxe"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/crossbow-light",
+                    "quantity": 1
+                  },
+                  {
+                    "item": "srd51:item/crossbow-bolt",
+                    "quantity": 20
                   }
-                }
-              ]
-            }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/handaxe",
+                    "quantity": 2
+                  }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "dungeoneers-pack"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/dungeoneers-pack",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "explorers-pack"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/explorers-pack",
+                    "quantity": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "startingWealth": {
+          "dice": "5d4",
+          "multiplier": 10
+        }
       }
     },
     {
@@ -3456,61 +3325,52 @@
             "quantity": 10
           }
         ],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "shortsword"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/shortsword",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "any simple weapon",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "simple-weapons"
-                      }
-                    }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "simple-weapons",
+                    "count": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "dungeoneers-pack"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/dungeoneers-pack",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "explorers-pack"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/explorers-pack",
+                    "quantity": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "startingWealth": {
+          "dice": "5d4",
+          "multiplier": 1
+        }
       }
     },
     {
@@ -4020,120 +3880,88 @@
             "quantity": 1
           }
         ],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "multiple",
-                  "items": [
-                    {
-                      "optionType": "choice",
-                      "choice": {
-                        "desc": "a martial weapon",
-                        "choose": 1,
-                        "type": "equipment",
-                        "from": {
-                          "optionSetType": "equipment_category",
-                          "equipmentCategory": {
-                            "index": "martial-weapons"
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "optionType": "counted_reference",
-                      "count": 1,
-                      "of": {
-                        "index": "shield"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "two martial weapons",
-                    "choose": 2,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "martial-weapons"
-                      }
-                    }
+            "options": [
+              {
+                "items": [
+                  {
+                    "category": "martial-weapons",
+                    "count": 1
+                  },
+                  {
+                    "item": "srd51:item/shield",
+                    "quantity": 1
                   }
-                }
-              ]
-            }
-          },
-          {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 5,
-                  "of": {
-                    "index": "javelin"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "martial-weapons",
+                    "count": 2
                   }
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "any simple weapon",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "simple-weapons"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "priests-pack"
-                  }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "explorers-pack"
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "equipment_category",
-              "equipmentCategory": {
-                "index": "holy-symbols"
+                ]
               }
-            }
+            ]
+          },
+          {
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/javelin",
+                    "quantity": 5
+                  }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "simple-weapons",
+                    "count": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/priests-pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/explorers-pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "options": [
+              {
+                "items": [
+                  {
+                    "category": "holy-symbols",
+                    "count": 1
+                  }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "startingWealth": {
+          "dice": "5d4",
+          "multiplier": 10
+        }
       }
     },
     {
@@ -4708,84 +4536,72 @@
             "quantity": 20
           }
         ],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "scale-mail"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/scale-mail",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "leather-armor"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/leather-armor",
+                    "quantity": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 2,
-                  "of": {
-                    "index": "shortsword"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/shortsword",
+                    "quantity": 2
                   }
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "two simple melee weapons",
-                    "choose": 2,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "simple-melee-weapons"
-                      }
-                    }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "simple-melee-weapons",
+                    "count": 2
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "dungeoneers-pack"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/dungeoneers-pack",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "explorers-pack"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/explorers-pack",
+                    "quantity": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "startingWealth": {
+          "dice": "5d4",
+          "multiplier": 10
+        }
       }
     },
     {
@@ -5167,96 +4983,84 @@
             "quantity": 1
           }
         ],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "rapier"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/rapier",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "shortsword"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/shortsword",
+                    "quantity": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "multiple",
-                  "items": [
-                    {
-                      "optionType": "counted_reference",
-                      "count": 1,
-                      "of": {
-                        "index": "shortbow"
-                      }
-                    },
-                    {
-                      "optionType": "counted_reference",
-                      "count": 20,
-                      "of": {
-                        "index": "arrow"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "shortsword"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/shortbow",
+                    "quantity": 1
+                  },
+                  {
+                    "item": "srd51:item/arrow",
+                    "quantity": 20
                   }
-                }
-              ]
-            }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/shortsword",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "burglars-pack"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/burglars-pack",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "dungeoneers-pack"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/dungeoneers-pack",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "explorers-pack"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/explorers-pack",
+                    "quantity": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "startingWealth": {
+          "dice": "4d4",
+          "multiplier": 10
+        }
       }
     },
     {
@@ -6230,103 +6034,76 @@
             "quantity": 2
           }
         ],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "multiple",
-                  "items": [
-                    {
-                      "optionType": "counted_reference",
-                      "count": 1,
-                      "of": {
-                        "index": "crossbow-light"
-                      }
-                    },
-                    {
-                      "optionType": "counted_reference",
-                      "count": 20,
-                      "of": {
-                        "index": "crossbow-bolt"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "any simple weapon",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "simple-weapons"
-                      }
-                    }
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/crossbow-light",
+                    "quantity": 1
+                  },
+                  {
+                    "item": "srd51:item/crossbow-bolt",
+                    "quantity": 20
                   }
-                }
-              ]
-            }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "simple-weapons",
+                    "count": 1
+                  }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "component-pouch"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/component-pouch",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "arcane focus",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "arcane-foci"
-                      }
-                    }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "arcane-foci",
+                    "count": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "dungeoneers-pack"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/dungeoneers-pack",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "explorers-pack"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/explorers-pack",
+                    "quantity": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "startingWealth": {
+          "dice": "3d4",
+          "multiplier": 10
+        }
       }
     },
     {
@@ -6936,113 +6713,88 @@
             "quantity": 1
           }
         ],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "multiple",
-                  "items": [
-                    {
-                      "optionType": "counted_reference",
-                      "count": 1,
-                      "of": {
-                        "index": "crossbow-light"
-                      }
-                    },
-                    {
-                      "optionType": "counted_reference",
-                      "count": 20,
-                      "of": {
-                        "index": "crossbow-bolt"
-                      }
-                    }
-                  ]
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "any simple weapon",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "simple-weapons"
-                      }
-                    }
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/crossbow-light",
+                    "quantity": 1
+                  },
+                  {
+                    "item": "srd51:item/crossbow-bolt",
+                    "quantity": 20
                   }
-                }
-              ]
-            }
-          },
-          {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "component-pouch"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "simple-weapons",
+                    "count": 1
                   }
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "arcane focus",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "arcane-foci"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "scholars-pack"
-                  }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "dungeoneers-pack"
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "equipment_category",
-              "equipmentCategory": {
-                "index": "simple-weapons"
+                ]
               }
-            }
+            ]
+          },
+          {
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/component-pouch",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "arcane-foci",
+                    "count": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/scholars-pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/dungeoneers-pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "options": [
+              {
+                "items": [
+                  {
+                    "category": "simple-weapons",
+                    "count": 1
+                  }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "startingWealth": {
+          "dice": "4d4",
+          "multiplier": 10
+        }
       }
     },
     {
@@ -7553,84 +7305,72 @@
             "quantity": 1
           }
         ],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "quarterstaff"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/quarterstaff",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "dagger"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/dagger",
+                    "quantity": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "component-pouch"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/component-pouch",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "choice",
-                  "choice": {
-                    "desc": "arcane focus",
-                    "choose": 1,
-                    "type": "equipment",
-                    "from": {
-                      "optionSetType": "equipment_category",
-                      "equipmentCategory": {
-                        "index": "arcane-foci"
-                      }
-                    }
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "category": "arcane-foci",
+                    "count": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           },
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "options_array",
-              "options": [
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "scholars-pack"
+            "options": [
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/scholars-pack",
+                    "quantity": 1
                   }
-                },
-                {
-                  "optionType": "counted_reference",
-                  "count": 1,
-                  "of": {
-                    "index": "explorers-pack"
+                ]
+              },
+              {
+                "items": [
+                  {
+                    "item": "srd51:item/explorers-pack",
+                    "quantity": 1
                   }
-                }
-              ]
-            }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "startingWealth": {
+          "dice": "4d4",
+          "multiplier": 10
+        }
       }
     }
   ]

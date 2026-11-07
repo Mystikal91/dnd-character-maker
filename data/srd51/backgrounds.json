@@ -67,16 +67,18 @@
             "quantity": 1
           }
         ],
-        "startingEquipmentOptions": [
+        "startingChoices": [
           {
-            "choose": 1,
-            "type": "equipment",
-            "from": {
-              "optionSetType": "equipment_category",
-              "equipmentCategory": {
-                "index": "holy-symbols"
+            "options": [
+              {
+                "items": [
+                  {
+                    "category": "holy-symbols",
+                    "count": 1
+                  }
+                ]
               }
-            }
+            ]
           }
         ]
       }
