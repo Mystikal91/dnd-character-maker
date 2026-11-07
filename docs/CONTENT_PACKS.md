@@ -120,6 +120,21 @@ list (`expanded`, a warlock patron) and, for a class that does not cast, its own
 and slots per level, like the Eldritch Knight. The homebrew editor offers the third caster's
 tables for a subclass.
 
+Some data fields are not effects:
+
+- `startingChoices` of a class or background: a list of choices, each `{ "options": [{ "items": [...], "requires": "warhammers" }] }`
+  (take one option; `requires` is a proficiency the rules ask for, shown but not enforced). An item is
+  `{ "item": "srd51:item/mace", "quantity": 1 }` or, to pick from a category of the SRD, `{ "category": "martial-weapons", "count": 2 }`
+  (`simple-weapons`, `martial-weapons`, `simple-melee-weapons`, `martial-melee-weapons`, `arcane-foci`, `holy-symbols`,
+  `druidic-foci`, `musical-instruments`). `startingEquipment` is what is given without a choice. The Equipment step asks them.
+- `startingWealth` of a class: `{ "dice": "5d4", "multiplier": 10 }`, the gold it may start with instead. The SRD does not
+  print it, so the SRD classes have none.
+- `replaces` of a feature: ids of the features it makes obsolete (the earlier steps of an improving feature). They are hidden
+  from the sheet while the character has the new one, unless the person turns them back on.
+- `hiddenByDefault: true` on a feature, trait or feat keeps it off the sheet unless the person turns it on (its effects apply).
+- `gear.bundleSize` on an item (ammunition): how many pieces one unit holds; starting equipment counts pieces and the
+  inventory bundles.
+
 The features of the SRD get theirs from `scripts/srd51/effects.ts`; a feature that offers options
 (a fighting style) has a `choice` over its child features. Class features and subclass features
 count once the character has reached their level.
