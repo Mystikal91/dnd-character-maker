@@ -117,8 +117,19 @@ listed. The barding is the word for barding plus the armor's name. `import_item_
 variants of magic items (+1 weapons, potions of giant strength, ioun stones...) from the family name the book uses
 and the words it uses for the variant; the damage types come from the interface texts. `import_proficiencies.py`
 names the proficiencies from the item, skill and ability names already imported, plus a short table (armor and
-weapon groups, the plural of each weapon, vehicles). The descriptions of the equipment and of the variants are not
-imported yet.
+weapon groups, the plural of each weapon, vehicles).
+
+```bash
+python scripts/srd-translations/import_equipment_texts.py it path/to/SRD_CC_v5.1_IT.pdf          # only reports
+python scripts/srd-translations/import_equipment_texts.py it path/to/SRD_CC_v5.1_IT.pdf --write
+```
+
+`import_equipment_texts.py` gives the equipment its descriptions: the book prints each as a paragraph that starts with the
+item's name, so it pairs them by the translated name; the items of a family that share one paragraph (arcane focus, holy
+symbol, artisan's tools, musical instruments, barding, rowboats) are listed in `FAMILIES`, the two saddles split one paragraph,
+and the lines the English data took from the packs ("typically found in a priest's pack") are written in `HOMEMADE`. A paragraph
+that runs into the table after it is cut to as many sentences as the English text has. The descriptions of the
+magic item variants are not imported yet.
 
 The monsters are read from the stat blocks of the same PDFs (`locales/<language>/srd51/monsters.json`),
 after `npm run data:srd51` has written the English ones:
