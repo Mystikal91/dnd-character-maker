@@ -73,6 +73,21 @@ describe("features that replace the earlier steps of themselves", () => {
     );
   });
 
+  it("keeps the Ability Score Improvement off the sheet unless the person asks for it", () => {
+    const asi = (ids: string[]) => ids.filter((id) => id.includes("ability-score-improvement"));
+    const sheet = sheetOf("fighter", 8);
+    const held = asi(sheet.features);
+    expect(held.length).toBeGreaterThan(0);
+    expect(asi(sheet.hiddenFeatures)).toEqual(held);
+    const [first] = held;
+    const shown = sheetOf("fighter", 8, { [first ?? ""]: { hidden: false } });
+    expect(asi(shown.hiddenFeatures)).toEqual(held.filter((id) => id !== first));
+    // and every class has them marked in the data
+    const marked = [...srd51Index.values()].filter((e) => e.data.hiddenByDefault === true);
+    expect(marked.every((e) => e.id.includes("ability-score-improvement"))).toBe(true);
+    expect(marked.length).toBe(63);
+  });
+
   it("finds nothing replaced when the later step is not held", () => {
     const ids = [feature("brutal-critical-1-die")];
     expect(supersededBy(ids, srd51Index)).toEqual({});

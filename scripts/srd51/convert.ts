@@ -643,6 +643,8 @@ function convertFeatures(raw: RawSource): Converted {
       level: f.level,
     };
     if (f.subclass) data.subclass = id("subclass", f.subclass.index);
+    // The sheet has the steps to raise the ability scores of its own: the feature is hidden unless asked for.
+    if (f.name === "Ability Score Improvement") data.hiddenByDefault = true;
     if (f.prerequisites.length) data.prerequisites = f.prerequisites.map(normalizePrerequisite);
     if (f.feature_specific) data.featureSpecific = cleanData(f.feature_specific);
     const activation = ACTIVATION[`feature/${f.index}`];

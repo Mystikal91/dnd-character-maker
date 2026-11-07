@@ -31,7 +31,7 @@ describe("changing the prepared spells", () => {
     )) {
       character.value = complete(build(cls, 5, "human"));
       const { host, done } = await drawn(PlaySpells);
-      const offered = host.textContent?.includes("Change prepared spells") ?? false;
+      const offered = host.textContent?.includes("Change prepared") ?? false;
       done();
       expect(offered, cls).toBe(PREPARING.includes(cls));
       expect(preparingCasters(sheet.value).length > 0, cls).toBe(PREPARING.includes(cls));

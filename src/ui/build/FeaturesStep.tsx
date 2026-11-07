@@ -1,5 +1,6 @@
 import { character, content, sheet, updateCharacter } from "../../app/store";
 import { MAX_CUSTOM_USES } from "../../engine/custom";
+import { isHiddenByDefault } from "../../engine/replaced";
 import { type FeatureSetting, countedBy } from "../../engine/uses";
 import { ui } from "../../i18n/ui";
 import { Paragraphs } from "../sheet/parts";
@@ -50,8 +51,10 @@ export function FeaturesStep() {
                 const setting = settings[id] ?? {};
                 const counted = countedBy(s.resources, id);
                 const replacedBy = s.superseded[id];
-                // A step that a better one replaces is hidden unless the person turned it back on.
-                const hidden = replacedBy ? setting.hidden !== false : setting.hidden === true;
+                // A step that a better one replaces, or one the data keeps off the sheet, is hidden
+                // unless the person turned it back on.
+                const standard = replacedBy !== undefined || isHiddenByDefault(c.index.get(id));
+                const hidden = standard ? setting.hidden !== false : setting.hidden === true;
                 return (
                   <details class={`feature-row${hidden ? " is-hidden" : ""}`} key={id}>
                     <summary>
@@ -141,7 +144,7 @@ export function FeaturesStep() {
                         checked={hidden}
                         onChange={(e) =>
                           change(id, {
-                            hidden: replacedBy
+                            hidden: standard
                               ? e.currentTarget.checked
                                 ? undefined
                                 : false
@@ -151,9 +154,11 @@ export function FeaturesStep() {
                       />{" "}
                       {ui("features.hide")}
                     </label>
-                    {replacedBy && (
+                    {standard && (
                       <p class="muted">
-                        {ui("features.replacedHint", { name: c.name(replacedBy) })}
+                        {replacedBy
+                          ? ui("features.replacedHint", { name: c.name(replacedBy) })
+                          : ui("features.hiddenByDefault")}
                       </p>
                     )}
                   </details>

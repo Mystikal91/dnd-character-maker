@@ -1,4 +1,5 @@
 import { signal } from "@preact/signals";
+import { useLayoutEffect, useRef, useState } from "preact/hooks";
 import {
   addLog,
   changePlay,
@@ -307,20 +308,29 @@ function SpellCard({ row, s }: { row: SpellRow; s: DerivedSheet }) {
   );
 }
 
-/** The spells the character can cast, by level, as cards with what to tap at the table. */
-export function PlaySpells() {
-  const c = content.value;
-  const s = sheet.value;
-  if (!c || !s) return null;
-  const rows = collectSpellRows(c, s);
-  // A class that prepares its spells can have none prepared yet: the button must still be there.
-  if (rows.length === 0 && preparingCasters(s).length === 0) return null;
-  const levels = [...new Set(rows.map((r) => r.level))];
-  const concentrating = character.value.play.concentration;
-
+/**
+ * The button to change the prepared spells and the quick buttons of the levels: in one row when
+ * they fit (the button takes what the buttons leave, a thin line between), else the button takes
+ * the whole row and the levels come under it, centred.
+ */
+function SpellToolbar({ levels }: { levels: number[] }) {
+  const row = useRef<HTMLDivElement>(null);
+  const [wrapped, setWrapped] = useState(false);
+  useLayoutEffect(() => {
+    const el = row.current;
+    if (!el) return;
+    const measure = () => {
+      const [first, second] = [el.children[0], el.children[1]] as (HTMLElement | undefined)[];
+      setWrapped(Boolean(first && second && second.offsetTop > first.offsetTop + 1));
+    };
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const watcher = new ResizeObserver(measure);
+    watcher.observe(el);
+    return () => watcher.disconnect();
+  });
   return (
-    <Panel title={ui("play.spells")} className="spells-panel">
-      {concentrating && <ConcentrationBanner spell={concentrating} />}
+    <div ref={row} class={`spell-toolbar${wrapped ? " wrapped" : ""}`}>
       <PrepareSpellsButton />
       {levels.length > 2 && (
         <nav class="spell-jump" aria-label={ui("play.spellJump")}>
@@ -338,6 +348,25 @@ export function PlaySpells() {
           ))}
         </nav>
       )}
+    </div>
+  );
+}
+
+/** The spells the character can cast, by level, as cards with what to tap at the table. */
+export function PlaySpells() {
+  const c = content.value;
+  const s = sheet.value;
+  if (!c || !s) return null;
+  const rows = collectSpellRows(c, s);
+  // A class that prepares its spells can have none prepared yet: the button must still be there.
+  if (rows.length === 0 && preparingCasters(s).length === 0) return null;
+  const levels = [...new Set(rows.map((r) => r.level))];
+  const concentrating = character.value.play.concentration;
+
+  return (
+    <Panel title={ui("play.spells")} className="spells-panel">
+      {concentrating && <ConcentrationBanner spell={concentrating} />}
+      <SpellToolbar levels={levels} />
       {levels.map((level) => (
         <section key={level} id={levelId(level)} class="spell-group">
           <header class="spell-group-head">

@@ -148,11 +148,63 @@
 }
 
 /* A short row of level numbers to jump to. */
+/* The button to change the prepared spells takes all the room the quick buttons of the levels leave:
+   in one row, with a thin line between them, when they fit; else it takes the whole row and the
+   levels go under it, centred (`.wrapped`, set by the component after measuring). */
+.spell-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.5rem;
+}
+
+.spell-toolbar.wrapped {
+  justify-content: center;
+}
+
+.play .spell-toolbar .prepare-btn:not(.pip-btn):not(.info-btn):not(.link) {
+  flex: 1 1 auto;
+}
+
+.spell-toolbar.wrapped .spell-jump {
+  padding-inline-start: 0;
+  border-inline-start: 0;
+}
+
 .spell-jump {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
   margin: 0 0 0.3rem;
+}
+
+.spell-toolbar .spell-jump {
+  flex: 0 1 auto;
+  margin: 0;
+  padding-inline-start: 0.6rem;
+  border-inline-start: 1px solid var(--border);
+}
+
+/* Tighter than elsewhere so that the button and four or five levels share a row at 375 px. */
+.play .spell-toolbar .prepare-btn:not(.pip-btn):not(.info-btn):not(.link) {
+  padding-inline: 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0;
+}
+
+.play .spell-toolbar .spell-jump-btn:not(.pip-btn):not(.info-btn):not(.link) {
+  min-width: 2rem;
+}
+
+.spell-toolbar .spell-jump {
+  gap: 0.25rem;
+  padding-inline-start: 0.4rem;
+}
+
+.spell-toolbar .spell-jump:first-child {
+  padding-inline-start: 0;
+  border-inline-start: 0;
 }
 
 .play .spell-jump-btn:not(.pip-btn):not(.info-btn):not(.link) {

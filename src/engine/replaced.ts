@@ -6,6 +6,11 @@ export function replacesOf(entry: Entry | undefined): string[] {
   return Array.isArray(raw) ? raw.filter((id): id is string => typeof id === "string") : [];
 }
 
+/** Whether an entry stays off the sheet unless the person turns it on (`data.hiddenByDefault`). */
+export function isHiddenByDefault(entry: Entry | undefined): boolean {
+  return (entry?.data as { hiddenByDefault?: unknown } | undefined)?.hiddenByDefault === true;
+}
+
 /**
  * Which of the entries a character has are replaced by another it has, as `replaced id -> id that
  * replaces it`. A feature the SRD lists for each step ("Brutal Critical (1 die)", "(2 dice)") is

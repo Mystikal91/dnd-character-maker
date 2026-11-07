@@ -83,16 +83,16 @@ export function PrepareSpellsDialog() {
 export function PrepareSpellsButton() {
   if (preparingCasters(sheet.value).length === 0) return null;
   return (
-    <div class="prepare-row">
-      <button
-        type="button"
-        class="card-btn"
-        onClick={() => {
-          prepareAsked.value = "button";
-        }}
-      >
-        {ui("play.prepareButton")}
-      </button>
-    </div>
+    <button
+      type="button"
+      class="card-btn prepare-btn"
+      title={ui("play.prepareButtonFull")}
+      aria-label={ui("play.prepareButtonFull")}
+      onClick={() => {
+        prepareAsked.value = "button";
+      }}
+    >
+      {ui("play.prepareButton")}
+    </button>
   );
 }

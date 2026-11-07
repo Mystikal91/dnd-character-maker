@@ -3,7 +3,7 @@ import type { SourcedEffect } from "./choices";
 import { MAX_CUSTOM_USES } from "./custom";
 import type { DerivedSheet } from "./derive";
 import { type FeatureValueState, termNumber } from "./featureValues";
-import { supersededBy } from "./replaced";
+import { isHiddenByDefault, supersededBy } from "./replaced";
 import type { ClassResource, ResourceRecovery } from "./resources";
 
 /**
@@ -94,8 +94,8 @@ export function deriveUses(sourced: SourcedEffect[], state: FeatureValueState): 
 /**
  * Applies the settings of the person to a sheet: the uses they set replace those the data gives,
  * and the entries they hid are listed. Settings of entries the character does not have are ignored.
- * An entry that a better step of the same feature replaces (`superseded`) is hidden too, unless
- * the person turned it back on (`hidden: false`).
+ * An entry that a better step of the same feature replaces (`superseded`), or that the data keeps
+ * off the sheet (`hiddenByDefault`), is hidden too, unless the person turned it back on (`hidden: false`).
  */
 export function withFeatureSettings(
   sheet: DerivedSheet,
@@ -105,9 +105,13 @@ export function withFeatureSettings(
   const superseded = index
     ? supersededBy([...sheet.traits, ...sheet.feats, ...sheet.features], index)
     : {};
-  const replaced = Object.keys(superseded).filter((id) => settings?.[id]?.hidden !== false);
-  if (!settings) return { ...sheet, superseded, hiddenFeatures: replaced };
   const have = new Set([...sheet.traits, ...sheet.feats, ...sheet.features]);
+  // Hidden unless the person turned them on: the replaced steps, and what the data keeps off the sheet.
+  const byDefault = index ? [...have].filter((id) => isHiddenByDefault(index.get(id))) : [];
+  const replaced = [...new Set([...Object.keys(superseded), ...byDefault])].filter(
+    (id) => settings?.[id]?.hidden !== false,
+  );
+  if (!settings) return { ...sheet, superseded, hiddenFeatures: replaced };
   let resources = sheet.resources;
   const hidden: string[] = [];
   for (const [id, setting] of Object.entries(settings)) {
