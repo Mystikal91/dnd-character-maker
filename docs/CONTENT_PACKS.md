@@ -48,6 +48,9 @@ of entry ids; the build step lists them). A switched-on option is held by its id
 effects apply. The Aurora importer makes the options that other rules ask for (Tasha's customised
 origin) and gives each a `flag` with its Aurora id, so that rules of another pack, which can only
 name it by that id, see it too.
+An option can also carry `data.replaces` (ids of entries it takes the place of: they are hidden from the
+sheet unless the person shows them again) and `data.backgroundFeature: true` (a text-only option that stands in
+for the feature of the background; one at a time). Tasha's optional class features are made this way.
 - Item data can hold `rarity` (a magic item), `enhancement` (+1 to +3 to attack and damage, also on
   a weapon that is carried: a homebrew +1 sword), `magical` (a weapon that counts as magic without
   a rarity), `copyOf` (the id of the item a person's copy was made from: a customized club still

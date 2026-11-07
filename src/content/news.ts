@@ -18,6 +18,26 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.28 beta",
+    date: "2026-11-07",
+    notes: [
+      {
+        en: "Tasha’s optional class features (Deft Explorer, Favored Foe, Primal Awareness, Nature’s Veil, Blessed Strikes, Martial Versatility and the others) can now be switched on in the Optional rules of the Create screen, once you import the book. The ones that take the place of a feature of your class hide it from the sheet, and the Features step lets you show it again.",
+        it: "Le capacità di classe opzionali di Tasha (Esploratore Abile, Nemico Prediletto, Consapevolezza Primordiale, Velo della Natura, Colpi Benedetti, Versatilità Marziale e le altre) ora si accendono nelle Regole opzionali della schermata Crea, dopo aver importato il manuale. Quelle che prendono il posto di una capacità della tua classe la nascondono dalla scheda, e il passo Capacità permette di mostrarla di nuovo.",
+        fr: "Les aptitudes de classe optionnelles de Tasha (Explorateur habile, Ennemi juré, Conscience primitive, Voile de la nature, Frappes bénies, Polyvalence martiale et les autres) s’activent maintenant dans les Règles optionnelles de l’écran Créer, une fois le livre importé. Celles qui prennent la place d’une aptitude de ta classe la cachent de la fiche, et l’étape Aptitudes permet de la montrer à nouveau.",
+        de: "Die optionalen Klassenmerkmale aus Tashas Kessel (Geschickter Entdecker, Erklärter Feind, Urwüchsige Wahrnehmung, Schleier der Natur, Gesegnete Schläge, Kampfvielseitigkeit und die anderen) lassen sich jetzt in den Optionalen Regeln des Erstellen-Bildschirms einschalten, sobald du das Buch importiert hast. Die, die ein Merkmal deiner Klasse ersetzen, blenden es im Bogen aus, und im Schritt Merkmale kannst du es wieder anzeigen.",
+        es: "Los rasgos de clase opcionales de Tasha (Explorador diestro, Enemigo predilecto, Conciencia primigenia, Velo de la naturaleza, Golpes bendecidos, Versatilidad marcial y los demás) ahora se activan en las Reglas opcionales de la pantalla Crear, una vez importado el libro. Los que ocupan el lugar de un rasgo de tu clase lo ocultan de la hoja, y el paso Rasgos permite mostrarlo de nuevo.",
+      },
+      {
+        en: "The optional features of backgrounds (the ones that replace the feature your background gives) can be picked in the same list, one at a time, and show on the printed story page and in the background box instead of the usual one.",
+        it: "Anche le capacità opzionali dei background (quelle che sostituiscono il privilegio che dà il tuo background) si scelgono nella stessa lista, una alla volta, e compaiono nella pagina della storia stampata e nel riquadro del background al posto di quella normale.",
+        fr: "Les aptitudes optionnelles des historiques (celles qui remplacent le trait que donne ton historique) se choisissent dans la même liste, une à la fois, et s’affichent sur la page d’histoire imprimée et dans l’encadré de l’historique à la place du trait habituel.",
+        de: "Auch die optionalen Merkmale der Hintergründe (die, die das Merkmal ersetzen, das dein Hintergrund gibt) wählst du in derselben Liste, eines nach dem anderen, und sie erscheinen auf der gedruckten Geschichtenseite und im Hintergrund-Feld anstelle des üblichen.",
+        es: "Los rasgos opcionales de los trasfondos (los que sustituyen el rasgo que da tu trasfondo) se eligen en la misma lista, uno a la vez, y aparecen en la página de historia impresa y en el recuadro del trasfondo en lugar del habitual.",
+      },
+    ],
+  },
+  {
     version: "1.27.1 beta",
     date: "2026-11-07",
     notes: [
