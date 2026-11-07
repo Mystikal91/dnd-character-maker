@@ -1184,11 +1184,11 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "translations",
     text: {
-      en: "The remaining translations: the descriptions of a few magic items with stat blocks (figurines of wondrous power, bags of tricks) and some class options. Automatic translation fills them meanwhile.",
-      it: "Le traduzioni che mancano: le descrizioni di alcuni oggetti magici con schede di mostro (statuine del potere meraviglioso, borse dei trucchi) e alcune opzioni di classe. Nel frattempo la traduzione automatica le riempie.",
-      fr: "Les traductions manquantes : les descriptions de quelques objets magiques avec fiches de créature (figurines merveilleuses, sacs à malices) et quelques options de classe. La traduction automatique les comble en attendant.",
-      de: "Die fehlenden Übersetzungen: die Beschreibungen einiger magischer Gegenstände mit Werteblöcken (Figuren der wundersamen Kraft, Trickbeutel) und einige Klassenoptionen. Die automatische Übersetzung füllt sie in der Zwischenzeit.",
-      es: "Las traducciones que faltan: las descripciones de algunos objetos mágicos con fichas de criatura (estatuillas de poder maravilloso, bolsas de trucos) y algunas opciones de clase. La traducción automática las cubre mientras tanto.",
+      en: "The remaining translations: a few class options. Automatic translation fills them meanwhile.",
+      it: "Le traduzioni che mancano: alcune opzioni di classe. Nel frattempo la traduzione automatica le riempie.",
+      fr: "Les traductions manquantes : quelques options de classe. La traduction automatique les comble en attendant.",
+      de: "Die fehlenden Übersetzungen: einige Klassenoptionen. Die automatische Übersetzung füllt sie in der Zwischenzeit.",
+      es: "Las traducciones que faltan: algunas opciones de clase. La traducción automática las cubre mientras tanto.",
     },
   },
   {

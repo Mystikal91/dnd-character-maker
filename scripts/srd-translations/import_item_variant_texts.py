@@ -45,6 +45,7 @@ HEADERS: dict[str, tuple[str, str, str, str]] = {
     "Scroll, very rare": ("Pergamena, molto rara", "Parchemin, très rare", "Schriftrolle, sehr selten", "Pergamino, muy raro"),
     "Scroll, legendary": ("Pergamena, leggendaria", "Parchemin, légendaire", "Schriftrolle, legendär", "Pergamino, legendario"),
     "Weapon (any), uncommon": ("Arma (qualsiasi), non comune", "Arme (quelconque), peu courante", "Waffe (beliebig), ungewöhnlich", "Arma (cualquiera), infrecuente"),
+    "Wondrous item, artifact (requires attunement)": ("Oggetto meraviglioso, manufatto (richiede sintonia)", "Objet merveilleux, artefact (harmonisation requise)", "Wundersamer Gegenstand, Artefakt (erfordert Einstimmung)", "Objeto maravilloso, artefacto (requiere sintonización)"),
     "Weapon (any), very rare": ("Arma (qualsiasi), molto rara", "Arme (quelconque), très rare", "Waffe (beliebig), sehr selten", "Arma (cualquiera), muy rara"),
 }
 
@@ -243,7 +244,7 @@ def section(lines: list[str], title: str) -> list[str]:
     for i, line in enumerate(lines):
         if key(line.strip()) == key(title) and i + 1 < len(lines) and TYPE_LINE.match(lines[i + 1].strip()):
             for j in range(i + 2, len(lines) - 1):
-                if len(lines[j].strip()) < 48 and TYPE_LINE.match(lines[j + 1].strip()) and not lines[j].startswith(" "):
+                if len(lines[j].strip()) < 48 and TYPE_LINE.match(lines[j + 1]) and not lines[j].startswith(" "):
                     return lines[i + 2 : j]
             return lines[i + 2 :]
     return []
@@ -265,7 +266,7 @@ def entries(body: list[str], lang: str) -> dict[str, list[str]]:
     for line in body:
         m = start.match(line)
         if m:
-            last = key(m.group(1))
+            last = key(m.group(1).replace('’', "'"))
             current = [m.group(2)]
             out.setdefault(last, []).append(current)
         elif line.startswith((" ", " ")) and line.strip() and last:
@@ -374,7 +375,7 @@ def main(lang: str, pdf: Path, write: bool) -> None:
         stones = entries(body[first_stone:], lang)
         for s in IOUN:
             term = re.sub(r".*\(|\)$", "", ioun_names[s])
-            paras = stones.get(key(term))
+            paras = stones.get(key(term.replace('’', "'")))
             if not paras:
                 problems.append(f"ioun-stone-of-{s}: no paragraph for '{term}'")
                 continue
@@ -390,7 +391,7 @@ def main(lang: str, pdf: Path, write: bool) -> None:
         kinds = entries(body[cut:], lang)
         for s in FEATHERS:
             term = re.sub(r".*\(|\)$", "", current.get(f"feather-token-{s}.name", ""))
-            paras = kinds.get(key(term))
+            paras = kinds.get(key(term.replace('’', "'")))
             if not paras:
                 problems.append(f"feather-token-{s}: no paragraph for '{term}'")
                 continue
@@ -410,6 +411,7 @@ def main(lang: str, pdf: Path, write: bool) -> None:
     else:
         problems.append("crystal balls: section not found")
 
+    more(lang, c, lines, current, english, put, problems, abilities, json.loads((ROOT / "locales" / lang / "ui.json").read_text(encoding="utf-8")))
     added = 0
     for k, v in out.items():
         current[k] = v
@@ -421,6 +423,155 @@ def main(lang: str, pdf: Path, write: bool) -> None:
     print(lang, "variant descriptions", "added:" if write else "that would be added:", added)
     for p in problems:
         print("   ", p)
+
+
+BAG_TITLE = {"it": "Borsa dei trucchi", "fr": "Sac à malices", "de": "Trickbeutel", "es": "Bolsa de trucos"}
+BAG_FIRST = (
+    "Questa borsa dall’aspetto ordinario, di stoffa {color}, sembra vuota. Tuttavia, infilandovi una mano si avverte un piccolo oggetto peloso. La borsa pesa 250 g.",
+    "Ce sac d’apparence ordinaire, en tissu {color}, semble vide. Pourtant, en y plongeant la main, on y sent un petit objet duveteux. Le sac pèse 250 g.",
+    "Dieser gewöhnliche Beutel aus {color} Stoff scheint leer zu sein. Ein Griff in den Beutel offenbart jedoch einen kleinen, flauschigen Gegenstand. Der Beutel wiegt 250 Gramm.",
+    "Esta bolsa corriente, de tela {color}, parece vacía. Sin embargo, al meter la mano dentro se nota un pequeño objeto peludo. La bolsa pesa 250 g.",
+)
+BAG_COLOR = {"it": ["grigia", "ruggine", "marrone"], "fr": ["gris", "rouille", "brun"], "de": ["grauem", "rostfarbenem", "beigefarbenem"], "es": ["gris", "rojiza", "marrón"]}
+CREATURE = ("Creatura", "Créature", "Kreatur", "Criatura")
+RING_TITLE = {"it": "Anello del comando degli elementali", "fr": "Anneau de maîtrise élémentaire", "de": "Ring der Elementar-Herrschaft", "es": "Anillo de comandar elementales"}
+RING_WORDS = {  # words that tell the block of an element, in the order air, earth, fire, water
+    "it": ["aria", "terra", "fuoco", "acqua"], "fr": ["air", "terre", "feu", "eau"],
+    "de": ["luftelementar", "erdelementar", "feuerelementar", "wasserelementar"], "es": ["aire", "tierra", "fuego", "agua"],
+}
+PLANE = (
+    ["Questo anello è collegato al Piano Elementale dell’Aria.", "Questo anello è collegato al Piano Elementale della Terra.", "Questo anello è collegato al Piano Elementale del Fuoco.", "Questo anello è collegato al Piano Elementale dell’Acqua."],
+    ["Cet anneau est lié au plan élémentaire de l’Air.", "Cet anneau est lié au plan élémentaire de la Terre.", "Cet anneau est lié au plan élémentaire du Feu.", "Cet anneau est lié au plan élémentaire de l’Eau."],
+    ["Dieser Ring ist mit der Elementarebene der Luft verbunden.", "Dieser Ring ist mit der Elementarebene der Erde verbunden.", "Dieser Ring ist mit der Elementarebene des Feuers verbunden.", "Dieser Ring ist mit der Elementarebene des Wassers verbunden."],
+    ["Este anillo está vinculado al Plano Elemental del Aire.", "Este anillo está vinculado al Plano Elemental de la Tierra.", "Este anillo está vinculado al Plano Elemental del Fuego.", "Este anillo está vinculado al Plano Elemental del Agua."],
+)
+FIGURINE_TITLE = {"it": "Statuina del potere meraviglioso", "fr": "Figurine merveilleuse", "de": "Figur der wundersamen Kraft", "es": "Estatuilla de poder maravilloso"}
+ORB_TITLE = {"it": "Sfera della stirpe dei draghi", "fr": "L’orbe des dragons", "de": "Kugel der Drachen", "es": "Orbe de los Dragones"}
+END_WORD = {"it": "Mostri", "fr": "Monstres", "de": "Monster", "es": "Monstruos"}
+FLY_NAME = ("Mosca gigante", "Mouche géante", "Riesenfliege", "Mosca gigante")
+FLY_LINE = (  # type line, speed, senses
+    ("Grande bestia, senza allineamento", "9 m, volare 18 m", "scurovisione 18 m"),
+    ("Grande bête, non alignée", "9 m, vol 18 m", "vision dans le noir 18 m"),
+    ("Große Bestie, gesinnungslos", "9 m, Fliegen 18 m", "Dunkelsicht 18 m"),
+    ("Bestia Grande, sin alineamiento", "9 m, volar 18 m", "visión en la oscuridad 18 m"),
+)
+FLY_TEXT = (
+    "Questa statuina di ebano raffigura un tafano. Può trasformarsi in una mosca gigante per una durata massima di 12 ore e può essere montata come cavalcatura. Una volta usata, non può essere riutilizzata finché non sono trascorsi 2 giorni.",
+    "Cette statuette d’ébène a été taillée à l’effigie d’un taon. Elle se transforme en mouche géante pendant un maximum de 12 heures durant lesquelles elle peut servir de monture. Une fois cette figurine utilisée, vous ne pouvez plus y recourir pendant 2 jours.",
+    "Diese kleine Statue aus Ebenholz hat die Form einer Pferdebremse. Sie kann bis zu zwölf Stunden lang zu einer Riesenfliege werden und als Reittier dienen. Nach der Verwendung kann sie erst nach 2 Tagen wieder verwendet werden.",
+    "Esta estatuilla de ébano se ha tallado con la forma de un tábano. Puede convertirse en una mosca gigante durante 12 horas, como máximo, y se puede emplear como montura. Una vez que se utilice, no podrá volver a usarse hasta que hayan pasado 2 días.",
+)
+FLY_ABILITIES =("14 (+2)", "13 (+1)", "13 (+1)", "2 (-4)", "10 (+0)", "3 (-4)")
+
+
+def paragraphs_of(body: list[str], lang: str) -> list[tuple[str | None, str]]:
+    """(title or None, text): a paragraph starts at an indented line or a bullet; " Title. text" has a title."""
+    blocks: list[list[str]] = []
+    for line in body:
+        text = line.strip()
+        if not text:
+            continue
+        if line.startswith((" ", " ")) or text.startswith("•") or not blocks:
+            blocks.append([text.lstrip("• ").strip()])
+        else:
+            blocks[-1].append(text)
+    out = []
+    for b in blocks:
+        text = join(b, lang)
+        m = re.match(r"^([A-ZÀ-ÝÄÖÜ][^.:,]{2,60}?)[.:] (.*)$", text)
+        out.append((m.group(1), m.group(2)) if m else (None, text))
+    return out
+
+
+def render(parts: list[tuple[str | None, str]]) -> str:
+    return "\n\n".join(f"***{t}.*** {x}" if t else x for t, x in parts)
+
+
+def more(lang, c, lines, current, english, put, problems, abilities, ui):
+    """Bags of tricks, figurines, rings of elemental command and the Orb of Dragonkind."""
+    monsters = json.loads((ROOT / "locales" / lang / "srd51" / "monsters.json").read_text(encoding="utf-8"))
+    # bags of tricks: the first paragraph with the color, the rest of the generic ones from the book, the table
+    body = section(lines, BAG_TITLE[lang])
+    cut = next((i for i, l in enumerate(body) if key(l.strip()).startswith(key(BAG_TITLE[lang]) + " ") and len(l.strip()) < 40), len(body))
+    generic = paragraphs_of(body[:cut], lang)
+
+    def before_table(text: str) -> str:  # the last paragraph can run into the tables of the three bags
+        m = re.search(r"\b[dDW]8\s+" + CREATURE[c], text)
+        if not m:
+            return text
+        text = text[: m.start()].rstrip()
+        return text if text.endswith((".", "!", "?", "»", "”")) else text[: text.rfind(". ") + 1]
+
+    generic = [(t, before_table(x)) for t, x in generic]
+    for s, color in zip(("gray", "rust", "tan"), BAG_COLOR[lang]):
+        k = f"bag-of-tricks-{s}.desc"
+        rows = re.findall(r"\| (\d\d) \| ([^|]+) \|", english[k])
+        table = []
+        for n, name in rows:
+            slug = re.sub(r"[^a-z]+", "-", name.strip().lower()).strip("-")
+            translated = monsters.get(f"{slug}.name") or monsters.get(f"{slug}-diseased.name")
+            if not translated:
+                problems.append(f"{k}: no name for the creature '{name.strip()}'")
+                translated = name.strip()
+            table.append(f"| {n} | {translated} |")
+        title = current.get(f"bag-of-tricks-{s}.name", "")
+        text = "\n\n".join([BAG_FIRST[c].replace("{color}", color), *[x for _, x in generic[1:]],
+                            f"{title}:", f"| d8 | {CREATURE[c]} |", "|---|---|", *table])
+        put(f"bag-of-tricks-{s}", text)
+    # figurines of wondrous power: a shared introduction, then the paragraph of the figurine
+    body = section(lines, FIGURINE_TITLE[lang])
+    first = next((i for i, l in enumerate(body) if re.match(r"^[  ]+[A-ZÀ-ÝÄÖÜ][^.:(]{2,40} \([^)]*\)[.:]", l)), 0)
+    intro = [x for _, x in paragraphs_of(body[:first], lang)]
+    variants = entries(body[first:], lang)
+    for s in ("bronze-griffon", "ebony-fly", "golden-lions", "ivory-goats", "marble-elephant", "obsidian-steed", "onyx-dog", "serpentine-owl", "silver-raven"):
+        name = current.get(f"figurine-of-wondrous-power-{s}.name", "")
+        term = re.sub(r".*\(|\)$", "", name)
+        paras = variants.get(key(term.replace('’', "'")))
+        if not paras:
+            problems.append(f"figurine-of-wondrous-power-{s}: no paragraph for '{term}'")
+            continue
+        if s == "ebony-fly":  # the book's stat block breaks the paragraph and comes out as one line: written here
+            paras = [FLY_TEXT[c]]
+        text = "\n\n".join([*intro, f"***{term}.*** {paras[0]}", *[p for p in paras[1:] if p]])
+        if s == "ebony-fly":
+            ab = [abilities.get(f"{a}.abbreviation", a.upper()) for a in ("str", "dex", "con", "int", "wis", "cha")]
+            kind, speed, senses = FLY_LINE[c]
+            text += "\n\n" + "\n\n".join([
+                FLY_NAME[c], kind, f"{ui['monster.ac']} 11", f"{ui['monster.hp']} 19 (3d10 + 3)", f"{ui['monster.speed']} {speed}",
+                "| " + " | ".join(ab) + " |", "|---|---|---|---|---|---|", "| " + " | ".join(FLY_ABILITIES) + " |",
+                f"{ui['monster.senses']} {senses}, {ui['monster.passivePerception'].replace('{n}', '10')}", f"{ui['monster.languages']} -",
+            ])
+        put(f"figurine-of-wondrous-power-{s}", text)
+    # rings of elemental command: the general paragraphs, then the block of the element
+    body = section(lines, RING_TITLE[lang])
+    parts = paragraphs_of(body, lang)
+    def whole(part: tuple[str | None, str]) -> str:  # a short first sentence is not a title here
+        return f"{part[0]}. {part[1]}" if part[0] else part[1]
+
+    words = RING_WORDS[lang]
+    at = [i for i, (t, x) in enumerate(parts) if t and any(w in key(t) for w in words) and key(t).startswith(("anello", "anneau", "ring", "anillo"))]
+    general = parts[: at[0]] if at else []
+    for n, (s, word) in enumerate(zip(("air", "earth", "fire", "water"), words)):
+        def names(i: int) -> bool:  # "eau" is also in "anneau": look for the word, after the family's own title
+            tail = key(parts[i][0] or "").removeprefix(key(RING_TITLE[lang]))
+            return word in tail if lang == "de" else re.search(rf"\b{word}\b", tail) is not None
+
+        mine = next((i for i in at if names(i)), None)
+        if mine is None or len(general) < 3:
+            problems.append(f"ring-of-elemental-command-{s}: block not found")
+            continue
+        end = next((j for j in at if j > mine), len(parts))
+        block = [parts[mine][1], *[whole(p) for p in parts[mine + 1 : end]]]
+        text = "\n\n".join([PLANE[c][n], whole(general[1]), whole(general[2]), *block])
+        put(f"ring-of-elemental-command-{s}", text)
+    # the Orb of Dragonkind
+    body = section(lines, ORB_TITLE[lang])
+    stop = next((i for i, l in enumerate(body) if l.strip() == END_WORD[lang]), len(body))
+    orb = paragraphs_of(body[:stop], lang)
+    if orb:
+        put("orb-of-dragonkind", render(orb))
+    else:
+        problems.append("orb-of-dragonkind: section not found")
 
 
 def fill_intro(name: str, column: int, scrying: str) -> str:
