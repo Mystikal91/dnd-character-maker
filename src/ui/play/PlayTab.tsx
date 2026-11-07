@@ -32,6 +32,7 @@ import { PlayFeatures, shownFeatures } from "./Features";
 import { BardNotes, Inspiration } from "./Inspiration";
 import { PlayInventory } from "./Inventory";
 import { MoreStatsDialog } from "./MoreStats";
+import { PrepareSpellsDialog } from "./PrepareSpells";
 import { QuickStats } from "./QuickStats";
 import { Rage, RageStrip } from "./Rage";
 import { ClassResources, PlayNotes, Slots } from "./Resources";
@@ -362,6 +363,7 @@ export function PlayTab() {
         )}
         <DiceButton />
         <DiceDrawer />
+        <PrepareSpellsDialog />
       </div>
     </>
   );

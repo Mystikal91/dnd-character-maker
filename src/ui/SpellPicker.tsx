@@ -21,7 +21,7 @@ interface ListProps {
 
 const levelOf = (c: Content, id: string) => (c.index.get(id)?.data.level as number) ?? 0;
 
-function SpellList({ classId, list, title, pick, filter, c }: ListProps) {
+export function SpellList({ classId, list, title, pick, filter, c }: ListProps) {
   const query = filter.trim().toLowerCase();
   const matches = pick.pool.filter((id) => !query || c.name(id).toLowerCase().includes(query));
   const levels = [...new Set(matches.map((id) => levelOf(c, id)))];

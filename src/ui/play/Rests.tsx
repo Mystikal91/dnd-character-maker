@@ -5,6 +5,7 @@ import { sheet } from "../../app/store";
 import { longRest, shortRest } from "../../engine/play";
 import { ui } from "../../i18n/ui";
 import { Panel } from "../sheet/parts";
+import { prepareAsked, preparingCasters } from "./PrepareSpells";
 import { FlameIcon, MoonIcon } from "./icons";
 
 /** The long rest is asked about in a dialog of the app, not in the browser's own box. */
@@ -106,6 +107,7 @@ function LongRestDialog() {
   const dialog = useRef<HTMLDialogElement>(null);
   const asked = longRestAsked.value;
   const v = vitals();
+  const prepares = preparingCasters(sheet.value).length > 0;
 
   useEffect(() => {
     const el = dialog.current;
@@ -124,6 +126,7 @@ function LongRestDialog() {
     ui("play.restChipUses"),
     ui("play.longRestDeath"),
     ui("play.longRestEnds"),
+    ...(prepares ? [ui("play.longRestPrepare")] : []),
   ];
 
   return (
@@ -161,6 +164,8 @@ function LongRestDialog() {
                 if (v) changePlay((p) => longRest(p, v.hitDice));
                 addLog({ label: ui("play.longRestLog"), detail: "" });
                 close();
+                // The step after the rest: a reminder to change the spells that are prepared.
+                if (prepares) prepareAsked.value = "rest";
               }}
             >
               {ui("play.longRestGo")}

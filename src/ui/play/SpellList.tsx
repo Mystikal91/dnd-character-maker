@@ -24,6 +24,7 @@ import { damageLabel } from "../rules/ActionButtons";
 import { Panel } from "../sheet/parts";
 import { type SpellRow, collectSpellRows } from "../spellRows";
 import { spellDetail } from "../spells/SpellInfo";
+import { PrepareSpellsButton, preparingCasters } from "./PrepareSpells";
 import { ChecksIcon, FocusIcon, HealIcon, SaveIcon } from "./icons";
 
 /** The slot level the person chose to roll and cast a spell at, by spell (default: its own level). */
@@ -312,13 +313,15 @@ export function PlaySpells() {
   const s = sheet.value;
   if (!c || !s) return null;
   const rows = collectSpellRows(c, s);
-  if (rows.length === 0) return null;
+  // A class that prepares its spells can have none prepared yet: the button must still be there.
+  if (rows.length === 0 && preparingCasters(s).length === 0) return null;
   const levels = [...new Set(rows.map((r) => r.level))];
   const concentrating = character.value.play.concentration;
 
   return (
     <Panel title={ui("play.spells")} className="spells-panel">
       {concentrating && <ConcentrationBanner spell={concentrating} />}
+      <PrepareSpellsButton />
       {levels.length > 2 && (
         <nav class="spell-jump" aria-label={ui("play.spellJump")}>
           {levels.map((level) => (

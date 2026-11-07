@@ -73,3 +73,26 @@
 .rest-dialog-actions {
   justify-content: flex-end;
 }
+
+/* The window to change the prepared spells, and the button of the spells that opens it. */
+.prepare-dialog {
+  width: min(34rem, calc(100vw - 2rem));
+  overflow-y: auto;
+}
+
+.prepare-dialog .spell-list {
+  margin: 0.8rem 0;
+}
+
+.prepare-actions {
+  position: sticky;
+  bottom: 0;
+  justify-content: flex-end;
+  padding-top: 0.6rem;
+  background: var(--surface);
+}
+
+.prepare-row {
+  display: flex;
+  margin-bottom: 0.7rem;
+}
