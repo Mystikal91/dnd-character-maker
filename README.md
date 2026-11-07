@@ -84,11 +84,12 @@ and Aurora Legacy that you already own.
 
 **Languages and look**
 
-- English, Italian, French, German and Spanish, with the **official SRD translations** (about 87%
+- English, Italian, French, German and Spanish, with the **official SRD translations** (about 94%
   of the rules texts). Missing texts show in English; translations are managed with Weblate (see
   [docs/TRANSLATING.md](docs/TRANSLATING.md)).
 - **Automatic translation** (footer): with your own DeepL key, texts that have no translation yet
-  (and the English content you imported) are translated as you read them, marked as such, with a
+  (and the English content you imported) are translated as you read them (the casting time and the
+  duration of an imported spell are translated without it), marked as such, with a
   button for the original. Translations are cached on your device. DeepL does not accept calls
   from web pages, so requests go through a small relay; see
   [docs/TRANSLATION_PROXY.md](docs/TRANSLATION_PROXY.md) to run your own.

@@ -18,6 +18,19 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.27.1 beta",
+    date: "2026-11-07",
+    notes: [
+      {
+        en: "The casting time, the duration and the simple ranges of the spells you import (1 Action, Concentration, up to 1 minute, Instantaneous, Touch...) now show in your language, with the words of the translated SRD, even with the automatic translation off. A reaction with its condition or a range with a shape is still left to the automatic translation.",
+        it: "Il tempo di lancio, la durata e le gittate semplici delle magie che importi (1 Action, Concentration, up to 1 minute, Instantaneous, Touch...) ora si vedono nella tua lingua, con le parole dell’SRD tradotto, anche con la traduzione automatica spenta. Una reazione con la sua condizione o una gittata con una forma restano alla traduzione automatica.",
+        fr: "Le temps d’incantation, la durée et les portées simples des sorts que tu importes (1 Action, Concentration, up to 1 minute, Instantaneous, Touch...) s’affichent maintenant dans ta langue, avec les mots du SRD traduit, même quand la traduction automatique est désactivée. Une réaction avec sa condition ou une portée avec une forme restent confiées à la traduction automatique.",
+        de: "Die Zeit zum Zaubern, die Wirkungsdauer und die einfachen Reichweiten der Zauber, die du importierst (1 Action, Concentration, up to 1 minute, Instantaneous, Touch ...), erscheinen jetzt in deiner Sprache, mit den Wörtern des übersetzten SRD, auch bei ausgeschalteter automatischer Übersetzung. Eine Reaktion mit ihrer Bedingung oder eine Reichweite mit einer Form bleibt der automatischen Übersetzung überlassen.",
+        es: "El tiempo de lanzamiento, la duración y los alcances simples de los conjuros que importas (1 Action, Concentration, up to 1 minute, Instantaneous, Touch...) ahora se ven en tu idioma, con las palabras del SRD traducido, incluso con la traducción automática apagada. Una reacción con su condición o un alcance con una forma siguen en manos de la traducción automática.",
+      },
+    ],
+  },
+  {
     version: "1.27.0 beta",
     date: "2026-11-07",
     notes: [
@@ -1174,11 +1187,11 @@ export const CHANGELOG: ChangelogEntry[] = [
         es: "Paquetes de contenido: un editor homebrew (hechizos, objetos, dotes, especies, trasfondos, clases, subclases) y un importador de archivos de Aurora, por archivo, índice o dirección.",
       },
       {
-        en: "Five languages (English, Italian, French, German, Spanish) with the official SRD translations, about 87% of the rules texts.",
-        it: "Cinque lingue (inglese, italiano, francese, tedesco, spagnolo) con le traduzioni ufficiali dell'SRD, circa l'87% dei testi delle regole.",
-        fr: "Cinq langues (anglais, italien, français, allemand, espagnol) avec les traductions officielles du SRD, environ 87 % des textes de règles.",
-        de: "Fünf Sprachen (Englisch, Italienisch, Französisch, Deutsch, Spanisch) mit den offiziellen SRD-Übersetzungen, etwa 87 % der Regeltexte.",
-        es: "Cinco idiomas (inglés, italiano, francés, alemán, español) con las traducciones oficiales del SRD, cerca del 87 % de los textos de reglas.",
+        en: "Five languages (English, Italian, French, German, Spanish) with the official SRD translations, about 94% of the rules texts.",
+        it: "Cinque lingue (inglese, italiano, francese, tedesco, spagnolo) con le traduzioni ufficiali dell'SRD, circa il 94% dei testi delle regole.",
+        fr: "Cinq langues (anglais, italien, français, allemand, espagnol) avec les traductions officielles du SRD, environ 94 % des textes de règles.",
+        de: "Fünf Sprachen (Englisch, Italienisch, Französisch, Deutsch, Spanisch) mit den offiziellen SRD-Übersetzungen, etwa 94 % der Regeltexte.",
+        es: "Cinco idiomas (inglés, italiano, francés, alemán, español) con las traducciones oficiales del SRD, cerca del 94 % de los textos de reglas.",
       },
       {
         en: "Automatic translation of the texts that have none yet, with your own DeepL key, and metric units.",
