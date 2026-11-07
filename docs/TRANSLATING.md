@@ -128,8 +128,20 @@ python scripts/srd-translations/import_equipment_texts.py it path/to/SRD_CC_v5.1
 item's name, so it pairs them by the translated name; the items of a family that share one paragraph (arcane focus, holy
 symbol, artisan's tools, musical instruments, barding, rowboats) are listed in `FAMILIES`, the two saddles split one paragraph,
 and the lines the English data took from the packs ("typically found in a priest's pack") are written in `HOMEMADE`. A paragraph
-that runs into the table after it is cut to as many sentences as the English text has. The descriptions of the
-magic item variants are not imported yet.
+that runs into the table after it is cut to as many sentences as the English text has.
+
+```bash
+python scripts/srd-translations/import_item_variant_texts.py it path/to/SRD_CC_v5.1_IT.pdf          # only reports
+python scripts/srd-translations/import_item_variant_texts.py it path/to/SRD_CC_v5.1_IT.pdf --write
+```
+
+`import_item_variant_texts.py` writes the descriptions of the magic item variants (107 of 124). The families that
+differ by a number or a word have a template written once per language (`T`: +N weapons, armor and ammunition, belts and
+potions of giant strength, healing and resistance, rings of resistance, carpets, horns of Valhalla, golem manuals, elemental
+gems, dragon scale mail, spell scrolls), with the numbers read from the English text; the ones that have a paragraph for each
+variant in the book (ioun stones, feather tokens, crystal balls) take it from the PDF after a shared introduction. The first
+line is the one other items of the same kind already have in the language (`HEADERS` for the rest). Not done: the figurines
+of wondrous power, the bags of tricks (stat blocks and tables), the rings of elemental command and the Orb of Dragonkind.
 
 The monsters are read from the stat blocks of the same PDFs (`locales/<language>/srd51/monsters.json`),
 after `npm run data:srd51` has written the English ones:
