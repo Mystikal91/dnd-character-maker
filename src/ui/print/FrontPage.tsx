@@ -7,6 +7,7 @@ import type { ClassLevel } from "../../engine/character";
 import type { DamageResult } from "../../engine/equipment";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
+import { damageName } from "../damageName";
 import { movementLines } from "../movementLines";
 import { recoveryLabel, resourceLabel } from "../play/ResourceControl";
 import { extraAmount, extraName } from "../sheet/ExtraDamage";
@@ -28,7 +29,7 @@ const PROFICIENCY_LABELS = {
 } as const;
 
 const formatDamage = (d: DamageResult) =>
-  `${d.dice}${d.bonus === 0 ? "" : signed(d.bonus)} ${d.type}`;
+  `${d.dice}${d.bonus === 0 ? "" : signed(d.bonus)} ${damageName(d.type)}`;
 
 /** Names of the features gained at each level reached, from the class and its subclass. */
 function featureRows(c: Content, cl: ClassLevel): [number, string[]][] {

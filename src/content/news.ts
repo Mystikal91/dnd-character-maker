@@ -1184,11 +1184,11 @@ export const ROADMAP: RoadmapItem[] = [
   {
     id: "translations",
     text: {
-      en: "The remaining translations: about 140 pieces of equipment, the variants of the magic items (+1 weapons, potions of giant strength...), the proficiencies and a few class options. Automatic translation fills them meanwhile.",
-      it: "Le traduzioni che mancano: circa 140 pezzi di equipaggiamento, le varianti degli oggetti magici (armi +1, pozioni della forza dei giganti...), le competenze e alcune opzioni di classe. Nel frattempo la traduzione automatica le riempie.",
-      fr: "Les traductions manquantes : environ 140 pièces d'équipement, les variantes des objets magiques (armes +1, potions de force de géant...), les maîtrises et quelques options de classe. La traduction automatique les comble en attendant.",
-      de: "Die fehlenden Übersetzungen: etwa 140 Ausrüstungsgegenstände, die Varianten der magischen Gegenstände (Waffen +1, Tränke der Riesenstärke ...), die Übungen und einige Klassenoptionen. Die automatische Übersetzung füllt sie in der Zwischenzeit.",
-      es: "Las traducciones que faltan: unos 140 objetos de equipo, las variantes de los objetos mágicos (armas +1, pociones de fuerza de gigante...), las competencias y algunas opciones de clase. La traducción automática las cubre mientras tanto.",
+      en: "The remaining translations: the descriptions of the equipment and of the variants of the magic items (+1 weapons, potions of giant strength...) and a few class options. Automatic translation fills them meanwhile.",
+      it: "Le traduzioni che mancano: le descrizioni dell'equipaggiamento e delle varianti degli oggetti magici (armi +1, pozioni della forza dei giganti...) e alcune opzioni di classe. Nel frattempo la traduzione automatica le riempie.",
+      fr: "Les traductions manquantes : les descriptions de l'équipement et des variantes des objets magiques (armes +1, potions de force de géant...) et quelques options de classe. La traduction automatique les comble en attendant.",
+      de: "Die fehlenden Übersetzungen: die Beschreibungen der Ausrüstung und der Varianten der magischen Gegenstände (Waffen +1, Tränke der Riesenstärke ...) und einige Klassenoptionen. Die automatische Übersetzung füllt sie in der Zwischenzeit.",
+      es: "Las traducciones que faltan: las descripciones del equipo y de las variantes de los objetos mágicos (armas +1, pociones de fuerza de gigante...) y algunas opciones de clase. La traducción automática las cubre mientras tanto.",
     },
   },
   {

@@ -7,6 +7,7 @@ import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { ExplainButton } from "../Explain";
 import { attackName } from "../attackName";
+import { damageName } from "../damageName";
 import { useRoll } from "../useRoll";
 import { ExtraDamageList } from "./ExtraDamage";
 import { Panel } from "./parts";
@@ -43,7 +44,7 @@ export function Stat({
 }
 
 const formatDamage = (d: DamageResult) =>
-  `${d.dice}${d.bonus === 0 ? "" : signed(d.bonus)} ${d.type}`;
+  `${d.dice}${d.bonus === 0 ? "" : signed(d.bonus)} ${damageName(d.type)}`;
 
 /** Where the bonuses of features and choices come from, so a number can be trusted. */
 function Bonuses() {

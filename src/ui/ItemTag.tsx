@@ -2,6 +2,7 @@ import { content } from "../app/store";
 import { itemData } from "../data/items";
 import { type UiKey, ui } from "../i18n/ui";
 import { distance } from "../i18n/units";
+import { damageName } from "./damageName";
 
 /** What kind of armor or weapon an item is ("Light armor", "Martial weapon · Melee"), if it is one. */
 export function itemTag(id: string): string | undefined {
@@ -30,26 +31,6 @@ export function ItemTag({ id }: { id: string }) {
   const tag = itemTag(id);
   return tag ? <span class="item-tag">[{tag}]</span> : null;
 }
-
-const DAMAGE_TYPES = new Set([
-  "acid",
-  "bludgeoning",
-  "cold",
-  "fire",
-  "force",
-  "lightning",
-  "necrotic",
-  "piercing",
-  "poison",
-  "psychic",
-  "radiant",
-  "slashing",
-  "thunder",
-]);
-
-/** A kind of damage in the language ("tagliente"), or as it is written when it is not a usual one. */
-const damageName = (type: string) =>
-  DAMAGE_TYPES.has(type) ? ui(`hb.o.${type}` as UiKey).toLowerCase() : type;
 
 /** The numbers of a weapon or armor on one line: damage and properties, or armor class and needs. */
 export function itemFacts(id: string): string | undefined {

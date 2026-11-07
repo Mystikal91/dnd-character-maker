@@ -19,35 +19,16 @@ import {
   slotsLeft,
 } from "../../engine/play";
 import { canSpend, spendPool } from "../../engine/spends";
-import { type UiKey, signed, ui } from "../../i18n/ui";
+import { signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { attackName } from "../attackName";
+import { damageName } from "../damageName";
 import { ruleDetail } from "../rules/EntryDetail";
 import { extraAmount, extraKey, extraName, extraNote } from "../sheet/ExtraDamage";
 import { BowIcon, ChecksIcon, CriticalIcon, SwordIcon } from "./icons";
 
 /** The weapon whose attack was just rolled: its damage button asks to be tapped. */
 const damageDue = signal<string | undefined>(undefined);
-
-const DAMAGE_TYPES = [
-  "acid",
-  "bludgeoning",
-  "cold",
-  "fire",
-  "force",
-  "lightning",
-  "necrotic",
-  "piercing",
-  "poison",
-  "psychic",
-  "radiant",
-  "slashing",
-  "thunder",
-];
-
-/** A kind of damage in the language ("contundente"), or as it is written when it is not a usual one. */
-const typeName = (type: string) =>
-  DAMAGE_TYPES.includes(type) ? ui(`hb.o.${type}` as UiKey).toLowerCase() : type;
 
 const withBonus = (dice: string, bonus: number) =>
   `${dice}${bonus === 0 ? "" : bonus > 0 ? `+${bonus}` : bonus}`;
@@ -262,7 +243,7 @@ function AttackCard({ a }: { a: AttackResult }) {
             >
               <b>{dice}</b>
               <small>
-                {d.label && d.part.type === a.damage?.type ? d.label : typeName(d.part.type)}
+                {d.label && d.part.type === a.damage?.type ? d.label : damageName(d.part.type)}
               </small>
             </button>
           );

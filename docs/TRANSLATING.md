@@ -99,8 +99,26 @@ python scripts/srd-translations/import_magic_items.py it path/to/SRD_CC_v5.1_IT.
 Each section is paired with an English item by the rarity, the attunement, the kind of item, the
 numbers and the words learned from the other translations; a pair that disagrees on any of the first
 three is dropped. The rarity and item words of Italian, German, Spanish and French are in `CONFIG` (add the
-words of another language to use it). `MANUAL` holds the pairs checked by hand. The items with variants (the +1, +2 and +3
-weapons, the potions of giant strength...) stay in English.
+words of another language to use it). `MANUAL` holds the pairs checked by hand.
+
+Three more scripts finish the names the pairing could not settle. They write only keys that are still empty,
+so they can be run after the others in any order:
+
+```bash
+python scripts/srd-translations/import_equipment.py it path/to/SRD_CC_v5.1_IT.pdf
+python scripts/srd-translations/import_item_variants.py it path/to/SRD_CC_v5.1_IT.pdf          # only reports
+python scripts/srd-translations/import_item_variants.py it path/to/SRD_CC_v5.1_IT.pdf --write
+python scripts/srd-translations/import_proficiencies.py it fr de es
+```
+
+`import_equipment.py` holds a table (`MANUAL`) with the name of each piece of equipment that the cost and weight
+could not pair (gear, tools, mounts, packs); each name is looked up in the PDF and the ones it does not find are
+listed. The barding is the word for barding plus the armor's name. `import_item_variants.py` builds the names of the
+variants of magic items (+1 weapons, potions of giant strength, ioun stones...) from the family name the book uses
+and the words it uses for the variant; the damage types come from the interface texts. `import_proficiencies.py`
+names the proficiencies from the item, skill and ability names already imported, plus a short table (armor and
+weapon groups, the plural of each weapon, vehicles). The descriptions of the equipment and of the variants are not
+imported yet.
 
 The monsters are read from the stat blocks of the same PDFs (`locales/<language>/srd51/monsters.json`),
 after `npm run data:srd51` has written the English ones:
