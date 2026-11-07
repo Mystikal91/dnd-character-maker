@@ -4,6 +4,7 @@ import { itemData } from "../../data/items";
 import type { Character } from "../../engine/character";
 import { COINS } from "../../engine/coins";
 import { type UiKey, ui } from "../../i18n/ui";
+import { backgroundFeature } from "../backgroundFeature";
 import { FitBox } from "./FitBox";
 import { RuledArea } from "./RuledArea";
 
@@ -61,8 +62,7 @@ export function StoryPage() {
   const ch = character.value;
   if (!c) return null;
   const background = ch.choices.background;
-  const featureName = background ? c.text(background, "featureName") : undefined;
-  const featureDesc = background ? c.text(background, "featureDesc") : undefined;
+  const { name: featureName, text: featureDesc } = backgroundFeature(ch, c);
   // A magic item (one with a rarity) goes in the box for them, whether it is worn or carried.
   const isMagic = (i: (typeof ch.inventory)[number]) => Boolean(c.index.get(i.itemId)?.data.rarity);
   const magicItems = ch.inventory.filter(isMagic);

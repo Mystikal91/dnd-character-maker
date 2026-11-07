@@ -6,6 +6,7 @@ import { heldBy, plainEffects } from "../../engine/requirements";
 import { type UiKey, signed, ui } from "../../i18n/ui";
 import { distance } from "../../i18n/units";
 import { EditPencil } from "../QuickEdit";
+import { backgroundFeature } from "../backgroundFeature";
 import { Paragraphs, RulesText } from "../sheet/parts";
 
 /** The longest list of options named in a line before it is cut. */
@@ -183,7 +184,7 @@ export function BackgroundInfo() {
   const background = c?.index.get(ch.choices.background ?? "");
   if (!c || !background) return <Pick text="build.info.pickBackground" />;
   const effects = plainEffects(background.effects);
-  const featureName = c.text(background.id, "featureName");
+  const { name: featureName, text: featureText } = backgroundFeature(ch, c);
 
   return (
     <Block title={c.name(background.id)} edit={[background.id]}>
@@ -198,11 +199,7 @@ export function BackgroundInfo() {
       />
       {featureName && (
         <div class="entry-info-list">
-          <RulesText
-            id={background.id}
-            name={featureName}
-            text={c.text(background.id, "featureDesc")}
-          />
+          <RulesText id={background.id} name={featureName} text={featureText} />
         </div>
       )}
     </Block>

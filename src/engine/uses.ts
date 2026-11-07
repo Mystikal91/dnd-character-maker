@@ -103,7 +103,7 @@ export function withFeatureSettings(
   index?: ReadonlyMap<string, Entry>,
 ): DerivedSheet {
   const superseded = index
-    ? supersededBy([...sheet.traits, ...sheet.feats, ...sheet.features], index)
+    ? supersededBy([...sheet.traits, ...sheet.feats, ...sheet.features, ...sheet.held], index)
     : {};
   const have = new Set([...sheet.traits, ...sheet.feats, ...sheet.features]);
   // Hidden unless the person turned them on: the replaced steps, and what the data keeps off the sheet.

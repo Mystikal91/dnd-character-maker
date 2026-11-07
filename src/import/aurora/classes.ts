@@ -140,6 +140,19 @@ export function importFeature(ctx: Context, source: Source, owners: Map<Source, 
     {
       effects: [
         ...(mapped.effects as Effect[]),
+        // A feature no class lists (one an optional feature of Tasha's grants) brings the features
+        // it is made of, each when its level is reached.
+        ...(owner
+          ? []
+          : mapped.grants.flatMap(({ source: granted, level, requires }): Effect[] => {
+              if (!granted.id) return [];
+              const trait: Effect = {
+                type: "trait",
+                id: granted.id as `${string}:${string}/${string}`,
+                ...(level !== undefined && { minLevel: level }),
+              };
+              return [requires ? { type: "when", requires, effects: [trait] } : trait];
+            })),
         // The fighting style of that name: the off-hand weapon adds its modifier to damage.
         ...(slugify(source.name) === "two-weapon-fighting"
           ? [{ type: "flag", id: "two-weapon-fighting" } as Effect]

@@ -1,6 +1,7 @@
 import type { Effect } from "../../data/schema";
 import { emit } from "./emit";
 import { naturalWeaponEffects } from "./naturalWeapons";
+import { REPLACED_BY_FLAG } from "./optionalFeatures";
 import { type Context, FEATURE_TYPES, type Source, ofType, sharesTag } from "./registry";
 import { mapRules, readRules, requirementsMet, selectMatches, translateRequirement } from "./rules";
 import { clean, description, setters, supportsOf } from "./xml";
@@ -174,6 +175,40 @@ export function importOption(ctx: Context, source: Source): void {
     { desc: description(source.el) },
     { effects: [{ type: "flag", id: source.aid }, ...effects] },
   );
+}
+
+/**
+ * One of Tasha's optional class features: a hidden item in Aurora that a character equips to
+ * switch it on, here an option. It grants the feature (at its level) and, for the six that take
+ * the place of a feature of the class, lists the entries it replaces.
+ */
+export function importOptionalFeature(ctx: Context, source: Source): void {
+  const { effects } = baseEffects(ctx, source, "option");
+  const replaces = effects.flatMap((effect) =>
+    effect.type === "flag" ? (REPLACED_BY_FLAG[effect.id] ?? []) : [],
+  );
+  const have = replaces.filter((id) => ctx.options.index.has(id));
+  // The item only says "equip me": what the person reads is the feature it grants.
+  const feature = readRules(source.el)
+    .filter((r) => r.tag === "grant" && FEATURE_TYPES.has(r.type))
+    .map((r) => ctx.byAid.get(r.id))
+    .find(Boolean);
+  const named = /^(.+?),\s*LV(\d+):\s*(.+)$/.exec(source.name);
+  emit(
+    ctx,
+    source,
+    {
+      optionalFeature: true,
+      ...(source.type === "Background Feature" && { backgroundFeature: true }),
+      ...(have.length > 0 && { replaces: have }),
+    },
+    { desc: description(feature?.el ?? source.el) },
+    { effects: [{ type: "flag", id: source.aid }, ...effects] },
+  );
+  if (source.id && named) ctx.result.strings[`${source.id}.name`] = `${named[3]} (${named[1]})`;
+  const plain =
+    source.type === "Background Feature" && source.name.replace(/^optional feature:\s*/i, "");
+  if (source.id && plain) ctx.result.strings[`${source.id}.name`] = plain;
 }
 
 /** A racial trait, a feat feature or any other named option that has effects of its own. */

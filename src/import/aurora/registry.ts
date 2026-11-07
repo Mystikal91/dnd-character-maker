@@ -1,7 +1,7 @@
 import type { Entry } from "../../data/schema";
 import type { Overlay } from "./overlays";
 import pairs from "./srdPairs.json";
-import { clean, slugify, supportsOf } from "./xml";
+import { clean, setters, slugify, supportsOf } from "./xml";
 
 export interface AuroraOptions {
   /** Id of the pack the entries are created in, e.g. `imp1a2b3c`. */
@@ -164,9 +164,25 @@ export const isAsiOption = (source: Source): boolean =>
   source.type === "Ability Score Improvement" &&
   elementTags(source).includes("Custom Ability Score Improvement Option");
 
+/**
+ * Optional features a character switches on, as options: Tasha's optional class features (hidden
+ * items a character "equips" in Aurora) and the optional features of backgrounds, which stand in
+ * for the background's own feature.
+ */
+export const isOptionalBackgroundFeature = (source: Source): boolean =>
+  source.type === "Background Feature" &&
+  elementTags(source).includes("Optional Background Feature");
+
+export const isOptionalFeatureItem = (source: Source): boolean =>
+  (source.type === "Item" &&
+    slugify(setters(source.el).get("category")?.text ?? "") === "optional-class-features") ||
+  isOptionalBackgroundFeature(source);
+
 /** The kind of entry an element becomes, if it becomes one. */
 export const kindOf = (source: Source): string | undefined =>
-  KIND_OF[source.type] ?? (isAsiOption(source) ? "trait" : undefined);
+  isOptionalFeatureItem(source)
+    ? "option"
+    : (KIND_OF[source.type] ?? (isAsiOption(source) ? "trait" : undefined));
 
 /** Types that are granted or offered by other elements. */
 export const FEATURE_TYPES = new Set([

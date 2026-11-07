@@ -16,6 +16,7 @@ import {
   importDeity,
   importFeat,
   importOption,
+  importOptionalFeature,
   importRace,
   importRaceVariant,
   importSubRace,
@@ -26,12 +27,12 @@ import {
   type AuroraResult,
   type Context,
   FEATURE_TYPES,
-  KIND_OF,
   ROOT_TYPES,
   type Source,
   allocate,
   indexExisting,
   isAsiOption,
+  isOptionalFeatureItem,
   kindOf,
   nameKey,
   ofType,
@@ -50,7 +51,7 @@ export { AuroraParseError, slugify } from "./xml";
  * the entries or texts it makes: packs imported with an older version are marked as needing an
  * update, and can be imported again with a click.
  */
-export const AURORA_IMPORT_VERSION = 37;
+export const AURORA_IMPORT_VERSION = 38;
 export type { AuroraOptions, AuroraResult } from "./registry";
 
 /**
@@ -216,9 +217,9 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
 
   // What the app already has stays as it is; other roots are what the files are about.
   for (const source of ctx.all) {
-    const kind = KIND_OF[source.type];
+    const kind = kindOf(source);
     if (!kind) continue;
-    if (ROOT_TYPES.has(source.type)) {
+    if (ROOT_TYPES.has(source.type) || isOptionalFeatureItem(source)) {
       if (isBookkeeping(source)) continue;
       const existing =
         ctx.existingByName.get(nameKey(kind, source.name)) ??
@@ -289,7 +290,11 @@ export function parseAurora(files: string[], options: AuroraOptions): AuroraResu
         importArmor(ctx, source);
         break;
       case "Item":
-        importGear(ctx, source);
+        if (source.kind === "option") importOptionalFeature(ctx, source);
+        else importGear(ctx, source);
+        break;
+      case "Background Feature":
+        importOptionalFeature(ctx, source);
         break;
       case "Magic Item":
         importMagicItem(ctx, source);

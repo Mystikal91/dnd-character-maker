@@ -251,6 +251,13 @@ function deriveForm(character: Character, index: PackIndex): DerivedSheet {
     [
       ...character.classes.flatMap((cl) => [cl.classId, cl.subclassId ?? ""]),
       ...Object.values(character.choices),
+      // Aurora's `[level:ranger:6]`: the level reached in a class, by the class's name.
+      ...character.classes.flatMap((cl) =>
+        Array.from(
+          { length: Math.min(cl.level, MAX_LEVEL) },
+          (_, n) => `[level:${cl.classId.split("/")[1] ?? ""}:${n + 1}]`,
+        ),
+      ),
     ].filter((id): id is string => Boolean(id)),
   );
   for (const { entry } of others) {
