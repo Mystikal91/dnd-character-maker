@@ -42,12 +42,12 @@ describe("the categories starting equipment picks from", () => {
 });
 
 describe("the starting equipment of the classes of the SRD", () => {
-  it("has the choices and the gold alternative of all twelve", () => {
+  it("has the choices of all twelve, and no gold alternative (the SRD does not print it)", () => {
     expect(classes).toHaveLength(12);
     for (const cls of classes) {
       const { choices, wealth } = startingOf(cls);
       expect(choices.length, cls.id).toBeGreaterThan(0);
-      expect(wealth, cls.id).toBeDefined();
+      expect(wealth, cls.id).toBeUndefined();
       for (const choice of choices)
         for (const option of choice.options)
           for (const part of option.items) {
@@ -61,8 +61,7 @@ describe("the starting equipment of the classes of the SRD", () => {
   it("reads like the book for the fighter", () => {
     const fighter = startingOf(entry("srd51:class/fighter"));
     expect(fighter.choices).toHaveLength(4);
-    expect(fighter.wealth).toEqual({ dice: "5d4", multiplier: 10 });
-    expect(startingWealthOf(entry("srd51:class/monk"))).toEqual({ dice: "5d4", multiplier: 1 });
+    expect(startingWealthOf(entry("srd51:class/monk"))).toBeUndefined();
     // chain mail, or leather armor with a longbow and 20 arrows
     expect(fighter.choices[0]?.options).toEqual([
       { items: [{ item: "srd51:item/chain-mail", quantity: 1 }] },

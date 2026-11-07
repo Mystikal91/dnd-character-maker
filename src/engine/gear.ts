@@ -36,6 +36,16 @@ export function itemKind(entry: Entry): ItemKind {
   return "gear";
 }
 
+/**
+ * How many of an item a starting equipment line puts in the inventory. The rules count pieces
+ * ("20 arrows") and the items are the bundles the book sells ("Arrow (20)", one line of 20), so a
+ * count of ammunition becomes that many bundles; anything else is taken as it is.
+ */
+export function startingQuantity(entry: Entry | undefined, quantity: number): number {
+  const size = (entry?.data as { gear?: { bundleSize?: unknown } } | undefined)?.gear?.bundleSize;
+  return typeof size === "number" && size > 1 ? Math.max(1, Math.round(quantity / size)) : quantity;
+}
+
 /** Adds what an entry hands out without a choice; a pack adds everything it holds instead of itself. */
 export function addStartingItems(
   inventory: InventoryItem[],
@@ -44,7 +54,8 @@ export function addStartingItems(
 ): void {
   for (const { item, quantity } of items) {
     const contents = packContents(index.get(item) ?? ({ data: {} } as Entry));
-    if (contents.length === 0) addToInventory(inventory, item, quantity);
+    if (contents.length === 0)
+      addToInventory(inventory, item, startingQuantity(index.get(item), quantity));
     else
       for (const part of contents) addToInventory(inventory, part.item, part.quantity * quantity);
   }

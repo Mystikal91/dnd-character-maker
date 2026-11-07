@@ -7,6 +7,7 @@ import {
   healingOf,
   isUsable,
   packContents,
+  startingQuantity,
   useOne,
 } from "./gear";
 
@@ -85,5 +86,20 @@ describe("adding to the inventory", () => {
     expect(inventory.some((i) => i.itemId === "srd51:item/explorers-pack")).toBe(false);
     expect(inventory.some((i) => i.itemId === "srd51:item/backpack")).toBe(true);
     expect(inventory.find((i) => i.itemId === "srd51:item/javelin")?.quantity).toBe(4);
+  });
+
+  it("counts ammunition in the bundles the book sells, not in pieces", () => {
+    const inventory: InventoryItem[] = [];
+    addStartingItems(inventory, srd51Index, [
+      { item: "srd51:item/arrow", quantity: 20 },
+      { item: "srd51:item/crossbow-bolt", quantity: 40 },
+      { item: "srd51:item/dart", quantity: 10 },
+    ]);
+    const quantity = (id: string) => inventory.find((i) => i.itemId === id)?.quantity;
+    expect(quantity("srd51:item/arrow")).toBe(1);
+    expect(quantity("srd51:item/crossbow-bolt")).toBe(2);
+    expect(quantity("srd51:item/dart")).toBe(10); // a dart is sold one at a time
+    expect(startingQuantity(entry("srd51:item/blowgun-needle"), 50)).toBe(1);
+    expect(startingQuantity(undefined, 3)).toBe(3);
   });
 });

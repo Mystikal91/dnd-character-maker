@@ -373,11 +373,7 @@
               }
             ]
           }
-        ],
-        "startingWealth": {
-          "dice": "2d4",
-          "multiplier": 10
-        }
+        ]
       }
     },
     {
@@ -1154,11 +1150,7 @@
               }
             ]
           }
-        ],
-        "startingWealth": {
-          "dice": "5d4",
-          "multiplier": 10
-        }
+        ]
       }
     },
     {
@@ -1813,11 +1805,7 @@
               }
             ]
           }
-        ],
-        "startingWealth": {
-          "dice": "5d4",
-          "multiplier": 10
-        }
+        ]
       }
     },
     {
@@ -2479,11 +2467,7 @@
               }
             ]
           }
-        ],
-        "startingWealth": {
-          "dice": "2d4",
-          "multiplier": 10
-        }
+        ]
       }
     },
     {
@@ -2905,11 +2889,7 @@
               }
             ]
           }
-        ],
-        "startingWealth": {
-          "dice": "5d4",
-          "multiplier": 10
-        }
+        ]
       }
     },
     {
@@ -3366,11 +3346,7 @@
               }
             ]
           }
-        ],
-        "startingWealth": {
-          "dice": "5d4",
-          "multiplier": 1
-        }
+        ]
       }
     },
     {
@@ -3957,11 +3933,7 @@
               }
             ]
           }
-        ],
-        "startingWealth": {
-          "dice": "5d4",
-          "multiplier": 10
-        }
+        ]
       }
     },
     {
@@ -4597,11 +4569,7 @@
               }
             ]
           }
-        ],
-        "startingWealth": {
-          "dice": "5d4",
-          "multiplier": 10
-        }
+        ]
       }
     },
     {
@@ -5056,11 +5024,7 @@
               }
             ]
           }
-        ],
-        "startingWealth": {
-          "dice": "4d4",
-          "multiplier": 10
-        }
+        ]
       }
     },
     {
@@ -6099,11 +6063,7 @@
               }
             ]
           }
-        ],
-        "startingWealth": {
-          "dice": "3d4",
-          "multiplier": 10
-        }
+        ]
       }
     },
     {
@@ -6790,11 +6750,7 @@
               }
             ]
           }
-        ],
-        "startingWealth": {
-          "dice": "4d4",
-          "multiplier": 10
-        }
+        ]
       }
     },
     {
@@ -7366,11 +7322,7 @@
               }
             ]
           }
-        ],
-        "startingWealth": {
-          "dice": "4d4",
-          "multiplier": 10
-        }
+        ]
       }
     }
   ]

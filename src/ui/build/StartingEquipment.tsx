@@ -9,7 +9,7 @@ import {
   startingOf,
 } from "../../data/startingEquipment";
 import type { InventoryItem } from "../../engine/character";
-import { addStartingItems } from "../../engine/gear";
+import { addStartingItems, startingQuantity } from "../../engine/gear";
 import {
   type StartingPicks,
   categoryItems,
@@ -33,11 +33,15 @@ function classLines(c: Content, classId: string): string[] {
   return lines;
 }
 
+/** An item with how many of it: ammunition counts in the bundles of the book ("Arrow (20)"). */
+const itemText = (c: Content, item: string, quantity: number) => {
+  const n = startingQuantity(c.index.get(item), quantity);
+  return n > 1 ? `${c.name(item)} ×${n}` : c.name(item);
+};
+
 const partText = (c: Content, part: StartingPart) =>
   "item" in part
-    ? part.quantity > 1
-      ? `${c.name(part.item)} ×${part.quantity}`
-      : c.name(part.item)
+    ? itemText(c, part.item, part.quantity)
     : ui(`equipment.cat.${part.category}` as UiKey);
 
 /** What an option hands out, in words ("a light crossbow and 20 bolts"). */
@@ -120,9 +124,7 @@ function Questions({ c, entry, starting, picks, onChange }: SectionProps) {
 
 /** A short list of the items an entry gives without a choice ("Explorer's Pack, Javelin ×4"). */
 const fixedText = (c: Content, starting: Starting) =>
-  starting.fixed
-    .map((i) => (i.quantity > 1 ? `${c.name(i.item)} ×${i.quantity}` : c.name(i.item)))
-    .join(", ");
+  starting.fixed.map((i) => itemText(c, i.item, i.quantity)).join(", ");
 
 /**
  * The starting equipment of the first class and the background, in the Equipment step: what the

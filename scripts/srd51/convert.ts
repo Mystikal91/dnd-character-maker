@@ -3,11 +3,7 @@
  * Pure functions: no file or network access, so they can be unit tested.
  */
 import type { Ability, Effect, Entry, ProficiencyCategory } from "../../src/data/schema";
-import type {
-  StartingChoice,
-  StartingPart,
-  StartingWealth,
-} from "../../src/data/startingEquipment";
+import type { StartingChoice, StartingPart } from "../../src/data/startingEquipment";
 import {
   ACTIVATION,
   FEATURE_EFFECTS,
@@ -107,25 +103,6 @@ export function startingChoices(rawOptions: Raw[]): StartingChoice[] {
     };
   });
 }
-
-/**
- * The gold a class may start with instead of its equipment (the Player's Handbook table, which the
- * SRD 5.1 does not print): the dice times ten, except the monk's.
- */
-const STARTING_WEALTH: Record<string, StartingWealth> = {
-  barbarian: { dice: "2d4", multiplier: 10 },
-  bard: { dice: "5d4", multiplier: 10 },
-  cleric: { dice: "5d4", multiplier: 10 },
-  druid: { dice: "2d4", multiplier: 10 },
-  fighter: { dice: "5d4", multiplier: 10 },
-  monk: { dice: "5d4", multiplier: 1 },
-  paladin: { dice: "5d4", multiplier: 10 },
-  ranger: { dice: "5d4", multiplier: 10 },
-  rogue: { dice: "4d4", multiplier: 10 },
-  sorcerer: { dice: "3d4", multiplier: 10 },
-  warlock: { dice: "4d4", multiplier: 10 },
-  wizard: { dice: "4d4", multiplier: 10 },
-};
 
 const text = (value: string | string[] | undefined) =>
   Array.isArray(value) ? value.join("\n\n") : value;
@@ -547,7 +524,6 @@ function convertClasses(raw: RawSource, ctx: Context): Converted {
           quantity: e.quantity,
         })),
         startingChoices: startingChoices(c.starting_equipment_options),
-        ...(STARTING_WEALTH[c.index] && { startingWealth: STARTING_WEALTH[c.index] }),
       },
     });
   }
@@ -763,7 +739,10 @@ function convertItems(raw: RawSource): Converted {
     }
 
     entries.push({ id: id("item", e.index), kind: "item", effects: [], data });
-    strings[`${e.index}.name`] = e.name;
+    strings[`${e.index}.name`] =
+      e.quantity !== undefined && e.gear_category?.index === "ammunition"
+        ? `${e.name} (${e.quantity})`
+        : e.name;
     if (e.desc) strings[`${e.index}.desc`] = text(e.desc) ?? "";
     if (e.special) strings[`${e.index}.special`] = text(e.special) ?? "";
   }
